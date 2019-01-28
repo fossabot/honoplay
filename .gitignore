@@ -4,3 +4,5 @@
 
 /Honoplay/AdminService/obj
 /Honoplay/AdminService/bin
+/Honoplay/.vs
+/Honoplay/AdminFrontEnd/node_modules
