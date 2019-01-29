@@ -8,7 +8,8 @@
   "scripts": {
     "start": "brunch watch --server",
     "build": "brunch build --production",
-    "test": "node test-run"
+    "test": "mocha --require @babel/register **/*.test.js",
+    "prepack": "test-run"
   },
   "author": {
     "name": "Omega Bigdata"
@@ -23,13 +24,17 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.3.1",
     "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
     "auto-reload-brunch": "^2.7.1",
     "babel-brunch": "^7.0.0",
     "brunch": "^2.10.17",
     "clean-css-brunch": "^2.10.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.8.0",
     "fs-walk": "^0.0.2",
     "mocha": "^5.2.0",
     "opn": "^5.4.0",
+    "requirejs": "^2.3.6",
     "should": "^13.2.3",
     "uglify-js-brunch": "^2.10.0"
   },

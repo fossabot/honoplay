@@ -31,22 +31,25 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app\components\App.jsx" />
-    <Compile Include="test-run.js" />
-    <Compile Include="test\initialize.js" />
+    <Compile Include="app\components\App.test.js" />
+    <Compile Include="browser-test-run.js" />
+    <Compile Include="browser-test\App.test.js" />
+    <Compile Include="browser-test\initialize.js" />
     <Compile Include="app\initialize.js" />
     <Compile Include="brunch-config.js" />
     <Compile Include="server.js" />
+    <Content Include=".babelrc" />
     <Content Include="app\assets\index.html" />
     <Content Include="app\styles\application.css" />
     <Content Include="package.json" />
     <Content Include="README.md" />
-    <Content Include="test-run.html" />
+    <Content Include="browser-test-run.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\" />
     <Folder Include="app\assets\" />
     <Folder Include="app\components\" />
-    <Folder Include="test\" />
+    <Folder Include="browser-test\" />
     <Folder Include="app\styles\" />
   </ItemGroup>
   <!-- Do not delete the following Import Project.  While this appears to do nothing it is a marker for setting TypeScript properties before our import that depends on them. -->
