@@ -24077,6 +24077,16 @@ if ('development' === 'production') {
 }
   })();
 });
+require.register("test/initialize.js", function(exports, require, module) {
+"use strict";
+
+describe("Initialize", function () {
+  it("should be true", function () {
+    "1".should.be.exactly("1");
+  });
+});
+});
+
 require.alias("process/browser.js", "process");require.register("___globals___", function(exports, require, module) {
   
 });})();require('___globals___');
