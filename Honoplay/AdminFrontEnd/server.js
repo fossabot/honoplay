@@ -1,8 +1,16 @@
-'use strict';
-var http = require('http');
-var port = process.env.PORT || 1337;
+// Server.js
+// 
+// Visual Studio üzerinde çalýþýrken play düðmesinin uygulamayý çalýþtýrmasýný saðlar.
+//
+// 
 
-http.createServer(function (req, res) {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('Hello World\n');
-}).listen(port);
+'use strict';
+const util = require('util');
+const exec = util.promisify(require('child_process').execSync);
+
+async function runServer() {
+    const { stdout, stderr } = await exec('yarn start', { stdio: 'inherit' });
+    console.log('stdout:', stdout);
+    console.log('stderr:', stderr);
+}
+runServer();

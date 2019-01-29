@@ -3,7 +3,39 @@
   "version": "0.0.0",
   "description": "AdminFrontEnd",
   "main": "server.js",
+  "repository": "",
+  "private": true,
+  "scripts": {
+    "start": "brunch watch --server",
+    "build": "brunch build --production"
+  },
   "author": {
-    "name": ""
+    "name": "Omega Bigdata"
+  },
+  "dependencies": {
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.3.1",
+    "@babel/preset-react": "^7.0.0",
+    "auto-reload-brunch": "^2.7.1",
+    "babel-brunch": "^7.0.0",
+    "brunch": "^2.10.17",
+    "clean-css-brunch": "^2.10.0",
+    "uglify-js-brunch": "^2.10.0"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 9,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "rules": {
+      "react/jsx-sort-prop-types": 0,
+      "semi": 2
+    }
   }
 }
