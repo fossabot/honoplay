@@ -24,6 +24,6 @@ walk.walkSync('./test/', function (basedir, filename, stat) {
 fs.writeFileSync("test-run.html", testFileContent);
 
 // testi çalýþtýr
-opn(`file:///${__dirname}/test-run.html`, { app: ['chrome', '--new-window', '--incognito'] });
+opn(`file:///${__dirname}/test-run.html`, { app: ['chrome', '--new-window', '--incognito', '--disable-translate' ,'--disable-plugins'] });
 
 //chrome --headless --disable-gpu --dump-dom

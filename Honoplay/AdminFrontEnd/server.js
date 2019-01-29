@@ -13,7 +13,7 @@ console.log("Version. 1.0");
 
 async function runServer() {
 
-    opn('http://localhost:3333/', { app: ['chrome', '--remote-debugging-port=9222', '--new-window'] }).then(() => {
+    opn('http://localhost:3333/', { app: ['chrome', '--disable-plugins', '--remote-debugging-port=9222', '--new-window', '--disable-translate'] }).then(() => {
         console.log(`browser started`);
     });
 
@@ -22,9 +22,6 @@ async function runServer() {
     console.log('stdout:', stdout);
     console.log('stderr:', stderr);
 }
-
-
-
 runServer();
 
 
