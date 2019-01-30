@@ -3,9 +3,9 @@
 
 #Modül açıklamaları
 
-## Dev
+### Dev
 	
-	"@babel/cli": Babel js için komut satırı
+    "@babel/cli": Babel js için komut satırı
     "@babel/core": Yeni javascript özelliklerinin eski tarayıcılarda ve nodejs ortamında çalışması için dönüşüm yapar
     "@babel/node": Node js için babel eklemeleri
     "@babel/preset-env": Browserlist de belirtilen tarayıcılara yönelik dönüştürme işlemi yapar
@@ -35,18 +35,18 @@
     
     
     
-## Prod  
+### Prod  
 
     "react": React !
     "react-dom": React !
     "react-hot-loader": Webpack ile birlikte react componentleri üzerinde değişiklik yapıldığında otomatik yükleme sağlamaktadır. Prod ortamında otomatik olarak çalışmamaktadır.
 
-#Testler
+## Testler
 
-## React Testleri
+### React Testleri
 JSX dosyalarının testleri için enzyme kullanıyoruz https://github.com/airbnb/enzyme
 https://github.com/rkotze/should-enzyme
-## Kütüphane Testleri
+### Kütüphane Testleri
 JS dosyları
 
 ## Browser Testi
