@@ -8,7 +8,7 @@
   "scripts": {
     "build": "rimraf ./dist && webpack",
     "start": "rimraf ./dist && webpack-dev-server --mode development --colors",
-    "test": "mocha --require @babel/register **/*.test.js",
+    "test": "mocha --require @babel/register --require ignore-styles **/*.test.jsx",
     "prepack": "test-run"
   },
   "author": {
@@ -17,8 +17,7 @@
   "dependencies": {
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-hot-loader": "^4.6.3",
-    "rimraf": "^2.6.3"
+    "react-hot-loader": "^4.6.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
@@ -32,10 +31,13 @@
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.8.0",
     "fs-walk": "^0.0.2",
+    "ignore-styles": "^5.0.1",
     "mocha": "^5.2.0",
     "opn": "^5.4.0",
     "requirejs": "^2.3.6",
+    "rimraf": "^2.6.3",
     "should": "^13.2.3",
+    "should-enzyme": "^2.1.0",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.0",
     "webpack-cli": "^3.2.1",
