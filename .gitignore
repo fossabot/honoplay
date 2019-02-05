@@ -6,3 +6,7 @@
 /Honoplay/AdminService/bin
 /Honoplay/.vs
 /Honoplay/AdminFrontEnd/node_modules
+/.vs/Honoplay
+/Honoplay.AdminWebAPI/obj
+/Honoplay.AdminWebUI/node_modules
+/Honoplay.AdminWebUI/obj/Debug

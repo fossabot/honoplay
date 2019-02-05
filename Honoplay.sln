@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28407.52
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{2D4DEBDD-BE53-46B1-BD18-D1DDE3DDA675}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{285B6830-6C68-42AA-A7DE-C25E2506234F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{76B05BC4-5CCC-49F3-851A-903B6E92B542}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{A1C76422-C6F8-417A-BC94-43F8E503AA12}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{F5F25785-4269-4051-85AA-4F6A754EB079}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{3C524589-3444-4493-AD88-C3CD6A9DCB3B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{687F225E-61EC-4DB8-AF31-05396138358C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Honoplay.AdminWebAPI", "Honoplay.AdminWebAPI\Honoplay.AdminWebAPI.csproj", "{43AD5A93-FF27-456B-B589-71E2C1D43C3F}"
+EndProject
+Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Honoplay.AdminWebUI", "Honoplay.AdminWebUI\Honoplay.AdminWebUI.njsproj", "{7343F152-1865-4D5A-87FD-85B16CCC67FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43AD5A93-FF27-456B-B589-71E2C1D43C3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43AD5A93-FF27-456B-B589-71E2C1D43C3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43AD5A93-FF27-456B-B589-71E2C1D43C3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43AD5A93-FF27-456B-B589-71E2C1D43C3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7343F152-1865-4D5A-87FD-85B16CCC67FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7343F152-1865-4D5A-87FD-85B16CCC67FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7343F152-1865-4D5A-87FD-85B16CCC67FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7343F152-1865-4D5A-87FD-85B16CCC67FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{285B6830-6C68-42AA-A7DE-C25E2506234F} = {2D4DEBDD-BE53-46B1-BD18-D1DDE3DDA675}
+		{F5F25785-4269-4051-85AA-4F6A754EB079} = {2D4DEBDD-BE53-46B1-BD18-D1DDE3DDA675}
+		{3C524589-3444-4493-AD88-C3CD6A9DCB3B} = {2D4DEBDD-BE53-46B1-BD18-D1DDE3DDA675}
+		{687F225E-61EC-4DB8-AF31-05396138358C} = {2D4DEBDD-BE53-46B1-BD18-D1DDE3DDA675}
+		{43AD5A93-FF27-456B-B589-71E2C1D43C3F} = {687F225E-61EC-4DB8-AF31-05396138358C}
+		{7343F152-1865-4D5A-87FD-85B16CCC67FA} = {687F225E-61EC-4DB8-AF31-05396138358C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D314710A-BD01-4670-B5E7-0441DE5551C6}
+	EndGlobalSection
+EndGlobal

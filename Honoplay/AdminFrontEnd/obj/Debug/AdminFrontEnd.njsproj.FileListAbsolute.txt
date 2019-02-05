@@ -1,3 +1,0 @@
-C:\Cihan\Git\honoplay\Honoplay\AdminFrontEnd\obj\Debug\AdminFrontEnd.njsprojAssemblyReference.cache
-C:\Cihan\Git\honoplay\Honoplay\AdminFrontEnd\obj\Debug\AdminFrontEnd.njsproj.CoreCompileInputs.cache
-C:\Cihan\Git\honoplay\Honoplay\AdminFrontEnd\bin\Microsoft.NodejsTools.WebRole.dll
