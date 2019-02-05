@@ -17,5 +17,10 @@ namespace Honoplay.Persistence
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(HonoplayDbContext).Assembly);
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;");
+        }
     }
 }

@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Honoplay.Persistence.Configurations
 {
-    public class AdminUserConfiguration : IEntityTypeConfiguration<AdminUser>
+    public sealed class AdminUserConfiguration : IEntityTypeConfiguration<AdminUser>
     {
         public void Configure(EntityTypeBuilder<AdminUser> builder)
         {

@@ -11,7 +11,6 @@ namespace Honoplay.Domain.Entities
         {
             //Default values for non nullable refs.
             Name = HostName = "";
-            Logo = new byte[0];
             AdminUsers = new HashSet<AdminUser>();
         }
 
@@ -21,7 +20,7 @@ namespace Honoplay.Domain.Entities
 
         public string HostName { get; set; }
 
-        public byte[] Logo { get; set; }
+        public byte[]? Logo { get; set; }
 
         public ICollection<AdminUser> AdminUsers { get; private set; }
     }

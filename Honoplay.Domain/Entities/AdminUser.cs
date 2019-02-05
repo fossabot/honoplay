@@ -3,7 +3,7 @@
 #nullable enable
 namespace Honoplay.Domain.Entities
 {
-    public class AdminUser
+    public sealed class AdminUser
     {
 
         public AdminUser()
