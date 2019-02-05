@@ -10,3 +10,8 @@
 /Honoplay.AdminWebAPI/obj
 /Honoplay.AdminWebUI/node_modules
 /Honoplay.AdminWebUI/obj/Debug
+/Honoplay.AdminWebAPI/bin/Debug/netcoreapp2.2
+/Honoplay.Application/obj
+/Honoplay.Common/obj
+/Honoplay.Domain/obj
+/Honoplay.Persistence/obj

@@ -2,6 +2,9 @@
 Honoplay Stack
 
 
+
+# Klasör Yapýsý
+
 ## Common
 
 ## Core
@@ -45,3 +48,21 @@ Web API
 Razor Pages
 MVC
 Web Forms
+
+# Kullanýlan 3rd party kütüphaneler
+
+## MediatR
+Uygulama içi mesajlaþma için kullanýlýyor. 3 arayüz önemli:
+
+IRequest
+IRequestHandler
+INotification
+
+
+https://github.com/jbogard/MediatR
+https://github.com/jbogard/MediatR/wiki
+
+## FluentValidation
+Bir nesne için doðrulama kurallarý oluþturmayý saðlar.
+
+https://fluentvalidation.net/start
