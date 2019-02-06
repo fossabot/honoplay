@@ -1,9 +1,9 @@
-# honoplay
+ï»¿# honoplay
 Honoplay Stack
 
 
 
-# Klasör Yapısı
+# KlasÃ¶r YapÄ±sÄ±
 
 ## Common
 
@@ -43,16 +43,16 @@ System Clock
 Anything external
 
 ## Presentation
-SPA – Angular or React
+SPA â€“ Angular or React
 Web API
 Razor Pages
 MVC
 Web Forms
 
-# Kullanılan 3rd party kütüphaneler
+# KullanÄ±lan 3rd party kÃ¼tÃ¼phaneler
 
 ## MediatR
-Uygulama içi mesajlaşma için kullanılıyor. 3 arayüz önemli:
+Uygulama iÃ§i mesajlaÅŸma iÃ§in kullanÄ±lÄ±yor. 3 arayÃ¼z Ã¶nemli:
 
 IRequest
 IRequestHandler
@@ -63,6 +63,6 @@ https://github.com/jbogard/MediatR
 https://github.com/jbogard/MediatR/wiki
 
 ## FluentValidation
-Bir nesne için doğrulama kuralları oluşturmayı sağlar.
+Bir nesne iÃ§in doÄŸrulama kurallarÄ± oluÅŸturmayÄ± saÄŸlar.
 
 https://fluentvalidation.net/start
