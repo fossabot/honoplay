@@ -11,4 +11,15 @@
     <PackageReference Include="MediatR" Version="6.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Honoplay.Common\Honoplay.Common.csproj" />
+    <ProjectReference Include="..\Honoplay.Domain\Honoplay.Domain.csproj" />
+    <ProjectReference Include="..\Honoplay.Persistence\Honoplay.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="AdminUsers\Commands\" />
+    <Folder Include="AdminUsers\Queries\" />
+  </ItemGroup>
+
 </Project>

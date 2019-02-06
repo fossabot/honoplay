@@ -10,7 +10,13 @@ namespace Honoplay.Persistence
         {
         }
 
+        public HonoplayDbContext()
+        {
+
+        }
+
         public DbSet<AdminUser> AdminUsers { get; set; }
+        public DbSet<Tenant> Tenants { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -20,7 +26,7 @@ namespace Honoplay.Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=MyDatabase;Trusted_Connection=True;");
+           optionsBuilder.UseSqlServer(@"Data Source=fides.omegabigdata.com,1443;User ID=sa;Password=Hedele321?;Initial Catalog=Honoplay;app=Honoplay;MultipleActiveResultSets=True");
         }
     }
 }

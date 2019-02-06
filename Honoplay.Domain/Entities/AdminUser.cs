@@ -42,7 +42,6 @@ namespace Honoplay.Domain.Entities
         public int NumberOfInvalidPasswordAttemps { get; set; }
 
         public byte[] RowVersion { get; set; }
-
         public Tenant Tenant { get; set; }
     }
 }

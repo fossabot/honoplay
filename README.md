@@ -66,3 +66,9 @@ https://github.com/jbogard/MediatR/wiki
 Bir nesne için doğrulama kuralları oluşturmayı sağlar.
 
 https://fluentvalidation.net/start
+
+# Database
+
+Honoplay.Persistence klasöründe olduğunu doğruladıktan sonra
+`dotnet ef migrations add InitialCreate`  
+`dotnet ef database update`
