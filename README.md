@@ -12,7 +12,6 @@ This will contain all cross-cutting concerns.
 
 ### Domain
 Entities
-Value Objects
 Enumerations
 Logic
 Exceptions

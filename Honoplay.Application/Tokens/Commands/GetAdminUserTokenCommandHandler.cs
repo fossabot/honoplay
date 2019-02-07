@@ -8,6 +8,7 @@ using Honoplay.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Honoplay.Application.Exceptions;
+using Honoplay.Common.Extensions;
 #nullable enable
 
 namespace Honoplay.Application.Tokens.Commands
@@ -33,7 +34,14 @@ namespace Honoplay.Application.Tokens.Commands
                 throw new NotFoundException(nameof(request.Username), request.Username);
             }
 
-
+            var salt =  adminUser[0].PasswordSalt;
+            var passwordHash = request.Password?.GetSHA512(salt);
+                       
+            if(!passwordHash.SequenceEqual(adminUser[0].Password))
+            {
+                //TODO:  Auth exception
+                throw new Exception();
+            }
 
             return default;
         }
