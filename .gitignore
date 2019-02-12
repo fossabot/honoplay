@@ -16,3 +16,6 @@
 /Honoplay.Domain/obj
 /Honoplay.Persistence/obj
 /obj
+/Honoplay.Application.Tests/obj
+/Honoplay.Common.Tests/obj
+/Honoplay.Common.Tests/bin/Debug/netcoreapp2.2
