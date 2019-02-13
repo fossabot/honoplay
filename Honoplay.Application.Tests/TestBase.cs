@@ -13,6 +13,7 @@ namespace Honoplay.Application.Tests
         protected HonoplayDbContext GetDbContext()
         {
             var builder = new DbContextOptionsBuilder<HonoplayDbContext>();
+            builder.UseInMemoryDatabase(Guid.NewGuid().ToString());
             var dbContext = new HonoplayDbContext(builder.Options);
 
             dbContext.Database.EnsureCreated();

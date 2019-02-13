@@ -3,9 +3,9 @@
 
 namespace Honoplay.Application.Tokens.Commands
 {
-    public class GetAdminUserTokenValidator : AbstractValidator<GetAdminUserTokenCommand>
+    public class LoginAdminUserValidator : AbstractValidator<LoginAdminUserCommand>
     {
-        public GetAdminUserTokenValidator()
+        public LoginAdminUserValidator()
         {
             RuleFor(x => x.Username).MaximumLength(50).NotNull().NotEmpty();
             RuleFor(x => x.Password).MaximumLength(50).NotNull().NotEmpty();

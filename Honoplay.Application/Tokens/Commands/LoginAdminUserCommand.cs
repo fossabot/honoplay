@@ -6,7 +6,7 @@ using MediatR;
 
 namespace Honoplay.Application.Tokens.Commands
 {
-    public class GetAdminUserTokenCommand : IRequest
+    public class LoginAdminUserCommand : IRequest<AdminUserLoginModel>
     {
         public Guid TenantId { get; set; }
 

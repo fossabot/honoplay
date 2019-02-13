@@ -8,8 +8,9 @@ namespace Honoplay.Persistence
     {
         public HonoplayDbContext(DbContextOptions<HonoplayDbContext> options) : base(options)
         {
+            _isTest = true;
         }
-
+        private bool _isTest = false;
         public HonoplayDbContext()
         {
 
@@ -26,7 +27,11 @@ namespace Honoplay.Persistence
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-           optionsBuilder.UseSqlServer(@"Data Source=fides.omegabigdata.com,1443;User ID=sa;Password=Hedele321?;Initial Catalog=Honoplay;app=Honoplay;MultipleActiveResultSets=True");
+            if (_isTest)
+            {
+                return;
+            }
+            optionsBuilder.UseSqlServer(@"Data Source=fides.omegabigdata.com,1443;User ID=sa;Password=Hedele321?;Initial Catalog=Honoplay;app=Honoplay;MultipleActiveResultSets=True");
         }
     }
 }

@@ -28,6 +28,7 @@ namespace Honoplay.AdminWebAPI.Controllers
         [HttpPost]
         public void Post([FromBody] string value)
         {
+            
         }
 
         // PUT api/values/5

@@ -64,12 +64,10 @@ namespace Honoplay.Persistence.Configurations
                    .HasDefaultValue(3);
 
             //  CreatedBy
-            builder.Property(e => e.CreatedBy)
-                   .IsRequired();
+            builder.Property(e => e.CreatedBy);
 
             //  UpdatedBy
-            builder.Property(e => e.CreatedDateTime)
-                   .IsRequired();
+            builder.Property(e => e.CreatedDateTime);
 
             //  UpdatedDateTime
 
