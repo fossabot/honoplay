@@ -51,7 +51,7 @@ namespace Honoplay.Application.Tokens.Commands
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    //TODO
+                    //TODO https://docs.microsoft.com/en-us/ef/core/saving/concurrency
                 }
                 catch (Exception)
                 {
