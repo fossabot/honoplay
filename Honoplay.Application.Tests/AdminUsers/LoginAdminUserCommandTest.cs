@@ -1,4 +1,4 @@
-﻿using Honoplay.Application.Tokens.Commands;
+﻿using Honoplay.Application.AdminUsers.Commands;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using System;
@@ -9,18 +9,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 using Honoplay.Application.Exceptions;
+using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
 
 namespace Honoplay.Application.Tests.Tokens
 {
-    public class LoginAdminUserCommandTest : TestBase, IDisposable
+    public class AuthenticateAdminUserCommandTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly LoginAdminUserCommandHandler _commandHandler;
+        private readonly AuthenticateAdminUserCommandHandler _commandHandler;
         private readonly Guid _testTenantGuid;
-        public LoginAdminUserCommandTest()
+        public AuthenticateAdminUserCommandTest()
         {
             _context = InitAndGetDbContext(out _testTenantGuid);
-            _commandHandler = new LoginAdminUserCommandHandler(_context);
+            _commandHandler = new AuthenticateAdminUserCommandHandler(_context);
         }
         private HonoplayDbContext InitAndGetDbContext(out Guid tenantGuid)
         {
@@ -50,7 +51,7 @@ namespace Honoplay.Application.Tests.Tokens
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var command = new LoginAdminUserCommand
+            var command = new AuthenticateAdminUserCommand
             {
                 TenantId = _testTenantGuid,
                 Username = "TestAdminUser#01",
@@ -67,7 +68,7 @@ namespace Honoplay.Application.Tests.Tokens
         [Fact]
         public async Task ShouldThrowErrorWhenInvalidInformation()
         {
-            var command = new LoginAdminUserCommand
+            var command = new AuthenticateAdminUserCommand
             {
                 TenantId = _testTenantGuid,
                 Username = "TestAdminUser#01",
@@ -81,7 +82,7 @@ namespace Honoplay.Application.Tests.Tokens
         [Fact]
         public async Task ShouldThrowErrorWhenCaseErrorInPassword()
         {
-            var command = new LoginAdminUserCommand
+            var command = new AuthenticateAdminUserCommand
             {
                 TenantId = _testTenantGuid,
                 Username = "TestAdminUser#01",
@@ -96,7 +97,7 @@ namespace Honoplay.Application.Tests.Tokens
         [Fact]
         public async Task ShouldThrowErrorWhenCaseErrorInUsername()
         {
-            var command = new LoginAdminUserCommand
+            var command = new AuthenticateAdminUserCommand
             {
                 TenantId = _testTenantGuid,
                 Username = "testAdminUser#01",
@@ -111,7 +112,7 @@ namespace Honoplay.Application.Tests.Tokens
         [Fact]
         public async Task ShouldIncreaseInvalidPasswordAttempsNumberWhenInvalidInformation()
         {
-            var command = new LoginAdminUserCommand
+            var command = new AuthenticateAdminUserCommand
             {
                 TenantId = _testTenantGuid,
                 Username = "TestAdminUser#01",

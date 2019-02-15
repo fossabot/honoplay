@@ -1,57 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Honoplay.AdminWebAPI.Services;
+using Honoplay.Application.AdminUsers.Commands;
+using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
+#nullable enable
 namespace Honoplay.AdminWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class AdminUserController : BaseController
     {
-      
+        private readonly AppSettings _appSettings;
+        public AdminUserController(IOptions<AppSettings> appSettings)
+        {
+            _appSettings = appSettings.Value;
+        }
 
-        //[AllowAnonymous]
-        //[HttpPost("authenticate")]
-        //public IActionResult Authenticate([FromBody]User userParam)
-        //{
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public async Task<IActionResult> Authenticate([FromBody]AuthenticateAdminUserCommand command)
+        {
+            var model = await Mediator.Send(command);
+            //// authentication successful so generate jwt token
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = System.Text.Encoding.ASCII.GetBytes(_appSettings.JWTSecret);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, model.Username),
+                    new Claim(ClaimTypes.Role, "AdminUser"),
+                    new Claim(ClaimTypes.Name, model.Name),
+                    new Claim(ClaimTypes.UserData, model.TenantId.ToString())
 
+                }),
+                Expires = DateTime.UtcNow.AddDays(1),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
 
-        //    // return null if user not found
-        //    if (adminUserModel is null)
-        //    { return null; }
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
 
-        //    // authentication successful so generate jwt token
-        //    var tokenHandler = new JwtSecurityTokenHandler();
-        //    var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
-        //    var tokenDescriptor = new SecurityTokenDescriptor
-        //    {
-        //        Subject = new ClaimsIdentity(new Claim[]
-        //        {
-        //            new Claim(ClaimTypes.Name, user.Id.ToString())
-        //        }),
-        //        Expires = DateTime.UtcNow.AddDays(7),
-        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-        //    };
-        //    var token = tokenHandler.CreateToken(tokenDescriptor);
-        //    user.Token = tokenHandler.WriteToken(token);
-
-        //    // remove password before returning
-        //    user.Password = null;
-
-        //    return user;
-
-
-        //    var user = _userService.Authenticate(userParam.Username, userParam.Password);
-
-        //    if (user == null)
-        //        return BadRequest(new { message = "Username or password is incorrect" });
-
-        //    return Ok(user);
-        //}
+            var stringToken = tokenHandler.WriteToken(token);
+            return Ok(new { User = model, Token = stringToken });
+        }
 
 
     }

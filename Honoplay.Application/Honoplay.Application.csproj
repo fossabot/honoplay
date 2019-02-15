@@ -18,8 +18,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="AdminUsers\Commands\" />
     <Folder Include="AdminUsers\Queries\" />
+    <Folder Include="Tokens\" />
   </ItemGroup>
 
   <ItemGroup>

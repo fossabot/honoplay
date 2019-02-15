@@ -11,21 +11,21 @@ using Honoplay.Application.Exceptions;
 using Honoplay.Common.Extensions;
 #nullable enable
 
-namespace Honoplay.Application.Tokens.Commands
+namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
 {
 
-    public class LoginAdminUserCommandHandler : IRequestHandler<LoginAdminUserCommand, AdminUserLoginModel>
+    public class AuthenticateAdminUserCommandHandler : IRequestHandler<AuthenticateAdminUserCommand, AdminUserAuthenticateModel>
     {
         private readonly HonoplayDbContext _context;
 
 
-        public LoginAdminUserCommandHandler(HonoplayDbContext context)
+        public AuthenticateAdminUserCommandHandler(HonoplayDbContext context)
         {
             _context = context;
         }
 
 
-        public async Task<AdminUserLoginModel> Handle(LoginAdminUserCommand request, CancellationToken cancellationToken)
+        public async Task<AdminUserAuthenticateModel> Handle(AuthenticateAdminUserCommand request, CancellationToken cancellationToken)
         {
             var adminUser = await _context.AdminUsers
                                     .Where(u => u.Username == request.Username
@@ -62,7 +62,7 @@ namespace Honoplay.Application.Tokens.Commands
                 throw new Exception();
             }
 
-            return new AdminUserLoginModel(id: adminUser[0].Id,
+            return new AdminUserAuthenticateModel(id: adminUser[0].Id,
                                            username: adminUser[0].Username,
                                            name: adminUser[0].Name,
                                            tenantId: adminUser[0].TenantId,

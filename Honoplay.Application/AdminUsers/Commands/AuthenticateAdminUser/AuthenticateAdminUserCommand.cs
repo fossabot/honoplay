@@ -4,9 +4,9 @@ using System.Text;
 using MediatR;
 #nullable enable
 
-namespace Honoplay.Application.Tokens.Commands
+namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
 {
-    public class LoginAdminUserCommand : IRequest<AdminUserLoginModel>
+    public class AuthenticateAdminUserCommand : IRequest<AdminUserAuthenticateModel>
     {
         public Guid TenantId { get; set; }
 

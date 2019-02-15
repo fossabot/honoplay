@@ -1,9 +1,9 @@
 ﻿using System;
 #nullable enable
 
-namespace Honoplay.Application.Tokens.Commands
+namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
 {
-    public class AdminUserLoginModel
+    public readonly struct AdminUserAuthenticateModel
     {
         public int Id { get; }
         public string? Username { get; }
@@ -11,7 +11,7 @@ namespace Honoplay.Application.Tokens.Commands
         public Guid? TenantId { get; }
 
         public bool IsPasswordExpired { get; }
-        public AdminUserLoginModel(int id, string username, string name, Guid tenantId, bool isPasswordExpired)
+        public AdminUserAuthenticateModel(int id, string username, string name, Guid tenantId, bool isPasswordExpired)
         {
             Id = id;
             Username = username;
