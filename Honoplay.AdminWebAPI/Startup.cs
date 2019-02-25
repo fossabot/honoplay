@@ -33,7 +33,6 @@ namespace Honoplay.AdminWebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Application.AssemblyIdentifier>()); ;
 
             // Add MediatR
@@ -49,6 +48,7 @@ namespace Honoplay.AdminWebAPI
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
+
             // configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = System.Text.Encoding.ASCII.GetBytes(appSettings.JWTSecret);
@@ -68,6 +68,18 @@ namespace Honoplay.AdminWebAPI
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+                x.Events = new JwtBearerEvents
+                {
+                    OnTokenValidated = y =>
+                    {
+                        return Task.CompletedTask;
+                    },
+                    OnAuthenticationFailed = y =>
+                    {
+                        Console.WriteLine("Exception:{0}", y.Exception.Message);
+                        return Task.CompletedTask;
+                    }
+                };
             });
         }
 
@@ -84,6 +96,7 @@ namespace Honoplay.AdminWebAPI
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
         }
