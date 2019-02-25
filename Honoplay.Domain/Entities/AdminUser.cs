@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 
 #nullable enable
 namespace Honoplay.Domain.Entities
 {
-    public sealed class AdminUser
+    public sealed class AdminUser : IdentityUser
     {
 
         public AdminUser()

@@ -18,6 +18,8 @@ using Honoplay.Application.Infrastructure;
 using FluentValidation.AspNetCore;
 using Honoplay.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Honoplay.Domain.Entities;
 
 namespace Honoplay.AdminWebAPI
 {
@@ -33,7 +35,7 @@ namespace Honoplay.AdminWebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Application.AssemblyIdentifier>()); ;
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Application.AssemblyIdentifier>());
 
             // Add MediatR
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
@@ -43,7 +45,12 @@ namespace Honoplay.AdminWebAPI
 
             // Add DbContext using SQL Server Provider
             services.AddDbContext<HonoplayDbContext>(options =>
-                options.UseSqlServer(@"Data Source=fides.omegabigdata.com,1443;User ID=sa;Password=Hedele321?;Initial Catalog=Honoplay;app=Honoplay;MultipleActiveResultSets=True"));
+                options.UseSqlServer(@"Data Source=fides.omegabigdata.com,1443;User ID=sa;Password=Hedele321?;Initial Catalog=Honoplay;app=Honoplay;MultipleActiveResultSets=True",
+                                    b => b.MigrationsAssembly("Honoplay.Persistence")));
+
+            services.AddIdentity<AdminUser, IdentityRole>()
+                    .AddEntityFrameworkStores<HonoplayDbContext>()
+                    .AddDefaultTokenProviders();
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");

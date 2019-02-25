@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v2.2": {
       "Honoplay.Domain/1.0.0": {
         "dependencies": {
-          "Honoplay.Common": "1.0.0"
+          "Honoplay.Common": "1.0.0",
+          "Microsoft.Extensions.Identity.Stores": "2.2.0.0"
         },
         "runtime": {
           "Honoplay.Domain.dll": {}
@@ -17,6 +18,14 @@
       "Honoplay.Common/1.0.0": {
         "runtime": {
           "Honoplay.Common.dll": {}
+        }
+      },
+      "Microsoft.Extensions.Identity.Stores/2.2.0.0": {
+        "runtime": {
+          "Microsoft.Extensions.Identity.Stores.dll": {
+            "assemblyVersion": "2.2.0.0",
+            "fileVersion": "2.2.0.18316"
+          }
         }
       }
     }
@@ -29,6 +38,11 @@
     },
     "Honoplay.Common/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Microsoft.Extensions.Identity.Stores/2.2.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }
