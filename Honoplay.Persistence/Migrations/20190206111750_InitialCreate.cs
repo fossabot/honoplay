@@ -35,7 +35,7 @@ namespace Honoplay.Persistence.Migrations
                     Name = table.Column<string>(maxLength: 50, nullable: false),
                     Surname = table.Column<string>(maxLength: 50, nullable: false),
                     PhoneNumber = table.Column<string>(unicode: false, maxLength: 50, nullable: true),
-                    EMailAddress = table.Column<string>(unicode: false, maxLength: 50, nullable: true),
+                    Email = table.Column<string>(unicode: false, maxLength: 50, nullable: true),
                     TimeZone = table.Column<int>(nullable: false, defaultValue: 3),
                     CreatedBy = table.Column<int>(nullable: false),
                     UpdatedBy = table.Column<int>(nullable: true),
@@ -59,11 +59,11 @@ namespace Honoplay.Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_AdminUsers_TenantId_EMailAddress",
+                name: "IX_AdminUsers_TenantId_Email",
                 table: "AdminUsers",
-                columns: new[] { "TenantId", "EMailAddress" },
+                columns: new[] { "TenantId", "Email" },
                 unique: true,
-                filter: "[EMailAddress] IS NOT NULL");
+                filter: "[Email] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AdminUsers_TenantId_Username",

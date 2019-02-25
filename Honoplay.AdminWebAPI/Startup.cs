@@ -49,7 +49,7 @@ namespace Honoplay.AdminWebAPI
                                     b => b.MigrationsAssembly("Honoplay.Persistence")));
 
             services.AddIdentity<AdminUser, IdentityRole>()
-                    .AddEntityFrameworkStores<HonoplayDbContext>()
+                    //.AddEntityFrameworkStores<HonoplayDbContext>()
                     .AddDefaultTokenProviders();
 
             // configure strongly typed settings objects

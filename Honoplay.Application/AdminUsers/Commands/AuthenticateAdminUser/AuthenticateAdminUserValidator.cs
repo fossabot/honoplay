@@ -7,7 +7,7 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
     {
         public AuthenticateAdminUserValidator()
         {
-            RuleFor(x => x.Username).MaximumLength(50).NotNull().NotEmpty();
+            RuleFor(x => x.UserName).MaximumLength(50).NotNull().NotEmpty();
             RuleFor(x => x.Password).MaximumLength(50).NotNull().NotEmpty();
         }
     }

@@ -4,13 +4,13 @@ using System;
 #nullable enable
 namespace Honoplay.Domain.Entities
 {
-    public sealed class AdminUser : IdentityUser
+    public sealed class AdminUser : IdentityUser<int>
     {
 
         public AdminUser()
         {
             //Default values for non nullable refs.
-            Username = Name
+            UserName = Name
                      = Surname
                      = "";
 
@@ -20,14 +20,14 @@ namespace Honoplay.Domain.Entities
 
             Tenant = new Tenant();
         }
-        public int Id { get; set; }
+          public override int Id { get; set; }
         public Guid TenantId { get; set; }
-        public string Username { get; set; }
+        public override string UserName { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
 
-        public string? PhoneNumber { get; set; }
-        public string? EMailAddress { get; set; }
+        public override string? PhoneNumber { get; set; }
+        public override string? Email { get; set; }
         public int TimeZone { get; set; }
 
 

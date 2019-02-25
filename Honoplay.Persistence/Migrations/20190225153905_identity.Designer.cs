@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Honoplay.Persistence.Migrations
 {
     [DbContext(typeof(HonoplayDbContext))]
-    [Migration("20190206111750_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20190225153905_identity")]
+    partial class identity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
+                .HasAnnotation("ProductVersion", "3.0.0-preview.19074.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -27,8 +27,11 @@ namespace Honoplay.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CreatedBy")
-                        .IsRequired();
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp");
+
+                    b.Property<int?>("CreatedBy");
 
                     b.Property<DateTimeOffset>("CreatedDateTime");
 
@@ -36,15 +39,27 @@ namespace Honoplay.Persistence.Migrations
                         .HasMaxLength(50)
                         .IsUnicode(false);
 
+                    b.Property<bool>("EmailConfirmed");
+
                     b.Property<DateTimeOffset>("LastPasswordChangeDateTime");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<string>("NormalizedEmail");
+
+                    b.Property<string>("NormalizedUserName");
+
                     b.Property<int>("NumberOfInvalidPasswordAttemps");
 
                     b.Property<byte[]>("Password");
+
+                    b.Property<string>("PasswordHash");
 
                     b.Property<byte[]>("PasswordSalt");
 
@@ -52,9 +67,13 @@ namespace Honoplay.Persistence.Migrations
                         .HasMaxLength(50)
                         .IsUnicode(false);
 
+                    b.Property<bool>("PhoneNumberConfirmed");
+
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<string>("SecurityStamp");
 
                     b.Property<string>("Surname")
                         .IsRequired()
@@ -66,11 +85,13 @@ namespace Honoplay.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(3);
 
+                    b.Property<bool>("TwoFactorEnabled");
+
                     b.Property<int?>("UpdatedBy");
 
                     b.Property<DateTimeOffset>("UpdatedDateTime");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("UserName")
                         .IsRequired()
                         .HasMaxLength(50);
 
@@ -80,7 +101,7 @@ namespace Honoplay.Persistence.Migrations
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
 
-                    b.HasIndex("TenantId", "Username")
+                    b.HasIndex("TenantId", "UserName")
                         .IsUnique();
 
                     b.ToTable("AdminUsers");
