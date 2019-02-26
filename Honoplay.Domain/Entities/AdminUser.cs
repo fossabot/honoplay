@@ -21,7 +21,6 @@ namespace Honoplay.Domain.Entities
             Tenant = new Tenant();
         }
           public override int Id { get; set; }
-        public Guid TenantId { get; set; }
         public override string UserName { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }

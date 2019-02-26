@@ -17,22 +17,10 @@ namespace Honoplay.Persistence.Configurations
             builder.Property(e => e.Id)
                    .ValueGeneratedOnAdd();
 
-            //  Tenant Id
-            builder.Property(e => e.TenantId)
-                  .IsRequired();
-
-            builder.HasOne(e => e.Tenant)
-                    .WithMany(e => e.AdminUsers)
-                    .HasForeignKey(e => e.TenantId)
-                    .HasConstraintName("FK_AdminUsers_Tenants");
-
             //  UserName
             builder.Property(e => e.UserName)
                    .IsRequired()
                    .HasMaxLength(50);
-
-            builder.HasIndex(e => new { e.TenantId, e.UserName })
-                  .IsUnique();
 
             //  Name
             builder.Property(e => e.Name)
@@ -54,7 +42,7 @@ namespace Honoplay.Persistence.Configurations
                    .IsUnicode(false)
                    .HasMaxLength(50);
 
-            builder.HasIndex(e => new { e.TenantId, e.Email })
+            builder.HasIndex(e => e.Email)
              .HasFilter("[Email] IS NOT NULL")
              .IsUnique();
 

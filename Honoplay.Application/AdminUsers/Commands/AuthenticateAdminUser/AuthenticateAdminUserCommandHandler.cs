@@ -28,8 +28,7 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
         public async Task<AdminUserAuthenticateModel> Handle(AuthenticateAdminUserCommand request, CancellationToken cancellationToken)
         {
             var adminUser = await _context.AdminUsers
-                                    .Where(u => u.UserName == request.UserName
-                                             && u.TenantId == request.TenantId)
+                                    .Where(u => u.UserName == request.UserName)
                                     .ToListAsync();
 
             if (adminUser.Count < 1 || adminUser.Count > 1)
@@ -65,7 +64,6 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
             return new AdminUserAuthenticateModel(id: adminUser[0].Id,
                                            userName: adminUser[0].UserName,
                                            name: adminUser[0].Name,
-                                           tenantId: adminUser[0].TenantId,
                                            isPasswordExpired: isPasswordExpired);
         }
     }
