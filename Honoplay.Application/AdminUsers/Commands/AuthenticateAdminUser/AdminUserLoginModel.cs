@@ -6,15 +6,15 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
     public readonly struct AdminUserAuthenticateModel
     {
         public int Id { get; }
-        public string? Username { get; }
+        public string? UserName { get; }
         public string? Name { get; }
         public Guid? TenantId { get; }
 
         public bool IsPasswordExpired { get; }
-        public AdminUserAuthenticateModel(int id, string username, string name, Guid tenantId, bool isPasswordExpired)
+        public AdminUserAuthenticateModel(int id, string userName, string name, Guid tenantId, bool isPasswordExpired)
         {
             Id = id;
-            Username = username;
+            UserName = userName;
             Name = name;
             TenantId = tenantId;
             IsPasswordExpired = isPasswordExpired;

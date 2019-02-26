@@ -31,7 +31,7 @@ namespace Honoplay.Persistence.Migrations
 
                     b.Property<DateTimeOffset>("CreatedDateTime");
 
-                    b.Property<string>("EMailAddress")
+                    b.Property<string>("Email")
                         .HasMaxLength(50)
                         .IsUnicode(false);
 
@@ -75,9 +75,9 @@ namespace Honoplay.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenantId", "EMailAddress")
+                    b.HasIndex("TenantId", "Email")
                         .IsUnique()
-                        .HasFilter("[EMailAddress] IS NOT NULL");
+                        .HasFilter("[Email] IS NOT NULL");
 
                     b.HasIndex("TenantId", "Username")
                         .IsUnique();

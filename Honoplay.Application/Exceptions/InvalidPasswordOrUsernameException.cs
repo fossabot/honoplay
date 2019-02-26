@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Honoplay.Application.Exceptions
 {
-    public class InvalidPasswordOrUsernameException : Exception
+    public class InvalidPasswordOrUserNameException : Exception
     {
     }
 

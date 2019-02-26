@@ -38,7 +38,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, model.Username),
+                    new Claim(ClaimTypes.Name, model.UserName),
                     new Claim(ClaimTypes.Role, "AdminUser"),
                     new Claim(ClaimTypes.Name, model.Name),
                     new Claim(ClaimTypes.UserData, model.TenantId.ToString())

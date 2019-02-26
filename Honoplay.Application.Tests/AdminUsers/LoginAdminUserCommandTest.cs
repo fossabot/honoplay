@@ -36,7 +36,7 @@ namespace Honoplay.Application.Tests.Tokens
             context.AdminUsers.Add(new AdminUser
             {
                 TenantId = _testTenantGuid,
-                Username = "TestAdminUser#01",
+                UserName = "TestAdminUser#01",
                 //Omega
                 Password = new byte[] { 213, 15, 188, 206, 153, 60, 130, 254, 153, 23, 161, 161, 34, 250, 45, 174, 50, 172, 195, 94, 195, 228, 219, 196, 69, 251, 105, 138, 223, 138, 3, 6, 245, 214, 235, 110, 29, 104, 11, 225, 234, 191, 62, 51, 93, 122, 42, 109, 154, 103, 77, 8, 179, 143, 7, 107, 23, 216, 76, 29, 181, 172, 193, 113 },
                 PasswordSalt = new byte[] { 123, 123, 123 },
@@ -54,14 +54,14 @@ namespace Honoplay.Application.Tests.Tokens
             var command = new AuthenticateAdminUserCommand
             {
                 TenantId = _testTenantGuid,
-                Username = "TestAdminUser#01",
+                UserName = "TestAdminUser#01",
                 Password = "Omega"
             };
 
             var adminUser = await _commandHandler.Handle(command, CancellationToken.None);
 
             Assert.NotNull(adminUser);
-            Assert.Equal(command.Username, adminUser.Username, ignoreCase: true);
+            Assert.Equal(command.UserName, adminUser.UserName, ignoreCase: true);
             Assert.Equal(command.TenantId, adminUser.TenantId);
         }
 
@@ -71,7 +71,7 @@ namespace Honoplay.Application.Tests.Tokens
             var command = new AuthenticateAdminUserCommand
             {
                 TenantId = _testTenantGuid,
-                Username = "TestAdminUser#01",
+                UserName = "TestAdminUser#01",
                 Password = "Omega2"
             };
 
@@ -85,7 +85,7 @@ namespace Honoplay.Application.Tests.Tokens
             var command = new AuthenticateAdminUserCommand
             {
                 TenantId = _testTenantGuid,
-                Username = "TestAdminUser#01",
+                UserName = "TestAdminUser#01",
                 Password = "omega"
             };
 
@@ -95,12 +95,12 @@ namespace Honoplay.Application.Tests.Tokens
         }
 
         [Fact]
-        public async Task ShouldThrowErrorWhenCaseErrorInUsername()
+        public async Task ShouldThrowErrorWhenCaseErrorInUserName()
         {
             var command = new AuthenticateAdminUserCommand
             {
                 TenantId = _testTenantGuid,
-                Username = "testAdminUser#01",
+                UserName = "testAdminUser#01",
                 Password = "Omega"
             };
 
@@ -115,14 +115,14 @@ namespace Honoplay.Application.Tests.Tokens
             var command = new AuthenticateAdminUserCommand
             {
                 TenantId = _testTenantGuid,
-                Username = "TestAdminUser#01",
+                UserName = "TestAdminUser#01",
                 Password = "Omega2"
             };
 
             var dbUser = _context
                             .AdminUsers
                             .First(u => u.TenantId == _testTenantGuid
-                                    && u.Username == command.Username);
+                                    && u.UserName == command.UserName);
 
             var before = dbUser.NumberOfInvalidPasswordAttemps;
 
