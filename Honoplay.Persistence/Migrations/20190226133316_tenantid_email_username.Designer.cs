@@ -4,14 +4,16 @@ using Honoplay.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Honoplay.Persistence.Migrations
 {
     [DbContext(typeof(HonoplayDbContext))]
-    partial class HonoplayDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190226133316_tenantid_email_username")]
+    partial class tenantid_email_username
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
