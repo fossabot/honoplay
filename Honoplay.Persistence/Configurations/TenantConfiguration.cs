@@ -1,9 +1,7 @@
 ﻿using Honoplay.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 #nullable enable
 
 namespace Honoplay.Persistence.Configurations
@@ -28,7 +26,6 @@ namespace Honoplay.Persistence.Configurations
 
             builder.Property(p => p.Description)
                    .HasMaxLength(250);
-
         }
     }
 }

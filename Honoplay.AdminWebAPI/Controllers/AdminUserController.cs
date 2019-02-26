@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Honoplay.AdminWebAPI.Services;
-using Honoplay.Application.AdminUsers.Commands;
-using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
+﻿using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
+using Honoplay.Application.AdminUsers.Commands.RegisterAdminUser;
+using Honoplay.Application.Exceptions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 #nullable enable
+
 namespace Honoplay.AdminWebAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -21,6 +19,7 @@ namespace Honoplay.AdminWebAPI.Controllers
     public class AdminUserController : BaseController
     {
         private readonly AppSettings _appSettings;
+
         public AdminUserController(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
@@ -41,8 +40,6 @@ namespace Honoplay.AdminWebAPI.Controllers
                     new Claim(ClaimTypes.Name, model.UserName),
                     new Claim(ClaimTypes.Role, "AdminUser"),
                     new Claim(ClaimTypes.Name, model.Name),
-                    new Claim(ClaimTypes.UserData, model.TenantId.ToString())
-
                 }),
                 Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -54,6 +51,23 @@ namespace Honoplay.AdminWebAPI.Controllers
             return Ok(new { User = model, Token = stringToken });
         }
 
-
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody]RegisterAdminUserCommand command)
+        {
+            try
+            {
+                var model = await Mediator.Send(command);
+                return Ok(new { User = model });
+            }
+            catch (DataExistingException)
+            {
+                return Conflict();
+            }
+            catch (Exception)
+            {
+                return StatusCode(500);
+            }
+        }
     }
 }

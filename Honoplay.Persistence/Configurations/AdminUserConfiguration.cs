@@ -1,9 +1,6 @@
 ﻿using Honoplay.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Honoplay.Persistence.Configurations
 {
@@ -20,7 +17,8 @@ namespace Honoplay.Persistence.Configurations
             //  UserName
             builder.Property(e => e.UserName)
                    .IsRequired()
-                   .HasMaxLength(50);
+                   .HasComputedColumnSql("Email")
+                   .HasMaxLength(150);
 
             //  Name
             builder.Property(e => e.Name)
@@ -40,7 +38,7 @@ namespace Honoplay.Persistence.Configurations
             //  Email
             builder.Property(e => e.Email)
                    .IsUnicode(false)
-                   .HasMaxLength(50);
+                   .HasMaxLength(150);
 
             builder.HasIndex(e => e.Email)
              .HasFilter("[Email] IS NOT NULL")

@@ -1,29 +1,25 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using Honoplay.Application.Exceptions;
+using Honoplay.Common.Extensions;
 using Honoplay.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Honoplay.Application.Exceptions;
-using Honoplay.Common.Extensions;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
 #nullable enable
 
 namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
 {
-
     public class AuthenticateAdminUserCommandHandler : IRequestHandler<AuthenticateAdminUserCommand, AdminUserAuthenticateModel>
     {
         private readonly HonoplayDbContext _context;
-
 
         public AuthenticateAdminUserCommandHandler(HonoplayDbContext context)
         {
             _context = context;
         }
-
 
         public async Task<AdminUserAuthenticateModel> Handle(AuthenticateAdminUserCommand request, CancellationToken cancellationToken)
         {

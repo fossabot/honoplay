@@ -52,7 +52,6 @@ namespace Honoplay.Application.Tests.Tokens
         {
             var command = new AuthenticateAdminUserCommand
             {
-                TenantId = _testTenantGuid,
                 UserName = "TestAdminUser#01",
                 Password = "Omega"
             };
@@ -61,7 +60,6 @@ namespace Honoplay.Application.Tests.Tokens
 
             Assert.NotNull(adminUser);
             Assert.Equal(command.UserName, adminUser.UserName, ignoreCase: true);
-            //Assert.Equal(command.TenantId, adminUser.TenantId);
         }
 
         [Fact]
@@ -69,7 +67,6 @@ namespace Honoplay.Application.Tests.Tokens
         {
             var command = new AuthenticateAdminUserCommand
             {
-                TenantId = _testTenantGuid,
                 UserName = "TestAdminUser#01",
                 Password = "Omega2"
             };
@@ -83,7 +80,6 @@ namespace Honoplay.Application.Tests.Tokens
         {
             var command = new AuthenticateAdminUserCommand
             {
-                TenantId = _testTenantGuid,
                 UserName = "TestAdminUser#01",
                 Password = "omega"
             };
@@ -98,7 +94,6 @@ namespace Honoplay.Application.Tests.Tokens
         {
             var command = new AuthenticateAdminUserCommand
             {
-                TenantId = _testTenantGuid,
                 UserName = "testAdminUser#01",
                 Password = "Omega"
             };
@@ -113,7 +108,6 @@ namespace Honoplay.Application.Tests.Tokens
         {
             var command = new AuthenticateAdminUserCommand
             {
-                TenantId = _testTenantGuid,
                 UserName = "TestAdminUser#01",
                 Password = "Omega2"
             };

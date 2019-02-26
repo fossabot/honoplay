@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Honoplay.Application.Exceptions
 {
@@ -11,5 +9,4 @@ namespace Honoplay.Application.Exceptions
     public class TooManyAuthenticationFailuresException : Exception
     {
     }
-     
 }
