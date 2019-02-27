@@ -11,6 +11,7 @@ using Honoplay.Application.Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Data.SqlClient;
 #nullable enable
 
 namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
@@ -29,14 +30,6 @@ namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
 
         public async Task<AdminUserRegisterModel> Handle(RegisterAdminUserCommand request, CancellationToken cancellationToken)
         {
-            var adminUser = await _context.AdminUsers
-                                    .Where(u => u.Email == request.Email)
-                                    .ToListAsync();
-
-            if (adminUser.Any())
-            {
-                throw new DataExistingException(nameof(request.Email), request.Email);
-            }
             var salt = ByteArrayExtensions.GetRandomSalt();
             var item = new AdminUser
             {
@@ -58,6 +51,11 @@ namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
                     await _context.SaveChangesAsync(cancellationToken);
 
                     transaction.Commit();
+                }
+                catch (DbUpdateException ex) when (ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601))
+                {
+                    transaction.Rollback();
+                    throw new ObjectAlreadyExistsException();
                 }
                 catch (Exception)
                 {
