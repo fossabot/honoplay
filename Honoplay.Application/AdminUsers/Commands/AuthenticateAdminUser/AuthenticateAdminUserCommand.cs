@@ -6,7 +6,7 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
 {
     public class AuthenticateAdminUserCommand : IRequest<AdminUserAuthenticateModel>
     {
-        public string? UserName { get; set; }
+        public string? Email { get; set; }
 
         public string? Password { get; set; }
     }

@@ -43,5 +43,14 @@ namespace Honoplay.Common.Tests.Extensions
 
             Assert.Equal(check, result);
         }
+
+        [Fact]
+        public void ShouldNotEmpytOrNull()
+        {
+            var result = ByteArrayExtensions.GetRandomSalt();
+
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+        }
     }
 }

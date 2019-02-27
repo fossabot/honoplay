@@ -10,13 +10,9 @@ namespace Honoplay.Domain.Entities
         public AdminUser()
         {
             //Default values for non nullable refs.
-            UserName = Name
-                     = Surname
-                     = "";
+            Email = UserName = Name = Surname = "";
 
-            RowVersion = Password
-                       = PasswordSalt
-                       = new byte[0];
+            RowVersion = Password = PasswordSalt = new byte[0];
         }
 
         public override int Id { get; set; }
