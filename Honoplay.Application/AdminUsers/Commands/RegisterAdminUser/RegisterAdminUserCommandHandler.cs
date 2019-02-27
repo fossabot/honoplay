@@ -66,8 +66,13 @@ namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
 
             return new AdminUserRegisterModel(id: item.Id,
                                               email: item.Email,
+                                              username: item.UserName,
                                               name: item.Name,
-                                              surname: item.Surname);
+                                              surname: item.Surname,
+                                              phoneNumber: item.PhoneNumber,
+                                              timeZone: item.TimeZone,
+                                              createDateTime: item.CreatedDateTime,
+                                              password: item.Password);
         }
     }
 }
