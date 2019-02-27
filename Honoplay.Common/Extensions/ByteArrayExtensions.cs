@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Security.Cryptography;
+
 #nullable enable
+
 namespace Honoplay.Common.Extensions
 {
     public static class ByteArrayExtensions
@@ -14,6 +15,17 @@ namespace Honoplay.Common.Extensions
             Buffer.BlockCopy(first, 0, ret, 0, first.Length);
             Buffer.BlockCopy(second, 0, ret, first.Length, second.Length);
             return ret;
+        }
+
+        public static byte[] GetRandomSalt()
+        {
+            byte[] buffer;
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                buffer = new byte[64];
+                rng.GetBytes(buffer);
+            }
+            return buffer;
         }
     }
 }

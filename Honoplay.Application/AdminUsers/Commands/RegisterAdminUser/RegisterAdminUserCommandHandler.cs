@@ -37,7 +37,7 @@ namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
             {
                 throw new DataExistingException(nameof(request.Email), request.Email);
             }
-
+            var salt = ByteArrayExtensions.GetRandomSalt();
             var item = new AdminUser
             {
                 Email = request.Email,
@@ -46,8 +46,8 @@ namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
                 TimeZone = request.TimeZone,
                 CreatedDateTime = DateTimeOffset.Now,
                 LastPasswordChangeDateTime = DateTimeOffset.Now,
-                Password = new byte[0], // TODO: hash algorithm?
-                PasswordSalt = new byte[0] // TODO: hash algorithm?
+                PasswordSalt = salt,
+                Password = request.Password.GetSHA512(salt),
             };
 
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
