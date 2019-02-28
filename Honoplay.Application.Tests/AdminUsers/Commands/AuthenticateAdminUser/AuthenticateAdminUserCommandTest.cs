@@ -1,5 +1,4 @@
 ﻿using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
-using Honoplay.Application.Exceptions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using System;

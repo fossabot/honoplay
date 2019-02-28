@@ -60,7 +60,7 @@ namespace Honoplay.AdminWebAPI.Controllers
                 var model = await Mediator.Send(command);
                 return Ok(new { User = model });
             }
-            catch (DataExistingException)
+            catch (ObjectAlreadyExistsException)
             {
                 return Conflict();
             }
