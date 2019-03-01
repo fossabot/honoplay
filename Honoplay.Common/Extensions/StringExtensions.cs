@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Security.Cryptography;
+using System.Text;
 
 #nullable enable
+
 namespace Honoplay.Common.Extensions
 {
     public static class StringExtensions
     {
         public static byte[] GetSHA512(this string value, byte[]? salt)
         {
-            if(value is null)
+            if (value is null)
             {
                 throw new ArgumentNullException(nameof(value));
             }

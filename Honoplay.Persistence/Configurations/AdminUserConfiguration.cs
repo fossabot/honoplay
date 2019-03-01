@@ -16,7 +16,7 @@ namespace Honoplay.Persistence.Configurations
 
             //  UserName
             builder.Property(e => e.UserName)
-                   .IsRequired()
+                   //.IsRequired()
                    .HasComputedColumnSql("Email")
                    .HasMaxLength(150);
 

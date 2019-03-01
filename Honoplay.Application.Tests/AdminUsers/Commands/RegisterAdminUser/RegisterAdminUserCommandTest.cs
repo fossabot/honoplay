@@ -1,6 +1,5 @@
 ﻿using Honoplay.Application.AdminUsers.Commands.RegisterAdminUser;
 using Honoplay.Application.Exceptions;
-using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using System;
 using System.Linq;
@@ -44,7 +43,19 @@ namespace Honoplay.Application.Tests.Tokens
             Assert.NotNull(adminUser.CreatedDateTime);
             Assert.Equal(adminUser.CreatedDateTime.Value.Date, DateTime.Today);
             Assert.NotNull(adminUser.Password);
-            Assert.Equal(command.Email, adminUser.Email, ignoreCase: true);
+
+            var adminUsers = _context.AdminUsers.ToList();
+            Assert.NotNull(adminUsers.FirstOrDefault());
+            Assert.Single(adminUsers);
+            Assert.Equal(command.Email, adminUsers.FirstOrDefault().Email.ToLower(), ignoreCase: true);
+
+            command.Email = "TestAdminUser02@omegabigdata.com";
+            await _commandHandler.Handle(command, CancellationToken.None);
+
+            adminUsers = _context.AdminUsers.ToList();
+            Assert.Equal(2, adminUsers.Count);
+
+            await Assert.ThrowsAsync<ObjectAlreadyExistsException>(async () => await _commandHandler.Handle(command, CancellationToken.None));
         }
 
         public void Dispose()
