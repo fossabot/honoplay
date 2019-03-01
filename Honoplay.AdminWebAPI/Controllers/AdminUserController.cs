@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -58,7 +59,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             try
             {
                 var model = await Mediator.Send(command);
-                return Ok(new { User = model });
+                return StatusCode((int)HttpStatusCode.Created, new { User = model });
             }
             catch (ObjectAlreadyExistsException)
             {

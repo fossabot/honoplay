@@ -17,7 +17,7 @@ namespace Honoplay.Application.Tests
             var connectionString = connectionStringBuilder.ToString();
             var connection = new SqliteConnection(connectionString);
 
-            builder.UseSqlite(connection).ConfigureWarnings(w => w.Ignore(InMemoryEventId.TransactionIgnoredWarning)); ;
+            builder.UseSqlite(connection).ConfigureWarnings(w => w.Ignore(InMemoryEventId.TransactionIgnoredWarning));
 
             var dbContext = new HonoplayDbContext(builder.Options);
             dbContext.Database.OpenConnection();

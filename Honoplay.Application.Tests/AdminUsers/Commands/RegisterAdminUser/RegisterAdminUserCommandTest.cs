@@ -32,7 +32,7 @@ namespace Honoplay.Application.Tests.Tokens
             var command = new RegisterAdminUserCommand
             {
                 Email = "TestAdminUser01@omegabigdata.com",
-                Password = "Omega",
+                Password = "Passw0rd",
                 Name = "Test",
                 Surname = "Ex",
                 TimeZone = 0

@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FluentValidation.AspNetCore;
+using Honoplay.Application.Infrastructure;
+using Honoplay.Domain.Entities;
+using Honoplay.Persistence;
 using MediatR;
 using MediatR.Pipeline;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Honoplay.Application.Infrastructure;
-using FluentValidation.AspNetCore;
-using Honoplay.Persistence;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
-using Honoplay.Domain.Entities;
+using System;
+using System.Threading.Tasks;
 
 namespace Honoplay.AdminWebAPI
 {
