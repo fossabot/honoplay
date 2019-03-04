@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Honoplay.Persistence.Migrations
 {
     [DbContext(typeof(HonoplayDbContext))]
-    [Migration("20190206111750_InitialCreate")]
+    [Migration("20190304114416_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
+                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -27,24 +27,39 @@ namespace Honoplay.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CreatedBy")
-                        .IsRequired();
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp");
+
+                    b.Property<int?>("CreatedBy");
 
                     b.Property<DateTimeOffset>("CreatedDateTime");
 
                     b.Property<string>("Email")
-                        .HasMaxLength(50)
+                        .HasMaxLength(150)
                         .IsUnicode(false);
 
+                    b.Property<bool>("EmailConfirmed");
+
                     b.Property<DateTimeOffset>("LastPasswordChangeDateTime");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<string>("NormalizedEmail");
+
+                    b.Property<string>("NormalizedUserName");
+
                     b.Property<int>("NumberOfInvalidPasswordAttemps");
 
                     b.Property<byte[]>("Password");
+
+                    b.Property<string>("PasswordHash");
 
                     b.Property<byte[]>("PasswordSalt");
 
@@ -52,36 +67,38 @@ namespace Honoplay.Persistence.Migrations
                         .HasMaxLength(50)
                         .IsUnicode(false);
 
+                    b.Property<bool>("PhoneNumberConfirmed");
+
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<string>("SecurityStamp");
 
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<Guid>("TenantId");
-
                     b.Property<int>("TimeZone")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(3);
 
+                    b.Property<bool>("TwoFactorEnabled");
+
                     b.Property<int?>("UpdatedBy");
 
-                    b.Property<DateTimeOffset>("UpdatedDateTime");
+                    b.Property<DateTimeOffset?>("UpdatedDateTime");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                    b.Property<string>("UserName")
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasComputedColumnSql("Email")
+                        .HasMaxLength(150);
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenantId", "Email")
+                    b.HasIndex("Email")
                         .IsUnique()
                         .HasFilter("[Email] IS NOT NULL");
-
-                    b.HasIndex("TenantId", "Username")
-                        .IsUnique();
 
                     b.ToTable("AdminUsers");
                 });
@@ -90,6 +107,10 @@ namespace Honoplay.Persistence.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<DateTimeOffset>("CreatedAt");
+
+                    b.Property<int>("CreatedBy");
 
                     b.Property<string>("Description")
                         .HasMaxLength(250);
@@ -104,6 +125,10 @@ namespace Honoplay.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.Property<DateTimeOffset?>("UpdatedAt");
+
+                    b.Property<int?>("UpdatedBy");
+
                     b.HasKey("Id");
 
                     b.HasAlternateKey("HostName");
@@ -111,12 +136,46 @@ namespace Honoplay.Persistence.Migrations
                     b.ToTable("Tenants");
                 });
 
-            modelBuilder.Entity("Honoplay.Domain.Entities.AdminUser", b =>
+            modelBuilder.Entity("Honoplay.Domain.Entities.TenantAdminUser", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AdminUserId");
+
+                    b.Property<DateTimeOffset>("CreatedAt");
+
+                    b.Property<int>("CreatedBy");
+
+                    b.Property<Guid>("TenantId");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt");
+
+                    b.Property<int?>("UpdatedBy");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminUserId");
+
+                    b.HasIndex("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("TenantAdminUser");
+                });
+
+            modelBuilder.Entity("Honoplay.Domain.Entities.TenantAdminUser", b =>
+                {
+                    b.HasOne("Honoplay.Domain.Entities.AdminUser", "AdminUser")
+                        .WithMany("TenantAdminUsers")
+                        .HasForeignKey("AdminUserId")
+                        .HasConstraintName("FK_AdminUser_TenantAdminUsers")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Honoplay.Domain.Entities.Tenant", "Tenant")
-                        .WithMany("AdminUsers")
+                        .WithMany("TenantAdminUsers")
                         .HasForeignKey("TenantId")
-                        .HasConstraintName("FK_AdminUsers_Tenants")
+                        .HasConstraintName("FK_Tenant_TenantAdminUsers")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
