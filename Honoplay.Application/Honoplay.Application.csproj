@@ -18,9 +18,4 @@
     <ProjectReference Include="..\Honoplay.Persistence\Honoplay.Persistence.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="AdminUsers\Queries\" />
-    <Folder Include="Tokens\" />
-  </ItemGroup>
-
 </Project>
