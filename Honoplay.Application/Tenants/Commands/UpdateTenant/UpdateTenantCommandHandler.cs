@@ -1,0 +1,75 @@
+﻿using Honoplay.Application.Exceptions;
+using Honoplay.Common.Extensions;
+using Honoplay.Domain.Entities;
+using Honoplay.Persistence;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using System;
+using System.Data.SqlClient;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
+
+#nullable enable
+
+namespace Honoplay.Application.AdminUsers.Commands.UpdateTenant
+{
+    public class UpdateTenantCommandHandler : IRequestHandler<UpdateTenantCommand, UpdateTenantModel>
+    {
+        private readonly HonoplayDbContext _context;
+
+        public UpdateTenantCommandHandler(HonoplayDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<UpdateTenantModel> Handle(UpdateTenantCommand request, CancellationToken cancellationToken)
+        {
+            var updatedAt = DateTime.Now;
+            using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var entity = await _context.Tenants.SingleAsync(c => c.Id == request.Id, cancellationToken);
+
+                    if (entity == null)
+                    {
+                        throw new NotFoundException(nameof(Tenant), request.Id);
+                    }
+
+                    entity.Name = request.Name;
+                    entity.HostName = request.HostName;
+                    entity.Description = request.Description;
+                    entity.Logo = request.Logo;
+                    entity.UpdatedBy = request.UpdatedBy;
+                    entity.UpdatedAt = updatedAt;
+
+                    _context.Tenants.Update(entity);
+                    await _context.SaveChangesAsync(cancellationToken);
+
+                    transaction.Commit();
+                }
+                catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
+                                                   (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
+                {
+                    transaction.Rollback();
+                    throw new ObjectAlreadyExistsException();
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw new TransactionException();
+                }
+            }
+
+            return new UpdateTenantModel(id: request.Id,
+                                              updatedBy: request.UpdatedBy,
+                                              updatedAt: updatedAt,
+                                              name: request.Name,
+                                              description: request.Description,
+                                              hostName: request.HostName,
+                                              logo: request.Logo);
+        }
+    }
+}
