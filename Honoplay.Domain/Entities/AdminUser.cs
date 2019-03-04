@@ -1,18 +1,21 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 
 #nullable enable
+
 namespace Honoplay.Domain.Entities
 {
-    public sealed class AdminUser : IdentityUser<int>
+    public class AdminUser : IdentityUser<int>
     {
-
         public AdminUser()
         {
             //Default values for non nullable refs.
             Email = UserName = Name = Surname = "";
 
             RowVersion = Password = PasswordSalt = new byte[0];
+
+            TenantAdminUsers = new HashSet<TenantAdminUser>();
         }
 
         public override int Id { get; set; }
@@ -36,5 +39,7 @@ namespace Honoplay.Domain.Entities
         public int NumberOfInvalidPasswordAttemps { get; set; }
 
         public byte[] RowVersion { get; set; }
+
+        public virtual ICollection<TenantAdminUser> TenantAdminUsers { get; set; }
     }
 }
