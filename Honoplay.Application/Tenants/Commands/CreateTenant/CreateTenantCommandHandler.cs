@@ -1,8 +1,4 @@
-﻿using System;
-using System.Data.SqlClient;
-using System.Threading;
-using System.Threading.Tasks;
-using Honoplay.Application.Exceptions;
+﻿using Honoplay.Application.Exceptions;
 using Honoplay.Application.Infrastructure;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -10,6 +6,10 @@ using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using System;
+using System.Data.SqlClient;
+using System.Threading;
+using System.Threading.Tasks;
 
 #nullable enable
 
@@ -29,7 +29,7 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
             var item = new Tenant
             {
                 Name = request.Name,
-                Description =request.Description,
+                Description = request.Description,
                 HostName = request.HostName,
                 Logo = request.Logo,
                 CreatedBy = request.CreatedBy
@@ -44,7 +44,13 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
 
                     transaction.Commit();
                 }
-                catch (Exception)
+                catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
+                                                   (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
+                {
+                    transaction.Rollback();
+                    throw new ObjectAlreadyExistsException(nameof(Tenant), request.HostName);
+                }
+                catch (Exception ex)
                 {
                     transaction.Rollback();
                     throw new TransactionException();
@@ -58,7 +64,6 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
                 description: item.Description,
                 hostName: item.HostName,
                 logo: item.Logo);
-
 
             return new ResponseModel<CreateTenantModel>(model);
         }

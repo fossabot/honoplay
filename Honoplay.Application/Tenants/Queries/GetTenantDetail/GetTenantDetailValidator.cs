@@ -4,7 +4,7 @@
 
 namespace Honoplay.Application.Tenants.Queries.GetTenantDetail
 {
-    public class GetTenantDetailValidator : AbstractValidator<TenantDetailModel>
+    public class GetTenantDetailValidator : AbstractValidator<GetTenantDetailQuery>
     {
         public GetTenantDetailValidator()
         {

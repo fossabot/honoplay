@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Honoplay.Application.Infrastructure;
 using MediatR;
+using System;
 
 #nullable enable
 
 namespace Honoplay.Application.Tenants.Commands.UpdateTenant
 {
-    public class UpdateTenantCommand : IRequest<UpdateTenantModel>
+    public class UpdateTenantCommand : IRequest<ResponseModel<UpdateTenantModel>>
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }

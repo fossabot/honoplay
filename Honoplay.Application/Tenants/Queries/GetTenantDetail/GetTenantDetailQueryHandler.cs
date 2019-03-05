@@ -19,11 +19,11 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantDetail
 
         public async Task<ResponseModel<TenantDetailModel>> Handle(GetTenantDetailQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Tenants.FindAsync(request.Id);
+            var entity = await _context.Tenants.FindAsync(request.Id, cancellationToken);
 
             if (entity == null)
             {
-                return new ResponseModel<TenantDetailModel>(new Error(nameof(NotFoundException), nameof(NotFoundException), new NotFoundException(nameof(Tenant), request.Id).Message));
+                throw new NotFoundException(nameof(Tenant), request.Id);
             }
 
             var model = TenantDetailModel.Create(entity);

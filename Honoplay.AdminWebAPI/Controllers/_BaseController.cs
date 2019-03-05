@@ -6,8 +6,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("api/[controller]/[action]")]
     public abstract class BaseController : ControllerBase
     {
         private IMediator _mediator = null;

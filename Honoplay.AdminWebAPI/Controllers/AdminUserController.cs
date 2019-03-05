@@ -16,8 +16,6 @@ using System.Threading.Tasks;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class AdminUserController : BaseController
     {
         private readonly AppSettings _appSettings;

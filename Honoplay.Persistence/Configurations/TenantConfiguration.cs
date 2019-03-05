@@ -19,11 +19,12 @@ namespace Honoplay.Persistence.Configurations
                    .IsRequired();
 
             builder.Property(p => p.HostName)
+                   .IsUnicode(false)
                    .HasMaxLength(150)
                    .IsRequired();
 
-            builder.HasAlternateKey(p => p.HostName);
-
+            builder.HasIndex(p => p.HostName).IsUnique();
+            
             builder.Property(p => p.Description)
                    .HasMaxLength(250);
         }

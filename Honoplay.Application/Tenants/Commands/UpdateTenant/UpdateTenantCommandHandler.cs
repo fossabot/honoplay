@@ -1,4 +1,5 @@
 ﻿using Honoplay.Application.Exceptions;
+using Honoplay.Application.Infrastructure;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using MediatR;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace Honoplay.Application.Tenants.Commands.UpdateTenant
 {
-    public class UpdateTenantCommandHandler : IRequestHandler<UpdateTenantCommand, UpdateTenantModel>
+    public class UpdateTenantCommandHandler : IRequestHandler<UpdateTenantCommand, ResponseModel<UpdateTenantModel>>
     {
         private readonly HonoplayDbContext _context;
 
@@ -23,14 +24,14 @@ namespace Honoplay.Application.Tenants.Commands.UpdateTenant
             _context = context;
         }
 
-        public async Task<UpdateTenantModel> Handle(UpdateTenantCommand request, CancellationToken cancellationToken)
+        public async Task<ResponseModel<UpdateTenantModel>> Handle(UpdateTenantCommand request, CancellationToken cancellationToken)
         {
             var updatedAt = DateTime.Now;
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    var entity = await _context.Tenants.SingleAsync(c => c.Id == request.Id, cancellationToken);
+                    var entity = await _context.Tenants.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
                     if (entity == null)
                     {
@@ -53,22 +54,24 @@ namespace Honoplay.Application.Tenants.Commands.UpdateTenant
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
                 {
                     transaction.Rollback();
-                    throw new ObjectAlreadyExistsException();
+                    throw new ObjectAlreadyExistsException(nameof(Tenant), request.HostName);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     transaction.Rollback();
                     throw new TransactionException();
                 }
             }
 
-            return new UpdateTenantModel(id: request.Id,
-                                              updatedBy: request.UpdatedBy,
-                                              updatedAt: updatedAt,
-                                              name: request.Name,
-                                              description: request.Description,
-                                              hostName: request.HostName,
-                                              logo: request.Logo);
+            var model = new UpdateTenantModel(id: request.Id,
+                updatedBy: request.UpdatedBy,
+                updatedAt: updatedAt,
+                name: request.Name,
+                description: request.Description,
+                hostName: request.HostName,
+                logo: request.Logo);
+
+            return new ResponseModel<UpdateTenantModel>(model);
         }
     }
 }
