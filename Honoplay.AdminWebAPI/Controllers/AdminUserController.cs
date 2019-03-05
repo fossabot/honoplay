@@ -62,11 +62,11 @@ namespace Honoplay.AdminWebAPI.Controllers
             }
             catch (ObjectAlreadyExistsException ex)
             {
-                return Conflict(new ResponseModel<AdminUserRegisterModel>(new Error(409, HttpStatusCode.Conflict.ToString(), ex)));
+                return Conflict(new ResponseModel<AdminUserRegisterModel>(new Error(HttpStatusCode.Conflict, ex)));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new ResponseModel<AdminUserRegisterModel>(new Error(500, HttpStatusCode.InternalServerError.ToString(), ex)));
+                return StatusCode(500, new ResponseModel<AdminUserRegisterModel>(new Error(HttpStatusCode.InternalServerError, ex)));
             }
         }
     }

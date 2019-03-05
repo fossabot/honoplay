@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using Honoplay.Common.Extensions;
 
 namespace Honoplay.Application.Infrastructure
 {
@@ -88,19 +90,11 @@ namespace Honoplay.Application.Infrastructure
             ErrorDetail = errorDetail;
         }
 
-        public Error(int errorCode, string errorType, string errorDetail)
-        {
-            ErrorCode = errorCode.ToString();
-            ErrorType = errorType;
-            ErrorDetail = errorDetail;
-        }
+        public Error(int errorCode, string errorType, string errorDetail) : this(errorCode.ToString(), errorType, errorDetail) { }
 
-        public Error(int errorCode, string errorType, Exception ex)
-        {
-            ErrorCode = errorCode.ToString();
-            ErrorType = errorType;
-            ErrorDetail = ex.Message;
-        }
+        public Error(int errorCode, string errorType, Exception ex) : this(errorCode.ToString(), errorType, ex.Message) { }
+
+        public Error(HttpStatusCode httpStatusCode, Exception ex) : this(httpStatusCode.ToInt(), httpStatusCode.ToString(), ex.Message) { }
 
         public string ErrorCode { get; set; }
         public string ErrorType { get; set; }

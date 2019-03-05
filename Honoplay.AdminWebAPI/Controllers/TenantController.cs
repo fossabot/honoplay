@@ -24,11 +24,11 @@ namespace Honoplay.AdminWebAPI.Controllers
             }
             catch (NotFoundException ex)
             {
-                return StatusCode(HttpStatusCode.NotFound.ToInt(), new ResponseModel<TenantDetailModel>(new Error(404, HttpStatusCode.NotFound.ToString(), ex)));
+                return StatusCode(HttpStatusCode.NotFound.ToInt(), new ResponseModel<TenantDetailModel>(new Error(HttpStatusCode.NotFound, ex)));
             }
             catch (Exception ex)
             {
-                return StatusCode(HttpStatusCode.InternalServerError.ToInt(), new ResponseModel<TenantDetailModel>(new Error(500, HttpStatusCode.InternalServerError.ToString(), ex)));
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt(), new ResponseModel<TenantDetailModel>(new Error(HttpStatusCode.InternalServerError, ex)));
             }
         }
 
@@ -42,15 +42,15 @@ namespace Honoplay.AdminWebAPI.Controllers
             }
             catch (NotFoundException ex)
             {
-                return StatusCode(HttpStatusCode.NotFound.ToInt(), new ResponseModel<TenantsListModel>(new Error(404, HttpStatusCode.NotFound.ToString(), ex)));
+                return StatusCode(HttpStatusCode.NotFound.ToInt(), new ResponseModel<TenantsListModel>(new Error(HttpStatusCode.NotFound, ex)));
             }
             catch (ObjectAlreadyExistsException ex)
             {
-                return Conflict(new ResponseModel<TenantsListModel>(new Error(409, HttpStatusCode.Conflict.ToString(), ex)));
+                return Conflict(new ResponseModel<TenantsListModel>(new Error(HttpStatusCode.Conflict, ex)));
             }
             catch (Exception ex)
             {
-                return StatusCode(HttpStatusCode.InternalServerError.ToInt(), new ResponseModel<TenantsListModel>(new Error(500, HttpStatusCode.InternalServerError.ToString(), ex)));
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt(), new ResponseModel<TenantsListModel>(new Error(HttpStatusCode.InternalServerError, ex)));
             }
         }
 
@@ -64,11 +64,11 @@ namespace Honoplay.AdminWebAPI.Controllers
             }
             catch (ObjectAlreadyExistsException ex)
             {
-                return Conflict(new ResponseModel<CreateTenantModel>(new Error(409, HttpStatusCode.Conflict.ToString(), ex)));
+                return Conflict(new ResponseModel<CreateTenantModel>(new Error(HttpStatusCode.Conflict, ex)));
             }
             catch (Exception ex)
             {
-                return StatusCode(HttpStatusCode.InternalServerError.ToInt(), new ResponseModel<CreateTenantModel>(new Error(500, HttpStatusCode.InternalServerError.ToString(), ex)));
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt(), new ResponseModel<CreateTenantModel>(new Error(HttpStatusCode.InternalServerError, ex)));
             }
         }
 
@@ -82,15 +82,15 @@ namespace Honoplay.AdminWebAPI.Controllers
             }
             catch (NotFoundException ex)
             {
-                return StatusCode(HttpStatusCode.NotFound.ToInt(), new ResponseModel<UpdateTenantModel>(new Error(404, HttpStatusCode.NotFound.ToString(), ex)));
+                return StatusCode(HttpStatusCode.NotFound.ToInt(), new ResponseModel<UpdateTenantModel>(new Error(HttpStatusCode.NotFound, ex)));
             }
             catch (ObjectAlreadyExistsException ex)
             {
-                return Conflict(new ResponseModel<UpdateTenantModel>(new Error(409, HttpStatusCode.Conflict.ToString(), ex)));
+                return Conflict(new ResponseModel<UpdateTenantModel>(new Error(HttpStatusCode.Conflict, ex)));
             }
             catch (Exception ex)
             {
-                return StatusCode(HttpStatusCode.InternalServerError.ToInt(), new ResponseModel<UpdateTenantModel>(new Error(500, HttpStatusCode.InternalServerError.ToString(), ex)));
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt(), new ResponseModel<UpdateTenantModel>(new Error(HttpStatusCode.InternalServerError, ex)));
             }
         }
     }
