@@ -17,9 +17,7 @@ namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
 
         public DateTimeOffset? CreatedDateTime { get; }
 
-        public byte[]? Password { get; }
-
-        public AdminUserRegisterModel(int id, string email, string username, string name, string surname, string phoneNumber, int timeZone, DateTimeOffset createDateTime, byte[] password)
+        public AdminUserRegisterModel(int id, string email, string username, string name, string surname, string phoneNumber, int timeZone, DateTimeOffset createDateTime)
         {
             Id = id;
             Email = email;
@@ -29,7 +27,6 @@ namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
             PhoneNumber = phoneNumber;
             TimeZone = timeZone;
             CreatedDateTime = createDateTime;
-            Password = password;
         }
     }
 }

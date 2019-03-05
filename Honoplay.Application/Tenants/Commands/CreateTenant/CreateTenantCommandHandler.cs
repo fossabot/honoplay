@@ -3,6 +3,7 @@ using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 using Honoplay.Application.Exceptions;
+using Honoplay.Application.Infrastructure;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using MediatR;
@@ -14,7 +15,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Honoplay.Application.Tenants.Commands.CreateTenant
 {
-    public class CreateTenantCommandHandler : IRequestHandler<CreateTenantCommand, CreateTenantModel>
+    public class CreateTenantCommandHandler : IRequestHandler<CreateTenantCommand, ResponseModel<CreateTenantModel>>
     {
         private readonly HonoplayDbContext _context;
 
@@ -23,14 +24,14 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
             _context = context;
         }
 
-        public async Task<CreateTenantModel> Handle(CreateTenantCommand request, CancellationToken cancellationToken)
+        public async Task<ResponseModel<CreateTenantModel>> Handle(CreateTenantCommand request, CancellationToken cancellationToken)
         {
             var item = new Tenant
             {
                 Name = request.Name,
                 Description =request.Description,
                 HostName = request.HostName,
-                Logo = request.Logo,     
+                Logo = request.Logo,
                 CreatedBy = request.CreatedBy
             };
 
@@ -43,12 +44,6 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
 
                     transaction.Commit();
                 }
-                catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
-                                                   (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
-                {
-                    transaction.Rollback();
-                    throw new ObjectAlreadyExistsException();
-                }
                 catch (Exception)
                 {
                     transaction.Rollback();
@@ -56,13 +51,16 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
                 }
             }
 
-            return new CreateTenantModel(id: item.Id,
-                                              createdBy: item.CreatedBy,
-                                              createdAt: item.CreatedAt,
-                                              name: item.Name,
-                                              description: item.Description,
-                                              hostName: item.HostName,
-                                              logo: item.Logo);
+            var model = new CreateTenantModel(id: item.Id,
+                createdBy: item.CreatedBy,
+                createdAt: item.CreatedAt,
+                name: item.Name,
+                description: item.Description,
+                hostName: item.HostName,
+                logo: item.Logo);
+
+
+            return new ResponseModel<CreateTenantModel>(model);
         }
     }
 }

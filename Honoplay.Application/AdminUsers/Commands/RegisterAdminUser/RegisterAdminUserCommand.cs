@@ -1,10 +1,11 @@
-﻿using MediatR;
+﻿using Honoplay.Application.Infrastructure;
+using MediatR;
 
 #nullable enable
 
 namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
 {
-    public class RegisterAdminUserCommand : IRequest<AdminUserRegisterModel>
+    public class RegisterAdminUserCommand : IRequest<ResponseModel<AdminUserRegisterModel>>
     {
         public string? Email { get; set; }
 

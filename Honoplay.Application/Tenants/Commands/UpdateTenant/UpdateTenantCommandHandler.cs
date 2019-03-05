@@ -1,14 +1,14 @@
-﻿using System;
-using System.Data.SqlClient;
-using System.Threading;
-using System.Threading.Tasks;
-using Honoplay.Application.Exceptions;
+﻿using Honoplay.Application.Exceptions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using System;
+using System.Data.SqlClient;
+using System.Threading;
+using System.Threading.Tasks;
 
 #nullable enable
 

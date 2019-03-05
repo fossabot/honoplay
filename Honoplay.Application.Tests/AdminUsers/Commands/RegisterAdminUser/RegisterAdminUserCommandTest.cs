@@ -3,6 +3,7 @@ using Honoplay.Application.Exceptions;
 using Honoplay.Persistence;
 using System;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -38,11 +39,14 @@ namespace Honoplay.Application.Tests.Tokens
                 TimeZone = 0
             };
 
-            var adminUser = await _commandHandler.Handle(command, CancellationToken.None);
+            var adminUserModel = await _commandHandler.Handle(command, CancellationToken.None);
+
+            Assert.Equal(1, adminUserModel.NumberOfTotalItems);
+
+            var adminUser = adminUserModel.Items.Single();
 
             Assert.NotNull(adminUser.CreatedDateTime);
             Assert.Equal(adminUser.CreatedDateTime.Value.Date, DateTime.Today);
-            Assert.NotNull(adminUser.Password);
 
             var adminUsers = _context.AdminUsers.ToList();
             Assert.NotNull(adminUsers.FirstOrDefault());

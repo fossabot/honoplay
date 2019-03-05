@@ -9,13 +9,14 @@ using System;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Infrastructure;
 using Microsoft.Data.Sqlite;
 
 #nullable enable
 
 namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
 {
-    public class RegisterAdminUserCommandHandler : IRequestHandler<RegisterAdminUserCommand, AdminUserRegisterModel>
+    public class RegisterAdminUserCommandHandler : IRequestHandler<RegisterAdminUserCommand, ResponseModel<AdminUserRegisterModel>>
     {
         private readonly HonoplayDbContext _context;
 
@@ -24,7 +25,7 @@ namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
             _context = context;
         }
 
-        public async Task<AdminUserRegisterModel> Handle(RegisterAdminUserCommand request, CancellationToken cancellationToken)
+        public async Task<ResponseModel<AdminUserRegisterModel>> Handle(RegisterAdminUserCommand request, CancellationToken cancellationToken)
         {
             var salt = ByteArrayExtensions.GetRandomSalt();
             var item = new AdminUser
@@ -52,7 +53,7 @@ namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
                 {
                     transaction.Rollback();
-                    throw new ObjectAlreadyExistsException();
+                    throw new ObjectAlreadyExistsException(nameof(AdminUser), nameof(AdminUser.Email));
                 }
                 catch (Exception)
                 {
@@ -61,15 +62,16 @@ namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
                 }
             }
 
-            return new AdminUserRegisterModel(id: item.Id,
-                                              email: item.Email,
-                                              username: item.UserName,
-                                              name: item.Name,
-                                              surname: item.Surname,
-                                              phoneNumber: item.PhoneNumber,
-                                              timeZone: item.TimeZone,
-                                              createDateTime: item.CreatedDateTime,
-                                              password: item.Password);
+            var model = new AdminUserRegisterModel(id: item.Id,
+                email: item.Email,
+                username: item.UserName,
+                name: item.Name,
+                surname: item.Surname,
+                phoneNumber: item.PhoneNumber,
+                timeZone: item.TimeZone,
+                createDateTime: item.CreatedDateTime);
+
+            return new ResponseModel<AdminUserRegisterModel>(model);
         }
     }
 }

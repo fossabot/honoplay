@@ -1,6 +1,7 @@
 ﻿using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
 using Honoplay.Application.AdminUsers.Commands.RegisterAdminUser;
 using Honoplay.Application.Exceptions;
+using Honoplay.Application.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -59,15 +60,15 @@ namespace Honoplay.AdminWebAPI.Controllers
             try
             {
                 var model = await Mediator.Send(command);
-                return StatusCode((int)HttpStatusCode.Created, new { User = model });
+                return StatusCode((int)HttpStatusCode.Created, model);
             }
-            catch (ObjectAlreadyExistsException)
+            catch (ObjectAlreadyExistsException ex)
             {
-                return Conflict();
+                return Conflict(new ResponseModel<AdminUserRegisterModel>(new Error(409, HttpStatusCode.Conflict.ToString(), ex)));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, new ResponseModel<AdminUserRegisterModel>(new Error(500, HttpStatusCode.InternalServerError.ToString(), ex)));
             }
         }
     }

@@ -1,10 +1,11 @@
-﻿using MediatR;
+﻿using Honoplay.Application.Infrastructure;
+using MediatR;
 
 #nullable enable
 
 namespace Honoplay.Application.Tenants.Commands.CreateTenant
 {
-    public class CreateTenantCommand : IRequest<CreateTenantModel>
+    public class CreateTenantCommand : IRequest<ResponseModel<CreateTenantModel>>
     {
         public string? Name { get; set; }
         public string? Description { get; set; }

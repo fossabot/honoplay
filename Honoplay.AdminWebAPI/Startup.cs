@@ -35,7 +35,7 @@ namespace Honoplay.AdminWebAPI
             // Add MediatR
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+            //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>)); // TODO: çalışan bir nokta görülmediği için kontrol amaçlı kapatıldı
             services.AddMediatR(Application.AssemblyIdentifier.Get());
 
             // Add DbContext using SQL Server Provider
