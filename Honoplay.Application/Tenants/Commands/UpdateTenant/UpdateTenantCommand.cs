@@ -1,9 +1,9 @@
-﻿using MediatR;
-using System;
+﻿using System;
+using MediatR;
 
 #nullable enable
 
-namespace Honoplay.Application.AdminUsers.Commands.UpdateTenant
+namespace Honoplay.Application.Tenants.Commands.UpdateTenant
 {
     public class UpdateTenantCommand : IRequest<UpdateTenantModel>
     {

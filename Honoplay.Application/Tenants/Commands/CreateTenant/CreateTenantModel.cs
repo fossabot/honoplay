@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Honoplay.Application.AdminUsers.Commands.CreateTenant
+namespace Honoplay.Application.Tenants.Commands.CreateTenant
 {
     public readonly struct CreateTenantModel
     {

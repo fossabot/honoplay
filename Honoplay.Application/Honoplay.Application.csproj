@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Honoplay.Persistence\Honoplay.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Tenants\Queries\GetTenantsList\" />
+  </ItemGroup>
+
 </Project>

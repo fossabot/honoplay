@@ -2,7 +2,7 @@
 
 #nullable enable
 
-namespace Honoplay.Application.AdminUsers.Commands.CreateTenant
+namespace Honoplay.Application.Tenants.Commands.CreateTenant
 {
     public class CreateTenantCommand : IRequest<CreateTenantModel>
     {

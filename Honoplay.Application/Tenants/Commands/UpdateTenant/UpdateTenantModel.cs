@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Honoplay.Application.AdminUsers.Commands.UpdateTenant
+namespace Honoplay.Application.Tenants.Commands.UpdateTenant
 {
     public readonly struct UpdateTenantModel
     {

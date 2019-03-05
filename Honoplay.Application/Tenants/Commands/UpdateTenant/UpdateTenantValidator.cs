@@ -1,7 +1,8 @@
 ﻿using FluentValidation;
+
 #nullable enable
 
-namespace Honoplay.Application.AdminUsers.Commands.UpdateTenant
+namespace Honoplay.Application.Tenants.Commands.UpdateTenant
 {
     public class UpdateTenantValidator : AbstractValidator<UpdateTenantCommand>
     {

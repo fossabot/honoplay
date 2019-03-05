@@ -1,19 +1,18 @@
-﻿using Honoplay.Application.Exceptions;
-using Honoplay.Common.Extensions;
-using Honoplay.Domain.Entities;
-using Honoplay.Persistence;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
-using System;
+﻿using System;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Exceptions;
+using Honoplay.Domain.Entities;
+using Honoplay.Persistence;
+using MediatR;
 using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 #nullable enable
 
-namespace Honoplay.Application.AdminUsers.Commands.UpdateTenant
+namespace Honoplay.Application.Tenants.Commands.UpdateTenant
 {
     public class UpdateTenantCommandHandler : IRequestHandler<UpdateTenantCommand, UpdateTenantModel>
     {
