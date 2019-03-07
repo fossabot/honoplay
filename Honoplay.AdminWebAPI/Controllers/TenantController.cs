@@ -28,9 +28,9 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 return NotFound();
             }
-            catch (Exception ex)
+            catch
             {
-                return StatusCode(HttpStatusCode.InternalServerError.ToInt(), new ResponseModel<TenantDetailModel>(new Error(HttpStatusCode.InternalServerError, ex)));
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt());
             }
         }
 
@@ -46,9 +46,9 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 return NotFound();
             }
-            catch (Exception ex)
+            catch
             {
-                return StatusCode(HttpStatusCode.InternalServerError.ToInt(), new ResponseModel<TenantsListModel>(new Error(HttpStatusCode.InternalServerError, ex)));
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt());
             }
         }
 
@@ -64,9 +64,9 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 return Conflict(new ResponseModel<CreateTenantModel>(new Error(HttpStatusCode.Conflict, ex)));
             }
-            catch (Exception ex)
+            catch
             {
-                return StatusCode(HttpStatusCode.InternalServerError.ToInt(), new ResponseModel<CreateTenantModel>(new Error(HttpStatusCode.InternalServerError, ex)));
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt());
             }
         }
 
@@ -86,9 +86,9 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 return Conflict(new ResponseModel<UpdateTenantModel>(new Error(HttpStatusCode.Conflict, ex)));
             }
-            catch (Exception ex)
+            catch
             {
-                return StatusCode(HttpStatusCode.InternalServerError.ToInt(), new ResponseModel<UpdateTenantModel>(new Error(HttpStatusCode.InternalServerError, ex)));
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt());
             }
         }
     }
