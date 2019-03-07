@@ -21,8 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Honoplay.AdminWebAPI\Honoplay.AdminWebAPI.csproj" />
-    <ProjectReference Include="..\Honoplay.Persistence\Honoplay.Persistence.csproj" />
+    <ProjectReference Include="..\..\src\Honoplay.AdminWebAPI\Honoplay.AdminWebAPI.csproj" />
+    <ProjectReference Include="..\..\src\Honoplay.Persistence\Honoplay.Persistence.csproj" />
   </ItemGroup>
+
 
 </Project>

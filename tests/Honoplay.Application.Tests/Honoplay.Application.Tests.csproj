@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Honoplay.Application\Honoplay.Application.csproj" />
-    <ProjectReference Include="..\Honoplay.Persistence\Honoplay.Persistence.csproj" />
+    <ProjectReference Include="..\..\src\Honoplay.Application\Honoplay.Application.csproj" />
+    <ProjectReference Include="..\..\src\Honoplay.Persistence\Honoplay.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
