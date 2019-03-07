@@ -6,7 +6,7 @@ namespace Honoplay.Domain.Entities
     {
         public BaseEntity()
         {
-            CreatedAt = DateTime.Now;
+            CreatedAt = DateTimeOffset.Now;
         }
 
         public Guid Id { get; set; }

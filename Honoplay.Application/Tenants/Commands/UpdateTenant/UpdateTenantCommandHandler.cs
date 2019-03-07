@@ -26,7 +26,7 @@ namespace Honoplay.Application.Tenants.Commands.UpdateTenant
 
         public async Task<ResponseModel<UpdateTenantModel>> Handle(UpdateTenantCommand request, CancellationToken cancellationToken)
         {
-            var updatedAt = DateTime.Now;
+            var updatedAt = DateTimeOffset.Now;
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
                 try
@@ -55,6 +55,11 @@ namespace Honoplay.Application.Tenants.Commands.UpdateTenant
                 {
                     transaction.Rollback();
                     throw new ObjectAlreadyExistsException(nameof(Tenant), request.HostName);
+                }
+                catch (NotFoundException)
+                {
+                    transaction.Rollback();
+                    throw;
                 }
                 catch (Exception ex)
                 {

@@ -8,8 +8,8 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantsList
     {
         public GetTenantDetailValidator()
         {
-            RuleFor(x => x.Skip).NotNull().NotEmpty();
-            RuleFor(x => x.Take).GreaterThan(1).LessThan(100).NotNull().NotEmpty();
+            RuleFor(x => x.Skip).NotNull().GreaterThan(-1);
+            RuleFor(x => x.Take).NotNull().GreaterThan(4).LessThan(101);
         }
     }
 }

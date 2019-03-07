@@ -3,6 +3,7 @@ using Honoplay.Application.Infrastructure;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,7 +20,7 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantDetail
 
         public async Task<ResponseModel<TenantDetailModel>> Handle(GetTenantDetailQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Tenants.FindAsync(request.Id, cancellationToken);
+            var entity = await _context.Tenants.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
             if (entity == null)
             {
