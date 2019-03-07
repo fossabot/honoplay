@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SERVICE_NAME=honoplay_admin_webapi_service_app
-IMAGE_NAME=honoplayadminwebapiservice
+IMAGE_NAME=honoplay_admin_webapi_service
 
 if docker service ls | grep -q ${SERVICE_NAME}; then
 	echo "$(tput setaf 2) ${SERVICE_NAME} Bulundu Guncelleniyor...$(tput sgr 0)"
