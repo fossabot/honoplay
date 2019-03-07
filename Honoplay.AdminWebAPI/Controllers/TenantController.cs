@@ -7,6 +7,7 @@ using Honoplay.Application.Tenants.Queries.GetTenantsList;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -15,7 +16,7 @@ namespace Honoplay.AdminWebAPI.Controllers
     public class TenantController : BaseController
     {
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<ActionResult<ResponseModel<TenantDetailModel>>> Get(Guid id)
         {
             try
             {
@@ -23,9 +24,9 @@ namespace Honoplay.AdminWebAPI.Controllers
                 var model = await Mediator.Send(command);
                 return Ok(model);
             }
-            catch (NotFoundException ex)
+            catch (NotFoundException)
             {
-                return StatusCode(HttpStatusCode.NotFound.ToInt(), new ResponseModel<TenantDetailModel>(new Error(HttpStatusCode.NotFound, ex)));
+                return NotFound();
             }
             catch (Exception ex)
             {
@@ -34,16 +35,16 @@ namespace Honoplay.AdminWebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get([FromBody]GetTenantsListQuery command)
+        public async Task<ActionResult<ResponseModel<TenantsListModel>>> Get([FromBody]GetTenantsListQuery command)
         {
             try
             {
                 var model = await Mediator.Send(command);
                 return Ok(model);
             }
-            catch (NotFoundException ex)
+            catch (NotFoundException)
             {
-                return StatusCode(HttpStatusCode.NotFound.ToInt(), new ResponseModel<TenantsListModel>(new Error(HttpStatusCode.NotFound, ex)));
+                return NotFound();
             }
             catch (Exception ex)
             {
@@ -52,12 +53,12 @@ namespace Honoplay.AdminWebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]CreateTenantCommand command)
+        public async Task<ActionResult<ResponseModel<CreateTenantModel>>> Post([FromBody]CreateTenantCommand command)
         {
             try
             {
                 var model = await Mediator.Send(command);
-                return StatusCode(HttpStatusCode.Created.ToInt(), model);
+                return Created($"api/tenant/{model.Items.Single().Id}", model);
             }
             catch (ObjectAlreadyExistsException ex)
             {
@@ -70,16 +71,16 @@ namespace Honoplay.AdminWebAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put([FromBody]UpdateTenantCommand command)
+        public async Task<ActionResult<ResponseModel<UpdateTenantModel>>> Put([FromBody]UpdateTenantCommand command)
         {
             try
             {
                 var model = await Mediator.Send(command);
-                return StatusCode(HttpStatusCode.OK.ToInt(), model);
+                return Ok(model);
             }
-            catch (NotFoundException ex)
+            catch (NotFoundException)
             {
-                return StatusCode(HttpStatusCode.NotFound.ToInt(), new ResponseModel<UpdateTenantModel>(new Error(HttpStatusCode.NotFound, ex)));
+                return NotFound();
             }
             catch (ObjectAlreadyExistsException ex)
             {
