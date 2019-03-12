@@ -11,7 +11,7 @@ using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
-#nullable enable
+
 
 namespace Honoplay.Application.Tenants.Commands.UpdateTenant
 {

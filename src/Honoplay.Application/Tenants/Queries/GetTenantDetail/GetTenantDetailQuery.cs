@@ -2,7 +2,7 @@
 using MediatR;
 using System;
 
-#nullable enable
+
 
 namespace Honoplay.Application.Tenants.Queries.GetTenantDetail
 {

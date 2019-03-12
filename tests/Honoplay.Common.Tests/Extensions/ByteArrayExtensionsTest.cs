@@ -4,7 +4,7 @@ using System.Text;
 using Xunit;
 using Honoplay.Common.Extensions;
 
-#nullable enable
+
 namespace Honoplay.Common.Tests.Extensions
 {
     public sealed class ByteArrayExtensionsTest
@@ -12,8 +12,8 @@ namespace Honoplay.Common.Tests.Extensions
         [Fact]
         public void ShouldNullValuesActAsEmptyArrays()
         {
-            byte[]? first = null;
-            byte[]? second = null;
+            byte[] first = null;
+            byte[] second = null;
 
             var result = first.Combine(second);
 

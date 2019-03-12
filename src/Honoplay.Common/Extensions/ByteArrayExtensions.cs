@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-#nullable enable
+
 
 namespace Honoplay.Common.Extensions
 {
     public static class ByteArrayExtensions
     {
-        public static byte[] Combine(this byte[]? firstInput, byte[]? secondInput)
+        public static byte[] Combine(this byte[] firstInput, byte[] secondInput)
         {
             var first = firstInput ?? new byte[0];
             var second = secondInput ?? new byte[0];

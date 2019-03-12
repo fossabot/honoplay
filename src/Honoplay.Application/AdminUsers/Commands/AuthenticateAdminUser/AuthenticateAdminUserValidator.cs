@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-#nullable enable
+
 
 namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
 {

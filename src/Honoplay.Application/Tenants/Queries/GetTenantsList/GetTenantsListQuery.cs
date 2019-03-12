@@ -1,7 +1,7 @@
 ﻿using Honoplay.Application.Infrastructure;
 using MediatR;
 
-#nullable enable
+
 
 namespace Honoplay.Application.Tenants.Queries.GetTenantsList
 {

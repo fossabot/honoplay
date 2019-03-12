@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
-#nullable enable
+
 
 namespace Honoplay.AdminWebAPI.Controllers
 {

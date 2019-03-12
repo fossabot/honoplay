@@ -3,7 +3,7 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-#nullable enable
+
 
 namespace Honoplay.Application.Tests
 {

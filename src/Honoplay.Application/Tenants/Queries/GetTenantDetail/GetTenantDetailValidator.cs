@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-#nullable enable
+
 
 namespace Honoplay.Application.Tenants.Queries.GetTenantDetail
 {

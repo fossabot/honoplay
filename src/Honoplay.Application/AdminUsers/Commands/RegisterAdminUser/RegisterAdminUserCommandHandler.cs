@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Honoplay.Application.Infrastructure;
 using Microsoft.Data.Sqlite;
 
-#nullable enable
+
 
 namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
 {

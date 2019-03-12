@@ -1,9 +1,9 @@
-FROM microsoft/dotnet:3.0-aspnetcore-runtime-stretch-slim AS base
+FROM microsoft/dotnet:2.2-aspnetcore-runtime-stretch-slim AS base
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443
 
-FROM microsoft/dotnet:3.0-sdk-stretch AS build
+FROM microsoft/dotnet:2.2-sdk-stretch AS build
 WORKDIR /src
 COPY ["Honoplay.AdminWebAPI/Honoplay.AdminWebAPI.csproj", "Honoplay.AdminWebAPI/"]
 COPY ["Honoplay.Application/Honoplay.Application.csproj", "Honoplay.Application/"]

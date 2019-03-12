@@ -1,13 +1,13 @@
 ﻿using MediatR;
 
-#nullable enable
+
 
 namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
 {
     public class AuthenticateAdminUserCommand : IRequest<AdminUserAuthenticateModel>
     {
-        public string? Email { get; set; }
+        public string Email { get; set; }
 
-        public string? Password { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -5,8 +5,6 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <UserSecretsId>aa388502-0771-41d6-867d-f7993bd24834</UserSecretsId>
-    <LangVersion>8.0</LangVersion>
-    <NullableReferenceTypes>true</NullableReferenceTypes>
   </PropertyGroup>
 
   <ItemGroup>

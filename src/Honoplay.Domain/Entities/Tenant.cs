@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-#nullable enable
+
 
 namespace Honoplay.Domain.Entities
 {
@@ -15,11 +15,11 @@ namespace Honoplay.Domain.Entities
         }
 
         public string Name { get; set; }
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
         public string HostName { get; set; }
 
-        public byte[]? Logo { get; set; }
+        public byte[] Logo { get; set; }
 
         public virtual ICollection<TenantAdminUser> TenantAdminUsers { get; set; }
     }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
-#nullable enable
+
 
 namespace Honoplay.Domain.Entities
 {
@@ -23,7 +23,7 @@ namespace Honoplay.Domain.Entities
         public string Name { get; set; }
         public string Surname { get; set; }
 
-        public override string? PhoneNumber { get; set; }
+        public override string PhoneNumber { get; set; }
         public override string Email { get; set; }
         public int TimeZone { get; set; }
 

@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using Honoplay.Common.Extensions;
 
-#nullable enable
+
 
 namespace Honoplay.Common.Tests.Extensions
 {
@@ -11,7 +11,7 @@ namespace Honoplay.Common.Tests.Extensions
         [Fact]
         public void ShouldThrowExceptionForNullValue()
         {
-            string? value = null;
+            string value = null;
             Assert.Throws<ArgumentNullException>(() => value.GetSHA512(new byte[] { }));
         }
 

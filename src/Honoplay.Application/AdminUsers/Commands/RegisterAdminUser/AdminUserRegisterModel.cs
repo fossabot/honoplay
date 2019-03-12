@@ -1,18 +1,18 @@
-﻿#nullable enable
+﻿
 
 using System;
 
 namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
 {
-    public readonly struct AdminUserRegisterModel
+    public struct AdminUserRegisterModel
     {
         public int? Id { get; }
-        public string? Email { get; }
-        public string? Username { get; }
-        public string? Name { get; }
-        public string? Surname { get; }
+        public string Email { get; }
+        public string Username { get; }
+        public string Name { get; }
+        public string Surname { get; }
 
-        public string? PhoneNumber { get; }
+        public string PhoneNumber { get; }
         public int TimeZone { get; }
 
         public DateTimeOffset? CreatedDateTime { get; }
