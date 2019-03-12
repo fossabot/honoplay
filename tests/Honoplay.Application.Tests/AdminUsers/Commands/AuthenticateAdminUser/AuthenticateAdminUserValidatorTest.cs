@@ -16,13 +16,13 @@ namespace Honoplay.Application.Tests.AdminUsers.Commands.AuthenticateAdminUser
         }
 
         [Fact]
-        public async Task ShouldBeValid()
+        public void ShouldBeValid()
         {
             Assert.True(_validator.Validate(new AuthenticateAdminUserCommand { Email = "test@test.com", Password = "123456" }).IsValid);
         }
 
         [Fact]
-        public async Task ShouldBeNotValidForNullOrEmpty()
+        public void ShouldBeNotValidForNullOrEmpty()
         {
             _validator.ShouldHaveValidationErrorFor(x => x.Email, "");
             _validator.ShouldHaveValidationErrorFor(x => x.Email, null as string);
@@ -32,14 +32,14 @@ namespace Honoplay.Application.Tests.AdminUsers.Commands.AuthenticateAdminUser
         }
 
         [Fact]
-        public async Task ShouldBeNotValidForEmail()
+        public void ShouldBeNotValidForEmail()
         {
             _validator.ShouldHaveValidationErrorFor(x => x.Email, "test[AT]test.com");
             _validator.ShouldHaveValidationErrorFor(x => x.Email, "test@test[DOT]com");
         }
 
         [Fact]
-        public async Task ShouldBeNotValidForMaxLen()
+        public void ShouldBeNotValidForMaxLen()
         {
             _validator.ShouldHaveValidationErrorFor(x => x.Email, $"{string.Join("", Enumerable.Repeat("x", 150))}@1234567890.com");
             _validator.ShouldHaveValidationErrorFor(x => x.Password, string.Join("", Enumerable.Repeat("x", 51)));

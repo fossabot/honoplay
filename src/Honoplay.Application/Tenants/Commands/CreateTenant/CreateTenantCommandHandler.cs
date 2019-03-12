@@ -50,7 +50,7 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
                     transaction.Rollback();
                     throw new ObjectAlreadyExistsException(nameof(Tenant), request.HostName);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     transaction.Rollback();
                     throw new TransactionException();
