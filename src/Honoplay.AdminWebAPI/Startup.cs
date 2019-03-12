@@ -1,4 +1,5 @@
 ﻿using FluentValidation.AspNetCore;
+using Honoplay.Common.Constants;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using MediatR;
@@ -40,7 +41,7 @@ namespace Honoplay.AdminWebAPI
 
             // Add DbContext using SQL Server Provider
             services.AddDbContext<HonoplayDbContext>(options =>
-                options.UseSqlServer(@"Data Source=fides.omegabigdata.com,1443;User ID=sa;Password=Hedele321?;Initial Catalog=Honoplay;app=Honoplay;MultipleActiveResultSets=True",
+                options.UseSqlServer(StringConstants.ConnectionString,
                                     b => b.MigrationsAssembly("Honoplay.Persistence")));
 
             services.AddIdentity<AdminUser, IdentityRole>()

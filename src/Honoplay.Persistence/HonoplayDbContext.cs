@@ -1,4 +1,5 @@
 ﻿using System;
+using Honoplay.Common.Constants;
 using Honoplay.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,7 +32,7 @@ namespace Honoplay.Persistence
             {
                 return;
             }
-            optionsBuilder.UseSqlServer(@"Data Source=fides.omegabigdata.com,1443;User ID=sa;Password=Hedele321?;Initial Catalog=Honoplay;app=Honoplay;MultipleActiveResultSets=True");
+            optionsBuilder.UseSqlServer(StringConstants.ConnectionString);
         }
     }
 }
