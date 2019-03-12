@@ -16,7 +16,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateTenant
         }
 
         [Fact]
-        public async Task ShouldBeValid()
+        public void ShouldBeValid()
         {
             Assert.True(_validator.Validate(new CreateTenantCommand
             {
@@ -29,7 +29,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateTenant
         }
 
         [Fact]
-        public async Task ShouldBeNotValidForNullOrEmpty()
+        public void ShouldBeNotValidForNullOrEmpty()
         {
             _validator.ShouldHaveValidationErrorFor(x => x.Name, "");
             _validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
@@ -39,14 +39,14 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateTenant
         }
 
         [Fact]
-        public async Task ShouldBeNotValidForMinLen()
+        public void ShouldBeNotValidForMinLen()
         {
             _validator.ShouldHaveValidationErrorFor(x => x.Name, "");
             _validator.ShouldHaveValidationErrorFor(x => x.HostName, "");
         }
 
         [Fact]
-        public async Task ShouldBeNotValidForMaxLen()
+        public void ShouldBeNotValidForMaxLen()
         {
             _validator.ShouldHaveValidationErrorFor(x => x.Name, string.Join("", Enumerable.Repeat("x", 51)));
             _validator.ShouldHaveValidationErrorFor(x => x.HostName, string.Join("", Enumerable.Repeat("x", 151)));

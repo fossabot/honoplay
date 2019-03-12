@@ -13,6 +13,10 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantDetail
             Id = id;
         }
 
+        public GetTenantDetailQuery()
+        {
+        }
+
         public Guid Id { get; set; }
     }
 }
