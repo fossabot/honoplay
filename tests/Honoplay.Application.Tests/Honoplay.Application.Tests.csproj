@@ -22,4 +22,8 @@
     <ProjectReference Include="..\..\src\Honoplay.Persistence\Honoplay.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Tenants\Commands\Queries\" />
+  </ItemGroup>
+
 </Project>

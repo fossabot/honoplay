@@ -1,29 +1,31 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation.TestHelper;
-using Honoplay.Application.Tenants.Commands.CreateTenant;
+using Honoplay.Application.Tenants.Commands.UpdateTenant;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Tenants.Commands.CreateTenant
+namespace Honoplay.Application.Tests.Tenants.Commands.UpdateTenant
 {
-    public class CreateTenantValidatorTest : TestBase
+    public class UpdateTenantValidatorTest : TestBase
     {
-        private readonly CreateTenantValidator _validator;
+        private readonly UpdateTenantValidator _validator;
 
-        public CreateTenantValidatorTest()
+        public UpdateTenantValidatorTest()
         {
-            _validator = new CreateTenantValidator();
+            _validator = new UpdateTenantValidator();
         }
 
         [Fact]
         public async Task ShouldBeValid()
         {
-            Assert.True(_validator.Validate(new CreateTenantCommand
+            Assert.True(_validator.Validate(new UpdateTenantCommand
             {
+                Id = Guid.NewGuid(),
                 Name = "test name",
                 HostName = "test host name",
                 Description = "test desc",
-                CreatedBy = 1,
+                UpdatedBy = 1,
                 Logo = new byte[] { 0 },
             }).IsValid);
         }
@@ -31,6 +33,8 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateTenant
         [Fact]
         public async Task ShouldBeNotValidForNullOrEmpty()
         {
+            _validator.ShouldHaveValidationErrorFor(x => x.Id, Guid.Empty);
+
             _validator.ShouldHaveValidationErrorFor(x => x.Name, "");
             _validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
 
