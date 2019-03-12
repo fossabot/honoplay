@@ -35,7 +35,7 @@ namespace Honoplay.AdminWebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ResponseModel<TenantsListModel>>> Get([FromBody]GetTenantsListQuery command)
+        public async Task<ActionResult<ResponseModel<TenantsListModel>>> Get([FromQuery]GetTenantsListQuery command)
         {
             try
             {

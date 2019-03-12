@@ -1,24 +1,31 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using FluentValidation.TestHelper;
-using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
+using Honoplay.Application.AdminUsers.Commands.RegisterAdminUser;
 using Xunit;
 
-namespace Honoplay.Application.Tests.AdminUsers.Commands.AuthenticateAdminUser
+namespace Honoplay.Application.Tests.Tenants.Commands.RegisterAdminUser
 {
-    public class AuthenticateAdminUserValidatorTest : TestBase
+    public class RegisterAdminUserValidatorTest : TestBase
     {
-        private readonly AuthenticateAdminUserValidator _validator;
+        private readonly RegisterAdminUserValidator _validator;
 
-        public AuthenticateAdminUserValidatorTest()
+        public RegisterAdminUserValidatorTest()
         {
-            _validator = new AuthenticateAdminUserValidator();
+            _validator = new RegisterAdminUserValidator();
         }
 
         [Fact]
         public async Task ShouldBeValid()
         {
-            Assert.True(_validator.Validate(new AuthenticateAdminUserCommand { Email = "test@test.com", Password = "123456" }).IsValid);
+            var item = new RegisterAdminUserCommand
+            {
+                Email = "test@test.com",
+                Password = "123456",
+                Name = "John",
+                Surname = "Doe"
+            };
+            Assert.True(_validator.Validate(item).IsValid);
         }
 
         [Fact]
@@ -29,6 +36,12 @@ namespace Honoplay.Application.Tests.AdminUsers.Commands.AuthenticateAdminUser
 
             _validator.ShouldHaveValidationErrorFor(x => x.Password, "");
             _validator.ShouldHaveValidationErrorFor(x => x.Password, null as string);
+
+            _validator.ShouldHaveValidationErrorFor(x => x.Name, "");
+            _validator.ShouldHaveValidationErrorFor(x => x.Name, null as string);
+
+            _validator.ShouldHaveValidationErrorFor(x => x.Surname, "");
+            _validator.ShouldHaveValidationErrorFor(x => x.Surname, null as string);
         }
 
         [Fact]

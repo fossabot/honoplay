@@ -7,7 +7,7 @@ using Honoplay.Application.Exceptions;
 using Honoplay.Persistence;
 using Xunit;
 
-namespace Honoplay.Application.Tests.AdminUsers.Commands.RegisterAdminUser
+namespace Honoplay.Application.Tests.Tenants.Commands.RegisterAdminUser
 {
     public class RegisterAdminUserCommandTest : TestBase, IDisposable
     {

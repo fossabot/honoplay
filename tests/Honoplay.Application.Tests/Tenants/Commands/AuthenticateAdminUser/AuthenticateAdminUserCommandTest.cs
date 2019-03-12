@@ -8,7 +8,7 @@ using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Xunit;
 
-namespace Honoplay.Application.Tests.AdminUsers.Commands.AuthenticateAdminUser
+namespace Honoplay.Application.Tests.Tenants.Commands.AuthenticateAdminUser
 {
     public class AuthenticateAdminUserCommandTest : TestBase, IDisposable
     {

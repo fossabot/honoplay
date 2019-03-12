@@ -1,10 +1,10 @@
-﻿using FluentValidation.TestHelper;
-using Honoplay.Application.AdminUsers.Commands.RegisterAdminUser;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using FluentValidation.TestHelper;
+using Honoplay.Application.AdminUsers.Commands.RegisterAdminUser;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Tokens
+namespace Honoplay.Application.Tests.AdminUsers.Commands.RegisterAdminUser
 {
     public class RegisterAdminUserValidatorTest : TestBase
     {

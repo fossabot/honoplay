@@ -11,7 +11,7 @@ namespace Honoplay.System.Tests
         {
             dbContext.Tenants.Add(new Tenant
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a"),
                 Name = "api-test",
                 Description = "test",
                 HostName = "omega",

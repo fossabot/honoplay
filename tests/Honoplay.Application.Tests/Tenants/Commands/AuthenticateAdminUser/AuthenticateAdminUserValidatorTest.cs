@@ -4,7 +4,7 @@ using FluentValidation.TestHelper;
 using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
 using Xunit;
 
-namespace Honoplay.Application.Tests.AdminUsers.Commands.AuthenticateAdminUser
+namespace Honoplay.Application.Tests.Tenants.Commands.AuthenticateAdminUser
 {
     public class AuthenticateAdminUserValidatorTest : TestBase
     {
