@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
 
-
-
 namespace Honoplay.Common.Extensions
 {
     public static class ByteArrayExtensions

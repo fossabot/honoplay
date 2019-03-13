@@ -1,8 +1,8 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-
-
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
@@ -14,5 +14,7 @@ namespace Honoplay.AdminWebAPI.Controllers
 
         protected IMediator Mediator => _mediator
             ?? (_mediator = HttpContext.RequestServices.GetService<IMediator>());
+
+        public Dictionary<string, string> Claims => User.Claims.ToDictionary(x => x.Type, x => x.Value);
     }
 }

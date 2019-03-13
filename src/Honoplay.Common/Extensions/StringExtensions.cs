@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-
-
 
 namespace Honoplay.Common.Extensions
 {
@@ -23,13 +20,10 @@ namespace Honoplay.Common.Extensions
                 return shaM.ComputeHash(data);
             }
         }
-    }
 
-    public static class EnumExtensions
-    {
-        public static int ToInt(this HttpStatusCode httpStatusCode)
+        public static int ToInt(this string value)
         {
-            return (int)httpStatusCode;
+            return int.TryParse(value, out int result) ? result : -1;
         }
     }
 }
