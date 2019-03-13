@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Honoplay.Application.Exceptions;
+﻿using Honoplay.Application.Exceptions;
 using Honoplay.Application.Tenants.Queries.GetTenantsList;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
@@ -15,22 +15,46 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
         private readonly HonoplayDbContext _context;
         private readonly GetTenantsListQueryHandler _QueryHandler;
         private readonly Guid _testTenantGuid;
+        private readonly int _adminUserId;
 
         public GetTenantsListQueryTest()
         {
-            _context = InitAndGetDbContext(out _testTenantGuid);
+            _context = InitAndGetDbContext(out _testTenantGuid, out _adminUserId);
             _QueryHandler = new GetTenantsListQueryHandler(_context);
         }
 
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantGuid)
+        private HonoplayDbContext InitAndGetDbContext(out Guid tenantGuid, out int adminUserId)
         {
             var context = GetDbContext();
-            tenantGuid = Guid.NewGuid();
-            context.Tenants.Add(new Tenant
+
+            var salt = ByteArrayExtensions.GetRandomSalt();
+            var adminUser = new AdminUser
             {
-                Id = _testTenantGuid,
+                Id = 1,
+                Email = "TestAdminUser01@omegabigdata.com",
+                Password = "Passw0rd".GetSHA512(salt),
+                PasswordSalt = salt,
+                LastPasswordChangeDateTime = DateTime.Today.AddDays(-5),
+            };
+            context.AdminUsers.Add(adminUser);
+
+            adminUserId = adminUser.Id;
+
+            var tenant = new Tenant
+            {
                 Name = "TestTenant#01",
-                HostName = "test 1"
+                HostName = "test 1",
+                CreatedBy = adminUserId,
+            };
+            context.Tenants.Add(tenant);
+
+            tenantGuid = tenant.Id;
+
+            context.TenantAdminUsers.Add(new TenantAdminUser
+            {
+                TenantId = tenant.Id,
+                AdminUserId = adminUserId,
+                CreatedBy = adminUserId,
             });
 
             context.SaveChanges();
@@ -40,7 +64,7 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTenantsListQuery(111);
+            var query = new GetTenantsListQuery(_adminUserId);
 
             var tenantModel = await _QueryHandler.Handle(query, CancellationToken.None);
 

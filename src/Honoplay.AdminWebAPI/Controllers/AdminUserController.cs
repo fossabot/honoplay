@@ -46,6 +46,7 @@ namespace Honoplay.AdminWebAPI.Controllers
                         new Claim(ClaimTypes.Email, model.Email),
                         new Claim(ClaimTypes.Role, "AdminUser"),
                         new Claim(ClaimTypes.Name, model.Name),
+                        new Claim(ClaimTypes.UserData, model.Tenants),
                     }),
                     Expires = DateTime.UtcNow.AddDays(1),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

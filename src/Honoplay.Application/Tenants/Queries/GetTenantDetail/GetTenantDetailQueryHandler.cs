@@ -1,4 +1,5 @@
-﻿using Honoplay.Application.Exceptions;
+﻿using System.Linq;
+using Honoplay.Application.Exceptions;
 using Honoplay.Application.Infrastructure;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -20,14 +21,14 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantDetail
 
         public async Task<ResponseModel<TenantDetailModel>> Handle(GetTenantDetailQuery request, CancellationToken cancellationToken)
         {
-            var entity = await _context.Tenants.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+            var tenant = await _context.Tenants.AsNoTracking().SingleOrDefaultAsync(x => x.Id == request.Id && x.TenantAdminUsers.Any(y => y.AdminUserId == request.AdminUserId), cancellationToken);
 
-            if (entity == null)
+            if (tenant is null)
             {
                 throw new NotFoundException(nameof(Tenant), request.Id);
             }
 
-            var model = TenantDetailModel.Create(entity);
+            var model = TenantDetailModel.Create(tenant);
             return new ResponseModel<TenantDetailModel>(model);
         }
     }

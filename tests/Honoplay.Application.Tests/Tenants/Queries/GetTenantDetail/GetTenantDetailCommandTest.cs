@@ -31,6 +31,7 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantDetail
             var salt = ByteArrayExtensions.GetRandomSalt();
             var adminUser = new AdminUser
             {
+                Id = 1,
                 Email = "TestAdminUser01@omegabigdata.com",
                 Password = "Passw0rd".GetSHA512(salt),
                 PasswordSalt = salt,
