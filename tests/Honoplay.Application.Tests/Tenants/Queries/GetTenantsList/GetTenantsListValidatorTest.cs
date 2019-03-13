@@ -16,12 +16,12 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
         [Fact]
         public void ShouldBeValid()
         {
-            Assert.True(_validator.Validate(new GetTenantsListQuery()).IsValid);
-            Assert.True(_validator.Validate(new GetTenantsListQuery(0, 5)).IsValid);
+            Assert.True(_validator.Validate(new GetTenantsListQuery(111)).IsValid);
+            Assert.True(_validator.Validate(new GetTenantsListQuery(111, 0, 5)).IsValid);
         }
 
         [Fact]
-        public void ShouldBeNotValidForNullOrEmpty()
+        public void ShouldBeNotValid()
         {
             _validator.ShouldHaveValidationErrorFor(x => x.Skip, -1);
             _validator.ShouldHaveValidationErrorFor(x => x.Take, 4);

@@ -32,7 +32,7 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
                 Description = request.Description,
                 HostName = request.HostName,
                 Logo = request.Logo,
-                CreatedBy = request.CreatedBy
+                CreatedBy = request.CreatedBy,
             };
 
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
@@ -40,6 +40,14 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
                 try
                 {
                     _context.Add(item);
+
+                    _context.Add(new TenantAdminUser
+                    {
+                        TenantId = item.Id,
+                        AdminUserId = request.CreatedBy,
+                        CreatedBy = request.CreatedBy,
+                    });
+
                     await _context.SaveChangesAsync(cancellationToken);
 
                     transaction.Commit();

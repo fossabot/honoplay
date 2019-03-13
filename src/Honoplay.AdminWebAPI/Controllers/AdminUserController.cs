@@ -11,8 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-
-
+using Microsoft.AspNetCore.Http;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
@@ -27,28 +26,40 @@ namespace Honoplay.AdminWebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesDefaultResponseType]
         public async Task<IActionResult> Authenticate([FromBody]AuthenticateAdminUserCommand command)
         {
-            var model = await Mediator.Send(command);
-            //// authentication successful so generate jwt token
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = System.Text.Encoding.ASCII.GetBytes(_appSettings.JWTSecret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            try
             {
-                Subject = new ClaimsIdentity(new Claim[]
+                var model = await Mediator.Send(command);
+
+                //// authentication successful so generate jwt token
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = System.Text.Encoding.ASCII.GetBytes(_appSettings.JWTSecret);
+                var tokenDescriptor = new SecurityTokenDescriptor
                 {
-                    new Claim(ClaimTypes.Email, model.Email),
-                    new Claim(ClaimTypes.Role, "AdminUser"),
-                    new Claim(ClaimTypes.Name, model.Name),
-                }),
-                Expires = DateTime.UtcNow.AddDays(1),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                        new Claim(ClaimTypes.Sid, model.Id.ToString()),
+                        new Claim(ClaimTypes.Email, model.Email),
+                        new Claim(ClaimTypes.Role, "AdminUser"),
+                        new Claim(ClaimTypes.Name, model.Name),
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(1),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
 
-            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+                SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
 
-            var stringToken = tokenHandler.WriteToken(token);
-            return Ok(new { User = model, Token = stringToken });
+                var stringToken = tokenHandler.WriteToken(token);
+                return Ok(new { User = model, Token = stringToken });
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [AllowAnonymous]

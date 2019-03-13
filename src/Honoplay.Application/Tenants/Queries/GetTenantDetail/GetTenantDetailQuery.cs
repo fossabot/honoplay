@@ -8,15 +8,17 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantDetail
 {
     public class GetTenantDetailQuery : IRequest<ResponseModel<TenantDetailModel>>
     {
-        public GetTenantDetailQuery(Guid id)
+        public GetTenantDetailQuery(int adminUserId, Guid id)
         {
             Id = id;
+            AdminUserId = adminUserId;
         }
 
         public GetTenantDetailQuery()
         {
         }
 
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
+        public int AdminUserId { get; private set; }
     }
 }

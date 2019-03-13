@@ -1,14 +1,16 @@
-using System;
 using Honoplay.AdminWebAPI;
-using Honoplay.Common.Constants;
-using Newtonsoft.Json;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
 using Honoplay.Application.Tenants.Commands.CreateTenant;
 using Honoplay.Application.Tenants.Commands.UpdateTenant;
-using Honoplay.Application.Tenants.Queries.GetTenantsList;
+using Honoplay.Common.Constants;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Honoplay.System.Tests.Controllers
@@ -20,6 +22,15 @@ namespace Honoplay.System.Tests.Controllers
         public TenantControllerIntegrationTests(CustomWebApplicationFactory<Startup> factory)
         {
             _client = factory.CreateClient();
+
+            var authenticateAdminUserCommand = new AuthenticateAdminUserCommand
+            {
+                Email = "registered@omegabigdata.com",
+                Password = "Passw0rd"
+            };
+            var httpResponse = _client.PostAsync("api/AdminUser/Authenticate", new StringContent(JsonConvert.SerializeObject(authenticateAdminUserCommand), Encoding.UTF8, StringConstants.ApplicationJson)).Result;
+            var token = JsonConvert.DeserializeObject<Dictionary<string, object>>(httpResponse.Content.ReadAsStringAsync().Result)["token"];
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.ToString());
         }
 
         [Fact]
@@ -31,6 +42,7 @@ namespace Honoplay.System.Tests.Controllers
                 Name = "tenan1",
                 HostName = "tenant1",
                 Description = "desc",
+                CreatedBy = 1
             };
 
             var json = JsonConvert.SerializeObject(command);
@@ -54,6 +66,7 @@ namespace Honoplay.System.Tests.Controllers
                 HostName = "omega2",
                 Name = "test update",
                 Description = "desc",
+                UpdatedBy = 1
             };
 
             var json = JsonConvert.SerializeObject(command);
@@ -103,6 +116,5 @@ namespace Honoplay.System.Tests.Controllers
             Assert.True(httpResponse.IsSuccessStatusCode);
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
         }
-
     }
 }

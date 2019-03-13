@@ -5,14 +5,17 @@ using Honoplay.Application.Tenants.Commands.UpdateTenant;
 using Honoplay.Application.Tenants.Queries.GetTenantDetail;
 using Honoplay.Application.Tenants.Queries.GetTenantsList;
 using Honoplay.Common.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
+    [Authorize]
     public class TenantController : BaseController
     {
         [HttpGet("{id}")]
@@ -20,7 +23,8 @@ namespace Honoplay.AdminWebAPI.Controllers
         {
             try
             {
-                var command = new GetTenantDetailQuery(id);
+                var userId = Claims[ClaimTypes.Sid].ToInt();
+                var command = new GetTenantDetailQuery(userId, id);
                 var model = await Mediator.Send(command);
                 return Ok(model);
             }
@@ -35,11 +39,13 @@ namespace Honoplay.AdminWebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ResponseModel<TenantsListModel>>> Get([FromQuery]GetTenantsListQuery command)
+        public async Task<ActionResult<ResponseModel<TenantsListModel>>> Get([FromQuery]GetTenantsListQueryModel command)
         {
             try
             {
-                var model = await Mediator.Send(command);
+                var userId = Claims[ClaimTypes.Sid].ToInt();
+
+                var model = await Mediator.Send(new GetTenantsListQuery(userId, command.Skip, command.Take));
                 return Ok(model);
             }
             catch (NotFoundException)
@@ -57,6 +63,9 @@ namespace Honoplay.AdminWebAPI.Controllers
         {
             try
             {
+                var userId = Claims[ClaimTypes.Sid].ToInt();
+                command.CreatedBy = userId;
+
                 var model = await Mediator.Send(command);
                 return Created($"api/tenant/{model.Items.Single().Id}", model);
             }
@@ -75,6 +84,9 @@ namespace Honoplay.AdminWebAPI.Controllers
         {
             try
             {
+                var userId = Claims[ClaimTypes.Sid].ToInt();
+                command.UpdatedBy = userId;
+
                 var model = await Mediator.Send(command);
                 return Ok(model);
             }

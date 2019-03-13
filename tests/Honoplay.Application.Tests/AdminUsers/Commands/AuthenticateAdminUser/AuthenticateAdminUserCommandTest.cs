@@ -36,11 +36,9 @@ namespace Honoplay.Application.Tests.AdminUsers.Commands.AuthenticateAdminUser
             context.AdminUsers.Add(new AdminUser
             {
                 Email = "TestAdminUser01@omegabigdata.com",
-                //Omega
                 Password = "Passw0rd".GetSHA512(salt),
                 PasswordSalt = salt,
                 LastPasswordChangeDateTime = DateTime.Today.AddDays(-5),
-                CreatedBy = null,
             });
 
             context.SaveChanges();

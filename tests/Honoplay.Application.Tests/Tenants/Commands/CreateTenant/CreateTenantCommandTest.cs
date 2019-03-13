@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Honoplay.Application.Exceptions;
 using Xunit;
+using Honoplay.Common.Extensions;
 
 namespace Honoplay.Application.Tests.Tenants.Commands.CreateTenant
 {
@@ -26,6 +27,16 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateTenant
         {
             var context = GetDbContext();
             tenantGuid = Guid.NewGuid();
+
+            var salt = ByteArrayExtensions.GetRandomSalt();
+            context.AdminUsers.Add(new AdminUser
+            {
+                Email = "TestAdminUser01@omegabigdata.com",
+                Password = "Passw0rd".GetSHA512(salt),
+                PasswordSalt = salt,
+                LastPasswordChangeDateTime = DateTime.Today.AddDays(-5),
+            });
+
             context.Tenants.Add(new Tenant
             {
                 Id = _testTenantGuid,
@@ -42,8 +53,8 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateTenant
         {
             var command = new CreateTenantCommand
             {
-                Name = "testto1",
-                HostName = "testto1",
+                Name = "testtom",
+                HostName = "testtom",
                 Description = "test desc",
                 CreatedBy = 1,
                 Logo = new byte[] { 1 }

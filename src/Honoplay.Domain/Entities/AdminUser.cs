@@ -27,9 +27,6 @@ namespace Honoplay.Domain.Entities
         public override string Email { get; set; }
         public int TimeZone { get; set; }
 
-        public int? CreatedBy { get; set; }
-        public int? UpdatedBy { get; set; }
-
         public DateTimeOffset CreatedDateTime { get; set; }
         public DateTimeOffset? UpdatedDateTime { get; set; }
 

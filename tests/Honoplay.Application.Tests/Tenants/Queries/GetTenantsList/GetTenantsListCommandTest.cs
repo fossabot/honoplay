@@ -40,7 +40,7 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTenantsListQuery();
+            var query = new GetTenantsListQuery(111);
 
             var tenantModel = await _QueryHandler.Handle(query, CancellationToken.None);
 
@@ -50,7 +50,7 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
         [Fact]
         public async Task ShouldThrowErrorWhenInvalidInformation()
         {
-            var query = new GetTenantsListQuery(10, 10);
+            var query = new GetTenantsListQuery(111, 10, 10);
             await Assert.ThrowsAsync<NotFoundException>(async () =>
            await _QueryHandler.Handle(query, CancellationToken.None));
         }

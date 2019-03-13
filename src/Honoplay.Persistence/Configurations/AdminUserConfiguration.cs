@@ -48,10 +48,7 @@ namespace Honoplay.Persistence.Configurations
             builder.Property(e => e.TimeZone)
                    .IsRequired()
                    .HasDefaultValue(3);
-
-            //  CreatedBy
-            builder.Property(e => e.CreatedBy);
-
+            
             //  UpdatedBy
             builder.Property(e => e.CreatedDateTime);
 

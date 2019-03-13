@@ -12,7 +12,7 @@ namespace Honoplay.Domain.Entities
         public Guid Id { get; set; }
 
         public int CreatedBy { get; set; }
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; private set; }
 
         public int? UpdatedBy { get; set; }
         public DateTimeOffset? UpdatedAt { get; set; }
