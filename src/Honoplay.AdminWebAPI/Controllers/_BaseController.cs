@@ -16,5 +16,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             ?? (_mediator = HttpContext.RequestServices.GetService<IMediator>());
 
         public Dictionary<string, string> Claims => User.Claims.ToDictionary(x => x.Type, x => x.Value);
+
+        public string HonoHost => Request.Headers.TryGetValue("HonoHost", out var value) ? value[0].ToString() : Request.Host.Host;
     }
 }
