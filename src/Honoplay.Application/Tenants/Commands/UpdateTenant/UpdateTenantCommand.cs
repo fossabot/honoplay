@@ -1,7 +1,6 @@
-﻿using Honoplay.Application.Infrastructure;
-using MediatR;
+﻿using MediatR;
 using System;
-
+using Honoplay.Application._Infrastructure;
 
 
 namespace Honoplay.Application.Tenants.Commands.UpdateTenant

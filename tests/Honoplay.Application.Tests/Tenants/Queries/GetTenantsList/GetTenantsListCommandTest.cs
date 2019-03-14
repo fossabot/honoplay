@@ -1,11 +1,11 @@
-﻿using Honoplay.Application.Exceptions;
-using Honoplay.Application.Tenants.Queries.GetTenantsList;
+﻿using Honoplay.Application.Tenants.Queries.GetTenantsList;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application._Exceptions;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList

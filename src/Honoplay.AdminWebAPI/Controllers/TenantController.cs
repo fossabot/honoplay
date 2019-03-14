@@ -1,6 +1,4 @@
-﻿using Honoplay.Application.Exceptions;
-using Honoplay.Application.Infrastructure;
-using Honoplay.Application.Tenants.Commands.CreateTenant;
+﻿using Honoplay.Application.Tenants.Commands.CreateTenant;
 using Honoplay.Application.Tenants.Commands.UpdateTenant;
 using Honoplay.Application.Tenants.Queries.GetTenantDetail;
 using Honoplay.Application.Tenants.Queries.GetTenantsList;
@@ -12,6 +10,8 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Honoplay.Application._Exceptions;
+using Honoplay.Application._Infrastructure;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {

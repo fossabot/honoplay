@@ -1,4 +1,4 @@
-﻿using Honoplay.Application.Infrastructure;
+﻿using Honoplay.Application._Infrastructure;
 using MediatR;
 
 namespace Honoplay.Application.Tenants.Commands.CreateTenant

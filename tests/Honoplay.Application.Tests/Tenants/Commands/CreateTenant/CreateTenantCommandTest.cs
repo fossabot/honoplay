@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application.Exceptions;
+using Honoplay.Application._Exceptions;
 using Xunit;
 using Honoplay.Common.Extensions;
 

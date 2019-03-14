@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentValidation.Results;
 
-namespace Honoplay.Application.Exceptions
+namespace Honoplay.Application._Exceptions
 {
     public class ValidationException : Exception
     {

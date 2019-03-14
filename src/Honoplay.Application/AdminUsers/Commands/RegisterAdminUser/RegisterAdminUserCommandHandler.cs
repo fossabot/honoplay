@@ -1,5 +1,4 @@
-﻿using Honoplay.Application.Exceptions;
-using Honoplay.Common.Extensions;
+﻿using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using MediatR;
@@ -9,7 +8,8 @@ using System;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application.Infrastructure;
+using Honoplay.Application._Exceptions;
+using Honoplay.Application._Infrastructure;
 using Microsoft.Data.Sqlite;
 
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using Honoplay.Common.Extensions;
 
-namespace Honoplay.Application.Infrastructure
+namespace Honoplay.Application._Infrastructure
 {
     public sealed class ResponseModel<T>
     {

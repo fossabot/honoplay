@@ -1,12 +1,12 @@
 ﻿using System.Linq;
-using Honoplay.Application.Exceptions;
-using Honoplay.Application.Infrastructure;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application._Exceptions;
+using Honoplay.Application._Infrastructure;
 
 namespace Honoplay.Application.Tenants.Queries.GetTenantDetail
 {
