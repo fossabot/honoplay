@@ -2,8 +2,9 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application.Exceptions;
 using Honoplay.Application.Tenants.Commands.UpdateTenant;
+using Honoplay.Application._Exceptions;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Xunit;
@@ -26,6 +27,18 @@ namespace Honoplay.Application.Tests.Tenants.Commands.UpdateTenant
         {
             var context = GetDbContext();
             tenantGuid = Guid.NewGuid();
+
+            var salt = ByteArrayExtensions.GetRandomSalt();
+            var adminUser = new AdminUser
+            {
+                Id = 1,
+                Email = "TestAdminUser01@omegabigdata.com",
+                Password = "Passw0rd".GetSHA512(salt),
+                PasswordSalt = salt,
+                LastPasswordChangeDateTime = DateTime.Today.AddDays(-5),
+            };
+            context.AdminUsers.Add(adminUser);
+
             context.Tenants.Add(new Tenant
             {
                 Id = _testTenantGuid,
@@ -37,6 +50,13 @@ namespace Honoplay.Application.Tests.Tenants.Commands.UpdateTenant
             {
                 Name = "TestTenant#02",
                 HostName = "test 2"
+            });
+
+            context.TenantAdminUsers.Add(new TenantAdminUser
+            {
+                TenantId = _testTenantGuid,
+                AdminUserId = 1,
+                CreatedBy = 1
             });
 
             context.SaveChanges();

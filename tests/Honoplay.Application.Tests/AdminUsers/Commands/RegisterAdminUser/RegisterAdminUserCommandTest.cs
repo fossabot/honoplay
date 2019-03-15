@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Honoplay.Application.AdminUsers.Commands.RegisterAdminUser;
-using Honoplay.Application.Exceptions;
+using Honoplay.Application._Exceptions;
 using Honoplay.Persistence;
 using Xunit;
 

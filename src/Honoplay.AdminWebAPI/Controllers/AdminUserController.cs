@@ -1,7 +1,5 @@
 ﻿using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
 using Honoplay.Application.AdminUsers.Commands.RegisterAdminUser;
-using Honoplay.Application.Exceptions;
-using Honoplay.Application.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -11,6 +9,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Honoplay.Application._Exceptions;
+using Honoplay.Application._Infrastructure;
 using Microsoft.AspNetCore.Http;
 
 namespace Honoplay.AdminWebAPI.Controllers
@@ -46,6 +46,7 @@ namespace Honoplay.AdminWebAPI.Controllers
                         new Claim(ClaimTypes.Email, model.Email),
                         new Claim(ClaimTypes.Role, "AdminUser"),
                         new Claim(ClaimTypes.Name, model.Name),
+                        new Claim(ClaimTypes.UserData, model.Tenants),
                     }),
                     Expires = DateTime.UtcNow.AddDays(1),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

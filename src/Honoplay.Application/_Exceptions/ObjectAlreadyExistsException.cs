@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Honoplay.Application.Exceptions
+namespace Honoplay.Application._Exceptions
 {
     public sealed class ObjectAlreadyExistsException : Exception
     {

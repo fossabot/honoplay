@@ -1,12 +1,12 @@
-﻿using FluentValidation;
-using MediatR;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
+using MediatR;
+using ValidationException = Honoplay.Application._Exceptions.ValidationException;
 
-
-namespace Honoplay.Application.Infrastructure
+namespace Honoplay.Application._Infrastructure
 {
     public class RequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
       where TRequest : IRequest<TResponse>
@@ -30,7 +30,7 @@ namespace Honoplay.Application.Infrastructure
 
             if (failures.Count != 0)
             {
-                throw new Exceptions.ValidationException(failures);
+                throw new ValidationException(failures);
             }
 
             return next();

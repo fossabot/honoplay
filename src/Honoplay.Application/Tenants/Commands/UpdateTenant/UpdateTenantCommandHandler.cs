@@ -1,6 +1,4 @@
-﻿using Honoplay.Application.Exceptions;
-using Honoplay.Application.Infrastructure;
-using Honoplay.Domain.Entities;
+﻿using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using MediatR;
 using Microsoft.Data.Sqlite;
@@ -8,10 +6,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
-
+using Honoplay.Application._Exceptions;
+using Honoplay.Application._Infrastructure;
 
 namespace Honoplay.Application.Tenants.Commands.UpdateTenant
 {
@@ -31,21 +30,21 @@ namespace Honoplay.Application.Tenants.Commands.UpdateTenant
             {
                 try
                 {
-                    var entity = await _context.Tenants.SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+                    var tenant = await _context.Tenants.SingleOrDefaultAsync(x => x.Id == request.Id && x.TenantAdminUsers.Any(y => y.AdminUserId == request.UpdatedBy), cancellationToken);
 
-                    if (entity == null)
+                    if (tenant is null)
                     {
                         throw new NotFoundException(nameof(Tenant), request.Id);
                     }
 
-                    entity.Name = request.Name;
-                    entity.HostName = request.HostName;
-                    entity.Description = request.Description;
-                    entity.Logo = request.Logo;
-                    entity.UpdatedBy = request.UpdatedBy;
-                    entity.UpdatedAt = updatedAt;
+                    tenant.Name = request.Name;
+                    tenant.HostName = request.HostName;
+                    tenant.Description = request.Description;
+                    tenant.Logo = request.Logo;
+                    tenant.UpdatedBy = request.UpdatedBy;
+                    tenant.UpdatedAt = updatedAt;
 
-                    _context.Tenants.Update(entity);
+                    _context.Tenants.Update(tenant);
                     await _context.SaveChangesAsync(cancellationToken);
 
                     transaction.Commit();
@@ -61,7 +60,7 @@ namespace Honoplay.Application.Tenants.Commands.UpdateTenant
                     transaction.Rollback();
                     throw;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     transaction.Rollback();
                     throw new TransactionException();

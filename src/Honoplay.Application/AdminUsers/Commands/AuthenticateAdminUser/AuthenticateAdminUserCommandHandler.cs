@@ -1,13 +1,13 @@
-﻿using Honoplay.Application.Exceptions;
-using Honoplay.Common.Extensions;
+﻿using Honoplay.Common.Extensions;
 using Honoplay.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
+using Honoplay.Application._Exceptions;
 
 
 namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
@@ -24,25 +24,26 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
         public async Task<AdminUserAuthenticateModel> Handle(AuthenticateAdminUserCommand request, CancellationToken cancellationToken)
         {
             var adminUser = await _context.AdminUsers
-                                    .Where(u => u.Email.Equals(request.Email, StringComparison.InvariantCultureIgnoreCase))
-                                    .ToListAsync();
+                                    .SingleOrDefaultAsync(u => u.Email.Equals(request.Email, StringComparison.InvariantCultureIgnoreCase));
 
-            if (adminUser.Count < 1 || adminUser.Count > 1)
+            if (adminUser is null)
             {
                 throw new NotFoundException(nameof(request.Email), request.Email);
             }
 
-            var salt = adminUser[0].PasswordSalt;
+            var salt = adminUser.PasswordSalt;
             var passwordHash = request.Password?.GetSHA512(salt);
             var today = DateTimeOffset.Now;
-            var isPasswordExpired = today.Subtract(adminUser[0].LastPasswordChangeDateTime).Days > 90;
+            var isPasswordExpired = today.Subtract(adminUser.LastPasswordChangeDateTime).Days > 90;
+            List<Guid> tenants = new List<Guid>();
 
-            if (!passwordHash.SequenceEqual(adminUser[0].Password))
+            if (!passwordHash.SequenceEqual(adminUser.Password))
             {
-                adminUser[0].NumberOfInvalidPasswordAttemps = Math.Min(adminUser[0].NumberOfInvalidPasswordAttemps + 1, int.MaxValue);
+                adminUser.NumberOfInvalidPasswordAttemps = Math.Min(adminUser.NumberOfInvalidPasswordAttemps + 1, int.MaxValue);
                 try
                 {
                     await _context.SaveChangesAsync(cancellationToken);
+                    tenants =  _context.TenantAdminUsers.Where(x => x.AdminUserId == adminUser.Id).AsNoTracking().Select(x => x.TenantId).ToList();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -57,10 +58,11 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
                 throw new Exception();
             }
 
-            return new AdminUserAuthenticateModel(id: adminUser[0].Id,
-                                           email: adminUser[0].Email,
-                                           name: adminUser[0].Name,
-                                           isPasswordExpired: isPasswordExpired);
+            return new AdminUserAuthenticateModel(id: adminUser.Id,
+                                           email: adminUser.Email,
+                                           name: adminUser.Name,
+                                           isPasswordExpired: isPasswordExpired,
+                                           tenants: tenants);
         }
     }
 }
