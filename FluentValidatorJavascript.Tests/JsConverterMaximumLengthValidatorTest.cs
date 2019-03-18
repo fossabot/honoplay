@@ -17,12 +17,10 @@ namespace FluentValidatorJavascript.Tests
 
             var validationRules = new SeedDataValidator();
 
-            var actual = TestExtensions.Invoke(seedData, validationRules);
-            var expected = TestExtensions.ErrorsCount(seedData, validationRules);
+            var actual = TestExtensions.GetActualErrorCount(seedData, validationRules);
+            var expected = TestExtensions.GetExpectErrorCount(seedData, validationRules);
 
-            Assert.NotEmpty(actual);
-
-            Assert.Equal(expected, actual.Count);
+            Assert.Equal(expected, actual);
 
         }
         [Fact]
@@ -36,12 +34,10 @@ namespace FluentValidatorJavascript.Tests
 
             var validators = new SeedDataValidator();
 
-            var actual = TestExtensions.Invoke(seedData, validators);
-            var expected = TestExtensions.ErrorsCount(seedData, validators);
+            var actual = TestExtensions.GetActualErrorCount(seedData, validators);
+            var expected = TestExtensions.GetExpectErrorCount(seedData, validators);
 
-            Assert.Empty(actual);
-
-            Assert.Equal(expected, actual.Count);
+            Assert.Equal(expected, actual);
         }
         [Fact]
         public void WhenValueIsNull_MaximumLengthValidator_ExpectErrorCount0()
@@ -54,12 +50,10 @@ namespace FluentValidatorJavascript.Tests
 
             var validators = new SeedDataValidator();
 
-            var actual = TestExtensions.Invoke(seedData, validators);
-            var expected = TestExtensions.ErrorsCount(seedData, validators);
+            var actual = TestExtensions.GetActualErrorCount(seedData, validators);
+            var expected = TestExtensions.GetExpectErrorCount(seedData, validators);           
 
-            Assert.Empty(actual);
-
-            Assert.Equal(expected, actual.Count);
+            Assert.Equal(expected, actual);
         }
     }
 }

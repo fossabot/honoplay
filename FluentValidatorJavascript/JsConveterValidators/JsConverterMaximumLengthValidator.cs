@@ -1,4 +1,7 @@
-﻿using FluentValidation.Validators;
+﻿using System.Globalization;
+using FluentValidation.Internal;
+using FluentValidation.Resources;
+using FluentValidation.Validators;
 using FluentValidatorJavascript.IJsConverterValidators;
 
 namespace FluentValidatorJavascript.JsConveterValidators
@@ -13,8 +16,20 @@ namespace FluentValidatorJavascript.JsConveterValidators
 
         public override string GetJs(string propertyName)
         {
+            var languageManager = new LanguageManager();
+
+            var replacePropName = propertyName.SplitPascalCase();
+
+            var errorMessage = languageManager.GetString(nameof(MinimumLengthValidator), CultureInfo.CurrentCulture)
+                                              .Replace("{PropertyName}", replacePropName)
+                                              .Replace("{MinLength}", _validator.Max.ToString())
+                                              .Replace("{TotalLength}", $"'+obj.{propertyName}.length+'");
+
+
             return
-                $"\tif (obj.{propertyName} !== null &&obj.{propertyName}.length > {_validator.Max}) errors.push('MaximumLengthValidator');\n";
+                $@"if (obj.{propertyName} !== null &&obj.{propertyName}.length > {_validator.Max}) {{
+                    errors.push(""{errorMessage}"");
+                }};";
         }
     }
 }

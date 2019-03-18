@@ -14,6 +14,8 @@ namespace FluentValidator.Tests.Seed
             RuleFor(rf => rf.MinimumLengthValidatorProp).MinimumLength(4);
             RuleFor(rf => rf.NotNullValidatorProp).NotNull();
             RuleFor(rf => rf.NotEmptyValidatorProp).NotEmpty();
+            RuleFor(rf => rf.NotNullValidatorProp).NotNull();
+            RuleFor(rf => rf.IBMMakeStuffAndSellIt).NotNull();
         }
     }
 }

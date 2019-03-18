@@ -1,4 +1,7 @@
-﻿using FluentValidation.Validators;
+﻿using System.Globalization;
+using FluentValidation.Internal;
+using FluentValidation.Resources;
+using FluentValidation.Validators;
 using FluentValidatorJavascript.IJsConverterValidators;
 
 namespace FluentValidatorJavascript.JsConveterValidators
@@ -11,30 +14,41 @@ namespace FluentValidatorJavascript.JsConveterValidators
 
         public override string GetJs(string propertyName)
         {
-            return $@"var value = obj.{propertyName};
-            if (value !== null) {{
-            if (!/[^0-9-\s]+/.test(value)) {{
+            LanguageManager languageManager = new LanguageManager();
 
-                var nCheck = 0, nDigit = 0, bEven = false;
+            var replacePropName = propertyName.SplitPascalCase();
 
-                value = value.replace(/\D/g, '');
+            var errorMessage = languageManager.GetString(key: nameof(CreditCardValidator), CultureInfo.CurrentCulture)
+                                                .Replace(oldValue: "{PropertyName}",
+                                                         newValue: replacePropName);
 
-                for (var n = value.length - 1; n >= 0; n--) {{
-                    var cDigit = value.charAt(n),
-                        nDigit = parseInt(cDigit, 10);
+            return 
+                $@"var value = obj.{propertyName};
+                    if (value !== null) {{
+                        if (!/[^0-9-\s]+/.test(value)) {{
 
-                    if (bEven) {{
-                        if ((nDigit *= 2) > 9) nDigit -= 9;
-                    }}
+                            var nCheck = 0, nDigit = 0, bEven = false;
 
-                    nCheck += nDigit;
-                    bEven = !bEven;
-                }}
-                if (!(nCheck % 10) == 0) errors.push('CreditCardValidator');
-            }} else {{
-                errors.push('CreditCardValidator');
-            }}
-            }}";
+                            value = value.replace(/\D/g, '');
+
+                            for (var n = value.length - 1; n >= 0; n--) {{
+                                var cDigit = value.charAt(n),
+                                    nDigit = parseInt(cDigit, 10);
+
+                                if (bEven) {{
+                                    if ((nDigit *= 2) > 9) nDigit -= 9;
+                                    }}
+
+                                nCheck += nDigit;
+                                bEven = !bEven;
+                                }}
+                            if (!(nCheck % 10) == 0) {{ 
+                                    errors.push(""{errorMessage}""); 
+                                  }}
+                        }} else {{
+                        errors.push(""{errorMessage}""); 
+                        }}
+                }}";
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using FluentValidation.Validators;
+﻿using System.Globalization;
+using FluentValidation.Resources;
+using FluentValidation.Validators;
 using FluentValidatorJavascript.IJsConverterValidators;
 
 namespace FluentValidatorJavascript.JsConveterValidators
@@ -11,7 +13,12 @@ namespace FluentValidatorJavascript.JsConveterValidators
 
         public override string GetJs(string propertyName)
         {
-            return $"\t if(!obj.{propertyName} || 0 === obj.{propertyName}.length) errors.push('NotEmptyValidator'); \n";
+            LanguageManager languageManager = new LanguageManager();
+            return
+                $@"if(!obj.{propertyName} || 0 === obj.{propertyName}.length) {{
+                            errors.push(""{languageManager.GetString(nameof(NotEmptyValidator), CultureInfo.CurrentCulture)
+                                .Replace("'{PropertyName}'", "'" + propertyName + "'")}"");
+                }}";
         }
     }
 }

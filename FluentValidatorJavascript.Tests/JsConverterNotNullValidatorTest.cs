@@ -1,4 +1,5 @@
-﻿using FluentValidator.Tests.Extensions;
+﻿using System.Linq;
+using FluentValidator.Tests.Extensions;
 using FluentValidator.Tests.Seed;
 using Xunit;
 
@@ -17,12 +18,10 @@ namespace FluentValidatorJavascript.Tests
 
             var validationRules = new SeedDataValidator();
 
-            var actual = TestExtensions.Invoke(seedData, validationRules);
-            var expected = TestExtensions.ErrorsCount(seedData, validationRules);
+            var actual = TestExtensions.GetActualErrorCount(seedData, validationRules);
+            var expected = TestExtensions.GetExpectErrorCount(seedData, validationRules);
 
-            Assert.Empty(actual);
-
-            Assert.Equal(expected, actual.Count);
+            Assert.Equal(expected, actual);
 
         }
         [Fact]
@@ -30,19 +29,37 @@ namespace FluentValidatorJavascript.Tests
         {
             var seedData = new SeedData
             {
-                //RuleFor(rf => rf.NotEmptyValidatorProp).NotEmpty();
+                //RuleFor(rf => rf.NotNullValidatorProp).NotNull();
                 NotNullValidatorProp = null
             };
 
             var validationRules = new SeedDataValidator();
 
-            var actual = TestExtensions.Invoke(seedData, validationRules);
-            var expected = TestExtensions.ErrorsCount(seedData, validationRules);
+            var actual = TestExtensions.GetActualErrorCount(seedData, validationRules);
+            var expected = TestExtensions.GetExpectErrorCount(seedData, validationRules);
+            
 
-            Assert.NotEmpty(actual);
+            Assert.Equal(expected, actual);
 
-            Assert.Equal(expected, actual.Count);
+        }
 
+        [Fact]
+        public void WhenValueIsNull_NotNullValidatorMessage_ExpectJsConverterValidatorMessageAreSame()
+        {
+            var seedData = new SeedData
+            {
+                //RuleFor(rf => rf.NotNullValidatorProp).NotNull();
+                NotNullValidatorProp = "asd",
+                IBMMakeStuffAndSellIt = null
+            };
+
+            var validationRules = new SeedDataValidator();
+
+            var actual = TestExtensions.GetActualErrors(seedData, validationRules).First();
+            var expected = TestExtensions.GetExpectErrors(seedData, validationRules).First().ErrorMessage;
+
+
+            Assert.Equal(expected, actual);
         }
 
     }
