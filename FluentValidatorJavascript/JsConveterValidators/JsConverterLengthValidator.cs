@@ -16,11 +16,10 @@ namespace FluentValidatorJavascript.JsConveterValidators
 
         public override string GetJs(string propertyName)
         {
-            LanguageManager languageManager = new LanguageManager();
 
             var replacePropName = propertyName.SplitPascalCase();
 
-            var errorMessage = languageManager.GetString(key: nameof(LengthValidator), culture: CultureInfo.CurrentCulture)
+            var errorMessage = LanguageManager.GetString(key: nameof(LengthValidator), culture: CultureInfo.CurrentCulture)
                                               .Replace(oldValue: "{PropertyName}", newValue: replacePropName)
                                               .Replace(oldValue: "{MinLength}", newValue: _validator.Min.ToString())
                                               .Replace(oldValue: "{MaxLength}", newValue: _validator.Max.ToString())

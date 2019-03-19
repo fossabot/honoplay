@@ -14,11 +14,9 @@ namespace FluentValidatorJavascript.JsConveterValidators
 
         public override string GetJs(string propertyName)
         {
-            var languageManager = new LanguageManager();
-
             var replacePropName = propertyName.SplitPascalCase();
 
-            var errorMessage = languageManager.GetString(key: nameof(NotNullValidator), CultureInfo.CurrentCulture)
+            var errorMessage = LanguageManager.GetString(key: nameof(NotNullValidator), CultureInfo.CurrentCulture)
                                    .Replace(oldValue: "{PropertyName}",newValue: replacePropName);
 
             return

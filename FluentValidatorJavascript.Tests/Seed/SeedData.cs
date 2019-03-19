@@ -10,6 +10,6 @@
         public string CreditCardValidatorProp { get; set; } = "5105105105105100";
         public string NotEmptyValidatorProp { get; set; } = "lorem";
         public int? InclusiveBetweenValidatorProp { get; set; } = 19;
-        public string IBMMakeStuffAndSellIt { get; set; } = "qdqwd";
+        public string CompositeValidatorProp { get; set; } = "lorem@gmail.com";
     }
 }

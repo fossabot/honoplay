@@ -38,7 +38,7 @@ namespace FluentValidatorJavascript.Tests
 
             var actual = TestExtensions.GetActualErrorCount(seedData, validationRules);
             var expected = TestExtensions.GetExpectErrorCount(seedData, validationRules);
-            
+
 
             Assert.Equal(expected, actual);
 
@@ -62,7 +62,7 @@ namespace FluentValidatorJavascript.Tests
             Assert.Equal(expected, actual);
         }
         [Fact]
-        public void WhenValueIsNotNull_NotNullValidatorMessage__ExpectJsConverterValidatorMessageAreNullAndEqual()
+        public void WhenValueIsNotNull_NotNullValidatorMessage_ExpectJsConverterValidatorMessageAreNullAndEqual()
         {
             var seedData = new SeedData
             {
@@ -80,7 +80,7 @@ namespace FluentValidatorJavascript.Tests
             Assert.Equal(expected, actual);
         }
         [Fact]
-        public void WhenValueIsEmpty_NotNullValidatorMessage__ExpectJsConverterValidatorMessageAreNullAndEqual()
+        public void WhenValueIsEmpty_NotNullValidatorMessage_ExpectJsConverterValidatorMessageAreNullAndEqual()
         {
             var seedData = new SeedData
             {

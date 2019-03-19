@@ -15,7 +15,7 @@ namespace FluentValidator.Tests.Seed
             RuleFor(rf => rf.NotNullValidatorProp).NotNull();
             RuleFor(rf => rf.NotEmptyValidatorProp).NotEmpty();
             RuleFor(rf => rf.NotNullValidatorProp).NotNull();
-            RuleFor(rf => rf.IBMMakeStuffAndSellIt).NotNull();
+            RuleFor(rf => rf.CompositeValidatorProp).NotNull().EmailAddress();
         }
     }
 }

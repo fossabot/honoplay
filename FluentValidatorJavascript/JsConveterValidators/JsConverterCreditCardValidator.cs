@@ -14,11 +14,11 @@ namespace FluentValidatorJavascript.JsConveterValidators
 
         public override string GetJs(string propertyName)
         {
-            LanguageManager languageManager = new LanguageManager();
+            
 
             var replacePropName = propertyName.SplitPascalCase();
 
-            var errorMessage = languageManager.GetString(key: nameof(CreditCardValidator), culture: CultureInfo.CurrentCulture)
+            var errorMessage = LanguageManager.GetString(key: nameof(CreditCardValidator), culture: CultureInfo.CurrentCulture)
                                               .Replace(oldValue: "{PropertyName}", newValue: replacePropName);
 
             return
