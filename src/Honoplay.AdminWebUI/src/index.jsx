@@ -4,7 +4,6 @@ import {createStore,applyMiddleware,combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import App from './App';
 
-
 var createHistory = require('history').createBrowserHistory;
 import { Router, Route } from 'react-router';
 import { routerReducer, routerMiddleware } from 'react-router-redux';
@@ -25,4 +24,4 @@ render(
        </Router>
     </Provider>,
     document.getElementById('root'),
-    );
+);

@@ -1,79 +1,11 @@
 import React from 'react';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faQuestionCircle, faListOl, faGraduationCap, faUsers, faCog, faChartPie } from '@fortawesome/free-solid-svg-icons';
-library.add(faQuestionCircle, faListOl, faGraduationCap, faUsers, faCog, faChartPie );
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
 import MenuIcon from '@material-ui/icons/Menu';
-
 import { withStyles } from '@material-ui/core/styles';
-
+import MenuItem from './MenuItem';
 import {AppBar, CssBaseline, Drawer, 
-        Hidden, IconButton,List, 
-        ListItem, ListItemText,Toolbar,
-        Typography, Divider} from '@material-ui/core';
-
-import {Link} from 'react-router-dom';
-
-
-const drawerWidth = 240;
-const styles = theme => ({
-  root: {
-    display: 'flex',
-  },
-  drawer: {
-    [theme.breakpoints.up('sm')]: {
-      width: drawerWidth,
-      flexShrink: 0,
-    },
-  },
-  appBar: {
-    marginLeft: drawerWidth,
-    [theme.breakpoints.up('sm')]: {
-      display:'none',
-    },
-  },
-  menuButton: {
-    marginRight: 20,
-    [theme.breakpoints.up('sm')]: {
-      display: 'none',
-    },
-  },
-  toolbar: theme.mixins.toolbar, //yukardan boşluk veriyor
-  drawerPaper: {
-    width: drawerWidth,
-    background: '#e92428',
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3,
-    paddingTop: 0
-  },
-  Divider: {
-    height:1,
-    backgroundColor:'#e48e8f'
-  },
-  List: {
-    paddingTop:0,
-  },
-  ListItemLink: {
-    paddingTop:20,
-    paddingBottom:20
-  },
-  fontawesome: {
-    color: 'white',
-    fontSize: 17
-  },
-  Typography: {
-    color: 'white',
-    fontSize: 17
- }
-});
-
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
+        Hidden, IconButton,Toolbar, Divider,List} from '@material-ui/core';
+import Style from './Style';
 
 class Layout extends React.Component {
 
@@ -83,6 +15,7 @@ class Layout extends React.Component {
     this.state = {
         mobileOpen: false,
     };
+
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this)
   }
   handleDrawerToggle()
@@ -92,63 +25,24 @@ class Layout extends React.Component {
 
   render() {
     const { classes, theme , children} = this.props;
-
     const drawer = (
       <div>
         <div className={classes.toolbar} />
         <Divider className={classes.Divider} />
         <List component="nav" className={classes.List}>
-            <ListItemLink className={classes.ListItemLink} component={Link} to="/sorular">
-              <FontAwesomeIcon className={classes.fontawesome} icon="question-circle" />
-              <ListItemText
-                primary={<Typography className={classes.Typography}> Sorular </Typography>}
-              />             
-            </ListItemLink>
-            <Divider className={classes.Divider}/>
-            <ListItemLink className={classes.ListItemLink} component={Link} to="/egitimserisi">
-              <FontAwesomeIcon className={classes.fontawesome} icon="list-ol" />
-              <ListItemText
-                primary={<Typography className={classes.Typography}> Eğitim Serisi </Typography>}
-              />             
-            </ListItemLink>
-            <Divider className={classes.Divider}/>
-            <ListItemLink className={classes.ListItemLink} component={Link} to="/egitmenler">
-              <FontAwesomeIcon className={classes.fontawesome} icon="graduation-cap" />
-              <ListItemText
-                primary={<Typography className={classes.Typography}> Eğitmenler </Typography>}
-              />             
-            </ListItemLink>
-            <Divider className={classes.Divider}/>
-            <ListItemLink className={classes.ListItemLink} component={Link} to="/katilimcilar">
-              <FontAwesomeIcon className={classes.fontawesome} icon="users" />
-              <ListItemText
-                primary={<Typography className={classes.Typography}> Katılımcılar </Typography>}
-              />             
-            </ListItemLink>
-            <Divider className={classes.Divider}/>
-            <ListItemLink className={classes.ListItemLink} component={Link} to="/kullaniciyonetimi">
-              <FontAwesomeIcon className={classes.fontawesome} icon="cog" />
-              <ListItemText
-                primary={<Typography className={classes.Typography}> Kullanıcı Yönetimi </Typography>}
-              />             
-            </ListItemLink>
-            <Divider className={classes.Divider}/>
-            <ListItemLink className={classes.ListItemLink} component={Link} to="/raporlar">
-              <FontAwesomeIcon className={classes.fontawesome} icon="chart-pie" />
-              <ListItemText
-                primary={<Typography className={classes.Typography}> Raporlar </Typography>}
-              />             
-            </ListItemLink>
-            <Divider className={classes.Divider}/>
+          <MenuItem pageLink={"/sorular"} pageIcon={"question-circle"} pageName={"Sorular"} />
+          <MenuItem pageLink={"/egitimserisi"} pageIcon={"list-ol"} pageName={"Eğitim Serisi"} />
+          <MenuItem pageLink={"/egitmenler"} pageIcon={"graduation-cap"} pageName={"Eğitmenler"} />
+          <MenuItem pageLink={"/katilimcilar"} pageIcon={"users"} pageName={"Katılımcılar"} />
+          <MenuItem pageLink={"/raporlar"} pageIcon={"chart-pie"} pageName={"Raporlar"} />
         </List>
       </div>
     );
-
     return (
       <div className={classes.root}>
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar style={{background: '#e92428'}}>
+          <Toolbar className={classes.Toolbar}>
             <IconButton
               color="inherit"
               aria-label="Open drawer"
@@ -201,4 +95,4 @@ Layout.propTypes = {
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(Layout);
+export default withStyles(Style, { withTheme: true })(Layout);

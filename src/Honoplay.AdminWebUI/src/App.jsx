@@ -5,9 +5,6 @@ import Sorular from "./views/Sorular";
 import EgitimSerisi from "./views/EgitimSerisi";
 import Layout from "./components/Layout";
 
-
-
-
 class App extends Component {
     render() {
         return (
