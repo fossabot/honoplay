@@ -18,11 +18,10 @@ namespace FluentValidatorJavascript.JsConveterValidators
 
             var replacePropName = propertyName.SplitPascalCase();
 
-            var errorMessage = languageManager.GetString(key: nameof(CreditCardValidator), CultureInfo.CurrentCulture)
-                                                .Replace(oldValue: "{PropertyName}",
-                                                         newValue: replacePropName);
+            var errorMessage = languageManager.GetString(key: nameof(CreditCardValidator), culture: CultureInfo.CurrentCulture)
+                                              .Replace(oldValue: "{PropertyName}", newValue: replacePropName);
 
-            return 
+            return
                 $@"var value = obj.{propertyName};
                     if (value !== null) {{
                         if (!/[^0-9-\s]+/.test(value)) {{

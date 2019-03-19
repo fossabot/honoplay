@@ -1,5 +1,6 @@
 ﻿using FluentValidator.Tests.Extensions;
 using FluentValidator.Tests.Seed;
+using System.Linq;
 using Xunit;
 
 namespace FluentValidatorJavascript.Tests
@@ -9,7 +10,7 @@ namespace FluentValidatorJavascript.Tests
 
         [Fact]
         public void WhenEmailValueIsNotCorrectFormat_EmailValidator_ExpectErrorCount1()
-        {   
+        {
             var seedData = new SeedData
             {
                 //RuleFor(rf => rf.EmailValidatorProp).EmailAddress();
@@ -25,7 +26,7 @@ namespace FluentValidatorJavascript.Tests
         }
         [Fact]
         public void WhenEmailValueIsCorrectFormat_EmailValidator_ExpectErrorCount0()
-        {   
+        {
             var seedData = new SeedData
             {
                 //RuleFor(rf => rf.EmailValidatorProp).EmailAddress();
@@ -53,6 +54,42 @@ namespace FluentValidatorJavascript.Tests
             var actual = TestExtensions.GetActualErrorCount(seedData, validators);
             var expected = TestExtensions.GetExpectErrorCount(seedData, validators);
 
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void WhenEmailValueIsNotCorrectFormat_EmailValidator_ExpectJsConverterValidatorMessageAreEqual()
+        {
+            var seedData = new SeedData
+            {
+                //RuleFor(rf => rf.EmailValidatorProp).EmailAddress();
+                EmailValidatorProp = "sample"
+            };
+
+            var validators = new SeedDataValidator();
+
+            var actual = TestExtensions.GetActualErrors(seedData, validators).FirstOrDefault();
+            var expected = TestExtensions.GetExpectErrorMessages(seedData, validators).FirstOrDefault();
+
+            Assert.NotNull(actual);
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void WhenEmailValueIsCorrectFormat_EmailValidator_ExpectJsConverterValidatorMessageIsNullAndMessageAreEquals()
+        {
+            var seedData = new SeedData
+            {
+                //RuleFor(rf => rf.EmailValidatorProp).EmailAddress();
+                EmailValidatorProp = "sample@gmail.com"
+            };
+
+            var validators = new SeedDataValidator();
+
+            var actual = TestExtensions.GetActualErrors(seedData, validators).FirstOrDefault();
+            var expected = TestExtensions.GetExpectErrorMessages(seedData, validators).FirstOrDefault();
+
+            Assert.Null(actual);
             Assert.Equal(expected, actual);
         }
     }

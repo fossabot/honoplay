@@ -19,8 +19,7 @@ namespace FluentValidatorJavascript.JsConveterValidators
             var replacePropName = propertyName.SplitPascalCase();
 
             var errorMessage = languageManager.GetString(key: nameof(NotNullValidator), CultureInfo.CurrentCulture)
-                                   .Replace(oldValue: "{PropertyName}",
-                                            newValue: replacePropName);
+                                   .Replace(oldValue: "{PropertyName}",newValue: replacePropName);
 
             return
                 $@"if (obj.{propertyName} === null){{

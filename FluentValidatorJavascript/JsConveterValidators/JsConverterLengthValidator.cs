@@ -20,11 +20,11 @@ namespace FluentValidatorJavascript.JsConveterValidators
 
             var replacePropName = propertyName.SplitPascalCase();
 
-            var errorMessage = languageManager.GetString(nameof(LengthValidator), CultureInfo.CurrentCulture)
-                                              .Replace("{PropertyName}", replacePropName)
-                                              .Replace("{MinLength}", _validator.Min.ToString())
-                                              .Replace("{MaxLength}", _validator.Max.ToString())
-                                              .Replace("{TotalLength}", $"'+obj.{propertyName}.length+'");
+            var errorMessage = languageManager.GetString(key: nameof(LengthValidator), culture: CultureInfo.CurrentCulture)
+                                              .Replace(oldValue: "{PropertyName}", newValue: replacePropName)
+                                              .Replace(oldValue: "{MinLength}", newValue: _validator.Min.ToString())
+                                              .Replace(oldValue: "{MaxLength}", newValue: _validator.Max.ToString())
+                                              .Replace(oldValue: "{TotalLength}", newValue: $"\" + obj.{propertyName}.length + \"");
 
             return
                 $@"if ((obj.{propertyName} !== null) && (obj.{propertyName}.length < {_validator.Min} || obj.{propertyName}.length > {_validator.Max})) {{

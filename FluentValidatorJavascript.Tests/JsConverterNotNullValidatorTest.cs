@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FluentValidator.Tests.Extensions;
 using FluentValidator.Tests.Seed;
 using Xunit;
@@ -44,20 +45,55 @@ namespace FluentValidatorJavascript.Tests
         }
 
         [Fact]
-        public void WhenValueIsNull_NotNullValidatorMessage_ExpectJsConverterValidatorMessageAreSame()
+        public void WhenValueIsNull_NotNullValidatorMessage_ExpectJsConverterValidatorMessageAreEqual()
         {
             var seedData = new SeedData
             {
                 //RuleFor(rf => rf.NotNullValidatorProp).NotNull();
-                NotNullValidatorProp = "asd",
-                IBMMakeStuffAndSellIt = null
+                NotNullValidatorProp = null
             };
 
             var validationRules = new SeedDataValidator();
 
-            var actual = TestExtensions.GetActualErrors(seedData, validationRules).First();
-            var expected = TestExtensions.GetExpectErrors(seedData, validationRules).First().ErrorMessage;
+            var actual = TestExtensions.GetActualErrors(seedData, validationRules).FirstOrDefault();
+            var expected = TestExtensions.GetExpectErrorMessages(seedData, validationRules).FirstOrDefault();
 
+
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void WhenValueIsNotNull_NotNullValidatorMessage__ExpectJsConverterValidatorMessageAreNullAndEqual()
+        {
+            var seedData = new SeedData
+            {
+                //RuleFor(rf => rf.NotNullValidatorProp).NotNull();
+                NotNullValidatorProp = "asd"
+            };
+
+            var validationRules = new SeedDataValidator();
+
+            var actual = TestExtensions.GetActualErrors(seedData, validationRules).FirstOrDefault();
+            var expected = TestExtensions.GetExpectErrorMessages(seedData, validationRules).FirstOrDefault();
+
+            Assert.Null(actual);
+
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void WhenValueIsEmpty_NotNullValidatorMessage__ExpectJsConverterValidatorMessageAreNullAndEqual()
+        {
+            var seedData = new SeedData
+            {
+                //RuleFor(rf => rf.NotNullValidatorProp).NotNull();
+                NotNullValidatorProp = string.Empty
+            };
+
+            var validationRules = new SeedDataValidator();
+
+            var actual = TestExtensions.GetActualErrors(seedData, validationRules).FirstOrDefault();
+            var expected = TestExtensions.GetExpectErrorMessages(seedData, validationRules).FirstOrDefault();
+
+            Assert.Null(actual);
 
             Assert.Equal(expected, actual);
         }

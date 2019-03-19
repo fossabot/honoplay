@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using FluentValidation.Internal;
 using FluentValidation.Resources;
 using FluentValidation.Validators;
 using FluentValidatorJavascript.IJsConverterValidators;
@@ -17,12 +18,16 @@ namespace FluentValidatorJavascript.JsConveterValidators
         {
             LanguageManager languageManager = new LanguageManager();
 
+            var replacePropName = propertyName.SplitPascalCase();
+
+            var errorMessage = languageManager.GetString(nameof(MinimumLengthValidator), CultureInfo.CurrentCulture)
+                                              .Replace(oldValue:"{PropertyName}", newValue: replacePropName)
+                                              .Replace(oldValue:"{MinLength}", newValue: _validator.Min.ToString())
+                                              .Replace(oldValue: "{TotalLength}", newValue: $"\" + obj.{propertyName}.length + \"");
+
             return
                 $@"if (obj.{propertyName} !== null && obj.{propertyName}.length < {_validator.Min}){{
-                    errors.push(""{languageManager.GetString(nameof(MinimumLengthValidator), CultureInfo.CurrentCulture)
-                        .Replace("'{PropertyName}'", "'" + propertyName + "'")
-                        .Replace("{MinLength}", _validator.Min.ToString())
-                        .Replace("{TotalLength}", $"'+obj.{propertyName}.length+'")}"")
+                    errors.push(""{errorMessage}"");
                 }};";
         }
     }

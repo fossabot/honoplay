@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using FluentValidation.Internal;
 using FluentValidation.Resources;
 using FluentValidation.Validators;
 using FluentValidatorJavascript.IJsConverterValidators;
@@ -14,10 +15,15 @@ namespace FluentValidatorJavascript.JsConveterValidators
         public override string GetJs(string propertyName)
         {
             LanguageManager languageManager = new LanguageManager();
+
+            var replacePropName = propertyName.SplitPascalCase();
+
+            var errorMessage = languageManager.GetString(key: nameof(NotEmptyValidator), CultureInfo.CurrentCulture)
+                                              .Replace(oldValue: "{PropertyName}",newValue: replacePropName);
+
             return
                 $@"if(!obj.{propertyName} || 0 === obj.{propertyName}.length) {{
-                            errors.push(""{languageManager.GetString(nameof(NotEmptyValidator), CultureInfo.CurrentCulture)
-                                .Replace("'{PropertyName}'", "'" + propertyName + "'")}"");
+                            errors.push(""{errorMessage}"");
                 }}";
         }
     }

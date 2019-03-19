@@ -9,7 +9,7 @@ namespace FluentValidator.Tests.Extensions
 {
     public static class TestExtensions
     {
-        public static IList<string> GetActualErrors<T>(T seedData, AbstractValidator<T> abstractValidator)
+        public static List<string> GetActualErrors<T>(T seedData, AbstractValidator<T> abstractValidator)
         {
             var js = JsConverter.GetJavascript(abstractValidator);
 
@@ -23,13 +23,18 @@ namespace FluentValidator.Tests.Extensions
             return GetActualErrors(seedData, abstractValidator).Count;
 
         }
-        public static IList<ValidationFailure> GetExpectErrors<T>(T seedData, AbstractValidator<T> abstractValidator)
+        public static List<ValidationFailure> GetExpectErrors<T>(T seedData, AbstractValidator<T> abstractValidator)
         {
-            return abstractValidator.Validate(seedData).Errors;
+            return abstractValidator.Validate(seedData).Errors.ToList();
         }
         public static int GetExpectErrorCount<T>(T seedData, AbstractValidator<T> abstractValidator)
         {
             return GetExpectErrors(seedData, abstractValidator).Count;
+        }
+
+        public static List<string> GetExpectErrorMessages<T>(T seedData, AbstractValidator<T> abstractValidator)
+        {
+            return GetExpectErrors(seedData, abstractValidator).Select(x => x.ErrorMessage).ToList();
         }
     }
 }

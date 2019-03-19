@@ -20,11 +20,11 @@ namespace FluentValidatorJavascript.JsConveterValidators
 
             var replacePropName = propertyName.SplitPascalCase();
 
-            var errorMessage = languageManager.GetString(key: nameof(InclusiveBetweenValidator), CultureInfo.CurrentCulture)
+            var errorMessage = languageManager.GetString(key: nameof(InclusiveBetweenValidator), culture: CultureInfo.CurrentCulture)
                                               .Replace(oldValue: "{PropertyName}", newValue: replacePropName)
                                               .Replace(oldValue: "{From}", newValue: _validator.From.ToString())
                                               .Replace(oldValue: "{To}", newValue: _validator.To.ToString())
-                                              .Replace(oldValue: "{Value}", newValue: $"obj.{propertyName}");
+                                              .Replace(oldValue: "{Value}", newValue: $"\"+obj.{propertyName}+\"");
             return
                 $@"if (obj.{propertyName} !== null && parseInt(obj.{propertyName}) < {_validator.From} || parseInt(obj.{propertyName})> {_validator.To}){{
                         errors.push(""{errorMessage}"");
