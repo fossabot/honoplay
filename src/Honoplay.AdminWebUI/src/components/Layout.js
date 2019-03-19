@@ -14,6 +14,9 @@ import {AppBar, CssBaseline, Drawer,
         ListItem, ListItemText,Toolbar,
         Typography, Divider} from '@material-ui/core';
 
+import {Link} from 'react-router-dom';
+
+
 const drawerWidth = 240;
 const styles = theme => ({
   root: {
@@ -45,6 +48,7 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
+    paddingTop: 0
   },
   Divider: {
     height:1,
@@ -54,8 +58,8 @@ const styles = theme => ({
     paddingTop:0,
   },
   ListItemLink: {
-    paddingTop:35,
-    paddingBottom:35
+    paddingTop:20,
+    paddingBottom:20
   },
   fontawesome: {
     color: 'white',
@@ -87,49 +91,49 @@ class Layout extends React.Component {
   };
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme , children} = this.props;
 
     const drawer = (
       <div>
         <div className={classes.toolbar} />
         <Divider className={classes.Divider} />
         <List component="nav" className={classes.List}>
-            <ListItemLink className={classes.ListItemLink} href="#simple-list">
+            <ListItemLink className={classes.ListItemLink} component={Link} to="/sorular">
               <FontAwesomeIcon className={classes.fontawesome} icon="question-circle" />
               <ListItemText
                 primary={<Typography className={classes.Typography}> Sorular </Typography>}
               />             
             </ListItemLink>
             <Divider className={classes.Divider}/>
-            <ListItemLink className={classes.ListItemLink} href="#simple-list">
+            <ListItemLink className={classes.ListItemLink} component={Link} to="/egitimserisi">
               <FontAwesomeIcon className={classes.fontawesome} icon="list-ol" />
               <ListItemText
                 primary={<Typography className={classes.Typography}> Eğitim Serisi </Typography>}
               />             
             </ListItemLink>
             <Divider className={classes.Divider}/>
-            <ListItemLink className={classes.ListItemLink} href="#simple-list">
+            <ListItemLink className={classes.ListItemLink} component={Link} to="/egitmenler">
               <FontAwesomeIcon className={classes.fontawesome} icon="graduation-cap" />
               <ListItemText
                 primary={<Typography className={classes.Typography}> Eğitmenler </Typography>}
               />             
             </ListItemLink>
             <Divider className={classes.Divider}/>
-            <ListItemLink className={classes.ListItemLink} href="#simple-list">
+            <ListItemLink className={classes.ListItemLink} component={Link} to="/katilimcilar">
               <FontAwesomeIcon className={classes.fontawesome} icon="users" />
               <ListItemText
                 primary={<Typography className={classes.Typography}> Katılımcılar </Typography>}
               />             
             </ListItemLink>
             <Divider className={classes.Divider}/>
-            <ListItemLink className={classes.ListItemLink} href="#simple-list">
+            <ListItemLink className={classes.ListItemLink} component={Link} to="/kullaniciyonetimi">
               <FontAwesomeIcon className={classes.fontawesome} icon="cog" />
               <ListItemText
                 primary={<Typography className={classes.Typography}> Kullanıcı Yönetimi </Typography>}
               />             
             </ListItemLink>
             <Divider className={classes.Divider}/>
-            <ListItemLink className={classes.ListItemLink} href="#simple-list">
+            <ListItemLink className={classes.ListItemLink} component={Link} to="/raporlar">
               <FontAwesomeIcon className={classes.fontawesome} icon="chart-pie" />
               <ListItemText
                 primary={<Typography className={classes.Typography}> Raporlar </Typography>}
@@ -184,9 +188,7 @@ class Layout extends React.Component {
         </nav>
         <main className={classes.content}>
           <div className={classes.toolbar} />
-          <Typography paragraph>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-          </Typography>
+          {children}
         </main>
       </div>
     );
