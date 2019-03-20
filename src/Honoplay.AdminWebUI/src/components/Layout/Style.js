@@ -25,6 +25,8 @@ const Style = (theme) => ({
     drawerPaper: {
       width: drawerWidth,
       background: '#e92428',
+      boxShadow: '0 .5rem 1rem rgba(0,0,0,.15)',
+      borderRight: 'none',  
     },
     content: {
       flexGrow: 1,
@@ -42,17 +44,24 @@ const Style = (theme) => ({
       background: '#e92428',
     },
     ListItemLink: {
-        paddingTop:20,
-        paddingBottom:20
+      paddingTop:20,
+      paddingBottom:20
     },
-    fontawesome: {
-        color: 'white',
-        fontSize: 15
+    fontawesome:{
+      color: 'white',
+      fontSize: 15,      
     },
     Typography: {
-        color: 'white',
-        fontSize: 15
+      color: 'white',
+      fontSize: 15
     },  
+    active: {
+       background: 'rgba(255, 255, 255, 0.12)',
+    },
+    activeFontawesome: {
+      color: '#e92428',
+      fontSize: 15,
+    }
 });
 
 export default Style;

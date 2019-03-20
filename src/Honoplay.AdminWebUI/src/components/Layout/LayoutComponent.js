@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MenuIcon from '@material-ui/icons/Menu';
 import { withStyles } from '@material-ui/core/styles';
-import MenuItem from './MenuItem';
+import ListItemComponent from './ListItemComponent';
 import {AppBar, CssBaseline, Drawer, 
-        Hidden, IconButton,Toolbar, Divider,List} from '@material-ui/core';
+        Hidden, IconButton,Toolbar, 
+        Divider,List} from '@material-ui/core';
 import Style from './Style';
 
 class Layout extends React.Component {
@@ -29,12 +30,26 @@ class Layout extends React.Component {
       <div>
         <div className={classes.toolbar} />
         <Divider className={classes.Divider} />
-        <List component="nav" className={classes.List}>
-          <MenuItem pageLink={"/sorular"} pageIcon={"question-circle"} pageName={"Sorular"} />
-          <MenuItem pageLink={"/egitimserisi"} pageIcon={"list-ol"} pageName={"Eğitim Serisi"} />
-          <MenuItem pageLink={"/egitmenler"} pageIcon={"graduation-cap"} pageName={"Eğitmenler"} />
-          <MenuItem pageLink={"/katilimcilar"} pageIcon={"users"} pageName={"Katılımcılar"} />
-          <MenuItem pageLink={"/raporlar"} pageIcon={"chart-pie"} pageName={"Raporlar"} />
+        <List component="nav" 
+              className={classes.List}>
+          <ListItemComponent pageLink={"/sorular"} 
+                             pageIcon={"question-circle"} 
+                             pageName={"Sorular"} />
+          <ListItemComponent pageLink={"/egitimserisi"} 
+                             pageIcon={"list-ol"} 
+                             pageName={"Eğitim Serisi"} />
+          <ListItemComponent pageLink={"/egitmenler"} 
+                             pageIcon={"graduation-cap"} 
+                             pageName={"Eğitmenler"} />
+          <ListItemComponent pageLink={"/katilimcilar"} 
+                             pageIcon={"users"} 
+                             pageName={"Katılımcılar"} />
+          <ListItemComponent pageLink={"/kullaniciyonetimi"} 
+                             pageIcon={"cog"} 
+                             pageName={"Kullanıcı Yönetimi"} />
+          <ListItemComponent pageLink={"/raporlar"} 
+                             pageIcon={"chart-pie"} 
+                             pageName={"Raporlar"} />
         </List>
       </div>
     );
