@@ -3,30 +3,26 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles'; 
 import {Button,MuiThemeProvider,createMuiTheme } from '@material-ui/core';
 import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';  
-
-const styles = theme => ({
-    button: {
-        margin: theme.spacing.unit,
-        color: 'white'
-    },
-});
+import Style from './Style';
 
 const theme = createMuiTheme({
     palette: {
       primary: green,
+      secondary: red
     },
 });
 
 class ButtonComponent extends React.Component {
     render() {
-        const { classes,ButtonIcon,ButtonName} = this.props;
+        const { classes,ButtonColor,ButtonIcon,ButtonName} = this.props;
  
         return (
             <div>
                 <MuiThemeProvider theme={theme}>
                     <Button variant="contained" 
-                            color="primary"
+                            color={ButtonColor}
                             className={classes.button}>
                     <FontAwesomeIcon icon={ButtonIcon}/>
                         &nbsp; {ButtonName} &nbsp;
@@ -40,4 +36,4 @@ ButtonComponent.propTypes = {
     classes: PropTypes.object.isRequired,
 };
  
-export default withStyles(styles, { withTheme: true })(ButtonComponent);
+export default withStyles(Style, { withTheme: true })(ButtonComponent);
