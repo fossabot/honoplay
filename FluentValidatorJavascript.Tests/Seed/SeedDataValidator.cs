@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FluentValidatorJavascript;
 
 namespace FluentValidator.Tests.Seed
 {
@@ -6,16 +7,48 @@ namespace FluentValidator.Tests.Seed
     {
         public SeedDataValidator()
         {
-            RuleFor(rf => rf.CreditCardValidatorProp).CreditCard();
-            RuleFor(rf => rf.EmailValidatorProp).EmailAddress();
-            RuleFor(rf => rf.InclusiveBetweenValidatorProp).InclusiveBetween(18,60);
-            RuleFor(rf => rf.LengthValidatorProp).Length(1, 6);
-            RuleFor(rf => rf.MaximumLengthValidatorProp).MaximumLength(6);
-            RuleFor(rf => rf.MinimumLengthValidatorProp).MinimumLength(4);
-            RuleFor(rf => rf.NotNullValidatorProp).NotNull();
-            RuleFor(rf => rf.NotEmptyValidatorProp).NotEmpty();
-            RuleFor(rf => rf.NotNullValidatorProp).NotNull();
-            RuleFor(rf => rf.CompositeValidatorProp).NotNull().EmailAddress();
+
+            RuleFor(rf => rf.CreditCardValidatorProp)
+                .CreditCard()
+                .WithMessage("CreditCard");
+
+            RuleFor(rf => rf.EmailValidatorProp)
+                .EmailAddress()
+                .WithMessage("Email");
+
+            RuleFor(rf => rf.InclusiveBetweenValidatorProp)
+                .InclusiveBetween(18, 60)
+                .WithMessage("InclusiveBetween");
+
+            RuleFor(rf => rf.LengthValidatorProp)
+                .Length(1, 6)
+                .WithMessage("Length");
+
+            RuleFor(rf => rf.MaximumLengthValidatorProp)
+                .MaximumLength(6)
+                .WithMessage("MaximumLength");
+
+            RuleFor(rf => rf.MinimumLengthValidatorProp)
+                .MinimumLength(4)
+                .WithMessage("MinimumLength");
+
+            RuleFor(rf => rf.NotNullValidatorProp)
+                .NotNull()
+                .WithMessage("NotNull");
+
+            RuleFor(rf => rf.NotEmptyValidatorProp)
+                .NotEmpty()
+                .WithMessage("NotEmpty");
+
+            RuleFor(rf => rf.CustomNullValidatorProp)
+                .NotNull()
+                .WithMessage("CustomNotNull");
+
+            RuleFor(rf => rf.CompositeValidatorProp)
+                .NotNull()
+                .WithMessage("CompositeNotNull")
+                .EmailAddress()
+                .WithMessage("CompositeEmail");
         }
     }
 }

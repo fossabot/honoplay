@@ -12,7 +12,6 @@ namespace FluentValidatorJavascript
         private static ILookup<Type, Type> _typeLookup;
 
         static JsConverter()
-
         {
             _typeLookup = typeof(JsConverter).Assembly.GetTypes()
                 .Where(t => t.GetInterface(nameof(IJsConverterValidator)) != null && !t.IsAbstract)
@@ -31,16 +30,19 @@ namespace FluentValidatorJavascript
             foreach (var property in props)
             {
                 var propertyName = property.Name;
+                ValidationContext validationContext = new ValidationContext(property);
+
                 foreach (var element in validator.CreateDescriptor().GetValidatorsForMember(propertyName))
                 {
+                    var errorMessage = element.Options.ErrorMessageSource.GetString(validationContext);
+
                     foreach (var converterType in _typeLookup[element.GetType()])
                     {
-                        if (Activator.CreateInstance(converterType, args: element) is IJsConverterValidator converter) sb.AppendLine(converter.GetJs(propertyName));
+                        if (Activator.CreateInstance(converterType, args: element) is IJsConverterValidator converter) sb.AppendLine(converter.GetJs(propertyName, errorMessage));
                     }
                 }
             }
             sb.AppendLine("return errors;\r\n}");
-            //sb.AppendLine("log(validate(person));");
 
             return sb.ToString();
         }

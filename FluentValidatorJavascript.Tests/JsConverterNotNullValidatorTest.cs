@@ -1,7 +1,6 @@
-﻿using System;
-using System.Linq;
-using FluentValidator.Tests.Extensions;
+﻿using FluentValidator.Tests.Extensions;
 using FluentValidator.Tests.Seed;
+using System.Linq;
 using Xunit;
 
 namespace FluentValidatorJavascript.Tests
@@ -55,6 +54,7 @@ namespace FluentValidatorJavascript.Tests
 
             var validationRules = new SeedDataValidator();
 
+
             var actual = TestExtensions.GetActualErrors(seedData, validationRules).FirstOrDefault();
             var expected = TestExtensions.GetExpectErrorMessages(seedData, validationRules).FirstOrDefault();
 
@@ -86,6 +86,24 @@ namespace FluentValidatorJavascript.Tests
             {
                 //RuleFor(rf => rf.NotNullValidatorProp).NotNull();
                 NotNullValidatorProp = string.Empty
+            };
+
+            var validationRules = new SeedDataValidator();
+
+            var actual = TestExtensions.GetActualErrors(seedData, validationRules).FirstOrDefault();
+            var expected = TestExtensions.GetExpectErrorMessages(seedData, validationRules).FirstOrDefault();
+
+            Assert.Null(actual);
+
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void WhenValueIsEmpty_CustomNotNullValidatorMessage_ExpectJsConverterValidatorMessageAreNullAndEqual()
+        {
+            var seedData = new SeedData
+            {
+                //RuleFor(rf => rf.NotNullValidatorProp).NotNull();
+                CustomNullValidatorProp = string.Empty
             };
 
             var validationRules = new SeedDataValidator();

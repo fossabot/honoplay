@@ -12,12 +12,12 @@ namespace FluentValidatorJavascript.JsConveterValidators
         {
         }
 
-        public override string GetJs(string propertyName)
+        public override string GetJs(string propertyName, string errorMessage)
         {
             var replacePropName = propertyName.SplitPascalCase();
 
-            var errorMessage = LanguageManager.GetString(key: nameof(NotEmptyValidator), CultureInfo.CurrentCulture)
-                                              .Replace(oldValue: "{PropertyName}",newValue: replacePropName);
+            //var errorMessage = LanguageManager.GetString(key: nameof(NotEmptyValidator), CultureInfo.CurrentCulture)
+            //                                  .Replace(oldValue: "{PropertyName}",newValue: replacePropName);
 
             return
                 $@"if(!obj.{propertyName} || 0 === obj.{propertyName}.length) {{

@@ -23,9 +23,9 @@ namespace FluentValidator.Tests.Extensions
             return GetActualErrors(seedData, abstractValidator).Count;
 
         }
-        public static List<ValidationFailure> GetExpectErrors<T>(T seedData, AbstractValidator<T> abstractValidator)
+        public static IList<ValidationFailure> GetExpectErrors<T>(T seedData, AbstractValidator<T> abstractValidator)
         {
-            return abstractValidator.Validate(seedData).Errors.ToList();
+            return abstractValidator.Validate(seedData).Errors;
         }
         public static int GetExpectErrorCount<T>(T seedData, AbstractValidator<T> abstractValidator)
         {

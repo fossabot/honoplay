@@ -3,6 +3,7 @@
     public class SeedData
     {
         public string NotNullValidatorProp { get; set; } = "lorem";
+        public string CustomNullValidatorProp { get; set; } = "lorem";
         public string MinimumLengthValidatorProp { get; set; } = "lorem";
         public string MaximumLengthValidatorProp { get; set; } = "lorem";
         public string LengthValidatorProp { get; set; } = "lorem";

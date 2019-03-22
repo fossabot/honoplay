@@ -12,19 +12,16 @@ namespace FluentValidatorJavascript.JsConveterValidators
         {
         }
 
-        public override string GetJs(string propertyName)
+        public override string GetJs(string propertyName,string errorMessage)
         {
-            
+
 
             var replacePropName = propertyName.SplitPascalCase();
-
-            var errorMessage = LanguageManager.GetString(key: nameof(CreditCardValidator), culture: CultureInfo.CurrentCulture)
-                                              .Replace(oldValue: "{PropertyName}", newValue: replacePropName);
 
             return
                 $@"var value = obj.{propertyName};
                     if (value !== null) {{
-                        if (!/[^0-9-\s]+/.test(value)) {{
+                        if (/[0-9-\s]+/.test(value)) {{
 
                             var nCheck = 0, nDigit = 0, bEven = false;
 

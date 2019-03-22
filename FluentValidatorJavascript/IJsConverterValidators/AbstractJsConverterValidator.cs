@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentValidation;
 using FluentValidation.Resources;
 using FluentValidation.Validators;
 
@@ -16,6 +17,6 @@ namespace FluentValidatorJavascript.IJsConverterValidators
             _validator = validator;
         }
 
-        public abstract string GetJs(string propertyName);
+        public abstract string GetJs(string propertyName,string errorMessage);
     }
 }

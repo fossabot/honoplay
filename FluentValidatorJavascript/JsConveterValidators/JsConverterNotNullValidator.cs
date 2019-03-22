@@ -1,28 +1,24 @@
-﻿using FluentValidation.Internal;
-using FluentValidation.Resources;
-using FluentValidation.Validators;
+﻿using FluentValidation.Validators;
 using FluentValidatorJavascript.IJsConverterValidators;
-using System.Globalization;
 
 namespace FluentValidatorJavascript.JsConveterValidators
 {
     public class JsConverterNotNullValidator : AbstractJsConverterValidator<NotNullValidator>
     {
+        private readonly NotNullValidator _validator;
         public JsConverterNotNullValidator(NotNullValidator validator) : base(validator)
         {
+            _validator = validator;
         }
 
-        public override string GetJs(string propertyName)
+        public override string GetJs(string propertyName, string errorMessage)
         {
-            var replacePropName = propertyName.SplitPascalCase();
-
-            var errorMessage = LanguageManager.GetString(key: nameof(NotNullValidator), CultureInfo.CurrentCulture)
-                                   .Replace(oldValue: "{PropertyName}",newValue: replacePropName);
 
             return
-                $@"if (obj.{propertyName} === null){{
+                $@"if (obj.{propertyName} == null){{
                     errors.push(""{errorMessage}"");
                 }}";
         }
+
     }
 }
