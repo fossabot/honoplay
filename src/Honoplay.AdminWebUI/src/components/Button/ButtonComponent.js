@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles'; 
 import {Button,MuiThemeProvider,createMuiTheme } from '@material-ui/core';
-import green from '@material-ui/core/colors/green';
-import red from '@material-ui/core/colors/red';
+import {green,red} from '@material-ui/core/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';  
 import Style from './Style';
 
@@ -13,6 +12,7 @@ const theme = createMuiTheme({
       secondary: red
     },
 });
+
 
 class ButtonComponent extends React.Component {
     render() {

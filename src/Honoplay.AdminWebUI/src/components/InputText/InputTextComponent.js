@@ -7,20 +7,20 @@ import Style from './Style';
   
 class InputTextComponent extends React.Component {
   render() {
-      const { classes,InputName,InputType,PlaceHolderName} = this.props;
+      const { classes,LabelName,InputId,InputType,PlaceHolderName} = this.props;
   
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
-          <Grid item sm={3} className={classes.center}>
+          <Grid item xs={3} className={classes.center}>
             <InputLabel  htmlFor="bootstrap-input" 
                          className={classes.bootstrapFormLabel}>
-                         {InputName}
+                         {LabelName}
             </InputLabel>                                   
           </Grid>
-          <Grid item sm={9}>
-            <InputBase id="bootstrap-input"
-                       defaultValue={PlaceHolderName}
+          <Grid item xs={9}>
+            <InputBase id={InputId}
+                       placeholder={PlaceHolderName}
                        type={InputType}
                        fullWidth
                        classes={{

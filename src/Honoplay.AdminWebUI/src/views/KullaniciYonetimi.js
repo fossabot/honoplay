@@ -4,6 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import {Grid, Typography} from '@material-ui/core';
 import ButtonComponent from '../components/Button/ButtonComponent';
 import InputTextComponent from '../components/InputText/InputTextComponent';
+import SearchInputComponent from '../components/InputText/SearchInputComponent';
+import TableComponent from '../components/Table/TableComponent';
 
 const styles = theme => ({
   root: {
@@ -22,12 +24,12 @@ function KullaniciYonetimi(props) {
   return (
     <div className={classes.root}>
       <Grid container spacing={24}>
-        <Grid item sm={7}>
+        <Grid item sm={9}>
             <Typography variant="h5" className={classes.Typography} >
             Kullanıcı Yönetimi
             </Typography>
         </Grid>
-        <Grid item sm={5}>
+        <Grid item sm={3}>
             <ButtonComponent ButtonColor="primary" 
                              ButtonIcon="file-excel" 
                              ButtonName="Excel'den Aktar"/>          
@@ -40,23 +42,36 @@ function KullaniciYonetimi(props) {
             </Typography>       
         </Grid>
         <Grid item sm={12}>
-          <InputTextComponent InputName="Ad" 
+          <InputTextComponent LabelName="Ad" 
+                              InputId="inputAd" 
                               PlaceHolderName="Ad" 
                               InputType="text"/>
-          <InputTextComponent InputName="Soyad" 
+          <InputTextComponent LabelName="Soyad" 
+                              InputId="inputSoyad"
                               PlaceHolderName="Soyad" 
                               InputType="text"/>
-          <InputTextComponent InputName="Kullanıcı Adı" 
+          <InputTextComponent LabelName="Kullanıcı Adı" 
+                              InputId="inputKullaniciAdi"
                               PlaceHolderName="Kullanıcı Adı" 
                               InputType="text"/>
-          <InputTextComponent InputName="Şifre" 
+          <InputTextComponent LabelName="Şifre"
+                              InputId="inputSifre" 
                               InputType="password"/>
-          <InputTextComponent InputName="Şifre Tekrar" 
+          <InputTextComponent LabelName="Şifre Tekrar" 
+                              InputId="inputSifreTekrar"
                               InputType="password"/>
         </Grid>
         <Grid item sm={9}></Grid>
         <Grid item sm={3}>
-          <ButtonComponent ButtonColor="secondary" ButtonName="Kullanıcı Oluştur"/>
+          <ButtonComponent ButtonColor="secondary"  
+                           ButtonName="Kullanıcıyı Oluştur"/>
+        </Grid>
+        <Grid item xs={12}>
+          <SearchInputComponent InputId="inputKullaniciAra"
+                                PlaceHolderName="Kullanıcı Ara"/>
+        </Grid>
+        <Grid item xs={12}>
+          <TableComponent/>
         </Grid>
       </Grid>
     </div>
