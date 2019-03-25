@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles'; 
-import {Button,MuiThemeProvider,createMuiTheme } from '@material-ui/core';
+import {Button,MuiThemeProvider,createMuiTheme,IconButton } from '@material-ui/core';
 import {green,red} from '@material-ui/core/colors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';  
 import Style from './Style';
@@ -24,8 +24,12 @@ class ButtonComponent extends React.Component {
                     <Button variant="contained" 
                             color={ButtonColor}
                             className={classes.button}>
-                    <FontAwesomeIcon icon={ButtonIcon}/>
-                        &nbsp; {ButtonName} &nbsp;
+                            {(ButtonIcon ? 
+                                <div className={classes.div}>
+                                    <FontAwesomeIcon icon={ButtonIcon}/>
+                                </div>
+                             : "" )}
+                            {ButtonName} 
                     </Button>
                 </MuiThemeProvider>
             </div>   

@@ -21,6 +21,31 @@ const styles = theme => ({
 function KullaniciYonetimi(props) {
   const { classes } = props;
 
+  const columns = ['Ad', 'Soyad', 'Kullanıcı Adı'];
+  const data = [{ 'Ad':'Şaduman',
+                  'Soyad': 'Küçük',
+                  'Kullanıcı Adı': 'sadumankucuk',
+                },
+                {
+                  'Ad':'Şaduman',
+                  'Soyad': 'Küçük',
+                  'Kullanıcı Adı': 'sadumankucuk',
+                },
+                { 'Ad':'Şaduman',
+                  'Soyad': 'Küçük',
+                  'Kullanıcı Adı': 'sadumankucuk',
+                },
+                {
+                  'Ad':'Şaduman',
+                  'Soyad': 'Küçük',
+                  'Kullanıcı Adı': 'sadumankucuk',
+                },
+                { 'Ad':'Şaduman',
+                  'Soyad': 'Küçük',
+                  'Kullanıcı Adı': 'sadumankucuk',
+                },
+              ];
+  
   return (
     <div className={classes.root}>
       <Grid container spacing={24}>
@@ -35,24 +60,14 @@ function KullaniciYonetimi(props) {
                              ButtonName="Excel'den Aktar"/>          
         </Grid>
         <Grid item sm={12}>
-            <Typography variant="body1" gutterBottom>
-            You don't have to go it alone. Master the inbound methodology and get the most out of your 
-            tools with HubSpot's legendary customer support team and a community of thousands of 
-            marketing and sales pros just like you.
-            </Typography>       
-        </Grid>
-        <Grid item sm={12}>
           <InputTextComponent LabelName="Ad" 
                               InputId="inputAd" 
-                              PlaceHolderName="Ad" 
                               InputType="text"/>
           <InputTextComponent LabelName="Soyad" 
-                              InputId="inputSoyad"
-                              PlaceHolderName="Soyad" 
+                              InputId="inputSoyad" 
                               InputType="text"/>
           <InputTextComponent LabelName="Kullanıcı Adı" 
-                              InputId="inputKullaniciAdi"
-                              PlaceHolderName="Kullanıcı Adı" 
+                              InputId="inputKullaniciAdi" 
                               InputType="text"/>
           <InputTextComponent LabelName="Şifre"
                               InputId="inputSifre" 
@@ -71,7 +86,9 @@ function KullaniciYonetimi(props) {
                                 PlaceHolderName="Kullanıcı Ara"/>
         </Grid>
         <Grid item xs={12}>
-          <TableComponent/>
+          <TableComponent columns={columns} 
+                          data={data}
+                          deneme="true"/>
         </Grid>
       </Grid>
     </div>

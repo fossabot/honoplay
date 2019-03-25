@@ -21,7 +21,6 @@ const Style = (theme) => ({
         display: 'none',
       },
     },
-    toolbar: theme.mixins.toolbar,
     drawerPaper: {
       width: drawerWidth,
       background: '#e92428',
@@ -31,7 +30,7 @@ const Style = (theme) => ({
     content: {
       flexGrow: 1,
       padding: theme.spacing.unit * 3,
-      paddingTop: 0
+      paddingTop: 55
     },
     Divider: {
       height:1,
@@ -44,8 +43,8 @@ const Style = (theme) => ({
       background: '#e92428',
     },
     ListItemLink: {
-      paddingTop:20,
-      paddingBottom:20
+      paddingTop:25,
+      paddingBottom:25
     },
     fontawesome:{
       color: 'white',

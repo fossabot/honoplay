@@ -7,7 +7,7 @@ import SearchStyle from './SearchStyle';
 
 class SearchInputComponent extends React.Component {
   render() {
-      const { classes,InputId,PlaceHolderName} = this.props;
+    const { classes,InputId,PlaceHolderName} = this.props;
 
     return (
       <Paper className={classes.root} elevation={1}>

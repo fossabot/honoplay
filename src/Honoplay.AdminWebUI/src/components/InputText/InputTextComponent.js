@@ -7,7 +7,7 @@ import Style from './Style';
   
 class InputTextComponent extends React.Component {
   render() {
-      const { classes,LabelName,InputId,InputType,PlaceHolderName} = this.props;
+      const { classes,LabelName,InputId,InputType} = this.props;
   
     return (
       <div className={classes.root}>
@@ -20,7 +20,6 @@ class InputTextComponent extends React.Component {
           </Grid>
           <Grid item xs={9}>
             <InputBase id={InputId}
-                       placeholder={PlaceHolderName}
                        type={InputType}
                        fullWidth
                        classes={{

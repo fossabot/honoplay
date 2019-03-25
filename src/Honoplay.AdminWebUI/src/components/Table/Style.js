@@ -1,11 +1,13 @@
 const Style = (theme) => ({
     root: {
-      display: 'flex',
+      width: '100%',
       marginTop: theme.spacing.unit * 3,
-      overflowX: 'hide',  
     },
     table: {
-      minWidth: 100,
+      minWidth: 400,
+    },
+    tableWrapper: {
+      overflowX: 'auto',
     },
     row: {
       '&:nth-of-type(odd)': {
@@ -13,8 +15,8 @@ const Style = (theme) => ({
       },
     },
     tableCell: {
-      paddingRight: 4,
-      paddingLeft:4,
+      paddingRight: 3,
+      paddingLeft:3,
       borderWidth: 1, 
       borderColor: '#dee2e6',
       borderStyle: 'solid',

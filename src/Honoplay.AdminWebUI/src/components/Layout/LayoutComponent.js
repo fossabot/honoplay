@@ -29,7 +29,6 @@ class Layout extends React.Component {
     const drawer = (
       <div>
         <div className={classes.toolbar} />
-        <Divider className={classes.Divider} />
         <List component="nav" 
               className={classes.List}>
           <ListItemComponent pageLink={"/sorular"} 
@@ -44,6 +43,9 @@ class Layout extends React.Component {
           <ListItemComponent pageLink={"/katilimcilar"} 
                              pageIcon={"users"} 
                              pageName={"Katılımcılar"} />
+          <ListItemComponent pageLink={"/sirketbilgileri"}
+                             pageIcon={"briefcase"}
+                             pageName={"Şirket Bilgileri"} />
           <ListItemComponent pageLink={"/kullaniciyonetimi"} 
                              pageIcon={"cog"} 
                              pageName={"Kullanıcı Yönetimi"} />
