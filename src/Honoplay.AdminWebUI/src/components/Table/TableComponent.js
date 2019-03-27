@@ -30,7 +30,7 @@ class TableComponent extends React.Component {
   };
 
   render() {
-    const { classes, columns, data, deneme } = this.props;
+    const { classes, columns, data, SwitchColumn, RowNumber } = this.props;
     const { rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
@@ -39,10 +39,15 @@ class TableComponent extends React.Component {
         <Table className={classes.table}>     
           <TableHead>
             <TableRow>
+              {(RowNumber ?
+                <TableCell className={classes.TableHead}>
+                  #
+                </TableCell> : ""
+              )} 
               {columns.map((column,i) =>(
                 <TableCell className={classes.TableHead} key={i}>{column}</TableCell>
               ))}
-              {(deneme ? 
+              {(SwitchColumn ? 
                   <TableCell className={classes.TableHead}>
                     Durum (Pasif/Aktif)
                   </TableCell> : ""
@@ -53,24 +58,29 @@ class TableComponent extends React.Component {
           <TableBody>        
           {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => (
                 <TableRow className={classes.row} key={i}>
+                  {(RowNumber ? 
+                    <TableCell className={classes.tableCell}>
+                      {i+1}
+                    </TableCell> : ""
+                  )}
                   {columns.map((column,i) =>
                     <TableCell className={classes.tableCell} key={i}>
                       {row[column]}
                     </TableCell>
                   )}
-                {(deneme ? 
-                    <TableCell className={classes.tableCell}>
-                    <Switch
-                      checked
-                      value="checkedDurum"
-                      classes={{
-                        switchBase: classes.colorSwitchBase,
-                        checked: classes.colorChecked,
-                        bar: classes.colorBar,
-                      }}
-                    /> 
-                    </TableCell> : ""
-                )}
+                  {(SwitchColumn ? 
+                      <TableCell className={classes.tableCell}>
+                      <Switch
+                        checked
+                        value="checkedDurum"
+                        classes={{
+                          switchBase: classes.colorSwitchBase,
+                          checked: classes.colorChecked,
+                          bar: classes.colorBar,
+                        }}
+                      /> 
+                      </TableCell> : ""
+                  )}
                 <TableCell className={classes.tableCell}>
                   <Tooltip title="Şifre Değiştir">
                     <IconButton>
@@ -85,11 +95,6 @@ class TableComponent extends React.Component {
                 </TableCell>
                 </TableRow>
              ))}
-             {emptyRows > 0 && (
-                <TableRow style={{ height: 48 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-             )}
           </TableBody>
           </Table>
           <TableFooter>
@@ -108,7 +113,7 @@ class TableComponent extends React.Component {
                     onChangeRowsPerPage={this.handleChangeRowsPerPage}
                   /> 
                 </TableRow>
-            </TableFooter>
+          </TableFooter>
       </Paper>
     );
   }

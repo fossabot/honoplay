@@ -5,7 +5,7 @@ const Style = (theme) => ({
     },
     div: {
         paddingRight: 5,
-      },
+    },
 });
 
 export default Style;

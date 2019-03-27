@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles'; 
-import {Grid, Typography} from '@material-ui/core';
+import {Grid, Typography, Card, CardContent  } from '@material-ui/core';
 import ButtonComponent from '../components/Button/ButtonComponent';
 import InputTextComponent from '../components/InputText/InputTextComponent';
 import SearchInputComponent from '../components/InputText/SearchInputComponent';
@@ -16,35 +16,20 @@ const styles = theme => ({
     color: '#e92428',
     fontWeight: 'bold',
   },
+  card: {
+    minWidth: 275,
+   
+  },
 });
 
 function KullaniciYonetimi(props) {
   const { classes } = props;
 
   const columns = ['Ad', 'Soyad', 'Kullanıcı Adı'];
-  const data = [{ 'Ad':'Şaduman',
-                  'Soyad': 'Küçük',
-                  'Kullanıcı Adı': 'sadumankucuk',
-                },
-                {
-                  'Ad':'Şaduman',
-                  'Soyad': 'Küçük',
-                  'Kullanıcı Adı': 'sadumankucuk',
-                },
-                { 'Ad':'Şaduman',
-                  'Soyad': 'Küçük',
-                  'Kullanıcı Adı': 'sadumankucuk',
-                },
-                {
-                  'Ad':'Şaduman',
-                  'Soyad': 'Küçük',
-                  'Kullanıcı Adı': 'sadumankucuk',
-                },
-                { 'Ad':'Şaduman',
-                  'Soyad': 'Küçük',
-                  'Kullanıcı Adı': 'sadumankucuk',
-                },
-              ];
+  const data = [{ 'Ad':'Alper',
+                  'Soyad': 'Halıcı',
+                  'Kullanıcı Adı': 'Yaşlı Kurt 27m',
+                }];
   
   return (
     <div className={classes.root}>
@@ -82,13 +67,20 @@ function KullaniciYonetimi(props) {
                            ButtonName="Kullanıcıyı Oluştur"/>
         </Grid>
         <Grid item xs={12}>
-          <SearchInputComponent InputId="inputKullaniciAra"
-                                PlaceHolderName="Kullanıcı Ara"/>
-        </Grid>
-        <Grid item xs={12}>
-          <TableComponent columns={columns} 
-                          data={data}
-                          deneme="true"/>
+          <Card className={classes.card}>
+            <CardContent>
+              <Grid item xs={12}>
+                <SearchInputComponent InputId="inputKullaniciAra"
+                                      PlaceHolderName="Kullanıcı Ara"/>
+              </Grid>
+              <Grid item xs={12}>
+                <TableComponent columns={columns} 
+                                data={data}
+                                SwitchColumn="true"
+                />
+              </Grid>
+            </CardContent>
+         </Card>
         </Grid>
       </Grid>
     </div>

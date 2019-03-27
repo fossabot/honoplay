@@ -20,7 +20,7 @@ const Style = (theme) => ({
       borderWidth: 1, 
       borderColor: '#dee2e6',
       borderStyle: 'solid',
-      color: '#495057'
+      color: '#495057',
     },
     TableHead: {
       paddingRight: 4,
