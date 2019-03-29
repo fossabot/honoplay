@@ -40,7 +40,7 @@ namespace FluentValidator.Tests.Seed
                 .NotEmpty()
                 .WithMessage("NotEmpty");
 
-            RuleFor(rf => rf.CustomNullValidatorProp)
+            RuleFor(rf => rf.CustomNotNullValidatorProp)
                 .NotNull()
                 .WithMessage("CustomNotNull");
 

@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using FluentValidation.Internal;
-using FluentValidation.Resources;
-using FluentValidation.Validators;
+﻿using FluentValidation.Validators;
 using FluentValidatorJavascript.IJsConverterValidators;
 
 namespace FluentValidatorJavascript.JsConveterValidators
@@ -12,12 +9,8 @@ namespace FluentValidatorJavascript.JsConveterValidators
         {
         }
 
-        public override string GetJs(string propertyName,string errorMessage)
+        public override string GetJs(string propertyName, string errorMessage)
         {
-
-
-            var replacePropName = propertyName.SplitPascalCase();
-
             return
                 $@"var value = obj.{propertyName};
                     if (value !== null) {{

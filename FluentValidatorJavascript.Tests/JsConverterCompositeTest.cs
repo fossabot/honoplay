@@ -12,6 +12,7 @@ namespace FluentValidatorJavascript.Tests
         {
             var seedData = new SeedData
             {
+                //RuleFor(rf => rf.CompositeValidatorProp).NotNull().WithMessage("CompositeNotNull").EmailAddress().WithMessage("CompositeEmail");
                 CompositeValidatorProp = null
             };
             var validator = new SeedDataValidator();

@@ -103,7 +103,7 @@ namespace FluentValidatorJavascript.Tests
             var seedData = new SeedData
             {
                 //RuleFor(rf => rf.NotNullValidatorProp).NotNull();
-                CustomNullValidatorProp = string.Empty
+                CustomNotNullValidatorProp = string.Empty
             };
 
             var validationRules = new SeedDataValidator();

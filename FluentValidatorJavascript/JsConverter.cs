@@ -30,7 +30,7 @@ namespace FluentValidatorJavascript
             foreach (var property in props)
             {
                 var propertyName = property.Name;
-                ValidationContext validationContext = new ValidationContext(property);
+                var validationContext = new ValidationContext(property);
 
                 foreach (var element in validator.CreateDescriptor().GetValidatorsForMember(propertyName))
                 {

@@ -1,8 +1,5 @@
-﻿using FluentValidation.Internal;
-using FluentValidation.Resources;
-using FluentValidation.Validators;
+﻿using FluentValidation.Validators;
 using FluentValidatorJavascript.IJsConverterValidators;
-using System.Globalization;
 
 namespace FluentValidatorJavascript.JsConveterValidators
 {
@@ -14,16 +11,10 @@ namespace FluentValidatorJavascript.JsConveterValidators
             _validator = validator;
         }
 
-        public override string GetJs(string propertyName,string errorMessage)
+        public override string GetJs(string propertyName, string errorMessage)
         {
 
-            var replacePropName = propertyName.SplitPascalCase();
 
-            //var errorMessage = LanguageManager.GetString(key: nameof(LengthValidator), culture: CultureInfo.CurrentCulture)
-            //                                  .Replace(oldValue: "{PropertyName}", newValue: replacePropName)
-            //                                  .Replace(oldValue: "{MinLength}", newValue: _validator.Min.ToString())
-            //                                  .Replace(oldValue: "{MaxLength}", newValue: _validator.Max.ToString())
-            //                                  .Replace(oldValue: "{TotalLength}", newValue: $"\" + obj.{propertyName}.length + \"");
 
             return
                 $@"if ((obj.{propertyName} !== null) && (obj.{propertyName}.length < {_validator.Min} || obj.{propertyName}.length > {_validator.Max})) {{

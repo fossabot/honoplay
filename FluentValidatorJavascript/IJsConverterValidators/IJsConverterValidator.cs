@@ -2,6 +2,6 @@
 {
     public interface IJsConverterValidator
     {
-        string GetJs(string propertyName,string errorMessage);
+        string GetJs(string propertyName, string errorMessage);
     }
 }
