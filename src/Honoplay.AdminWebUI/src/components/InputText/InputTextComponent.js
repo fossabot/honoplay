@@ -3,7 +3,6 @@ import {Grid, InputLabel, InputBase} from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles'; 
 import Style from './Style';
-
   
 class InputTextComponent extends React.Component {
   render() {
@@ -25,7 +24,7 @@ class InputTextComponent extends React.Component {
                        classes={{
                          root: classes.bootstrapRoot,
                          input: classes.bootstrapInput,
-                       }}
+                      }}
               />          
           </Grid>
         </Grid>

@@ -49,9 +49,7 @@ class EgitimSerisi extends React.Component {
             />
         </Grid>
         <Grid item xs={12} sm={9}>
-            <CardComponent
-                           data={this.state.data}
-            />
+            <CardComponent data={this.state.data}/>
         </Grid>
       </Grid>
     </div>

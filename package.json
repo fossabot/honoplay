@@ -1,8 +1,11 @@
 {
   "dependencies": {
+    "react": "^16.8.6",
     "react-dom": "^16.8.4",
+    "react-number-format": "^4.0.7",
     "react-redux": "^6.0.1",
     "react-router-redux": "^4.0.8",
+    "react-text-mask": "^5.4.3",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0"
