@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Honoplay.Common.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Honoplay.Common.Extensions;
 
 namespace Honoplay.Application._Infrastructure
 {
     public sealed class ResponseModel<T>
     {
+        /// <inheritdoc />
         /// <summary>
         /// Tek bir kayıt için yapıcı metod
         /// </summary>
@@ -70,15 +71,15 @@ namespace Honoplay.Application._Infrastructure
             DataType = typeof(T).Name;
         }
 
-        public long NumberOfTotalItems { get; private set; }
-        public long NumberOfItems { get; private set; }
-        public long NumberOfSkippedItems { get; private set; }
+        public long NumberOfTotalItems { get; }
+        public long NumberOfItems { get; }
+        public long NumberOfSkippedItems { get; }
 
-        public string DataType { get; private set; }
+        public string DataType { get; }
 
-        public IEnumerable<T> Items { get; private set; }
+        public IEnumerable<T> Items { get; }
 
-        public IEnumerable<Error> Errors { get; private set; }
+        public IEnumerable<Error> Errors { get; }
     }
 
     public sealed class Error

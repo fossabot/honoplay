@@ -65,6 +65,8 @@ namespace Honoplay.AdminWebAPI.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Register([FromBody]RegisterAdminUserCommand command)
         {
             try

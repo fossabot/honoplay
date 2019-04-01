@@ -73,10 +73,7 @@ namespace Honoplay.AdminWebAPI
                 };
                 x.Events = new JwtBearerEvents
                 {
-                    OnTokenValidated = y =>
-                    {
-                        return Task.CompletedTask;
-                    },
+                    OnTokenValidated = y => Task.CompletedTask,
                     OnAuthenticationFailed = y =>
                     {
                         Console.WriteLine("Exception:{0}", y.Exception.Message);

@@ -33,7 +33,7 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantsList
                 throw new NotFoundException();
             }
 
-            return new ResponseModel<TenantsListModel>(await query.CountAsync(), request.Take, result);
+            return new ResponseModel<TenantsListModel>(numberOfTotalItems: await query.CountAsync(cancellationToken), numberOfSkippedItems: request.Take, result);
         }
     }
 }

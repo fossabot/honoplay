@@ -1,5 +1,4 @@
-﻿using System;
-using Honoplay.Common.Constants;
+﻿using Honoplay.Common.Constants;
 using Honoplay.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,14 +6,12 @@ namespace Honoplay.Persistence
 {
     public sealed class HonoplayDbContext : DbContext
     {
+
+        private readonly bool _isTest;
+
         public HonoplayDbContext(DbContextOptions<HonoplayDbContext> options) : base(options)
         {
             _isTest = true;
-        }
-        private bool _isTest = false;
-        public HonoplayDbContext()
-        {
-
         }
 
         public DbSet<AdminUser> AdminUsers { get; set; }

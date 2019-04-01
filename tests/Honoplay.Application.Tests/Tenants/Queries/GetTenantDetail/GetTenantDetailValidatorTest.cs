@@ -17,7 +17,7 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantDetail
         [Fact]
         public void ShouldBeValid()
         {
-            Assert.True(_validator.Validate(new GetTenantDetailQuery(111, Guid.NewGuid())).IsValid);
+            Assert.True(_validator.Validate(new GetTenantDetailQuery(adminUserId: 111, Guid.NewGuid())).IsValid);
         }
 
         [Fact]

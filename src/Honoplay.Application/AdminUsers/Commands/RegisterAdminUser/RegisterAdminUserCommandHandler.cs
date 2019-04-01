@@ -55,7 +55,7 @@ namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
                     transaction.Rollback();
                     throw new ObjectAlreadyExistsException(nameof(AdminUser), nameof(AdminUser.Email));
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     transaction.Rollback();
                     throw new TransactionException();

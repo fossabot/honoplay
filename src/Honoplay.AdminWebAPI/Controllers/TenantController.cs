@@ -12,6 +12,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Honoplay.Application._Exceptions;
 using Honoplay.Application._Infrastructure;
+using Microsoft.AspNetCore.Http;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
@@ -39,6 +40,8 @@ namespace Honoplay.AdminWebAPI.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ResponseModel<TenantsListModel>>> Get([FromQuery]GetTenantsListQueryModel command)
         {
             try
@@ -80,6 +83,9 @@ namespace Honoplay.AdminWebAPI.Controllers
         }
 
         [HttpPut]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ResponseModel<UpdateTenantModel>>> Put([FromBody]UpdateTenantCommand command)
         {
             try
