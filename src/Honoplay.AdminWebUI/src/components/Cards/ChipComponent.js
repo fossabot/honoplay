@@ -22,7 +22,7 @@ class ChipComponent extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, CardName } = this.props;
 
     return (
       <Grid container spacing={24}>
@@ -30,7 +30,7 @@ class ChipComponent extends React.Component {
           <Paper className={classes.root}>
             <Grid item xs={12}>
               <Typography variant="h5" className={classes.typography} >
-               Eğitmen Uzmanlık Alanları
+              {CardName}
               </Typography>
             </Grid>
              {this.state.chipData.map(data => {

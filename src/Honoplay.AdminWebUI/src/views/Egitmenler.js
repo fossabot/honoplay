@@ -94,7 +94,9 @@ render() {
                                 ButtonName="Uzmanlık Alanı Ekle"/>     
             </Grid>
             <Grid item xs={12}>
-                <ChipComponent data={this.state.alanData}></ChipComponent>
+                <ChipComponent data={this.state.alanData} 
+                               CardName=" Eğitmen Uzmanlık Alanları">
+                </ChipComponent>
             </Grid>
             <Grid item sm={9}></Grid>
             <Grid item sm={3}>

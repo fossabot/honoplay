@@ -26,7 +26,6 @@ const Style = (theme) => ({
         width: '100%',
         fontSize:13
       },
-      
 });
 
 export default Style;

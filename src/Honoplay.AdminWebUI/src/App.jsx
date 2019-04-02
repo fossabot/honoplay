@@ -5,6 +5,8 @@ import Sorular from './views/Sorular';
 import EgitimSerisi from './views/EgitimSerisi';
 import KullaniciYonetimi from './views/KullaniciYonetimi';
 import Egitmenler from './views/Egitmenler';
+import Katilimcilar from './views/Katilimcilar';
+import SirketBilgileri from './views/SirketBilgileri';
 import Layout from './components/Layout/LayoutComponent';
 
 class App extends Component {
@@ -12,11 +14,13 @@ class App extends Component {
         return (
             <Router>
                 <Layout>             
-                    <Route exact path="/" render={() => <h2>Home</h2>}/>
-                    <Route path="/sorular" component={Sorular} />
-                    <Route path="/egitimserisi" component={EgitimSerisi} /> 
-                    <Route path="/kullaniciyonetimi" component={KullaniciYonetimi} /> 
-                    <Route path="/egitmenler" component={Egitmenler} /> 
+                    <Route exact path="/home" render={() => <h2>Home</h2>}/>
+                    <Route path="/home/sorular" component={Sorular} />
+                    <Route path="/home/egitimserisi" component={EgitimSerisi} /> 
+                    <Route path="/home/kullaniciyonetimi" component={KullaniciYonetimi} /> 
+                    <Route path="/home/egitmenler" component={Egitmenler} /> 
+                    <Route path="/home/katilimcilar" component={Katilimcilar} /> 
+                    <Route path="/home/sirketbilgileri" component={SirketBilgileri} />
                 </Layout>
             </Router>
         );

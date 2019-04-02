@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import {Card, CardContent, Typography, Grid, IconButton} from '@material-ui/core';
-import ButtonComponent from '../Button/ButtonComponent';
+import {Card, CardContent, Typography, Grid, IconButton, Button} from '@material-ui/core';
+
 import Style from './CardComponentStyle';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 
@@ -50,9 +50,15 @@ class CardComponent extends React.Component {
                           {data.date}
                         </Typography>
                         <div className={classes.center}>
-                            <ButtonComponent ButtonColor="secondary"  
-                                            ButtonName="Düzenle"
-                            />
+                          <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="default"
+                            className={classes.submit}
+                          >
+                            Düzenle
+                          </Button>
                         </div>
                     </CardContent>
                   </Card>        

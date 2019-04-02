@@ -30,6 +30,9 @@ const Style = (theme) => ({
       flexWrap: 'wrap',
       padding: theme.spacing.unit / 2,
     },
+    submit: {
+      marginTop: theme.spacing.unit * 3,
+    },
   });
 
   export default Style;

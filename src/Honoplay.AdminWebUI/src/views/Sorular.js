@@ -55,7 +55,7 @@ function Sorular(props) {
             </Grid>
             <Grid item sm={3}>
                 <ButtonComponent ButtonColor="primary" 
-                                ButtonName="Yeni Soru Ekle"/>          
+                                 ButtonName="Yeni Soru Ekle"/>          
             </Grid>
             <Grid item xs={12}>
                 <Typography variant="body2" gutterBottom>
@@ -70,12 +70,12 @@ function Sorular(props) {
                 />
             </Grid>
             <Grid item xs={12} sm={3}>
-                <ButtonComponent ButtonColor="primary" 
+                <ButtonComponent ButtonColor="secondary" 
                                 ButtonIcon="file-excel" 
                                 ButtonName="Excel Formatında İndir"/>  
             </Grid>           
             <Grid item xs={12} sm={3}>  
-                <ButtonComponent ButtonColor="secondary" 
+                <ButtonComponent ButtonColor="primary" 
                                  ButtonIcon="file-excel" 
                                  ButtonName="Excel'den Aktar"
                 />  
