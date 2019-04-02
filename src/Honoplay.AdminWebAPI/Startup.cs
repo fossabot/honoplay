@@ -1,13 +1,11 @@
 ﻿using FluentValidation.AspNetCore;
 using Honoplay.Common.Constants;
-using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +14,8 @@ using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Threading.Tasks;
+using Honoplay.AdminWebAPI.Interfaces;
+using Honoplay.AdminWebAPI.Services;
 
 namespace Honoplay.AdminWebAPI
 {
@@ -39,14 +39,12 @@ namespace Honoplay.AdminWebAPI
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>)); // TODO: çalışan bir nokta görülmediği için kontrol amaçlı kapatıldı
             services.AddMediatR(Application.AssemblyIdentifier.Get());
 
+            services.AddScoped<IUserService, UserService>();
+
             // Add DbContext using SQL Server Provider
             services.AddDbContext<HonoplayDbContext>(options =>
                 options.UseSqlServer(StringConstants.ConnectionString,
                                     b => b.MigrationsAssembly("Honoplay.Persistence")));
-
-            services.AddIdentity<AdminUser, IdentityRole>()
-                    //.AddEntityFrameworkStores<HonoplayDbContext>()
-                    .AddDefaultTokenProviders();
 
             // configure strongly typed settings objects
             var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -82,6 +80,9 @@ namespace Honoplay.AdminWebAPI
                 };
             });
 
+            //Add session
+            services.AddSession();
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
@@ -114,6 +115,8 @@ namespace Honoplay.AdminWebAPI
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "HonoPlay API V1");
             });
+
+            app.UseSession();
 
             app.UseMvc();
         }

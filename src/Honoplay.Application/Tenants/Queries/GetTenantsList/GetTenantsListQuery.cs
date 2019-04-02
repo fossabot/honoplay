@@ -7,9 +7,7 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantsList
     {
         public GetTenantsListQuery()
         {
-
         }
-
         public GetTenantsListQuery(int adminUserId) : this(adminUserId, 0, 10)
         {
         }

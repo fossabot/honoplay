@@ -9,23 +9,27 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Honoplay.AdminWebAPI.Enums;
+using Honoplay.AdminWebAPI.Filters;
+using Honoplay.AdminWebAPI.Interfaces;
 using Honoplay.Application._Exceptions;
 using Honoplay.Application._Infrastructure;
 using Microsoft.AspNetCore.Http;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
+    [AllowAnonymous]
     public class AdminUserController : BaseController
     {
-        private readonly AppSettings _appSettings;
+        private readonly IUserService _userService;
 
-        public AdminUserController(IOptions<AppSettings> appSettings)
+        public AdminUserController(IUserService userService)
         {
-            _appSettings = appSettings.Value;
+            _userService = userService;
         }
 
-        [AllowAnonymous]
         [HttpPost("authenticate")]
+        [Roles(roles: new[] { Roles.AdminUser, Roles.Trainer })]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -35,35 +39,15 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var model = await Mediator.Send(command);
 
-                //// authentication successful so generate jwt token
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var key = System.Text.Encoding.ASCII.GetBytes(_appSettings.JWTSecret);
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new Claim[]
-                    {
-                        new Claim(ClaimTypes.Sid, model.Id.ToString()),
-                        new Claim(ClaimTypes.Email, model.Email),
-                        new Claim(ClaimTypes.Role, "AdminUser"),
-                        new Claim(ClaimTypes.Name, model.Name),
-                        new Claim(ClaimTypes.UserData, model.Tenants),
-                    }),
-                    Expires = DateTime.UtcNow.AddDays(1),
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-                };
+                var result = _userService.Authenticate(model);
 
-                SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
-
-                var stringToken = tokenHandler.WriteToken(token);
-                return Ok(new { User = model, Token = stringToken });
+                return Ok(new { User = result.user, Token = result.stringToken });
             }
             catch (Exception)
             {
                 return BadRequest();
             }
         }
-
-        [AllowAnonymous]
         [HttpPost("register")]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
