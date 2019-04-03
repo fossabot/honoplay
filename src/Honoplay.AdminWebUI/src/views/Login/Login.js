@@ -47,14 +47,14 @@ function Login(props) {
                 className={classes.margin}
                 label="Parola"
                 name="password" 
-                type="password" 
+                type="text" 
                 id="password" 
                 autoComplete="current-password"
               />
             </MuiThemeProvider> 
           </FormControl>
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={<Checkbox value="remember" />}
             label="Beni Hatırla"
           />
           <Button

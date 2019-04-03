@@ -40,17 +40,13 @@ class TableComponent extends React.Component {
           <TableHead>
             <TableRow>
               {(RowNumber ?
-                <TableCell className={classes.TableHead}>
-                  #
-                </TableCell> : ""
+                <TableCell className={classes.TableHead}>#</TableCell> : null
               )} 
               {columns.map((column,i) =>(
                 <TableCell className={classes.TableHead} key={i}>{column}</TableCell>
               ))}
               {(SwitchColumn ? 
-                  <TableCell className={classes.TableHead}>
-                    Durum (Pasif/Aktif)
-                  </TableCell> : ""
+                  <TableCell className={classes.TableHead}>Durum (Pasif/Aktif)</TableCell> : null
               )}      
               <TableCell className={classes.TableHead}>İşlem</TableCell>
             </TableRow>    
@@ -59,14 +55,10 @@ class TableComponent extends React.Component {
           {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => (
                 <TableRow className={classes.row} key={i}>
                   {(RowNumber ? 
-                    <TableCell className={classes.tableCell}>
-                      {i+1}
-                    </TableCell> : ""
+                    <TableCell className={classes.tableCell}>{i+1}</TableCell> : null
                   )}
                   {columns.map((column,i) =>
-                    <TableCell className={classes.tableCell} key={i}>
-                      {row[column]}
-                    </TableCell>
+                    <TableCell className={classes.tableCell} key={i}>{row[column]}</TableCell>
                   )}
                   {(SwitchColumn ? 
                       <TableCell className={classes.tableCell}>
@@ -79,7 +71,7 @@ class TableComponent extends React.Component {
                           bar: classes.colorBar,
                         }}
                       /> 
-                      </TableCell> : ""
+                      </TableCell> : null
                   )}
                 <TableCell className={classes.tableCell}>
                   <Tooltip title="Şifre Değiştir">
@@ -97,23 +89,25 @@ class TableComponent extends React.Component {
              ))}
           </TableBody>
           </Table>
-          <TableFooter>
-                <TableRow >
-                  <TablePagination 
-                    labelRowsPerPage='Sayfa başına satır sayısı:'
-                    rowsPerPageOptions={[5, 10, 25]}
-                    colSpan={3}
-                    count={data.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    SelectProps={{
-                      native: true,
-                    }}
-                    onChangePage={this.handleChangePage}
-                    onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                  /> 
-                </TableRow>
-          </TableFooter>
+          <Table>
+            <TableFooter>
+                  <TableRow >
+                    <TablePagination 
+                      labelRowsPerPage='Sayfa başına satır sayısı:'
+                      rowsPerPageOptions={[5, 10, 25]}
+                      colSpan={3}
+                      count={data.length}
+                      rowsPerPage={rowsPerPage}
+                      page={page}
+                      SelectProps={{
+                        native: true,
+                      }}
+                      onChangePage={this.handleChangePage}
+                      onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                    /> 
+                  </TableRow>
+            </TableFooter>
+          </Table>
       </Paper>
     );
   }

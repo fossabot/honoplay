@@ -14,7 +14,7 @@ const Style = (theme) => ({
       border: '1px solid #ced4da',
       fontSize: 16,
       width: '90%',
-      padding: '13px 12px',
+      padding: '10px 12px',
       transition: theme.transitions.create(['border-color', 'box-shadow']),
       // Use the system font instead of the default Roboto font.
       fontFamily: [
@@ -49,6 +49,12 @@ const Style = (theme) => ({
     },
     iconButton: {
       padding: 10,
+    },
+    button: {
+      height: 40
+    },
+    input: {
+      display: 'none',
     },
 });
 

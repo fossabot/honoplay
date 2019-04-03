@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles'; 
-import {Grid, Typography, Card, CardContent, Divider} from '@material-ui/core';
+import {Grid, Typography, Card, CardContent, Divider, InputLabel} from '@material-ui/core';
 import InputTextComponent from '../components/InputText/InputTextComponent';
 import SearchInputComponent from '../components/InputText/SearchInputComponent';
 import ButtonComponent from '../components/Button/ButtonComponent';
@@ -9,6 +9,8 @@ import TableComponent from '../components/Table/TableComponent';
 import DropDownInputComponent from '../components/InputText/DropDownInputComponent';
 import ChipComponent from '../components/Cards/ChipComponent';
 import NumberInputComponent from '../components/InputText/NumberInputComponent';
+import FileInput from '../components/InputText/FileInputComponent';
+import StepperComponent from '../components/Stepper/StepperComponent';
 
 const styles = theme => ({
   root: {
@@ -57,7 +59,8 @@ constructor(props) {
             ],
         };
 }
-      
+
+
 render() {
   const { classes } = this.props;
 
@@ -78,22 +81,24 @@ render() {
                 Şirket Bilgileri
                 </Typography>
             </Grid>
-            <Grid item sm={12}>
+            <Grid item sm={12} xs={12} >
             <InputTextComponent LabelName="Şirket Adı" 
                                 InputId="inputSirketAd" 
                                 InputType="text"/>
-            
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={12}>
+                <FileInput LabelName="Şirket Logosu"/>
+            </Grid>
+            <Grid item xs={12} sm={8}>
                 <InputTextComponent LabelName="Departman" 
                                     InputId="inputdepartman" 
                                     InputType="text"/>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={3} sm={1}>
                 <ButtonComponent ButtonColor="secondary" 
-                                ButtonName="Ekle"/>     
+                                 ButtonName="Ekle"/>     
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={9} sm={3}>
                 <ButtonComponent ButtonColor="primary" 
                                     ButtonIcon="file-excel" 
                                     ButtonName="Excel'den Aktar"/>     
@@ -155,11 +160,11 @@ render() {
                 </CardContent>
             </Card>
             </Grid>
-            <Grid item xs={12} sm={3}>
+            <Grid item xs={6} sm={3}>
                 <ButtonComponent ButtonColor="primary" 
                                 ButtonName="Bilgileri Güncelle"/>  
             </Grid>           
-            <Grid item xs={12} sm={3}>  
+            <Grid item xs={6} sm={3}>  
                 <ButtonComponent ButtonColor="secondary" 
                                  ButtonName="Şirketi Kaydet"
                 />  

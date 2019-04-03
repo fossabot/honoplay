@@ -11,12 +11,14 @@ class InputTextComponent extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
-          <Grid item xs={3} className={classes.center}>
-            <InputLabel  htmlFor="bootstrap-input" 
-                         className={classes.bootstrapFormLabel}>
-                         {LabelName}
-            </InputLabel>                                   
-          </Grid>
+          {(LabelName ? 
+              <Grid item xs={3} className={classes.center}>
+                  <InputLabel  className={classes.bootstrapFormLabel}>
+                               {LabelName}
+                  </InputLabel>                                   
+              </Grid> : ""
+
+          )}
           <Grid item xs={9}>
             <InputBase id={InputId}
                        type={InputType}
