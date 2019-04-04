@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Honoplay.AdminWebAPI.Enums;
+﻿using Honoplay.AdminWebAPI.Enums;
 
 namespace Honoplay.AdminWebAPI.TestEntities
 {

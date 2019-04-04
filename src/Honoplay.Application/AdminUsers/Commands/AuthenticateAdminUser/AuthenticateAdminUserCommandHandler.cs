@@ -24,7 +24,7 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
         public async Task<AdminUserAuthenticateModel> Handle(AuthenticateAdminUserCommand request, CancellationToken cancellationToken)
         {
             var adminUser = await _context.AdminUsers
-                                    .SingleOrDefaultAsync(u => u.Email.Equals(request.Email, StringComparison.InvariantCultureIgnoreCase));
+                                    .SingleOrDefaultAsync(u => u.Email.Equals(request.Email, StringComparison.InvariantCultureIgnoreCase), cancellationToken: cancellationToken);
 
             if (adminUser is null)
             {
@@ -43,7 +43,7 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
                 try
                 {
                     await _context.SaveChangesAsync(cancellationToken);
-                    tenants =  _context.TenantAdminUsers.Where(x => x.AdminUserId == adminUser.Id).AsNoTracking().Select(x => x.TenantId).ToList();
+                    tenants = _context.TenantAdminUsers.Where(x => x.AdminUserId == adminUser.Id).AsNoTracking().Select(x => x.TenantId).ToList();
                 }
                 catch (DbUpdateConcurrencyException)
                 {

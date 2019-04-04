@@ -6,8 +6,6 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-
-
 namespace Honoplay.AdminWebAPI.Services
 {
     public class UserService : IUserService
@@ -32,7 +30,7 @@ namespace Honoplay.AdminWebAPI.Services
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim(ClaimTypes.Role, "AdminUser"),
                     new Claim(ClaimTypes.Name, user.Name),
-                    new Claim(ClaimTypes.UserData, user.Tenants)
+                    new Claim(ClaimTypes.UserData, user.Tenants),
                 }),
                 Expires = DateTime.UtcNow.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

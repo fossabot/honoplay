@@ -1,24 +1,19 @@
-﻿using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
-using Honoplay.Application.AdminUsers.Commands.RegisterAdminUser;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Honoplay.AdminWebAPI.Enums;
-using Honoplay.AdminWebAPI.Filters;
-using Honoplay.AdminWebAPI.Interfaces;
+﻿using Honoplay.AdminWebAPI.Interfaces;
 using Honoplay.Application._Exceptions;
 using Honoplay.Application._Infrastructure;
+using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
+using Honoplay.Application.AdminUsers.Commands.RegisterAdminUser;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
     [AllowAnonymous]
+
     public class AdminUserController : BaseController
     {
         private readonly IUserService _userService;
@@ -29,7 +24,6 @@ namespace Honoplay.AdminWebAPI.Controllers
         }
 
         [HttpPost("authenticate")]
-        [Roles(roles: new[] { Roles.AdminUser, Roles.Trainer })]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]

@@ -1,18 +1,18 @@
-﻿using Honoplay.Application.Tenants.Commands.CreateTenant;
+﻿using Honoplay.Application._Exceptions;
+using Honoplay.Application._Infrastructure;
+using Honoplay.Application.Tenants.Commands.CreateTenant;
 using Honoplay.Application.Tenants.Commands.UpdateTenant;
 using Honoplay.Application.Tenants.Queries.GetTenantDetail;
 using Honoplay.Application.Tenants.Queries.GetTenantsList;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Honoplay.Application._Exceptions;
-using Honoplay.Application._Infrastructure;
-using Microsoft.AspNetCore.Http;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {

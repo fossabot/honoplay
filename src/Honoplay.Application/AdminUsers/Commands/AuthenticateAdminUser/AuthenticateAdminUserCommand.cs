@@ -1,7 +1,5 @@
 ﻿using MediatR;
 
-
-
 namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
 {
     public class AuthenticateAdminUserCommand : IRequest<AdminUserAuthenticateModel>
