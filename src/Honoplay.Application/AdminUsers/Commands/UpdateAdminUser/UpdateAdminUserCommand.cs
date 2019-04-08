@@ -1,10 +1,11 @@
 ﻿using Honoplay.Application._Infrastructure;
 using MediatR;
 
-namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
+namespace Honoplay.Application.AdminUsers.Commands.UpdateAdminUser
 {
-    public class RegisterAdminUserCommand : IRequest<ResponseModel<AdminUserRegisterModel>>
+    public class UpdateAdminUserCommand : IRequest<ResponseModel<UpdateAdminUserModel>>
     {
+        public int Id { get; set; }
         public string Email { get; set; }
 
         public string Password { get; set; }

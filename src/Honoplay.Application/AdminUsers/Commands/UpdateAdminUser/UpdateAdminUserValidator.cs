@@ -1,10 +1,11 @@
 ﻿using FluentValidation;
 
-namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
+
+namespace Honoplay.Application.AdminUsers.Commands.UpdateAdminUser
 {
-    public class RegisterAdminUserValidator : AbstractValidator<RegisterAdminUserCommand>
+    public class UpdateAdminUserValidator : AbstractValidator<UpdateAdminUserCommand>
     {
-        public RegisterAdminUserValidator()
+        public UpdateAdminUserValidator()
         {
             RuleFor(x => x.Email).MaximumLength(150).NotNull().EmailAddress().NotEmpty();
             RuleFor(x => x.Password).MinimumLength(6).MaximumLength(50).NotNull().NotEmpty();

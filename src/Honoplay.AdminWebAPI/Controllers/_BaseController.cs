@@ -17,6 +17,6 @@ namespace Honoplay.AdminWebAPI.Controllers
 
         public Dictionary<string, string> Claims => User.Claims.ToDictionary(x => x.Type, x => x.Value);
 
-        public string HonoHost => Request.Headers.TryGetValue("HonoHost", out var value) ? value[0].ToString() : Request.Host.Host;
+        public string HonoHost => Request.Headers.TryGetValue("HonoHost", out var value) ? value[0] : Request.Host.Host;
     }
 }

@@ -12,32 +12,22 @@ using Honoplay.Application._Exceptions;
 using Honoplay.Application._Infrastructure;
 using Microsoft.Data.Sqlite;
 
-namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
+
+
+namespace Honoplay.Application.AdminUsers.Commands.UpdateAdminUser
 {
-    public class RegisterAdminUserCommandHandler : IRequestHandler<RegisterAdminUserCommand, ResponseModel<AdminUserRegisterModel>>
+    public class UpdateAdminUserCommandHandler : IRequestHandler<UpdateAdminUserCommand, ResponseModel<UpdateAdminUserModel>>
     {
         private readonly HonoplayDbContext _context;
 
-        public RegisterAdminUserCommandHandler(HonoplayDbContext context)
+        public UpdateAdminUserCommandHandler(HonoplayDbContext context)
         {
             _context = context;
         }
 
-        public async Task<ResponseModel<AdminUserRegisterModel>> Handle(RegisterAdminUserCommand request, CancellationToken cancellationToken)
+        public async Task<ResponseModel<UpdateAdminUserModel>> Handle(UpdateAdminUserCommand request, CancellationToken cancellationToken)
         {
-            var salt = ByteArrayExtensions.GetRandomSalt();
-            var item = new AdminUser
-            {
-                Email = request.Email,
-                Name = request.Name,
-                Surname = request.Surname,
-                TimeZone = request.TimeZone,
-                CreatedDateTime = DateTimeOffset.Now,
-                LastPasswordChangeDateTime = DateTimeOffset.Now,
-                PasswordSalt = salt,
-                Password = request.Password.GetSHA512(salt),
-            };
-
+            var item = await _context.AdminUsers.SingleOrDefaultAsync(au => au.Id == request.Id);
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
                 try
@@ -60,7 +50,7 @@ namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
                 }
             }
 
-            var model = new AdminUserRegisterModel(id: item.Id,
+            var model = new UpdateAdminUserModel(id: item.Id,
                 email: item.Email,
                 username: item.UserName,
                 name: item.Name,
@@ -69,7 +59,7 @@ namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
                 timeZone: item.TimeZone,
                 createDateTime: item.CreatedDateTime);
 
-            return new ResponseModel<AdminUserRegisterModel>(model);
+            return new ResponseModel<UpdateAdminUserModel>(model);
         }
     }
 }

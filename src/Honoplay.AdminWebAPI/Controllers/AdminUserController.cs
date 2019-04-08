@@ -9,11 +9,11 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using Honoplay.Application.AdminUsers.Commands.UpdateAdminUser;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
     [AllowAnonymous]
-
     public class AdminUserController : BaseController
     {
         private readonly IUserService _userService;
@@ -60,6 +60,14 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 return StatusCode(500, new ResponseModel<AdminUserRegisterModel>(new Error(HttpStatusCode.InternalServerError, ex)));
             }
+        }
+
+        [HttpGet("update")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        public async Task<IActionResult> Update([FromBody]UpdateAdminUserCommand command)
+        {
+            return new JsonResult("");
         }
     }
 }
