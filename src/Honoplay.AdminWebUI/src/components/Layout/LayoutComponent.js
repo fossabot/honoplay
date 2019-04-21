@@ -1,12 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import MenuIcon from '@material-ui/icons/Menu';
+import {KeyboardArrowRight} from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
-import ListItemComponent from './ListItemComponent';
 import {AppBar, CssBaseline, Drawer, 
         Hidden, IconButton,Toolbar, 
-        Divider,List} from '@material-ui/core';
+        Button,List} from '@material-ui/core';
 import Style from './Style';
+
+import TrainerCard from './TrainerCard';
+import ListItem from './ListItemComponent';
+import CompanyCard from './CompanyCard';
+
 
 class Layout extends React.Component {
 
@@ -27,39 +31,63 @@ class Layout extends React.Component {
   render() {
     const { classes, theme , children} = this.props;
     const drawer = (
-      <div>
-        <div className={classes.toolbar} />
-        <List component="nav" 
-              className={classes.List}>
-          <ListItemComponent pageLink={"/home/sorular"} 
-                             pageIcon={"question-circle"} 
-                             pageName={"Sorular"} />
-          <ListItemComponent pageLink={"/home/egitimserisi"} 
-                             pageIcon={"list-ol"} 
-                             pageName={"Eğitim Serisi"} />
-          <ListItemComponent pageLink={"/home/egitmenler"} 
-                             pageIcon={"graduation-cap"} 
-                             pageName={"Eğitmenler"} />
-          <ListItemComponent pageLink={"/home/katilimcilar"} 
-                             pageIcon={"users"} 
-                             pageName={"Katılımcılar"} />
-          <ListItemComponent pageLink={"/home/sirketbilgileri"}
-                             pageIcon={"briefcase"}
-                             pageName={"Şirket Bilgileri"} />
-          <ListItemComponent pageLink={"/home/kullaniciyonetimi"} 
-                             pageIcon={"cog"} 
-                             pageName={"Kullanıcı Yönetimi"} />
-          <ListItemComponent pageLink={"/home/raporlar"} 
-                             pageIcon={"chart-pie"} 
-                             pageName={"Raporlar"} />
-        </List>
-      </div>
+        <div className={classes.drawerLayout}> 
+          <div className={classes.companyLayout}>
+            <CompanyCard companyName="Framer Bilişim Teknolojileri"/>
+          </div> 
+          <div className={classes.buttonLayout}>
+            <Button 
+              color="primary"
+              fullWidth
+              className={classes.button}>
+              + Ekle
+              <div className={classes.buttonSpace}></div>
+              <KeyboardArrowRight className={classes.buttonIconColor}/>              
+            </Button>
+          </div>       
+          <div className={classes.listLayout}>
+            <List 
+            component="nav">
+            <ListItem 
+              pageLink={"/home/sorular"} 
+              pageIcon={"question-circle"} 
+              pageName={"Sorular"} />
+            <ListItem
+              pageLink={"/home/egitimserisi"} 
+              pageIcon={"list-ol"} 
+              pageName={"Eğitim Serisi"} />
+            <ListItem 
+              pageLink={"/home/egitmenler"} 
+              pageIcon={"graduation-cap"} 
+              pageName={"Eğitmenler"} />
+            <ListItem 
+              pageLink={"/home/katilimcilar"} 
+              pageIcon={"users"} 
+              pageName={"Katılımcılar"} />
+            <ListItem
+              pageLink={"/home/sirketbilgileri"}
+              pageIcon={"briefcase"}
+              pageName={"Şirket Bilgileri"} />
+            <ListItem 
+              pageLink={"/home/kullaniciyonetimi"} 
+              pageIcon={"cog"} 
+              pageName={"Kullanıcı Yönetimi"} />
+            <ListItem
+              pageLink={"/home/raporlar"} 
+              pageIcon={"chart-pie"} 
+              pageName={"Raporlar"} />
+              </List>     
+          </div>        
+          <div  className={classes.trainerLayout}>
+            <TrainerCard trainerName="Ahmet Frankfurt"/>
+          </div>
+        </div>                 
     );
     return (
       <div className={classes.root}>
         <CssBaseline />
         <AppBar position="fixed" className={classes.appBar}>
-          <Toolbar className={classes.Toolbar}>
+          <Toolbar className={classes.toolbar}>
             <IconButton
               color="inherit"
               aria-label="Open drawer"
@@ -105,11 +133,5 @@ class Layout extends React.Component {
     );
   }
 }
-
-Layout.propTypes = {
-  classes: PropTypes.object.isRequired,
-  container: PropTypes.object,
-  theme: PropTypes.object.isRequired,
-};
 
 export default withStyles(Style, { withTheme: true })(Layout);

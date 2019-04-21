@@ -1,7 +1,7 @@
 const Style = (theme) => ({
     button: {
-        margin: theme.spacing.unit,
         color: 'white',
+        textTransform: 'capitalize',
     },
     div: {
         paddingRight: 5,

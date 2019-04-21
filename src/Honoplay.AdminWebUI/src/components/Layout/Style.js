@@ -1,3 +1,4 @@
+import {deepPurple, deepOrange} from '@material-ui/core/colors';
 const drawerWidth = 240;
 const Style = (theme) => ({
     root: {
@@ -23,44 +24,88 @@ const Style = (theme) => ({
     },
     drawerPaper: {
       width: drawerWidth,
-      background: '#e92428',
-      boxShadow: '0 .5rem 1rem rgba(0,0,0,.15)',
+      background: '#fafafa',
+      boxShadow: '0 .5rem 1rem rgba(0,0,0,.25)',
       borderRight: 'none',  
     },
     content: {
       flexGrow: 1,
       padding: theme.spacing.unit * 3,
-      paddingTop: 55
+      paddingTop: 65,
     },
-    Divider: {
-      height:1,
-      backgroundColor:'#e48e8f'
+    toolbar: {
+      background: '#ff8a65',
     },
-    List: {
-      paddingTop:0,
+    button: {
+      color: theme.palette.getContrastText(deepPurple[500]),
+      backgroundColor: deepPurple[700],
+      '&:hover': {
+        backgroundColor: deepPurple[700],
+      },
+      margin: 0, 
+      borderRadius: 2,
+      border: 0,
+      color: 'white',
+      height: 50,
+      padding: '0 30px',
+      boxShadow: '0 3px 5px 2px rgba(0, 0, 0, .2)',
+      textTransform: 'capitalize',
     },
-    Toolbar: {
-      background: '#e92428',
+    buttonSpace: {
+      paddingLeft: 70, 
     },
-    ListItemLink: {
-      paddingTop:25,
-      paddingBottom:25
+    buttonIconColor: {
+      color: 'white'
+    },
+    drawerLayout: {
+      display: 'flex',
+      flex: 1,
+      flexDirection:'column',
+    },
+    listLayout: {
+      flex:10,
+    },
+    trainerLayout: {
+      flex:1,
+      justifyContent: 'flex-end',
+    },
+    companyLayout: {
+      flex:3,
+    },
+    buttonLayout: {
+      flex:2
+    },
+    listItemLink: {
+      padding: 10,        
+      paddingLeft: 25
     },
     fontawesome:{
-      color: 'white',
-      fontSize: 15,      
+      color: deepOrange[300],
+      fontSize: 17,  
     },
-    Typography: {
-      color: 'white',
-      fontSize: 15
+    typography: {
+      color: deepOrange[300],
+      fontSize: 14, 
     },  
     active: {
-       background: 'rgba(255, 255, 255, 0.12)',
+       background: 'rgba(255, 140, 0, 0.12)',
+       borderLeftColor: '#ff8a65',
+       borderLeftStyle: 'solid',
+       borderLeftWidth: 4
     },
     activeFontawesome: {
       color: '#e92428',
-      fontSize: 15,
-    }
+    },
+    companyCard: {
+      width: 240,
+    },
+    cardMedia: {
+      width: 48,
+      borderRadius:4
+    },
+    trainerCard: {
+      width: drawerWidth,
+    },
 });
 
 export default Style;

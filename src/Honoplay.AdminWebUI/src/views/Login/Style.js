@@ -1,8 +1,8 @@
+import deepPurple from '@material-ui/core/colors/purple';
 const Style = (theme) => ({
-
     main: {
       width: 'auto',
-      display: 'block', // Fix IE 11 issue.
+      display: 'block', 
       marginLeft: theme.spacing.unit * 3,
       marginRight: theme.spacing.unit * 3,
       [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
@@ -20,14 +20,19 @@ const Style = (theme) => ({
     },
     avatar: {
       margin: theme.spacing.unit,
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: deepPurple[700]
     },
     form: {
-      width: '100%', // Fix IE 11 issue.
+      width: '100%', 
       marginTop: theme.spacing.unit,
     },
     submit: {
       marginTop: theme.spacing.unit * 3,
+            color: theme.palette.getContrastText(deepPurple[500]),
+      backgroundColor: deepPurple[700],
+      '&:hover': {
+        backgroundColor: deepPurple[700],
+      },
     },
     margin: {
       margin: theme.spacing.unit,

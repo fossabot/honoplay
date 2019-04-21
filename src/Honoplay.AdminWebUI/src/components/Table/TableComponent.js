@@ -1,120 +1,160 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import {Switch, IconButton, Paper,TableRow, TableHead, 
-        TableCell, TableBody, Table, Tooltip, TableFooter } from '@material-ui/core';
-import TablePagination from '@material-ui/core/TablePagination';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';  
+import {Table, TableBody, TableCell, 
+        TablePagination, TableRow, Paper, 
+        Checkbox, MuiThemeProvider} from '@material-ui/core';
+
+import TableMenu from './TableMenu';
+import EnhancedTableHead from './EnhancedTableHead';
+import EnhancedTableToolbar from './EnhancedTableToolbar';
+
 import Style from './Style';
+import theme from '../../TypographyTheme';
 
 
-class TableComponent extends React.Component {
-
+class EnhancedTable extends React.Component {
   constructor(props) {
-    super(props);
-
-    this.state = {
-     page: 0,
-     rowsPerPage: 5,
-   };
-   this.handleChangePage=this.handleChangePage.bind(this);
-   this.handleChangeRowsPerPage=this.handleChangeRowsPerPage.bind(this);
+        super(props);
+        this.state = {
+            selected: [],
+            data: props.data,
+            columns: props.columns,
+            page: 0,
+            rowsPerPage: 5,
+          };
+          this.handleChangePage=this.handleChangePage.bind(this);
+          this.handleChangeRowsPerPage=this.handleChangeRowsPerPage.bind(this);
   }
 
-  handleChangePage (event, page) {
-  this.setState({ page });
+  handleSelectAllClick (event)  {
+    if (event.target.checked) {
+        this.setState(state => ({ selected: state.data.map(n => n.id) }));
+        return;
+    }
+    this.setState({ selected: [] });
   };
 
+  handleClick (id) {
+    const { selected } = this.state;
+    const selectedIndex = selected.indexOf(id);
+    let newSelected = [];
+
+    if (selectedIndex === -1) {
+      newSelected = newSelected.concat(selected, id);
+    } else if (selectedIndex === 0) {
+      newSelected = newSelected.concat(selected.slice(1));
+    } else if (selectedIndex === selected.length - 1) {
+      newSelected = newSelected.concat(selected.slice(0, -1));
+    } else if (selectedIndex > 0) {
+      newSelected = newSelected.concat(
+        selected.slice(0, selectedIndex),
+        selected.slice(selectedIndex + 1),
+      );
+    }
+
+    this.setState({ selected: newSelected });
+  };
+
+  handleChangePage (event, page) {
+    this.setState({ page });
+  };
+  
   handleChangeRowsPerPage (event) {
-  this.setState({ page: 0, rowsPerPage: event.target.value });
+    this.setState({ page: 0, rowsPerPage: event.target.value });
+    };
+
+  isSelected  (id) {return this.state.selected.indexOf(id) !== -1;}
+
+  handleDelete(index) {
+    const id= this.state.data.map(row => row.id);
+    const data = [...this.state.data];
+    index.map( k=> {
+      let n = id.indexOf(k);
+      id.splice(n,1);
+      data.splice(n,1);
+    });
+    this.setState({data});
+    this.setState({selected: []});
   };
 
   render() {
-    const { classes, columns, data, SwitchColumn, RowNumber } = this.props;
-    const { rowsPerPage, page } = this.state;
+    const { classes } = this.props;
+    const { data, columns, selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-
     return (
-      <Paper className={classes.root}>       
-        <Table className={classes.table}>     
-          <TableHead>
-            <TableRow>
-              {(RowNumber ?
-                <TableCell className={classes.TableHead}>#</TableCell> : null
-              )} 
-              {columns.map((column,i) =>(
-                <TableCell className={classes.TableHead} key={i}>{column}</TableCell>
-              ))}
-              {(SwitchColumn ? 
-                  <TableCell className={classes.TableHead}>Durum (Pasif/Aktif)</TableCell> : null
-              )}      
-              <TableCell className={classes.TableHead}>İşlem</TableCell>
-            </TableRow>    
-          </TableHead>      
-          <TableBody>        
-          {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row,i) => (
-                <TableRow className={classes.row} key={i}>
-                  {(RowNumber ? 
-                    <TableCell className={classes.tableCell}>{i+1}</TableCell> : null
-                  )}
-                  {columns.map((column,i) =>
-                    <TableCell className={classes.tableCell} key={i}>{row[column]}</TableCell>
-                  )}
-                  {(SwitchColumn ? 
-                      <TableCell className={classes.tableCell}>
-                      <Switch
-                        checked
-                        value="checkedDurum"
-                        classes={{
-                          switchBase: classes.colorSwitchBase,
-                          checked: classes.colorChecked,
-                          bar: classes.colorBar,
-                        }}
-                      /> 
-                      </TableCell> : null
-                  )}
-                <TableCell className={classes.tableCell}>
-                  <Tooltip title="Şifre Değiştir">
-                    <IconButton>
-                      <FontAwesomeIcon className={classes.icon} icon="lock"></FontAwesomeIcon>
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Düzenle">
-                    <IconButton>
-                      <FontAwesomeIcon className={classes.icon} icon="edit"></FontAwesomeIcon>
-                    </IconButton>
-                  </Tooltip>
-                </TableCell>
-                </TableRow>
-             ))}
-          </TableBody>
-          </Table>
-          <Table>
-            <TableFooter>
-                  <TableRow >
-                    <TablePagination 
-                      labelRowsPerPage='Sayfa başına satır sayısı:'
-                      rowsPerPageOptions={[5, 10, 25]}
-                      colSpan={3}
-                      count={data.length}
-                      rowsPerPage={rowsPerPage}
-                      page={page}
-                      SelectProps={{
-                        native: true,
-                      }}
-                      onChangePage={this.handleChangePage}
-                      onChangeRowsPerPage={this.handleChangeRowsPerPage}
-                    /> 
+      <MuiThemeProvider theme={theme} >
+        <Paper classes={{root: classes.tableRoot,typography: classes.typography}}>
+          <EnhancedTableToolbar numSelected={selected.length} 
+                                handleDelete={this.handleDelete.bind(this,selected)}/>
+          <div className={classes.tableWrapper}>
+            <Table className={classes.table} aria-labelledby="tableTitle">
+              <EnhancedTableHead
+                numSelected={selected.length}
+                onSelectAllClick={this.handleSelectAllClick.bind(this)}
+                rowCount={data.length}
+                columns={this.state.columns}
+              />
+              <TableBody>
+                {data
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map(n => {
+                    const isSelected = this.isSelected(n.id);
+                    return (
+                      <TableRow
+                        hover
+                        onChange={this.handleClick.bind(this,(event, n.id))}
+                        role="checkbox"
+                        aria-checked={isSelected}
+                        tabIndex={-1}
+                        selected={isSelected}
+                        key={n.id}
+                      >
+                        <TableCell padding="checkbox"
+                                   className={classes.tableCell}>
+                          <Checkbox checked={isSelected} 
+                                    color='secondary'
+                          />
+                        </TableCell>
+                          {columns.map((column,i) =>
+                          <TableCell className={classes.tableCell} key={i}>{n[column]}</TableCell>
+                          )}
+                          { selected.includes(n.id) ?
+                            <TableCell className={classes.tableCell}>
+                              <TableMenu handleDelete={this.handleDelete.bind(this,selected)}/>
+                            </TableCell> :
+                            <TableCell/>
+                          }
+                        </TableRow>               
+                    );                 
+                  })}             
+                {emptyRows > 0 && (
+                  <TableRow style={{ height: 49 * emptyRows }}>
+                    <TableCell colSpan={6} className={classes.tableCell}/>
                   </TableRow>
-            </TableFooter>
-          </Table>
-      </Paper>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+          <TablePagination
+            onChangePage={this.handleChangePage}
+            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+            labelRowsPerPage='Satır sayısı:'
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            colSpan={3}
+            count={data.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            SelectProps={{
+              native: true,
+            }}
+            onChangePage={this.handleChangePage}
+            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+          />
+        </Paper>
+      </MuiThemeProvider>
     );
   }
 }
 
-TableComponent.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(Style)(TableComponent);
+export default withStyles(Style)(EnhancedTable);
