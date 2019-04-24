@@ -32,6 +32,7 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
                 HostName = request.HostName,
                 Logo = request.Logo,
                 CreatedBy = request.CreatedBy,
+                //TenantDepartments= request.TenantDepartments
             };
 
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())

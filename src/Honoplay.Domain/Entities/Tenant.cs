@@ -12,6 +12,7 @@ namespace Honoplay.Domain.Entities
             Name = HostName = "";
 
             TenantAdminUsers = new HashSet<TenantAdminUser>();
+            TenantDepartments = new HashSet<TenantDepartment>();
         }
 
         public string Name { get; set; }
@@ -22,5 +23,6 @@ namespace Honoplay.Domain.Entities
         public byte[] Logo { get; set; }
 
         public virtual ICollection<TenantAdminUser> TenantAdminUsers { get; set; }
+        public virtual ICollection<TenantDepartment> TenantDepartments { get; set; }
     }
 }

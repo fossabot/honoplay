@@ -16,6 +16,8 @@ using System;
 using System.Threading.Tasks;
 using Honoplay.AdminWebAPI.Interfaces;
 using Honoplay.AdminWebAPI.Services;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Honoplay.AdminWebAPI
 {
@@ -31,6 +33,7 @@ namespace Honoplay.AdminWebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Application.AssemblyIdentifier>());
 
             // Add MediatR
@@ -60,14 +63,16 @@ namespace Honoplay.AdminWebAPI
             })
             .AddJwtBearer(x =>
             {
-                x.RequireHttpsMetadata = false;
-                x.SaveToken = true;
+                //x.RequireHttpsMetadata = false;
+                //x.SaveToken = true;
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = false,
-                    ValidateAudience = false
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ClockSkew=TimeSpan.Zero
                 };
                 x.Events = new JwtBearerEvents
                 {
@@ -87,6 +92,17 @@ namespace Honoplay.AdminWebAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "HonoPlay API", Version = "v1" });
+                c.AddSecurityDefinition("Bearer",
+                new ApiKeyScheme
+                {
+                    In = "header",
+                    Description = "Please enter into field the word 'Bearer' following by space and JWT",
+                    Name = "Authorization",
+                    Type = "apiKey"
+                });
+                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
+                { "Bearer", Enumerable.Empty<string>() },
+            });
             });
         }
 
@@ -114,10 +130,14 @@ namespace Honoplay.AdminWebAPI
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "HonoPlay API V1");
+
             });
 
-            app.UseSession();
-
+            app.UseCors(builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
             app.UseMvc();
         }
     }

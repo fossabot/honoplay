@@ -14,7 +14,7 @@ using Microsoft.Data.Sqlite;
 
 namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
 {
-    public class RegisterAdminUserCommandHandler : IRequestHandler<RegisterAdminUserCommand, ResponseModel<AdminUserRegisterModel>>
+    public class RegisterAdminUserCommandHandler : IRequestHandler<RegisterAdminUserCommand, ResponseModel<RegisterAdminUserModel>>
     {
         private readonly HonoplayDbContext _context;
 
@@ -23,7 +23,7 @@ namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
             _context = context;
         }
 
-        public async Task<ResponseModel<AdminUserRegisterModel>> Handle(RegisterAdminUserCommand request, CancellationToken cancellationToken)
+        public async Task<ResponseModel<RegisterAdminUserModel>> Handle(RegisterAdminUserCommand request, CancellationToken cancellationToken)
         {
             var salt = ByteArrayExtensions.GetRandomSalt();
             var item = new AdminUser
@@ -60,7 +60,7 @@ namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
                 }
             }
 
-            var model = new AdminUserRegisterModel(id: item.Id,
+            var model = new RegisterAdminUserModel(id: item.Id,
                 email: item.Email,
                 username: item.UserName,
                 name: item.Name,
@@ -69,7 +69,7 @@ namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
                 timeZone: item.TimeZone,
                 createDateTime: item.CreatedDateTime);
 
-            return new ResponseModel<AdminUserRegisterModel>(model);
+            return new ResponseModel<RegisterAdminUserModel>(model);
         }
     }
 }

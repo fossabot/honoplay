@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
 using System.Threading.Tasks;
-using Honoplay.Application.AdminUsers.Commands.UpdateAdminUser;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
@@ -33,7 +32,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var model = await Mediator.Send(command);
 
-                var result = _userService.Authenticate(model);
+                var result = _userService.GenerateToken(model);
 
                 return Ok(new { User = result.user, Token = result.stringToken });
             }
@@ -54,20 +53,31 @@ namespace Honoplay.AdminWebAPI.Controllers
             }
             catch (ObjectAlreadyExistsException ex)
             {
-                return Conflict(new ResponseModel<AdminUserRegisterModel>(new Error(HttpStatusCode.Conflict, ex)));
+                return Conflict(new ResponseModel<RegisterAdminUserModel>(new Error(HttpStatusCode.Conflict, ex)));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new ResponseModel<AdminUserRegisterModel>(new Error(HttpStatusCode.InternalServerError, ex)));
+                return StatusCode(500, new ResponseModel<RegisterAdminUserModel>(new Error(HttpStatusCode.InternalServerError, ex)));
             }
         }
-
-        [HttpGet("update")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<IActionResult> Update([FromBody]UpdateAdminUserCommand command)
+        [HttpPost("renew-token")]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult RenewToken([FromBody]string renewToken)
         {
-            return new JsonResult("");
+            try
+            {
+                var token = _userService.RenewToken(renewToken);
+                return StatusCode((int)HttpStatusCode.Created, token);
+            }
+            catch (ObjectAlreadyExistsException ex)
+            {
+                return Conflict(new ResponseModel<RegisterAdminUserModel>(new Error(HttpStatusCode.Conflict, ex)));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponseModel<RegisterAdminUserModel>(new Error(HttpStatusCode.InternalServerError, ex)));
+            }
         }
     }
 }

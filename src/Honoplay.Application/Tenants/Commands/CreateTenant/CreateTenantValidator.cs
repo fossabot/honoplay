@@ -1,7 +1,5 @@
 ﻿using FluentValidation;
 
-
-
 namespace Honoplay.Application.Tenants.Commands.CreateTenant
 {
     public class CreateTenantValidator : AbstractValidator<CreateTenantCommand>

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Honoplay.Application.AdminUsers.Commands.RegisterAdminUser
 {
-    public class RegisterAdminUserCommand : IRequest<ResponseModel<AdminUserRegisterModel>>
+    public class RegisterAdminUserCommand : IRequest<ResponseModel<RegisterAdminUserModel>>
     {
         public string Email { get; set; }
 

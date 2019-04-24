@@ -1,5 +1,7 @@
 ﻿using Honoplay.Application._Infrastructure;
+using Honoplay.Domain.Entities;
 using MediatR;
+using System.Collections.Generic;
 
 namespace Honoplay.Application.Tenants.Commands.CreateTenant
 {

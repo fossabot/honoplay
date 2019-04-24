@@ -5,6 +5,9 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Linq;
+using Honoplay.Common.Extensions;
+using Newtonsoft.Json;
 
 namespace Honoplay.AdminWebAPI.Services
 {
@@ -17,8 +20,9 @@ namespace Honoplay.AdminWebAPI.Services
             _appSettings = appSettings.Value;
         }
 
-        public (AdminUserAuthenticateModel user, string stringToken) Authenticate(AdminUserAuthenticateModel user)
+        public (AdminUserAuthenticateModel user, string stringToken) GenerateToken(AdminUserAuthenticateModel user)
         {
+
             //// authentication successful so generate jwt token
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = System.Text.Encoding.ASCII.GetBytes(_appSettings.JWTSecret);
@@ -32,16 +36,38 @@ namespace Honoplay.AdminWebAPI.Services
                     new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.UserData, user.Tenants),
                 }),
-                Expires = DateTime.UtcNow.AddDays(1),
+                NotBefore = DateTime.UtcNow,
+                Expires = DateTime.UtcNow.AddDays(20),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
-            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
+            JwtSecurityToken token = tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
 
             var stringToken = tokenHandler.WriteToken(token);
 
             var userWithToken = (user, stringToken);
             return userWithToken;
         }
+        public string RenewToken(string token)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
+            var key = System.Text.Encoding.ASCII.GetBytes(_appSettings.JWTSecret);
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(jwtSecurityToken.Claims),
+                NotBefore = DateTime.UtcNow,
+                Expires = DateTime.UtcNow.AddDays(20),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var jwtToken = tokenHandler.CreateJwtSecurityToken(tokenDescriptor);
+            var stringToken = tokenHandler.WriteToken(jwtToken);
+
+            return stringToken;
+        }
+
     }
 }

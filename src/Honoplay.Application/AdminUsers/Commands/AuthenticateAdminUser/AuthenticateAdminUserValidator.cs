@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 
-
 namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
 {
     public class AuthenticateAdminUserValidator : AbstractValidator<AuthenticateAdminUserCommand>

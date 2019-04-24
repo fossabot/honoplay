@@ -1,6 +1,4 @@
-﻿
-
-using Honoplay.Domain.Entities;
+﻿using Honoplay.Domain.Entities;
 using System;
 using System.Linq.Expressions;
 

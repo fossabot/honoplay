@@ -2,7 +2,6 @@
 using System;
 using Honoplay.Application._Infrastructure;
 
-
 namespace Honoplay.Application.Tenants.Commands.UpdateTenant
 {
     public class UpdateTenantCommand : IRequest<ResponseModel<UpdateTenantModel>>

@@ -1,7 +1,5 @@
 ﻿using FluentValidation;
 
-
-
 namespace Honoplay.Application.Tenants.Commands.UpdateTenant
 {
     public class UpdateTenantValidator : AbstractValidator<UpdateTenantCommand>

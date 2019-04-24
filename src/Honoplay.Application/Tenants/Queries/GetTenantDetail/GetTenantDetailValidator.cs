@@ -1,7 +1,5 @@
 ﻿using FluentValidation;
 
-
-
 namespace Honoplay.Application.Tenants.Queries.GetTenantDetail
 {
     public class GetTenantDetailValidator : AbstractValidator<GetTenantDetailQuery>

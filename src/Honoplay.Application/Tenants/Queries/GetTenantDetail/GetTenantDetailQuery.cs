@@ -2,7 +2,6 @@
 using System;
 using Honoplay.Application._Infrastructure;
 
-
 namespace Honoplay.Application.Tenants.Queries.GetTenantDetail
 {
     public class GetTenantDetailQuery : IRequest<ResponseModel<TenantDetailModel>>
