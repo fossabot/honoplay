@@ -1,6 +1,8 @@
 ﻿using MediatR;
 using System;
 using Honoplay.Application._Infrastructure;
+using Honoplay.Domain.Entities;
+using System.Collections.Generic;
 
 namespace Honoplay.Application.Tenants.Commands.UpdateTenant
 {
@@ -12,5 +14,6 @@ namespace Honoplay.Application.Tenants.Commands.UpdateTenant
         public string HostName { get; set; }
         public byte[] Logo { get; set; }
         public int UpdatedBy { get; set; }
+        public ICollection<Department> Departments { get; set; }
     }
 }

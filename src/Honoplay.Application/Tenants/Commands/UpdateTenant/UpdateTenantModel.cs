@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Honoplay.Domain.Entities;
+using System;
+using System.Collections.Generic;
 
 namespace Honoplay.Application.Tenants.Commands.UpdateTenant
 {
@@ -11,8 +13,9 @@ namespace Honoplay.Application.Tenants.Commands.UpdateTenant
         public string Description { get; }
         public string HostName { get; }
         public byte[] Logo { get; }
+        public ICollection<Department> Departments { get; set; }
 
-        public UpdateTenantModel(Guid id, int updatedBy, DateTimeOffset updatedAt, string name, string description, string hostName, byte[] logo)
+        public UpdateTenantModel(Guid id, int updatedBy, DateTimeOffset updatedAt, string name, string description, string hostName, byte[] logo, ICollection<Department> departments)
         {
             Id = id;
             UpdatedBy = updatedBy;
@@ -21,6 +24,7 @@ namespace Honoplay.Application.Tenants.Commands.UpdateTenant
             Description = description;
             HostName = hostName;
             Logo = logo;
+            Departments = departments;
         }
     }
 }

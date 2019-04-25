@@ -2,9 +2,11 @@ using Honoplay.AdminWebAPI;
 using Honoplay.Application.Tenants.Commands.CreateTenant;
 using Honoplay.Application.Tenants.Commands.UpdateTenant;
 using Honoplay.Common.Constants;
+using Honoplay.Domain.Entities;
 using Honoplay.System.Tests.Extensions;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -58,7 +60,20 @@ namespace Honoplay.System.Tests.Controllers
                 HostName = "omega2",
                 Name = "test update",
                 Description = "desc",
-                UpdatedBy = 1
+                UpdatedBy = 1,
+                Departments = new List<Department>
+                {
+                    new Department
+                    {
+                        Name="Yazilim",
+                        TenantId=Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a")
+                    },
+                    new Department
+                    {
+                        Name="Tasarim",
+                        TenantId=Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a")
+                    }
+                }
             };
 
             var json = JsonConvert.SerializeObject(command);

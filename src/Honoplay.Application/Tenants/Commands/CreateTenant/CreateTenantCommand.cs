@@ -12,5 +12,6 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
         public string HostName { get; set; }
         public byte[] Logo { get; set; }
         public int CreatedBy { get; set; }
+        public ICollection<Department> Departments { get; set; }
     }
 }

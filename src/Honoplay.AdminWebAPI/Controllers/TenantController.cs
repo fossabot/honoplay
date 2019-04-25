@@ -6,8 +6,8 @@ using Honoplay.Application.Tenants.Queries.GetTenantDetail;
 using Honoplay.Application.Tenants.Queries.GetTenantsList;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Linq;
 using System.Net;
@@ -109,5 +109,6 @@ namespace Honoplay.AdminWebAPI.Controllers
                 return StatusCode(HttpStatusCode.InternalServerError.ToInt());
             }
         }
+
     }
 }

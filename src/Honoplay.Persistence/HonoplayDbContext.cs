@@ -17,7 +17,7 @@ namespace Honoplay.Persistence
         public DbSet<AdminUser> AdminUsers { get; set; }
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<TenantAdminUser> TenantAdminUsers { get; set; }
-        public DbSet<TenantDepartment> TenantDepartments { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

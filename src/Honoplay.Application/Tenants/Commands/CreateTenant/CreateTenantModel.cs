@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Honoplay.Domain.Entities;
+using System;
+using System.Collections.Generic;
 
 namespace Honoplay.Application.Tenants.Commands.CreateTenant
 {
@@ -11,8 +13,10 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
         public string Description { get; }
         public string HostName { get; }
         public byte[] Logo { get; }
+        public ICollection<Department> Departments { get; set; }
 
-        public CreateTenantModel(Guid id, int createdBy, DateTimeOffset createdAt, string name, string description, string hostName, byte[] logo)
+
+        public CreateTenantModel(Guid id, int createdBy, DateTimeOffset createdAt, string name, string description, string hostName, byte[] logo, ICollection<Department> departments)
         {
             Id = id;
             CreatedBy = createdBy;
@@ -21,6 +25,7 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
             Description = description;
             HostName = hostName;
             Logo = logo;
+            Departments = departments; 
         }
     }
 }

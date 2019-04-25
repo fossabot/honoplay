@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
 
-
-
 namespace Honoplay.Domain.Entities
 {
     public class Tenant : BaseEntity
@@ -12,17 +10,15 @@ namespace Honoplay.Domain.Entities
             Name = HostName = "";
 
             TenantAdminUsers = new HashSet<TenantAdminUser>();
-            TenantDepartments = new HashSet<TenantDepartment>();
+            Departments = new HashSet<Department>();
         }
 
         public string Name { get; set; }
         public string Description { get; set; }
-
         public string HostName { get; set; }
-
         public byte[] Logo { get; set; }
 
         public virtual ICollection<TenantAdminUser> TenantAdminUsers { get; set; }
-        public virtual ICollection<TenantDepartment> TenantDepartments { get; set; }
+        public virtual ICollection<Department> Departments { get; set; }
     }
 }
