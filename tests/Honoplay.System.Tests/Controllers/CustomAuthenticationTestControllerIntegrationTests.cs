@@ -16,35 +16,35 @@ namespace Honoplay.System.Tests.Controllers
         {
             _client = factory.CreateClient();
         }
-        [Fact]
-        public async void CanNotGetValuesAsync()
-        {
-            var httpResponse = await _client.GetAsync("api/CustomAuthenticationTest");
 
-            Assert.False(httpResponse.IsSuccessStatusCode);
-            Assert.Equal(HttpStatusCode.Unauthorized, httpResponse.StatusCode);
-        }
+        // [Fact]
+        // public async void CanNotGetValuesAsync()
+        // {
+        //     var httpResponse = await _client.GetAsync("api/CustomAuthenticationTest");
 
-        [Fact]
-        public async void CanGetValuesAsync()
-        {
-            AuthenticateAdminUserCommand command = new AuthenticateAdminUserCommand
-            {
-                Email = "registered@omegabigdata.com",
-                Password = "Passw0rd"
-            };
+        //     Assert.False(httpResponse.IsSuccessStatusCode);
+        //     Assert.Equal(HttpStatusCode.Unauthorized, httpResponse.StatusCode);
+        // }
 
-            var json = JsonConvert.SerializeObject(command);
+        // [Fact]
+        // public async void CanGetValuesAsync()
+        // {
+        //     AuthenticateAdminUserCommand command = new AuthenticateAdminUserCommand
+        //     {
+        //         Email = "registered@omegabigdata.com",
+        //         Password = "Passw0rd"
+        //     };
 
-            //Authenticate and init session
-            await _client.PostAsync("api/CustomAuthenticationTest", new StringContent(json, Encoding.UTF8, "application/json"));
+        //     var json = JsonConvert.SerializeObject(command);
 
-            //So now we can access the action
-            var httpResponse = await _client.GetAsync("api/CustomAuthenticationTest");
+        //     //Authenticate and init session
+        //     await _client.PostAsync("api/CustomAuthenticationTest", new StringContent(json, Encoding.UTF8, "application/json"));
 
-            Assert.True(httpResponse.IsSuccessStatusCode);
-            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+        //     //So now we can access the action
+        //     var httpResponse = await _client.GetAsync("api/CustomAuthenticationTest");
 
-        }
+        //     Assert.True(httpResponse.IsSuccessStatusCode);
+        //     Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+        // }
     }
 }
