@@ -6,8 +6,7 @@ import {Paper, Checkbox,
         Avatar, MuiThemeProvider,TextField, 
         Typography} from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
-import Style from './Style';
-import theme from '../../TypographyTheme';
+import { Style, theme} from './Style';
 
 function Login(props) {
   const { classes } = props;

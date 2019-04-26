@@ -1,18 +1,18 @@
 ﻿import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
-import {BrowserRouter as Router, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Layout from './components/Layout/LayoutComponent';
 
 import Sorular from './views/Sorular/Sorular';
+import SirketBilgileri from './views/SirketBilgileri';
 
 class App extends Component {
     render() {
         return (
-            <Router>
-                <Layout>             
-                    <Route path="/home/sorular" component={Sorular} />         
-                </Layout>
-            </Router>
+            <Layout>             
+                <Route path="/home/sorular" component={Sorular} />    
+                <Route path="/home/sirketbilgileri" component={SirketBilgileri} />       
+            </Layout>
         );
     }
 }

@@ -1,30 +1,28 @@
 import React from 'react';
 import { render } from 'react-dom';
-import {createStore,applyMiddleware,combineReducers } from 'redux';
-import { Provider } from 'react-redux';
 import App from './App';
 import Login from './views/Login/Login';
 
-var createHistory = require('history').createBrowserHistory;
-import { Router, Route } from 'react-router';
-import { routerReducer, routerMiddleware } from 'react-router-redux';
-
-const history = createHistory();
-
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import rootReducer from './reducers/rootReducers';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { Provider } from 'react-redux';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 const store = createStore(
-    combineReducers({
-        routing: routerReducer,
-     }),
-     applyMiddleware(routerMiddleware(history)),
+    rootReducer,
+    composeWithDevTools(
+        applyMiddleware(thunk)
+    )
 );
 
 render(
-    <Provider store={store}>
-       <Router history={history}>
+    <BrowserRouter>
+        <Provider store={store}>
             <Route exact path="/" component={Login} />
             <Route path="/home" component={App} />
-       </Router>
-    </Provider>,
+        </Provider>
+    </BrowserRouter>,
     document.getElementById('root'),
 );

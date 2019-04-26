@@ -5,8 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import {ListItem, ListItemText, ListItemIcon, 
         MuiThemeProvider, Typography} from '@material-ui/core';
 import {NavLink} from 'react-router-dom';
-import Style from './Style';
-import theme from '../../TypographyTheme';
+import { Style, theme } from './Style';
 
 class ListItemComponent extends React.Component {
 render() {

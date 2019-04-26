@@ -2,8 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles'; 
 import {TableHead, TableRow, TableCell, 
         Checkbox, MuiThemeProvider} from '@material-ui/core';
-import Style from './Style';
-import theme from '../../TypographyTheme';
+import { Style, theme } from './Style';
 
 class EnhancedTableHead extends React.Component {
     constructor(props) {

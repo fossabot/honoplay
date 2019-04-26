@@ -2,8 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles'; 
 import {Button,MuiThemeProvider} from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';  
-import theme from '../../TypographyTheme';
-import Style from './Style';
+import { Style,theme } from './Style';
 
 class ButtonComponent extends React.Component {
     render() {

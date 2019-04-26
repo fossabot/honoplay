@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {IconButton, Menu, MenuItem } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreHoriz';
-import Style from './Style';
+import { Style } from './Style';
 
 class TableMenu extends React.Component {
   constructor(props) {

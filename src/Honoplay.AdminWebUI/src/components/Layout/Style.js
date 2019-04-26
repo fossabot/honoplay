@@ -1,6 +1,6 @@
 import {deepPurple, deepOrange} from '@material-ui/core/colors';
 const drawerWidth = 240;
-const Style = (theme) => ({
+export const Style = (theme) => ({
     root: {
       display: 'flex',
     },
@@ -12,9 +12,6 @@ const Style = (theme) => ({
     },
     appBar: {
       marginLeft: drawerWidth,
-      [theme.breakpoints.up('sm')]: {
-        display:'none',
-      },
     },
     menuButton: {
       marginRight: 20,
@@ -31,7 +28,7 @@ const Style = (theme) => ({
     content: {
       flexGrow: 1,
       padding: theme.spacing.unit * 3,
-      paddingTop: 65,
+      paddingTop: 80,
     },
     toolbar: {
       background: '#ff8a65',
@@ -108,4 +105,15 @@ const Style = (theme) => ({
     },
 });
 
-export default Style;
+import {createMuiTheme} from '@material-ui/core';
+export const theme = createMuiTheme({
+  palette: {
+    primary: deepPurple,
+    secondary: {
+      main: deepOrange[300]
+    }
+  },
+  typography: {
+    useNextVariants: true,
+  },
+});

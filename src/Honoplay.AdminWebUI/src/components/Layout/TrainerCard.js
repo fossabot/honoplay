@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import {Avatar, CardHeader} from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import Style from './Style';
+import { Style } from './Style';
 
 import imageUrl from '../../images/deneme.jpg'
 

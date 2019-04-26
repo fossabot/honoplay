@@ -8,8 +8,7 @@ import TableMenu from './TableMenu';
 import EnhancedTableHead from './EnhancedTableHead';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
 
-import Style from './Style';
-import theme from '../../TypographyTheme';
+import { Style, theme} from './Style';
 
 
 class EnhancedTable extends React.Component {

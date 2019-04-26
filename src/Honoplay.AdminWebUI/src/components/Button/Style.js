@@ -1,4 +1,4 @@
-const Style = (theme) => ({
+export const Style = (theme) => ({
     button: {
         color: 'white',
         textTransform: 'capitalize',
@@ -8,4 +8,16 @@ const Style = (theme) => ({
     },
 });
 
-export default Style;
+import {createMuiTheme} from '@material-ui/core';
+import {deepPurple, deepOrange} from '@material-ui/core/colors';
+export const theme = createMuiTheme({
+  palette: {
+    primary: deepPurple,
+    secondary: {
+      main: deepOrange[300]
+    }
+  },
+  typography: {
+    useNextVariants: true,
+  },
+});

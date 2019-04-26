@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {CardHeader, CardMedia} from '@material-ui/core';
-import Style from './Style';
+import { Style } from './Style';
 
 import imageUrl from '../../images/deneme.jpg';
 

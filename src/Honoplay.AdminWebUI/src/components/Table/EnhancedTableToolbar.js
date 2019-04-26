@@ -3,8 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import {Toolbar, IconButton, 
         Tooltip, MuiThemeProvider, Typography} from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Style from './Style';
-import theme from '../../TypographyTheme';
+import { Style, theme} from './Style';
   
 const EnhancedTableToolbar = props => {
     const { numSelected, classes, handleDelete } = props;

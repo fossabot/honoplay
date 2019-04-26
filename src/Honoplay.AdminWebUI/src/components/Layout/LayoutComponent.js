@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import {AppBar, CssBaseline, Drawer, 
         Hidden, IconButton,Toolbar, 
         Button,List} from '@material-ui/core';
-import Style from './Style';
+import { Style } from './Style';
 
 import TrainerCard from './TrainerCard';
 import ListItem from './ListItemComponent';
