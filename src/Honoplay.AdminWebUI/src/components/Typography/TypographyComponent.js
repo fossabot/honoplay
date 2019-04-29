@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import {Typography} from '@material-ui/core';
 import Style from './Style';
 
-function TypographyComponent(props) {
+const TypographyComponent = (props) => {
     const { classes, pageHeader } = props;
     return (
         <Typography className={classes.typography}>

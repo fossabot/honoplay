@@ -7,10 +7,9 @@ import {ListItem, ListItemText, ListItemIcon,
 import {NavLink} from 'react-router-dom';
 import { Style, theme } from './Style';
 
-class ListItemComponent extends React.Component {
-render() {
-    const { classes,pageLink,pageIcon,pageName} = this.props;
+const ListItemComponent = (props) => {
 
+    const { classes,pageLink,pageIcon,pageName} = props;
     return (
       <MuiThemeProvider theme={theme}>
             <ListItem className={classes.listItemLink} 
@@ -31,7 +30,5 @@ render() {
             </ListItem>
       </MuiThemeProvider>
     );
-  }
 }
-
-export default withStyles(Style, { withTheme: true })(ListItemComponent);
+export default withStyles(Style)(ListItemComponent);

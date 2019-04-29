@@ -1,7 +1,5 @@
 export const Style = (theme) => ({
     root: {
-      backgroundColor: theme.palette.background.paper,
-      width: '%100',
       flexGrow: 1,
     },
     default_tabStyle: {
@@ -18,7 +16,6 @@ export const Style = (theme) => ({
         borderWidth: 1,
         textTransform: 'capitalize',
         color: '#673ab7',
-        minWidth: 72,
     },
 });
 

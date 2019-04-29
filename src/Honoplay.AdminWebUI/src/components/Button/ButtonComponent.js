@@ -4,16 +4,15 @@ import {Button,MuiThemeProvider} from '@material-ui/core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';  
 import { Style,theme } from './Style';
 
-class ButtonComponent extends React.Component {
-    render() {
-        const { classes, buttonColor, buttonIcon, buttonName} = this.props;
- 
+const ButtonComponent = (props) => {
+        const { classes, buttonColor, buttonIcon, buttonName, onClick} = props;
         return (
             <div>
                 <MuiThemeProvider theme={theme}>
                     <Button variant="contained"
                             color={buttonColor}
-                            className={classes.button}>
+                            className={classes.button}
+                            onClick={onClick}>
                             {(buttonIcon &&
                                 <div className={classes.div}>
                                     <FontAwesomeIcon icon={buttonIcon}/>
@@ -24,7 +23,6 @@ class ButtonComponent extends React.Component {
                 </MuiThemeProvider>
             </div>   
         );
-    }
 }  
  
-export default withStyles(Style, { withTheme: true })(ButtonComponent);
+export default withStyles(Style)(ButtonComponent);

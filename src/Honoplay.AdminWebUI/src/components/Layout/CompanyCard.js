@@ -6,9 +6,9 @@ import { Style } from './Style';
 import imageUrl from '../../images/deneme.jpg';
 
 class CompanyCard extends React.Component {
+  
   render() {
     const { classes, companyName } = this.props;
-
     return (
       <div className={classes.companyCard}>
         <CardHeader

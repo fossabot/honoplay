@@ -12,6 +12,9 @@ export const Style = (theme) => ({
     },
     appBar: {
       marginLeft: drawerWidth,
+      [theme.breakpoints.up('sm')]: {
+        display: 'none'
+      },
     },
     menuButton: {
       marginRight: 20,
@@ -28,7 +31,7 @@ export const Style = (theme) => ({
     content: {
       flexGrow: 1,
       padding: theme.spacing.unit * 3,
-      paddingTop: 80,
+      paddingTop: 75,
     },
     toolbar: {
       background: '#ff8a65',

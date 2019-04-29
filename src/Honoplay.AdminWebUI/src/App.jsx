@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import Layout from './components/Layout/LayoutComponent';
 
 import Sorular from './views/Sorular/Sorular';
-import SirketBilgileri from './views/SirketBilgileri';
+import SirketBilgileri from './views/SirketBilgileri/SirketBilgileri';
 
 class App extends Component {
     render() {
