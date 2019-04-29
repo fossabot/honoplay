@@ -33,7 +33,9 @@ class FullWidthTabs extends React.Component {
   };
   handleChangeValue(event)
   {
-    this.setState({ value: this.state.value + 1 });
+    this.setState({ 
+      value: this.state.value === 2 ? this.state.value : this.state.value + 1
+    });
   };
 
   render() {
