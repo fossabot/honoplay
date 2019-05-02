@@ -18,6 +18,8 @@ using Honoplay.AdminWebAPI.Interfaces;
 using Honoplay.AdminWebAPI.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.IO;
 
 namespace Honoplay.AdminWebAPI
 {
@@ -72,7 +74,7 @@ namespace Honoplay.AdminWebAPI
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ValidateLifetime = true,
-                    ClockSkew=TimeSpan.Zero
+                    ClockSkew = TimeSpan.Zero
                 };
                 x.Events = new JwtBearerEvents
                 {
@@ -103,7 +105,11 @@ namespace Honoplay.AdminWebAPI
                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
                 { "Bearer", Enumerable.Empty<string>() },
             });
+                // Configure Swagger to use the xml documentation file
+                var xmlFile = Environment.CurrentDirectory + "\\SwaggerDoc.xml";
+                c.IncludeXmlComments(xmlFile);
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

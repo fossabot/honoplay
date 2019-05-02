@@ -1,8 +1,7 @@
 ﻿using MediatR;
 using System;
 using Honoplay.Application._Infrastructure;
-using Honoplay.Domain.Entities;
-using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Honoplay.Application.Tenants.Commands.UpdateTenant
 {
@@ -13,7 +12,7 @@ namespace Honoplay.Application.Tenants.Commands.UpdateTenant
         public string Description { get; set; }
         public string HostName { get; set; }
         public byte[] Logo { get; set; }
+        [JsonIgnore]
         public int UpdatedBy { get; set; }
-        public ICollection<Department> Departments { get; set; }
     }
 }

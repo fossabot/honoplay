@@ -43,7 +43,6 @@ namespace Honoplay.Application.Tenants.Commands.UpdateTenant
                     tenant.Logo = request.Logo;
                     tenant.UpdatedBy = request.UpdatedBy;
                     tenant.UpdatedAt = updatedAt;
-                    tenant.Departments = request.Departments;
 
                     _context.Tenants.Update(tenant);
                     await _context.SaveChangesAsync(cancellationToken);
@@ -69,13 +68,11 @@ namespace Honoplay.Application.Tenants.Commands.UpdateTenant
             }
 
             var model = new UpdateTenantModel(id: request.Id,
-                updatedBy: request.UpdatedBy,
                 updatedAt: updatedAt,
                 name: request.Name,
                 description: request.Description,
                 hostName: request.HostName,
-                logo: request.Logo,
-                departments: request.Departments);
+                logo: request.Logo);
 
             return new ResponseModel<UpdateTenantModel>(model);
         }

@@ -31,8 +31,7 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
                 Description = request.Description,
                 HostName = request.HostName,
                 Logo = request.Logo,
-                CreatedBy = request.CreatedBy,
-                Departments = request.Departments
+                CreatedBy = request.CreatedBy
             };
 
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
@@ -66,13 +65,11 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
             }
 
             var model = new CreateTenantModel(id: item.Id,
-                createdBy: item.CreatedBy,
                 createdAt: item.CreatedAt,
                 name: item.Name,
                 description: item.Description,
                 hostName: item.HostName,
-                logo: item.Logo,
-                departments: item.Departments);
+                logo: item.Logo);
 
             return new ResponseModel<CreateTenantModel>(model);
         }

@@ -11,6 +11,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Honoplay.Application.Tenants.Commands.AddDepartment;
 using Xunit;
 
 namespace Honoplay.System.Tests.Controllers
@@ -53,31 +54,19 @@ namespace Honoplay.System.Tests.Controllers
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            // The endpoint or route of the controller action.
+            //Init model
             var command = new UpdateTenantCommand
             {
                 Id = Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a"),
                 HostName = "omega2",
                 Name = "test update",
                 Description = "desc",
-                UpdatedBy = 1,
-                Departments = new List<Department>
-                {
-                    new Department
-                    {
-                        Name="Yazilim",
-                        TenantId=Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a")
-                    },
-                    new Department
-                    {
-                        Name="Tasarim",
-                        TenantId=Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a")
-                    }
-                }
+                UpdatedBy = 1
             };
 
             var json = JsonConvert.SerializeObject(command);
 
+            // The endpoint or route of the controller action.
             var httpResponse = await client.PutAsync("api/Tenant", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
 
             // Must be successful.
@@ -123,6 +112,40 @@ namespace Honoplay.System.Tests.Controllers
 
             var httpResponse = await client.GetAsync($"api/Tenant?skip=0&take=10");
 
+            // Must be successful.
+            httpResponse.EnsureSuccessStatusCode();
+
+            Assert.True(httpResponse.IsSuccessStatusCode);
+            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+        }
+        [Fact]
+        public async Task CanAddDepartment()
+        {
+            var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
+
+            //Init model
+            var command = new AddDepartmentCommand
+            {
+                TenantId = Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a"),
+                Departments = new List<Department>
+                {
+                    new Department
+                    {
+                        Name="Yazilim",
+                        TenantId=Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a")
+                    },
+                    new Department
+                    {
+                        Name="Tasarim",
+                        TenantId=Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a")
+                    }
+                }
+            };
+
+            var json = JsonConvert.SerializeObject(command);
+
+            // The endpoint or route of the controller action.
+            var httpResponse = await client.PostAsync(requestUri: "api/Tenant/add-department", content: new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
 

@@ -2,6 +2,7 @@
 using Honoplay.Domain.Entities;
 using MediatR;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Honoplay.Application.Tenants.Commands.CreateTenant
 {
@@ -11,7 +12,7 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
         public string Description { get; set; }
         public string HostName { get; set; }
         public byte[] Logo { get; set; }
+        [JsonIgnore]
         public int CreatedBy { get; set; }
-        public ICollection<Department> Departments { get; set; }
     }
 }
