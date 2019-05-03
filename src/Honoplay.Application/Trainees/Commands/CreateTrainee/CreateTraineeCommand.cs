@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Honoplay.Application._Infrastructure;
+﻿using Honoplay.Application._Infrastructure;
 using MediatR;
 
 namespace Honoplay.Application.Trainees.Commands.CreateTrainee
@@ -15,5 +12,6 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
         public int Gender { get; set; }
         public int WorkingStatusId { get; set; }
         public int DepartmentId { get; set; }
+        public int AdminUserId { get; set; }
     }
 }

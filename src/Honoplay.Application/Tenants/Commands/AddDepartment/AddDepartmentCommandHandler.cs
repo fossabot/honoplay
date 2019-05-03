@@ -37,6 +37,11 @@ namespace Honoplay.Application.Tenants.Commands.AddDepartment
                         throw new NotFoundException(nameof(Tenant), request.TenantId);
                     }
 
+                    foreach (var requestDepartment in request.Departments)
+                    {
+                        requestDepartment.CreatedBy = request.AdminUserId;
+                    }
+
                     await _context.Departments.AddRangeAsync(request.Departments, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
                     transaction.Commit();

@@ -9,8 +9,6 @@ namespace Honoplay.Domain.Entities
             CreatedAt = DateTimeOffset.Now;
         }
 
-        public Guid Id { get; set; }
-
         public int CreatedBy { get; set; }
         public DateTimeOffset CreatedAt { get; private set; }
 

@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Honoplay.Domain.Entities
 {
-    public class Trainee
+    public class Trainee : BaseEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }

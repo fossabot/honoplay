@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Honoplay.Domain.Entities
 {
-    public class Department
+    public class Department : BaseEntity
     {
         public Department()
         {

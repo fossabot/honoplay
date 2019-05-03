@@ -26,5 +26,12 @@
             <param name="command"> Retrieve the tenants by the Skip and Take.</param>
             <returns>Created Tenant</returns>
         </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TraineeController.Post(Honoplay.Application.Trainees.Commands.CreateTrainee.CreateTraineeCommand)">
+            <summary>
+            Retrieve status code with CreateTraineeModel
+            </summary>
+            <param name="command">The param is must be trainee model.</param>
+            <returns>StatusCode with CreateTraineeModel. </returns>
+        </member>
     </members>
 </doc>

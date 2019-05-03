@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Honoplay.Domain.Entities
 {
@@ -12,6 +13,7 @@ namespace Honoplay.Domain.Entities
             TenantAdminUsers = new HashSet<TenantAdminUser>();
             Departments = new HashSet<Department>();
         }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
         public string Description { get; set; }
