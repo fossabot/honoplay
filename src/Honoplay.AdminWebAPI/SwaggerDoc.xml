@@ -33,5 +33,12 @@
             <param name="command">The param is must be trainee model.</param>
             <returns>StatusCode with CreateTraineeModel. </returns>
         </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TraineeController.Put(Honoplay.Application.Trainees.Commands.CreateTrainee.UpdateTraineeCommand)">
+            <summary>
+            Retrieve status code with UpdateTraineeModel
+            </summary>
+            <param name="command">The param is must be trainee model.</param>
+            <returns>StatusCode with UpdateTraineeModel. </returns>
+        </member>
     </members>
 </doc>

@@ -8,19 +8,20 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Honoplay.Application.Trainees.Commands.CreateTrainee
 {
-    public class CreateTraineeCommandHandler : IRequestHandler<CreateTraineeCommand, ResponseModel<CreateTraineeModel>>
+    public class UpdateTraineeCommandHandler : IRequestHandler<UpdateTraineeCommand, ResponseModel<UpdateTraineeModel>>
     {
         private readonly HonoplayDbContext _context;
-        public CreateTraineeCommandHandler(HonoplayDbContext context)
+        public UpdateTraineeCommandHandler(HonoplayDbContext context)
         {
             _context = context;
         }
-        public async Task<ResponseModel<CreateTraineeModel>> Handle(CreateTraineeCommand request, CancellationToken cancellationToken)
+        public async Task<ResponseModel<UpdateTraineeModel>> Handle(UpdateTraineeCommand request, CancellationToken cancellationToken)
         {
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
@@ -28,27 +29,29 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
                 {
                     var department = await _context.Departments.SingleOrDefaultAsync(x => x.Id == request.DepartmentId, cancellationToken);
                     var isExist = await _context.TenantAdminUsers.AnyAsync(x =>
-                                                                    x.AdminUserId == request.CreatedBy
-                                                                    && x.TenantId == department.TenantId,
-                                                                    cancellationToken);
-                    if (!isExist)
+                            x.AdminUserId == request.UpdatedBy
+                            && x.TenantId == department.TenantId,
+                        cancellationToken);
+
+                    var trainee = await _context.Trainees.SingleOrDefaultAsync(
+                        x => x.Id == request.Id && isExist, cancellationToken);
+
+                    if (trainee is null)
                     {
                         throw new NotFoundException(nameof(Department), request.DepartmentId);
                     }
 
-                    var trainee = new Trainee
-                    {
-                        Name = request.Name,
-                        DepartmentId = request.DepartmentId,
-                        Gender = request.Gender,
-                        NationalIdentityNumber = request.NationalIdentityNumber,
-                        PhoneNumber = request.PhoneNumber,
-                        Surname = request.Surname,
-                        WorkingStatusId = request.WorkingStatusId,
-                        CreatedBy = request.CreatedBy,
-                    };
+                    trainee.Name = request.Name;
+                    trainee.DepartmentId = request.DepartmentId;
+                    trainee.Gender = request.Gender;
+                    trainee.NationalIdentityNumber = request.NationalIdentityNumber;
+                    trainee.PhoneNumber = request.PhoneNumber;
+                    trainee.Surname = request.Surname;
+                    trainee.WorkingStatusId = request.WorkingStatusId;
+                    trainee.UpdatedBy = request.UpdatedBy;
+                    trainee.UpdatedAt = DateTimeOffset.Now;
 
-                    await _context.AddAsync(trainee, cancellationToken);
+                    _context.Update(trainee);
                     await _context.SaveChangesAsync(cancellationToken);
                     transaction.Commit();
                 }
@@ -70,8 +73,8 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
                 }
             }
 
-            var traineeModel = new CreateTraineeModel(request.Name, request.Surname, request.NationalIdentityNumber, request.PhoneNumber, request.Gender);
-            return new ResponseModel<CreateTraineeModel>(traineeModel);
+            var traineeModel = new UpdateTraineeModel(request.Id, request.Name, request.Surname, request.NationalIdentityNumber, request.PhoneNumber, request.Gender);
+            return new ResponseModel<UpdateTraineeModel>(traineeModel);
         }
     }
 }

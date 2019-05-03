@@ -4,8 +4,9 @@ using Newtonsoft.Json;
 
 namespace Honoplay.Application.Trainees.Commands.CreateTrainee
 {
-    public class CreateTraineeCommand : IRequest<ResponseModel<CreateTraineeModel>>
+    public class UpdateTraineeCommand : IRequest<ResponseModel<UpdateTraineeModel>>
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string NationalIdentityNumber { get; set; }
@@ -14,6 +15,6 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
         public int WorkingStatusId { get; set; }
         public int DepartmentId { get; set; }
         [JsonIgnore]
-        public int CreatedBy { get; set; }
+        public int UpdatedBy { get; set; }
     }
 }

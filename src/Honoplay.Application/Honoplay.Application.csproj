@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Trainees\Commands\UpdateTrainee\" />
     <Folder Include="Trainees\Queries\" />
   </ItemGroup>
 

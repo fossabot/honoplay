@@ -27,7 +27,7 @@ namespace Honoplay.Application.AdminUsers.Commands.UpdateAdminUser
 
         public async Task<ResponseModel<UpdateAdminUserModel>> Handle(UpdateAdminUserCommand request, CancellationToken cancellationToken)
         {
-            var item = await _context.AdminUsers.SingleOrDefaultAsync(au => au.Id == request.Id);
+            var item = await _context.AdminUsers.SingleOrDefaultAsync(au => au.Id == request.Id, cancellationToken);
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
                 try
