@@ -43,6 +43,7 @@ render() {
           <Grid item xs={12} sm={12}>
             <DropDown data={this.state.calismaDurumu}
                       labelName="Çalışma Durumu"
+                      describable
             />
             <Input labelName="Ad" 
                    inputId="inputKisiAd" 

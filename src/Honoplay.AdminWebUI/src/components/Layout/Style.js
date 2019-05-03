@@ -106,6 +106,9 @@ export const Style = (theme) => ({
     trainerCard: {
       width: drawerWidth,
     },
+    nested: {
+      paddingLeft: theme.spacing.unit * 4,
+    },
 });
 
 import {createMuiTheme} from '@material-ui/core';

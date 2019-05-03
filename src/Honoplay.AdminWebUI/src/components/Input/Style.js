@@ -13,7 +13,7 @@ export const Style = (theme) => ({
       backgroundColor: theme.palette.common.white,
       border: '1px solid #ced4da',
       fontSize: 16,
-      width: '90%',
+      width: '92.5%',
       height: 20,
       padding: '8px 12px',
       transition: theme.transitions.create(['border-color', 'box-shadow']),
@@ -50,7 +50,7 @@ export const Style = (theme) => ({
     },
     nativeWidth: {
       width: '90%'
-    }
+    },
 });
 
 import { withStyles } from '@material-ui/core/styles';
@@ -68,7 +68,7 @@ export const BootstrapInput = withStyles(theme => ({
       backgroundColor: theme.palette.background.paper,
       border: '1px solid #ced4da',
       fontSize: 15,
-      width: '100%',
+      width: '103%',
       padding: '10px 12px',
       transition: theme.transitions.create(['border-color', 'box-shadow']),
       // Use the system font instead of the default Roboto font.
