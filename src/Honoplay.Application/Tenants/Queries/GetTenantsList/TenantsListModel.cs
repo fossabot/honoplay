@@ -35,9 +35,9 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantsList
             }
         }
 
-        public static TenantsListModel Create(Tenant customer)
+        public static TenantsListModel Create(Tenant tenant)
         {
-            return Projection.Compile().Invoke(customer);
+            return Projection.Compile().Invoke(tenant);
         }
     }
 }

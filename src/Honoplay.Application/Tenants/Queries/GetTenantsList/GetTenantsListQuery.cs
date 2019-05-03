@@ -8,18 +8,15 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantsList
         public GetTenantsListQuery()
         {
         }
-        public GetTenantsListQuery(int adminUserId) : this(adminUserId, 0, 10)
-        {
-        }
 
-        public GetTenantsListQuery(int adminUserId, int skip, int take)
+        public GetTenantsListQuery(int adminUserId, int skip = 0, int take = 10)
         {
             AdminUserId = adminUserId;
             Skip = skip;
             Take = take;
         }
 
-        public int? AdminUserId { get; set; }
+        public int? AdminUserId { get; private set; }
         public int Skip { get; private set; }
         public int Take { get; private set; }
     }
