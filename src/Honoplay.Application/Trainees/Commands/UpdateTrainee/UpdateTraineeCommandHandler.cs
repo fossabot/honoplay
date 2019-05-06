@@ -27,14 +27,13 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
             {
                 try
                 {
-                    var department = await _context.Departments.SingleOrDefaultAsync(x => x.Id == request.DepartmentId, cancellationToken);
+                    var department = await _context.Departments.FirstOrDefaultAsync(x => x.Id == request.DepartmentId, cancellationToken);
                     var isExist = await _context.TenantAdminUsers.AnyAsync(x =>
                             x.AdminUserId == request.UpdatedBy
                             && x.TenantId == department.TenantId,
                         cancellationToken);
 
-                    var trainee = await _context.Trainees.SingleOrDefaultAsync(
-                        x => x.Id == request.Id && isExist, cancellationToken);
+                    var trainee = await _context.Trainees.FirstOrDefaultAsync(x => x.Id == request.Id && isExist, cancellationToken);
 
                     if (trainee is null)
                     {

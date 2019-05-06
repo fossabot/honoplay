@@ -26,10 +26,10 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
             {
                 try
                 {
-                    var department = await _context.Departments.SingleOrDefaultAsync(x => x.Id == request.DepartmentId, cancellationToken);
+                    var department = await _context.Departments.FirstOrDefaultAsync(x => x.Id == request.DepartmentId, cancellationToken);
                     var isExist = await _context.TenantAdminUsers.AnyAsync(x =>
-                                                                    x.AdminUserId == request.CreatedBy
-                                                                    && x.TenantId == department.TenantId,
+                                                                    x.AdminUserId == request.CreatedBy &&
+                                                                    x.TenantId == department.TenantId,
                                                                     cancellationToken);
                     if (!isExist)
                     {

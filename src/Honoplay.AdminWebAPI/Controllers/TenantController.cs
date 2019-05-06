@@ -127,11 +127,11 @@ namespace Honoplay.AdminWebAPI.Controllers
                 return StatusCode(HttpStatusCode.InternalServerError.ToInt());
             }
         }
-        [HttpPost("add-department")]
+        [HttpPost("Department")]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ResponseModel<AddDepartmentModel>>> AddDepartment([FromBody]AddDepartmentCommand command)
+        public async Task<ActionResult<ResponseModel<CreateDepartmentModel>>> PostDepartment([FromBody]CreateDepartmentCommand command)
         {
             try
             {

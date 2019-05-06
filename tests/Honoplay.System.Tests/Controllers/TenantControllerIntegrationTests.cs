@@ -124,7 +124,7 @@ namespace Honoplay.System.Tests.Controllers
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
             //Init model
-            var command = new AddDepartmentCommand
+            var command = new CreateDepartmentCommand
             {
                 TenantId = Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a"),
                 Departments = new List<Department>

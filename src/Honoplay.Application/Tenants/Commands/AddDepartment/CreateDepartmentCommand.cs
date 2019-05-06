@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Honoplay.Application.Tenants.Commands.AddDepartment
 {
-    public class AddDepartmentCommand : IRequest<ResponseModel<AddDepartmentModel>>
+    public class CreateDepartmentCommand : IRequest<ResponseModel<CreateDepartmentModel>>
     {
         [JsonIgnore]
         public int AdminUserId { get; set; }

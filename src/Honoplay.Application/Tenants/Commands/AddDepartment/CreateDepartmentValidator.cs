@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Honoplay.Application.Tenants.Commands.AddDepartment
 {
-    public class AddDepartmentValidator : AbstractValidator<AddDepartmentCommand>
+    public class CreateDepartmentValidator : AbstractValidator<CreateDepartmentCommand>
     {
-        public AddDepartmentValidator()
+        public CreateDepartmentValidator()
         {
             RuleFor(x => x.Departments).NotEmpty().NotNull();
             RuleFor(x => x.TenantId).NotEmpty().NotNull();

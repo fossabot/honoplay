@@ -4,12 +4,12 @@ using Honoplay.Domain.Entities;
 
 namespace Honoplay.Application.Tenants.Commands.AddDepartment
 {
-    public struct AddDepartmentModel
+    public struct CreateDepartmentModel
     {
         public ICollection<Department> Departments { get; set; }
 
 
-        public AddDepartmentModel(ICollection<Department> departments)
+        public CreateDepartmentModel(ICollection<Department> departments)
         {
             Departments = departments;
         }

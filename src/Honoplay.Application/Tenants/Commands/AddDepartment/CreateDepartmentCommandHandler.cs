@@ -13,16 +13,16 @@ using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Honoplay.Application.Tenants.Commands.AddDepartment
 {
-    public class AddDepartmentCommandHandler : IRequestHandler<AddDepartmentCommand, ResponseModel<AddDepartmentModel>>
+    public class CreateDepartmentCommandHandler : IRequestHandler<CreateDepartmentCommand, ResponseModel<CreateDepartmentModel>>
     {
         private readonly HonoplayDbContext _context;
 
-        public AddDepartmentCommandHandler(HonoplayDbContext context)
+        public CreateDepartmentCommandHandler(HonoplayDbContext context)
         {
             _context = context;
         }
 
-        public async Task<ResponseModel<AddDepartmentModel>> Handle(AddDepartmentCommand request,
+        public async Task<ResponseModel<CreateDepartmentModel>> Handle(CreateDepartmentCommand request,
             CancellationToken cancellationToken)
         {
 
@@ -64,8 +64,8 @@ namespace Honoplay.Application.Tenants.Commands.AddDepartment
                 }
             }
 
-            var departments = new AddDepartmentModel(departments: request.Departments);
-            return new ResponseModel<AddDepartmentModel>(departments);
+            var departments = new CreateDepartmentModel(departments: request.Departments);
+            return new ResponseModel<CreateDepartmentModel>(departments);
         }
     }
 }
