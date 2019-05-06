@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
+import './styles/application.css';
 import { Route } from 'react-router-dom';
 import Layout from './components/Layout/LayoutComponent';
 

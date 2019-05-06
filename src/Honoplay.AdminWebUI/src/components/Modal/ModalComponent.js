@@ -46,6 +46,12 @@ class ModalComponent extends React.Component {
               {modalTitle}
             </DialogTitle>
             <DialogContent>
+              <DialogActions className={classes.contextDialog}>
+                <Input labelName={modalInputName}
+                       inputId={modalInputId} 
+                       inputType="text"
+                />
+              </DialogActions>
               <Paper className={classes.modalPaper}>
                 {this.state.data.map(n => {
                   
@@ -64,19 +70,10 @@ class ModalComponent extends React.Component {
                   );
                 })}
               </Paper>
-              <DialogActions className={classes.contextDialog}>
-                <Input labelName={modalInputName}
-                       inputId={modalInputId} 
-                       inputType="text"
-                />
-                <Button buttonColor="secondary" 
-                        buttonName="Ekle"
-                />
-              </DialogActions>
             </DialogContent>
             <DialogActions >
               <Button buttonColor="primary" 
-                      buttonName="Kaydet"
+                      buttonName="Ekle"
               />
             </DialogActions>
           </Dialog>

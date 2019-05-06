@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles'; 
 import {Grid} from '@material-ui/core';
-import Style from './Style';
+import Style from '../Style';
 import Typography from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Table from '../../components/Table/TableComponent';

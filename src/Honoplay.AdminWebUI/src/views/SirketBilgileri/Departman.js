@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles'; 
 import {Grid, Divider} from '@material-ui/core';
-import Style from '../Sorular/Style';
+import Style from '../Style';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Chip from '../../components/Cards/ChipComponent';

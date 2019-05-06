@@ -11,7 +11,7 @@ import EnhancedTableToolbar from './EnhancedTableToolbar';
 import { Style, theme} from './Style';
 
 
-class EnhancedTable extends React.Component {
+class TableComponent extends React.Component {
   constructor(props) {
         super(props);
         this.state = {
@@ -21,8 +21,8 @@ class EnhancedTable extends React.Component {
             page: 0,
             rowsPerPage: 5,
           };
-          this.handleChangePage=this.handleChangePage.bind(this);
-          this.handleChangeRowsPerPage=this.handleChangeRowsPerPage.bind(this);
+        this.handleChangePage=this.handleChangePage.bind(this);
+        this.handleChangeRowsPerPage=this.handleChangeRowsPerPage.bind(this);
   }
 
   handleSelectAllClick (event)  {
@@ -54,13 +54,13 @@ class EnhancedTable extends React.Component {
     this.setState({ selected: newSelected });
   };
 
-  handleChangePage (event, page) {
+  handleChangePage (event,page) {
     this.setState({ page });
   };
   
   handleChangeRowsPerPage (event) {
     this.setState({ page: 0, rowsPerPage: event.target.value });
-    };
+  };
 
   isSelected  (id) {return this.state.selected.indexOf(id) !== -1;}
 
@@ -135,8 +135,6 @@ class EnhancedTable extends React.Component {
             </Table>
           </div>
           <TablePagination
-            onChangePage={this.handleChangePage}
-            onChangeRowsPerPage={this.handleChangeRowsPerPage}
             labelRowsPerPage='Satır sayısı:'
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
@@ -144,8 +142,11 @@ class EnhancedTable extends React.Component {
             count={data.length}
             rowsPerPage={rowsPerPage}
             page={page}
-            SelectProps={{
-              native: true,
+            backIconButtonProps={{
+              'aria-label': 'Previous Page',
+            }}
+            nextIconButtonProps={{
+              'aria-label': 'Next Page',
             }}
             onChangePage={this.handleChangePage}
             onChangeRowsPerPage={this.handleChangeRowsPerPage}
@@ -156,4 +157,4 @@ class EnhancedTable extends React.Component {
   }
 }
 
-export default withStyles(Style)(EnhancedTable);
+export default withStyles(Style)(TableComponent);
