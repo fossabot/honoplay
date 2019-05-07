@@ -1,4 +1,5 @@
-﻿using Honoplay.Application._Exceptions;
+﻿using System.Linq;
+using Honoplay.Application._Exceptions;
 using Honoplay.Application._Infrastructure;
 using Honoplay.Application.Trainees.Commands.CreateTrainee;
 using Honoplay.Application.Trainees.Queries.GetTraineeList;
@@ -16,14 +17,10 @@ namespace Honoplay.AdminWebAPI.Controllers
     [Authorize]
     public class TraineeController : BaseController
     {
-        /// <summary>
-        /// Retrieve status code with CreateTraineeModel
-        /// </summary>
-        /// <param name="command">The param is must be trainee model.</param>
-        /// <returns>StatusCode with CreateTraineeModel. </returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ResponseModel<CreateTraineeModel>>> Post([FromBody]CreateTraineeCommand command)
         {
@@ -32,7 +29,7 @@ namespace Honoplay.AdminWebAPI.Controllers
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 command.CreatedBy = userId;
                 var model = await Mediator.Send(command);
-                return Ok(model);
+                return Created($"api/trainee/{model.Items.Single().Name}", model);
             }
             catch (ObjectAlreadyExistsException ex)
             {
@@ -43,11 +40,7 @@ namespace Honoplay.AdminWebAPI.Controllers
                 return StatusCode(HttpStatusCode.InternalServerError.ToInt());
             }
         }
-        /// <summary>
-        /// Retrieve status code with UpdateTraineeModel
-        /// </summary>
-        /// <param name="command">The param is must be trainee model.</param>
-        /// <returns>StatusCode with UpdateTraineeModel. </returns>
+
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -75,6 +68,7 @@ namespace Honoplay.AdminWebAPI.Controllers
                 return StatusCode(HttpStatusCode.InternalServerError.ToInt());
             }
         }
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -96,6 +90,7 @@ namespace Honoplay.AdminWebAPI.Controllers
                 return StatusCode(HttpStatusCode.InternalServerError.ToInt());
             }
         }
+
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]

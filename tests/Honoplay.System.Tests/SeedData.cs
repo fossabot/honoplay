@@ -37,6 +37,33 @@ namespace Honoplay.System.Tests
                 CreatedBy = adminUser.Id
             });
 
+            var department = new Department
+            {
+                CreatedBy = adminUser.Id,
+                Name = "yazilim",
+                TenantId = tenantId
+            };
+
+            dbContext.Departments.Add(department);
+
+            var workingStatus = new WorkingStatus
+            {
+                Name = "Full-Time"
+            };
+            dbContext.WorkingStatuses.Add(workingStatus);
+
+            dbContext.Trainees.Add(new Trainee
+            {
+                DepartmentId = department.Id,
+                Name = "Yunus Emre",
+                CreatedBy = adminUser.Id,
+                Gender = 1,
+                NationalIdentityNumber = "654654654444",
+                PhoneNumber = "053546835411",
+                Surname = "KAS",
+                WorkingStatusId = workingStatus.Id
+            });
+
             dbContext.SaveChanges();
         }
     }
