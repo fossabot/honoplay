@@ -2,10 +2,12 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {Dialog, Paper, DialogActions, DialogContent, 
         DialogTitle, Slide, List, ListItem, ListItemText, 
-        Checkbox, MuiThemeProvider} from '@material-ui/core';
+        Radio , MuiThemeProvider} from '@material-ui/core';
 import {Style, theme} from './Style';
 import Input from '../Input/InputTextComponent';
 import Button from '../Button/ButtonComponent';
+
+import SearchInput from '../Input/SearchInput';
 
 
 function Transition(props) {
@@ -15,21 +17,21 @@ function Transition(props) {
 class ModalComponent extends React.Component {
   constructor(props) {
       super(props);
-      this.state= {
-        selectedValue: '',
+      this.state= {  
+        selectedValue: '',   
         data: props.data
       }
       this.handleChange=this.handleChange.bind(this);
-  
   }
-
+  
   handleChange (event) {
     this.setState({ selectedValue: event.target.value });
     
   };
 
   render() {
-    const {open, handleClickClose, modalTitle, modalInputName, modalInputId, classes} = this.props;
+    const { data, selectedValue } = this.state;
+    const {open, handleClickClose, modalTitle, modalInputName, classes} = this.props;
     return (
       <MuiThemeProvider theme={theme}>
         <div>
@@ -48,32 +50,35 @@ class ModalComponent extends React.Component {
             <DialogContent>
               <DialogActions className={classes.contextDialog}>
                 <Input labelName={modalInputName}
-                       inputId={modalInputId} 
                        inputType="text"
                 />
+                <Button buttonColor="secondary" 
+                        buttonName="Ekle"
+                />
+                <SearchInput/>
+
               </DialogActions>
               <Paper className={classes.modalPaper}>
-                {this.state.data.map(n => {
-                  
-                  return(
-                    <List dense key={n.key} className={classes.root}>
-                      <ListItem>
-                        <Checkbox checked={this.state.selectedValue === n.label}
+                  {data.map(n => {                   
+                    return(
+                      <List dense key={n.key} className={classes.root}>
+                        <ListItem>
+                          <Radio  checked={selectedValue === n.label}
                                   onClick={this.handleChange}
                                   value={n.label}
                                   color= 'secondary'
-                        />
-                        <ListItemText inset primary={n.label}
-                        />
-                      </ListItem>
-                    </List>
-                  );
-                })}
-              </Paper>
+                          />
+                          <ListItemText inset primary={n.label}
+                          />
+                        </ListItem>
+                      </List>
+                    );
+                  })}    
+                </Paper>
             </DialogContent>
             <DialogActions >
               <Button buttonColor="primary" 
-                      buttonName="Ekle"
+                      buttonName="Kaydet"
               />
             </DialogActions>
           </Dialog>

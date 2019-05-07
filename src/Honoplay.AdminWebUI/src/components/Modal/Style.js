@@ -1,10 +1,7 @@
 export const Style = (theme) => ({
     modalPaper: {
-      display: 'flex',
-      justifyContent: 'left',
-      flexWrap: 'wrap',
-      padding: theme.spacing.unit / 2,
-      paddingBottom: 8
+      maxHeight: 200, 
+      overflow: 'auto'
     },
     contextDialog: {
       paddingTop: 35, 

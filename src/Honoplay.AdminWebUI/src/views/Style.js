@@ -4,7 +4,10 @@ const Style = theme => ({
     },
     kisilerLink: {
       fontSize:16,
-      textDecorationLine: 'none'
+      textDecorationLine: 'none',
+      '&:active': {
+       color: 'purple',
+      },
     },
 });
 

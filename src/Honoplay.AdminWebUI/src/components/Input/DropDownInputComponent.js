@@ -62,9 +62,8 @@ class DropDownInputComponent extends React.Component {
         <Modal handleClickClose={this.handleClose}
                open = {this.state.open}
                data = {this.state.data}
-               modalTitle = "Çalışma Durumu Ekle"
-               modalInputName = "Çalışma Durumu"
-               modalInputId = "inputCalismaDurumu"
+               modalTitle = {`${labelName} Ekle`}
+               modalInputName = {labelName}
         />
       </div>
     );

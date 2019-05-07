@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
-import './styles/application.css';
 import { Route } from 'react-router-dom';
 import Layout from './components/Layout/LayoutComponent';
 
@@ -12,7 +11,7 @@ class App extends Component {
         return (
             <Layout>             
                 <Route path="/home/sorular" component={Sorular} />    
-                <Route path="/home/sirketbilgileri" component={SirketBilgileri} />       
+                <Route path="/home/sirketbilgileri" component={SirketBilgileri}/>       
             </Layout>
         );
     }
