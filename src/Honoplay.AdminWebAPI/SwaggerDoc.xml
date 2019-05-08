@@ -28,17 +28,10 @@
         </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.TraineeController.Post(Honoplay.Application.Trainees.Commands.CreateTrainee.CreateTraineeCommand)">
             <summary>
-            Retrieve status code with CreateTraineeModel
+            This service create trainee.
             </summary>
-            <param name="command">The param is must be trainee model.</param>
-            <returns>StatusCode with CreateTraineeModel. </returns>
-        </member>
-        <member name="M:Honoplay.AdminWebAPI.Controllers.TraineeController.Put(Honoplay.Application.Trainees.Commands.CreateTrainee.UpdateTraineeCommand)">
-            <summary>
-            Retrieve status code with UpdateTraineeModel
-            </summary>
-            <param name="command">The param is must be trainee model.</param>
-            <returns>StatusCode with UpdateTraineeModel. </returns>
+            <param name="command">Create trainee model</param>
+            <returns>CreateTraineeModel with status code.</returns>
         </member>
     </members>
 </doc>

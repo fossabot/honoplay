@@ -1,5 +1,8 @@
 ﻿namespace Honoplay.Application.Trainees.Commands.CreateTrainee
 {
+    /// <summary>
+    /// /api/Trainee/Post service return that model.
+    /// </summary>
     public struct CreateTraineeModel
     {
         public string Name { get; }

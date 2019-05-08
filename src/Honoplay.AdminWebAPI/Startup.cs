@@ -47,7 +47,7 @@ namespace Honoplay.AdminWebAPI
             services.AddScoped<IUserService, UserService>();
 
             // Add DbContext using SQL Server Provider
-            services.AddDbContext<HonoplayDbContext>(options =>
+            services.AddDbContextPool<HonoplayDbContext>(options =>
                 options.UseSqlServer(StringConstants.ConnectionString,
                                     b => b.MigrationsAssembly("Honoplay.Persistence")));
 

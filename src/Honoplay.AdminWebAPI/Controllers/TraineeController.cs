@@ -17,11 +17,15 @@ namespace Honoplay.AdminWebAPI.Controllers
     [Authorize]
     public class TraineeController : BaseController
     {
+        /// <summary>
+        /// This service create trainee.
+        /// </summary>
+        /// <param name="command">Create trainee model</param>
+        /// <returns>CreateTraineeModel with status code.</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ResponseModel<CreateTraineeModel>>> Post([FromBody]CreateTraineeCommand command)
         {
             try
@@ -44,6 +48,7 @@ namespace Honoplay.AdminWebAPI.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<ResponseModel<UpdateTraineeModel>>> Put([FromBody]UpdateTraineeCommand command)
         {
@@ -72,6 +77,7 @@ namespace Honoplay.AdminWebAPI.Controllers
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ResponseModel<TraineeListModel>>> Get([FromQuery]GetTraineeListQueryModel command)
         {
             try
@@ -94,6 +100,7 @@ namespace Honoplay.AdminWebAPI.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ResponseModel<TraineeListModel>>> Get(int id)
         {
             try

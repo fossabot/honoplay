@@ -4,6 +4,9 @@ using Newtonsoft.Json;
 
 namespace Honoplay.Application.Trainees.Commands.CreateTrainee
 {
+    /// <summary>
+    /// /api/Trainee/Post service need that model for create trainee.
+    /// </summary>
     public class CreateTraineeCommand : IRequest<ResponseModel<CreateTraineeModel>>
     {
         public string Name { get; set; }

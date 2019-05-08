@@ -20,13 +20,13 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeList
         }
 
         public int AdminUserId { get; private set; }
-        public int Skip { get; private set; }
-        public int Take { get; private set; }
+        public int Skip { get; private set; } = 0;
+        public int Take { get; private set; } = 10;
     }
 
     public class GetTraineeListQueryModel : IRequest<ResponseModel<TraineeListModel>>
     {
-        public int Skip { get; set; }
-        public int Take { get; set; }
+        public int Skip { get; set; } = 0;
+        public int Take { get; set; } = 10;
     }
 }
