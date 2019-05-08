@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ namespace Honoplay.Application.Tenants.Commands.AddDepartment
         public async Task<ResponseModel<CreateDepartmentModel>> Handle(CreateDepartmentCommand request,
             CancellationToken cancellationToken)
         {
+            var addDepartmentList = new List<Department>();
 
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
@@ -39,10 +41,17 @@ namespace Honoplay.Application.Tenants.Commands.AddDepartment
 
                     foreach (var requestDepartment in request.Departments)
                     {
-                        requestDepartment.CreatedBy = request.AdminUserId;
+                        var department = new Department
+                        {
+                            CreatedBy = request.AdminUserId,
+                            Name = requestDepartment,
+                            TenantId = request.TenantId,
+
+                        };
+                        addDepartmentList.Add(department);
                     }
 
-                    await _context.Departments.AddRangeAsync(request.Departments, cancellationToken);
+                    await _context.Departments.AddRangeAsync(addDepartmentList, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
                     transaction.Commit();
                 }
@@ -64,7 +73,7 @@ namespace Honoplay.Application.Tenants.Commands.AddDepartment
                 }
             }
 
-            var departments = new CreateDepartmentModel(departments: request.Departments);
+            var departments = new CreateDepartmentModel(departments: addDepartmentList);
             return new ResponseModel<CreateDepartmentModel>(departments);
         }
     }

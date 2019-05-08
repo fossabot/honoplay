@@ -16,6 +16,7 @@ namespace Honoplay.Domain.Entities
         public Guid TenantId { get; set; }
         [JsonIgnore]
         public Tenant Tenant { get; set; }
+        [JsonIgnore]
         public virtual ICollection<Trainee> Trainees { get; set; }
     }
 }

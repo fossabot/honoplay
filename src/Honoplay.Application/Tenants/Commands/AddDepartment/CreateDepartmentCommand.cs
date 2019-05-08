@@ -12,6 +12,6 @@ namespace Honoplay.Application.Tenants.Commands.AddDepartment
         [JsonIgnore]
         public int AdminUserId { get; set; }
         public Guid TenantId { get; set; }
-        public ICollection<Department> Departments { get; set; }
+        public ICollection<string> Departments { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Honoplay.Domain.Entities
 {
@@ -19,8 +20,11 @@ namespace Honoplay.Domain.Entities
         public string Description { get; set; }
         public string HostName { get; set; }
         public byte[] Logo { get; set; }
+        [JsonIgnore]
 
         public virtual ICollection<TenantAdminUser> TenantAdminUsers { get; set; }
+        [JsonIgnore]
+
         public virtual ICollection<Department> Departments { get; set; }
     }
 }

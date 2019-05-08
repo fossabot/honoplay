@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Honoplay.Domain.Entities
 {
@@ -33,6 +34,7 @@ namespace Honoplay.Domain.Entities
         public int NumberOfInvalidPasswordAttemps { get; set; }
 
         public byte[] RowVersion { get; set; }
+        [JsonIgnore]
 
         public virtual ICollection<TenantAdminUser> TenantAdminUsers { get; set; }
     }
