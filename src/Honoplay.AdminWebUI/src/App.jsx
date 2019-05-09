@@ -1,13 +1,18 @@
-﻿import React, { Component } from "react";
-import { hot } from "react-hot-loader";
-import "./styles/application.css";
+﻿import React, { Component } from 'react';
+import { hot } from 'react-hot-loader';
+import { Route } from 'react-router-dom';
+import Layout from './components/Layout/LayoutComponent';
+
+import Sorular from './views/Sorular/Sorular';
+import SirketBilgileri from './views/SirketBilgileri/SirketBilgileri';
 
 class App extends Component {
     render() {
         return (
-            <div className="App">
-                <h1> Hello, World!! </h1>
-            </div>
+            <Layout>             
+                <Route path="/home/sorular" component={Sorular} />    
+                <Route path="/home/sirketbilgileri" component={SirketBilgileri}/>       
+            </Layout>
         );
     }
 }

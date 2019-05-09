@@ -15,6 +15,13 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ["style-loader", "css-loader"]
+            },
+            {
+                test: /\.(png|jpg|gif)$/i,
+                use: [ {
+                    loader: 'url-loader',
+                    options: {limit: 8192}
+                } ]
             }
         ]
     },
@@ -25,6 +32,7 @@ module.exports = {
         filename: "bundle.js"
     },
     devServer: {
+        historyApiFallback: true,
         contentBase: path.join(__dirname, "public/"),
         port: 3000,
         publicPath: "http://localhost:3000/dist/",
