@@ -127,19 +127,7 @@ namespace Honoplay.System.Tests.Controllers
             var command = new CreateDepartmentCommand
             {
                 TenantId = Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a"),
-                Departments = new List<Department>
-                {
-                    new Department
-                    {
-                        Name="Yazilim",
-                        TenantId=Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a")
-                    },
-                    new Department
-                    {
-                        Name="Tasarim",
-                        TenantId=Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a")
-                    }
-                }
+                Departments = new List<string>()
             };
 
             var json = JsonConvert.SerializeObject(command);
