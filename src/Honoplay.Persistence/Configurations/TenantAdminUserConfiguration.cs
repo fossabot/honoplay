@@ -8,21 +8,22 @@ namespace Honoplay.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<TenantAdminUser> builder)
         {
+            //Id
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id)
                 .ValueGeneratedOnAdd();
-
-            //Indexes
             builder.HasIndex(x => x.Id);
 
-            //Relations
+            //RELATIONS
+            
+            //Tenant
             builder.HasOne(x => x.Tenant)
                     .WithMany(x => x.TenantAdminUsers)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasForeignKey(x => x.TenantId)
                     .HasConstraintName("FK_Tenant_TenantAdminUsers");
 
-            //Relations
+            //AdminUser
             builder.HasOne(x => x.AdminUser)
                     .WithMany(x => x.TenantAdminUsers)
                     .OnDelete(DeleteBehavior.Cascade)

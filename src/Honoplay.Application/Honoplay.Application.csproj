@@ -16,4 +16,10 @@
     <ProjectReference Include="..\Honoplay.Persistence\Honoplay.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Trainers\Commands\UpdateTrainer\" />
+    <Folder Include="Trainers\Queries\GetTrainersList\" />
+    <Folder Include="Trainers\Queries\GetTrainerDetail\" />
+  </ItemGroup>
+
 </Project>

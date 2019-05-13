@@ -8,10 +8,14 @@ namespace Honoplay.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Department> builder)
         {
+            //Id
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
                    .ValueGeneratedOnAdd();
 
+            //RELATIONS
+
+            //Tenant
             builder.HasOne(x => x.Tenant)
                 .WithMany(y => y.Departments)
                 .HasForeignKey(x => x.TenantId);

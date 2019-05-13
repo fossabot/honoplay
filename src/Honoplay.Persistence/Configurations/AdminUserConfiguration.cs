@@ -8,34 +8,34 @@ namespace Honoplay.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<AdminUser> builder)
         {
-            //  Id
+            //Id
             builder.HasKey(e => e.Id);
 
             builder.Property(e => e.Id)
                    .ValueGeneratedOnAdd();
 
-            //  UserName
+            //UserName
             builder.Property(e => e.UserName)
                    //.IsRequired()
                    .HasComputedColumnSql("Email")
                    .HasMaxLength(150);
 
-            //  Name
+            //Name
             builder.Property(e => e.Name)
                    .IsRequired()
                    .HasMaxLength(50);
 
-            //  Surname
+            //Surname
             builder.Property(e => e.Surname)
                    .IsRequired()
                    .HasMaxLength(50);
 
-            //  PhoneNumber
+            //PhoneNumber
             builder.Property(e => e.PhoneNumber)
                    .IsUnicode(false)
                    .HasMaxLength(50);
 
-            //  Email
+            //Email
             builder.Property(e => e.Email)
                    .IsUnicode(false)
                    .HasMaxLength(150);
@@ -48,7 +48,7 @@ namespace Honoplay.Persistence.Configurations
             builder.Property(e => e.TimeZone)
                    .IsRequired()
                    .HasDefaultValue(3);
-            
+
             //  UpdatedBy
             builder.Property(e => e.CreatedDateTime);
 
