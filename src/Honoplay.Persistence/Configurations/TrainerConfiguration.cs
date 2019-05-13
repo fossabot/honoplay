@@ -47,7 +47,7 @@ namespace Honoplay.Persistence.Configurations
             //Department
             builder.HasOne(x => x.Department)
                 .WithMany(x => x.Trainers)
-                .HasForeignKey(x => x.ProfessionId);
+                .HasForeignKey(x => x.DepartmentId);
         }
     }
 }
