@@ -1,14 +1,13 @@
-﻿using System;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Honoplay.AdminWebAPI;
+﻿using Honoplay.AdminWebAPI;
 using Honoplay.Application.Trainees.Commands.CreateTrainee;
 using Honoplay.Application.Trainees.Queries.GetTraineeList;
 using Honoplay.Common.Constants;
 using Honoplay.System.Tests.Extensions;
 using Newtonsoft.Json;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Honoplay.System.Tests.Controllers

@@ -1,20 +1,20 @@
-﻿using System;
+﻿using Honoplay.Application._Exceptions;
+using Honoplay.Application._Infrastructure;
+using Honoplay.Application.Trainers.Commands.CreateTrainer;
+using Honoplay.Common.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Honoplay.Application._Exceptions;
-using Honoplay.Application._Infrastructure;
-using Honoplay.Application.Tenants.Commands.CreateTenant;
-using Honoplay.Application.Trainers.Commands.CreateTrainer;
-using Honoplay.Common.Extensions;
-using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
+    [Authorize]
     public class TrainerController : BaseController
     {
         // GET: api/<controller>

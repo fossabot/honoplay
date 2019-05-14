@@ -1,12 +1,11 @@
-﻿using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
+﻿using Honoplay.AdminWebAPI;
+using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
 using Honoplay.Common.Constants;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
-using Honoplay.AdminWebAPI;
-using Xunit;
 
 namespace Honoplay.System.Tests.Extensions
 {
@@ -20,7 +19,8 @@ namespace Honoplay.System.Tests.Extensions
                 Email = "registered@omegabigdata.com",
                 Password = "Passw0rd"
             };
-            var httpResponse = client.PostAsync("api/AdminUser/Authenticate", new StringContent(JsonConvert.SerializeObject(authenticateAdminUserCommand), Encoding.UTF8, StringConstants.ApplicationJson)).Result;
+            var content = JsonConvert.SerializeObject(authenticateAdminUserCommand);
+            var httpResponse = client.PostAsync("api/AdminUser/Authenticate", new StringContent(content, Encoding.UTF8, StringConstants.ApplicationJson)).Result;
 
             var token = JsonConvert.DeserializeObject<Dictionary<string, object>>(httpResponse.Content.ReadAsStringAsync().Result)["token"];
 
