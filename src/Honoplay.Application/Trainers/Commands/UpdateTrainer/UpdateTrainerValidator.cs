@@ -1,11 +1,15 @@
 ﻿using FluentValidation;
 
-namespace Honoplay.Application.Trainers.Commands.CreateTrainer
+namespace Honoplay.Application.Trainers.Commands.UpdateTrainer
 {
-    public class CreateTrainerValidator : AbstractValidator<CreateTrainerCommand>
+    public class UpdateTrainerValidator : AbstractValidator<UpdateTrainerCommand>
     {
-        public CreateTrainerValidator()
+        public UpdateTrainerValidator()
         {
+            RuleFor(x => x.Id)
+                .NotEmpty()
+                .NotNull();
+
             RuleFor(x => x.Name)
                 .NotEmpty()
                 .NotNull();

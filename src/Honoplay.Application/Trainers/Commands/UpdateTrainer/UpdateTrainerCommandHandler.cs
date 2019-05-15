@@ -12,46 +12,45 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Honoplay.Application.Trainees.Commands.CreateTrainee
+namespace Honoplay.Application.Trainers.Commands.UpdateTrainer
 {
-    public class CreateTraineeCommandHandler : IRequestHandler<CreateTraineeCommand, ResponseModel<CreateTraineeModel>>
+    public class UpdateTrainerCommandHandler : IRequestHandler<UpdateTrainerCommand, ResponseModel<UpdateTrainerModel>>
     {
         private readonly HonoplayDbContext _context;
-        public CreateTraineeCommandHandler(HonoplayDbContext context)
+
+        public UpdateTrainerCommandHandler(HonoplayDbContext context)
         {
             _context = context;
         }
-        public async Task<ResponseModel<CreateTraineeModel>> Handle(CreateTraineeCommand request, CancellationToken cancellationToken)
+
+        public async Task<ResponseModel<UpdateTrainerModel>> Handle(UpdateTrainerCommand request, CancellationToken cancellationToken)
         {
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    var isExist = await _context.Departments.AnyAsync(x =>
-                            x.Id == request.DepartmentId &&
-                            _context.TenantAdminUsers.Any(y =>
-                                y.AdminUserId == request.CreatedBy &&
-                                y.TenantId == x.TenantId)
-                        , cancellationToken);
+                    var trainer = await _context.Trainers.Include(x => x.Department)
+                        .Where(x => x.Id == request.Id &&
+                                    _context.TenantAdminUsers.Any(y =>
+                                        y.TenantId == x.Department.TenantId &&
+                                        y.AdminUserId == request.UpdatedBy))
+                        .FirstOrDefaultAsync(cancellationToken);
 
-                    if (!isExist)
+                    if (trainer is null)
                     {
                         throw new NotFoundException(nameof(Department), request.DepartmentId);
                     }
 
-                    var trainee = new Trainee
-                    {
-                        Name = request.Name,
-                        DepartmentId = request.DepartmentId,
-                        Gender = request.Gender,
-                        NationalIdentityNumber = request.NationalIdentityNumber,
-                        PhoneNumber = request.PhoneNumber,
-                        Surname = request.Surname,
-                        WorkingStatusId = request.WorkingStatusId,
-                        CreatedBy = request.CreatedBy,
-                    };
+                    trainer.Name = request.Name;
+                    trainer.DepartmentId = request.DepartmentId;
+                    trainer.PhoneNumber = request.PhoneNumber;
+                    trainer.Surname = request.Surname;
+                    trainer.UpdatedBy = request.UpdatedBy;
+                    trainer.UpdatedAt = DateTimeOffset.Now;
+                    trainer.Email = request.Email;
+                    trainer.ProfessionId = request.ProfessionId;
 
-                    await _context.AddAsync(trainee, cancellationToken);
+                    _context.Update(trainer);
                     await _context.SaveChangesAsync(cancellationToken);
                     transaction.Commit();
                 }
@@ -73,8 +72,8 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
                 }
             }
 
-            var traineeModel = new CreateTraineeModel(request.Name, request.Surname, request.NationalIdentityNumber, request.PhoneNumber, request.Gender);
-            return new ResponseModel<CreateTraineeModel>(traineeModel);
+            var trainerModel = new UpdateTrainerModel(request.Id, request.Name, request.Surname, request.Email, request.PhoneNumber, request.DepartmentId, request.ProfessionId);
+            return new ResponseModel<UpdateTrainerModel>(trainerModel);
         }
     }
 }

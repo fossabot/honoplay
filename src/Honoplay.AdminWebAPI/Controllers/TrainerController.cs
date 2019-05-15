@@ -9,6 +9,9 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Honoplay.Application.Trainees.Commands.CreateTrainee;
+using Honoplay.Application.Trainers.Commands.UpdateTrainer;
+using Microsoft.AspNetCore.Http;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -41,7 +44,7 @@ namespace Honoplay.AdminWebAPI.Controllers
                 command.CreatedBy = userId;
 
                 var model = await Mediator.Send(command);
-                return Created($"api/trainer/{model.Items.Single().Name}", model);
+                return Created($"api/Trainer/{model.Items.Single().Name}", model);
             }
             catch (ObjectAlreadyExistsException ex)
             {
@@ -54,9 +57,33 @@ namespace Honoplay.AdminWebAPI.Controllers
         }
 
         // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<ResponseModel<UpdateTrainerModel>>> Put([FromBody]UpdateTrainerCommand command)
         {
+            try
+            {
+                var userId = Claims[ClaimTypes.Sid].ToInt();
+                command.UpdatedBy = userId;
+
+                var model = await Mediator.Send(command);
+                return Ok(model);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ObjectAlreadyExistsException ex)
+            {
+                return Conflict(new ResponseModel<UpdateTrainerModel>(new Error(HttpStatusCode.Conflict, ex)));
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt());
+            }
         }
 
         // DELETE api/<controller>/5

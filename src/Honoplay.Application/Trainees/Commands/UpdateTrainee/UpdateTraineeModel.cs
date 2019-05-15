@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Honoplay.Application.Trainees.Commands.CreateTrainee
+﻿namespace Honoplay.Application.Trainees.Commands.CreateTrainee
 {
     public struct UpdateTraineeModel
     {
-        public int Id { get; set; }
+        public int Id { get; }
         public string Name { get; }
         public string Surname { get; }
         public string NationalIdentityNumber { get; }
         public string PhoneNumber { get; }
         public int Gender { get; }
 
-        public UpdateTraineeModel(int id,string name, string surname, string nationalIdentityNumber, string phoneNumber, int gender)
+        public UpdateTraineeModel(int id, string name, string surname, string nationalIdentityNumber, string phoneNumber, int gender)
         {
             Id = id;
             Name = name;

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Honoplay.Application._Infrastructure;
+﻿using Honoplay.Application._Infrastructure;
 using MediatR;
 
 namespace Honoplay.Application.Trainees.Queries.GetTraineeList

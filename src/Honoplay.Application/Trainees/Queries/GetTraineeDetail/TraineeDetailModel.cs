@@ -12,7 +12,7 @@ namespace Honoplay.Application.Tenants.Queries.GetTraineeDetail
         public string PhoneNumber { get; set; }
         public int Gender { get; set; }
 
-        public static Expression<Func<Trainee, TraineeDetailModel>> Projection
+        private static Expression<Func<Trainee, TraineeDetailModel>> Projection
         {
             get
             {

@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Honoplay.Application._Infrastructure;
+using MediatR;
+using Newtonsoft.Json;
 
-namespace Honoplay.Domain.Entities
+namespace Honoplay.Application.Trainers.Commands.UpdateTrainer
 {
-    public class Trainer : BaseEntity
+    public class UpdateTrainerCommand : IRequest<ResponseModel<UpdateTrainerModel>>
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -11,10 +13,7 @@ namespace Honoplay.Domain.Entities
         public string PhoneNumber { get; set; }
         public int DepartmentId { get; set; }
         public int ProfessionId { get; set; }
-
         [JsonIgnore]
-        public Profession Profession { get; set; }
-        [JsonIgnore]
-        public Department Department { get; set; }
+        public int UpdatedBy { get; set; }
     }
 }

@@ -21,7 +21,7 @@ namespace Honoplay.System.Tests.Controllers
             _factory = factory;
         }
         [Fact]
-        public async Task CanCreateTrainee()
+        public async void CanCreateTrainee()
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
             // The endpoint or route of the controller action.
@@ -49,7 +49,7 @@ namespace Honoplay.System.Tests.Controllers
         }
 
         [Fact]
-        public async Task CanUpdateTrainee()
+        public async void CanUpdateTrainee()
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
@@ -116,6 +116,20 @@ namespace Honoplay.System.Tests.Controllers
             // Must be unsuccessful.
             Assert.False(httpResponse.IsSuccessStatusCode);
             Assert.Equal(HttpStatusCode.NotFound, httpResponse.StatusCode);
+        }
+
+        [Fact]
+        public async void CanGetTraineeDetail()
+        {
+            var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
+
+            //Request to api/Trainee/1 endpoint
+            var httpResponse = await client.GetAsync("api/Trainee/1");
+
+            //Must be successful.
+            Assert.True(httpResponse.IsSuccessStatusCode);
+            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+
         }
     }
 }
