@@ -10,10 +10,6 @@ namespace Honoplay.Application.Trainers.Queries.GetTrainerDetail
                 .NotEmpty()
                 .NotNull();
 
-            RuleFor(x => x.TenantId)
-                .NotEmpty()
-                .NotNull();
-
             RuleFor(x => x.Id)
                 .NotEmpty()
                 .NotNull();

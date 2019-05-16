@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Honoplay.Application.Trainees.Queries.GetTraineeList
 {
-    public struct TraineeListModel
+    public struct TraineesListModel
     {
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -12,7 +12,7 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeList
         public string PhoneNumber { get; set; }
         public int Gender { get; set; }
 
-        public static Expression<Func<Trainee, TraineeListModel>> Projection => trainee => new TraineeListModel
+        public static Expression<Func<Trainee, TraineesListModel>> Projection => trainee => new TraineesListModel
         {
             Name = trainee.Name,
             Surname = trainee.Surname,
@@ -21,7 +21,7 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeList
             Gender = trainee.Gender
         };
 
-        public static TraineeListModel Create(Trainee trainee)
+        public static TraineesListModel Create(Trainee trainee)
         {
             return Projection.Compile().Invoke(trainee);
         }

@@ -21,7 +21,13 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantDetail
 
         public async Task<ResponseModel<TenantDetailModel>> Handle(GetTenantDetailQuery request, CancellationToken cancellationToken)
         {
-            var tenant = await _context.Tenants.AsNoTracking().SingleOrDefaultAsync(x => x.Id == request.Id && x.TenantAdminUsers.Any(y => y.AdminUserId == request.AdminUserId), cancellationToken);
+            var tenant = await _context.Tenants
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x =>
+                    x.Id == request.Id &&
+                    x.TenantAdminUsers.Any(y =>
+                        y.AdminUserId == request.AdminUserId),
+                    cancellationToken);
 
             if (tenant is null)
             {

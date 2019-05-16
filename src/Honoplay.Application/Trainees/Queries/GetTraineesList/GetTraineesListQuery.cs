@@ -1,28 +1,32 @@
 ﻿using Honoplay.Application._Infrastructure;
 using MediatR;
+using System;
 
 namespace Honoplay.Application.Trainees.Queries.GetTraineeList
 {
-    public class GetTraineeListQuery : IRequest<ResponseModel<TraineeListModel>>
+    public class GetTraineesListQuery : IRequest<ResponseModel<TraineesListModel>>
     {
-        public GetTraineeListQuery()
+        public GetTraineesListQuery()
         {
         }
 
-        public GetTraineeListQuery(int adminUserId, int skip = 0, int take = 10)
+        public GetTraineesListQuery(int adminUserId, int skip, int take, Guid tenantId)
         {
             AdminUserId = adminUserId;
             Skip = skip;
             Take = take;
+            TenantId = tenantId;
         }
 
         public int AdminUserId { get; private set; }
+        public Guid TenantId { get; set; }
         public int Skip { get; private set; } = 0;
         public int Take { get; private set; } = 10;
     }
 
-    public class GetTraineeListQueryModel : IRequest<ResponseModel<TraineeListModel>>
+    public class GetTraineesListQueryModel : IRequest<ResponseModel<TraineesListModel>>
     {
+        public Guid TenantId { get; set; }
         public int Skip { get; set; } = 0;
         public int Take { get; set; } = 10;
     }

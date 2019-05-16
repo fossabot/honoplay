@@ -1,37 +1,76 @@
-﻿using Honoplay.Application._Exceptions;
+﻿using System;
+using Honoplay.Application._Exceptions;
 using Honoplay.Application._Infrastructure;
 using Honoplay.Application.Trainers.Commands.CreateTrainer;
+using Honoplay.Application.Trainers.Commands.UpdateTrainer;
+using Honoplay.Application.Trainers.Queries.GetTrainerDetail;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Honoplay.Application.Trainees.Commands.CreateTrainee;
-using Honoplay.Application.Trainers.Commands.UpdateTrainer;
-using Microsoft.AspNetCore.Http;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Honoplay.Application.Trainers.Queries.GetTrainersList;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
     [Authorize]
     public class TrainerController : BaseController
     {
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        // GET: api/<controller>{id}
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ResponseModel<TrainerDetailModel>>> Get(int id)
         {
-            return new string[] { "value1", "value2" };
+            try
+            {
+                var userId = Claims[ClaimTypes.Sid].ToInt();
+
+                var models = await Mediator.Send(new GetTrainerDetailQuery(userId, id));
+
+                return Ok(models);
+
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt());
+            }
+
         }
 
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ResponseModel<TrainersListModel>>> Get([FromQuery] GetTrainersListQueryModel query)
         {
-            return "value";
+            try
+            {
+                var userId = Claims[ClaimTypes.Sid].ToInt();
+
+                var models = await Mediator.Send(new GetTrainersListQuery(userId, query.TenantId, query.Skip, query.Take));
+
+                return Ok(models);
+
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt());
+            }
+
+
         }
 
         // POST api/<controller>
@@ -56,7 +95,6 @@ namespace Honoplay.AdminWebAPI.Controllers
             }
         }
 
-        // PUT api/<controller>/5
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -84,12 +122,6 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 return StatusCode(HttpStatusCode.InternalServerError.ToInt());
             }
-        }
-
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

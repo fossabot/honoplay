@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Honoplay.Domain.Entities;
+using System;
 using System.Linq.Expressions;
-using System.Text;
-using Honoplay.Domain.Entities;
 
 namespace Honoplay.Application.Trainers.Queries.GetTrainerDetail
 {

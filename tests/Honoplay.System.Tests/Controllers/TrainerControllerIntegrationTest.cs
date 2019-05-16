@@ -1,4 +1,5 @@
-﻿using Honoplay.AdminWebAPI;
+﻿using System;
+using Honoplay.AdminWebAPI;
 using Honoplay.Application.Trainers.Commands.CreateTrainer;
 using Honoplay.Common.Constants;
 using Honoplay.System.Tests.Extensions;
@@ -8,6 +9,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Honoplay.Application.Trainers.Commands.UpdateTrainer;
+using Honoplay.Application.Trainers.Queries.GetTrainerDetail;
+using Honoplay.Application.Trainers.Queries.GetTrainersList;
 using Xunit;
 
 namespace Honoplay.System.Tests.Controllers
@@ -84,8 +87,26 @@ namespace Honoplay.System.Tests.Controllers
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await client.GetAsync("api/Trainer/1");
+            var httpResponse = await client.GetAsync($"api/Trainer/1");
 
+            httpResponse.EnsureSuccessStatusCode();
+
+            Assert.True(httpResponse.IsSuccessStatusCode);
+            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+        }
+        [Fact]
+        public async Task CanGetTrainersList()
+        {
+            var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
+
+            var getTrainersListQueryModel = new GetTrainersListQueryModel
+            {
+                Skip = 0,
+                Take = 10,
+                TenantId = Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a")
+            };
+
+            var httpResponse = await client.GetAsync($"api/Trainer?Skip={getTrainersListQueryModel.Skip}&Take={getTrainersListQueryModel.Take}&TenantId={getTrainersListQueryModel.TenantId}");
             httpResponse.EnsureSuccessStatusCode();
 
             Assert.True(httpResponse.IsSuccessStatusCode);
