@@ -6,7 +6,7 @@ namespace Honoplay.Application.Trainers.Queries.GetTrainersList
 {
     public class GetTrainersListQuery : IRequest<ResponseModel<TrainersListModel>>
     {
-        public GetTrainersListQuery(int adminUserId, Guid tenantId, int skip, int take)
+        public GetTrainersListQuery(int adminUserId, Guid tenantId, int skip = 0, int take = 10)
         {
             TenantId = tenantId;
             AdminUserId = adminUserId;
@@ -21,8 +21,8 @@ namespace Honoplay.Application.Trainers.Queries.GetTrainersList
 
         public int AdminUserId { get; private set; }
         public Guid TenantId { get; private set; }
-        public int Skip { get; private set; }
-        public int Take { get; private set; }
+        public int Skip { get; private set; } = 0;
+        public int Take { get; private set; } = 10;
     }
 
     public class GetTrainersListQueryModel : IRequest<ResponseModel<TrainersListModel>>

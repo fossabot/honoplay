@@ -5,7 +5,6 @@ using Honoplay.Persistence;
 using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Data.SqlClient;
 using System.Linq;
@@ -23,7 +22,7 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
         }
         public async Task<ResponseModel<CreateTraineeModel>> Handle(CreateTraineeCommand request, CancellationToken cancellationToken)
         {
-            using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
+            using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {

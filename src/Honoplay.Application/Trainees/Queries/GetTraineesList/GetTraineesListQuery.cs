@@ -10,7 +10,7 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeList
         {
         }
 
-        public GetTraineesListQuery(int adminUserId, int skip, int take, Guid tenantId)
+        public GetTraineesListQuery(int adminUserId, Guid tenantId, int skip = 0, int take = 10)
         {
             AdminUserId = adminUserId;
             Skip = skip;
@@ -19,7 +19,7 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeList
         }
 
         public int AdminUserId { get; private set; }
-        public Guid TenantId { get; set; }
+        public Guid TenantId { get; private set; }
         public int Skip { get; private set; } = 0;
         public int Take { get; private set; } = 10;
     }
