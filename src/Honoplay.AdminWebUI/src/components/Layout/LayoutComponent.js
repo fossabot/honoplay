@@ -34,17 +34,7 @@ class Layout extends React.Component {
         <div className={classes.drawerLayout}> 
           <div className={classes.companyLayout}>
             <CompanyCard companyName="Framer Bilişim Teknolojileri"/>
-          </div> 
-          <div className={classes.buttonLayout}>
-            <Button 
-              color="primary"
-              fullWidth
-              className={classes.button}>
-              + Ekle
-              <div className={classes.buttonSpace}></div>
-              <KeyboardArrowRight className={classes.buttonIconColor}/>              
-            </Button>
-          </div>       
+          </div>      
           <div className={classes.listLayout}>
             <List 
             component="nav">

@@ -51,6 +51,7 @@ render() {
     return (
         <div className={classes.root} id="kisiEkle">
         <Grid container spacing={40}>
+          <Grid item xs={12} sm={12}/>
           <Grid item xs={6} sm={9}>
           <div />
           <a href="#kisiler" className={classes.kisilerLink}>

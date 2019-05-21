@@ -36,27 +36,6 @@ export const Style = (theme) => ({
     toolbar: {
       background: '#ff8a65',
     },
-    button: {
-      color: theme.palette.getContrastText(deepPurple[500]),
-      backgroundColor: deepPurple[700],
-      '&:hover': {
-        backgroundColor: deepPurple[700],
-      },
-      margin: 0, 
-      borderRadius: 2,
-      border: 0,
-      color: 'white',
-      height: 50,
-      padding: '0 30px',
-      boxShadow: '0 3px 5px 2px rgba(0, 0, 0, .2)',
-      textTransform: 'capitalize',
-    },
-    buttonSpace: {
-      paddingLeft: 70, 
-    },
-    buttonIconColor: {
-      color: 'white'
-    },
     drawerLayout: {
       display: 'flex',
       flex: 1,
@@ -71,9 +50,6 @@ export const Style = (theme) => ({
     },
     companyLayout: {
       flex:3,
-    },
-    buttonLayout: {
-      flex:2
     },
     listItemLink: {
       padding: 10,        

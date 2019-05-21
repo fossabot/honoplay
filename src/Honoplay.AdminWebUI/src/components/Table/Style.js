@@ -24,6 +24,19 @@ export const Style = (theme) => ({
   tableCell: {
     paddingRight: 2,
     paddingLeft: 2,
+  },
+  simpleTableRoot: {
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto',
+    maxHeight: 350, 
+  },
+  simpleTable: {  
+    minWidth: 350,
+  },
+  tablecellText: {
+    color:'#673ab7',
+    fontSize: 15
   }
 });
 

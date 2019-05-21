@@ -2,13 +2,11 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {Dialog, Paper, DialogActions, DialogContent, 
         DialogTitle, Slide, List, ListItem, ListItemText, 
-        Radio , MuiThemeProvider} from '@material-ui/core';
+        Radio , MuiThemeProvider, Grid} from '@material-ui/core';
 import {Style, theme} from './Style';
 import Input from '../Input/InputTextComponent';
 import Button from '../Button/ButtonComponent';
-
-import SearchInput from '../Input/SearchInput';
-
+import Search from '../Input/SearchInputComponent';
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -41,40 +39,49 @@ class ModalComponent extends React.Component {
             open={open}
             TransitionComponent={Transition}
             onClose={handleClickClose}
-            aria-labelledby="alert-dialog-slide-title"
-            
+            aria-labelledby="alert-dialog-slide-title"           
           >
             <DialogTitle id="alert-dialog-slide-title">
               {modalTitle}
             </DialogTitle>
             <DialogContent>
-              <DialogActions className={classes.contextDialog}>
+            <Grid container spacing={24}>
+              <Grid item xs={12} sm={12}></Grid>
+              <Grid item xs={10} sm={10}>
                 <Input labelName={modalInputName}
-                       inputType="text"
+                       inputType="text"                     
                 />
+              </Grid>
+              <Grid item xs={2} sm={2}>
                 <Button buttonColor="secondary" 
                         buttonName="Ekle"
                 />
-                <SearchInput/>
-
-              </DialogActions>
-              <Paper className={classes.modalPaper}>
-                  {data.map(n => {                   
-                    return(
-                      <List dense key={n.key} className={classes.root}>
-                        <ListItem>
-                          <Radio  checked={selectedValue === n.label}
-                                  onClick={this.handleChange}
-                                  value={n.label}
-                                  color= 'secondary'
-                          />
-                          <ListItemText inset primary={n.label}
-                          />
-                        </ListItem>
-                      </List>
-                    );
-                  })}    
+              </Grid>
+              <Grid item xs={12} sm={12}></Grid>
+              <Grid item xs={12} sm={3}>
+                <Search/>
+              </Grid>
+              <Grid item xs={12} sm={9}></Grid>
+              <Grid item xs={12} sm={12}>
+                <Paper className={classes.modalPaper}>
+                    {data.map(n => {                   
+                      return(
+                        <List dense key={n.key} className={classes.root}>
+                          <ListItem>
+                            <Radio  checked={selectedValue === n.label}
+                                    onClick={this.handleChange}
+                                    value={n.label}
+                                    color= 'secondary'
+                            />
+                            <ListItemText inset primary={n.label}
+                            />
+                          </ListItem>
+                        </List>
+                      );
+                    })}    
                 </Paper>
+              </Grid>
+              </Grid>
             </DialogContent>
             <DialogActions >
               <Button buttonColor="primary" 

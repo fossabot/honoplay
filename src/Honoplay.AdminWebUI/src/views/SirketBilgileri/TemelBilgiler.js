@@ -17,6 +17,7 @@ render() {
     return (
         <div className={classes.root}>
         <Grid container spacing={40}>
+          <Grid item xs={12} sm={12}/>
           <Grid item xs={12} sm={12}>
             <Input labelName="Şirket Adı" 
                    inputId="inputSirketAd" 

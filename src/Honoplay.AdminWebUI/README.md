@@ -33,6 +33,26 @@
     "opn": Node js için işletim sisteminde bir program çalıştırılmasını sağlar.
     "requirejs": Browser testlerinde require kullanılabilmesi için eklendi.
     
+    "@fortawesome/fontawesome-svg-core": icons 
+    "@fortawesome/free-solid-svg-icons": icons
+    "@fortawesome/react-fontawesome" :  Layout list item’larda ve button’larda kullanılan iconlar için     kullanıldı.
+
+    "@material-ui/core":  React arayüz kütüphanesi, arayüzü oluşturmak için kullanıldı.
+    "@material-ui/icons" : Arayüzün bazı kısımlarındaki iconlar için kullanılmıştır.
+
+    "url-loader": .jpg uzantılı dosyaların kullanılabilmesi için.
+    "file-loader":  .jpg uzantılı dosyaların kullanılabilmesi için.
+
+    "redux": Redux
+    "redux-thunk": Redux
+    "react-redux" :  projedeki state yönetimi için kullanıldı.
+    "redux-devtools-extension": Redux DevTools eklentisini aktif etmek için kullanıldı.
+
+    "react-router-dom": sayfalardaki yönlendirmeler için kullanıldı.
+
+    "react-swipeable-views":  Tab componentinin animasyonu için kullanıldı.
+    
+    
     
     
 ### Prod  
@@ -40,6 +60,7 @@
     "react": React !
     "react-dom": React !
     "react-hot-loader": Webpack ile birlikte react componentleri üzerinde değişiklik yapıldığında otomatik yükleme sağlamaktadır. Prod ortamında otomatik olarak çalışmamaktadır.
+
 
 ## Testler
 
