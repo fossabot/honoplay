@@ -1,26 +1,27 @@
 ﻿using FluentValidation.TestHelper;
 using Honoplay.Application.Trainers.Commands.CreateTrainer;
+using Honoplay.Application.Trainers.Commands.UpdateTrainer;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Trainers.Commands.CreateTrainer
+namespace Honoplay.Application.Tests.Trainers.Commands.UpdateTrainer
 {
-    public class CreateTrainerValidatorTest : TestBase
+    public class UpdateTrainerValidatorTest : TestBase
     {
-        private readonly CreateTrainerValidator _validator;
-
-        public CreateTrainerValidatorTest()
+        private readonly UpdateTrainerValidator _validator;
+        public UpdateTrainerValidatorTest()
         {
-            _validator = new CreateTrainerValidator();
+            _validator = new UpdateTrainerValidator();
         }
 
         [Fact]
         public void ShouldBeValid()
         {
-            Assert.True(_validator.Validate(new CreateTrainerCommand
+            Assert.True(_validator.Validate(new UpdateTrainerCommand
             {
+                Id = 1,
                 Name = "asdasd",
                 DepartmentId = 1,
-                CreatedBy = 1,
+                UpdatedBy = 1,
                 Surname = "asdasd",
                 PhoneNumber = "21412312321",
                 Email = "asd@gmail.com",
@@ -28,7 +29,6 @@ namespace Honoplay.Application.Tests.Trainers.Commands.CreateTrainer
             }
             ).IsValid);
         }
-
         [Fact]
         public void ShouldBeNotValidForNullOrEmpty()
         {

@@ -1,27 +1,26 @@
-﻿using System.Linq;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
 using Honoplay.Application.Trainees.Commands.CreateTrainee;
-using Honoplay.Application.Trainers.Commands.CreateTrainer;
+using System.Linq;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Trainees.Commands.CreateTrainee
+namespace Honoplay.Application.Tests.Trainees.Commands.UpdateTrainee
 {
-    public class CreateTraineeValidatorTest
+    public class UpdateTraineeValidatorTest : TestBase
     {
-        private readonly CreateTraineeValidator _validator;
-
-        public CreateTraineeValidatorTest()
+        private readonly UpdateTraineeValidator _validator;
+        public UpdateTraineeValidatorTest()
         {
-            _validator = new CreateTraineeValidator();
+            _validator = new UpdateTraineeValidator();
         }
         [Fact]
         public void ShouldBeValid()
         {
-            Assert.True(_validator.Validate(new CreateTraineeCommand
+            Assert.True(_validator.Validate(new UpdateTraineeCommand
             {
+                Id = 1,
                 Name = "asdasd",
                 DepartmentId = 1,
-                CreatedBy = 1,
+                UpdatedBy = 1,
                 Surname = "asdasd",
                 PhoneNumber = "21412312321",
                 Gender = 1,
@@ -41,6 +40,7 @@ namespace Honoplay.Application.Tests.Trainees.Commands.CreateTrainee
             _validator.ShouldHaveValidationErrorFor(x => x.DepartmentId, 0);
             _validator.ShouldHaveValidationErrorFor(x => x.Gender, 0);
             _validator.ShouldHaveValidationErrorFor(x => x.Surname, string.Empty);
+            _validator.ShouldHaveValidationErrorFor(x => x.Id, 0);
         }
 
         [Fact]
@@ -66,6 +66,5 @@ namespace Honoplay.Application.Tests.Trainees.Commands.CreateTrainee
         {
             _validator.ShouldHaveValidationErrorFor(x => x.Name, "");
         }
-
     }
 }

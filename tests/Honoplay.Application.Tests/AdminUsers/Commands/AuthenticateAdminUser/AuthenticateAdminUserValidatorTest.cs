@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
 using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
+using System.Linq;
 using Xunit;
 
 namespace Honoplay.Application.Tests.AdminUsers.Commands.AuthenticateAdminUser
