@@ -43,7 +43,6 @@ namespace Honoplay.System.Tests
                 Name = "yazilim",
                 TenantId = tenantId
             };
-
             dbContext.Departments.Add(department);
 
             var workingStatus = new WorkingStatus
@@ -52,7 +51,26 @@ namespace Honoplay.System.Tests
             };
             dbContext.WorkingStatuses.Add(workingStatus);
 
-            dbContext.Trainees.Add(new Trainee
+            //var profession = new Profession
+            //{
+            //    Name = "Web",
+            //    CreatedBy = adminUser.Id
+            //};
+            //dbContext.Professions.Add(profession);
+
+            //var trainer = new Trainer
+            //{
+            //    Name = "Emre",
+            //    PhoneNumber = "1234567890",
+            //    Surname = "KAS",
+            //    DepartmentId = department.Id,
+            //    CreatedBy = adminUser.Id,
+            //    Email = "yunuskas55@gmail.com",
+            //    ProfessionId = profession.Id,
+            //};
+            //dbContext.Trainers.Add(trainer);
+
+            var trainee = new Trainee
             {
                 DepartmentId = department.Id,
                 Name = "Yunus Emre",
@@ -62,7 +80,9 @@ namespace Honoplay.System.Tests
                 PhoneNumber = "053546835411",
                 Surname = "KAS",
                 WorkingStatusId = workingStatus.Id
-            });
+            };
+
+            dbContext.Trainees.Add(trainee);
 
             dbContext.SaveChanges();
         }

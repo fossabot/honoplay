@@ -22,7 +22,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             _userService = userService;
         }
 
-        [HttpPost("authenticate")]
+        [HttpPost("Authenticate")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesDefaultResponseType]
@@ -41,7 +41,7 @@ namespace Honoplay.AdminWebAPI.Controllers
                 return BadRequest();
             }
         }
-        [HttpPost("register")]
+        [HttpPost("Register")]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> Register([FromBody]RegisterAdminUserCommand command)
@@ -60,7 +60,7 @@ namespace Honoplay.AdminWebAPI.Controllers
                 return StatusCode(500, new ResponseModel<RegisterAdminUserModel>(new Error(HttpStatusCode.InternalServerError, ex)));
             }
         }
-        [HttpPost("renew-token")]
+        [HttpPost("RenewToken")]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public IActionResult RenewToken([FromBody]string renewToken)

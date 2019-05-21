@@ -4,21 +4,18 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Honoplay.Persistence.Configurations
 {
-    public class WorkingStatusConfiguration : IEntityTypeConfiguration<WorkingStatus>
-
+    public class ProfessionConfiguration : IEntityTypeConfiguration<Profession>
     {
-        public void Configure(EntityTypeBuilder<WorkingStatus> builder)
+        public void Configure(EntityTypeBuilder<Profession> builder)
         {
             //Id
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
                 .ValueGeneratedOnAdd();
-
+            
             //Name
             builder.Property(x => x.Name)
-                .HasMaxLength(20)
-                .IsRequired();
-            builder.HasIndex(x => x.Id).IsUnique();
+                .HasMaxLength(50);
         }
     }
 }

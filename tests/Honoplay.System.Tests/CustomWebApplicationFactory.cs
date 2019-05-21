@@ -22,7 +22,7 @@ namespace Honoplay.System.Tests
                     .BuildServiceProvider();
 
                 // Add a database context (HonoplayDbContext) using an in-memory database for testing.
-                services.AddDbContext<HonoplayDbContext>(options =>
+                services.AddDbContextPool<HonoplayDbContext>(options =>
                 {
                     options.UseInMemoryDatabase("WEB_API_TEST_DB").ConfigureWarnings(w => w.Ignore(InMemoryEventId.TransactionIgnoredWarning));
                     options.UseInternalServiceProvider(serviceProvider);
