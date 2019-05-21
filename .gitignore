@@ -3,6 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=node,visualstudio,visualstudiocode
 
 ### Node ###
+yarn.lock
 # Logs
 logs
 *.log
