@@ -17,6 +17,11 @@ export const Style = (theme) => ({
         textTransform: 'capitalize',
         color: '#673ab7',
     },
+    mobileTabs: {
+      [theme.breakpoints.up('sm')]: {
+        display: 'none'
+      },
+    }
 });
 
 import {createMuiTheme} from '@material-ui/core';

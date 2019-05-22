@@ -1,4 +1,5 @@
 import React from 'react';
+import terasuProxy from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import {IconButton, Menu, MenuItem } from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreHoriz';
@@ -38,8 +39,8 @@ class TableMenu extends React.Component {
           <MoreVertIcon className={classes.tableMenu}/>
         </IconButton>
         <Menu id="table-menu" anchorEl={anchorEl} open={open} onClose={this.handleClose}>
-              <MenuItem onClick={this.handleClose}>Düzenle</MenuItem>
-              <MenuItem onClick={handleDelete}>Sil</MenuItem>
+              <MenuItem onClick={this.handleClose}>{terasuProxy.translate('Edit')}</MenuItem>
+              <MenuItem onClick={handleDelete}>{terasuProxy.translate('Remove')}</MenuItem>
         </Menu>
       </div>
     );

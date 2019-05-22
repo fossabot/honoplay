@@ -1,4 +1,5 @@
 import React from 'react';
+import terasuProxy from '@omegabigdata/terasu-api-proxy';
 import MenuIcon from '@material-ui/icons/Menu';
 import {KeyboardArrowRight} from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
@@ -41,31 +42,31 @@ class Layout extends React.Component {
             <ListItem 
               pageLink={"/home/sorular"} 
               pageIcon={"question-circle"} 
-              pageName={"Sorular"} />
+              pageName={terasuProxy.translate('Questions')} />
             <ListItem
               pageLink={"/home/egitimserisi"} 
               pageIcon={"list-ol"} 
-              pageName={"Eğitim Serisi"} />
+              pageName={terasuProxy.translate('TrainerSeries')}  />
             <ListItem 
               pageLink={"/home/egitmenler"} 
               pageIcon={"graduation-cap"} 
-              pageName={"Eğitmenler"} />
+              pageName={terasuProxy.translate('Trainers')} />
             <ListItem 
               pageLink={"/home/katilimcilar"} 
               pageIcon={"users"} 
-              pageName={"Katılımcılar"} />
+              pageName={terasuProxy.translate('Trainees')} />
             <ListItem
               pageLink={"/home/sirketbilgileri"}
               pageIcon={"briefcase"}
-              pageName={"Şirket Bilgileri"} />
+              pageName={terasuProxy.translate('TenantInformation')} />
             <ListItem 
               pageLink={"/home/kullaniciyonetimi"} 
               pageIcon={"cog"} 
-              pageName={"Kullanıcı Yönetimi"} />
+              pageName={terasuProxy.translate('UserManagement')} />
             <ListItem
               pageLink={"/home/raporlar"} 
               pageIcon={"chart-pie"} 
-              pageName={"Raporlar"} />
+              pageName={terasuProxy.translate('Reports')} />
               </List>     
           </div>        
           <div  className={classes.trainerLayout}>

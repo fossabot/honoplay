@@ -6,20 +6,21 @@ import {Style} from './Style';
 
 class SearchInputComponent extends React.Component {
   render() {
-    const { classes,InputId,PlaceHolderName} = this.props;
+    const { classes,PlaceHolderName} = this.props;
 
     return (
       <Paper className={classes.searchRoot} elevation={1}>
-        <InputBase id={InputId}
-                   placeholder={PlaceHolderName}
-                   type="search"
-                   fullWidth
-                   classes={{
-                     root: classes.bootstrapRoot,
-                     input: classes.bootstrapInput,
-                   }}
-                />      
-        <IconButton className={classes.searchIconButton} aria-label="Search">
+        <InputBase 
+          placeholder={PlaceHolderName}
+          type="search"
+          fullWidth
+          classes={{
+            root: classes.bootstrapRoot,
+            input: classes.bootstrapInput,
+          }}
+        />      
+        <IconButton 
+          className={classes.searchIconButton} aria-label="Search">
           <SearchIcon />
         </IconButton>
       </Paper>

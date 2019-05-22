@@ -1,4 +1,5 @@
 import React from 'react';
+import terasuProxy from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import {Table, TableBody, TableCell, 
         TablePagination, TableRow, Paper, 
@@ -136,7 +137,7 @@ class TableComponent extends React.Component {
             </Table>
           </div>
           <TablePagination
-            labelRowsPerPage='Satır sayısı:'
+            labelRowsPerPage={terasuProxy.translate('NumberOfRows')}
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
             colSpan={3}

@@ -1,6 +1,7 @@
 import React from 'react';
+import terasuProxy from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles'; 
-import {Grid, Divider} from '@material-ui/core';
+import {Grid} from '@material-ui/core';
 import Style from '../Style';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
@@ -30,22 +31,29 @@ render() {
         <Grid container spacing={40}>
           <Grid item xs={12} sm={12}/>
           <Grid item xs={12} sm={7}>
-            <Input labelName="Departman" 
-                   inputId="inputDepartman" 
-                   inputType="text"
+            <Input 
+              labelName={terasuProxy.translate('Department')}
+              inputType="text"
             />
           </Grid>
           <Grid item xs={5} sm={2}>
-            <Button  buttonColor="secondary" 
-                     buttonName="Ekle"/>
+            <Button  
+              buttonColor="secondary" 
+              buttonName={terasuProxy.translate('Add')}
+            />
           </Grid>
           <Grid item xs={7} sm={3}>
-            <Button buttonColor="primary" 
-                    buttonIcon="file-excel" 
-                    buttonName="Excel'den Aktar"/>     
+            <Button 
+              buttonColor="primary" 
+              buttonIcon="file-excel" 
+              buttonName={terasuProxy.translate('ExportFromExcel')}
+            />     
           </Grid>
           <Grid item xs={12} sm={12}> 
-            <SimpleTable data={this.state.sirketdepartmanData}/>
+            <SimpleTable 
+              data={this.state.sirketdepartmanData}
+              header={terasuProxy.translate('TenantDepartments')}
+            />
           </Grid>
         </Grid>
         </div>
