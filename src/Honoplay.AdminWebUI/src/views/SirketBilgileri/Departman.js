@@ -4,7 +4,7 @@ import {Grid, Divider} from '@material-ui/core';
 import Style from '../Style';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
-import Chip from '../../components/Cards/ChipComponent';
+import SimpleTable from '../../components/Table/SimpleTable';
 
 class Departman extends React.Component {
 
@@ -16,7 +16,9 @@ constructor(props) {
       { key: 2, label: 'Yazılım',  },
       { key: 3, label: 'Yönetim',  },
       { key: 4, label: 'Satış Pazarlama',  },
-      { key: 5, label: 'İnsan Kaynakları',  }]
+      { key: 5, label: 'İnsan Kaynakları',  },   
+      { key: 6, label: 'Muhasebe',  },  
+    ]
   };
 }
 
@@ -26,6 +28,7 @@ render() {
     return (
         <div className={classes.root}>
         <Grid container spacing={40}>
+          <Grid item xs={12} sm={12}/>
           <Grid item xs={12} sm={7}>
             <Input labelName="Departman" 
                    inputId="inputDepartman" 
@@ -42,9 +45,7 @@ render() {
                     buttonName="Excel'den Aktar"/>     
           </Grid>
           <Grid item xs={12} sm={12}> 
-            <Chip data={this.state.sirketdepartmanData}
-                  cardName="Şirket Departmanları"
-            />
+            <SimpleTable data={this.state.sirketdepartmanData}/>
           </Grid>
         </Grid>
         </div>

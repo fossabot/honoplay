@@ -101,12 +101,13 @@ class TableComponent extends React.Component {
                     return (
                       <TableRow
                         hover
-                        onChange={this.handleClick.bind(this,(event, n.id))}
+                        onChange={this.handleClick.bind(this,(n.id))}
                         role="checkbox"
                         aria-checked={isSelected}
                         tabIndex={-1}
                         selected={isSelected}
                         key={n.id}
+                        id={'container-desk'}
                       >
                         <TableCell padding="checkbox"
                                    className={classes.tableCell}>
