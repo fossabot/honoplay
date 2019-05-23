@@ -5,7 +5,7 @@ import {Style, BootstrapInput} from './Style';
   
 const InputTextComponent = (props) => {
 
-    const { classes,labelName,inputId,inputType} = props;
+    const { classes,labelName,inputType} = props;
     return (
       <div className={classes.inputRoot}>
         <Grid container spacing={24}>
@@ -18,13 +18,13 @@ const InputTextComponent = (props) => {
               </Grid> 
           )}
           <Grid item xs={12} sm={9}>
-            <InputBase id={inputId}
-                       type={inputType}
-                       fullWidth
-                       classes={{
-                         root: classes.bootstrapRoot,
-                         input: classes.bootstrapInput,
-                      }}
+            <InputBase 
+              type={inputType}
+              fullWidth
+              classes={{
+                root: classes.bootstrapRoot,
+                input: classes.bootstrapInput,
+              }}
             />          
           </Grid>
         </Grid>

@@ -2,7 +2,6 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {Table, TableBody, TableCell, 
         TableHead, TableRow, Paper} from '@material-ui/core';
-import Bookmark from '@material-ui/icons/Bookmark';
 import {Style} from './Style';
 
 
@@ -15,7 +14,7 @@ class SimpleTable extends React.Component {
   }
   render() {
     const { data } = this.state;
-    const { classes } = this.props;
+    const { classes,header} = this.props;
   
     return (
       <Paper className={classes.simpleTableRoot}>
@@ -23,7 +22,7 @@ class SimpleTable extends React.Component {
           <TableHead>
             <TableRow>
               <TableCell className={classes.tablecellText}>
-                Şirket Departmanları
+                {header}
               </TableCell>
             </TableRow>
           </TableHead>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { TRAINER } from '../../helpers/TerasuKey';
 import { withStyles } from '@material-ui/core/styles';
 import {Avatar, CardHeader, IconButton} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -23,7 +24,7 @@ class TrainerCard extends React.Component {
             </IconButton>
           }
           title={trainerName}
-          subheader="Eğitmen"
+          subheader={TRAINER}
         />
       </div>
     );

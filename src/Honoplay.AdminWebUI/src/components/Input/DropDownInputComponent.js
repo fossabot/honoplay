@@ -1,4 +1,5 @@
 import React from 'react';
+import { CHOOSE, ADD } from '../../helpers/TerasuKey';
 import { withStyles } from '@material-ui/core/styles';
 import {Grid, InputLabel, NativeSelect, IconButton} from '@material-ui/core';
 import {Style, BootstrapInput} from './Style';
@@ -44,7 +45,7 @@ class DropDownInputComponent extends React.Component {
                 className={classes.nativeWidth}
                 input={<BootstrapInput fullWidth/>}
             >
-                <option>Seçiniz</option>
+                <option>{CHOOSE}</option>
                 {this.state.data.map(n => 
                     <option value={n.key} key={n.key}>
                       {n.label}
@@ -62,7 +63,7 @@ class DropDownInputComponent extends React.Component {
         <Modal handleClickClose={this.handleClose}
                open = {this.state.open}
                data = {this.state.data}
-               modalTitle = {`${labelName} Ekle`}
+               modalTitle = {`${labelName} ${ADD}`}
                modalInputName = {labelName}
         />
       </div>

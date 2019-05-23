@@ -1,5 +1,5 @@
 import React from 'react';
-import Icons from '../Icons';
+import Icons from '../../helpers/Icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withStyles } from '@material-ui/core/styles';
 import {List, ListItem, ListItemText, ListItemIcon, 

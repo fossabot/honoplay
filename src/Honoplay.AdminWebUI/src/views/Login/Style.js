@@ -33,6 +33,7 @@ export const Style = (theme) => ({
       '&:hover': {
         backgroundColor: deepPurple[700],
       },
+      textTransform: 'capitalize',
     },
     margin: {
       margin: theme.spacing.unit,

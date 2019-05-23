@@ -1,4 +1,5 @@
 import React from 'react';
+import { SELECTED } from '../../helpers/TerasuKey';
 import { withStyles } from '@material-ui/core/styles';
 import {Toolbar, IconButton, 
         Tooltip, MuiThemeProvider, Typography} from '@material-ui/core';
@@ -13,7 +14,7 @@ const EnhancedTableToolbar = props => {
           <div className={classes.headTitle}>
             {numSelected > 0 && (
               <Typography variant="subtitle1" className={classes.typography}>
-                {numSelected} seçili
+                {numSelected} {SELECTED}
               </Typography>
             )}
           </div>

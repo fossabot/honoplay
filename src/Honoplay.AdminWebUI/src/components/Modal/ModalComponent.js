@@ -1,4 +1,5 @@
 import React from 'react';
+import { ADD, SAVE } from '../../helpers/TerasuKey';
 import { withStyles } from '@material-ui/core/styles';
 import {Dialog, Paper, DialogActions, DialogContent, 
         DialogTitle, Slide, List, ListItem, ListItemText, 
@@ -54,7 +55,7 @@ class ModalComponent extends React.Component {
               </Grid>
               <Grid item xs={2} sm={2}>
                 <Button buttonColor="secondary" 
-                        buttonName="Ekle"
+                        buttonName={ADD}
                 />
               </Grid>
               <Grid item xs={12} sm={12}></Grid>
@@ -84,8 +85,9 @@ class ModalComponent extends React.Component {
               </Grid>
             </DialogContent>
             <DialogActions >
-              <Button buttonColor="primary" 
-                      buttonName="Kaydet"
+              <Button 
+                buttonColor="primary" 
+                buttonName= {SAVE}
               />
             </DialogActions>
           </Dialog>

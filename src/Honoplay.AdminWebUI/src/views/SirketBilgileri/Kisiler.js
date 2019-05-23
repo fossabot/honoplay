@@ -1,4 +1,7 @@
 import React from 'react';
+import { ADD, TRAINEE, EXPORT_FROM_EXCEL, WORKING_STATUS, 
+         NAME, SURNAME, DEPARTMENT, NATIONAL_IDENTITY_NUMBER, 
+         PHONE_NUMBER, GENDER, TRAINEES } from '../../helpers/TerasuKey';
 import { withStyles } from '@material-ui/core/styles'; 
 import {Grid, Divider} from '@material-ui/core';
 import Style from '../Style';
@@ -55,55 +58,61 @@ render() {
           <Grid item xs={6} sm={9}>
           <div />
           <a href="#kisiler" className={classes.kisilerLink}>
-           Kişi Ekle
+           {`${TRAINEE} ${ADD}`}
           </a>
           </Grid>
           <Grid item xs={6} sm={3}>
-            <Button buttonColor="primary" 
-                    buttonIcon="file-excel" 
-                    buttonName="Excel'den Aktar"
+            <Button 
+              buttonColor="primary"                       
+              buttonIcon="file-excel"                     
+              buttonName= {EXPORT_FROM_EXCEL}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
           
-            <DropDown data={this.state.calismaDurumu}
-                      labelName="Çalışma Durumu"
-                      describable
+            <DropDown 
+              data={this.state.calismaDurumu}                        
+              labelName={WORKING_STATUS}                   
+              describable
             />
-            <Input labelName="Ad" 
-                   inputId="inputKisiAd" 
-                   inputType="text"
+            <Input 
+              labelName={NAME}                                    
+              inputType="text"
             />
-            <Input labelName="Soyad" 
-                   inputId="inputKisiSoyad" 
-                   inputType="text"
+            <Input 
+              labelName={SURNAME}                                     
+              inputType="text"
             />
-            <DropDown data={this.state.kisidepartmanData}
-                      labelName="Departman"
+            <DropDown 
+              data={this.state.kisidepartmanData}                       
+              labelName={DEPARTMENT}   
             />
-            <Input labelName="TCKN" 
-                   inputId="inputTCKN" 
-                   inputType="text"
+            <Input 
+              labelName={NATIONAL_IDENTITY_NUMBER}                                   
+              inputType="text"
             />
-            <Input labelName="Cep Telefonu" 
-                   inputId="inputTel" 
-                   inputType="text"
+            <Input 
+              labelName={PHONE_NUMBER}                                        
+              inputType="text"
             />
-            <DropDown data={this.state.cinsiyet}
-                      labelName="Cinsiyet"
+            <DropDown 
+              data={this.state.cinsiyet}                     
+              labelName={GENDER} 
             />
           
           </Grid>
           <Grid item xs={12} sm={12}><Divider/></Grid>
           <Grid item xs={12} sm={12}>
           <a href='#kisiEkle' className={classes.kisilerLink}>
-            Kişiler
+            {TRAINEES}
           </a>
           </Grid>
           <Grid item xs={12} sm={12}>  
             <div id="kisiler">
-              <Table columns={this.state.kisilerColumns}
-                     data={this.state.kisilerData}/>
+              <Table 
+                columns={this.state.kisilerColumns}                    
+                data={this.state.kisilerData}
+              />
             </div>
           </Grid>
         </Grid>

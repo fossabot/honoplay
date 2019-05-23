@@ -1,6 +1,8 @@
 import React from 'react';
+import { QUESTIONS, TRAINER_SERIES, TRAINERS, 
+         TRAINEES, TENANT_INFORMATION, USER_MANAGEMENT, 
+         REPORTS } from '../../helpers/TerasuKey';
 import MenuIcon from '@material-ui/icons/Menu';
-import {KeyboardArrowRight} from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import {AppBar, CssBaseline, Drawer, 
         Hidden, IconButton,Toolbar, 
@@ -41,31 +43,31 @@ class Layout extends React.Component {
             <ListItem 
               pageLink={"/home/sorular"} 
               pageIcon={"question-circle"} 
-              pageName={"Sorular"} />
+              pageName={QUESTIONS} />
             <ListItem
               pageLink={"/home/egitimserisi"} 
               pageIcon={"list-ol"} 
-              pageName={"Eğitim Serisi"} />
+              pageName={TRAINER_SERIES}  />
             <ListItem 
               pageLink={"/home/egitmenler"} 
               pageIcon={"graduation-cap"} 
-              pageName={"Eğitmenler"} />
+              pageName={TRAINERS} />
             <ListItem 
               pageLink={"/home/katilimcilar"} 
               pageIcon={"users"} 
-              pageName={"Katılımcılar"} />
+              pageName={TRAINEES} />
             <ListItem
               pageLink={"/home/sirketbilgileri"}
               pageIcon={"briefcase"}
-              pageName={"Şirket Bilgileri"} />
+              pageName={TENANT_INFORMATION} />
             <ListItem 
               pageLink={"/home/kullaniciyonetimi"} 
               pageIcon={"cog"} 
-              pageName={"Kullanıcı Yönetimi"} />
+              pageName={USER_MANAGEMENT} />
             <ListItem
               pageLink={"/home/raporlar"} 
               pageIcon={"chart-pie"} 
-              pageName={"Raporlar"} />
+              pageName={REPORTS} />
               </List>     
           </div>        
           <div  className={classes.trainerLayout}>

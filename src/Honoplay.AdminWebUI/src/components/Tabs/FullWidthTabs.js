@@ -1,4 +1,6 @@
 import React from 'react';
+import { TENANT_INFORMATION, SAVE, BASIC_KNOWLEDGE, 
+         DEPARTMENT, TRAINEES } from '../../helpers/TerasuKey';
 import { withStyles } from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
 import {Tabs, Tab, MuiThemeProvider, Grid} from '@material-ui/core';
@@ -45,12 +47,15 @@ class FullWidthTabs extends React.Component {
       <div className={classes.root}>
       <Grid container spacing={24}>
         <Grid item xs={6} sm={10}>
-            <Typography pageHeader='Şirket Bilgileri'/>
+            <Typography 
+              pageHeader={TENANT_INFORMATION}
+            />
           </Grid>
           <Grid item xs={6} sm={2}>
-            <Button buttonColor="secondary" 
-                    buttonName="Kaydet"
-                    onClick={this.handleChangeValue}
+            <Button 
+              buttonColor="secondary"                    
+              buttonName={SAVE}                   
+              onClick={this.handleChangeValue}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
@@ -60,19 +65,22 @@ class FullWidthTabs extends React.Component {
               onChange={this.handleChange}
               textColor="primary"
               variant="fullWidth">
-                <Tab className={ this.state.value === 0 ? 
-                classes.active_tab : classes.default_tabStyle } 
-                    label="Temel Bilgiler" 
+                <Tab 
+                  className={ this.state.value === 0 ? 
+                  classes.active_tab : classes.default_tabStyle } 
+                  label={BASIC_KNOWLEDGE}
                 />
-                <Tab className={ this.state.value === 1 ? 
-                classes.active_tab : classes.default_tabStyle } 
-                    label="Departman" 
-                    disabled={this.state.value === 0 ? true : false}
+                <Tab 
+                  className={ this.state.value === 1 ? 
+                  classes.active_tab : classes.default_tabStyle } 
+                  label={DEPARTMENT}
+                  disabled={this.state.value === 0 ? true : false}
                 />
-                <Tab className={ this.state.value === 2 ? 
-                classes.active_tab : classes.default_tabStyle } 
-                    label="Kişiler" 
-                    disabled={this.state.value === 0 || this.state.value === 1 ? true : false}
+                <Tab 
+                  className={ this.state.value === 2 ? 
+                  classes.active_tab : classes.default_tabStyle } 
+                  label={TRAINEES}
+                  disabled={this.state.value === 0 || this.state.value === 1 ? true : false}
                 />
             </Tabs>
             <SwipeableViews
