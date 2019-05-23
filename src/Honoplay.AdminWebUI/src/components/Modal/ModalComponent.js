@@ -2,7 +2,7 @@ import React from 'react';
 import { ADD, SAVE } from '../../helpers/TerasuKey';
 import { withStyles } from '@material-ui/core/styles';
 import {Dialog, Paper, DialogActions, DialogContent, 
-        DialogTitle, Slide, List, ListItem, ListItemText, 
+        DialogTitle, Slide, List, FormGroup, FormControlLabel, 
         Radio , MuiThemeProvider, Grid} from '@material-ui/core';
 import {Style, theme} from './Style';
 import Input from '../Input/InputTextComponent';
@@ -48,17 +48,18 @@ class ModalComponent extends React.Component {
             <DialogContent>
             <Grid container spacing={24}>
               <Grid item xs={12} sm={12}></Grid>
-              <Grid item xs={10} sm={10}>
+              <Grid item xs={10} sm={11}>
                 <Input labelName={modalInputName}
                        inputType="text"                     
                 />
               </Grid>
-              <Grid item xs={2} sm={2}>
+              <Grid item xs={2} sm={1}>
                 <Button buttonColor="secondary" 
                         buttonName={ADD}
                 />
               </Grid>
               <Grid item xs={12} sm={12}></Grid>
+              <Grid item xs={12} sm={9}></Grid>
               <Grid item xs={12} sm={3}>
                 <Search/>
               </Grid>
@@ -67,16 +68,19 @@ class ModalComponent extends React.Component {
                 <Paper className={classes.modalPaper}>
                     {data.map(n => {                   
                       return(
-                        <List dense key={n.key} className={classes.root}>
-                          <ListItem>
-                            <Radio  checked={selectedValue === n.label}
-                                    onClick={this.handleChange}
-                                    value={n.label}
-                                    color= 'secondary'
-                            />
-                            <ListItemText inset primary={n.label}
-                            />
-                          </ListItem>
+                        <List dense key={n.key} className={classes.contextDialog}> 
+                          <FormGroup row>
+                              <FormControlLabel
+                                control= {                                  
+                                  <Radio  checked={selectedValue === n.label}
+                                          onClick={this.handleChange}
+                                          value={n.label}
+                                          color= 'secondary'
+                                  />
+                                }
+                                label={n.label}
+                              />            
+                          </FormGroup>
                         </List>
                       );
                     })}    
