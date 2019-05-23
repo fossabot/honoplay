@@ -1,5 +1,6 @@
 import React from 'react';
 import terasuProxy from '@omegabigdata/terasu-api-proxy';
+import { department, add, exportFromExcel, tenantDepartments } from '../../helpers/TerasuKey';
 import { withStyles } from '@material-ui/core/styles'; 
 import {Grid} from '@material-ui/core';
 import Style from '../Style';
@@ -32,27 +33,27 @@ render() {
           <Grid item xs={12} sm={12}/>
           <Grid item xs={12} sm={7}>
             <Input 
-              labelName={terasuProxy.translate('Department')}
+              labelName={terasuProxy.translate(department)}
               inputType="text"
             />
           </Grid>
           <Grid item xs={5} sm={2}>
             <Button  
               buttonColor="secondary" 
-              buttonName={terasuProxy.translate('Add')}
+              buttonName={terasuProxy.translate(add)}
             />
           </Grid>
           <Grid item xs={7} sm={3}>
             <Button 
               buttonColor="primary" 
               buttonIcon="file-excel" 
-              buttonName={terasuProxy.translate('ExportFromExcel')}
+              buttonName={terasuProxy.translate(exportFromExcel)}
             />     
           </Grid>
           <Grid item xs={12} sm={12}> 
             <SimpleTable 
               data={this.state.sirketdepartmanData}
-              header={terasuProxy.translate('TenantDepartments')}
+              header={terasuProxy.translate(tenantDepartments)}
             />
           </Grid>
         </Grid>

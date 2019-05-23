@@ -1,5 +1,6 @@
 import React from 'react';
 import terasuProxy from '@omegabigdata/terasu-api-proxy';
+import { add, save } from '../../helpers/TerasuKey';
 import { withStyles } from '@material-ui/core/styles';
 import {Dialog, Paper, DialogActions, DialogContent, 
         DialogTitle, Slide, List, ListItem, ListItemText, 
@@ -55,7 +56,7 @@ class ModalComponent extends React.Component {
               </Grid>
               <Grid item xs={2} sm={2}>
                 <Button buttonColor="secondary" 
-                        buttonName={terasuProxy.translate('Add')}
+                        buttonName={terasuProxy.translate(add)}
                 />
               </Grid>
               <Grid item xs={12} sm={12}></Grid>
@@ -87,7 +88,7 @@ class ModalComponent extends React.Component {
             <DialogActions >
               <Button 
                 buttonColor="primary" 
-                buttonName= {terasuProxy.translate('Save')}
+                buttonName= {terasuProxy.translate(save)}
               />
             </DialogActions>
           </Dialog>

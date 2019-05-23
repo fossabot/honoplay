@@ -4,7 +4,7 @@ import App from './App';
 import Login from './views/Login/Login';
 
 import terasuProxy from '@omegabigdata/terasu-api-proxy';
-terasuProxy.init(3, 'en-US');
+terasuProxy.init(3);
 
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';

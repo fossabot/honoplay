@@ -1,5 +1,7 @@
 import React from 'react';
 import terasuProxy from '@omegabigdata/terasu-api-proxy';
+import { questions, trainerSeries, trainers, 
+         trainees, tenantInformation, userManagement, reports } from '../../helpers/TerasuKey';
 import MenuIcon from '@material-ui/icons/Menu';
 import {KeyboardArrowRight} from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
@@ -42,31 +44,31 @@ class Layout extends React.Component {
             <ListItem 
               pageLink={"/home/sorular"} 
               pageIcon={"question-circle"} 
-              pageName={terasuProxy.translate('Questions')} />
+              pageName={terasuProxy.translate(questions)} />
             <ListItem
               pageLink={"/home/egitimserisi"} 
               pageIcon={"list-ol"} 
-              pageName={terasuProxy.translate('TrainerSeries')}  />
+              pageName={terasuProxy.translate(trainerSeries)}  />
             <ListItem 
               pageLink={"/home/egitmenler"} 
               pageIcon={"graduation-cap"} 
-              pageName={terasuProxy.translate('Trainers')} />
+              pageName={terasuProxy.translate(trainers)} />
             <ListItem 
               pageLink={"/home/katilimcilar"} 
               pageIcon={"users"} 
-              pageName={terasuProxy.translate('Trainees')} />
+              pageName={terasuProxy.translate(trainees)} />
             <ListItem
               pageLink={"/home/sirketbilgileri"}
               pageIcon={"briefcase"}
-              pageName={terasuProxy.translate('TenantInformation')} />
+              pageName={terasuProxy.translate(tenantInformation)} />
             <ListItem 
               pageLink={"/home/kullaniciyonetimi"} 
               pageIcon={"cog"} 
-              pageName={terasuProxy.translate('UserManagement')} />
+              pageName={terasuProxy.translate(userManagement)} />
             <ListItem
               pageLink={"/home/raporlar"} 
               pageIcon={"chart-pie"} 
-              pageName={terasuProxy.translate('Reports')} />
+              pageName={terasuProxy.translate(reports)} />
               </List>     
           </div>        
           <div  className={classes.trainerLayout}>

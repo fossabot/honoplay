@@ -1,5 +1,6 @@
 import React from 'react';
 import terasuProxy from '@omegabigdata/terasu-api-proxy';
+import { trainer } from '../../helpers/TerasuKey';
 import { withStyles } from '@material-ui/core/styles';
 import {Avatar, CardHeader, IconButton} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -24,7 +25,7 @@ class TrainerCard extends React.Component {
             </IconButton>
           }
           title={trainerName}
-          subheader={terasuProxy.translate('Trainer')}
+          subheader={terasuProxy.translate(trainer)}
         />
       </div>
     );

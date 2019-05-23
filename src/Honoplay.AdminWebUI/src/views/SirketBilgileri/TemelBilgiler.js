@@ -1,5 +1,6 @@
 import React from 'react';
 import terasuProxy from '@omegabigdata/terasu-api-proxy';
+import { tenantName, tenantLogo } from '../../helpers/TerasuKey';
 import { withStyles } from '@material-ui/core/styles'; 
 import {Grid} from '@material-ui/core';
 import Style from '../Style';
@@ -21,11 +22,11 @@ render() {
           <Grid item xs={12} sm={12}/>
           <Grid item xs={12} sm={12}>
             <Input 
-              labelName={terasuProxy.translate('TenantName')}              
+              labelName={terasuProxy.translate(tenantName)}              
               inputType="text"
             />
             <FileInput 
-              labelName={terasuProxy.translate('TenantLogo')}
+              labelName={terasuProxy.translate(tenantLogo)}
             />
           </Grid>
         </Grid>

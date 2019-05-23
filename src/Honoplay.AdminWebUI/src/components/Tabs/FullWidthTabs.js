@@ -1,5 +1,7 @@
 import React from 'react';
 import terasuProxy from '@omegabigdata/terasu-api-proxy';
+import { tenantInformation, save, basicKnowledge, 
+         department, trainees } from '../../helpers/TerasuKey';
 import { withStyles } from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
 import {Tabs, Tab, MuiThemeProvider, Grid} from '@material-ui/core';
@@ -47,13 +49,13 @@ class FullWidthTabs extends React.Component {
       <Grid container spacing={24}>
         <Grid item xs={6} sm={10}>
             <Typography 
-              pageHeader={terasuProxy.translate('TenantInformation')}
+              pageHeader={terasuProxy.translate(tenantInformation)}
             />
           </Grid>
           <Grid item xs={6} sm={2}>
             <Button 
               buttonColor="secondary"                    
-              buttonName={terasuProxy.translate('Save')}                   
+              buttonName={terasuProxy.translate(save)}                   
               onClick={this.handleChangeValue}
             />
           </Grid>
@@ -67,18 +69,18 @@ class FullWidthTabs extends React.Component {
                 <Tab 
                   className={ this.state.value === 0 ? 
                   classes.active_tab : classes.default_tabStyle } 
-                    label={terasuProxy.translate('BasicKnowledge')}
+                    label={terasuProxy.translate(basicKnowledge)}
                 />
                 <Tab 
                   className={ this.state.value === 1 ? 
                   classes.active_tab : classes.default_tabStyle } 
-                  label={terasuProxy.translate('Department')}
+                  label={terasuProxy.translate(department)}
                   disabled={this.state.value === 0 ? true : false}
                 />
                 <Tab 
                   className={ this.state.value === 2 ? 
                   classes.active_tab : classes.default_tabStyle } 
-                  label={terasuProxy.translate('Trainees')}
+                  label={terasuProxy.translate(trainees)}
                   disabled={this.state.value === 0 || this.state.value === 1 ? true : false}
                 />
             </Tabs>
