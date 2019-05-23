@@ -9,8 +9,8 @@ export const Style = (theme) => ({
       paddingBottom: 20
     },
     contextDialog: {
-      paddingTop: 35, 
-      paddingBottom:35
+      paddingLeft: 20,
+      paddingTop: 5
     },
 });
 import {deepPurple, deepOrange} from '@material-ui/core/colors';
