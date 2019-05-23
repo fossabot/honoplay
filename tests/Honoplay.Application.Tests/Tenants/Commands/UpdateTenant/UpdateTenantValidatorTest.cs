@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
 using Honoplay.Application.Tenants.Commands.UpdateTenant;
+using System;
+using System.Linq;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Tenants.Commands.UpdateTenant

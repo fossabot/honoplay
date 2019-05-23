@@ -51,24 +51,24 @@ namespace Honoplay.System.Tests
             };
             dbContext.WorkingStatuses.Add(workingStatus);
 
-            //var profession = new Profession
-            //{
-            //    Name = "Web",
-            //    CreatedBy = adminUser.Id
-            //};
-            //dbContext.Professions.Add(profession);
+            var profession = new Profession
+            {
+                Name = "Web",
+                CreatedBy = adminUser.Id
+            };
+            dbContext.Professions.Add(profession);
 
-            //var trainer = new Trainer
-            //{
-            //    Name = "Emre",
-            //    PhoneNumber = "1234567890",
-            //    Surname = "KAS",
-            //    DepartmentId = department.Id,
-            //    CreatedBy = adminUser.Id,
-            //    Email = "yunuskas55@gmail.com",
-            //    ProfessionId = profession.Id,
-            //};
-            //dbContext.Trainers.Add(trainer);
+            var trainer = new Trainer
+            {
+                Name = "Emre",
+                PhoneNumber = "1234567890",
+                Surname = "KAS",
+                DepartmentId = department.Id,
+                CreatedBy = adminUser.Id,
+                Email = "yunuskas55@gmail.com",
+                ProfessionId = profession.Id,
+            };
+            dbContext.Trainers.Add(trainer);
 
             var trainee = new Trainee
             {

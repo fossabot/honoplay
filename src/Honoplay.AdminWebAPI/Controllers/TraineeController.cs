@@ -78,13 +78,13 @@ namespace Honoplay.AdminWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ResponseModel<TraineeListModel>>> Get([FromQuery]GetTraineeListQueryModel command)
+        public async Task<ActionResult<ResponseModel<TraineesListModel>>> Get([FromQuery]GetTraineesListQueryModel query)
         {
             try
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
 
-                var model = await Mediator.Send(new GetTraineeListQuery(userId, command.Skip, command.Take));
+                var model = await Mediator.Send(new GetTraineesListQuery(userId, query.TenantId, query.Skip, query.Take));
                 return Ok(model);
             }
             catch (NotFoundException)
@@ -101,7 +101,7 @@ namespace Honoplay.AdminWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ResponseModel<TraineeListModel>>> Get(int id)
+        public async Task<ActionResult<ResponseModel<TraineesListModel>>> Get(int id)
         {
             try
             {

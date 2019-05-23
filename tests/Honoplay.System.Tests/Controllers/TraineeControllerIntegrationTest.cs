@@ -1,4 +1,5 @@
-﻿using Honoplay.AdminWebAPI;
+﻿using System;
+using Honoplay.AdminWebAPI;
 using Honoplay.Application.Trainees.Commands.CreateTrainee;
 using Honoplay.Application.Trainees.Queries.GetTraineeList;
 using Honoplay.Common.Constants;
@@ -21,7 +22,7 @@ namespace Honoplay.System.Tests.Controllers
             _factory = factory;
         }
         [Fact]
-        public async Task CanCreateTrainee()
+        public async void CanCreateTrainee()
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
             // The endpoint or route of the controller action.
@@ -49,7 +50,7 @@ namespace Honoplay.System.Tests.Controllers
         }
 
         [Fact]
-        public async Task CanUpdateTrainee()
+        public async void CanUpdateTrainee()
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
@@ -79,18 +80,19 @@ namespace Honoplay.System.Tests.Controllers
         }
 
         [Fact]
-        public async void CanGetTraineeList()
+        public async void CanGetTraineesList()
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var getTraineeListQueryModel = new GetTraineeListQueryModel
+            var getTraineeListQueryModel = new GetTraineesListQueryModel
             {
                 Skip = 0,
-                Take = 10
+                Take = 10,
+                TenantId = Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a")
             };
-            // The endpoint or route of the controller action.
 
-            var httpResponse = await client.GetAsync(requestUri: $"api/Trainee?Skip={getTraineeListQueryModel.Skip}&Take={getTraineeListQueryModel.Take}");
+            // The endpoint or route of the controller action.
+            var httpResponse = await client.GetAsync(requestUri: $"api/Trainee?Skip={getTraineeListQueryModel.Skip}&Take={getTraineeListQueryModel.Take}&TenantId={getTraineeListQueryModel.TenantId}");
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -100,22 +102,37 @@ namespace Honoplay.System.Tests.Controllers
         }
 
         [Fact]
-        public async void CanNotGetTraineeList()
+        public async void CanNotGetTraineesList()
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var getTraineeListQueryModel = new GetTraineeListQueryModel
+            var getTraineeListQueryModel = new GetTraineesListQueryModel
             {
                 Skip = -3,
-                Take = -3
+                Take = -3,
+                TenantId = Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a")
             };
-            // The endpoint or route of the controller action.
 
-            var httpResponse = await client.GetAsync(requestUri: $"api/Trainee?Skip={getTraineeListQueryModel.Skip}&Take={getTraineeListQueryModel.Take}");
+            // The endpoint or route of the controller action.
+            var httpResponse = await client.GetAsync(requestUri: $"api/Trainee?Skip={getTraineeListQueryModel.Skip}&Take={getTraineeListQueryModel.Take}&TenantId={getTraineeListQueryModel.TenantId}");
 
             // Must be unsuccessful.
             Assert.False(httpResponse.IsSuccessStatusCode);
-            Assert.Equal(HttpStatusCode.NotFound, httpResponse.StatusCode);
+            Assert.Equal(HttpStatusCode.BadRequest, httpResponse.StatusCode);
+        }
+
+        [Fact]
+        public async void CanGetTraineeDetail()
+        {
+            var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
+
+            //Request to api/Trainee/1 endpoint
+            var httpResponse = await client.GetAsync("api/Trainee/1");
+
+            //Must be successful.
+            Assert.True(httpResponse.IsSuccessStatusCode);
+            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Honoplay.Application._Infrastructure;
 using MediatR;
+using Newtonsoft.Json;
 
 namespace Honoplay.Application.Tenants.Queries.GetTenantsList
 {
@@ -15,7 +16,7 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantsList
             Skip = skip;
             Take = take;
         }
-
+        [JsonIgnore]
         public int? AdminUserId { get; private set; }
         public int Skip { get; private set; } = 0;
         public int Take { get; private set; }= 10;

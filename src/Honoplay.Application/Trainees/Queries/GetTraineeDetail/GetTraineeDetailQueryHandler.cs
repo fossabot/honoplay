@@ -21,14 +21,17 @@ namespace Honoplay.Application.Tenants.Queries.GetTraineeDetail
 
         public async Task<ResponseModel<TraineeDetailModel>> Handle(GetTraineeDetailQuery request, CancellationToken cancellationToken)
         {
-            var isExist = await _context.TenantAdminUsers.AnyAsync(x =>
-                x.AdminUserId == request.AdminUserId, cancellationToken);
+            var trainee = await _context.Trainees.AsNoTracking().Include(x => x.Department)
+                .Where(x => x.Id == request.Id &&
+                            _context.TenantAdminUsers
+                                .Any(y => y.TenantId == x.Department.TenantId &&
+                                          y.AdminUserId == request.AdminUserId))
+                .FirstOrDefaultAsync(cancellationToken);
 
-            var trainee = await _context.Trainees.AsNoTracking().SingleOrDefaultAsync(x => x.Id == request.Id && isExist, cancellationToken);
 
             if (trainee is null)
             {
-                throw new NotFoundException(nameof(Tenant), request.Id);
+                throw new NotFoundException(nameof(Trainee), request.Id);
             }
 
             var model = TraineeDetailModel.Create(trainee);

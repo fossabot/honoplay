@@ -2,6 +2,7 @@
 using MediatR;
 using System;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Honoplay.Application._Exceptions;
@@ -29,14 +30,12 @@ namespace Honoplay.Application.Trainers.Commands.CreateTrainer
             {
                 try
                 {
-                    var department = await _context.Departments.FirstOrDefaultAsync(x =>
-                            x.Id == request.DepartmentId,
-                            cancellationToken);
-
-                    var isExist = await _context.TenantAdminUsers.AnyAsync(x =>
-                            x.AdminUserId == request.CreatedBy &&
-                            x.TenantId == department.TenantId,
-                            cancellationToken);
+                    var isExist = await _context.Departments.AnyAsync(x =>
+                            x.Id == request.DepartmentId &&
+                            _context.TenantAdminUsers.Any(y =>
+                                    y.AdminUserId == request.CreatedBy &&
+                                    y.TenantId == x.TenantId)
+                        , cancellationToken);
 
                     if (!isExist)
                     {

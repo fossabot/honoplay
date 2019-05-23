@@ -5,9 +5,9 @@ using Honoplay.Persistence;
 using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,15 +22,17 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
         }
         public async Task<ResponseModel<CreateTraineeModel>> Handle(CreateTraineeCommand request, CancellationToken cancellationToken)
         {
-            using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
+            using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    var department = await _context.Departments.FirstOrDefaultAsync(x => x.Id == request.DepartmentId, cancellationToken);
-                    var isExist = await _context.TenantAdminUsers.AnyAsync(x =>
-                                                                    x.AdminUserId == request.CreatedBy &&
-                                                                    x.TenantId == department.TenantId,
-                                                                    cancellationToken);
+                    var isExist = await _context.Departments.AnyAsync(x =>
+                            x.Id == request.DepartmentId &&
+                            _context.TenantAdminUsers.Any(y =>
+                                y.AdminUserId == request.CreatedBy &&
+                                y.TenantId == x.TenantId)
+                        , cancellationToken);
+
                     if (!isExist)
                     {
                         throw new NotFoundException(nameof(Department), request.DepartmentId);
