@@ -1,6 +1,5 @@
 import React from 'react';
-import terasuProxy from '@omegabigdata/terasu-api-proxy';
-import { questions, newQuestion } from '../../helpers/TerasuKey';
+import { QUESTIONS, NEW_QUESTION } from '../../helpers/TerasuKey';
 import { withStyles } from '@material-ui/core/styles'; 
 import {Grid} from '@material-ui/core';
 import Style from '../Style';
@@ -55,14 +54,14 @@ render() {
         <Grid container spacing={24}>
           <Grid item xs={6} sm={10}>
             <Typography 
-              pageHeader={terasuProxy.translate(questions)}
+              pageHeader={QUESTIONS}
             />
           </Grid>
           <Grid item xs={6} sm={2}> 
             <Button 
               buttonColor="secondary" 
               buttonIcon="plus"
-              buttonName={terasuProxy.translate(newQuestion)}
+              buttonName={NEW_QUESTION}
             />   
           </Grid>
           <Grid item xs={12} sm={12}>  

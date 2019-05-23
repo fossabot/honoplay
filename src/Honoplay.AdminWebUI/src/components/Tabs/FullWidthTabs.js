@@ -1,7 +1,6 @@
 import React from 'react';
-import terasuProxy from '@omegabigdata/terasu-api-proxy';
-import { tenantInformation, save, basicKnowledge, 
-         department, trainees } from '../../helpers/TerasuKey';
+import { TENANT_INFORMATION, SAVE, BASIC_KNOWLEDGE, 
+         DEPARTMENT, TRAINEES } from '../../helpers/TerasuKey';
 import { withStyles } from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
 import {Tabs, Tab, MuiThemeProvider, Grid} from '@material-ui/core';
@@ -49,13 +48,13 @@ class FullWidthTabs extends React.Component {
       <Grid container spacing={24}>
         <Grid item xs={6} sm={10}>
             <Typography 
-              pageHeader={terasuProxy.translate(tenantInformation)}
+              pageHeader={TENANT_INFORMATION}
             />
           </Grid>
           <Grid item xs={6} sm={2}>
             <Button 
               buttonColor="secondary"                    
-              buttonName={terasuProxy.translate(save)}                   
+              buttonName={SAVE}                   
               onClick={this.handleChangeValue}
             />
           </Grid>
@@ -69,18 +68,18 @@ class FullWidthTabs extends React.Component {
                 <Tab 
                   className={ this.state.value === 0 ? 
                   classes.active_tab : classes.default_tabStyle } 
-                    label={terasuProxy.translate(basicKnowledge)}
+                  label={BASIC_KNOWLEDGE}
                 />
                 <Tab 
                   className={ this.state.value === 1 ? 
                   classes.active_tab : classes.default_tabStyle } 
-                  label={terasuProxy.translate(department)}
+                  label={DEPARTMENT}
                   disabled={this.state.value === 0 ? true : false}
                 />
                 <Tab 
                   className={ this.state.value === 2 ? 
                   classes.active_tab : classes.default_tabStyle } 
-                  label={terasuProxy.translate(trainees)}
+                  label={TRAINEES}
                   disabled={this.state.value === 0 || this.state.value === 1 ? true : false}
                 />
             </Tabs>

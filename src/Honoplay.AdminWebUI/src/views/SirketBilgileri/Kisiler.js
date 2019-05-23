@@ -1,8 +1,7 @@
 import React from 'react';
-import terasuProxy from '@omegabigdata/terasu-api-proxy';
-import { add, trainee, exportFromExcel, workingStatus, 
-         name, surname, department, nationalIdentityNumber, 
-         phoneNumber, gender, trainees } from '../../helpers/TerasuKey';
+import { ADD, TRAINEE, EXPORT_FROM_EXCEL, WORKING_STATUS, 
+         NAME, SURNAME, DEPARTMENT, NATIONAL_IDENTITY_NUMBER, 
+         PHONE_NUMBER, GENDER, TRAINEES } from '../../helpers/TerasuKey';
 import { withStyles } from '@material-ui/core/styles'; 
 import {Grid, Divider} from '@material-ui/core';
 import Style from '../Style';
@@ -59,53 +58,53 @@ render() {
           <Grid item xs={6} sm={9}>
           <div />
           <a href="#kisiler" className={classes.kisilerLink}>
-           {`${terasuProxy.translate(trainee)} ${terasuProxy.translate(add)}`}
+           {`${TRAINEE} ${ADD}`}
           </a>
           </Grid>
           <Grid item xs={6} sm={3}>
             <Button 
               buttonColor="primary"                       
               buttonIcon="file-excel"                     
-              buttonName= {terasuProxy.translate(exportFromExcel)}
+              buttonName= {EXPORT_FROM_EXCEL}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
           
             <DropDown 
               data={this.state.calismaDurumu}                        
-              labelName={terasuProxy.translate(workingStatus)}                   
+              labelName={WORKING_STATUS}                   
               describable
             />
             <Input 
-              labelName={terasuProxy.translate(name)}                                    
+              labelName={NAME}                                    
               inputType="text"
             />
             <Input 
-              labelName={terasuProxy.translate(surname)}                                     
+              labelName={SURNAME}                                     
               inputType="text"
             />
             <DropDown 
               data={this.state.kisidepartmanData}                       
-              labelName={terasuProxy.translate(department)}   
+              labelName={DEPARTMENT}   
             />
             <Input 
-              labelName={terasuProxy.translate(nationalIdentityNumber)}                                   
+              labelName={NATIONAL_IDENTITY_NUMBER}                                   
               inputType="text"
             />
             <Input 
-              labelName={terasuProxy.translate(phoneNumber)}                                        
+              labelName={PHONE_NUMBER}                                        
               inputType="text"
             />
             <DropDown 
               data={this.state.cinsiyet}                     
-              labelName={terasuProxy.translate(gender)} 
+              labelName={GENDER} 
             />
           
           </Grid>
           <Grid item xs={12} sm={12}><Divider/></Grid>
           <Grid item xs={12} sm={12}>
           <a href='#kisiEkle' className={classes.kisilerLink}>
-            {terasuProxy.translate(trainees)}
+            {TRAINEES}
           </a>
           </Grid>
           <Grid item xs={12} sm={12}>  

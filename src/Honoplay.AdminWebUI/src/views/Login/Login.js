@@ -1,6 +1,5 @@
 import React from 'react';
-import terasuProxy from '@omegabigdata/terasu-api-proxy';
-import {login, emailAddress, password, rememberMe} from '../../helpers/TerasuKey';
+import {LOGIN, EMAIL_ADDRESS, PASSWORD, REMEMBER_ME} from '../../helpers/TerasuKey';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {Paper, Checkbox, 
@@ -22,12 +21,12 @@ class Login extends React.Component {
               <LockOutlinedIcon />
             </Avatar>
             <Typography variant="h5" className={classes.typography}>
-             {terasuProxy.translate(login)}
+             {LOGIN}
             </Typography>
             <form className={classes.form}>
               <FormControl margin="normal"  fullWidth>
                   <TextField
-                    label={terasuProxy.translate(emailAddress)}
+                    label={EMAIL_ADDRESS}
                     id="email" 
                     name="email" 
                     autoComplete="email" 
@@ -37,7 +36,7 @@ class Login extends React.Component {
               <FormControl margin="normal"  fullWidth>
                   <TextField
                     className={classes.margin}
-                    label={terasuProxy.translate(password)}
+                    label={PASSWORD}
                     name="password" 
                     type="text" 
                     id="password" 
@@ -47,7 +46,7 @@ class Login extends React.Component {
               <FormControlLabel
                 control={<Checkbox value="remember" 
                                    color="primary"/>}
-                label={terasuProxy.translate(rememberMe)}
+                label={REMEMBER_ME}
               />
               <Button
                 type="submit"
@@ -56,7 +55,7 @@ class Login extends React.Component {
                 color="secondary"
                 className={classes.submit}
               >
-                {terasuProxy.translate(login)}
+                {LOGIN}
               </Button>
   
             </form>

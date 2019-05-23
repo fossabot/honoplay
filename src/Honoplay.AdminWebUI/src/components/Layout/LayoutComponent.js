@@ -1,9 +1,8 @@
 import React from 'react';
-import terasuProxy from '@omegabigdata/terasu-api-proxy';
-import { questions, trainerSeries, trainers, 
-         trainees, tenantInformation, userManagement, reports } from '../../helpers/TerasuKey';
+import { QUESTIONS, TRAINER_SERIES, TRAINERS, 
+         TRAINEES, TENANT_INFORMATION, USER_MANAGEMENT, 
+         REPORTS } from '../../helpers/TerasuKey';
 import MenuIcon from '@material-ui/icons/Menu';
-import {KeyboardArrowRight} from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
 import {AppBar, CssBaseline, Drawer, 
         Hidden, IconButton,Toolbar, 
@@ -44,31 +43,31 @@ class Layout extends React.Component {
             <ListItem 
               pageLink={"/home/sorular"} 
               pageIcon={"question-circle"} 
-              pageName={terasuProxy.translate(questions)} />
+              pageName={QUESTIONS} />
             <ListItem
               pageLink={"/home/egitimserisi"} 
               pageIcon={"list-ol"} 
-              pageName={terasuProxy.translate(trainerSeries)}  />
+              pageName={TRAINER_SERIES}  />
             <ListItem 
               pageLink={"/home/egitmenler"} 
               pageIcon={"graduation-cap"} 
-              pageName={terasuProxy.translate(trainers)} />
+              pageName={TRAINERS} />
             <ListItem 
               pageLink={"/home/katilimcilar"} 
               pageIcon={"users"} 
-              pageName={terasuProxy.translate(trainees)} />
+              pageName={TRAINEES} />
             <ListItem
               pageLink={"/home/sirketbilgileri"}
               pageIcon={"briefcase"}
-              pageName={terasuProxy.translate(tenantInformation)} />
+              pageName={TENANT_INFORMATION} />
             <ListItem 
               pageLink={"/home/kullaniciyonetimi"} 
               pageIcon={"cog"} 
-              pageName={terasuProxy.translate(userManagement)} />
+              pageName={USER_MANAGEMENT} />
             <ListItem
               pageLink={"/home/raporlar"} 
               pageIcon={"chart-pie"} 
-              pageName={terasuProxy.translate(reports)} />
+              pageName={REPORTS} />
               </List>     
           </div>        
           <div  className={classes.trainerLayout}>
