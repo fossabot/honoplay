@@ -1,5 +1,5 @@
 import React from 'react';
-import { ADD, SAVE } from '../../helpers/TerasuKey';
+import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import {Dialog, Paper, DialogActions, DialogContent, 
         DialogTitle, Slide, List, FormGroup, FormControlLabel, 
@@ -55,7 +55,7 @@ class ModalComponent extends React.Component {
               </Grid>
               <Grid item xs={2} sm={1}>
                 <Button buttonColor="secondary" 
-                        buttonName={ADD}
+                        buttonName={translate('Add')}
                 />
               </Grid>
               <Grid item xs={12} sm={12}></Grid>
@@ -66,19 +66,19 @@ class ModalComponent extends React.Component {
               <Grid item xs={12} sm={9}></Grid>
               <Grid item xs={12} sm={12}>
                 <Paper className={classes.modalPaper}>
-                    {data.map(n => {                   
+                    {data.map((data,id) => {                   
                       return(
-                        <List dense key={n.key} className={classes.contextDialog}> 
+                        <List dense key={id} className={classes.contextDialog}> 
                           <FormGroup row>
                               <FormControlLabel
                                 control= {                                  
-                                  <Radio  checked={selectedValue === n.label}
+                                  <Radio  checked={selectedValue === data.name}
                                           onClick={this.handleChange}
-                                          value={n.label}
+                                          value={data.name}
                                           color= 'secondary'
                                   />
                                 }
-                                label={n.label}
+                                label={data.name}
                               />            
                           </FormGroup>
                         </List>
@@ -91,7 +91,7 @@ class ModalComponent extends React.Component {
             <DialogActions >
               <Button 
                 buttonColor="primary" 
-                buttonName= {SAVE}
+                buttonName= {translate('Save')}
               />
             </DialogActions>
           </Dialog>

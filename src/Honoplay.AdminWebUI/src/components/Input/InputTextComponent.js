@@ -1,7 +1,7 @@
 import React from 'react';
 import {Grid, InputLabel, InputBase} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles'; 
-import {Style, BootstrapInput} from './Style';
+import {Style} from './Style';
   
 const InputTextComponent = (props) => {
 

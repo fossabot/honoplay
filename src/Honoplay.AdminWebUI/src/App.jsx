@@ -3,16 +3,16 @@ import { hot } from 'react-hot-loader';
 import { Route } from 'react-router-dom';
 import Layout from './components/Layout/LayoutComponent';
 
-import Sorular from './views/Sorular/Sorular';
-import SirketBilgileri from './views/SirketBilgileri/SirketBilgileri';
+import Questions from './views/Questions/Questions';
+import TenantInformation from './views/TenantInformation/TenantInformation';
 
 
 class App extends Component {
     render() {
         return (
             <Layout>             
-                <Route path="/home/sorular" component={Sorular} />    
-                <Route path="/home/sirketbilgileri" component={SirketBilgileri}/>  
+                <Route path="/home/sorular" component={Questions} />    
+                <Route path="/home/sirketbilgileri" component={TenantInformation}/>  
             </Layout>
         );
     }

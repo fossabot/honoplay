@@ -1,6 +1,5 @@
 import React from 'react';
-import { TENANT_INFORMATION, SAVE, BASIC_KNOWLEDGE, 
-         DEPARTMENT, TRAINEES } from '../../helpers/TerasuKey';
+import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
 import {Tabs, Tab, MuiThemeProvider, Grid} from '@material-ui/core';
@@ -9,34 +8,34 @@ import Typography from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
 import {Style, theme} from './Style';
 
-import TemelBilgiler from '../../views/SirketBilgileri/TemelBilgiler';
-import Departman from '../../views/SirketBilgileri/Departman';
-import Kisiler from '../../views/SirketBilgileri/Kisiler';
+import BasicKnowledge from '../../views/TenantInformation/BasicKnowledge';
+import Department from '../../views/TenantInformation/Department';
+import Trainee from '../../views/TenantInformation/Trainee';
 
 class FullWidthTabs extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-          value: 0,
+          tabValue: 0,
       };
       this.handleChange=this.handleChange.bind(this);
       this.handleChangeIndex=this.handleChangeIndex.bind(this);
-      this.handleChangeValue=this.handleChangeValue.bind(this);
+      this.handleChangetabValue=this.handleChangetabValue.bind(this);
   }
 
-  handleChange(event, value)
+  handleChange(event, tabValue)
   {
-    this.setState({ value });
+    this.setState({ tabValue });
   };
 
   handleChangeIndex(index)
   {
-    this.setState({ value: index });
+    this.setState({ tabValue: index });
   };
-  handleChangeValue(event)
+  handleChangetabValue(event)
   {
     this.setState({ 
-      value: this.state.value === 2 ? this.state.value : this.state.value + 1
+      tabValue: this.state.tabValue === 2 ? this.state.tabValue : this.state.tabValue + 1
     });
   };
 
@@ -48,54 +47,54 @@ class FullWidthTabs extends React.Component {
       <Grid container spacing={24}>
         <Grid item xs={6} sm={10}>
             <Typography 
-              pageHeader={TENANT_INFORMATION}
+              pageHeader={translate('TenantInformation')}
             />
           </Grid>
           <Grid item xs={6} sm={2}>
             <Button 
               buttonColor="secondary"                    
-              buttonName={SAVE}                   
-              onClick={this.handleChangeValue}
+              buttonName={translate('Save')}                   
+              onClick={this.handleChangetabValue}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
             <Tabs
               indicatorColor="secondary"
-              value={this.state.value}
+              value={this.state.tabValue}
               onChange={this.handleChange}
               textColor="primary"
               variant="fullWidth">
                 <Tab 
-                  className={ this.state.value === 0 ? 
+                  className={ this.state.tabValue === 0 ? 
                   classes.active_tab : classes.default_tabStyle } 
-                  label={BASIC_KNOWLEDGE}
+                  label={translate('BasicKnowledge')}
                 />
                 <Tab 
-                  className={ this.state.value === 1 ? 
+                  className={ this.state.tabValue === 1 ? 
                   classes.active_tab : classes.default_tabStyle } 
-                  label={DEPARTMENT}
-                  disabled={this.state.value === 0 ? true : false}
+                  label={translate('Department')}
+                  disabled={this.state.tabValue === 0 ? true : false}
                 />
                 <Tab 
-                  className={ this.state.value === 2 ? 
+                  className={ this.state.tabValue === 2 ? 
                   classes.active_tab : classes.default_tabStyle } 
-                  label={TRAINEES}
-                  disabled={this.state.value === 0 || this.state.value === 1 ? true : false}
+                  label={translate('Trainees')}
+                  disabled={this.state.tabValue === 0 || this.state.tabValue === 1 ? true : false}
                 />
             </Tabs>
             <SwipeableViews
               axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-              index={this.state.value}
+              index={this.state.tabValue}
               onChangeIndex={this.handleChangeIndex}
             >
               <TabContainer dir={theme.direction}>
-                <TemelBilgiler/>
+                <BasicKnowledge/>
               </TabContainer>
               <TabContainer dir={theme.direction}>
-                <Departman/>
+                <Department/>
               </TabContainer>
               <TabContainer dir={theme.direction}>
-                <Kisiler/>
+                <Trainee/>
               </TabContainer>
             </SwipeableViews>
           </Grid>

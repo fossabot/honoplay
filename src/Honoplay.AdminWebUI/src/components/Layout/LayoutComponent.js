@@ -1,12 +1,9 @@
 import React from 'react';
-import { QUESTIONS, TRAINER_SERIES, TRAINERS, 
-         TRAINEES, TENANT_INFORMATION, USER_MANAGEMENT, 
-         REPORTS } from '../../helpers/TerasuKey';
+import { translate } from '@omegabigdata/terasu-api-proxy';
 import MenuIcon from '@material-ui/icons/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import {AppBar, CssBaseline, Drawer, 
-        Hidden, IconButton,Toolbar, 
-        Button,List} from '@material-ui/core';
+        Hidden, IconButton, Toolbar, List} from '@material-ui/core';
 import { Style } from './Style';
 
 import TrainerCard from './TrainerCard';
@@ -43,31 +40,31 @@ class Layout extends React.Component {
             <ListItem 
               pageLink={"/home/sorular"} 
               pageIcon={"question-circle"} 
-              pageName={QUESTIONS} />
+              pageName={translate('Questions')} />
             <ListItem
               pageLink={"/home/egitimserisi"} 
               pageIcon={"list-ol"} 
-              pageName={TRAINER_SERIES}  />
+              pageName={translate('TrainerSeries')}/>
             <ListItem 
               pageLink={"/home/egitmenler"} 
               pageIcon={"graduation-cap"} 
-              pageName={TRAINERS} />
+              pageName={translate('Trainers')} />
             <ListItem 
               pageLink={"/home/katilimcilar"} 
               pageIcon={"users"} 
-              pageName={TRAINEES} />
+              pageName={translate('Trainees')} />
             <ListItem
               pageLink={"/home/sirketbilgileri"}
               pageIcon={"briefcase"}
-              pageName={TENANT_INFORMATION} />
+              pageName={translate('TenantInformation')} />
             <ListItem 
               pageLink={"/home/kullaniciyonetimi"} 
               pageIcon={"cog"} 
-              pageName={USER_MANAGEMENT} />
+              pageName={translate('UserManagement')} />
             <ListItem
               pageLink={"/home/raporlar"} 
               pageIcon={"chart-pie"} 
-              pageName={REPORTS} />
+              pageName={translate('Reports')} />
               </List>     
           </div>        
           <div  className={classes.trainerLayout}>
