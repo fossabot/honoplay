@@ -1,7 +1,5 @@
 import React from 'react';
-import { ADD, TRAINEE, EXPORT_FROM_EXCEL, WORKING_STATUS, 
-         NAME, SURNAME, DEPARTMENT, NATIONAL_IDENTITY_NUMBER, 
-         PHONE_NUMBER, GENDER, TRAINEES } from '../../helpers/TerasuKey';
+import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles'; 
 import {Grid, Divider} from '@material-ui/core';
 import Style from '../Style';
@@ -10,25 +8,25 @@ import Button from '../../components/Button/ButtonComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
 import Table from '../../components/Table/TableComponent';
 
-class Kisiler extends React.Component {
+class Trainee extends React.Component {
 
 constructor(props) {
   super(props);
   this.state = {
-    calismaDurumu: [
-        { key: 1, label: 'Çalışan',  },
-        { key: 2, label: 'Aday',  },
-        { key: 3, label: 'Stajyer',  },
+    workingStatus: [
+        { id: 1, name: 'Çalışan',  },
+        { id: 2, name: 'Aday',  },
+        { id: 3, name: 'Stajyer',  },
     ],
-    kisidepartmanData: [
-        { key: 1, label: 'Tasarım', }
+    traineeDepartmentData: [
+        { id: 1, name: 'Tasarım', }
     ],
-    cinsiyet: [
-      { key: 1, label: 'Erkek', },
-      { key: 2, label: 'Kadın', }
+    gender: [
+      { id: 1, name: 'Erkek', },
+      { id: 2, name: 'Kadın', }
     ],
-    kisilerColumns: ['Durum', 'Ad', 'Soyad', 'Departman', 'Cep Telefonu', 'Cinsiyet',' '],
-    kisilerData: [{  'id': 0,
+    traineeColumns: ['Durum', 'Ad', 'Soyad', 'Departman', 'Cep Telefonu', 'Cinsiyet',' '],
+    traineeData: [{  'id': 0,
                      'Durum':'Stajyer',
                      'Ad': 'Şaduman',
                      'Soyad': 'Küçük',
@@ -58,60 +56,60 @@ render() {
           <Grid item xs={6} sm={9}>
           <div />
           <a href="#kisiler" className={classes.kisilerLink}>
-           {`${TRAINEE} ${ADD}`}
+           {`${translate('Trainee')} ${translate('Add')}`}
           </a>
           </Grid>
           <Grid item xs={6} sm={3}>
             <Button 
               buttonColor="primary"                       
               buttonIcon="file-excel"                     
-              buttonName= {EXPORT_FROM_EXCEL}
+              buttonName= {translate('ExportFromExcel')}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
           
             <DropDown 
-              data={this.state.calismaDurumu}                        
-              labelName={WORKING_STATUS}                   
+              data={this.state.workingStatus}                        
+              labelName={translate('WorkingStatus')}                   
               describable
             />
             <Input 
-              labelName={NAME}                                    
+              labelName={translate('Name')}                                    
               inputType="text"
             />
             <Input 
-              labelName={SURNAME}                                     
+              labelName={translate('Surname')}                                     
               inputType="text"
             />
             <DropDown 
-              data={this.state.kisidepartmanData}                       
-              labelName={DEPARTMENT}   
+              data={this.state.traineeDepartmentData}                       
+              labelName={translate('Department')}   
             />
             <Input 
-              labelName={NATIONAL_IDENTITY_NUMBER}                                   
+              labelName={translate('NationalIdentityNumber')}                                   
               inputType="text"
             />
             <Input 
-              labelName={PHONE_NUMBER}                                        
+              labelName={translate('PhoneNumber')}                                        
               inputType="text"
             />
             <DropDown 
-              data={this.state.cinsiyet}                     
-              labelName={GENDER} 
+              data={this.state.gender}                     
+              labelName={translate('Gender')} 
             />
           
           </Grid>
           <Grid item xs={12} sm={12}><Divider/></Grid>
           <Grid item xs={12} sm={12}>
           <a href='#kisiEkle' className={classes.kisilerLink}>
-            {TRAINEES}
+            {translate('Trainees')}
           </a>
           </Grid>
           <Grid item xs={12} sm={12}>  
             <div id="kisiler">
               <Table 
-                columns={this.state.kisilerColumns}                    
-                data={this.state.kisilerData}
+                columns={this.state.traineeColumns}                    
+                data={this.state.traineeData}
               />
             </div>
           </Grid>
@@ -121,4 +119,4 @@ render() {
     }
 }
 
-export default withStyles(Style)(Kisiler);
+export default withStyles(Style)(Trainee);

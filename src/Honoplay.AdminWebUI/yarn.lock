@@ -881,10 +881,10 @@
     prop-types "^15.6.0"
     react-is "^16.6.3"
 
-"@omegabigdata/terasu-api-proxy@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@omegabigdata/terasu-api-proxy/-/terasu-api-proxy-0.7.0.tgz#c08690b7e3c904b56f6ade6479ad61bece2d0f6e"
-  integrity sha512-3ggT+Ildy94OYZ6rdkjZ2WMFLs6paoH9syTisJablRfbQZy4LOYMlw8LE7y1U17D8+l95882Wnk6KQo9rHmlQQ==
+"@omegabigdata/terasu-api-proxy@^0.8.0":
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/@omegabigdata/terasu-api-proxy/-/terasu-api-proxy-0.8.0.tgz#e2656e4a099898c64449111fce03ab5612ad535f"
+  integrity sha512-vFO+kkgRU/j/s+CkV8JxbBfSqykJflWbzecpcsvfr8i3/STxnu1yoMTO2otnHozKyOf3OfSIJO4CMo0ThmXpzg==
   dependencies:
     axios "^0.18.0"
     store "^2.0.12"

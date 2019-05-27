@@ -28,8 +28,8 @@ class SimpleTable extends React.Component {
           </TableHead>
           <TableBody>
             {data.map(row => (
-              <TableRow key={row.key}>
-                <TableCell>{row.label}</TableCell>
+              <TableRow key={row.id}>
+                <TableCell>{row.name}</TableCell>
               </TableRow>
             ))}
           </TableBody>
