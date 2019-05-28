@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Distributed;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
@@ -17,11 +18,12 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
         private readonly GetTraineeDetailQueryHandler _queryHandler;
         private readonly int _traineeId;
         private readonly int _adminUserId;
+        private readonly IDistributedCache _cache;
 
         public GetTraineeDetailQueryTest()
         {
             _context = InitAndGetDbContext(out _adminUserId, out _traineeId);
-            _queryHandler = new GetTraineeDetailQueryHandler(_context);
+            _queryHandler = new GetTraineeDetailQueryHandler(_context, _cache);
         }
 
 

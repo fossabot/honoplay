@@ -8,8 +8,6 @@ using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
-using System;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
@@ -20,12 +18,6 @@ namespace Honoplay.AdminWebAPI.Controllers
     [Authorize]
     public class TrainerController : BaseController
     {
-        private readonly IDistributedCache _cache;
-
-        public TrainerController(IDistributedCache cache)
-        {
-            _cache = cache;
-        }
         // GET: api/<controller>{id}
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
