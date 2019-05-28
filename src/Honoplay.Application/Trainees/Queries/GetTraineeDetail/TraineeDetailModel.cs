@@ -2,7 +2,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Honoplay.Application.Tenants.Queries.GetTraineeDetail
+namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
 {
     public struct TraineeDetailModel
     {

@@ -1,14 +1,14 @@
-﻿using System.Linq;
+﻿using Honoplay.Application._Exceptions;
+using Honoplay.Application._Infrastructure;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application._Exceptions;
-using Honoplay.Application._Infrastructure;
 
-namespace Honoplay.Application.Tenants.Queries.GetTraineeDetail
+namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
 {
     public class GetTraineeDetailQueryHandler : IRequestHandler<GetTraineeDetailQuery, ResponseModel<TraineeDetailModel>>
     {

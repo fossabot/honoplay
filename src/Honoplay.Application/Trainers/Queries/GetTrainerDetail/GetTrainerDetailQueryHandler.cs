@@ -24,8 +24,8 @@ namespace Honoplay.Application.Trainers.Queries.GetTrainerDetail
             var trainer = await _context.Trainers.Include(x => x.Department)
                 .Where(x => x.Id == request.Id &&
                             _context.TenantAdminUsers
-                                .Any(y => y.TenantId == x.Department.TenantId &&
-                                          y.AdminUserId == request.AdminUserId))
+                                .Any(y => y.TenantId == x.Department.TenantId
+                                          && y.AdminUserId == request.AdminUserId))
                 .FirstOrDefaultAsync(cancellationToken);
 
 

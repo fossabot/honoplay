@@ -9,6 +9,7 @@ using Honoplay.Application.Trainees.Commands.CreateTrainee;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Microsoft.Extensions.Caching.Distributed;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainees.Commands.CreateTrainee

@@ -1,5 +1,5 @@
 ﻿using Honoplay.Application._Exceptions;
-using Honoplay.Application.Tenants.Queries.GetTraineeDetail;
+using Honoplay.Application.Trainees.Queries.GetTraineeList;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -7,7 +7,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application.Trainees.Queries.GetTraineeList;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineesList

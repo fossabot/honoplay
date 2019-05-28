@@ -70,7 +70,7 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantDetail
             var tenantModel = await _QueryHandler.Handle(query, CancellationToken.None);
 
             Assert.Null(tenantModel.Errors);
-            Assert.Equal(_context.Tenants.FirstOrDefault().Name, tenantModel.Items.Single().Name, ignoreCase: true);
+            Assert.Equal(_context.Tenants.FirstOrDefault()?.Name, tenantModel.Items.Single().Name, ignoreCase: true);
         }
 
         [Fact]

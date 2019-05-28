@@ -1,16 +1,16 @@
-﻿using System.Linq;
-using Honoplay.Application._Exceptions;
+﻿using Honoplay.Application._Exceptions;
 using Honoplay.Application._Infrastructure;
 using Honoplay.Application.Trainees.Commands.CreateTrainee;
+using Honoplay.Application.Trainees.Queries.GetTraineeDetail;
 using Honoplay.Application.Trainees.Queries.GetTraineeList;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Honoplay.Application.Tenants.Queries.GetTraineeDetail;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {

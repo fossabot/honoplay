@@ -1,7 +1,7 @@
 ﻿using Honoplay.Application._Infrastructure;
 using MediatR;
 
-namespace Honoplay.Application.Tenants.Queries.GetTraineeDetail
+namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
 {
     public class GetTraineeDetailQuery : IRequest<ResponseModel<TraineeDetailModel>>
     {

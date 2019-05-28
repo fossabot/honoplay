@@ -1,14 +1,11 @@
-﻿using Honoplay.Application._Infrastructure;
+﻿using Honoplay.Application._Exceptions;
+using Honoplay.Application._Infrastructure;
+using Honoplay.Persistence;
 using MediatR;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application._Exceptions;
-using Honoplay.Application.Tenants.Queries.GetTenantsList;
-using Honoplay.Persistence;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Honoplay.Application.Trainers.Queries.GetTrainersList
 {

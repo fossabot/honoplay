@@ -1,5 +1,4 @@
 ﻿using FluentValidation.TestHelper;
-using Honoplay.Application.Tenants.Queries.GetTrainersList;
 using Honoplay.Application.Trainees.Queries.GetTraineeList;
 using System;
 using Xunit;

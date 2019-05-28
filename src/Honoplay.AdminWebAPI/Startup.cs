@@ -1,4 +1,6 @@
 ﻿using FluentValidation.AspNetCore;
+using Honoplay.AdminWebAPI.Interfaces;
+using Honoplay.AdminWebAPI.Services;
 using Honoplay.Common.Constants;
 using Honoplay.Persistence;
 using MediatR;
@@ -13,13 +15,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
-using System.Threading.Tasks;
-using Honoplay.AdminWebAPI.Interfaces;
-using Honoplay.AdminWebAPI.Services;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.IO;
+using System.Threading.Tasks;
 
 namespace Honoplay.AdminWebAPI
 {
@@ -37,6 +35,13 @@ namespace Honoplay.AdminWebAPI
         {
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Application.AssemblyIdentifier>());
+
+            //Add RedisCache
+            services.AddDistributedRedisCache(options =>
+            {
+                options.InstanceName = "master";
+                options.Configuration = "127.0.0.1";
+            });
 
             // Add MediatR
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
@@ -86,9 +91,6 @@ namespace Honoplay.AdminWebAPI
                     }
                 };
             });
-
-            //Add session
-            services.AddSession();
 
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>

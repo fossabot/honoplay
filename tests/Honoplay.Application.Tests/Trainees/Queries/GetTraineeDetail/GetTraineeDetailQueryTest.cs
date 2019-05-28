@@ -1,5 +1,5 @@
 ﻿using Honoplay.Application._Exceptions;
-using Honoplay.Application.Tenants.Queries.GetTraineeDetail;
+using Honoplay.Application.Trainees.Queries.GetTraineeDetail;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -108,7 +108,7 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetTraineeDetailQuery(_adminUserId, _traineeId+1);
+            var query = new GetTraineeDetailQuery(_adminUserId, _traineeId + 1);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _queryHandler.Handle(query, CancellationToken.None));

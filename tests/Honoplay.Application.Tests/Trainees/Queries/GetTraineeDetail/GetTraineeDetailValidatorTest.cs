@@ -1,5 +1,5 @@
 ﻿using FluentValidation.TestHelper;
-using Honoplay.Application.Tenants.Queries.GetTraineeDetail;
+using Honoplay.Application.Trainees.Queries.GetTraineeDetail;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail

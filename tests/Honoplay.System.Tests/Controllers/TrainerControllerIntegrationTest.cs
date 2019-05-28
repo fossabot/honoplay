@@ -1,16 +1,15 @@
-﻿using System;
-using Honoplay.AdminWebAPI;
+﻿using Honoplay.AdminWebAPI;
 using Honoplay.Application.Trainers.Commands.CreateTrainer;
+using Honoplay.Application.Trainers.Commands.UpdateTrainer;
+using Honoplay.Application.Trainers.Queries.GetTrainersList;
 using Honoplay.Common.Constants;
 using Honoplay.System.Tests.Extensions;
 using Newtonsoft.Json;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Honoplay.Application.Trainers.Commands.UpdateTrainer;
-using Honoplay.Application.Trainers.Queries.GetTrainerDetail;
-using Honoplay.Application.Trainers.Queries.GetTrainersList;
 using Xunit;
 
 namespace Honoplay.System.Tests.Controllers
