@@ -6,7 +6,7 @@ namespace Honoplay.Application.Trainers.Queries.GetTrainersList
     {
         public GetTrainersListValidator()
         {
-            RuleFor(x => x.TenantId)
+            RuleFor(x => x.HostName)
                 .NotEmpty()
                 .NotNull();
 

@@ -19,11 +19,11 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeList
 
         public async Task<ResponseModel<TraineesListModel>> Handle(GetTraineesListQuery request, CancellationToken cancellationToken)
         {
-
+            var currentTenant = await _context.Tenants.FirstOrDefaultAsync(x => x.HostName == request.HostName, cancellationToken);
             var isExist = await _context.TenantAdminUsers.AnyAsync(x =>
-                x.AdminUserId == request.AdminUserId &&
-                x.TenantId == request.TenantId
-                , cancellationToken);
+                x.AdminUserId == request.AdminUserId
+                && x.TenantId == currentTenant.Id,
+                cancellationToken);
 
             var query = _context.Trainees.Where(x => isExist).AsNoTracking().OrderBy(x => x.Name);
             var result = query

@@ -19,7 +19,7 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineesList
             Assert.True(_validator.Validate(
                 new GetTraineesListQueryModel
                 {
-                    TenantId = Guid.NewGuid(),
+                    HostName = "localhost",
                     Skip = 1,
                     Take = 5
                 }
@@ -29,7 +29,7 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineesList
         [Fact]
         public void ShouldBeNotValidForNullOrEmpty()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x.TenantId, Guid.Empty);
+            _validator.ShouldHaveValidationErrorFor(x => x.HostName, string.Empty);
         }
 
         [Fact]

@@ -13,7 +13,7 @@ COPY ["Honoplay.Persistence/Honoplay.Persistence.csproj", "Honoplay.Persistence/
 
 RUN dotnet restore "Honoplay.AdminWebAPI/Honoplay.AdminWebAPI.csproj"
 COPY . .
-WORKDIR "/src/Honoplay.AdminWebAPI"
+WORKDIR /src/Honoplay.AdminWebAPI
 RUN dotnet build "Honoplay.AdminWebAPI.csproj" -c Release -o /app
 
 FROM build AS publish

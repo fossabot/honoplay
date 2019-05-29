@@ -16,16 +16,17 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainersList
         private readonly HonoplayDbContext _context;
         private readonly GetTrainersListQueryHandler _queryHandler;
         private readonly Guid _tenantId;
+        private readonly string _tenantHostName;
         private readonly int _adminUserId;
 
         public GetTrainersListQueryTest()
         {
-            _context = InitAndGetDbContext(out _adminUserId, out _tenantId);
+            _context = InitAndGetDbContext(out _adminUserId, out _tenantId, out _tenantHostName);
             _queryHandler = new GetTrainersListQueryHandler(_context);
         }
 
         //Arrange
-        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out Guid tenantId)
+        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out Guid tenantId, out string tenantHostName)
         {
             var context = GetDbContext();
 
@@ -87,13 +88,14 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainersList
 
             adminUserId = adminUser.Id;
             tenantId = tenant.Id;
+            tenantHostName = tenant.HostName;
             return context;
         }
 
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTrainersListQuery(_adminUserId, _tenantId, skip: 0, take: 11);
+            var query = new GetTrainersListQuery(_adminUserId, _tenantHostName, skip: 0, take: 11);
 
             var model = await _queryHandler.Handle(query, CancellationToken.None);
 
@@ -105,7 +107,7 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainersList
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetTrainersListQuery(_adminUserId, _tenantId, skip: 0, take: 0);
+            var query = new GetTrainersListQuery(_adminUserId, _tenantHostName, skip: 0, take: 0);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _queryHandler.Handle(query, CancellationToken.None));

@@ -1,5 +1,4 @@
-﻿using System;
-using Honoplay.AdminWebAPI;
+﻿using Honoplay.AdminWebAPI;
 using Honoplay.Application.Trainees.Commands.CreateTrainee;
 using Honoplay.Application.Trainees.Queries.GetTraineeList;
 using Honoplay.Common.Constants;
@@ -8,7 +7,6 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Honoplay.System.Tests.Controllers
@@ -88,11 +86,11 @@ namespace Honoplay.System.Tests.Controllers
             {
                 Skip = 0,
                 Take = 10,
-                TenantId = Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a")
+                HostName = "localhost"
             };
 
             // The endpoint or route of the controller action.
-            var httpResponse = await client.GetAsync(requestUri: $"api/Trainee?Skip={getTraineeListQueryModel.Skip}&Take={getTraineeListQueryModel.Take}&TenantId={getTraineeListQueryModel.TenantId}");
+            var httpResponse = await client.GetAsync(requestUri: $"api/Trainee?Skip={getTraineeListQueryModel.Skip}&Take={getTraineeListQueryModel.Take}&HostName={getTraineeListQueryModel.HostName}");
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -110,11 +108,11 @@ namespace Honoplay.System.Tests.Controllers
             {
                 Skip = -3,
                 Take = -3,
-                TenantId = Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a")
+                HostName = "localhost"
             };
 
             // The endpoint or route of the controller action.
-            var httpResponse = await client.GetAsync(requestUri: $"api/Trainee?Skip={getTraineeListQueryModel.Skip}&Take={getTraineeListQueryModel.Take}&TenantId={getTraineeListQueryModel.TenantId}");
+            var httpResponse = await client.GetAsync(requestUri: $"api/Trainee?Skip={getTraineeListQueryModel.Skip}&Take={getTraineeListQueryModel.Take}&HostName={getTraineeListQueryModel.HostName}");
 
             // Must be unsuccessful.
             Assert.False(httpResponse.IsSuccessStatusCode);
