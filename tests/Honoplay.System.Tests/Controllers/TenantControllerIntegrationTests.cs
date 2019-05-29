@@ -126,7 +126,7 @@ namespace Honoplay.System.Tests.Controllers
             //Init model
             var command = new CreateDepartmentCommand
             {
-                TenantId = Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a"),
+                HostName = "localhost",
                 Departments = new List<string> { "Tasarim"}
             };
 

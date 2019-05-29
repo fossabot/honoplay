@@ -30,13 +30,17 @@ namespace Honoplay.Application.Tenants.Commands.AddDepartment
 
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
+                var currentTenant = await _context.Tenants.FirstOrDefaultAsync(x => x.HostName == request.HostName, cancellationToken);
                 try
                 {
-                    var isExist = await _context.TenantAdminUsers.AnyAsync(
-                        x => x.TenantId == request.TenantId && x.AdminUserId == request.AdminUserId, cancellationToken);
+                    var isExist = await _context.TenantAdminUsers.AnyAsync(x =>
+                        x.TenantId == currentTenant.Id
+                        && x.AdminUserId == request.AdminUserId,
+                        cancellationToken);
+
                     if (!isExist)
                     {
-                        throw new NotFoundException(nameof(Tenant), request.TenantId);
+                        throw new NotFoundException(nameof(Tenant), currentTenant.Id);
                     }
 
                     foreach (var requestDepartment in request.Departments)
@@ -45,7 +49,7 @@ namespace Honoplay.Application.Tenants.Commands.AddDepartment
                         {
                             CreatedBy = request.AdminUserId,
                             Name = requestDepartment,
-                            TenantId = request.TenantId,
+                            TenantId = currentTenant.Id,
 
                         };
                         addDepartmentList.Add(department);
@@ -59,7 +63,7 @@ namespace Honoplay.Application.Tenants.Commands.AddDepartment
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
                 {
                     transaction.Rollback();
-                    throw new ObjectAlreadyExistsException(nameof(Tenant), request.TenantId);
+                    throw new ObjectAlreadyExistsException(nameof(Tenant), currentTenant.Id);
                 }
                 catch (NotFoundException)
                 {

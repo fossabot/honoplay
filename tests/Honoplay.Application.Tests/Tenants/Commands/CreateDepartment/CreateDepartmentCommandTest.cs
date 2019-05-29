@@ -18,16 +18,16 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
 
         private readonly HonoplayDbContext _context;
         private readonly CreateDepartmentCommandHandler _commandHandler;
-        private readonly Guid _testTenantGuid;
+        private readonly string _hostName;
         private readonly int _adminUserId;
 
         public CreateDepartmentCommandTest()
         {
-            _context = InitAndGetDbContext(out _testTenantGuid, out _adminUserId);
+            _context = InitAndGetDbContext(out _hostName, out _adminUserId);
             _commandHandler = new CreateDepartmentCommandHandler(_context);
         }
 
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantGuid, out int adminUserId)
+        private HonoplayDbContext InitAndGetDbContext(out string hostName, out int adminUserId)
         {
             var context = GetDbContext();
 
@@ -60,7 +60,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
             context.SaveChanges();
 
             adminUserId = adminUser.Id;
-            tenantGuid = tenant.Id;
+            hostName = tenant.HostName;
 
             return context;
         }
@@ -71,7 +71,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
             var command = new CreateDepartmentCommand
             {
                 AdminUserId = _adminUserId,
-                TenantId = _testTenantGuid,
+                HostName = _hostName,
                 Departments = new List<string>
                 {
                     "a",
@@ -92,7 +92,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
             var command = new CreateDepartmentCommand
             {
                 AdminUserId = _adminUserId + 1,
-                TenantId = _testTenantGuid,
+                HostName = _hostName,
                 Departments = new List<string>
                 {
                     "a",

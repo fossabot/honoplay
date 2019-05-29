@@ -7,7 +7,7 @@ namespace Honoplay.Application.Tenants.Commands.AddDepartment
         public CreateDepartmentValidator()
         {
             RuleFor(x => x.Departments).NotEmpty().NotNull();
-            RuleFor(x => x.TenantId).NotEmpty().NotNull();
+            RuleFor(x => x.HostName).NotEmpty().NotNull();
         }
     }
 }

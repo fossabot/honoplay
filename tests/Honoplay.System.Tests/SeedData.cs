@@ -15,7 +15,7 @@ namespace Honoplay.System.Tests
                 Id = tenantId,
                 Name = "api-test",
                 Description = "test",
-                HostName = "omega",
+                HostName = "localhost",
             });
 
             var salt = ByteArrayExtensions.GetRandomSalt();

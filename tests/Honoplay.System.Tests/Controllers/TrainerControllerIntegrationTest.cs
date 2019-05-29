@@ -104,7 +104,7 @@ namespace Honoplay.System.Tests.Controllers
                 HostName = "localhost"
             };
 
-            var httpResponse = await client.GetAsync($"api/Trainer?Skip={getTrainersListQueryModel.Skip}&Take={getTrainersListQueryModel.Take}&TenantId={getTrainersListQueryModel.HostName}");
+            var httpResponse = await client.GetAsync($"api/Trainer?Skip={getTrainersListQueryModel.Skip}&Take={getTrainersListQueryModel.Take}&HostName={getTrainersListQueryModel.HostName}");
             httpResponse.EnsureSuccessStatusCode();
 
             Assert.True(httpResponse.IsSuccessStatusCode);
