@@ -46,6 +46,7 @@
     "jsdom": "^15.1.0",
     "jsdom-global": "^3.0.2",
     "mocha": "^6.1.4",
+    "notistack": "^0.8.5",
     "opn": "^5.4.0",
     "react-addons-test-utils": "^15.6.2",
     "react-redux": "^7.0.3",
