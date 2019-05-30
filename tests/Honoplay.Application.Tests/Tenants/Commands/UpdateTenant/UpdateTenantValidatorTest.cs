@@ -22,7 +22,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.UpdateTenant
             {
                 Id = Guid.NewGuid(),
                 Name = "test name",
-                HostName = "test host name",
+                HostName = "localhost",
                 Description = "test desc",
                 UpdatedBy = 1,
                 Logo = new byte[] { 0 },

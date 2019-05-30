@@ -7,6 +7,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Distributed;
+using Moq;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
@@ -20,8 +22,9 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
 
         public GetTrainerDetailQueryTest()
         {
+            var cache = new Mock<IDistributedCache>();
             _context = InitAndGetDbContext(out _adminUserId, out _trainerId);
-            _queryHandler = new GetTrainerDetailQueryHandler(_context);
+            _queryHandler = new GetTrainerDetailQueryHandler(_context, cache.Object);
         }
 
         //Arrange
@@ -42,7 +45,7 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
             var tenant = new Tenant
             {
                 Name = "TestTenant#01",
-                HostName = "test 1"
+                HostName = "localhost"
             };
 
             context.Tenants.Add(tenant);
@@ -92,7 +95,7 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTrainerDetailQuery(_adminUserId, _trainerId);
+            var query = new GetTrainerDetailQuery(_adminUserId, _trainerId, hostName: "localhost");
 
             var model = await _queryHandler.Handle(query, CancellationToken.None);
 
@@ -104,7 +107,7 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetTrainerDetailQuery(_adminUserId, _trainerId + 1);
+            var query = new GetTrainerDetailQuery(_adminUserId, _trainerId + 1, hostName: "localhost");
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _queryHandler.Handle(query, CancellationToken.None));

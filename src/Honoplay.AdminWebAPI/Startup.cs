@@ -39,7 +39,7 @@ namespace Honoplay.AdminWebAPI
             //Add RedisCache
             services.AddDistributedRedisCache(options =>
             {
-                options.InstanceName = "master";
+                options.InstanceName = "honoplay";
                 options.Configuration = "127.0.0.1";
             });
 

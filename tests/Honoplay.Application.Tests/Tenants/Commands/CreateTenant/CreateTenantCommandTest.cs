@@ -41,7 +41,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateTenant
             {
                 Id = _testTenantGuid,
                 Name = "TestTenant#01",
-                HostName = "test 1"
+                HostName = "localhost"
             });
 
             context.SaveChanges();
@@ -54,7 +54,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateTenant
             var command = new CreateTenantCommand
             {
                 Name = "testtom",
-                HostName = "testtom",
+                HostName = "localhost1",
                 Description = "test desc",
                 CreatedBy = 1,
                 Logo = new byte[] { 1 }
@@ -73,7 +73,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateTenant
             var command = new CreateTenantCommand
             {
                 Name = "TestTenant#01",
-                HostName = "test 1",
+                HostName = "localhost",
                 Description = "test desc",
                 CreatedBy = 1,
                 Logo = new byte[] {1}

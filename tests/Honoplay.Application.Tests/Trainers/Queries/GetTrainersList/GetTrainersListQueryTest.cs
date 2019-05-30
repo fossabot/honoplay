@@ -15,18 +15,17 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainersList
     {
         private readonly HonoplayDbContext _context;
         private readonly GetTrainersListQueryHandler _queryHandler;
-        private readonly Guid _tenantId;
         private readonly string _tenantHostName;
         private readonly int _adminUserId;
 
         public GetTrainersListQueryTest()
         {
-            _context = InitAndGetDbContext(out _adminUserId, out _tenantId, out _tenantHostName);
+            _context = InitAndGetDbContext(out _adminUserId, out _tenantHostName);
             _queryHandler = new GetTrainersListQueryHandler(_context);
         }
 
         //Arrange
-        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out Guid tenantId, out string tenantHostName)
+        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out string tenantHostName)
         {
             var context = GetDbContext();
 
@@ -43,7 +42,7 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainersList
             var tenant = new Tenant
             {
                 Name = "TestTenant#01",
-                HostName = "test 1"
+                HostName = "localhost"
             };
 
             context.Tenants.Add(tenant);
@@ -87,7 +86,6 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainersList
             context.SaveChanges();
 
             adminUserId = adminUser.Id;
-            tenantId = tenant.Id;
             tenantHostName = tenant.HostName;
             return context;
         }

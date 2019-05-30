@@ -46,7 +46,7 @@ namespace Honoplay.Application.Tests.Trainees.Commands.CreateTrainee
             var tenant = new Tenant
             {
                 Name = "TestTenant#01",
-                HostName = "test 1"
+                HostName = "localhost"
             };
 
             context.Tenants.Add(tenant);

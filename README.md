@@ -52,7 +52,7 @@ Web Forms
 
 ## Moq
 Redis cache kullanılmış metotları test ederken yapılan dependency injection işlemlerinde hata vermesi sebebiyle eklenmiştir.
-Redis cache için kullanılan IDistrubutedCache interface'i mocklanmıştır.
+Redis cache için kullanılan IDistributedCache interface'i mocklanmıştır.
 
 https://github.com/moq/moq4
 https://www.nuget.org/packages/moq/

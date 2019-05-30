@@ -43,13 +43,13 @@ namespace Honoplay.Application.Tests.Tenants.Commands.UpdateTenant
             {
                 Id = _testTenantGuid,
                 Name = "TestTenant#01",
-                HostName = "test 1"
+                HostName = "localhost1"
             });
 
             context.Tenants.Add(new Tenant
             {
                 Name = "TestTenant#02",
-                HostName = "test 2"
+                HostName = "localhost2"
             });
 
             context.TenantAdminUsers.Add(new TenantAdminUser
@@ -70,7 +70,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.UpdateTenant
             {
                 Id = _testTenantGuid,
                 Name = "testto1",
-                HostName = "testto1",
+                HostName = "localhost5",
                 Description = "test desc",
                 UpdatedBy = 1,
                 Logo = new byte[] { 1 }
@@ -90,7 +90,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.UpdateTenant
             {
                 Id = _testTenantGuid,
                 Name = "TestTenant#02",
-                HostName = "test 2",
+                HostName = "localhost2",
                 Description = "test desc",
                 UpdatedBy = 1,
                 Logo = new byte[] { 1 }

@@ -6,6 +6,8 @@ using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Microsoft.Extensions.Caching.Distributed;
+using Moq;
 using Xunit;
 
 namespace Honoplay.Application.Tests.AdminUsers.Commands.AuthenticateAdminUser

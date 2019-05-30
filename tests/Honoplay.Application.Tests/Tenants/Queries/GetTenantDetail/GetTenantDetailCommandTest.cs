@@ -44,7 +44,7 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantDetail
             var tenant = new Tenant
             {
                 Name = "TestTenant#01",
-                HostName = "test 1",
+                HostName = "localhost",
                 CreatedBy = adminUserId,
             };
             context.Tenants.Add(tenant);

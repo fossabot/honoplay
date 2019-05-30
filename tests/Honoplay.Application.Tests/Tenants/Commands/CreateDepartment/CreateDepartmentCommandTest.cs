@@ -8,13 +8,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Distributed;
+using Moq;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
 {
     public class CreateDepartmentCommandTest : TestBase, IDisposable
     {
-
 
         private readonly HonoplayDbContext _context;
         private readonly CreateDepartmentCommandHandler _commandHandler;
@@ -23,8 +24,10 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
 
         public CreateDepartmentCommandTest()
         {
+            Mock<IDistributedCache> cache = new Mock<IDistributedCache>();
+
             _context = InitAndGetDbContext(out _hostName, out _adminUserId);
-            _commandHandler = new CreateDepartmentCommandHandler(_context);
+            _commandHandler = new CreateDepartmentCommandHandler(_context, cache.Object);
         }
 
         private HonoplayDbContext InitAndGetDbContext(out string hostName, out int adminUserId)
@@ -45,7 +48,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
             var tenant = new Tenant
             {
                 Name = "TestTenant#01",
-                HostName = "test 1"
+                HostName = "localhost"
             };
 
             context.Tenants.Add(tenant);

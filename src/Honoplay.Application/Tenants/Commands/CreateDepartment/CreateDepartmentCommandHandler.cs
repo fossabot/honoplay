@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Honoplay.Application._Exceptions;
@@ -11,16 +12,20 @@ using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 
 namespace Honoplay.Application.Tenants.Commands.CreateDepartment
 {
     public class CreateDepartmentCommandHandler : IRequestHandler<CreateDepartmentCommand, ResponseModel<CreateDepartmentModel>>
     {
         private readonly HonoplayDbContext _context;
+        private readonly IDistributedCache _cache;
 
-        public CreateDepartmentCommandHandler(HonoplayDbContext context)
+        public CreateDepartmentCommandHandler(HonoplayDbContext context, IDistributedCache cache)
         {
             _context = context;
+            _cache = cache;
         }
 
         public async Task<ResponseModel<CreateDepartmentModel>> Handle(CreateDepartmentCommand request,
@@ -30,17 +35,35 @@ namespace Honoplay.Application.Tenants.Commands.CreateDepartment
 
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
-                var currentTenant = await _context.Tenants.FirstOrDefaultAsync(x => x.HostName == request.HostName, cancellationToken);
+                var cacheKey = request.HostName + request.AdminUserId;
+                var cachedData = await _cache.GetStringAsync(cacheKey, cancellationToken);
+                Tenant currentTenant;
+
+                if (string.IsNullOrEmpty(cachedData))
+                {
+                    currentTenant = await _context.Tenants.Include(x => x.Departments)
+                       .FirstOrDefaultAsync(x =>
+                            x.HostName == request.HostName
+                            && x.TenantAdminUsers.Any(y =>
+                               y.AdminUserId == request.AdminUserId),
+                       cancellationToken);
+
+                    if (currentTenant != null)
+                    {
+                        await _cache.SetStringAsync(key: cacheKey, value: JsonConvert.SerializeObject(currentTenant), cancellationToken);
+                    }
+                }
+                else
+                {
+                    currentTenant = JsonConvert.DeserializeObject<Tenant>(await _cache.GetStringAsync(cacheKey, cancellationToken));
+                }
+
                 try
                 {
-                    var isExist = await _context.TenantAdminUsers.AnyAsync(x =>
-                        x.TenantId == currentTenant.Id
-                        && x.AdminUserId == request.AdminUserId,
-                        cancellationToken);
-
-                    if (!isExist)
+                    if (currentTenant is null)
                     {
-                        throw new NotFoundException(nameof(Tenant), currentTenant.Id);
+                        throw new NotFoundException(nameof(Tenant), request.HostName);
+
                     }
 
                     foreach (var requestDepartment in request.Departments)
@@ -49,7 +72,7 @@ namespace Honoplay.Application.Tenants.Commands.CreateDepartment
                         {
                             CreatedBy = request.AdminUserId,
                             Name = requestDepartment,
-                            TenantId = currentTenant.Id,
+                            TenantId = currentTenant.Id
 
                         };
                         addDepartmentList.Add(department);
@@ -63,7 +86,7 @@ namespace Honoplay.Application.Tenants.Commands.CreateDepartment
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
                 {
                     transaction.Rollback();
-                    throw new ObjectAlreadyExistsException(nameof(Tenant), currentTenant.Id);
+                    throw new ObjectAlreadyExistsException(nameof(Tenant), request.HostName);
                 }
                 catch (NotFoundException)
                 {
