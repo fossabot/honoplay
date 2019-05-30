@@ -1,6 +1,6 @@
-﻿using System;
-using Honoplay.Application._Infrastructure;
+﻿using Honoplay.Application._Infrastructure;
 using MediatR;
+using Newtonsoft.Json;
 
 namespace Honoplay.Application.Trainers.Queries.GetTrainersList
 {
@@ -20,6 +20,7 @@ namespace Honoplay.Application.Trainers.Queries.GetTrainersList
         }
 
         public int AdminUserId { get; private set; }
+        [JsonIgnore]
         public string HostName { get; private set; }
         public int Skip { get; private set; } = 0;
         public int Take { get; private set; } = 10;

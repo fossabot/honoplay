@@ -50,6 +50,23 @@ Web Forms
 
 # Kullanılan 3rd party kütüphaneler
 
+## Moq
+Redis cache kullanılmış metotları test ederken yapılan dependency injection işlemlerinde hata vermesi sebebiyle eklenmiştir.
+Redis cache için kullanılan IDistrubutedCache interface'i mocklanmıştır.
+
+https://github.com/moq/moq4
+https://www.nuget.org/packages/moq/
+
+## Redis Cache
+Redis cache genellikle çok fazla kullanılan verilere daha hızlı ulaşabilmek için kullanılır. Bu yüzden de kullanılan verileri KEY-VALUE şeklinde RAM üzerine kaydeder.
+İstenirse sabit disklere de kayıt yapılabilir.
+Projede giriş yapan AdminUser rolündeki kişinin Departments, Trainers, Trainee ile işlem yaparken daha hızlı yapabilmesi için kullanılmıştır.
+
+
+## Newtonsoft.Json
+Genellikle JSON serialize ve deserialize yapmak amacıyla kullanılır.
+Projede ise Redis cache ve Testlerde post request verilerinin serialize ve deserialize etmek amacıyla kullanılmıştır.
+
 ## MediatR
 Uygulama içi mesajlaşma için kullanılıyor. 3 arayüz önemli:
 

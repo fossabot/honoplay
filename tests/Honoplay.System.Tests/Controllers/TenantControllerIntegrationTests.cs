@@ -1,8 +1,8 @@
 using Honoplay.AdminWebAPI;
+using Honoplay.Application.Tenants.Commands.CreateDepartment;
 using Honoplay.Application.Tenants.Commands.CreateTenant;
 using Honoplay.Application.Tenants.Commands.UpdateTenant;
 using Honoplay.Common.Constants;
-using Honoplay.Domain.Entities;
 using Honoplay.System.Tests.Extensions;
 using Newtonsoft.Json;
 using System;
@@ -11,7 +11,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Honoplay.Application.Tenants.Commands.AddDepartment;
 using Xunit;
 
 namespace Honoplay.System.Tests.Controllers
@@ -119,15 +118,14 @@ namespace Honoplay.System.Tests.Controllers
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
         }
         [Fact]
-        public async Task CanAddDepartment()
+        public async Task CanCreateDepartment()
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
             //Init model
             var command = new CreateDepartmentCommand
             {
-                HostName = "localhost",
-                Departments = new List<string> { "Tasarim"}
+                Departments = new List<string> { "Tasarim" }
             };
 
             var json = JsonConvert.SerializeObject(command);

@@ -1,5 +1,5 @@
 ﻿using Honoplay.Application._Exceptions;
-using Honoplay.Application.Tenants.Commands.AddDepartment;
+using Honoplay.Application.Tenants.Commands.CreateDepartment;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;

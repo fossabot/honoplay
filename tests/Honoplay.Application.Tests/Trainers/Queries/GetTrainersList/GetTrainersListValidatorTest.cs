@@ -28,12 +28,6 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainersList
         }
 
         [Fact]
-        public void ShouldBeNotValidForNullOrEmpty()
-        {
-            _validator.ShouldHaveValidationErrorFor(x => x.HostName, string.Empty);
-        }
-
-        [Fact]
         public void ShouldBeNotValidForGreaterThanLength()
         {
             _validator.ShouldHaveValidationErrorFor(x => x.Skip, -5);

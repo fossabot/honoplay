@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FluentValidation.TestHelper;
-using Honoplay.Application.Tenants.Commands.AddDepartment;
+using Honoplay.Application.Tenants.Commands.CreateDepartment;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
@@ -30,7 +30,6 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
         [Fact]
         public void ShouldBeNotValidForNullOrEmpty()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x.HostName, string.Empty);
             _validator.ShouldHaveValidationErrorFor(x => x.Departments, new List<string>());
         }
 
