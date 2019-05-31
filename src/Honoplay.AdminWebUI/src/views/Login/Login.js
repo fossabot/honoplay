@@ -1,5 +1,5 @@
 import React from 'react';
-import {LOGIN, EMAIL_ADDRESS, PASSWORD, REMEMBER_ME} from '../../helpers/TerasuKey';
+import { translate } from '@omegabigdata/terasu-api-proxy';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import {Paper, Checkbox, 
@@ -21,12 +21,12 @@ class Login extends React.Component {
               <LockOutlinedIcon />
             </Avatar>
             <Typography variant="h5" className={classes.typography}>
-             {LOGIN}
+             {translate('Login')}
             </Typography>
             <form className={classes.form}>
               <FormControl margin="normal"  fullWidth>
                   <TextField
-                    label={EMAIL_ADDRESS}
+                    label={translate('EmailAddress')}
                     id="email" 
                     name="email" 
                     autoComplete="email" 
@@ -36,7 +36,7 @@ class Login extends React.Component {
               <FormControl margin="normal"  fullWidth>
                   <TextField
                     className={classes.margin}
-                    label={PASSWORD}
+                    label={translate('Password')}
                     name="password" 
                     type="text" 
                     id="password" 
@@ -46,7 +46,7 @@ class Login extends React.Component {
               <FormControlLabel
                 control={<Checkbox value="remember" 
                                    color="primary"/>}
-                label={REMEMBER_ME}
+                label={translate('RememberMe')}
               />
               <Button
                 type="submit"
@@ -55,7 +55,7 @@ class Login extends React.Component {
                 color="secondary"
                 className={classes.submit}
               >
-                {LOGIN}
+                {translate('Login')}
               </Button>
   
             </form>

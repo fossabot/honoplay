@@ -1,5 +1,5 @@
 import React from 'react';
-import { DEPARTMENT, ADD, EXPORT_FROM_EXCEL, TENANT_DEPARTMENTS } from '../../helpers/TerasuKey';
+import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles'; 
 import {Grid} from '@material-ui/core';
 import Style from '../Style';
@@ -7,18 +7,18 @@ import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import SimpleTable from '../../components/Table/SimpleTable';
 
-class Departman extends React.Component {
+class Department extends React.Component {
 
 constructor(props) {
   super(props);
   this.state = {
-    sirketdepartmanData: [
-      { key: 1, label: 'Tasarım',  },
-      { key: 2, label: 'Yazılım',  },
-      { key: 3, label: 'Yönetim',  },
-      { key: 4, label: 'Satış Pazarlama',  },
-      { key: 5, label: 'İnsan Kaynakları',  },   
-      { key: 6, label: 'Muhasebe',  },  
+    tanantDepartmentData: [
+      { id: 1, name: 'Tasarım',  },
+      { id: 2, name: 'Yazılım',  },
+      { id: 3, name: 'Yönetim',  },
+      { id: 4, name: 'Satış Pazarlama',  },
+      { id: 5, name: 'İnsan Kaynakları',  },   
+      { id: 6, name: 'Muhasebe',  },  
     ]
   };
 }
@@ -32,27 +32,27 @@ render() {
           <Grid item xs={12} sm={12}/>
           <Grid item xs={12} sm={7}>
             <Input 
-              labelName={DEPARTMENT}
+              labelName={translate('Department')}
               inputType="text"
             />
           </Grid>
           <Grid item xs={5} sm={2}>
             <Button  
               buttonColor="secondary" 
-              buttonName={ADD}
+              buttonName={translate('Add')}
             />
           </Grid>
           <Grid item xs={7} sm={3}>
             <Button 
               buttonColor="primary" 
               buttonIcon="file-excel" 
-              buttonName={EXPORT_FROM_EXCEL}
+              buttonName={translate('ExportFromExcel')}
             />     
           </Grid>
           <Grid item xs={12} sm={12}> 
             <SimpleTable 
-              data={this.state.sirketdepartmanData}
-              header={TENANT_DEPARTMENTS}
+              data={this.state.tanantDepartmentData}
+              header={translate('TenantDepartments')}
             />
           </Grid>
         </Grid>
@@ -61,4 +61,4 @@ render() {
     }
 }
 
-export default withStyles(Style)(Departman);
+export default withStyles(Style)(Department);

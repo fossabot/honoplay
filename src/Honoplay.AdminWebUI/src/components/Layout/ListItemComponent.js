@@ -2,8 +2,8 @@ import React from 'react';
 import Icons from '../../helpers/Icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withStyles } from '@material-ui/core/styles';
-import {List, ListItem, ListItemText, ListItemIcon, 
-        MuiThemeProvider, Typography, Collapse} from '@material-ui/core';
+import {ListItem, ListItemText, ListItemIcon, 
+        MuiThemeProvider, Typography } from '@material-ui/core';
 import {NavLink} from 'react-router-dom';
 import { Style, theme } from './Style';
 

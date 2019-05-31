@@ -1,5 +1,5 @@
 import React from 'react';
-import { QUESTIONS, NEW_QUESTION } from '../../helpers/TerasuKey';
+import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles'; 
 import {Grid} from '@material-ui/core';
 import Style from '../Style';
@@ -7,13 +7,13 @@ import Typography from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Table from '../../components/Table/TableComponent';
 
-class Sorular extends React.Component {
+class Questions extends React.Component {
 
 constructor(props) {
     super(props);
     this.state= {
-        sorularColumns: ['Sorular', 'Soru Tipi', 'Kategori', ' '],
-        sorularData: [{  'id': 0,
+        questionsColumns: ['Sorular', 'Soru Tipi', 'Kategori', ' '],
+        questionsData: [{  'id': 0,
                          'Sorular':'2025 Arenadaki en iyi tasarımcı kimdir?',
                          'Soru Tipi': 'Görselli',
                          'Kategori': 'Genel Kültür',
@@ -54,20 +54,20 @@ render() {
         <Grid container spacing={24}>
           <Grid item xs={6} sm={10}>
             <Typography 
-              pageHeader={QUESTIONS}
+              pageHeader={translate('Questions')}
             />
           </Grid>
           <Grid item xs={6} sm={2}> 
             <Button 
               buttonColor="secondary" 
               buttonIcon="plus"
-              buttonName={NEW_QUESTION}
+              buttonName={translate('NewQuestion')}
             />   
           </Grid>
           <Grid item xs={12} sm={12}>  
             <Table 
-              columns={this.state.sorularColumns}        
-              data={this.state.sorularData}
+              columns={this.state.questionsColumns}        
+              data={this.state.questionsData}
             />
           </Grid>
         </Grid>
@@ -76,4 +76,4 @@ render() {
     }
 }
 
-export default withStyles(Style)(Sorular);
+export default withStyles(Style)(Questions);

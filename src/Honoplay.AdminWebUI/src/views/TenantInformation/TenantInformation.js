@@ -5,7 +5,7 @@ import Style from '../Style';
 import Tabs from '../../components/Tabs/FullWidthTabs';
 
 
-class SirketBilgileri extends React.Component {
+class TenantInformation extends React.Component {
 
 constructor(props) {
   super(props);
@@ -26,4 +26,4 @@ render() {
     }
 }
 
-export default withStyles(Style)(SirketBilgileri);
+export default withStyles(Style)(TenantInformation);

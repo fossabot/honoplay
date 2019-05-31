@@ -1,5 +1,5 @@
 import React from 'react';
-import { NUMBER_OF_ROWS } from '../../helpers/TerasuKey';
+import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import {Table, TableBody, TableCell, 
         TablePagination, TableRow, Paper, 
@@ -97,17 +97,17 @@ class TableComponent extends React.Component {
               <TableBody>
                 {data
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map(n => {
-                    const isSelected = this.isSelected(n.id);
+                  .map(data => {
+                    const isSelected = this.isSelected(data.id);
                     return (
                       <TableRow
                         hover
-                        onChange={this.handleClick.bind(this,(n.id))}
+                        onChange={this.handleClick.bind(this,(data.id))}
                         role="checkbox"
                         aria-checked={isSelected}
                         tabIndex={-1}
                         selected={isSelected}
-                        key={n.id}
+                        key={data.id}
                         id={'container-desk'}
                       >
                         <TableCell padding="checkbox"
@@ -116,10 +116,10 @@ class TableComponent extends React.Component {
                                     color='secondary'
                           />
                         </TableCell>
-                          {columns.map((column,i) =>
-                          <TableCell className={classes.tableCell} key={i}>{n[column]}</TableCell>
+                          {columns.map((column,id) =>
+                          <TableCell className={classes.tableCell} key={id}>{data[column]}</TableCell>
                           )}
-                          { selected.includes(n.id) ?
+                          { selected.includes(data.id) ?
                             <TableCell className={classes.tableCell}>
                               <TableMenu handleDelete={this.handleDelete.bind(this,selected)}/>
                             </TableCell> :
@@ -137,7 +137,7 @@ class TableComponent extends React.Component {
             </Table>
           </div>
           <TablePagination
-            labelRowsPerPage={NUMBER_OF_ROWS}
+            labelRowsPerPage={translate('NumberOfRows')}
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
             colSpan={3}

@@ -29,9 +29,9 @@ class EnhancedTableHead extends React.Component {
               />
             </TableCell>
             {columns.map(
-              (row,id) => (
+              (column,id) => (
                 <TableCell className={classes.tableCell} key={id}>
-                  {row}
+                  {column}
                 </TableCell>
               ),
                 this,

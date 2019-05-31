@@ -14,7 +14,7 @@ const ButtonComponent = (props) => {
                             className={classes.button}
                             onClick={onClick}>
                             {(buttonIcon &&
-                                <div className={classes.div}>
+                                <div className={classes.buttonDiv}>
                                     <FontAwesomeIcon icon={buttonIcon}/>
                                 </div>
                             )}

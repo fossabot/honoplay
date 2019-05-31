@@ -3,7 +3,7 @@ export const Style = (theme) => ({
         color: 'white',
         textTransform: 'capitalize',
     },
-    div: {
+    buttonDiv: {
         paddingRight: 5,
     },
 });
