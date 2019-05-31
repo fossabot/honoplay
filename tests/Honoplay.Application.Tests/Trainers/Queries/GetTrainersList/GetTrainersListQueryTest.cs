@@ -8,6 +8,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using Microsoft.Extensions.Caching.Distributed;
+using Moq;
 
 namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainersList
 {
@@ -20,8 +22,9 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainersList
 
         public GetTrainersListQueryTest()
         {
+            var cache = new Mock<IDistributedCache>();            
             _context = InitAndGetDbContext(out _adminUserId, out _tenantHostName);
-            _queryHandler = new GetTrainersListQueryHandler(_context);
+            _queryHandler = new GetTrainersListQueryHandler(_context,cache.Object);
         }
 
         //Arrange

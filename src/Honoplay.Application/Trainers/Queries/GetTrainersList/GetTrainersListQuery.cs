@@ -28,7 +28,6 @@ namespace Honoplay.Application.Trainers.Queries.GetTrainersList
 
     public class GetTrainersListQueryModel : IRequest<ResponseModel<TrainersListModel>>
     {
-        public string HostName { get; set; }
         public int Skip { get; set; } = 0;
         public int Take { get; set; } = 10;
     }

@@ -101,10 +101,9 @@ namespace Honoplay.System.Tests.Controllers
             {
                 Skip = 0,
                 Take = 10,
-                HostName = "localhost"
             };
 
-            var httpResponse = await client.GetAsync($"api/Trainer?Skip={getTrainersListQueryModel.Skip}&Take={getTrainersListQueryModel.Take}&HostName={getTrainersListQueryModel.HostName}");
+            var httpResponse = await client.GetAsync($"api/Trainer?Skip={getTrainersListQueryModel.Skip}&Take={getTrainersListQueryModel.Take}");
             httpResponse.EnsureSuccessStatusCode();
 
             Assert.True(httpResponse.IsSuccessStatusCode);
