@@ -106,7 +106,7 @@ namespace Honoplay.AdminWebAPI
                 { "Bearer", Enumerable.Empty<string>() },
             });
                 // Configure Swagger to use the xml documentation file
-                var xmlFile = Environment.CurrentDirectory + "\\SwaggerDoc.xml";
+                var xmlFile = Configuration.GetValue<string>(WebHostDefaults.ContentRootKey) + "/SwaggerDoc.xml";
                 c.IncludeXmlComments(xmlFile);
             });
 
