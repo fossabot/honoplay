@@ -18,9 +18,8 @@ using Honoplay.AdminWebAPI.Interfaces;
 using Honoplay.AdminWebAPI.Services;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.IO;
-using Microsoft.Extensions.Hosting.Internal;
+
 
 namespace Honoplay.AdminWebAPI
 {
