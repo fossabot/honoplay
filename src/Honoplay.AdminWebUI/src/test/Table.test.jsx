@@ -5,13 +5,13 @@ import should from 'should';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { configure, shallow, mount, render } from 'enzyme';
+import { init } from '@omegabigdata/terasu-api-proxy';
 
-import Table from './components/Table/TableComponent';
-import TableToolbar from './components/Table/EnhancedTableToolbar';
-import TableHead from './components/Table/EnhancedTableHead';
-import TableMenu from './components/Table/TableMenu';
-
-import {TableRow, IconButton} from '@material-ui/core';
+import Table from '../components/Table/TableComponent';
+import TableToolbar from '../components/Table/EnhancedTableToolbar';
+import TableHead from '../components/Table/EnhancedTableHead';
+import TableMenu from '../components/Table/TableMenu';
+import {TableRow, IconButton, Typography, Checkbox} from '@material-ui/core';
 
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -27,12 +27,14 @@ describe('<Table/>', () => {
     wrapper.props().columns.should.be.defined; 
   });
 
-  it('should call TableToolbar on TableRow(checkbox) click', () => {
+  it('should call TableToolbar on TableRow(checkbox) click', async () => {
+   await init(3);
     const wrapper = mount (<Table 
       data={[{'id':0, 'Name':'Şaduman', 'Surname':'Küçük', 'User Name': 'sadumankucuk'}]}                                  
       columns={['Name','Surname','User Name',' ']}/>);
     wrapper.find(TableRow).at(1).simulate('click');
     expect(wrapper.find(TableToolbar)).to.have.lengthOf(1);
+  
   })
 
   it('should call TableMenu on TableRow(checkbox) click', () => {
@@ -43,7 +45,6 @@ describe('<Table/>', () => {
     wrapper.setState({selected: [0]});
     expect(wrapper.find(TableMenu)).to.have.lengthOf(1);
   })
-
 })
 
 describe('<TableToolbar/>', () => {
@@ -62,9 +63,17 @@ describe('<TableToolbar/>', () => {
       handleDelete={handleDelete} 
       numSelected={2}/>);
     wrapper.find(IconButton).simulate('click');
-    expect(handleDelete.calledOnce).to.equal(true)
+    expect(handleDelete.calledOnce).to.equal(true);
   })
 
+  it('should call Typography on TableRow(checkbox) click ', () => {
+    const handleDelete = sinon.spy();
+    const wrapper = mount (<TableToolbar 
+      handleDelete={handleDelete} 
+      numSelected={3}/>);
+    wrapper.find(Typography);
+    expect(wrapper.text()).to.equal('3 Seçili');
+  })
 })
 
 describe('<TableHead/>', () => {
@@ -80,4 +89,14 @@ describe('<TableHead/>', () => {
     wrapper.props().onSelectAllClick.should.be.defined;
     wrapper.props().rowCount.should.be.defined;
   })
+
+  // it('deneme', () => {
+  //   const handleSelectAllClick = sinon.spy();
+  //   const wrapper = mount (<TableHead 
+  //     columns={['Name','Surname','User Name',' ']} 
+  //     numSelected={5} 
+  //     onSelectAllClick={handleSelectAllClick} 
+  //     rowCount={5}/>);
+  //     expect(wrapper.find(Checkbox).prop('checked')).to.equal(true);
+  // })
 })
