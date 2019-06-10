@@ -2,10 +2,10 @@
 using Honoplay.Application._Infrastructure;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Honoplay.Persistence.CacheService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -16,45 +16,43 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
     public class GetTraineeDetailQueryHandler : IRequestHandler<GetTraineeDetailQuery, ResponseModel<TraineeDetailModel>>
     {
         private readonly HonoplayDbContext _context;
-        private readonly IDistributedCache _cache;
+        private readonly ICacheService _cacheService;
 
-        public GetTraineeDetailQueryHandler(HonoplayDbContext context, IDistributedCache cache)
+        public GetTraineeDetailQueryHandler(HonoplayDbContext context, ICacheService cacheService)
         {
             _context = context;
-            _cache = cache;
+            _cacheService = cacheService;
         }
 
         public async Task<ResponseModel<TraineeDetailModel>> Handle(GetTraineeDetailQuery request, CancellationToken cancellationToken)
         {
+
             var redisKey = $"TraineesWithDepartmentsByAdminUserId{request.AdminUserId}";
-            var serializedRedisTrainees = await _cache.GetStringAsync(redisKey, cancellationToken);
-            List<Trainee> redisTrainees;
-
-            if (!string.IsNullOrEmpty(serializedRedisTrainees))
+            IList<Trainee> redisTrainees;
+            try
             {
-                redisTrainees = JsonConvert.DeserializeObject<List<Trainee>>(serializedRedisTrainees);
+                redisTrainees = await _cacheService.RedisCacheAsync<IList<Trainee>>(redisKey, delegate
+                {
+                    return _context.Trainees.AsNoTracking()
+                        .Include(x => x.Department)
+                        .Where(x => x.Id == request.Id &&
+                                    _context.TenantAdminUsers
+                                        .Any(y => y.TenantId == x.Department.TenantId &&
+                                                  y.AdminUserId == request.AdminUserId))
+                        .ToList();
+                }, cancellationToken);
             }
-            else
+            catch (ArgumentNullException)
             {
-                redisTrainees = await _context.Trainees.AsNoTracking()
-                    .Include(x => x.Department)
-                    .Where(x => x.Id == request.Id &&
-                                _context.TenantAdminUsers
-                                    .Any(y => y.TenantId == x.Department.TenantId &&
-                                              y.AdminUserId == request.AdminUserId))
-                    .ToListAsync(cancellationToken);
-
-                await _cache.SetStringAsync(redisKey, JsonConvert.SerializeObject(redisTrainees), cancellationToken);
+                throw new NotFoundException(nameof(redisKey), redisKey);
             }
+            catch (ApplicationException)
+            {
+                throw new NotFoundException(nameof(Trainee), request.Id);
+            }
+
+
             var trainee = redisTrainees.FirstOrDefault(x => x.Id == request.Id);
-
-            //var trainee = await _context.Trainees.AsNoTracking()
-            //    .Include(x => x.Department)
-            //    .Where(x => x.Id == request.Id &&
-            //                _context.TenantAdminUsers
-            //                    .Any(y => y.TenantId == x.Department.TenantId &&
-            //                              y.AdminUserId == request.AdminUserId))
-            //    .FirstOrDefaultAsync(cancellationToken);
 
             if (trainee is null)
             {

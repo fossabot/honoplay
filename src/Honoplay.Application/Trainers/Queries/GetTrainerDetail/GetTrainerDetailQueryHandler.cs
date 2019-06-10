@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Honoplay.Application._Exceptions;
@@ -10,53 +11,55 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 
-namespace Honoplay.Application.Trainers.Queries.GetTrainerDetail {
-    public class GetTrainerDetailQueryHandler : IRequestHandler<GetTrainerDetailQuery, ResponseModel<TrainerDetailModel>> {
+namespace Honoplay.Application.Trainers.Queries.GetTrainerDetail
+{
+    public class GetTrainerDetailQueryHandler : IRequestHandler<GetTrainerDetailQuery, ResponseModel<TrainerDetailModel>>
+    {
         private readonly HonoplayDbContext _context;
         private readonly IDistributedCache _cache;
 
-        public GetTrainerDetailQueryHandler (HonoplayDbContext context, IDistributedCache cache) {
+        public GetTrainerDetailQueryHandler(HonoplayDbContext context, IDistributedCache cache)
+        {
             _context = context;
             _cache = cache;
         }
 
-        public async Task<ResponseModel<TrainerDetailModel>> Handle (GetTrainerDetailQuery request, CancellationToken cancellationToken) {
-            var cacheKey = request.HostName + request.AdminUserId;
-            var cachedData = await _cache.GetStringAsync (cacheKey, cancellationToken);
+        public async Task<ResponseModel<TrainerDetailModel>> Handle(GetTrainerDetailQuery request, CancellationToken cancellationToken)
+        {
+            var redisKey = $"TrainersWithDepartmentsByAdminUserId{request.HostName}";
+            var serializedRedisTrainers = await _cache.GetStringAsync(redisKey, cancellationToken);
+            List<Trainer> redisTrainers;
 
-            Trainer trainer;
+            if (!string.IsNullOrEmpty(serializedRedisTrainers))
+            {
+                redisTrainers = JsonConvert.DeserializeObject<List<Trainer>>(serializedRedisTrainers);
+            }
+            else
+            {
+                redisTrainers = await _context.Trainers.AsNoTracking()
+                    .Include(x => x.Department)
+                    .Where(x => x.Id == request.Id &&
+                                _context.TenantAdminUsers
+                                    .Any(y => y.TenantId == x.Department.TenantId &&
+                                              y.AdminUserId == request.AdminUserId))
+                    .ToListAsync(cancellationToken);
 
-            if (string.IsNullOrEmpty (cachedData)) {
-                var cacheCurrentTenant = await _context.Tenants.Include (x => x.Departments)
-                    .FirstOrDefaultAsync (x =>
-                        x.HostName == request.HostName &&
-                        x.TenantAdminUsers.Any (y =>
-                            y.AdminUserId == request.AdminUserId),
-                        cancellationToken);
-
-                if (cacheCurrentTenant is null) {
-                    throw new NotFoundException (nameof (Tenant), request.HostName);
-
+                if (redisTrainers is null)
+                {
+                    throw new NotFoundException(nameof(Trainer), request.Id);
                 }
-                await _cache.SetStringAsync (key: cacheKey, value: JsonConvert.SerializeObject (cacheCurrentTenant), cancellationToken);
+                await _cache.SetStringAsync(redisKey, JsonConvert.SerializeObject(redisTrainers), cancellationToken);
 
-                trainer = await _context.Trainers.Include (x => x.Department)
-                    .Where (x => x.Id == request.Id &&
-                        _context.TenantAdminUsers
-                        .Any (y => y.TenantId == x.Department.TenantId &&
-                            y.AdminUserId == request.AdminUserId))
-                    .FirstOrDefaultAsync (cancellationToken);
+            }
+            var trainer = redisTrainers.FirstOrDefault(x => x.Id == request.Id);
 
-            } else {
-                trainer = JsonConvert.DeserializeObject<Trainer> (cachedData);
+            if (trainer is null)
+            {
+                throw new NotFoundException(nameof(Trainer), request.Id);
             }
 
-            if (trainer is null) {
-                throw new NotFoundException (nameof (Trainer), request.Id);
-            }
-
-            var model = TrainerDetailModel.Create (trainer);
-            return new ResponseModel<TrainerDetailModel> (model);
+            var model = TrainerDetailModel.Create(trainer);
+            return new ResponseModel<TrainerDetailModel>(model);
         }
     }
 }

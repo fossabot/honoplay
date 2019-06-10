@@ -18,6 +18,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Honoplay.Application;
+using Honoplay.Persistence.CacheManager;
+using Honoplay.Persistence.CacheService;
 
 namespace Honoplay.AdminWebAPI
 {
@@ -47,9 +50,10 @@ namespace Honoplay.AdminWebAPI
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>)); // TODO: çalışan bir nokta görülmediği için kontrol amaçlı kapatıldı
-            services.AddMediatR(Application.AssemblyIdentifier.Get());
+            services.AddMediatR(AssemblyIdentifier.Get());
 
             services.AddScoped<IUserService, UserService>();
+            services.AddSingleton<ICacheService, CacheManager>();
 
             // Add DbContext using SQL Server Provider
             services.AddDbContextPool<HonoplayDbContext>(options =>
@@ -108,7 +112,7 @@ namespace Honoplay.AdminWebAPI
                 { "Bearer", Enumerable.Empty<string>() },
             });
                 // Configure Swagger to use the xml documentation file
-                var xmlFile = Configuration.GetValue<string>(WebHostDefaults.ContentRootKey) + "\\SwaggerDoc.xml";
+                var xmlFile = Configuration.GetValue<string>(WebHostDefaults.ContentRootKey) + "/SwaggerDoc.xml";
                 c.IncludeXmlComments(xmlFile);
             });
 

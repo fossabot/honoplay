@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Honoplay.Application._Exceptions;
+﻿using Honoplay.Application._Exceptions;
 using Honoplay.Application.Trainees.Commands.CreateTrainee;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Microsoft.Extensions.Caching.Distributed;
+using Moq;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainees.Commands.CreateTrainee
@@ -24,8 +23,9 @@ namespace Honoplay.Application.Tests.Trainees.Commands.CreateTrainee
 
         public CreateTraineeCommandTest()
         {
+            var cache = new Mock<IDistributedCache>();
             _context = InitAndGetDbContext(out _workingStatusId, out _departmentId, out _adminUserId);
-            _commandHandler = new CreateTraineeCommandHandler(_context);
+            _commandHandler = new CreateTraineeCommandHandler(_context, cache.Object);
         }
 
         //Arrange

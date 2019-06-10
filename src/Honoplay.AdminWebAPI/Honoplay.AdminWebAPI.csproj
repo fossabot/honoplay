@@ -28,4 +28,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Honoplay.Application\Honoplay.Application.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SwaggerDoc.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

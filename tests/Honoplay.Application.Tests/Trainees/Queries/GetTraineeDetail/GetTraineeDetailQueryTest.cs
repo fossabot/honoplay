@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Persistence.CacheService;
 using Moq;
 using Xunit;
 
@@ -22,7 +23,7 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
 
         public GetTraineeDetailQueryTest()
         {
-            Mock<IDistributedCache> cache = new Mock<IDistributedCache>();
+            Mock<ICacheService> cache = new Mock<ICacheService>();
             _context = InitAndGetDbContext(out _adminUserId, out _traineeId);
             _queryHandler = new GetTraineeDetailQueryHandler(_context, cache.Object);
         }

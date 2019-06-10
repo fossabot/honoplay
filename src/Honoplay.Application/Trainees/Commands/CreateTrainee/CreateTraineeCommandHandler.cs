@@ -6,19 +6,24 @@ using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 
 namespace Honoplay.Application.Trainees.Commands.CreateTrainee
 {
     public class CreateTraineeCommandHandler : IRequestHandler<CreateTraineeCommand, ResponseModel<CreateTraineeModel>>
     {
         private readonly HonoplayDbContext _context;
-        public CreateTraineeCommandHandler(HonoplayDbContext context)
+        private readonly IDistributedCache _cache;
+        public CreateTraineeCommandHandler(HonoplayDbContext context, IDistributedCache cache)
         {
             _context = context;
+            _cache = cache;
         }
         public async Task<ResponseModel<CreateTraineeModel>> Handle(CreateTraineeCommand request, CancellationToken cancellationToken)
         {
@@ -52,6 +57,19 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
 
                     await _context.AddAsync(trainee, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
+
+                    //Redis cache update
+                    var redisKey = $"TrainersWithDepartmentsByAdminUserId{request.CreatedBy}";
+                    var serializedRedisTrainers = await _cache.GetStringAsync(redisKey, cancellationToken);
+
+                    if (!string.IsNullOrEmpty(serializedRedisTrainers))
+                    {
+                        var redisTrainers = await _context.Trainers.Where(x => x.DepartmentId == request.DepartmentId)
+                            .ToListAsync(cancellationToken);
+                        serializedRedisTrainers = JsonConvert.SerializeObject(redisTrainers);
+                        await _cache.SetStringAsync(redisKey, serializedRedisTrainers, cancellationToken);
+                    }
+
                     transaction.Commit();
                 }
                 catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
