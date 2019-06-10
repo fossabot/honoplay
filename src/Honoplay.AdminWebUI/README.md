@@ -28,14 +28,31 @@
 
 	"should": Bir assert kütüphanesi, bir ifadenin belirli koşulları sağlayıp sağlamadını kontrol eder.
     "should-enzyme": Should'a enzyme yönelik yeni koşullar ekler.
+
+    "sinon": Spy functions, mocks, and stubs
+    "chai":  tarayıcı için bir BDD / TDD onay kütüphanesidir.
+    "jsdom-global":
+    "jsdom": gerçekçi bir test ortamı oluşturmak için kullanılabilecek bir JavaScript tabanlı headless tarayıcıdır.
 	
     "fs-walk": Node js üzerinde bir klasör altındaki dosyalar arasında gezinmeyi sağlar.
     "opn": Node js için işletim sisteminde bir program çalıştırılmasını sağlar.
     "requirejs": Browser testlerinde require kullanılabilmesi için eklendi.
     
+    "redux-devtools-extension": Redux DevTools eklentisini aktif etmek için kullanıldı.
+
+    
+    
+    
+    
+### Prod  
+
+    "react": React !
+    "react-dom": React !
+    "react-hot-loader": Webpack ile birlikte react componentleri üzerinde değişiklik yapıldığında otomatik yükleme sağlamaktadır. Prod ortamında otomatik olarak çalışmamaktadır.
+
     "@fortawesome/fontawesome-svg-core": icons 
     "@fortawesome/free-solid-svg-icons": icons
-    "@fortawesome/react-fontawesome" :  Layout list item’larda ve button’larda kullanılan iconlar için     kullanıldı.
+    "@fortawesome/react-fontawesome" :  Layout list item’larda ve button’larda kullanılan iconlar için kullanıldı.
 
     "@material-ui/core":  React arayüz kütüphanesi, arayüzü oluşturmak için kullanıldı.
     "@material-ui/icons" : Arayüzün bazı kısımlarındaki iconlar için kullanılmıştır.
@@ -46,20 +63,11 @@
     "redux": Redux
     "redux-thunk": Redux
     "react-redux" :  projedeki state yönetimi için kullanıldı.
-    "redux-devtools-extension": Redux DevTools eklentisini aktif etmek için kullanıldı.
 
     "react-router-dom": sayfalardaki yönlendirmeler için kullanıldı.
 
     "react-swipeable-views":  Tab componentinin animasyonu için kullanıldı.
-    
-    
-    
-    
-### Prod  
-
-    "react": React !
-    "react-dom": React !
-    "react-hot-loader": Webpack ile birlikte react componentleri üzerinde değişiklik yapıldığında otomatik yükleme sağlamaktadır. Prod ortamında otomatik olarak çalışmamaktadır.
+    "notistack": snackbar'ların görüntülenmesi için.
 
 
 ## Testler
