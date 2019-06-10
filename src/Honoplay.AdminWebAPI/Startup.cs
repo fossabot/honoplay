@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.IO;
+using Microsoft.Extensions.Hosting.Internal;
 
 namespace Honoplay.AdminWebAPI
 {
@@ -106,8 +107,9 @@ namespace Honoplay.AdminWebAPI
                 { "Bearer", Enumerable.Empty<string>() },
             });
                 // Configure Swagger to use the xml documentation file
-                var xmlFile = Configuration.GetValue<string>(WebHostDefaults.ContentRootKey) + "/SwaggerDoc.xml";
-                c.IncludeXmlComments(xmlFile);
+                var configPath = $"{Path.GetFullPath(WebHostDefaults.ContentRootKey)}".Replace("contentRoot", "SwaggerDoc.xml");
+                //var xmlFile = Configuration.GetValue<string>(WebHostDefaults.ContentRootKey) + "/SwaggerDoc.xml";
+                c.IncludeXmlComments(configPath);
             });
 
         }
