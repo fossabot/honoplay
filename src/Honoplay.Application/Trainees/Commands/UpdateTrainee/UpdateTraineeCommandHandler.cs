@@ -33,13 +33,12 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
                 try
                 {
                     var trainees = await _context.Trainees.Include(x => x.Department)
-                        .Where(x => x.Id == request.Id &&
-                                    _context.TenantAdminUsers.Any(y =>
-                                        y.TenantId == x.Department.TenantId &&
-                                        y.AdminUserId == request.UpdatedBy))
+                        .Where(x => _context.TenantAdminUsers.Any(y =>
+                                         y.TenantId == x.Department.TenantId &&
+                                         y.AdminUserId == request.UpdatedBy))
                         .ToListAsync(cancellationToken);
 
-                    var trainee = trainees.FirstOrDefault();
+                    var trainee = trainees.FirstOrDefault(x => x.Id == request.Id);
 
                     if (trainee is null)
                     {

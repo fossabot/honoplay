@@ -18,7 +18,7 @@ namespace Honoplay.Application.Trainers.Queries.GetTrainersList
         {
 
         }
-
+        [JsonIgnore]
         public int AdminUserId { get; private set; }
         [JsonIgnore]
         public string HostName { get; private set; }

@@ -1,60 +1,57 @@
-﻿using System.Collections.Generic;
+﻿using Honoplay.Application._Infrastructure;
+using Honoplay.Common._Exceptions;
+using Honoplay.Persistence;
+using Honoplay.Persistence.CacheService;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Common._Exceptions;
-using Honoplay.Application._Infrastructure;
-using Honoplay.Domain.Entities;
-using Honoplay.Persistence;
-using MediatR;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
 
-namespace Honoplay.Application.Trainers.Queries.GetTrainersList {
-    public class GetTrainersListQueryHandler : IRequestHandler<GetTrainersListQuery, ResponseModel<TrainersListModel>> {
+namespace Honoplay.Application.Trainers.Queries.GetTrainersList
+{
+    public class GetTrainersListQueryHandler : IRequestHandler<GetTrainersListQuery, ResponseModel<TrainersListModel>>
+    {
 
         private readonly HonoplayDbContext _context;
-        private readonly IDistributedCache _cache;
+        private readonly ICacheService _cacheService;
 
-        public GetTrainersListQueryHandler (HonoplayDbContext context, IDistributedCache cache) {
+        public GetTrainersListQueryHandler(HonoplayDbContext context, ICacheService cacheService)
+        {
             _context = context;
-            _cache = cache;
+            _cacheService = cacheService;
         }
-        public async Task<ResponseModel<TrainersListModel>> Handle (GetTrainersListQuery request, CancellationToken cancellationToken) {
-            var cacheKey = request.HostName + request.AdminUserId;
-            var cachedData = await _cache.GetStringAsync (cacheKey, cancellationToken);
-            Tenant cacheCurrentTenant;
+        public async Task<ResponseModel<TrainersListModel>> Handle(GetTrainersListQuery request, CancellationToken cancellationToken)
+        {
+            var redisKey = $"TrainersWithDepartmentsByHostName{request.HostName}";
+            var query = await _cacheService.RedisCacheAsync<IList<TrainersListModel>>(redisKey, delegate
+            {
+                var currentTenant = _context.Tenants.FirstOrDefaultAsync(x =>
+                        x.HostName == request.HostName,
+                    cancellationToken);
 
-            if (string.IsNullOrEmpty (cachedData)) {
-                cacheCurrentTenant = await _context.Tenants.Include (x => x.Departments)
-                    .FirstOrDefaultAsync (x =>
-                        x.HostName == request.HostName &&
-                        x.TenantAdminUsers.Any (y =>
-                            y.AdminUserId == request.AdminUserId),
-                        cancellationToken);
+                var isExist = _context.TenantAdminUsers.AnyAsync(x =>
+                        x.AdminUserId == request.AdminUserId
+                        && x.TenantId == currentTenant.Result.Id,
+                    cancellationToken);
 
-                if (cacheCurrentTenant is null) {
-                    throw new NotFoundException (nameof (Tenant), request.HostName);
+                return _context.Trainers.Where(x => isExist.Result)
+                    .AsNoTracking()
+                    .OrderBy(x => x.Name)
+                    .Skip(request.Skip)
+                    .Take(request.Take)
+                    .Select(TrainersListModel.Projection)
+                    .ToList();
 
-                }
-                await _cache.SetStringAsync (key: cacheKey, value: JsonConvert.SerializeObject (cacheCurrentTenant), cancellationToken);
-            } else {
-                cacheCurrentTenant = JsonConvert.DeserializeObject<Tenant> (cachedData);
-            }
-            var query = _context.Trainers.Where (x => cacheCurrentTenant.Departments.Any (y => y.Id == x.DepartmentId)).AsNoTracking ().OrderBy (x => x.Name);
+            }, cancellationToken);
 
-            var result = query
-                .Skip (request.Skip)
-                .Take (request.Take)
-                .Select (TrainersListModel.Projection)
-                .ToList ();
-
-            if (!result.Any ()) {
-                throw new NotFoundException ();
+            if (!query.Any())
+            {
+                throw new NotFoundException();
             }
 
-            return new ResponseModel<TrainersListModel> (numberOfTotalItems: await query.CountAsync (cancellationToken), numberOfSkippedItems: request.Take, source: result);
+            return new ResponseModel<TrainersListModel>(numberOfTotalItems: query.Count, numberOfSkippedItems: request.Take, source: query);
         }
     }
 }

@@ -6,6 +6,7 @@ using Honoplay.Common._Exceptions;
 using Honoplay.Application._Infrastructure;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Honoplay.Persistence.CacheService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Distributed;
@@ -16,41 +17,29 @@ namespace Honoplay.Application.Trainers.Queries.GetTrainerDetail
     public class GetTrainerDetailQueryHandler : IRequestHandler<GetTrainerDetailQuery, ResponseModel<TrainerDetailModel>>
     {
         private readonly HonoplayDbContext _context;
-        private readonly IDistributedCache _cache;
+        private readonly ICacheService _cacheService;
 
-        public GetTrainerDetailQueryHandler(HonoplayDbContext context, IDistributedCache cache)
+        public GetTrainerDetailQueryHandler(HonoplayDbContext context, ICacheService cacheService)
         {
             _context = context;
-            _cache = cache;
+            _cacheService = cacheService;
         }
 
         public async Task<ResponseModel<TrainerDetailModel>> Handle(GetTrainerDetailQuery request, CancellationToken cancellationToken)
         {
-            var redisKey = $"TrainersWithDepartmentsByAdminUserId{request.HostName}";
-            var serializedRedisTrainers = await _cache.GetStringAsync(redisKey, cancellationToken);
-            List<Trainer> redisTrainers;
+            var redisKey = $"TrainersWithDepartmentsByHostName{request.HostName}";
 
-            if (!string.IsNullOrEmpty(serializedRedisTrainers))
+            var redisTrainers = await _cacheService.RedisCacheAsync<IList<Trainer>>(redisKey, delegate
             {
-                redisTrainers = JsonConvert.DeserializeObject<List<Trainer>>(serializedRedisTrainers);
-            }
-            else
-            {
-                redisTrainers = await _context.Trainers.AsNoTracking()
+                return _context.Trainers.AsNoTracking()
                     .Include(x => x.Department)
                     .Where(x => x.Id == request.Id &&
                                 _context.TenantAdminUsers
                                     .Any(y => y.TenantId == x.Department.TenantId &&
                                               y.AdminUserId == request.AdminUserId))
-                    .ToListAsync(cancellationToken);
+                    .ToList();
+            }, cancellationToken);
 
-                if (redisTrainers is null)
-                {
-                    throw new NotFoundException(nameof(Trainer), request.Id);
-                }
-                await _cache.SetStringAsync(redisKey, JsonConvert.SerializeObject(redisTrainers), cancellationToken);
-
-            }
             var trainer = redisTrainers.FirstOrDefault(x => x.Id == request.Id);
 
             if (trainer is null)
