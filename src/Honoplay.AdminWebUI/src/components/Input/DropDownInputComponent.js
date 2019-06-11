@@ -50,6 +50,7 @@ class DropDownInputComponent extends React.Component {
                     <option value={data.id} key={id}>
                       {data.name}
                     </option>
+
                 )}                   
             </NativeSelect>  
             {

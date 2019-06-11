@@ -2,11 +2,12 @@ const Style = theme => ({
     root: {
       flexGrow: 1,
     },
-    kisilerLink: {
+    linkStyle: {
       fontSize:16,
+      color: '#673ab7',
       textDecorationLine: 'none',
       '&:active': {
-       color: 'purple',
+       color: '#673ab7',
       },
     },
 });

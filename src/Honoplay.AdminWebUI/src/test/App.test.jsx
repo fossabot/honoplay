@@ -14,18 +14,17 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
 
 let pathMap = {};
-describe('routes using array of routers', () => {
-
+describe('<App/>', () => {
     const component = shallow(<App/>);
     pathMap = component.find(Route).reduce((pathMap, route) => {
         const routeProps = route.props();
         pathMap[routeProps.path] = routeProps.component;
         return pathMap;
       }, {});
-  it(' Questions ', () => {
+  it('Should redirect to Questions page', () => {
     (pathMap['/home/sorular']).should.equal(Questions);
   })
-  it('TenantInformation ', () => {
+  it('Should redirect to Tenant Information page', () => {
     (pathMap['/home/sirketbilgileri']).should.equal(TenantInformation);
   })
 })

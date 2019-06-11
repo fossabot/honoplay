@@ -12,7 +12,7 @@ import TableToolbar from '../components/Table/EnhancedTableToolbar';
 import TableHead from '../components/Table/EnhancedTableHead';
 import TableMenu from '../components/Table/TableMenu';
 import {TableRow, IconButton, Typography, 
-        Checkbox, Menu, TablePagination} from '@material-ui/core';
+        Checkbox, Menu} from '@material-ui/core';
 
 import Adapter from 'enzyme-adapter-react-16';
 
