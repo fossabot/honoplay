@@ -26,7 +26,7 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
         public async Task<ResponseModel<TraineeDetailModel>> Handle(GetTraineeDetailQuery request, CancellationToken cancellationToken)
         {
 
-            var redisKey = $"TraineesWithDepartmentsByAdminUserId{request.AdminUserId}";
+            var redisKey = $"TraineesWithDepartmentsByHostName{request.HostName}";
 
             var redisTrainees = await _cacheService.RedisCacheAsync<IList<Trainee>>(redisKey, delegate
             {
@@ -38,7 +38,6 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
                                               y.AdminUserId == request.AdminUserId))
                     .ToList();
             }, cancellationToken);
-
 
             var trainee = redisTrainees.FirstOrDefault(x => x.Id == request.Id);
 

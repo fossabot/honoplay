@@ -107,7 +107,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
 
-                var model = await Mediator.Send(new GetTraineeDetailQuery(userId, id));
+                var model = await Mediator.Send(new GetTraineeDetailQuery(userId, id, HonoHost));
                 return Ok(model);
             }
             catch (NotFoundException)

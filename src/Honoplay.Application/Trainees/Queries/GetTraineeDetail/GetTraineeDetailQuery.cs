@@ -5,10 +5,11 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
 {
     public class GetTraineeDetailQuery : IRequest<ResponseModel<TraineeDetailModel>>
     {
-        public GetTraineeDetailQuery(int adminUserId, int id)
+        public GetTraineeDetailQuery(int adminUserId, int id, string hostName)
         {
             Id = id;
             AdminUserId = adminUserId;
+            HostName = hostName;
         }
 
         public GetTraineeDetailQuery()
@@ -17,5 +18,6 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
 
         public int Id { get; private set; }
         public int AdminUserId { get; private set; }
+        public string HostName { get; private set; }
     }
 }
