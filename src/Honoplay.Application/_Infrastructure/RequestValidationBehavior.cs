@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
-using ValidationException = Honoplay.Application._Exceptions.ValidationException;
+using ValidationException = Honoplay.Common._Exceptions.ValidationException;
 
 namespace Honoplay.Application._Infrastructure
 {

@@ -1,4 +1,4 @@
-﻿using Honoplay.Application._Exceptions;
+﻿using Honoplay.Common._Exceptions;
 using Honoplay.Application._Infrastructure;
 using Honoplay.Application.Tenants.Commands.CreateDepartment;
 using Honoplay.Application.Tenants.Commands.CreateTenant;

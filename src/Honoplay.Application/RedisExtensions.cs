@@ -1,4 +1,4 @@
-﻿using Honoplay.Application._Exceptions;
+﻿using Honoplay.Common._Exceptions;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using System;

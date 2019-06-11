@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application._Exceptions;
+using Honoplay.Common._Exceptions;
 using Honoplay.Application.Trainees.Commands.CreateTrainee;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;

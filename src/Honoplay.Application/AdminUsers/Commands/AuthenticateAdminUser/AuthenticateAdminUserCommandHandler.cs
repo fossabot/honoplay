@@ -1,4 +1,4 @@
-﻿using Honoplay.Application._Exceptions;
+﻿using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Persistence;
 using MediatR;
