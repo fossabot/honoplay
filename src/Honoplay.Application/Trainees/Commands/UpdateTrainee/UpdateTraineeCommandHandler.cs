@@ -1,5 +1,5 @@
-﻿using Honoplay.Common._Exceptions;
-using Honoplay.Application._Infrastructure;
+﻿using Honoplay.Application._Infrastructure;
+using Honoplay.Common._Exceptions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using MediatR;
@@ -11,28 +11,35 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Persistence.CacheService;
 
 namespace Honoplay.Application.Trainees.Commands.CreateTrainee
 {
     public class UpdateTraineeCommandHandler : IRequestHandler<UpdateTraineeCommand, ResponseModel<UpdateTraineeModel>>
     {
         private readonly HonoplayDbContext _context;
-        public UpdateTraineeCommandHandler(HonoplayDbContext context)
+        private readonly ICacheService _cacheService;
+        public UpdateTraineeCommandHandler(HonoplayDbContext context, ICacheService cacheService)
         {
             _context = context;
+            _cacheService = cacheService;
         }
         public async Task<ResponseModel<UpdateTraineeModel>> Handle(UpdateTraineeCommand request, CancellationToken cancellationToken)
         {
+            var redisKey = $"TraineesWithDepartmentsByHostName{request.HostName}";
+
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    var trainee = await _context.Trainees.Include(x => x.Department)
+                    var trainees = await _context.Trainees.Include(x => x.Department)
                         .Where(x => x.Id == request.Id &&
                                     _context.TenantAdminUsers.Any(y =>
                                         y.TenantId == x.Department.TenantId &&
                                         y.AdminUserId == request.UpdatedBy))
-                        .FirstOrDefaultAsync(cancellationToken);
+                        .ToListAsync(cancellationToken);
+
+                    var trainee = trainees.FirstOrDefault();
 
                     if (trainee is null)
                     {
@@ -51,6 +58,12 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
 
                     _context.Update(trainee);
                     await _context.SaveChangesAsync(cancellationToken);
+
+                    await _cacheService.RedisCacheUpdateAsync(redisKey, delegate
+                     {
+                         return trainees;
+                     }, cancellationToken);
+
                     transaction.Commit();
                 }
                 catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||

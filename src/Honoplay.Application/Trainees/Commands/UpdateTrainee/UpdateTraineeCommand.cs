@@ -16,5 +16,8 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
         public int DepartmentId { get; set; }
         [JsonIgnore]
         public int UpdatedBy { get; set; }
+        [JsonIgnore]
+        public string HostName { get; set; }
+
     }
 }

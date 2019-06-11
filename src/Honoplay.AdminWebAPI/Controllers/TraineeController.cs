@@ -56,6 +56,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 command.UpdatedBy = userId;
+                command.HostName = HonoHost;
 
                 var model = await Mediator.Send(command);
                 return Ok(model);

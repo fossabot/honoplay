@@ -25,7 +25,6 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
 
         public async Task<ResponseModel<TraineeDetailModel>> Handle(GetTraineeDetailQuery request, CancellationToken cancellationToken)
         {
-
             var redisKey = $"TraineesWithDepartmentsByHostName{request.HostName}";
 
             var redisTrainees = await _cacheService.RedisCacheAsync<IList<Trainee>>(redisKey, delegate

@@ -24,9 +24,10 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
 
         public GetTraineeDetailQueryTest()
         {
-            Mock<IDistributedCache> cache = new Mock<IDistributedCache>();
+            var distributedCacheMock = new Mock<IDistributedCache>();
+
             _context = InitAndGetDbContext(out _adminUserId, out _traineeId);
-            _queryHandler = new GetTraineeDetailQueryHandler(_context, new CacheManager(cache.Object));
+            _queryHandler = new GetTraineeDetailQueryHandler(_context, new CacheManager(distributedCacheMock.Object));
         }
 
 
@@ -100,7 +101,7 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTraineeDetailQuery(_traineeId, _adminUserId,  _hostName);
+            var query = new GetTraineeDetailQuery(_traineeId, _adminUserId, _hostName);
 
             var model = await _queryHandler.Handle(query, CancellationToken.None);
 
@@ -113,7 +114,7 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetTraineeDetailQuery(_traineeId + 1, _adminUserId,  _hostName);
+            var query = new GetTraineeDetailQuery(_traineeId + 1, _adminUserId, _hostName);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _queryHandler.Handle(query, CancellationToken.None));

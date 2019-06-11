@@ -23,9 +23,9 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineesList
 
         public GetTraineesListQueryTest()
         {
-            Mock<IDistributedCache> cache = new Mock<IDistributedCache>();
+            var distributedCacheMock = new Mock<IDistributedCache>();
             _context = InitAndGetDbContext(out _adminUserId, out _hostName);
-            _queryHandler = new GetTraineesListQueryHandler(_context, new CacheManager(cache.Object));
+            _queryHandler = new GetTraineesListQueryHandler(_context, new CacheManager(distributedCacheMock.Object));
         }
 
 
