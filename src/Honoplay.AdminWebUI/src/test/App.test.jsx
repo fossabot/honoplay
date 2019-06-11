@@ -3,11 +3,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { configure, shallow } from 'enzyme';
 
-import App from './App.jsx';
+import App from '../App.jsx';
 import { Route } from 'react-router-dom';
-import Layout from './components/Layout/LayoutComponent';
-import Sorular from './views/Sorular/Sorular';
-import SirketBilgileri from './views/SirketBilgileri/SirketBilgileri';
+import Layout from '../components/Layout/LayoutComponent';
+import Questions from '../views/Questions/Questions';
+import TenantInformation from '../views/TenantInformation/TenantInformation';
 
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -22,10 +22,10 @@ describe('routes using array of routers', () => {
         pathMap[routeProps.path] = routeProps.component;
         return pathMap;
       }, {});
-  it(' Sorular ', () => {
-    (pathMap['/home/sorular']).should.equal(Sorular);
+  it(' Questions ', () => {
+    (pathMap['/home/sorular']).should.equal(Questions);
   })
-  it('Şirket Bilgileri ', () => {
-    (pathMap['/home/sirketbilgileri']).should.equal(SirketBilgileri);
+  it('TenantInformation ', () => {
+    (pathMap['/home/sirketbilgileri']).should.equal(TenantInformation);
   })
 })
