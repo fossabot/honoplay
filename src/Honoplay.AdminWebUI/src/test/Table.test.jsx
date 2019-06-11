@@ -11,7 +11,8 @@ import Table from '../components/Table/TableComponent';
 import TableToolbar from '../components/Table/EnhancedTableToolbar';
 import TableHead from '../components/Table/EnhancedTableHead';
 import TableMenu from '../components/Table/TableMenu';
-import {TableRow, IconButton, Typography, Checkbox} from '@material-ui/core';
+import {TableRow, IconButton, Typography, 
+        Checkbox, Menu, TablePagination} from '@material-ui/core';
 
 import Adapter from 'enzyme-adapter-react-16';
 
@@ -27,8 +28,16 @@ describe('<Table/>', () => {
     wrapper.props().columns.should.be.defined; 
   });
 
-  it('should call TableToolbar on TableRow(checkbox) click', async () => {
-   await init(3);
+  it('should have state for page and rowsPerPage', async () => {
+    await init(3);
+    const wrapper = shallow (<Table 
+      data={[{'id':0, 'Name':'Şaduman', 'Surname':'Küçük', 'User Name': 'sadumankucuk'}]}                                
+      columns={['Name','Surname','User Name',' ']}/>).dive();
+    expect(wrapper.state().page).to.equal(0);
+    expect(wrapper.state().rowsPerPage).to.equal(5);
+  });
+
+  it('should call TableToolbar on TableRow(checkbox) click',  () => {
     const wrapper = mount (<Table 
       data={[{'id':0, 'Name':'Şaduman', 'Surname':'Küçük', 'User Name': 'sadumankucuk'}]}                                  
       columns={['Name','Surname','User Name',' ']}/>);
@@ -90,13 +99,26 @@ describe('<TableHead/>', () => {
     wrapper.props().rowCount.should.be.defined;
   })
 
-  // it('deneme', () => {
-  //   const handleSelectAllClick = sinon.spy();
-  //   const wrapper = mount (<TableHead 
-  //     columns={['Name','Surname','User Name',' ']} 
-  //     numSelected={5} 
-  //     onSelectAllClick={handleSelectAllClick} 
-  //     rowCount={5}/>);
-  //     expect(wrapper.find(Checkbox).prop('checked')).to.equal(true);
-  // })
+  it('should select all data when Checkbox click', () => {
+    const handleSelectAllClick = sinon.spy();
+    const wrapper = shallow (<TableHead 
+      columns={['Name','Surname','User Name',' ']} 
+      numSelected={5} 
+      onSelectAllClick={handleSelectAllClick} 
+      rowCount={5}/>).dive();
+      expect(wrapper.find(Checkbox).prop('checked')).to.equal(true);
+  })
+})
+
+describe('<TableMenu/>', () => {
+  it('should have state for menu', () => {
+    const wrapper = shallow (<TableMenu />).dive();
+    expect(wrapper.state().menu).to.equal(null);
+  })
+
+  it('should open menu when Iconbutton click', () => {
+    const wrapper = mount (<TableMenu />);
+    wrapper.find(IconButton).simulate('click');
+    expect(wrapper.find(Menu).prop('open')).to.equal(true);
+  })
 })
