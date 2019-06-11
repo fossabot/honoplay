@@ -1,6 +1,4 @@
-﻿using Honoplay.Domain.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 
 namespace Honoplay.Application.Tenants.Commands.CreateTenant
 {

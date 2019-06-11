@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Common._Exceptions;
-using Honoplay.Application._Infrastructure;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using MediatR;
@@ -13,7 +7,12 @@ using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Caching.Distributed;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Honoplay.Application.Tenants.Commands.CreateDepartment
 {
@@ -35,35 +34,18 @@ namespace Honoplay.Application.Tenants.Commands.CreateDepartment
 
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
-                var cacheKey = request.HostName + request.AdminUserId;
-                var cachedData = await _cache.GetStringAsync(cacheKey, cancellationToken);
-                Tenant currentTenant;
-
-                if (string.IsNullOrEmpty(cachedData))
-                {
-                    currentTenant = await _context.Tenants.Include(x => x.Departments)
-                       .FirstOrDefaultAsync(x =>
-                            x.HostName == request.HostName
-                            && x.TenantAdminUsers.Any(y =>
-                               y.AdminUserId == request.AdminUserId),
-                       cancellationToken);
-
-                    if (currentTenant != null)
-                    {
-                        await _cache.SetStringAsync(key: cacheKey, value: JsonConvert.SerializeObject(currentTenant), cancellationToken);
-                    }
-                }
-                else
-                {
-                    currentTenant = JsonConvert.DeserializeObject<Tenant>(await _cache.GetStringAsync(cacheKey, cancellationToken));
-                }
-
                 try
                 {
+                    var currentTenant = await _context.Tenants.Include(x => x.Departments)
+                        .FirstOrDefaultAsync(x =>
+                                x.HostName == request.HostName
+                                && x.TenantAdminUsers.Any(y =>
+                                    y.AdminUserId == request.AdminUserId),
+                            cancellationToken);
+
                     if (currentTenant is null)
                     {
                         throw new NotFoundException(nameof(Tenant), request.HostName);
-
                     }
 
                     foreach (var requestDepartment in request.Departments)

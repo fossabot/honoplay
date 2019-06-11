@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Honoplay.Domain.Entities;
 using System.Collections.Generic;
-using Honoplay.Domain.Entities;
 
 namespace Honoplay.Application.Tenants.Commands.CreateDepartment
 {
