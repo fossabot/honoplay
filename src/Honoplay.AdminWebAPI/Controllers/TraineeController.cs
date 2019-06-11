@@ -84,7 +84,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
 
-                var model = await Mediator.Send(new GetTraineesListQuery(userId, query.HostName, query.Skip, query.Take));
+                var model = await Mediator.Send(new GetTraineesListQuery(userId, HonoHost, query.Skip, query.Take));
                 return Ok(model);
             }
             catch (NotFoundException)
@@ -107,7 +107,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
 
-                var model = await Mediator.Send(new GetTraineeDetailQuery(userId, id, HonoHost));
+                var model = await Mediator.Send(new GetTraineeDetailQuery(id, userId, HonoHost));
                 return Ok(model);
             }
             catch (NotFoundException)

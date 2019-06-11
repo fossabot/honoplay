@@ -17,7 +17,7 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeList
             Take = take;
             HostName = hostName;
         }
-
+        [JsonIgnore]
         public int AdminUserId { get; private set; }
         [JsonIgnore]
         public string HostName { get; private set; }
@@ -27,7 +27,6 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeList
 
     public class GetTraineesListQueryModel : IRequest<ResponseModel<TraineesListModel>>
     {
-        public string HostName { get; set; }
         public int Skip { get; set; } = 0;
         public int Take { get; set; } = 10;
     }

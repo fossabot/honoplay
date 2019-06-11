@@ -86,11 +86,10 @@ namespace Honoplay.System.Tests.Controllers
             {
                 Skip = 0,
                 Take = 10,
-                HostName = "localhost"
             };
 
             // The endpoint or route of the controller action.
-            var httpResponse = await client.GetAsync(requestUri: $"api/Trainee?Skip={getTraineeListQueryModel.Skip}&Take={getTraineeListQueryModel.Take}&HostName={getTraineeListQueryModel.HostName}");
+            var httpResponse = await client.GetAsync(requestUri: $"api/Trainee?Skip={getTraineeListQueryModel.Skip}&Take={getTraineeListQueryModel.Take}");
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -107,12 +106,11 @@ namespace Honoplay.System.Tests.Controllers
             var getTraineeListQueryModel = new GetTraineesListQueryModel
             {
                 Skip = -3,
-                Take = -3,
-                HostName = "localhost"
+                Take = -3
             };
 
             // The endpoint or route of the controller action.
-            var httpResponse = await client.GetAsync(requestUri: $"api/Trainee?Skip={getTraineeListQueryModel.Skip}&Take={getTraineeListQueryModel.Take}&HostName={getTraineeListQueryModel.HostName}");
+            var httpResponse = await client.GetAsync(requestUri: $"api/Trainee?Skip={getTraineeListQueryModel.Skip}&Take={getTraineeListQueryModel.Take}");
 
             // Must be unsuccessful.
             Assert.False(httpResponse.IsSuccessStatusCode);

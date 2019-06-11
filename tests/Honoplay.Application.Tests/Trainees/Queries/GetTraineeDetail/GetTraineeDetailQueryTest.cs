@@ -100,7 +100,7 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTraineeDetailQuery(_adminUserId, _traineeId, _hostName);
+            var query = new GetTraineeDetailQuery(_traineeId, _adminUserId,  _hostName);
 
             var model = await _queryHandler.Handle(query, CancellationToken.None);
 
@@ -113,7 +113,7 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetTraineeDetailQuery(_adminUserId, _traineeId + 1, _hostName);
+            var query = new GetTraineeDetailQuery(_traineeId + 1, _adminUserId,  _hostName);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _queryHandler.Handle(query, CancellationToken.None));

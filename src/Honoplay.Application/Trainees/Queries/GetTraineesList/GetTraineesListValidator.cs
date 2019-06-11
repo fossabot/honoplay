@@ -6,10 +6,6 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeList
     {
         public GetTraineesListValidator()
         {
-            RuleFor(x => x.HostName)
-                .NotNull()
-                .NotEmpty();
-
             RuleFor(x => x.Skip)
                 .NotNull()
                 .GreaterThan(-1);

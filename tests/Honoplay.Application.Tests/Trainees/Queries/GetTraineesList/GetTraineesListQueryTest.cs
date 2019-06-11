@@ -1,8 +1,11 @@
-﻿using Honoplay.Common._Exceptions;
-using Honoplay.Application.Trainees.Queries.GetTraineeList;
+﻿using Honoplay.Application.Trainees.Queries.GetTraineeList;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Honoplay.Persistence.CacheManager;
+using Microsoft.Extensions.Caching.Distributed;
+using Moq;
 using System;
 using System.Linq;
 using System.Threading;
@@ -20,8 +23,9 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineesList
 
         public GetTraineesListQueryTest()
         {
+            Mock<IDistributedCache> cache = new Mock<IDistributedCache>();
             _context = InitAndGetDbContext(out _adminUserId, out _hostName);
-            _queryHandler = new GetTraineesListQueryHandler(_context);
+            _queryHandler = new GetTraineesListQueryHandler(_context, new CacheManager(cache.Object));
         }
 
 
@@ -95,8 +99,6 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineesList
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-
-
             var query = new GetTraineesListQuery(_adminUserId, _hostName, skip: 0, take: 11);
 
             var model = await _queryHandler.Handle(query, CancellationToken.None);

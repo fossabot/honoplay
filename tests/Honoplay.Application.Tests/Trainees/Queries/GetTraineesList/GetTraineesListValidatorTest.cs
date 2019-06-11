@@ -19,7 +19,6 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineesList
             Assert.True(_validator.Validate(
                 new GetTraineesListQueryModel
                 {
-                    HostName = "localhost",
                     Skip = 1,
                     Take = 5
                 }
