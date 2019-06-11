@@ -11,6 +11,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Persistence.CacheService;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 
@@ -19,14 +20,16 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
     public class CreateTraineeCommandHandler : IRequestHandler<CreateTraineeCommand, ResponseModel<CreateTraineeModel>>
     {
         private readonly HonoplayDbContext _context;
-        private readonly IDistributedCache _cache;
-        public CreateTraineeCommandHandler(HonoplayDbContext context, IDistributedCache cache)
+        private readonly ICacheService _cacheService;
+        public CreateTraineeCommandHandler(HonoplayDbContext context, ICacheService cacheService)
         {
             _context = context;
-            _cache = cache;
+            _cacheService = cacheService;
         }
         public async Task<ResponseModel<CreateTraineeModel>> Handle(CreateTraineeCommand request, CancellationToken cancellationToken)
         {
+            var redisKey = $"TraineesWithDepartmentsByHostName{request.HostName}";
+
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
@@ -58,17 +61,14 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
                     await _context.AddAsync(trainee, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
 
-                    //Redis cache update
-                    var redisKey = $"TrainersWithDepartmentsByAdminUserId{request.CreatedBy}";
-                    var serializedRedisTrainers = await _cache.GetStringAsync(redisKey, cancellationToken);
-
-                    if (!string.IsNullOrEmpty(serializedRedisTrainers))
+                    await _cacheService.RedisCacheUpdateAsync(redisKey, delegate
                     {
-                        var redisTrainers = await _context.Trainers.Where(x => x.DepartmentId == request.DepartmentId)
-                            .ToListAsync(cancellationToken);
-                        serializedRedisTrainers = JsonConvert.SerializeObject(redisTrainers);
-                        await _cache.SetStringAsync(redisKey, serializedRedisTrainers, cancellationToken);
-                    }
+                        return _context.Trainees.Include(x => x.Department)
+                            .Where(x => _context.TenantAdminUsers.Any(y =>
+                                            y.TenantId == x.Department.TenantId &&
+                                            y.AdminUserId == request.CreatedBy))
+                            .ToList();
+                    }, cancellationToken);
 
                     transaction.Commit();
                 }

@@ -1,8 +1,9 @@
-﻿using Honoplay.Common._Exceptions;
-using Honoplay.Application.Trainees.Commands.CreateTrainee;
+﻿using Honoplay.Application.Trainees.Commands.CreateTrainee;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
@@ -25,7 +26,7 @@ namespace Honoplay.Application.Tests.Trainees.Commands.CreateTrainee
         {
             var cache = new Mock<IDistributedCache>();
             _context = InitAndGetDbContext(out _workingStatusId, out _departmentId, out _adminUserId);
-            _commandHandler = new CreateTraineeCommandHandler(_context, cache.Object);
+            _commandHandler = new CreateTraineeCommandHandler(_context, new CacheManager(cache.Object));
         }
 
         //Arrange
