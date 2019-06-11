@@ -1,4 +1,5 @@
-﻿using Honoplay.Persistence.CacheService;
+﻿using Honoplay.Common._Exceptions;
+using Honoplay.Persistence.CacheService;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using System;
@@ -35,7 +36,7 @@ namespace Honoplay.Persistence.CacheManager
                 redisList = redisLogic.Invoke(_distributedCache);
                 if (redisList is null)
                 {
-                    throw new CacheNotFoundException();
+                    throw new NotFoundException();
                 }
 
                 await _distributedCache.SetStringAsync(redisKey, JsonConvert.SerializeObject(redisList), cancellationToken);
@@ -43,10 +44,5 @@ namespace Honoplay.Persistence.CacheManager
 
             return redisList;
         }
-    }
-
-    public sealed class CacheNotFoundException : Exception
-    {
-
     }
 }

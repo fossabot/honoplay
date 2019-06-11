@@ -1,11 +1,10 @@
-﻿using Honoplay.Common._Exceptions;
-using Honoplay.Application._Infrastructure;
+﻿using Honoplay.Application._Infrastructure;
+using Honoplay.Common._Exceptions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -28,28 +27,17 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
         {
 
             var redisKey = $"TraineesWithDepartmentsByAdminUserId{request.AdminUserId}";
-            IList<Trainee> redisTrainees;
-            try
+
+            var redisTrainees = await _cacheService.RedisCacheAsync<IList<Trainee>>(redisKey, delegate
             {
-                redisTrainees = await _cacheService.RedisCacheAsync<IList<Trainee>>(redisKey, delegate
-                {
-                    return _context.Trainees.AsNoTracking()
-                        .Include(x => x.Department)
-                        .Where(x => x.Id == request.Id &&
-                                    _context.TenantAdminUsers
-                                        .Any(y => y.TenantId == x.Department.TenantId &&
-                                                  y.AdminUserId == request.AdminUserId))
-                        .ToList();
-                }, cancellationToken);
-            }
-            catch (ArgumentNullException)
-            {
-                throw new NotFoundException(nameof(redisKey), redisKey);
-            }
-            catch (ApplicationException)
-            {
-                throw new NotFoundException(nameof(Trainee), request.Id);
-            }
+                return _context.Trainees.AsNoTracking()
+                    .Include(x => x.Department)
+                    .Where(x => x.Id == request.Id &&
+                                _context.TenantAdminUsers
+                                    .Any(y => y.TenantId == x.Department.TenantId &&
+                                              y.AdminUserId == request.AdminUserId))
+                    .ToList();
+            }, cancellationToken);
 
 
             var trainee = redisTrainees.FirstOrDefault(x => x.Id == request.Id);

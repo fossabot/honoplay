@@ -1,8 +1,11 @@
 ﻿using FluentValidation.AspNetCore;
 using Honoplay.AdminWebAPI.Interfaces;
 using Honoplay.AdminWebAPI.Services;
+using Honoplay.Application;
 using Honoplay.Common.Constants;
 using Honoplay.Persistence;
+using Honoplay.Persistence.CacheManager;
+using Honoplay.Persistence.CacheService;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -18,9 +21,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Honoplay.Application;
-using Honoplay.Persistence.CacheManager;
-using Honoplay.Persistence.CacheService;
 
 namespace Honoplay.AdminWebAPI
 {

@@ -1,15 +1,15 @@
-﻿using Honoplay.Common._Exceptions;
-using Honoplay.Application.Trainees.Queries.GetTraineeDetail;
+﻿using Honoplay.Application.Trainees.Queries.GetTraineeDetail;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
+using Moq;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Persistence.CacheService;
-using Moq;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
@@ -23,9 +23,9 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
 
         public GetTraineeDetailQueryTest()
         {
-            Mock<ICacheService> cache = new Mock<ICacheService>();
+            Mock<IDistributedCache> cache = new Mock<IDistributedCache>();
             _context = InitAndGetDbContext(out _adminUserId, out _traineeId);
-            _queryHandler = new GetTraineeDetailQueryHandler(_context, cache.Object);
+            _queryHandler = new GetTraineeDetailQueryHandler(_context, new CacheManager(cache.Object));
         }
 
 

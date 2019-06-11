@@ -1,13 +1,14 @@
-﻿using Honoplay.Common._Exceptions;
-using Honoplay.Application._Infrastructure;
+﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Application.Trainers.Commands.CreateTrainer;
 using Honoplay.Application.Trainers.Commands.UpdateTrainer;
 using Honoplay.Application.Trainers.Queries.GetTrainerDetail;
 using Honoplay.Application.Trainers.Queries.GetTrainersList;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
@@ -35,6 +36,10 @@ namespace Honoplay.AdminWebAPI.Controllers
 
             }
             catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ArgumentNullException)
             {
                 return NotFound();
             }
