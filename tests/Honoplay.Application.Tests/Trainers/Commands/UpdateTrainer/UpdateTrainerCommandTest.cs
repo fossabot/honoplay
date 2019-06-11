@@ -7,6 +7,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Persistence.CacheManager;
+using Microsoft.Extensions.Caching.Distributed;
+using Moq;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainers.Commands.UpdateTrainer
@@ -22,8 +25,9 @@ namespace Honoplay.Application.Tests.Trainers.Commands.UpdateTrainer
 
         public UpdateTrainerCommandTest()
         {
+            var cache = new Mock<IDistributedCache>();
             _context = InitAndGetDbContext(out _professionId, out _departmentId, out _adminUserId, out _trainerId);
-            _commandHandler = new UpdateTrainerCommandHandler(_context);
+            _commandHandler = new UpdateTrainerCommandHandler(_context, new CacheManager(cache.Object));
         }
 
         //Arrange
