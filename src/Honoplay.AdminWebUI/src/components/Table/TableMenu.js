@@ -27,7 +27,6 @@ class TableMenu extends React.Component {
     const { menu } = this.state;
     const { classes, handleDelete } = this.props;
     const open = Boolean(menu);
-
     return (
       <div>
         <IconButton

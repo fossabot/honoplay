@@ -61,6 +61,7 @@ export const Style = (theme) => ({
 
 export const theme = createMuiTheme({
   palette: {
+    primary: deepPurple,
     secondary: {
       main: '#fafafa'
     }
