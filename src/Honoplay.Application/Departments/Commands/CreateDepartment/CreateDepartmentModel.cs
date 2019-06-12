@@ -1,7 +1,7 @@
 ﻿using Honoplay.Domain.Entities;
 using System.Collections.Generic;
 
-namespace Honoplay.Application.Tenants.Commands.CreateDepartment
+namespace Honoplay.Application.Departments.Commands.CreateDepartment
 {
     public struct CreateDepartmentModel
     {

@@ -1,0 +1,50 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Net;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using Honoplay.Application._Infrastructure;
+using Honoplay.Application.Departments.Commands.CreateDepartment;
+using Honoplay.Application.Tenants.Commands.UpdateTenant;
+using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace Honoplay.AdminWebAPI.Controllers
+{
+    [Authorize]
+    public class DepartmentController : BaseController
+    {
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<ResponseModel<CreateDepartmentModel>>> PostDepartment([FromBody]CreateDepartmentCommand command)
+        {
+            try
+            {
+                var userId = Claims[ClaimTypes.Sid].ToInt();
+                command.AdminUserId = userId;
+                command.HostName = HonoHost;
+
+                var model = await Mediator.Send(command);
+                return Ok(model);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ObjectAlreadyExistsException ex)
+            {
+                return Conflict(new ResponseModel<UpdateTenantModel>(new Error(HttpStatusCode.Conflict, ex)));
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt());
+            }
+        }
+    }
+}

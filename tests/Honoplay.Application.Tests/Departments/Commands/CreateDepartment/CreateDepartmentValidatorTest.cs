@@ -1,7 +1,6 @@
-﻿using System;
+﻿using FluentValidation.TestHelper;
+using Honoplay.Application.Departments.Commands.CreateDepartment;
 using System.Collections.Generic;
-using FluentValidation.TestHelper;
-using Honoplay.Application.Tenants.Commands.CreateDepartment;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment

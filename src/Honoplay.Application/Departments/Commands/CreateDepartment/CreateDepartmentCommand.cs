@@ -3,7 +3,7 @@ using MediatR;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace Honoplay.Application.Tenants.Commands.CreateDepartment
+namespace Honoplay.Application.Departments.Commands.CreateDepartment
 {
     public class CreateDepartmentCommand : IRequest<ResponseModel<CreateDepartmentModel>>
     {

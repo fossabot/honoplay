@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Honoplay.Application.Tenants.Commands.CreateDepartment
+namespace Honoplay.Application.Departments.Commands.CreateDepartment
 {
     public class CreateDepartmentValidator : AbstractValidator<CreateDepartmentCommand>
     {

@@ -62,6 +62,8 @@ Redis cache genellikle çok fazla kullanılan verilere daha hızlı ulaşabilmek
 İstenirse sabit disklere de kayıt yapılabilir.
 Projede giriş yapan AdminUser rolündeki kişinin Departments, Trainers, Trainee ile işlem yaparken daha hızlı yapabilmesi için kullanılmıştır.
 
+https://www.nuget.org/packages/Microsoft.Extensions.Caching.Redis/2.2.0
+
 
 ## Newtonsoft.Json
 Genellikle JSON serialize ve deserialize yapmak amacıyla kullanılır.

@@ -14,7 +14,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Honoplay.Application.Tenants.Commands.CreateDepartment
+namespace Honoplay.Application.Departments.Commands.CreateDepartment
 {
     public class CreateDepartmentCommandHandler : IRequestHandler<CreateDepartmentCommand, ResponseModel<CreateDepartmentModel>>
     {
