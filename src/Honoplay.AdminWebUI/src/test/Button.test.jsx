@@ -12,10 +12,8 @@ configure({ adapter: new Adapter() });
 
 import Button from '../components/Button/ButtonComponent';
 
-import {} from '@material-ui/core';
-
 describe('<Button/>', () => {
-    it('should have props for data, modalTitle, modalInputName, handleClickClose ', () => {
+    it('should have props for data, buttonColor, buttonName, onClick ', () => {
         const onClick = sinon.spy();
         const wrapper = shallow(<Button
             buttonColor = "primary"
