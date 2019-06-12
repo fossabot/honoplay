@@ -1,17 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Net;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Honoplay.Application._Infrastructure;
+﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Application.Departments.Commands.CreateDepartment;
 using Honoplay.Application.Tenants.Commands.UpdateTenant;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Microsoft.AspNetCore.Mvc;
+using System.Net;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
@@ -22,7 +19,8 @@ namespace Honoplay.AdminWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ResponseModel<CreateDepartmentModel>>> PostDepartment([FromBody]CreateDepartmentCommand command)
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ResponseModel<CreateDepartmentModel>>> Post([FromBody]CreateDepartmentCommand command)
         {
             try
             {

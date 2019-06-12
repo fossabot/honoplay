@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Persistence.CacheManager;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
@@ -24,10 +25,10 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
 
         public CreateDepartmentCommandTest()
         {
-            Mock<IDistributedCache> cache = new Mock<IDistributedCache>();
+            var cache = new Mock<IDistributedCache>();
 
             _context = InitAndGetDbContext(out _hostName, out _adminUserId);
-            _commandHandler = new CreateDepartmentCommandHandler(_context, cache.Object);
+            _commandHandler = new CreateDepartmentCommandHandler(_context, new CacheManager(cache.Object));
         }
 
         private HonoplayDbContext InitAndGetDbContext(out string hostName, out int adminUserId)

@@ -2,11 +2,11 @@
 using Honoplay.Common._Exceptions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Honoplay.Persistence.CacheService;
 using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -19,12 +19,12 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
     public class CreateDepartmentCommandHandler : IRequestHandler<CreateDepartmentCommand, ResponseModel<CreateDepartmentModel>>
     {
         private readonly HonoplayDbContext _context;
-        private readonly IDistributedCache _cache;
+        private readonly ICacheService _cacheService;
 
-        public CreateDepartmentCommandHandler(HonoplayDbContext context, IDistributedCache cache)
+        public CreateDepartmentCommandHandler(HonoplayDbContext context, ICacheService cacheService)
         {
             _context = context;
-            _cache = cache;
+            _cacheService = cacheService;
         }
 
         public async Task<ResponseModel<CreateDepartmentModel>> Handle(CreateDepartmentCommand request,
@@ -34,6 +34,7 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
 
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
+                var redisKey = $"DepartmentsByHostName{request.HostName}";
                 try
                 {
                     var currentTenant = await _context.Tenants.Include(x => x.Departments)
@@ -62,6 +63,14 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
 
                     await _context.Departments.AddRangeAsync(addDepartmentList, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
+
+                    await _cacheService.RedisCacheUpdateAsync(redisKey,
+                        redisLogic: delegate
+                         {
+                             return currentTenant.Departments.ToList();
+                         },
+                        cancellationToken);
+
                     transaction.Commit();
                 }
                 catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||

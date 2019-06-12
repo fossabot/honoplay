@@ -35,7 +35,7 @@ namespace Honoplay.System.Tests.Controllers
             var json = JsonConvert.SerializeObject(command);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await client.PostAsync(requestUri: "api/Tenant/Department", content: new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await client.PostAsync(requestUri: "api/Department", content: new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
 
