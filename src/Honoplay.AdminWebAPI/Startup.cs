@@ -21,6 +21,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.IO;
+
 
 namespace Honoplay.AdminWebAPI
 {
@@ -114,6 +116,7 @@ namespace Honoplay.AdminWebAPI
                 // Configure Swagger to use the xml documentation file
                 var xmlFile = Configuration.GetValue<string>(WebHostDefaults.ContentRootKey) + "/SwaggerDoc.xml";
                 c.IncludeXmlComments(xmlFile);
+
             });
 
         }

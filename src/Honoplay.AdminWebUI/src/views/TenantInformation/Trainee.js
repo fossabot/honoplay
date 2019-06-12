@@ -55,7 +55,7 @@ render() {
           <Grid item xs={12} sm={12}/>
           <Grid item xs={6} sm={9}>
           <div />
-          <a href="#kisiler" className={classes.kisilerLink}>
+          <a href="#kisiler" className={classes.linkStyle}>
            {`${translate('Trainee')} ${translate('Add')}`}
           </a>
           </Grid>
@@ -101,7 +101,7 @@ render() {
           </Grid>
           <Grid item xs={12} sm={12}><Divider/></Grid>
           <Grid item xs={12} sm={12}>
-          <a href='#kisiEkle' className={classes.kisilerLink}>
+          <a href='#kisiEkle' className={classes.linkStyle}>
             {translate('Trainees')}
           </a>
           </Grid>
