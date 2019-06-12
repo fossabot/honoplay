@@ -8,6 +8,7 @@ import { configure, shallow, mount, render } from 'enzyme';
 import { init } from '@omegabigdata/terasu-api-proxy';
 
 import Adapter from 'enzyme-adapter-react-16';
+configure({ adapter: new Adapter() });
 
 import DropDownInput from '../components/Input/DropDownInputComponent';
 import FileInput from '../components/Input/FileInputComponent';
@@ -15,13 +16,11 @@ import Input from '../components/Input/InputTextComponent';
 
 import {IconButton, Modal, Button} from '@material-ui/core';
 
-configure({ adapter: new Adapter() });
-
 describe('<DropDownInput/>', () => {
     it('should have props for data and labelName', () => {
         const wrapper = shallow (<DropDownInput
-            data={[{'id':0, 'Name':'Design'}]} 
-            labelName= 'Departmant'   
+            data = {[{'id':0, 'Name':'Tasarım'}]} 
+            labelName = 'Departmant'   
         />);
         wrapper.props().data.should.be.defined;
         wrapper.props().labelName.should.be.defined; 
@@ -30,9 +29,9 @@ describe('<DropDownInput/>', () => {
     it('should have options if we have data', async () => {
         await init(3);
         const wrapper = shallow (<DropDownInput
-            data={[{'id':0, 'Name':'Design'},
-                   {'id':1, 'Name':'Software'}]} 
-            labelName= 'Departmant'   
+            data = {[{'id':0, 'Name':'Tasarım'},
+                   {'id':1, 'Name':'Yazılım'}]} 
+            labelName = 'Departmant'   
         />).dive();
         expect(wrapper.find('option').at(1,2).prop('value')).to.equal(0,1);
     })
@@ -40,8 +39,8 @@ describe('<DropDownInput/>', () => {
     it('should open Modal when IconButton click', async () => {
         await init(3);
         const wrapper = mount (<DropDownInput
-            data={[{'id':0, 'Name':'Intern'}]} 
-            labelName= 'Working Status'
+            data = {[{'id':0, 'Name':'Stajyer'}]} 
+            labelName = 'Working Status'
             describable
         />);
         wrapper.find(IconButton).simulate('click');
@@ -52,14 +51,14 @@ describe('<DropDownInput/>', () => {
 describe('<FileInput/>', () => {
     it('should have props for labelName', () => {
         const wrapper = shallow (<FileInput
-            labelName= 'Tenant Logo'
+            labelName = 'Tenant Logo'
         />);
         wrapper.props().labelName.should.be.defined;
     });
 
     it('should have filename cahnge when button is clicked ', () => {
         const wrapper = shallow (<FileInput
-            labelName= "Tenant Logo"
+            labelName = "Tenant Logo"
         />).dive();
         wrapper.find(Button).simulate('click');
         wrapper.setState({filename: 'Image.jpeg'});

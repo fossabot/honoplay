@@ -40,9 +40,9 @@ class ModalComponent extends React.Component {
             open={open}
             TransitionComponent={Transition}
             onClose={handleClickClose}
-            aria-labelledby="alert-dialog-slide-title"           
+            aria-labelledby="dialog-slide-title"           
           >
-            <DialogTitle id="alert-dialog-slide-title">
+            <DialogTitle id="dialog-slide-title">
               {modalTitle}
             </DialogTitle>
             <DialogContent>
