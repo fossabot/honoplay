@@ -1,5 +1,6 @@
 ﻿using Honoplay.AdminWebAPI;
 using Honoplay.Application.Departments.Commands.CreateDepartment;
+using Honoplay.Application.Departments.Queries.GetDepartmentsList;
 using Honoplay.Common.Constants;
 using Honoplay.System.Tests.Extensions;
 using Newtonsoft.Json;
@@ -41,6 +42,28 @@ namespace Honoplay.System.Tests.Controllers
 
             Assert.True(httpResponse.IsSuccessStatusCode);
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+        }
+
+
+        [Fact]
+        public async Task CanGetDepartmentsList()
+        {
+            var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
+
+            var query = new GetDepartmentsListQueryModel
+            {
+                Skip = 0,
+                Take = 10
+            };
+
+            //Get departments request
+            var httpResponse = await client.GetAsync(requestUri: $"api/Department?Skip={query.Skip}&Take={query.Take}");
+
+            httpResponse.EnsureSuccessStatusCode();
+
+            Assert.True(httpResponse.IsSuccessStatusCode);
+            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+
         }
     }
 }
