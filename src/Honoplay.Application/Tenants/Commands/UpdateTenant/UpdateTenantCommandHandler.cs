@@ -1,4 +1,6 @@
-﻿using Honoplay.Domain.Entities;
+﻿using Honoplay.Application._Infrastructure;
+using Honoplay.Common._Exceptions;
+using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using MediatR;
 using Microsoft.Data.Sqlite;
@@ -9,8 +11,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application._Exceptions;
-using Honoplay.Application._Infrastructure;
 
 namespace Honoplay.Application.Tenants.Commands.UpdateTenant
 {
@@ -30,7 +30,11 @@ namespace Honoplay.Application.Tenants.Commands.UpdateTenant
             {
                 try
                 {
-                    var tenant = await _context.Tenants.SingleOrDefaultAsync(x => x.Id == request.Id && x.TenantAdminUsers.Any(y => y.AdminUserId == request.UpdatedBy), cancellationToken);
+                    var tenant = await _context.Tenants.SingleOrDefaultAsync(x =>
+                        x.Id == request.Id
+                        && x.TenantAdminUsers.Any(y =>
+                            y.AdminUserId == request.UpdatedBy),
+                        cancellationToken);
 
                     if (tenant is null)
                     {

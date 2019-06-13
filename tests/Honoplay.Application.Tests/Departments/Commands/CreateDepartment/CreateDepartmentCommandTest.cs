@@ -1,13 +1,16 @@
-﻿using Honoplay.Application._Exceptions;
-using Honoplay.Application.Tenants.Commands.AddDepartment;
+﻿using Honoplay.Application.Departments.Commands.CreateDepartment;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Microsoft.Extensions.Caching.Distributed;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Persistence.CacheManager;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
@@ -15,19 +18,20 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
     public class CreateDepartmentCommandTest : TestBase, IDisposable
     {
 
-
         private readonly HonoplayDbContext _context;
         private readonly CreateDepartmentCommandHandler _commandHandler;
-        private readonly Guid _testTenantGuid;
+        private readonly string _hostName;
         private readonly int _adminUserId;
 
         public CreateDepartmentCommandTest()
         {
-            _context = InitAndGetDbContext(out _testTenantGuid, out _adminUserId);
-            _commandHandler = new CreateDepartmentCommandHandler(_context);
+            var cache = new Mock<IDistributedCache>();
+
+            _context = InitAndGetDbContext(out _hostName, out _adminUserId);
+            _commandHandler = new CreateDepartmentCommandHandler(_context, new CacheManager(cache.Object));
         }
 
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantGuid, out int adminUserId)
+        private HonoplayDbContext InitAndGetDbContext(out string hostName, out int adminUserId)
         {
             var context = GetDbContext();
 
@@ -45,7 +49,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
             var tenant = new Tenant
             {
                 Name = "TestTenant#01",
-                HostName = "test 1"
+                HostName = "localhost"
             };
 
             context.Tenants.Add(tenant);
@@ -60,7 +64,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
             context.SaveChanges();
 
             adminUserId = adminUser.Id;
-            tenantGuid = tenant.Id;
+            hostName = tenant.HostName;
 
             return context;
         }
@@ -71,7 +75,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
             var command = new CreateDepartmentCommand
             {
                 AdminUserId = _adminUserId,
-                TenantId = _testTenantGuid,
+                HostName = _hostName,
                 Departments = new List<string>
                 {
                     "a",
@@ -92,7 +96,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
             var command = new CreateDepartmentCommand
             {
                 AdminUserId = _adminUserId + 1,
-                TenantId = _testTenantGuid,
+                HostName = _hostName,
                 Departments = new List<string>
                 {
                     "a",

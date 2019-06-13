@@ -1,19 +1,18 @@
-﻿using Honoplay.Application._Exceptions;
-using Honoplay.Application._Infrastructure;
+﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Application.Tenants.Commands.CreateTenant;
 using Honoplay.Application.Tenants.Commands.UpdateTenant;
 using Honoplay.Application.Tenants.Queries.GetTenantDetail;
 using Honoplay.Application.Tenants.Queries.GetTenantsList;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Honoplay.Application.Tenants.Commands.AddDepartment;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
@@ -127,33 +126,5 @@ namespace Honoplay.AdminWebAPI.Controllers
                 return StatusCode(HttpStatusCode.InternalServerError.ToInt());
             }
         }
-        [HttpPost("Department")]
-        [ProducesResponseType(StatusCodes.Status409Conflict)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ResponseModel<CreateDepartmentModel>>> PostDepartment([FromBody]CreateDepartmentCommand command)
-        {
-            try
-            {
-                var userId = Claims[ClaimTypes.Sid].ToInt();
-                command.AdminUserId = userId;
-
-                var model = await Mediator.Send(command);
-                return Ok(model);
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
-            catch (ObjectAlreadyExistsException ex)
-            {
-                return Conflict(new ResponseModel<UpdateTenantModel>(new Error(HttpStatusCode.Conflict, ex)));
-            }
-            catch
-            {
-                return StatusCode(HttpStatusCode.InternalServerError.ToInt());
-            }
-        }
-
     }
 }

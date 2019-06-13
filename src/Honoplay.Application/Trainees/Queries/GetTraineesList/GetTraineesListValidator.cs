@@ -1,16 +1,11 @@
 ﻿using FluentValidation;
-using Honoplay.Application.Trainees.Queries.GetTraineeList;
 
-namespace Honoplay.Application.Tenants.Queries.GetTrainersList
+namespace Honoplay.Application.Trainees.Queries.GetTraineeList
 {
     public class GetTraineesListValidator : AbstractValidator<GetTraineesListQueryModel>
     {
         public GetTraineesListValidator()
         {
-            RuleFor(x => x.TenantId)
-                .NotNull()
-                .NotEmpty();
-
             RuleFor(x => x.Skip)
                 .NotNull()
                 .GreaterThan(-1);

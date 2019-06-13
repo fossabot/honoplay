@@ -15,5 +15,7 @@ namespace Honoplay.Application.Trainers.Commands.UpdateTrainer
         public int ProfessionId { get; set; }
         [JsonIgnore]
         public int UpdatedBy { get; set; }
+        [JsonIgnore]
+        public string HostName { get; set; }
     }
 }

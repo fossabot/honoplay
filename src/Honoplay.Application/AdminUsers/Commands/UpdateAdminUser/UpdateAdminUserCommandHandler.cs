@@ -1,16 +1,15 @@
-﻿using Honoplay.Common.Extensions;
+﻿using Honoplay.Application._Infrastructure;
+using Honoplay.Common._Exceptions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using MediatR;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application._Exceptions;
-using Honoplay.Application._Infrastructure;
-using Microsoft.Data.Sqlite;
 
 
 

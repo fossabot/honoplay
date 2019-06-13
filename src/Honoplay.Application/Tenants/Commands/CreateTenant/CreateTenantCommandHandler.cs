@@ -1,4 +1,6 @@
-﻿using Honoplay.Domain.Entities;
+﻿using Honoplay.Application._Infrastructure;
+using Honoplay.Common._Exceptions;
+using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using MediatR;
 using Microsoft.Data.Sqlite;
@@ -8,8 +10,6 @@ using System;
 using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application._Exceptions;
-using Honoplay.Application._Infrastructure;
 
 
 namespace Honoplay.Application.Tenants.Commands.CreateTenant

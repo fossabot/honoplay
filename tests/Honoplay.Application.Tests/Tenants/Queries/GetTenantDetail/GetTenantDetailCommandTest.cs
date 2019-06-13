@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application._Exceptions;
+using Honoplay.Common._Exceptions;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantDetail
@@ -44,7 +44,7 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantDetail
             var tenant = new Tenant
             {
                 Name = "TestTenant#01",
-                HostName = "test 1",
+                HostName = "localhost",
                 CreatedBy = adminUserId,
             };
             context.Tenants.Add(tenant);
@@ -70,7 +70,7 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantDetail
             var tenantModel = await _QueryHandler.Handle(query, CancellationToken.None);
 
             Assert.Null(tenantModel.Errors);
-            Assert.Equal(_context.Tenants.FirstOrDefault().Name, tenantModel.Items.Single().Name, ignoreCase: true);
+            Assert.Equal(_context.Tenants.FirstOrDefault()?.Name, tenantModel.Items.Single().Name, ignoreCase: true);
         }
 
         [Fact]

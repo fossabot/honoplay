@@ -21,7 +21,7 @@ namespace Honoplay.Application.Tests.Tenants.Commands.CreateTenant
             Assert.True(_validator.Validate(new CreateTenantCommand
             {
                 Name = "test name",
-                HostName = "test host name",
+                HostName = "localhost",
                 Description = "test desc",
                 CreatedBy = 1,
                 Logo = new byte[] { 0 },

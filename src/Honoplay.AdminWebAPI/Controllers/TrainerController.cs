@@ -1,18 +1,18 @@
-﻿using System;
-using Honoplay.Application._Exceptions;
-using Honoplay.Application._Infrastructure;
+﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Application.Trainers.Commands.CreateTrainer;
 using Honoplay.Application.Trainers.Commands.UpdateTrainer;
 using Honoplay.Application.Trainers.Queries.GetTrainerDetail;
+using Honoplay.Application.Trainers.Queries.GetTrainersList;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Honoplay.Application.Trainers.Queries.GetTrainersList;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
@@ -30,12 +30,16 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
 
-                var models = await Mediator.Send(new GetTrainerDetailQuery(userId, id));
+                var models = await Mediator.Send(new GetTrainerDetailQuery(userId, id, HonoHost));
 
                 return Ok(models);
 
             }
             catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ArgumentNullException)
             {
                 return NotFound();
             }
@@ -56,7 +60,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
 
-                var models = await Mediator.Send(new GetTrainersListQuery(userId, query.TenantId, query.Skip, query.Take));
+                var models = await Mediator.Send(new GetTrainersListQuery(userId, HonoHost, query.Skip, query.Take));
 
                 return Ok(models);
 
@@ -69,8 +73,6 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 return StatusCode(HttpStatusCode.InternalServerError.ToInt());
             }
-
-
         }
 
         // POST api/<controller>
@@ -81,6 +83,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 command.CreatedBy = userId;
+                command.HostName = HonoHost;
 
                 var model = await Mediator.Send(command);
                 return Created($"api/Trainer/{model.Items.Single().Name}", model);
@@ -106,6 +109,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 command.UpdatedBy = userId;
+                command.HostName = HonoHost;
 
                 var model = await Mediator.Send(command);
                 return Ok(model);

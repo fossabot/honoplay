@@ -1,26 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Threading;
-using System.Threading.Tasks;
-using Honoplay.Application._Exceptions;
-using Honoplay.Application._Infrastructure;
+﻿using Honoplay.Application._Infrastructure;
+using Honoplay.Common._Exceptions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Honoplay.Persistence.CacheService;
 using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Honoplay.Application.Tenants.Commands.AddDepartment
+namespace Honoplay.Application.Departments.Commands.CreateDepartment
 {
     public class CreateDepartmentCommandHandler : IRequestHandler<CreateDepartmentCommand, ResponseModel<CreateDepartmentModel>>
     {
         private readonly HonoplayDbContext _context;
+        private readonly ICacheService _cacheService;
 
-        public CreateDepartmentCommandHandler(HonoplayDbContext context)
+        public CreateDepartmentCommandHandler(HonoplayDbContext context, ICacheService cacheService)
         {
             _context = context;
+            _cacheService = cacheService;
         }
 
         public async Task<ResponseModel<CreateDepartmentModel>> Handle(CreateDepartmentCommand request,
@@ -30,13 +34,19 @@ namespace Honoplay.Application.Tenants.Commands.AddDepartment
 
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
+                var redisKey = $"DepartmentsByHostName{request.HostName}";
                 try
                 {
-                    var isExist = await _context.TenantAdminUsers.AnyAsync(
-                        x => x.TenantId == request.TenantId && x.AdminUserId == request.AdminUserId, cancellationToken);
-                    if (!isExist)
+                    var currentTenant = await _context.Tenants.Include(x => x.Departments)
+                        .FirstOrDefaultAsync(x =>
+                                x.HostName == request.HostName
+                                && x.TenantAdminUsers.Any(y =>
+                                    y.AdminUserId == request.AdminUserId),
+                            cancellationToken);
+
+                    if (currentTenant is null)
                     {
-                        throw new NotFoundException(nameof(Tenant), request.TenantId);
+                        throw new NotFoundException(nameof(Tenant), request.HostName);
                     }
 
                     foreach (var requestDepartment in request.Departments)
@@ -45,7 +55,7 @@ namespace Honoplay.Application.Tenants.Commands.AddDepartment
                         {
                             CreatedBy = request.AdminUserId,
                             Name = requestDepartment,
-                            TenantId = request.TenantId,
+                            TenantId = currentTenant.Id
 
                         };
                         addDepartmentList.Add(department);
@@ -53,13 +63,21 @@ namespace Honoplay.Application.Tenants.Commands.AddDepartment
 
                     await _context.Departments.AddRangeAsync(addDepartmentList, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
+
+                    await _cacheService.RedisCacheUpdateAsync(redisKey,
+                        redisLogic: delegate
+                         {
+                             return currentTenant.Departments.ToList();
+                         },
+                        cancellationToken);
+
                     transaction.Commit();
                 }
                 catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
                 {
                     transaction.Rollback();
-                    throw new ObjectAlreadyExistsException(nameof(Tenant), request.TenantId);
+                    throw new ObjectAlreadyExistsException(nameof(Tenant), request.HostName);
                 }
                 catch (NotFoundException)
                 {

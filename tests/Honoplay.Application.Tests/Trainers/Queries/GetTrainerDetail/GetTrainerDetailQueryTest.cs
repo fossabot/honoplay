@@ -1,8 +1,11 @@
-﻿using Honoplay.Application._Exceptions;
-using Honoplay.Application.Trainers.Queries.GetTrainerDetail;
+﻿using Honoplay.Application.Trainers.Queries.GetTrainerDetail;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Honoplay.Persistence.CacheManager;
+using Microsoft.Extensions.Caching.Distributed;
+using Moq;
 using System;
 using System.Linq;
 using System.Threading;
@@ -20,8 +23,9 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
 
         public GetTrainerDetailQueryTest()
         {
+            var cache = new Mock<IDistributedCache>();
             _context = InitAndGetDbContext(out _adminUserId, out _trainerId);
-            _queryHandler = new GetTrainerDetailQueryHandler(_context);
+            _queryHandler = new GetTrainerDetailQueryHandler(_context, new CacheManager(cache.Object));
         }
 
         //Arrange
@@ -42,7 +46,7 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
             var tenant = new Tenant
             {
                 Name = "TestTenant#01",
-                HostName = "test 1"
+                HostName = "localhost"
             };
 
             context.Tenants.Add(tenant);
@@ -92,7 +96,7 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTrainerDetailQuery(_adminUserId, _trainerId);
+            var query = new GetTrainerDetailQuery(_adminUserId, _trainerId, hostName: "localhost");
 
             var model = await _queryHandler.Handle(query, CancellationToken.None);
 
@@ -104,7 +108,7 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetTrainerDetailQuery(_adminUserId, _trainerId + 1);
+            var query = new GetTrainerDetailQuery(_adminUserId, _trainerId + 1, hostName: "localhost");
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _queryHandler.Handle(query, CancellationToken.None));

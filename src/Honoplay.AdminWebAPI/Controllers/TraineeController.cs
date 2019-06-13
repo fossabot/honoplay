@@ -1,16 +1,16 @@
-﻿using System.Linq;
-using Honoplay.Application._Exceptions;
+﻿using Honoplay.Common._Exceptions;
 using Honoplay.Application._Infrastructure;
 using Honoplay.Application.Trainees.Commands.CreateTrainee;
+using Honoplay.Application.Trainees.Queries.GetTraineeDetail;
 using Honoplay.Application.Trainees.Queries.GetTraineeList;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Honoplay.Application.Tenants.Queries.GetTraineeDetail;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
@@ -32,6 +32,8 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 command.CreatedBy = userId;
+                command.HostName = HonoHost;
+
                 var model = await Mediator.Send(command);
                 return Created($"api/trainee/{model.Items.Single().Name}", model);
             }
@@ -56,6 +58,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 command.UpdatedBy = userId;
+                command.HostName = HonoHost;
 
                 var model = await Mediator.Send(command);
                 return Ok(model);
@@ -84,7 +87,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
 
-                var model = await Mediator.Send(new GetTraineesListQuery(userId, query.TenantId, query.Skip, query.Take));
+                var model = await Mediator.Send(new GetTraineesListQuery(userId, HonoHost, query.Skip, query.Take));
                 return Ok(model);
             }
             catch (NotFoundException)
@@ -107,7 +110,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
 
-                var model = await Mediator.Send(new GetTraineeDetailQuery(userId, id));
+                var model = await Mediator.Send(new GetTraineeDetailQuery(id, userId, HonoHost));
                 return Ok(model);
             }
             catch (NotFoundException)

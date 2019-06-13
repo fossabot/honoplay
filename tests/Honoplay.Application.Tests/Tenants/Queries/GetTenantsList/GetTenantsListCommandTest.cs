@@ -5,7 +5,7 @@ using Honoplay.Persistence;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application._Exceptions;
+using Honoplay.Common._Exceptions;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
@@ -13,14 +13,14 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
     public class GetTenantsListQueryTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly GetTenantsListQueryHandler _QueryHandler;
+        private readonly GetTenantsListQueryHandler _queryHandler;
         private readonly Guid _testTenantGuid;
         private readonly int _adminUserId;
 
         public GetTenantsListQueryTest()
         {
             _context = InitAndGetDbContext(out _testTenantGuid, out _adminUserId);
-            _QueryHandler = new GetTenantsListQueryHandler(_context);
+            _queryHandler = new GetTenantsListQueryHandler(_context);
         }
 
         private HonoplayDbContext InitAndGetDbContext(out Guid tenantGuid, out int adminUserId)
@@ -43,7 +43,7 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
             var tenant = new Tenant
             {
                 Name = "TestTenant#01",
-                HostName = "test 1",
+                HostName = "localhost",
                 CreatedBy = adminUserId,
             };
             context.Tenants.Add(tenant);
@@ -66,7 +66,7 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
         {
             var query = new GetTenantsListQuery(_adminUserId);
 
-            var tenantModel = await _QueryHandler.Handle(query, CancellationToken.None);
+            var tenantModel = await _queryHandler.Handle(query, CancellationToken.None);
 
             Assert.Null(tenantModel.Errors);
         }
@@ -74,18 +74,14 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
         [Fact]
         public async Task ShouldThrowErrorWhenInvalidInformation()
         {
-            var query = new GetTenantsListQuery(111, 10, 10);
+            var query = new GetTenantsListQuery(adminUserId:111, skip:10, take:10);
             await Assert.ThrowsAsync<NotFoundException>(async () =>
-           await _QueryHandler.Handle(query, CancellationToken.None));
+           await _queryHandler.Handle(query, CancellationToken.None));
         }
 
         public void Dispose()
         {
-            if (_context is null)
-            {
-                return;
-            }
-            _context.Dispose();
+            _context?.Dispose();
         }
     }
 }

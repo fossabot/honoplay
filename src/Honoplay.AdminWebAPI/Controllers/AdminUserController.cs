@@ -1,5 +1,5 @@
 ﻿using Honoplay.AdminWebAPI.Interfaces;
-using Honoplay.Application._Exceptions;
+using Honoplay.Common._Exceptions;
 using Honoplay.Application._Infrastructure;
 using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
 using Honoplay.Application.AdminUsers.Commands.RegisterAdminUser;

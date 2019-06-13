@@ -1,8 +1,11 @@
-﻿using Honoplay.Application._Exceptions;
-using Honoplay.Application.Tenants.Queries.GetTraineeDetail;
+﻿using Honoplay.Application.Trainees.Queries.GetTraineeDetail;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Honoplay.Persistence.CacheManager;
+using Microsoft.Extensions.Caching.Distributed;
+using Moq;
 using System;
 using System.Linq;
 using System.Threading;
@@ -17,11 +20,14 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
         private readonly GetTraineeDetailQueryHandler _queryHandler;
         private readonly int _traineeId;
         private readonly int _adminUserId;
+        private readonly string _hostName = "localhost";
 
         public GetTraineeDetailQueryTest()
         {
+            var distributedCacheMock = new Mock<IDistributedCache>();
+
             _context = InitAndGetDbContext(out _adminUserId, out _traineeId);
-            _queryHandler = new GetTraineeDetailQueryHandler(_context);
+            _queryHandler = new GetTraineeDetailQueryHandler(_context, new CacheManager(distributedCacheMock.Object));
         }
 
 
@@ -43,7 +49,7 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
             var tenant = new Tenant
             {
                 Name = "TestTenant#01",
-                HostName = "test 1"
+                HostName = "localhost"
             };
 
             context.Tenants.Add(tenant);
@@ -95,7 +101,7 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTraineeDetailQuery(_adminUserId, _traineeId);
+            var query = new GetTraineeDetailQuery(_traineeId, _adminUserId, _hostName);
 
             var model = await _queryHandler.Handle(query, CancellationToken.None);
 
@@ -108,7 +114,7 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetTraineeDetailQuery(_adminUserId, _traineeId+1);
+            var query = new GetTraineeDetailQuery(_traineeId + 1, _adminUserId, _hostName);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _queryHandler.Handle(query, CancellationToken.None));

@@ -14,5 +14,7 @@ namespace Honoplay.Application.Trainers.Commands.CreateTrainer
         public int ProfessionId { get; set; }
         [JsonIgnore]
         public int CreatedBy { get; set; }
+        [JsonIgnore]
+        public string HostName { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Honoplay.Application._Exceptions
+namespace Honoplay.Common._Exceptions
 {
     public sealed class NotFoundException : Exception
     {

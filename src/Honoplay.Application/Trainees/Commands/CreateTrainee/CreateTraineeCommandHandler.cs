@@ -1,7 +1,8 @@
-﻿using Honoplay.Application._Exceptions;
-using Honoplay.Application._Infrastructure;
+﻿using Honoplay.Application._Infrastructure;
+using Honoplay.Common._Exceptions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Honoplay.Persistence.CacheService;
 using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +17,16 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
     public class CreateTraineeCommandHandler : IRequestHandler<CreateTraineeCommand, ResponseModel<CreateTraineeModel>>
     {
         private readonly HonoplayDbContext _context;
-        public CreateTraineeCommandHandler(HonoplayDbContext context)
+        private readonly ICacheService _cacheService;
+        public CreateTraineeCommandHandler(HonoplayDbContext context, ICacheService cacheService)
         {
             _context = context;
+            _cacheService = cacheService;
         }
         public async Task<ResponseModel<CreateTraineeModel>> Handle(CreateTraineeCommand request, CancellationToken cancellationToken)
         {
+            var redisKey = $"TraineesWithDepartmentsByHostName{request.HostName}";
+
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
@@ -52,6 +57,16 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
 
                     await _context.AddAsync(trainee, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
+
+                    await _cacheService.RedisCacheUpdateAsync(redisKey, delegate
+                    {
+                        return _context.Trainees.Include(x => x.Department)
+                            .Where(x => _context.TenantAdminUsers.Any(y =>
+                                            y.TenantId == x.Department.TenantId &&
+                                            y.AdminUserId == request.CreatedBy))
+                            .ToList();
+                    }, cancellationToken);
+
                     transaction.Commit();
                 }
                 catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||

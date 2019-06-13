@@ -1,6 +1,11 @@
 ﻿using FluentValidation.AspNetCore;
+using Honoplay.AdminWebAPI.Interfaces;
+using Honoplay.AdminWebAPI.Services;
+using Honoplay.Application;
 using Honoplay.Common.Constants;
 using Honoplay.Persistence;
+using Honoplay.Persistence.CacheManager;
+using Honoplay.Persistence.CacheService;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,11 +18,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
-using System.Threading.Tasks;
-using Honoplay.AdminWebAPI.Interfaces;
-using Honoplay.AdminWebAPI.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.IO;
 
 
@@ -38,13 +41,21 @@ namespace Honoplay.AdminWebAPI
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Application.AssemblyIdentifier>());
 
+            //Add RedisCache
+            services.AddDistributedRedisCache(options =>
+            {
+                options.InstanceName = "honoplay";
+                options.Configuration = "127.0.0.1";
+            });
+
             // Add MediatR
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>)); // TODO: çalışan bir nokta görülmediği için kontrol amaçlı kapatıldı
-            services.AddMediatR(Application.AssemblyIdentifier.Get());
+            services.AddMediatR(AssemblyIdentifier.Get());
 
             services.AddScoped<IUserService, UserService>();
+            services.AddSingleton<ICacheService, CacheManager>();
 
             // Add DbContext using SQL Server Provider
             services.AddDbContextPool<HonoplayDbContext>(options =>
@@ -87,9 +98,6 @@ namespace Honoplay.AdminWebAPI
                 };
             });
 
-            //Add session
-            services.AddSession();
-
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
@@ -106,9 +114,9 @@ namespace Honoplay.AdminWebAPI
                 { "Bearer", Enumerable.Empty<string>() },
             });
                 // Configure Swagger to use the xml documentation file
+                var xmlFile = Configuration.GetValue<string>(WebHostDefaults.ContentRootKey) + "/SwaggerDoc.xml";
+                c.IncludeXmlComments(xmlFile);
 
-                var configPath = $"{Path.GetFullPath(WebHostDefaults.ContentRootKey)}".Replace("contentRoot", "SwaggerDoc.xml");
-                c.IncludeXmlComments(configPath);
             });
 
         }

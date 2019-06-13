@@ -20,17 +20,10 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainersList
             Assert.True(_validator.Validate(
                 new GetTrainersListQueryModel
                 {
-                    TenantId = Guid.NewGuid(),
                     Skip = 1,
                     Take = 5
                 }
                 ).IsValid);
-        }
-
-        [Fact]
-        public void ShouldBeNotValidForNullOrEmpty()
-        {
-            _validator.ShouldHaveValidationErrorFor(x => x.TenantId, Guid.Empty);
         }
 
         [Fact]

@@ -1,4 +1,4 @@
-﻿using Honoplay.Application._Exceptions;
+﻿using Honoplay.Common._Exceptions;
 using Honoplay.Application.Trainers.Commands.UpdateTrainer;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
@@ -7,6 +7,9 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Persistence.CacheManager;
+using Microsoft.Extensions.Caching.Distributed;
+using Moq;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainers.Commands.UpdateTrainer
@@ -22,8 +25,9 @@ namespace Honoplay.Application.Tests.Trainers.Commands.UpdateTrainer
 
         public UpdateTrainerCommandTest()
         {
+            var cache = new Mock<IDistributedCache>();
             _context = InitAndGetDbContext(out _professionId, out _departmentId, out _adminUserId, out _trainerId);
-            _commandHandler = new UpdateTrainerCommandHandler(_context);
+            _commandHandler = new UpdateTrainerCommandHandler(_context, new CacheManager(cache.Object));
         }
 
         //Arrange
@@ -44,7 +48,7 @@ namespace Honoplay.Application.Tests.Trainers.Commands.UpdateTrainer
             var tenant = new Tenant
             {
                 Name = "TestTenant#01",
-                HostName = "test 1"
+                HostName = "localhost"
             };
 
             context.Tenants.Add(tenant);

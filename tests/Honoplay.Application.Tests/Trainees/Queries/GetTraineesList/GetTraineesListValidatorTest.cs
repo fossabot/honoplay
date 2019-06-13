@@ -1,5 +1,4 @@
 ﻿using FluentValidation.TestHelper;
-using Honoplay.Application.Tenants.Queries.GetTrainersList;
 using Honoplay.Application.Trainees.Queries.GetTraineeList;
 using System;
 using Xunit;
@@ -20,17 +19,10 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineesList
             Assert.True(_validator.Validate(
                 new GetTraineesListQueryModel
                 {
-                    TenantId = Guid.NewGuid(),
                     Skip = 1,
                     Take = 5
                 }
             ).IsValid);
-        }
-
-        [Fact]
-        public void ShouldBeNotValidForNullOrEmpty()
-        {
-            _validator.ShouldHaveValidationErrorFor(x => x.TenantId, Guid.Empty);
         }
 
         [Fact]
