@@ -3,7 +3,6 @@ using Honoplay.Persistence.CacheService;
 using Microsoft.Extensions.Caching.Distributed;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,7 +17,7 @@ namespace Honoplay.Persistence.CacheManager
             _distributedCache = distributedCache;
         }
 
-        public async Task<T> RedisCacheAsync<T>(string redisKey, Func<IDistributedCache, T> redisLogic, CancellationToken cancellationToken)
+        public async Task<T> RedisCacheAsync<T>(string redisKey, Func<IDistributedCache, T> redisLogic, CancellationToken cancellationToken) where T : class
         {
             if (string.IsNullOrEmpty(redisKey))
             {
@@ -34,7 +33,7 @@ namespace Honoplay.Persistence.CacheManager
             }
             else
             {
-                redisList = redisLogic.Invoke(_distributedCache);
+                redisList = redisLogic?.Invoke(_distributedCache);
                 if (redisList is null)
                 {
                     throw new NotFoundException();
@@ -46,18 +45,18 @@ namespace Honoplay.Persistence.CacheManager
             return redisList;
         }
 
-        public async Task RedisCacheUpdateAsync<T>(string redisKey, Func<IDistributedCache, IList<T>> redisLogic, CancellationToken cancellationToken) where T : new()
+        public async Task RedisCacheUpdateAsync<T>(string redisKey, Func<IDistributedCache, T> redisLogic, CancellationToken cancellationToken) where T : class
         {
             if (string.IsNullOrEmpty(redisKey))
             {
                 throw new ArgumentNullException(nameof(redisKey));
             }
-
             var databaseList = redisLogic?.Invoke(_distributedCache);
-            if (databaseList != null && databaseList.Count > 0)
+            if (databaseList != null)
             {
                 await _distributedCache.SetStringAsync(redisKey, JsonConvert.SerializeObject(databaseList), cancellationToken);
             }
+
         }
     }
 }
