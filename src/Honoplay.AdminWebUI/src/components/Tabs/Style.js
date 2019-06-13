@@ -1,4 +1,4 @@
-import {green, deepPurple} from '@material-ui/core/colors';
+import {green, deepPurple, amber} from '@material-ui/core/colors';
 import {createMuiTheme} from '@material-ui/core';
 export const Style = (theme) => ({
     root: {
@@ -57,6 +57,29 @@ export const Style = (theme) => ({
       left: -4,
       zIndex: 1,
     },
+    success: {
+      backgroundColor: green[600],
+    },
+    error: {
+      backgroundColor: theme.palette.error.dark,
+    },
+    info: {
+      backgroundColor: theme.palette.primary.dark,
+    },
+    warning: {
+      backgroundColor: amber[700],
+    },
+    snackbarIcon: {
+      fontSize: 20,
+    },
+    snackbarIconVariant: {
+      opacity: 0.9,
+      marginRight: theme.spacing.unit,
+    },
+    snackbarMessage: {
+      display: 'flex',
+      alignItems: 'center',
+    }
 });
 
 export const theme = createMuiTheme({
@@ -70,3 +93,5 @@ export const theme = createMuiTheme({
     useNextVariants: true,
   },
 });
+
+

@@ -116,7 +116,7 @@ describe('<TableMenu/>', () => {
     expect(wrapper.state().menu).to.equal(null);
   })
 
-  it('should open menu when Iconbutton click', () => {
+  it('should open menu when Iconbutton click', async () => {
     const wrapper = mount (<TableMenu />);
     wrapper.find(IconButton).simulate('click');
     expect(wrapper.find(Menu).prop('open')).to.equal(true);
