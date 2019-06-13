@@ -17,7 +17,7 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
         [Fact]
         public void ShouldBeValid()
         {
-            Assert.True(_validator.Validate(new GetTraineeDetailQuery( id: 1, adminUserId: 1, _hostName)).IsValid);
+            Assert.True(_validator.Validate(new GetTraineeDetailQuery( id: 1, adminUserId: 1, hostName:_hostName)).IsValid);
         }
 
         [Fact]
