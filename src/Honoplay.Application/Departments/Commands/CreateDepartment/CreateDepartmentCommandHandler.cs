@@ -65,7 +65,7 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
                     await _context.SaveChangesAsync(cancellationToken);
 
                     await _cacheService.RedisCacheUpdateAsync(redisKey,
-                        redisLogic: delegate
+                        delegate
                          {
                              return currentTenant.Departments.ToList();
                          },
