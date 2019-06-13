@@ -46,13 +46,14 @@ namespace Honoplay.Persistence.CacheManager
             return redisList;
         }
 
-        public async Task RedisCacheUpdateAsync<T>(string redisKey, Func<IDistributedCache, IList<T>> redisLogic, CancellationToken cancellationToken)
+        public async Task RedisCacheUpdateAsync<T>(string redisKey, Func<IDistributedCache, IList<T>> redisLogic, CancellationToken cancellationToken) where T : new()
         {
             if (string.IsNullOrEmpty(redisKey))
             {
                 throw new ArgumentNullException(nameof(redisKey));
             }
-            var databaseList = redisLogic.Invoke(_distributedCache);
+
+            var databaseList = redisLogic?.Invoke(_distributedCache);
             if (databaseList != null && databaseList.Count > 0)
             {
                 await _distributedCache.SetStringAsync(redisKey, JsonConvert.SerializeObject(databaseList), cancellationToken);

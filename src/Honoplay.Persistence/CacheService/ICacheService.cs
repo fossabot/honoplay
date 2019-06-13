@@ -12,6 +12,6 @@ namespace Honoplay.Persistence.CacheService
             CancellationToken cancellationToken);
 
         Task RedisCacheUpdateAsync<T>(string redisKey, Func<IDistributedCache, IList<T>> redisLogic,
-            CancellationToken cancellationToken);
+            CancellationToken cancellationToken) where T : new();
     }
 }
