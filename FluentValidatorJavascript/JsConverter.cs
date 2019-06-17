@@ -9,11 +9,11 @@ namespace FluentValidatorJavascript
     public static class JsConverter
     {
 
-        private static ILookup<Type, Type> _typeLookup;
+        private static readonly ILookup<Type, Type> TypeLookup;
 
         static JsConverter()
         {
-            _typeLookup = typeof(JsConverter).Assembly.GetTypes()
+            TypeLookup = typeof(JsConverter).Assembly.GetTypes()
                 .Where(t => t.GetInterface(nameof(IJsConverterValidator)) != null && !t.IsAbstract)
                 .ToLookup(t => t.BaseType?.GenericTypeArguments[0]);
         }
@@ -36,7 +36,7 @@ namespace FluentValidatorJavascript
                 {
                     var errorMessage = element.Options.ErrorMessageSource.GetString(validationContext);
 
-                    foreach (var converterType in _typeLookup[element.GetType()])
+                    foreach (var converterType in TypeLookup[element.GetType()])
                     {
                         if (Activator.CreateInstance(converterType, args: element) is IJsConverterValidator converter) sb.AppendLine(converter.GetJs(propertyName, errorMessage));
                     }

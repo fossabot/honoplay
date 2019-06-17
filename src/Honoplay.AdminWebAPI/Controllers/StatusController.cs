@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Caching.Distributed;
-using System;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {

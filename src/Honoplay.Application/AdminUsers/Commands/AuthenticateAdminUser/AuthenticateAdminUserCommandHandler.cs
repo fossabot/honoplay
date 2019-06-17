@@ -1,4 +1,6 @@
-﻿using Honoplay.Common._Exceptions;
+﻿using FluentValidation;
+using FluentValidatorJavascript;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Persistence;
 using MediatR;
@@ -6,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,6 +25,24 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
 
         public async Task<AdminUserAuthenticateModel> Handle(AuthenticateAdminUserCommand request, CancellationToken cancellationToken)
         {
+            var assembly = AssemblyIdentifier.Get();
+            var currentAssemlyTypes = assembly.GetTypes();
+            var query = currentAssemlyTypes.Where(x =>
+                  (x.BaseType?.IsGenericType ?? false)
+                  && x.BaseType.GetGenericTypeDefinition() == typeof(AbstractValidator<>))
+             .Select(x => x);
+
+            var stringBuilder = new StringBuilder();
+
+            foreach (var element in query)
+            {
+                dynamic validator = Activator.CreateInstance(element);
+                stringBuilder.Append(JsConverter.GetJavascript(validator));
+
+            }
+
+            //TODO: Terasuya hata mesajları eklenecek, hata mesajlarını dönebilmek adına response model'e yeni bir method yazılacak, JsConverter içine terasudan hata mesajları eklenecek.
+
             var adminUser = await _context.AdminUsers
                                     .SingleOrDefaultAsync(u => u.Email.Equals(request.Email, StringComparison.InvariantCultureIgnoreCase), cancellationToken: cancellationToken);
 
