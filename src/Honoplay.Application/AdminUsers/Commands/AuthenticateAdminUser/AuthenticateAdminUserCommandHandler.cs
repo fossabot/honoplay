@@ -28,7 +28,9 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
             //TODO: Terasuya hata mesajları eklenecek, JsConverter içine terasudan hata keyleri eklenecek.
 
             var adminUser = await _context.AdminUsers
-                                    .SingleOrDefaultAsync(u => u.Email.Equals(request.Email, StringComparison.InvariantCultureIgnoreCase), cancellationToken: cancellationToken);
+                                    .SingleOrDefaultAsync(u =>
+                                            u.Email.Equals(request.Email, StringComparison.InvariantCultureIgnoreCase),
+                                    cancellationToken);
 
             if (adminUser is null)
             {
