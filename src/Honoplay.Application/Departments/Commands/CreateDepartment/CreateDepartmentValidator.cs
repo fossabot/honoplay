@@ -2,7 +2,7 @@
 
 namespace Honoplay.Application.Departments.Commands.CreateDepartment
 {
-    public class CreateDepartmentValidator : AbstractValidator<CreateDepartmentCommand>,IJavascriptValidator
+    public class CreateDepartmentValidator : AbstractValidator<CreateDepartmentCommand>
     {
         public CreateDepartmentValidator()
         {

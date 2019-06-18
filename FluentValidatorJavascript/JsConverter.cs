@@ -23,7 +23,7 @@ namespace FluentValidatorJavascript
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine("function validate(obj) { \r\n");
+            sb.AppendLine(validator.GetType().Name + ":function (obj) { \r\n");
             sb.AppendLine("var errors = [];");
             var props = typeof(T).GetProperties();
 
@@ -34,7 +34,9 @@ namespace FluentValidatorJavascript
 
                 foreach (var element in validator.CreateDescriptor().GetValidatorsForMember(propertyName))
                 {
-                    var errorMessage = element.Options.ErrorMessageSource.GetString(validationContext);
+                    var errorMessage = element.Options.ErrorMessageSource
+                        .GetString(validationContext)
+                        .Replace(oldValue: "{PropertyName}", newValue: propertyName);
 
                     foreach (var converterType in TypeLookup[element.GetType()])
                     {
@@ -42,7 +44,7 @@ namespace FluentValidatorJavascript
                     }
                 }
             }
-            sb.AppendLine("return errors;\r\n}");
+            sb.AppendLine("return errors;\r\n},");
 
             return sb.ToString();
         }
