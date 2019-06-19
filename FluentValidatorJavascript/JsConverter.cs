@@ -23,8 +23,7 @@ namespace FluentValidatorJavascript
         {
             var sb = new StringBuilder();
 
-            sb.AppendLine(validator.GetType().Name + ":function (obj) { \r\n");
-            sb.AppendLine("var errors = [];");
+            sb.AppendLine(validator.GetType().Name + ":function (obj) { \r\n var errors = {}; \r\n Object.keys(obj).forEach(element => {\r\n errors[element] = []; \r\n });");
             var props = typeof(T).GetProperties();
 
             foreach (var property in props)

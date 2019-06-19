@@ -32,10 +32,10 @@ namespace FluentValidatorJavascript.JsConveterValidators
                                 bEven = !bEven;
                                 }}
                             if (!(nCheck % 10) == 0) {{ 
-                                    errors.push(""{errorMessage}""); 
+                                    errors.{propertyName}.push(""{errorMessage}""); 
                                   }}
                         }} else {{
-                        errors.push(""{errorMessage}""); 
+                        errors.{propertyName}.push(""{errorMessage}""); 
                         }}
                 }}";
         }

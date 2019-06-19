@@ -17,7 +17,7 @@ namespace FluentValidatorJavascript.JsConveterValidators
 
             return
                 $@"if (obj.{propertyName} !== null &&obj.{propertyName}.length > {_validator.Max}) {{
-                    errors.push(""{errorMessage}"");
+                    errors.{propertyName}.push(""{errorMessage}"");
                 }};";
         }
     }

@@ -15,7 +15,7 @@ namespace FluentValidatorJavascript.JsConveterValidators
 
             return
                 $@"if(!obj.{propertyName} || 0 === obj.{propertyName}.length) {{
-                            errors.push(""{errorMessage}"");
+                            errors.{propertyName}.push(""{errorMessage}"");
                 }}";
         }
     }

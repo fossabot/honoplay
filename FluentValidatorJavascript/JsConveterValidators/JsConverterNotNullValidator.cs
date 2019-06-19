@@ -16,7 +16,7 @@ namespace FluentValidatorJavascript.JsConveterValidators
 
             return
                 $@"if (obj.{propertyName} == null){{
-                    errors.push(""{errorMessage}"");
+                    errors.{propertyName}.push(""{errorMessage}"");
                 }}";
         }
 

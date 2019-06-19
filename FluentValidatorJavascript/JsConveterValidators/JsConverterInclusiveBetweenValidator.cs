@@ -18,7 +18,7 @@ namespace FluentValidatorJavascript.JsConveterValidators
 
             return
                 $@"if (obj.{propertyName} !== null && parseInt(obj.{propertyName}) < {_validator.From} || parseInt(obj.{propertyName})> {_validator.To}){{
-                        errors.push(""{errorMessage}"");
+                        errors.{propertyName}.push(""{errorMessage}"");
                 }}";
         }
     }

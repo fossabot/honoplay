@@ -13,11 +13,9 @@ namespace FluentValidatorJavascript.JsConveterValidators
 
         public override string GetJs(string propertyName, string errorMessage)
         {
-
-
             return
                 $@"if (obj.{propertyName} !== null && obj.{propertyName}.length < {_validator.Min}){{
-                    errors.push(""{errorMessage}"");
+                    errors.{propertyName}.push(""{errorMessage}"");
                 }};";
         }
     }
