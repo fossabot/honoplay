@@ -21,8 +21,17 @@ namespace Honoplay.Application._Infrastructure
             stringBuilder.AppendLine("var validations = {");
             foreach (var element in query)
             {
-                dynamic validator = Activator.CreateInstance(element);
-                stringBuilder.Append(JsConverter.GetJavascript(validator));
+                try
+                {
+                    dynamic validator = Activator.CreateInstance(element);
+                    stringBuilder.Append(JsConverter.GetJavascript(validator));
+                }
+                catch (Exception e)
+                {
+                    
+                    Console.WriteLine(e);
+                    throw;
+                }
 
             }
             stringBuilder.AppendLine("}");

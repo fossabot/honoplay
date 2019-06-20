@@ -1,8 +1,10 @@
 ﻿using FluentValidation;
 using FluentValidatorJavascript.IJsConverterValidators;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FluentValidation.Validators;
 
 namespace FluentValidatorJavascript
 {
@@ -28,18 +30,33 @@ namespace FluentValidatorJavascript
 
             foreach (var property in props)
             {
+
                 var propertyName = property.Name;
-                var validationContext = new ValidationContext(property);
 
                 foreach (var element in validator.CreateDescriptor().GetValidatorsForMember(propertyName))
                 {
-                    var errorMessage = element.Options.ErrorMessageSource
-                        .GetString(validationContext)
-                        .Replace(oldValue: "{PropertyName}", newValue: propertyName);
+                    var parameters = new Dictionary<string, object>();
+
+                    var errorMessage = element.GetType().Name;
+                    switch (element)
+                    {
+                        case IComparisonValidator cv:
+                            parameters.Add(nameof(cv.ValueToCompare), cv.ValueToCompare);
+                            break;
+                        case IBetweenValidator bv:
+                            parameters.Add(nameof(bv.From), bv.From);
+                            parameters.Add(nameof(bv.To), bv.To);
+                            break;
+                        case ILengthValidator lv:
+                            parameters.Add(nameof(lv.Min), lv.Min);
+                            parameters.Add(nameof(lv.Max), lv.Max);
+                            break;
+                    }
+
 
                     foreach (var converterType in TypeLookup[element.GetType()])
                     {
-                        if (Activator.CreateInstance(converterType, args: element) is IJsConverterValidator converter) sb.AppendLine(converter.GetJs(propertyName, errorMessage));
+                        if (Activator.CreateInstance(converterType, args: element) is IJsConverterValidator converter) sb.AppendLine(converter.GetJs(propertyName, errorMessage, parameters));
                     }
                 }
             }

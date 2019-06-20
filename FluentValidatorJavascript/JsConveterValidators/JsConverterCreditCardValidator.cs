@@ -1,4 +1,6 @@
-﻿using FluentValidation.Validators;
+﻿using System.Collections;
+using System.Collections.Generic;
+using FluentValidation.Validators;
 using FluentValidatorJavascript.IJsConverterValidators;
 
 namespace FluentValidatorJavascript.JsConveterValidators
@@ -9,7 +11,7 @@ namespace FluentValidatorJavascript.JsConveterValidators
         {
         }
 
-        public override string GetJs(string propertyName, string errorMessage)
+        public override string GetJs(string propertyName, string errorKey, IDictionary<string, object> parameters)
         {
             return
                 $@"var value = obj.{propertyName};
@@ -32,10 +34,10 @@ namespace FluentValidatorJavascript.JsConveterValidators
                                 bEven = !bEven;
                                 }}
                             if (!(nCheck % 10) == 0) {{ 
-                                    errors.{propertyName}.push(""{errorMessage}""); 
+                                        errors.{propertyName}.push({{'propertyName':'{propertyName}','errorKey':'{errorKey}'}});
                                   }}
                         }} else {{
-                        errors.{propertyName}.push(""{errorMessage}""); 
+                            errors.{propertyName}.push({{'propertyName':'{propertyName}','errorKey':'{errorKey}'}});
                         }}
                 }}";
         }
