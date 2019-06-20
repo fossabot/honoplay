@@ -19,6 +19,7 @@ namespace Honoplay.Application._Infrastructure
 
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("var validations = {");
+
             foreach (var element in query)
             {
                 try
@@ -34,7 +35,7 @@ namespace Honoplay.Application._Infrastructure
                 }
 
             }
-            stringBuilder.AppendLine("}");
+            stringBuilder.AppendLine("};");
             return stringBuilder.ToString();
         }
     }

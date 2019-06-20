@@ -37,7 +37,7 @@ namespace FluentValidatorJavascript
                 {
                     var parameters = new Dictionary<string, object>();
 
-                    var errorMessage = element.GetType().Name;
+                    var errorKey = element.GetType().Name;
                     switch (element)
                     {
                         case IComparisonValidator cv:
@@ -56,7 +56,7 @@ namespace FluentValidatorJavascript
 
                     foreach (var converterType in TypeLookup[element.GetType()])
                     {
-                        if (Activator.CreateInstance(converterType, args: element) is IJsConverterValidator converter) sb.AppendLine(converter.GetJs(propertyName, errorMessage, parameters));
+                        if (Activator.CreateInstance(converterType, args: element) is IJsConverterValidator converter) sb.AppendLine(converter.GetJs(propertyName, errorKey, parameters));
                     }
                 }
             }

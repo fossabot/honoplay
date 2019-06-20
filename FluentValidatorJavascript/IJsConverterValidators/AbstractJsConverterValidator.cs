@@ -20,7 +20,7 @@ namespace FluentValidatorJavascript.IJsConverterValidators
         {
             var sb = new StringBuilder();
 
-            sb.Append($"{{'propertyName':'{propertyName}','errorKey':'{errorKey}','parameters':{{");
+            sb.Append($"{{'errorKey':'{errorKey}','parameters':{{");
             sb.Append(string.Join(",", parameters.Select(parameter => $"'{parameter.Key}':'{parameter.Value}'")));
             sb.Append("}}");
 
