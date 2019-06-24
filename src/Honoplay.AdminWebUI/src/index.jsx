@@ -10,11 +10,11 @@ import store from './redux/store';
 init(3);
 
 render(
-    <Router>
-        <Provider store={store}>
+    <Provider store={store}>
+        <Router>
             <Route exact path="/" component={Login} />
             <Route path="/home" component={App} />
-        </Provider>
-    </Router>,
+        </Router>
+    </Provider>,
     document.getElementById('root'),
 );
