@@ -2,30 +2,19 @@ import React from 'react';
 import { render } from 'react-dom';
 import App from './App';
 import Login from './views/Login/Login';
-
 import { init } from '@omegabigdata/terasu-api-proxy';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import store from './redux/store';
+
 init(3);
 
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import rootReducer from './reducers/rootReducers';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import { Provider } from 'react-redux';
-import { BrowserRouter, Route } from 'react-router-dom';
-
-const store = createStore(
-    rootReducer,
-    composeWithDevTools(
-        applyMiddleware(thunk)
-    )
-);
-
 render(
-    <BrowserRouter>
-        <Provider store={store}>
+    <Provider store={store}>
+        <Router>
             <Route exact path="/" component={Login} />
             <Route path="/home" component={App} />
-        </Provider>
-    </BrowserRouter>,
+        </Router>
+    </Provider>,
     document.getElementById('root'),
 );

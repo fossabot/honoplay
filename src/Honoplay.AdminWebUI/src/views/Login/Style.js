@@ -26,7 +26,7 @@ export const Style = (theme) => ({
       width: '100%', 
       marginTop: theme.spacing.unit,
     },
-    submit: {
+    button: {
       marginTop: theme.spacing.unit * 3,
             color: theme.palette.getContrastText(deepPurple[500]),
       backgroundColor: deepPurple[700],
@@ -35,10 +35,12 @@ export const Style = (theme) => ({
       },
       textTransform: 'capitalize',
     },
-    margin: {
+    marginInput: {
       margin: theme.spacing.unit,
     },
-      
+    progress: {
+      margin: theme.spacing.unit * 2,
+    },    
   });
 
 import {createMuiTheme} from '@material-ui/core';
