@@ -1,37 +1,61 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
-import { withStyles } from '@material-ui/core/styles'; 
-import {Grid} from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core';
 import Style from '../Style';
 import Input from '../../components/Input/InputTextComponent';
-import FileInput from '../../components/Input/FileInputComponent';
+import ImageInput from '../../components/Input/ImageInputComponent';
 
 class BasicKnowledge extends React.Component {
 
-constructor(props) {
-  super(props);
-}
+  constructor(props) {
+    super(props);
+  }
 
-render() {
-  const { classes } = this.props;
-  
+  tenantModel = {
+    name: null,
+    description: null,
+    logo: null,
+    hostName: "localhosttt"
+  }
+
+
+  render() {
+    const { classes } = this.props;
     return (
-        <div className={classes.root}>
+      <div className={classes.root}>
         <Grid container spacing={40}>
-          <Grid item xs={12} sm={12}/>
+          <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12}>
-            <Input 
-              labelName={translate('TenantName')}              
+            <Input
+              onChange={value => {
+                this.tenantModel.name = value;
+                this.props.basicTenantModel(this.tenantModel)
+              }}
+              labelName={translate('TenantName')}
               inputType="text"
+              name="TenantName"
             />
-            <FileInput 
+            <Input
+              onChange={value => {
+                this.tenantModel.description = value;
+                this.props.basicTenantModel(this.tenantModel)
+              }}
+              labelName={translate('Description')}
+              multiline
+              inputType="text"
+              name="Description"
+            />
+            <ImageInput
+              selectedImage={value => { this.tenantModel.logo = value; 
+                this.props.basicTenantModel(this.tenantModel);}}
               labelName={translate('TenantLogo')}
             />
           </Grid>
         </Grid>
-        </div>
-        );
-    }
+      </div>
+    );
+  }
 }
 
 export default withStyles(Style)(BasicKnowledge);

@@ -25,7 +25,9 @@ class Login extends React.Component {
 
   componentDidUpdate(prevProps) {
     const { token, errorMessage } = this.props;
+
     if (token !== prevProps.token) {
+      console.log(token);
       if(token) {
         this.props.history.push("/home");
       }
