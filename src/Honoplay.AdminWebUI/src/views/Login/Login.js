@@ -1,15 +1,23 @@
-import React from 'react';
-import { translate } from '@omegabigdata/terasu-api-proxy';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { Paper, Checkbox, 
-         FormControlLabel, FormControl, Button, 
-         Avatar, MuiThemeProvider,TextField, 
-         Typography, CircularProgress } from '@material-ui/core';
-import withStyles from '@material-ui/core/styles/withStyles';
-import { Style, theme} from './Style';
-import { connect } from 'react-redux';
-import { fetchToken } from '@omegabigdata/honoplay-redux-helper/Src/actions/AdminUser';
+import React from "react";
+import { translate } from "@omegabigdata/terasu-api-proxy";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import {
+  Paper,
+  Checkbox,
+  FormControlLabel,
+  FormControl,
+  Button,
+  Avatar,
+  MuiThemeProvider,
+  TextField,
+  Typography,
+  CircularProgress
+} from "@material-ui/core";
+import withStyles from "@material-ui/core/styles/withStyles";
+import { Style, theme } from "./Style";
+import { connect } from "react-redux";
+import { fetchToken } from "@omegabigdata/honoplay-redux-helper/Src/actions/AdminUser";
 
 class Login extends React.Component {
   constructor(props) {
@@ -17,8 +25,8 @@ class Login extends React.Component {
     this.state = {
       email: " ",
       password: " ",
-      error: false,
-    }
+      error: false
+    };
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -28,14 +36,14 @@ class Login extends React.Component {
 
     if (token !== prevProps.token) {
       console.log(token);
-      if(token) {
+      if (token) {
+        localStorage.setItem("token", token.token);
         this.props.history.push("/home");
       }
     }
-    if (errorMessage !== prevProps.errorMessage)
-    {
-      if(errorMessage) {
-        this.setState({error: !this.state.error})
+    if (errorMessage !== prevProps.errorMessage) {
+      if (errorMessage) {
+        this.setState({ error: !this.state.error });
       }
     }
   }
@@ -48,14 +56,14 @@ class Login extends React.Component {
     });
   }
 
-  handleClick () {
+  handleClick() {
     const { email, password } = this.state;
-    this.props.fetchToken( email, password );
+    this.props.fetchToken(email, password);
     this.setState({
-      email: '',
-      password: '',
+      email: "",
+      password: "",
       error: false
-    })
+    });
   }
 
   render() {
@@ -66,59 +74,58 @@ class Login extends React.Component {
         <main className={classes.main}>
           <CssBaseline />
           <Paper className={classes.paper}>
-            { isTokenLoading ? 
-                <CircularProgress 
-                  className={classes.progress}  
-                  disableShrink={true} 
-                  color="primary" 
-                /> 
-              :
+            {isTokenLoading ? (
+              <CircularProgress
+                className={classes.progress}
+                disableShrink={true}
+                color="primary"
+              />
+            ) : (
               <Avatar className={classes.avatar}>
-                <LockOutlinedIcon />           
+                <LockOutlinedIcon />
               </Avatar>
-            }
+            )}
             <Typography variant="h5" className={classes.typography}>
-             {translate('Login')}
+              {translate("Login")}
             </Typography>
             <form className={classes.form}>
-              <FormControl margin="normal"  fullWidth>
-                  <TextField
-                    error = { error && true }
-                    label={translate('EmailAddress')}
-                    id="email" 
-                    name="email" 
-                    autoComplete="email" 
-                    autoFocus
-                    onChange={this.handleChange}
-                    value={email}
-                  />
+              <FormControl margin="normal" fullWidth>
+                <TextField
+                  error={error && true}
+                  label={translate("EmailAddress")}
+                  id="email"
+                  name="email"
+                  autoComplete="email"
+                  autoFocus
+                  onChange={this.handleChange}
+                  value={email}
+                />
               </FormControl>
-              <FormControl margin="normal"  fullWidth>
-                  <TextField
-                    error = { error && true }
-                    className={classes.marginInput}
-                    label={translate('Password')}
-                    name="password" 
-                    type="password" 
-                    id="password" 
-                    autoComplete="current-password"
-                    onChange={this.handleChange} 
-                    value={password}
-                  />
+              <FormControl margin="normal" fullWidth>
+                <TextField
+                  error={error && true}
+                  className={classes.marginInput}
+                  label={translate("Password")}
+                  name="password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={this.handleChange}
+                  value={password}
+                />
               </FormControl>
               <FormControlLabel
-                control={<Checkbox value="remember" 
-                                   color="primary"/>}
-                label={translate('RememberMe')}
+                control={<Checkbox value="remember" color="primary" />}
+                label={translate("RememberMe")}
               />
               <Button
                 fullWidth
                 variant="contained"
                 color="secondary"
                 className={classes.button}
-                onClick = {this.handleClick }              
+                onClick={this.handleClick}
               >
-                {translate('Login')}
+                {translate("Login")}
               </Button>
             </form>
           </Paper>
@@ -128,16 +135,15 @@ class Login extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  const { isTokenLoading, 
-          token, 
-          errorMessage } = state.auth;
-  return { isTokenLoading, 
-           token, 
-           errorMessage }
-}
+  const { isTokenLoading, token, errorMessage } = state.auth;
+  return { isTokenLoading, token, errorMessage };
+};
 
 const mapDispatchToProps = {
   fetchToken
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(withStyles(Style)(Login));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(Style)(Login));
