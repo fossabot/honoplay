@@ -15,7 +15,8 @@ namespace FluentValidatorJavascript.JsConveterValidators
         public override string GetJs(string propertyName, string errorKey, IDictionary<string, object> parameters)
         {
             return
-                $@"if (obj.{propertyName} !== null && obj.{propertyName}.length < {_validator.Min}){{
+                $@"if ('{propertyName}' in obj && obj.{propertyName} && obj.{propertyName}.length < {_validator.Min}){{
+                    errors.{propertyName} = [];
                     errors.{propertyName}.push({GetRow(propertyName,errorKey, parameters)});
                 }};";
         }

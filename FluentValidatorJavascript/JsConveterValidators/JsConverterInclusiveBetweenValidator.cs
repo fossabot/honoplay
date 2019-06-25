@@ -15,9 +15,10 @@ namespace FluentValidatorJavascript.JsConveterValidators
         public override string GetJs(string propertyName, string errorKey, IDictionary<string, object> parameters)
         {
             return
-                $@"if (obj.{propertyName} !== null && parseInt(obj.{propertyName}) < {_validator.From} || parseInt(obj.{propertyName})> {_validator.To}){{
-                                            errors.{propertyName}.push({GetRow(propertyName,errorKey, parameters)});
-                }}";
+                $@"if ('{propertyName}' in obj && obj.{propertyName}&& parseInt(obj.{propertyName}) < {_validator.From} || parseInt(obj.{propertyName})> {_validator.To}){{
+                        errors.{propertyName}= new Array();
+                        errors.{propertyName}.push({GetRow(propertyName,errorKey, parameters)});
+                }};";
         }
     }
 }

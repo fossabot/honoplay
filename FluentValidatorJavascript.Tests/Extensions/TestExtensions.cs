@@ -1,9 +1,10 @@
 ﻿using FluentValidation;
+using FluentValidation.Results;
 using FluentValidatorJavascript;
 using Jint;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using FluentValidation.Results;
 
 namespace FluentValidator.Tests.Extensions
 {
@@ -11,11 +12,27 @@ namespace FluentValidator.Tests.Extensions
     {
         public static List<string> GetActualErrors<T>(T seedData, AbstractValidator<T> abstractValidator)
         {
+            var errorsList = new List<string>();
+
+            var abstractValidatorName = abstractValidator.GetType().Name;
             var js = JsConverter.GetJavascript(abstractValidator);
+
+            js = js.Replace(abstractValidatorName + ":function", "function " + abstractValidatorName)
+                        .Remove(js.LastIndexOf(",", StringComparison.Ordinal));
 
             var engine = new Engine().Execute(js);
 
-            return (engine.Invoke("validate", seedData).ToObject() as object[]).Cast<string>().ToList();
+            dynamic result = (engine.Invoke(abstractValidatorName, seedData)
+                .ToObject() as IDictionary<string, object>)?
+                .Values
+                .FirstOrDefault();
+
+            if (result != null)
+            {
+                errorsList.Add(result[0].errorKey.ToString());
+            }
+
+            return errorsList;
 
         }
         public static int GetActualErrorCount<T>(T seedData, AbstractValidator<T> abstractValidator)
@@ -23,7 +40,8 @@ namespace FluentValidator.Tests.Extensions
             return GetActualErrors(seedData, abstractValidator).Count;
 
         }
-        public static IList<ValidationFailure> GetExpectErrors<T>(T seedData, AbstractValidator<T> abstractValidator)
+
+        private static IList<ValidationFailure> GetExpectErrors<T>(T seedData, AbstractValidator<T> abstractValidator)
         {
             return abstractValidator.Validate(seedData).Errors;
         }

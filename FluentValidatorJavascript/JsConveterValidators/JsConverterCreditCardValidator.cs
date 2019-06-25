@@ -14,8 +14,9 @@ namespace FluentValidatorJavascript.JsConveterValidators
         public override string GetJs(string propertyName, string errorKey, IDictionary<string, object> parameters)
         {
             return
-                $@"var value = obj.{propertyName};
-                    if (value !== null) {{
+                $@"
+                    if ('{propertyName}' in obj && obj.{propertyName}) {{
+                        var value = obj.{propertyName};
                         if (/[0-9-\s]+/.test(value)) {{
 
                             var nCheck = 0, nDigit = 0, bEven = false;
@@ -34,9 +35,11 @@ namespace FluentValidatorJavascript.JsConveterValidators
                                 bEven = !bEven;
                                 }}
                             if (!(nCheck % 10) == 0) {{ 
+                                        errors.{propertyName}= new Array();
                                         errors.{propertyName}.push({{'errorKey':'{errorKey}'}});
                                   }}
                         }} else {{
+                            errors.{propertyName}= new Array();
                             errors.{propertyName}.push({{'errorKey':'{errorKey}'}});
                         }}
                 }}";

@@ -97,24 +97,6 @@ namespace FluentValidatorJavascript.Tests
 
             Assert.Equal(expected, actual);
         }
-        [Fact]
-        public void WhenValueIsEmpty_CustomNotNullValidatorMessage_ExpectJsConverterValidatorMessageAreNullAndEqual()
-        {
-            var seedData = new SeedData
-            {
-                //RuleFor(rf => rf.NotNullValidatorProp).NotNull();
-                CustomNotNullValidatorProp = string.Empty
-            };
-
-            var validationRules = new SeedDataValidator();
-
-            var actual = TestExtensions.GetActualErrors(seedData, validationRules).FirstOrDefault();
-            var expected = TestExtensions.GetExpectErrorMessages(seedData, validationRules).FirstOrDefault();
-
-            Assert.Null(actual);
-
-            Assert.Equal(expected, actual);
-        }
 
     }
 }

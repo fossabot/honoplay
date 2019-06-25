@@ -17,7 +17,8 @@ namespace FluentValidatorJavascript.JsConveterValidators
         {
             if (errorKey == null) throw new ArgumentNullException(nameof(errorKey));
             return
-                $@"if (obj.{propertyName} !== null && obj.{propertyName}.length < {_validator.ValueToCompare} ) {{
+                $@"if ('{propertyName}' in obj && obj.{propertyName} && obj.{propertyName}.length < {_validator.ValueToCompare} ) {{
+                    errors.{propertyName}= new Array();
                     errors.{propertyName}.push({GetRow(propertyName,errorKey, parameters)});
                 }}";
         }
