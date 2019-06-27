@@ -13,7 +13,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Honoplay.Application.Trainees.Commands.CreateTrainee
+namespace Honoplay.Application.Trainees.Commands.UpdateTrainee
 {
     public class UpdateTraineeCommandHandler : IRequestHandler<UpdateTraineeCommand, ResponseModel<UpdateTraineeModel>>
     {

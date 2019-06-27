@@ -1,4 +1,5 @@
-﻿using Honoplay.Common._Exceptions;
+﻿using Honoplay.Application._Infrastructure;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Persistence;
 using MediatR;
@@ -22,8 +23,12 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
 
         public async Task<AdminUserAuthenticateModel> Handle(AuthenticateAdminUserCommand request, CancellationToken cancellationToken)
         {
+            var jsValidators = JsValidators.GetAllJsValidations();
+
             var adminUser = await _context.AdminUsers
-                                    .SingleOrDefaultAsync(u => u.Email.Equals(request.Email, StringComparison.InvariantCultureIgnoreCase), cancellationToken: cancellationToken);
+                                    .SingleOrDefaultAsync(u =>
+                                            u.Email.Equals(request.Email, StringComparison.InvariantCultureIgnoreCase),
+                                    cancellationToken);
 
             if (adminUser is null)
             {
@@ -61,7 +66,8 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
                                            email: adminUser.Email,
                                            name: adminUser.Name,
                                            isPasswordExpired: isPasswordExpired,
-                                           tenants: tenants);
+                                           tenants: tenants,
+                                           jsValidators: jsValidators);
         }
     }
 }

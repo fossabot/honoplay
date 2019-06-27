@@ -1,4 +1,5 @@
-﻿using FluentValidation.Validators;
+﻿using System.Collections.Generic;
+using FluentValidation.Validators;
 using FluentValidatorJavascript.IJsConverterValidators;
 
 namespace FluentValidatorJavascript.JsConveterValidators
@@ -9,14 +10,12 @@ namespace FluentValidatorJavascript.JsConveterValidators
         {
         }
 
-        public override string GetJs(string propertyName, string errorMessage)
+        public override string GetJs(string propertyName, string errorKey, IDictionary<string, object> parameters)
         {
-
-
-            return
-                $@"if(!obj.{propertyName} || 0 === obj.{propertyName}.length) {{
-                            errors.push(""{errorMessage}"");
-                }}";
+            return $@"if(!obj.{propertyName} || 0 === obj.{propertyName}.length) {{
+                        errors.{propertyName}= new Array();
+                        errors.{propertyName}.push({{'errorKey':'{errorKey}'}});
+                    }};";
         }
     }
 }

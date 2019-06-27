@@ -10,14 +10,16 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
         public string Name { get; }
         public string Tenants { get; }
         public bool IsPasswordExpired { get; }
+        public string JsValidators { get; }
 
-        public AdminUserAuthenticateModel(int id, string email, string name, bool isPasswordExpired, List<Guid> tenants)
+        public AdminUserAuthenticateModel(int id, string email, string name, bool isPasswordExpired, List<Guid> tenants, string jsValidators)
         {
             Id = id;
             Email = email;
             Name = name;
             IsPasswordExpired = isPasswordExpired;
             Tenants = string.Join(",", tenants);
+            JsValidators = jsValidators;
         }
     }
 }

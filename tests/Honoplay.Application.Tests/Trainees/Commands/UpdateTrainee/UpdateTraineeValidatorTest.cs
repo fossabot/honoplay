@@ -1,5 +1,5 @@
 ﻿using FluentValidation.TestHelper;
-using Honoplay.Application.Trainees.Commands.CreateTrainee;
+using Honoplay.Application.Trainees.Commands.UpdateTrainee;
 using System.Linq;
 using Xunit;
 

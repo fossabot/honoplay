@@ -1,5 +1,6 @@
 ﻿using Honoplay.AdminWebAPI;
 using Honoplay.Application.Trainees.Commands.CreateTrainee;
+using Honoplay.Application.Trainees.Commands.UpdateTrainee;
 using Honoplay.Application.Trainees.Queries.GetTraineeList;
 using Honoplay.Common.Constants;
 using Honoplay.System.Tests.Extensions;

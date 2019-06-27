@@ -1,4 +1,4 @@
-﻿using Honoplay.Application.Trainees.Commands.CreateTrainee;
+﻿using Honoplay.Application.Trainees.Commands.UpdateTrainee;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
