@@ -10,7 +10,6 @@ namespace FluentValidatorJavascript
 {
     public static class JsConverter
     {
-
         private static readonly ILookup<Type, Type> TypeLookup;
 
         static JsConverter()
@@ -20,23 +19,19 @@ namespace FluentValidatorJavascript
                 .ToLookup(t => t.BaseType?.GenericTypeArguments[0]);
         }
 
-
         public static string GetJavascript<T>(AbstractValidator<T> validator)
         {
-            var sb = new StringBuilder();
+            var jsBuilder = new StringBuilder();
 
-            sb.AppendLine(validator.GetType().Name + ":function (obj) { \r\n var errors = {}; \r\n Object.keys(obj).forEach(function(element) {\r\n errors[element] = []; \r\n });");
+            jsBuilder.AppendLine(validator.GetType().Name + ":function (obj) { \r\n var errors = {}; \r\n Object.keys(obj).forEach(function(element) {\r\n errors[element] = []; \r\n });");
             var props = typeof(T).GetProperties();
 
             foreach (var property in props)
             {
-
                 var propertyName = property.Name;
-
                 foreach (var element in validator.CreateDescriptor().GetValidatorsForMember(propertyName))
                 {
                     var parameters = new Dictionary<string, object>();
-
                     var errorKey = element.GetType().Name;
                     switch (element)
                     {
@@ -53,16 +48,14 @@ namespace FluentValidatorJavascript
                             break;
                     }
 
-
                     foreach (var converterType in TypeLookup[element.GetType()])
                     {
-                        if (Activator.CreateInstance(converterType, args: element) is IJsConverterValidator converter) sb.AppendLine(converter.GetJs(propertyName, errorKey, parameters));
+                        if (Activator.CreateInstance(converterType, args: element) is IJsConverterValidator converter) jsBuilder.AppendLine(converter.GetJs(propertyName, errorKey, parameters));
                     }
                 }
             }
-            sb.AppendLine("return errors;\r\n},");
-
-            return sb.ToString();
+            jsBuilder.AppendLine("return errors;\r\n},");
+            return jsBuilder.ToString();
         }
     }
 }

@@ -18,13 +18,13 @@ namespace FluentValidatorJavascript.IJsConverterValidators
 
         protected static string GetRow(string propertyName, string errorKey, IDictionary<string, object> parameters)
         {
-            var sb = new StringBuilder();
+            var jsBuilder = new StringBuilder();
 
-            sb.Append($"{{'errorKey':'{errorKey}','parameters':{{");
-            sb.Append(string.Join(",", parameters.Select(parameter => $"'{parameter.Key}':'{parameter.Value}'")));
-            sb.Append("}}");
+            jsBuilder.Append($"{{'errorKey':'{errorKey}','parameters':{{");
+            jsBuilder.Append(string.Join(",", parameters.Select(parameter => $"'{parameter.Key}':'{parameter.Value}'")));
+            jsBuilder.Append("}}");
 
-            return sb.ToString();
+            return jsBuilder.ToString();
         }
     }
 }

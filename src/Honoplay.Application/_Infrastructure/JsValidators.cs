@@ -29,7 +29,7 @@ namespace Honoplay.Application._Infrastructure
                 }
                 catch (Exception e)
                 {
-                    
+
                     Console.WriteLine(e);
                     throw;
                 }
