@@ -25,8 +25,6 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
         {
             var jsValidators = JsValidators.GetAllJsValidations();
 
-            //TODO: Terasuya hata mesajları eklenecek, JsConverter içine terasudan hata keyleri eklenecek.
-
             var adminUser = await _context.AdminUsers
                                     .SingleOrDefaultAsync(u =>
                                             u.Email.Equals(request.Email, StringComparison.InvariantCultureIgnoreCase),

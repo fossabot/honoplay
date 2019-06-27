@@ -36,7 +36,7 @@ namespace Honoplay.AdminWebAPI.Controllers
 
                 return Ok(new { User = result.user, Token = result.stringToken });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return BadRequest();
             }

@@ -22,14 +22,14 @@ namespace FluentValidator.Tests.Extensions
 
             var engine = new Engine().Execute(js);
 
-            dynamic result = (engine.Invoke(abstractValidatorName, seedData)
+            dynamic errorsResult = (engine.Invoke(abstractValidatorName, seedData)
                 .ToObject() as IDictionary<string, object>)?
                 .Values
                 .FirstOrDefault();
 
-            if (result != null)
+            if (errorsResult != null)
             {
-                errorsList.Add(result[0].errorKey.ToString());
+                errorsList.Add(errorsResult[0].errorKey.ToString());
             }
 
             return errorsList;

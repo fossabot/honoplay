@@ -11,21 +11,21 @@ namespace Honoplay.Application._Infrastructure
         public static string GetAllJsValidations()
         {
             var assembly = AssemblyIdentifier.Get();
-            var query = assembly.GetTypes()
+            var validatorTypes = assembly.GetTypes()
                 .Where(x =>
                     (x.BaseType?.IsGenericType ?? false)
                     && x.BaseType.GetGenericTypeDefinition() == typeof(AbstractValidator<>))
                 .Select(x => x);
 
-            var stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine("var validations = {");
+            var jsValidatorObjectBuilder = new StringBuilder();
+            jsValidatorObjectBuilder.AppendLine("{");
 
-            foreach (var element in query)
+            foreach (var type in validatorTypes)
             {
                 try
                 {
-                    dynamic validator = Activator.CreateInstance(element);
-                    stringBuilder.Append(JsConverter.GetJavascript(validator));
+                    dynamic validator = Activator.CreateInstance(type);
+                    jsValidatorObjectBuilder.Append(JsConverter.GetJavascript(validator));
                 }
                 catch (Exception e)
                 {
@@ -35,8 +35,8 @@ namespace Honoplay.Application._Infrastructure
                 }
 
             }
-            stringBuilder.AppendLine("};");
-            return stringBuilder.ToString();
+            jsValidatorObjectBuilder.AppendLine("};");
+            return jsValidatorObjectBuilder.ToString();
         }
     }
 }
