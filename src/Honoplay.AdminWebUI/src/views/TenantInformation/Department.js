@@ -7,6 +7,9 @@ import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import SimpleTable from '../../components/Table/SimpleTable';
 
+import { connect } from "react-redux";
+import { fetchDepartmentList, createDepartment} from "@omegabigdata/honoplay-redux-helper/Src/actions/Department";
+
 class Department extends React.Component {
 
 constructor(props) {
@@ -23,15 +26,28 @@ constructor(props) {
   };
 }
 
+departmentModel = {
+  departments: []
+};
+
+componentDidMount() {
+  this.props.fetchDepartmentList(1,10);
+}
+
+handleClick = () => {
+  this.props.createDepartment(this.departmentModel);
+  console.log(this.departmentModel);
+}
+
 render() {
   const { classes } = this.props;
-  
     return (
         <div className={classes.root}>
         <Grid container spacing={40}>
           <Grid item xs={12} sm={12}/>
           <Grid item xs={12} sm={7}>
             <Input 
+              onChange = { value => this.departmentModel.departments = [value] }
               labelName={translate('Department')}
               inputType="text"
             />
@@ -40,6 +56,7 @@ render() {
             <Button  
               buttonColor="secondary" 
               buttonName={translate('Add')}
+              onClick={this.handleClick}
             />
           </Grid>
           <Grid item xs={7} sm={3}>
@@ -61,4 +78,17 @@ render() {
     }
 }
 
-export default withStyles(Style)(Department);
+const mapStateToProps = state => {
+  const { errorMessage, isCreateDepartmentLoading, departments } = state.departmentList;
+  return { errorMessage, isCreateDepartmentLoading, departments };
+};
+
+const mapDispatchToProps = {
+  fetchDepartmentList,
+  createDepartment
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(Style)(Department));

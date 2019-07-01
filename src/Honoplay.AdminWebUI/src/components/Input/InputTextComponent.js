@@ -5,7 +5,7 @@ import { Style } from './Style';
 
 const InputTextComponent = (props) => {
 
-  const { classes, labelName, inputType, multiline, name, value, onChange } = props;
+  const { classes, labelName, inputType, multiline, name, value, onChange, error } = props;
   return (
     <div className={classes.inputRoot}>
       <Grid container spacing={24}>
@@ -27,8 +27,9 @@ const InputTextComponent = (props) => {
             fullWidth
             classes={{
               root: classes.bootstrapRoot,
-              input: classes.bootstrapInput,
+              input: error ? classes.bootstrapError :  classes.bootstrapInput ,
             }}
+
           />
         </Grid>
       </Grid>

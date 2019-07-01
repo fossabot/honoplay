@@ -29,7 +29,7 @@ class FullWidthTabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tabValue: 0,
+      tabValue: 1,
       loading: false,
       success: false,
       disabledTab1: true,
@@ -38,11 +38,6 @@ class FullWidthTabs extends React.Component {
       newTenantModel: null,
       isError: false
     };
-  }
-
-  componentDidCatch(error, info) {
-    console.log("error  asd:", error);
-    console.log("info  asd:", info);
   }
 
   componentDidUpdate(prevProps) {
@@ -54,21 +49,20 @@ class FullWidthTabs extends React.Component {
         open: true
       });
     }
-
     if (prevProps.isCreateTenantLoading && !isCreateTenantLoading && tenant) {
       this.setState({
         loading: false,
         success: true,
         isError: false,
-        open: true
+        open: true,
+        disabledTab1: false,
       });
     }
-
     if (!prevProps.isCreateTenantLoading && isCreateTenantLoading) {
       this.setState({
         loading: true,
         success: false,
-        open: true,
+        open: errorMessage && true,
         isError: errorMessage && true
       });
     } else if (prevProps.isCreateTenantLoading && !isCreateTenantLoading) {
@@ -80,11 +74,6 @@ class FullWidthTabs extends React.Component {
       });
     }
   }
-
-  // componentWillUnmount() {
-  //   clearTimeout(this.timer);
-  // }
-
   handleButtonClick = () => {
     const { createTenant } = this.props;
     createTenant(this.state.newTenantModel);
@@ -98,15 +87,7 @@ class FullWidthTabs extends React.Component {
     this.setState({ tabValue: index });
   };
 
-  // handleClick = () => {
-  //   this.timer = setTimeout(() => {
-  //     this.setState({
-  //       open: true
-  //     });
-  //   }, 3000);
-  // };
-
-  handleClose = reason => {
+  handleClose = (reason) => {
     if (reason === "clickaway") {
       return;
     }
@@ -142,7 +123,6 @@ class FullWidthTabs extends React.Component {
                     color="primary"
                     className={buttonClassname}
                     disabled={loading}
-                    // onClick={() => { this.handleButtonClick(); this.handleClick(); }}
                     onClick={this.handleButtonClick}
                   >
                     {translate("Save")}
@@ -220,7 +200,7 @@ class FullWidthTabs extends React.Component {
                     basicTenantModel={model => {
                       if (model) {
                         this.setState({
-                          newTenantModel: model
+                          newTenantModel: model,
                         });
                       }
                     }}
@@ -243,7 +223,6 @@ class FullWidthTabs extends React.Component {
 
 const mapStateToProps = state => {
   const { errorMessage, isCreateTenantLoading, tenant } = state.createTenant;
-  console.log("error", errorMessage);
   return { errorMessage, isCreateTenantLoading, tenant };
 };
 
