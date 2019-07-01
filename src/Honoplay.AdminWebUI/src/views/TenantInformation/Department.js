@@ -45,26 +45,19 @@ render() {
         <div className={classes.root}>
         <Grid container spacing={40}>
           <Grid item xs={12} sm={12}/>
-          <Grid item xs={12} sm={7}>
+          <Grid item xs={6} sm={11}>
             <Input 
               onChange = { value => this.departmentModel.departments = [value] }
               labelName={translate('Department')}
               inputType="text"
             />
           </Grid>
-          <Grid item xs={5} sm={2}>
+          <Grid item xs={6} sm={1}>
             <Button  
               buttonColor="secondary" 
               buttonName={translate('Add')}
               onClick={this.handleClick}
             />
-          </Grid>
-          <Grid item xs={7} sm={3}>
-            <Button 
-              buttonColor="primary" 
-              buttonIcon="file-excel" 
-              buttonName={translate('ExportFromExcel')}
-            />     
           </Grid>
           <Grid item xs={12} sm={12}> 
             <SimpleTable 
@@ -79,8 +72,14 @@ render() {
 }
 
 const mapStateToProps = state => {
-  const { errorMessage, isCreateDepartmentLoading, departments } = state.departmentList;
-  return { errorMessage, isCreateDepartmentLoading, departments };
+  const { errorDepartmentList, isDepartmentListLoading, departmentList } = state.departmentList;
+  const { errorCreateDepartment, isCreateDepartmentLoading, departments } = state.createDepartment;
+  return { errorDepartmentList, 
+          isDepartmentListLoading, 
+          departmentList, 
+          errorCreateDepartment, 
+          isCreateDepartmentLoading, 
+          departments };
 };
 
 const mapDispatchToProps = {

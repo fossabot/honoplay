@@ -32,7 +32,7 @@ class Login extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { token, errorMessage } = this.props;
+    const { token, errorToken } = this.props;
 
     if (token !== prevProps.token) {
       console.log(token);
@@ -41,8 +41,8 @@ class Login extends React.Component {
         this.props.history.push("/home");
       }
     }
-    if (errorMessage !== prevProps.errorMessage) {
-      if (errorMessage) {
+    if (errorToken !== prevProps.errorToken) {
+      if (errorToken) {
         this.setState({ error: !this.state.error });
       }
     }
@@ -135,8 +135,8 @@ class Login extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  const { isTokenLoading, token, errorMessage } = state.auth;
-  return { isTokenLoading, token, errorMessage };
+  const { isTokenLoading, token, errorToken } = state.auth;
+  return { isTokenLoading, token, errorToken };
 };
 
 const mapDispatchToProps = {

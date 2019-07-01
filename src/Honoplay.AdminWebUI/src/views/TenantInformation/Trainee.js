@@ -53,18 +53,11 @@ render() {
         <div className={classes.root} id="kisiEkle">
         <Grid container spacing={40}>
           <Grid item xs={12} sm={12}/>
-          <Grid item xs={6} sm={9}>
+          <Grid item xs={12} sm={12}>
           <div />
           <a href="#kisiler" className={classes.linkStyle}>
            {`${translate('Trainee')} ${translate('Add')}`}
           </a>
-          </Grid>
-          <Grid item xs={6} sm={3}>
-            <Button 
-              buttonColor="primary"                       
-              buttonIcon="file-excel"                     
-              buttonName= {translate('ExportFromExcel')}
-            />
           </Grid>
           <Grid item xs={12} sm={12}>
           

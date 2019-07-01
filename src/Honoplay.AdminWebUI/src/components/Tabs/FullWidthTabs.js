@@ -41,15 +41,15 @@ class FullWidthTabs extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { isCreateTenantLoading, errorMessage, tenant } = this.props;
+    const { isCreateTenantLoading, errorCreateTenant, newTenant } = this.props;
 
-    if (!prevProps.errorMessage && errorMessage) {
+    if (!prevProps.errorCreateTenant && errorCreateTenant) {
       this.setState({
         isError: true,
         open: true
       });
     }
-    if (prevProps.isCreateTenantLoading && !isCreateTenantLoading && tenant) {
+    if (prevProps.isCreateTenantLoading && !isCreateTenantLoading && newTenant) {
       this.setState({
         loading: false,
         success: true,
@@ -62,15 +62,15 @@ class FullWidthTabs extends React.Component {
       this.setState({
         loading: true,
         success: false,
-        open: errorMessage && true,
-        isError: errorMessage && true
+        open: errorCreateTenant && true,
+        isError: errorCreateTenant && true,
       });
     } else if (prevProps.isCreateTenantLoading && !isCreateTenantLoading) {
       this.setState({
         loading: false,
         success: false,
         open: true,
-        isError: errorMessage && true
+        isError: errorCreateTenant && true,
       });
     }
   }
@@ -222,8 +222,8 @@ class FullWidthTabs extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { errorMessage, isCreateTenantLoading, tenant } = state.createTenant;
-  return { errorMessage, isCreateTenantLoading, tenant };
+  const { errorCreateTenant, isCreateTenantLoading, newTenant } = state.createTenant;
+  return { errorCreateTenant, isCreateTenantLoading, newTenant };
 };
 
 const mapDispatchToProps = {
