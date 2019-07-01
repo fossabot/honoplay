@@ -1,8 +1,8 @@
-﻿using Honoplay.Domain.Entities;
-using System;
+﻿using System;
 using System.Linq.Expressions;
+using Honoplay.Domain.Entities;
 
-namespace Honoplay.Application.Trainees.Queries.GetTraineeList
+namespace Honoplay.Application.Trainees.Queries.GetTraineesList
 {
     public struct TraineesListModel
     {

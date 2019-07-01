@@ -1,12 +1,12 @@
-﻿using FluentValidation;
-using FluentValidatorJavascript.IJsConverterValidators;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FluentValidation;
 using FluentValidation.Validators;
+using Honoplay.FluentValidatorJavascript.IJsConverterValidators;
 
-namespace FluentValidatorJavascript
+namespace Honoplay.FluentValidatorJavascript
 {
     public static class JsConverter
     {

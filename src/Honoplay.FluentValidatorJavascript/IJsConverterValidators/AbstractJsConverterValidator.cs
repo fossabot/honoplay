@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using FluentValidation.Validators;
 
-namespace FluentValidatorJavascript.IJsConverterValidators
+namespace Honoplay.FluentValidatorJavascript.IJsConverterValidators
 {
     public abstract class AbstractJsConverterValidator<T> : IJsConverterValidator where T : IPropertyValidator
     {

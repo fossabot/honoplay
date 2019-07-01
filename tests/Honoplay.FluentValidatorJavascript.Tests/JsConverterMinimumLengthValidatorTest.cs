@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using FluentValidator.Tests.Extensions;
-using FluentValidator.Tests.Seed;
+using Honoplay.FluentValidatorJavascript.Tests.Extensions;
+using Honoplay.FluentValidatorJavascript.Tests.Seed;
 using Xunit;
 
-namespace FluentValidatorJavascript.Tests
+namespace Honoplay.FluentValidatorJavascript.Tests
 {
     public class JsConverterMinimumLengthValidatorTest
     {

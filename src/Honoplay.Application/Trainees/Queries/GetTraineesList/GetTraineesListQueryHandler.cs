@@ -1,15 +1,15 @@
-﻿using Honoplay.Application._Infrastructure;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Honoplay.Application._Infrastructure;
 using Honoplay.Common._Exceptions;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Honoplay.Application.Trainees.Queries.GetTraineeList
+namespace Honoplay.Application.Trainees.Queries.GetTraineesList
 {
     public class GetTraineesListQueryHandler : IRequestHandler<GetTraineesListQuery, ResponseModel<TraineesListModel>>
     {

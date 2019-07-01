@@ -2,7 +2,7 @@
 using MediatR;
 using Newtonsoft.Json;
 
-namespace Honoplay.Application.Trainees.Queries.GetTraineeList
+namespace Honoplay.Application.Trainees.Queries.GetTraineesList
 {
     public class GetTraineesListQuery : IRequest<ResponseModel<TraineesListModel>>
     {
