@@ -4,8 +4,8 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
-
-COPY *.csproj ./
+#WORKDIR /src
+COPY *.sln .
 #WORKDIR /src
 #COPY ["Honoplay.AdminWebAPI/Honoplay.AdminWebAPI.csproj", "Honoplay.AdminWebAPI/"]
 #COPY ["Honoplay.Application/Honoplay.Application.csproj", "Honoplay.Application/"]
