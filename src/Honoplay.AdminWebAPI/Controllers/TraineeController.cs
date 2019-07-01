@@ -1,6 +1,7 @@
 ﻿using Honoplay.Common._Exceptions;
 using Honoplay.Application._Infrastructure;
 using Honoplay.Application.Trainees.Commands.CreateTrainee;
+using Honoplay.Application.Trainees.Commands.UpdateTrainee;
 using Honoplay.Application.Trainees.Queries.GetTraineeDetail;
 using Honoplay.Application.Trainees.Queries.GetTraineeList;
 using Honoplay.Common.Extensions;

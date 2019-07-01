@@ -2,7 +2,7 @@
 using MediatR;
 using Newtonsoft.Json;
 
-namespace Honoplay.Application.Trainees.Commands.CreateTrainee
+namespace Honoplay.Application.Trainees.Commands.UpdateTrainee
 {
     public class UpdateTraineeCommand : IRequest<ResponseModel<UpdateTraineeModel>>
     {

@@ -1,4 +1,5 @@
-﻿using FluentValidation.Validators;
+﻿using System.Collections.Generic;
+using FluentValidation.Validators;
 using FluentValidatorJavascript.IJsConverterValidators;
 
 namespace FluentValidatorJavascript.JsConveterValidators
@@ -11,13 +12,12 @@ namespace FluentValidatorJavascript.JsConveterValidators
             _validator = validator;
         }
 
-        public override string GetJs(string propertyName, string errorMessage)
+        public override string GetJs(string propertyName, string errorKey, IDictionary<string, object> parameters)
         {
-
-
             return
-                $@"if (obj.{propertyName} !== null && obj.{propertyName}.length < {_validator.Min}){{
-                    errors.push(""{errorMessage}"");
+                $@"if ('{propertyName}' in obj && obj.{propertyName} && obj.{propertyName}.length < {_validator.Min}){{
+                    errors.{propertyName} = [];
+                    errors.{propertyName}.push({GetRow(propertyName,errorKey, parameters)});
                 }};";
         }
     }

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using FluentValidator.Tests.Extensions;
+﻿using FluentValidator.Tests.Extensions;
 using FluentValidator.Tests.Seed;
+using System.Linq;
 using Xunit;
 
 namespace FluentValidatorJavascript.Tests
