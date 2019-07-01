@@ -1,9 +1,9 @@
-﻿using FluentValidation.Validators;
-using FluentValidatorJavascript.IJsConverterValidators;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using FluentValidation.Validators;
+using Honoplay.FluentValidatorJavascript.IJsConverterValidators;
 
-namespace FluentValidatorJavascript.JsConveterValidators
+namespace Honoplay.FluentValidatorJavascript.JsConveterValidators
 {
     public class JsConverterLessThanValidator : AbstractJsConverterValidator<LessThanValidator>
     {

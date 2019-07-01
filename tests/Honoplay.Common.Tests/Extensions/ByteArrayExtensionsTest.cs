@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Honoplay.Common.Extensions;
 using Xunit;
-using Honoplay.Common.Extensions;
 
 
 namespace Honoplay.Common.Tests.Extensions

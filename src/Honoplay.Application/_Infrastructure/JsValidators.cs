@@ -1,8 +1,8 @@
 ﻿using FluentValidation;
-using FluentValidatorJavascript;
 using System;
 using System.Linq;
 using System.Text;
+using Honoplay.FluentValidatorJavascript;
 
 namespace Honoplay.Application._Infrastructure
 {

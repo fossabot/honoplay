@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FluentValidatorJavascript.IJsConverterValidators
+namespace Honoplay.FluentValidatorJavascript.IJsConverterValidators
 {
     public interface IJsConverterValidator
     {

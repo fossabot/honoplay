@@ -1,4 +1,4 @@
-﻿namespace FluentValidator.Tests.Seed
+﻿namespace Honoplay.FluentValidatorJavascript.Tests.Seed
 {
     public class SeedData
     {

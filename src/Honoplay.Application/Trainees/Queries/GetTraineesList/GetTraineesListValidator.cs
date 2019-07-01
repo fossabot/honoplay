@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Honoplay.Application.Trainees.Queries.GetTraineeList
+namespace Honoplay.Application.Trainees.Queries.GetTraineesList
 {
     public class GetTraineesListValidator : AbstractValidator<GetTraineesListQueryModel>
     {
