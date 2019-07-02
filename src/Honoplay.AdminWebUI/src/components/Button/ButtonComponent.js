@@ -5,11 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Style,theme } from './Style';
 
 const ButtonComponent = (props) => {
-        const { classes, buttonColor, buttonIcon, buttonName, onClick} = props;
+        const { classes, buttonColor, buttonIcon, buttonName, onClick, disabled} = props;
         return (
             <div>
                 <MuiThemeProvider theme={theme}>
                     <Button variant="contained"
+                            disabled = {disabled}
                             color={buttonColor}
                             className={classes.button}
                             onClick={onClick}>

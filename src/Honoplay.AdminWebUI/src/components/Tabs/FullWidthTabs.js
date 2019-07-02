@@ -201,9 +201,11 @@ class FullWidthTabs extends React.Component {
                       if (model) {
                         this.setState({
                           newTenantModel: model,
+                          isError: false
                         });
                       }
                     }}
+                    isError = {isError}
                   />
                 </TabContainer>
                 <TabContainer dir={theme.direction}>

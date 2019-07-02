@@ -22,13 +22,15 @@ class BasicKnowledge extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, isError } = this.props;
+    console.log(isError);
     return (
       <div className={classes.root}>
         <Grid container spacing={40}>
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12}>
             <Input
+              error = {isError}
               onChange={value => {
                 this.tenantModel.name = value;
                 this.props.basicTenantModel(this.tenantModel);
@@ -38,6 +40,7 @@ class BasicKnowledge extends React.Component {
               name="TenantName"
             />
             <Input
+              error = {isError}
               onChange={value => {
                 this.tenantModel.description = value;
                 this.props.basicTenantModel(this.tenantModel);
