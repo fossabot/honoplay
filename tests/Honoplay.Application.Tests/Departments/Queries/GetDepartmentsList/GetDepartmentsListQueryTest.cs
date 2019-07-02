@@ -82,7 +82,7 @@ namespace Honoplay.Application.Tests.Departments.Queries.GetDepartmentsList
         [Fact]
         public async Task ShouldThrowErrorWhenInvalidInformation()
         {
-            var query = new GetDepartmentsListQuery(_adminUserId+1, hostName: "localhost", skip: 10, take: 10);
+            var query = new GetDepartmentsListQuery(_adminUserId, hostName: "localhost", skip: 10, take: 10);
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _queryHandler.Handle(query, CancellationToken.None));
         }
