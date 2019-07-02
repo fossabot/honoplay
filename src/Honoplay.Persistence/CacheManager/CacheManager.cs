@@ -23,24 +23,33 @@ namespace Honoplay.Persistence.CacheManager
             {
                 throw new ArgumentNullException(nameof(redisKey));
             }
-
-            var serializedRedisList = await _distributedCache.GetStringAsync(redisKey, cancellationToken);
             T redisList;
 
-            if (!string.IsNullOrEmpty(serializedRedisList))
+            try
             {
-                redisList = JsonConvert.DeserializeObject<T>(serializedRedisList);
+                var serializedRedisList = await _distributedCache.GetStringAsync(redisKey, cancellationToken);
+
+                if (!string.IsNullOrEmpty(serializedRedisList))
+                {
+                    redisList = JsonConvert.DeserializeObject<T>(serializedRedisList);
+                }
+                else
+                {
+                    redisList = redisLogic?.Invoke(_distributedCache);
+                    if (redisList is null)
+                    {
+                        throw new NotFoundException();
+                    }
+
+                    await _distributedCache.SetStringAsync(redisKey, JsonConvert.SerializeObject(redisList),
+                        cancellationToken);
+                }
             }
-            else
+            catch
             {
                 redisList = redisLogic?.Invoke(_distributedCache);
-                if (redisList is null)
-                {
-                    throw new NotFoundException();
-                }
-
-                await _distributedCache.SetStringAsync(redisKey, JsonConvert.SerializeObject(redisList), cancellationToken);
             }
+
 
             return redisList;
         }
@@ -52,11 +61,17 @@ namespace Honoplay.Persistence.CacheManager
                 throw new ArgumentNullException(nameof(redisKey));
             }
             var databaseList = redisLogic?.Invoke(_distributedCache);
-            if (databaseList != null)
+            try
             {
-                await _distributedCache.SetStringAsync(redisKey, JsonConvert.SerializeObject(databaseList), cancellationToken);
+                if (databaseList != null)
+                {
+                    await _distributedCache.SetStringAsync(redisKey, JsonConvert.SerializeObject(databaseList), cancellationToken);
+                }
             }
-
+            catch
+            {
+                //TODO:Redis cache servisine ulaşılamazsa mantıklı bir log ataması yapılmalı.
+            }
         }
     }
 }
