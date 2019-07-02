@@ -1,19 +1,19 @@
-﻿using Honoplay.Application.Departments.Commands.CreateDepartment;
-using Honoplay.Common._Exceptions;
-using Honoplay.Common.Extensions;
-using Honoplay.Domain.Entities;
-using Honoplay.Persistence;
-using Microsoft.Extensions.Caching.Distributed;
-using Moq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Departments.Commands.CreateDepartment;
+using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
+using Honoplay.Domain.Entities;
+using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
+using Microsoft.Extensions.Caching.Distributed;
+using Moq;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Tenants.Commands.CreateDepartment
+namespace Honoplay.Application.Tests.Departments.Commands.CreateDepartment
 {
     public class CreateDepartmentCommandTest : TestBase, IDisposable
     {

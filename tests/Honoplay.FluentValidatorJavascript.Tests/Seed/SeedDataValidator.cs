@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace FluentValidator.Tests.Seed
+namespace Honoplay.FluentValidatorJavascript.Tests.Seed
 {
     public class SeedDataValidator : AbstractValidator<SeedData>
     {

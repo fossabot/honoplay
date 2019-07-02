@@ -1,12 +1,11 @@
-﻿using FluentValidation;
-using FluentValidation.Results;
-using FluentValidatorJavascript;
-using Jint;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FluentValidation;
+using FluentValidation.Results;
+using Jint;
 
-namespace FluentValidator.Tests.Extensions
+namespace Honoplay.FluentValidatorJavascript.Tests.Extensions
 {
     public static class TestExtensions
     {

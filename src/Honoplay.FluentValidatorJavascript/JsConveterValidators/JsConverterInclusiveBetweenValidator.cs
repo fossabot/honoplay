@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using FluentValidation.Validators;
-using FluentValidatorJavascript.IJsConverterValidators;
+using Honoplay.FluentValidatorJavascript.IJsConverterValidators;
 
-namespace FluentValidatorJavascript.JsConveterValidators
+namespace Honoplay.FluentValidatorJavascript.JsConveterValidators
 {
     public class JsConverterInclusiveBetweenValidator : AbstractJsConverterValidator<InclusiveBetweenValidator>
     {
