@@ -72,7 +72,7 @@ namespace Honoplay.Application.Tests.Departments.Queries.GetDepartmentsList
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetDepartmentsListQuery(_adminUserId, hostName: "localhost");
+            var query = new GetDepartmentsListQuery(_adminUserId, hostName: "localhost", skip: 0, take: 10);
 
             var departmentModel = await _queryHandler.Handle(query, CancellationToken.None);
 
@@ -80,11 +80,13 @@ namespace Honoplay.Application.Tests.Departments.Queries.GetDepartmentsList
         }
 
         [Fact]
-        public async Task ShouldThrowErrorWhenInvalidInformation()
+        public async Task ShouldItemsCount1WhenTake1()
         {
-            var query = new GetDepartmentsListQuery(_adminUserId+1, hostName: "localhost", skip: 10, take: 10);
-            await Assert.ThrowsAsync<NotFoundException>(async () =>
-                await _queryHandler.Handle(query, CancellationToken.None));
+            var query = new GetDepartmentsListQuery(_adminUserId, hostName: "localhost", skip: 0, take: 1);
+
+            var departmentModel = await _queryHandler.Handle(query, CancellationToken.None);
+
+            Assert.Single(departmentModel.Items);
         }
 
         public void Dispose()

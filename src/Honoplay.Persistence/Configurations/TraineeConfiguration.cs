@@ -25,7 +25,6 @@ namespace Honoplay.Persistence.Configurations
             builder.Property(x => x.PhoneNumber)
                 .HasMaxLength(20);
 
-
             //RELATIONS
             
             //Department
