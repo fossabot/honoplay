@@ -1,14 +1,13 @@
 ﻿using Honoplay.Application._Infrastructure;
+using Honoplay.Common._Exceptions;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Common._Exceptions;
 
 namespace Honoplay.Application.Departments.Queries.GetDepartmentsList
 {
@@ -41,9 +40,6 @@ namespace Honoplay.Application.Departments.Queries.GetDepartmentsList
 
                 return _context.Departments.Where(x => isExist.Result)
                     .AsNoTracking()
-                    .OrderBy(x => x.Name)
-                    .Skip(request.Skip)
-                    .Take(request.Take)
                     .Select(DepartmentsListModel.Projection)
                     .ToList();
 
@@ -53,6 +49,12 @@ namespace Honoplay.Application.Departments.Queries.GetDepartmentsList
             {
                 throw new NotFoundException();
             }
+
+            query = query
+                .OrderBy(x => x.Name)
+                .Skip(request.Skip)
+                .Take(request.Take)
+                .ToList();
 
             return new ResponseModel<DepartmentsListModel>(numberOfTotalItems: query.Count, numberOfSkippedItems: request.Take, source: query);
 

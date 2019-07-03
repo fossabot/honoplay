@@ -2,7 +2,7 @@
 
 namespace Honoplay.Application.Departments.Queries.GetDepartmentsList
 {
-    public class GetDepartmentsListValidator : AbstractValidator<GetDepartmentsListQuery>
+    public class GetDepartmentsListValidator : AbstractValidator<GetDepartmentsListQueryModel>
     {
         public GetDepartmentsListValidator()
         {
@@ -11,7 +11,7 @@ namespace Honoplay.Application.Departments.Queries.GetDepartmentsList
                 .GreaterThan(-1);
 
             RuleFor(x => x.Take)
-                .NotNull()
+                .NotEmpty()
                 .GreaterThan(4)
                 .LessThan(101);
         }
