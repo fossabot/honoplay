@@ -1,7 +1,6 @@
-﻿using System;
+﻿using Honoplay.Domain.Entities;
+using System;
 using System.Linq.Expressions;
-using Honoplay.Application.Tenants.Queries.GetTenantsList;
-using Honoplay.Domain.Entities;
 
 namespace Honoplay.Application.Departments.Queries.GetDepartmentsList
 {
