@@ -6,7 +6,12 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
     {
         public CreateDepartmentValidator()
         {
-            RuleFor(x => x.Departments).NotEmpty().NotNull();
+            RuleFor(x => x.Departments)
+                .ForEach(x=>
+                    x.NotEmpty()
+                        .NotNull())
+                .NotEmpty()
+                .NotNull();
         }
     }
 }
