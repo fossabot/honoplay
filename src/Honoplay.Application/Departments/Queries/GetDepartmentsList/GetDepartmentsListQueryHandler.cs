@@ -31,14 +31,14 @@ namespace Honoplay.Application.Departments.Queries.GetDepartmentsList
             {
                 var currentTenant = _context.Tenants.FirstOrDefaultAsync(x =>
                         x.HostName == request.HostName,
-                    cancellationToken);
+                    cancellationToken).Result;
 
-                var isExist = _context.TenantAdminUsers.AnyAsync(x =>
+                var isExist = _context.TenantAdminUsers.FirstOrDefaultAsync(x =>
                         x.AdminUserId == request.AdminUserId
-                        && x.TenantId == currentTenant.Result.Id,
-                    cancellationToken);
+                        && x.TenantId == currentTenant.Id,
+                    cancellationToken).Result;
 
-                return _context.Departments.Where(x => isExist.Result)
+                return _context.Departments.Where(x => isExist.TenantId == x.TenantId)
                     .AsNoTracking()
                     .Select(DepartmentsListModel.Projection)
                     .ToList();

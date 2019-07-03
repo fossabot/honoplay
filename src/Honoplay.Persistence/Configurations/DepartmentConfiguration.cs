@@ -10,8 +10,14 @@ namespace Honoplay.Persistence.Configurations
         {
             //Id
             builder.HasKey(x => x.Id);
+
             builder.Property(x => x.Id)
-                   .ValueGeneratedOnAdd();
+                .ValueGeneratedOnAdd();
+
+            builder.Property(x => x.Name)
+                .IsRequired();
+
+            builder.HasIndex(x => new { x.TenantId, x.Name }).IsUnique();
 
             //RELATIONS
 
