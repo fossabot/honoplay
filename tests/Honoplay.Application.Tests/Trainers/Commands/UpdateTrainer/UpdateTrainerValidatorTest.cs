@@ -1,5 +1,4 @@
 ﻿using FluentValidation.TestHelper;
-using Honoplay.Application.Trainers.Commands.CreateTrainer;
 using Honoplay.Application.Trainers.Commands.UpdateTrainer;
 using Xunit;
 

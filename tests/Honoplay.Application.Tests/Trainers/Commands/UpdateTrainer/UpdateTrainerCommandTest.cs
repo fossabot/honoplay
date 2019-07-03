@@ -98,7 +98,6 @@ namespace Honoplay.Application.Tests.Trainers.Commands.UpdateTrainer
             return context;
         }
 
-
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
