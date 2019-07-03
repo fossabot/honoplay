@@ -2,7 +2,7 @@ import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import {Grid, InputLabel, NativeSelect, IconButton} from '@material-ui/core';
-import {Style, BootstrapInput} from './Style';
+import {Style, BootstrapInput, BootstrapInputError} from './Style';
 import MoreVertIcon from '@material-ui/icons/MoreHoriz';
 import Modal from '../Modal/ModalComponent';
 
@@ -29,7 +29,7 @@ class DropDownInputComponent extends React.Component {
   
   render() {
     const { data } = this.state;
-    const { classes, labelName, describable } = this.props;
+    const { classes, labelName, describable, onChange, error } = this.props;
     return (
         <div className={classes.inputRoot}>
         <Grid container spacing={24}>
@@ -42,8 +42,9 @@ class DropDownInputComponent extends React.Component {
           </Grid>
           <Grid item xs={12} sm={9}>
             <NativeSelect
+                onChange={e => onChange(e.target.value)}
                 className={classes.nativeWidth}
-                input={<BootstrapInput fullWidth/>}
+                input={error ? <BootstrapInputError fullWidth/> : <BootstrapInput fullWidth/>}
             >
                 <option>{translate('Choose')}</option>
                 {data.map((data,id) => 

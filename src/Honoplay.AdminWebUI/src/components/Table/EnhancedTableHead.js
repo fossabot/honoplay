@@ -31,7 +31,7 @@ class EnhancedTableHead extends React.Component {
             {columns.map(
               (column,id) => (
                 <TableCell className={classes.tableCell} key={id}>
-                  {column}
+                  {column.title}
                 </TableCell>
               ),
                 this,

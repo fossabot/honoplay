@@ -9,7 +9,6 @@ import SimpleTable from '../../components/Table/SimpleTable';
 
 import { connect } from "react-redux";
 import { fetchDepartmentList, createDepartment } from "@omegabigdata/honoplay-redux-helper/Src/actions/Department";
-import { isError } from 'util';
 
 class Department extends React.Component {
 
@@ -40,7 +39,6 @@ class Department extends React.Component {
       })
     }
     if ( prevProps.isDepartmentListLoading && !isDepartmentListLoading && departmentList ) {
-      console.log('deparment:', departmentList.items);
       this.setState({
         departments: departmentList.items
       })
@@ -51,23 +49,18 @@ class Department extends React.Component {
       })
     }
     if( !prevProps.errorCreateDepartment && errorCreateDepartment ) {
-      console.log('error');
       this.setState({
         departmentError: true,
         loading: false
       })
     }
     if ( prevProps.isCreateDepartmentLoading && !isCreateDepartmentLoading && departments ) {
-      console.log(departments.items[0].departments[0]);
-      console.log('push');
       if( !errorCreateDepartment ) {
-        console.log('burdaaaa', errorCreateDepartment);
         this.setState({
           deparments: this.state.departments.push(departments.items[0].departments[0]),
           loading: false,
           departmentError: false,
         })
-        console.log(this.state.departments);
       }
     }
   }

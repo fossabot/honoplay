@@ -97,7 +97,7 @@ class TableComponent extends React.Component {
               <TableBody>
                 {data
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map(data => {
+                  .map((data,id) => {
                     const isSelected = this.isSelected(data.id);
                     return (
                       <TableRow
@@ -107,7 +107,7 @@ class TableComponent extends React.Component {
                         aria-checked={isSelected}
                         tabIndex={-1}
                         selected={isSelected}
-                        key={data.id}
+                        key={id}
                         id={'container-desk'}
                       >
                         <TableCell padding="checkbox"
@@ -117,7 +117,8 @@ class TableComponent extends React.Component {
                           />
                         </TableCell>
                           {columns.map((column,id) =>
-                          <TableCell className={classes.tableCell} key={id}>{data[column]}</TableCell>
+                          
+                          <TableCell className={classes.tableCell} key={id}>{data[column.field]}</TableCell>
                           )}
                           { selected.includes(data.id) ?
                             <TableCell className={classes.tableCell}>

@@ -5,7 +5,6 @@ import Layout from "./components/Layout/LayoutComponent";
 
 import Questions from "./views/Questions/Questions";
 import TenantInformation from "./views/TenantInformation/TenantInformation";
-import Trainers from "./views/Trainers/Trainers";
 import setToken from "@omegabigdata/honoplay-redux-helper/Src/actions/index";
 
 
@@ -21,9 +20,8 @@ class App extends Component {
   render() {
     return (
       <Layout>
-        <Route path="/home/questions" component={Questions} />
-        <Route path="/home/tenantinformation" component={TenantInformation} />
-        <Route path="/home/trainers" component={Trainers}/>
+        <Route path="/home/sorular" component={Questions} />
+        <Route path="/home/sirketbilgileri" component={TenantInformation} />
       </Layout>
 
     );

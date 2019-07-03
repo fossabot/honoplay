@@ -23,7 +23,6 @@ class BasicKnowledge extends React.Component {
 
   render() {
     const { classes, isError } = this.props;
-    console.log(isError);
     return (
       <div className={classes.root}>
         <Grid container spacing={40}>

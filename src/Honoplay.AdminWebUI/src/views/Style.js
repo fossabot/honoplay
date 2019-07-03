@@ -2,7 +2,7 @@ import {green, deepPurple, amber} from '@material-ui/core/colors';
 const Style = theme => ({
     root: {
       flexGrow: 1,
-      padding: 8 * 6
+      // padding: 8 * 6
     },
     linkStyle: {
       fontSize:16,
