@@ -17,18 +17,17 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.CreateWorkingStatu
     {
         private readonly HonoplayDbContext _context;
         private readonly CreateWorkingStatusCommandHandler _commandHandler;
-        private readonly Guid _tenantId;
         private readonly int _adminUserId;
 
         public CreateWorkingStatusCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _tenantId, out _adminUserId);
+            _context = InitAndGetDbContext(out _adminUserId);
             _commandHandler = new CreateWorkingStatusCommandHandler(_context, new CacheManager(cache.Object));
         }
 
         //Arrange
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId)
+        private HonoplayDbContext InitAndGetDbContext(out int adminUserId)
         {
             var context = GetDbContext();
 
@@ -49,6 +48,13 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.CreateWorkingStatu
             };
 
             context.Tenants.Add(tenant);
+            context.TenantAdminUsers.Add(new TenantAdminUser
+            {
+                TenantId = tenant.Id,
+                AdminUserId = adminUser.Id,
+                CreatedBy = adminUser.Id
+            });
+
             context.SaveChanges();
 
             tenantId = tenant.Id;
@@ -62,7 +68,7 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.CreateWorkingStatu
         {
             var createWorkingStatusCommand = new CreateWorkingStatusCommand
             {
-                TenantId = _tenantId,
+                HostName = "localhost",
                 Name = "workingStatusName",
                 CreatedBy = _adminUserId
             };
@@ -81,7 +87,7 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.CreateWorkingStatu
             var createWorkingStatusCommand = new CreateWorkingStatusCommand
             {
                 Name = "testWorkingStatusName",
-                TenantId = _tenantId,
+                HostName = "localhost",
                 CreatedBy = _adminUserId
             };
 

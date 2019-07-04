@@ -1,28 +1,25 @@
-﻿using FluentValidation.TestHelper;
-using Honoplay.Application.Trainers.Queries.GetTrainersList;
-using Xunit;
+﻿using Xunit;
 
-namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainersList
+namespace Honoplay.Application.Tests.WorkingStatuses.Queries.GetWorkingStatusesList
 {
-    public class GetTrainersListValidatorTest : TestBase
+    public class GetWorkingStatusesListValidatorTest : TestBase
     {
-        private readonly GetTrainersListValidator _validator;
+        private readonly GetWorkingStatusesListValidator _validator;
 
-        public GetTrainersListValidatorTest()
+        public GetWorkingStatusesListValidatorTest(GetWorkingStatusesListValidator validator)
         {
-            _validator = new GetTrainersListValidator();
+            _validator = validator;
         }
-
         [Fact]
         public void ShouldBeValid()
         {
             Assert.True(_validator.Validate(
-                new GetTrainersListQueryModel
+                new GetWorkingStatusesListQueryModel
                 {
-                    Skip = 1,
+                    Skip = 0,
                     Take = 5
                 }
-                ).IsValid);
+            ).IsValid);
         }
 
         [Fact]

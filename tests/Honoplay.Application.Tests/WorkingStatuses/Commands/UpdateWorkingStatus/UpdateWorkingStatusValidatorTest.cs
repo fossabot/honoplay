@@ -18,18 +18,16 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
             {
                 Id = 1,
                 Name = "asdasd",
-                TenantId = 1,
+                HostName = "localhost",
                 CreatedBy = 1,
-                UpdatedBy = 1,
-            }
-            ).IsValid);
+                UpdatedBy = 1
+            }).IsValid);
         }
 
         [Fact]
         public void ShouldBeNotValidForNullOrEmpty()
         {
             _validator.ShouldHaveValidationErrorFor(x => x.Name, string.Empty);
-            _validator.ShouldHaveValidationErrorFor(x => x.TenantId, 0);
             _validator.ShouldHaveValidationErrorFor(x => x.UpdatedBy, 0);
         }
     }

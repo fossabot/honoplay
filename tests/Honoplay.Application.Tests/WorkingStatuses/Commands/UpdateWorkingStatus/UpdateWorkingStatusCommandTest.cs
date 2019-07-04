@@ -1,4 +1,5 @@
-﻿using Honoplay.Common.Extensions;
+﻿using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Microsoft.Extensions.Caching.Distributed;
@@ -6,8 +7,6 @@ using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application.Trainers.Commands.UpdateTrainer;
-using Honoplay.Common._Exceptions;
 using Xunit;
 
 namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatus
@@ -15,7 +14,6 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
     public class UpdateWorkingStatusCommandTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly Guid _tenantId;
         private readonly int _adminUserId;
         private readonly int _workingStatusId;
         private readonly UpdateWorkingStatusCommandHandler _workingStatusCommandHandler;
@@ -23,12 +21,12 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
         public UpdateWorkingStatusCommandTest(UpdateWorkingStatusCommandHandler workingStatusCommandHandler)
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _adminUserId, out _tenantId, out _workingStatusId);
+            _context = InitAndGetDbContext(out _adminUserId, out _workingStatusId);
             _workingStatusCommandHandler = workingStatusCommandHandler(_context, cache.Object);
         }
 
 
-        public HonoplayDbContext InitAndGetDbContext(out int adminUserId, out Guid tenantId, out int workingStatusId)
+        public HonoplayDbContext InitAndGetDbContext(out int adminUserId, out int workingStatusId)
         {
             var context = GetDbContext();
 
@@ -52,10 +50,17 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
 
             context.Tenants.Add(tenant);
 
+            context.TenantAdminUsers.Add(new TenantAdminUser
+            {
+                TenantId = tenant.Id,
+                AdminUserId = adminUser.Id,
+                CreatedBy = adminUser.Id
+            });
+
             var workingStatus = new WorkingStatus
             {
                 Name = "testWorkingStatus",
-                TenantId = tenant.Id,
+                HostName = "localhost",
                 CreatedBy = adminUser.Id
             };
 
@@ -74,7 +79,7 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
             var updateWorkingStatusCommand = new UpdateWorkingStatusCommand()
             {
                 Id = _workingStatusId,
-                TenantId = _tenantId,
+                HostName = "localhost",
                 UpdatedBy = _adminUserId,
                 Name = "testWorkingStatusUpdate",
             };
@@ -91,8 +96,8 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
         {
             var updateWorkingStatusCommand = new UpdateWorkingStatusCommand
             {
-                Id = _workingStatusId+1,
-                TenantId = _tenantId,
+                Id = _workingStatusId + 1,
+                HostName = "localhost",
                 UpdatedBy = _adminUserId,
                 Name = "testWorkingStatusUpdate",
             };
