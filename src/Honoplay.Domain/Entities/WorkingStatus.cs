@@ -1,20 +1,21 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using Newtonsoft.Json;
 
 namespace Honoplay.Domain.Entities
 {
-    public class WorkingStatus
+    public class WorkingStatus : BaseEntity
     {
         public WorkingStatus()
         {
             Trainees = new HashSet<Trainee>();
         }
         public int Id { get; set; }
+        public Guid TenantId { get; set; }
         public string Name { get; set; }
-        [JsonIgnore]
 
+        [JsonIgnore]
         public virtual ICollection<Trainee> Trainees { get; set; }
+        public Tenant Tenant { get; set; }
     }
 }

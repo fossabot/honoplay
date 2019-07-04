@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Persistence.CacheManager;
 using Xunit;
 
 namespace Honoplay.Application.Tests.WorkingStatuses.Queries.GetWorkingStatusesList
@@ -22,7 +23,7 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Queries.GetWorkingStatusesL
         public GetWorkingStatusesListTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _queryHandler = new GetWorkingStatusesListQueryHandler(_context, cache.Object);
+            _queryHandler = new GetWorkingStatusesListQueryHandler(_context, new CacheManager(cache.Object));
         }
 
         private HonoplayDbContext InitAndGetDbContext()
@@ -57,7 +58,8 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Queries.GetWorkingStatusesL
             context.WorkingStatuses.Add(new WorkingStatus
             {
                 Name = "testStatus",
-                TenantId = tenant.Id
+                TenantId = tenant.Id,
+                CreatedBy = adminUser.Id
             });
 
             _context.SaveChanges();
