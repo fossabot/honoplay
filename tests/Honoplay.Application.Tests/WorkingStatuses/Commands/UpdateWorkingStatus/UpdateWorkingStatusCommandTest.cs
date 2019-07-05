@@ -1,13 +1,15 @@
-﻿using Honoplay.Common._Exceptions;
+﻿using Honoplay.Application.WorkingStatuses.Commands.UpdateWorkingStatus;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Persistence.CacheManager;
 using Xunit;
 
 namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatus
@@ -64,6 +66,7 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
                 TenantId = tenant.Id,
                 CreatedBy = adminUser.Id
             };
+            context.WorkingStatuses.Add(workingStatus);
 
             context.SaveChanges();
 

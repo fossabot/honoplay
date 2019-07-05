@@ -1,4 +1,6 @@
-﻿using Xunit;
+﻿using FluentValidation.TestHelper;
+using Honoplay.Application.WorkingStatuses.Queries;
+using Xunit;
 
 namespace Honoplay.Application.Tests.WorkingStatuses.Queries.GetWorkingStatusesList
 {
@@ -6,9 +8,9 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Queries.GetWorkingStatusesL
     {
         private readonly GetWorkingStatusesListValidator _validator;
 
-        public GetWorkingStatusesListValidatorTest(GetWorkingStatusesListValidator validator)
+        public GetWorkingStatusesListValidatorTest()
         {
-            _validator = validator;
+            _validator = new GetWorkingStatusesListValidator();
         }
         [Fact]
         public void ShouldBeValid()
@@ -26,7 +28,7 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Queries.GetWorkingStatusesL
         public void ShouldBeNotValidForGreaterThanLength()
         {
             _validator.ShouldHaveValidationErrorFor(x => x.Skip, -5);
-            _validator.ShouldHaveValidationErrorFor(x => x.Take, 2);
+            _validator.ShouldHaveValidationErrorFor(x => x.Take, -2);
         }
 
         [Fact]

@@ -1,4 +1,5 @@
-﻿using Honoplay.Common._Exceptions;
+﻿using Honoplay.Application.WorkingStatuses.Commands.CreateWorkingStatus;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -6,6 +7,7 @@ using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -56,7 +58,6 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.CreateWorkingStatu
 
             context.SaveChanges();
 
-            tenantId = tenant.Id;
             adminUserId = adminUser.Id;
 
             return context;
@@ -87,7 +88,7 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.CreateWorkingStatu
             {
                 Name = "testWorkingStatusName",
                 HostName = "localhost",
-                CreatedBy = _adminUserId
+                CreatedBy = _adminUserId+1
             };
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
