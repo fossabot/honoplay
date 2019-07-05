@@ -13,23 +13,20 @@ class DropDownInputComponent extends React.Component {
       data: props.data,
       open: false,
     };  
-
-    this.handleOpen=this.handleOpen.bind(this);
-    this.handleClose=this.handleClose.bind(this);
   }
-  handleOpen()
+  handleOpen = () =>
   {
     this.setState({ open: true });
   };
 
-  handleClose()
+  handleClose = () =>
   {
     this.setState({ open: false });
   };
   
   render() {
-    const { data } = this.state;
-    const { classes, labelName, describable, onChange, error } = this.props;
+    const { open, data } = this.state;
+    const { classes, labelName, describable, onChange, error, name, value } = this.props;
     return (
         <div className={classes.inputRoot}>
         <Grid container spacing={24}>
@@ -42,7 +39,9 @@ class DropDownInputComponent extends React.Component {
           </Grid>
           <Grid item xs={12} sm={9}>
             <NativeSelect
-                onChange={e => onChange(e.target.value)}
+                name={name}
+                value={value}
+                onChange={onChange}
                 className={classes.nativeWidth}
                 input={error ? <BootstrapInputError fullWidth/> : <BootstrapInput fullWidth/>}
             >
@@ -63,8 +62,8 @@ class DropDownInputComponent extends React.Component {
           </Grid>
         </Grid>
         <Modal handleClickClose={this.handleClose}
-               open = {this.state.open}
-               data = {this.state.data}
+               open = {open}
+               data = {data}
                modalTitle = {`${labelName} ${translate('Add')}`}
                modalInputName = {labelName}
         />

@@ -2,7 +2,7 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles'; 
 import {Grid} from '@material-ui/core';
 import Style from '../Style';
-import Tabs from '../../components/Tabs/FullWidthTabs';
+import Tabs from './TenantInformationTabs';
 
 
 class TenantInformation extends React.Component {

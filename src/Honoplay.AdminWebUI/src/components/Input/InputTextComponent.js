@@ -19,7 +19,7 @@ const InputTextComponent = (props) => {
         )}
         <Grid item xs={12} sm={9}>
           <InputBase
-            onChange={e => onChange(e.target.value)}
+            onChange={onChange}
             multiline={multiline}
             name={name}
             value={value}

@@ -12,42 +12,47 @@ class BasicKnowledge extends React.Component {
   }
 
   tenantModel = {
-    name: null,
-    description: null,
-    logo: null,
+    name: '',
+    description: '',
+    logo: '',
     hostName:
       Math.random()
         .toString(36)
         .substring(2) + new Date().getTime().toString(36)
   };
 
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.tenantModel[name] = value;
+    this.props.basicTenantModel(this.tenantModel);
+  }
+
   render() {
-    const { classes, isError } = this.props;
+    const { 
+      classes, 
+      isErrorTenant } = this.props;
+      
     return (
       <div className={classes.root}>
         <Grid container spacing={40}>
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12}>
             <Input
-              error = {isError}
-              onChange={value => {
-                this.tenantModel.name = value;
-                this.props.basicTenantModel(this.tenantModel);
-              }}
+              error = {isErrorTenant}
+              onChange={this.handleChange}
               labelName={translate("TenantName")}
               inputType="text"
-              name="TenantName"
+              name="name"
+              value={this.tenantModel.name}
             />
             <Input
-              error = {isError}
-              onChange={value => {
-                this.tenantModel.description = value;
-                this.props.basicTenantModel(this.tenantModel);
-              }}
+              error = {isErrorTenant}
+              onChange={this.handleChange}
               labelName={translate("Description")}
               multiline
               inputType="text"
-              name="Description"
+              name="description"
+              value={this.tenantModel.description}
             />
             <ImageInput
               selectedImage={value => {

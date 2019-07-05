@@ -13,37 +13,38 @@ import {
   Snackbar
 } from "@material-ui/core";
 import { Style, theme } from "./Style";
-import TabContainer from "./TabContainer";
+import TabContainer from "../../components/Tabs/TabContainer";
 import Typography from "../../components/Typography/TypographyComponent";
+import MySnackbarContentWrapper from "../../components/Snackbar/SnackbarContextComponent";
 
-import MySnackbarContentWrapper from "./SnackbarContextComponent";
-
-import BasicKnowledge from "../../views/TenantInformation/BasicKnowledge";
-import Department from "../../views/TenantInformation/Department";
-import Trainee from "../../views/TenantInformation/Trainee";
+import BasicKnowledge from "./BasicKnowledge";
+import Department from "./Department";
+import Trainee from "./Trainee";
 
 import { connect } from "react-redux";
 import { createTenant } from "@omegabigdata/honoplay-redux-helper/Src/actions/Tenant";
 import { createTrainee } from "@omegabigdata/honoplay-redux-helper/Src/actions/Trainee";
+import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Department";
 
-class FullWidthTabs extends React.Component {
+class TenantInformationTabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tabValue: 0,
+      tabValue: 2,
       loading: false,
       success: false,
       disabledTab1: true,
       disabledTab2: true,
       open: false,
       newTenantModel: null,
-      isError: false,
+      isErrorTenant: false,
+      isErrorTrainee: false,
       newTraineeModel: null
     };
   }
 
   componentDidUpdate(prevProps) {
-    const { 
+    const {
       isCreateTenantLoading,
       errorCreateTenant,
       newTenant,
@@ -52,10 +53,12 @@ class FullWidthTabs extends React.Component {
       newTrainee
     } = this.props;
 
-    if (this.state.tabValue == 0) {
+    const { tabValue } = this.state;
+
+    if (tabValue == 0) {
       if (!prevProps.errorCreateTenant && errorCreateTenant) {
         this.setState({
-          isError: true,
+          isErrorTenant: true,
           open: true
         });
       }
@@ -63,7 +66,7 @@ class FullWidthTabs extends React.Component {
         this.setState({
           loading: false,
           success: true,
-          isError: false,
+          isErrorTenant: false,
           open: true,
           disabledTab1: false,
           disabledTab2: false,
@@ -74,22 +77,21 @@ class FullWidthTabs extends React.Component {
           loading: true,
           success: false,
           open: errorCreateTenant && true,
-          isError: errorCreateTenant && true,
+          isErrorTenant: errorCreateTenant && true,
         });
       } else if (prevProps.isCreateTenantLoading && !isCreateTenantLoading) {
         this.setState({
           loading: false,
           success: false,
           open: true,
-          isError: errorCreateTenant && true,
+          isErrorTenant: errorCreateTenant && true,
         });
       }
     }
-
-    if (this.state.tabValue == 2) {
+    if (tabValue == 2) {
       if (!prevProps.errorCreateTrainee && errorCreateTrainee) {
         this.setState({
-          isError: true,
+          isErrorTrainee: true,
           open: true
         });
       }
@@ -97,7 +99,7 @@ class FullWidthTabs extends React.Component {
         this.setState({
           loading: false,
           success: true,
-          isError: false,
+          isErrorTrainee: false,
           open: true,
         });
       }
@@ -106,14 +108,14 @@ class FullWidthTabs extends React.Component {
           loading: true,
           success: false,
           open: errorCreateTrainee && true,
-          isError: errorCreateTrainee && true,
+          isErrorTrainee: errorCreateTrainee && true,
         });
       } else if (prevProps.isCreateTraineeLoading && !isCreateTraineeLoading) {
         this.setState({
           loading: false,
           success: false,
           open: true,
-          isError: errorCreateTrainee && true,
+          isErrorTrainee: errorCreateTrainee && true,
         });
       }
     }
@@ -121,16 +123,21 @@ class FullWidthTabs extends React.Component {
   }
   handleButtonClick = () => {
     const { createTenant, createTrainee } = this.props;
-    createTenant(this.state.newTenantModel);
-    createTrainee(this.state.newTraineeModel);
-    console.log(this.state.newTraineeModel);
+    const { tabValue, newTenantModel, newTraineeModel } = this.state;
+
+    if (tabValue == 0) {
+      createTenant(newTenantModel);
+    }
+    if (tabValue == 2) {
+      createTrainee(newTraineeModel);
+    }
   };
 
   handleChange = (event, tabValue) => {
     this.setState({ tabValue });
   };
 
-  handleChangeIndex = index => {
+  handleChangeIndex = (index) => {
     this.setState({ tabValue: index });
   };
 
@@ -141,6 +148,11 @@ class FullWidthTabs extends React.Component {
     this.setState({ open: false });
   };
 
+  componentDidMount() {
+    const { fetchDepartmentList } = this.props;
+    fetchDepartmentList(0, 50);
+  }
+
   render() {
     const {
       loading,
@@ -149,12 +161,14 @@ class FullWidthTabs extends React.Component {
       disabledTab1,
       disabledTab2,
       open,
-      isError
+      isErrorTrainee,
+      isErrorTenant
     } = this.state;
     const { classes } = this.props;
     const buttonClassname = classNames({
       [classes.buttonSuccess]: success
     });
+
     return (
       <MuiThemeProvider theme={theme}>
         <div className={classes.root}>
@@ -194,9 +208,9 @@ class FullWidthTabs extends React.Component {
             >
               <MySnackbarContentWrapper
                 onClose={this.handleClose}
-                variant={isError ? "error" : "success"}
+                variant={isErrorTrainee || isErrorTenant ? "error" : "success"}
                 message={
-                  isError
+                  isErrorTrainee || isErrorTenant
                     ? "İşlem başarısız"
                     : "İşleminiz başarılı bir şekilde kaydedildi!"
                 }
@@ -239,7 +253,7 @@ class FullWidthTabs extends React.Component {
               </Tabs>
               <SwipeableViews
                 axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-                index={this.state.tabValue}
+                index={tabValue}
                 onChangeIndex={this.handleChangeIndex}
               >
                 <TabContainer dir={theme.direction}>
@@ -248,11 +262,11 @@ class FullWidthTabs extends React.Component {
                       if (model) {
                         this.setState({
                           newTenantModel: model,
-                          isError: false
+                          isErrorTenant: false
                         });
                       }
                     }}
-                    isError={isError}
+                    isErrorTenant={isErrorTenant}
                   />
                 </TabContainer>
                 <TabContainer dir={theme.direction}>
@@ -264,11 +278,11 @@ class FullWidthTabs extends React.Component {
                       if (model) {
                         this.setState({
                           newTraineeModel: model,
-                          isError: false
+                          isErrorTrainee: false
                         })
                       }
                     }}
-                    isError={isError}
+                    isErrorTrainee={isErrorTrainee}
                   />
                 </TabContainer>
               </SwipeableViews>
@@ -281,8 +295,17 @@ class FullWidthTabs extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { errorCreateTenant, isCreateTenantLoading, newTenant } = state.createTenant;
-  const { errorCreateTrainee, isCreateTraineeLoading, newTrainee } = state.createTrainee;
+  const { 
+    errorCreateTenant,
+     isCreateTenantLoading, 
+     newTenant 
+    } = state.createTenant;
+  const { 
+    errorCreateTrainee, 
+    isCreateTraineeLoading, 
+    newTrainee 
+  } = state.createTrainee;
+
   return {
     errorCreateTenant,
     isCreateTenantLoading,
@@ -295,10 +318,11 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   createTenant,
-  createTrainee
+  createTrainee,
+  fetchDepartmentList
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(Style)(FullWidthTabs));
+)(withStyles(Style)(TenantInformationTabs));

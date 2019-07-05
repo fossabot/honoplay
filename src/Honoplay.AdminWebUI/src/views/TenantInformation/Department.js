@@ -1,21 +1,27 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, CircularProgress } from '@material-ui/core';
+import {
+  Grid,
+  CircularProgress
+} from '@material-ui/core';
 import Style from '../Style';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import SimpleTable from '../../components/Table/SimpleTable';
 
 import { connect } from "react-redux";
-import { fetchDepartmentList, createDepartment } from "@omegabigdata/honoplay-redux-helper/Src/actions/Department";
+import {
+  fetchDepartmentList,
+  createDepartment
+} from "@omegabigdata/honoplay-redux-helper/Src/actions/Department";
 
 class Department extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      departments: [],
+      department: [],
       loading: false,
       departmentError: false,
       departmentListError: false,
@@ -27,68 +33,81 @@ class Department extends React.Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { departmentList,
+    const {
+      departmentList,
       isDepartmentListLoading,
       errorDepartmentList,
       errorCreateDepartment,
       isCreateDepartmentLoading,
-      departments } = this.props;
-    if( !prevProps.errorDepartmentList && errorDepartmentList ) {
+      departments
+    } = this.props;
+
+    const { department } = this.state;
+
+    if (!prevProps.errorDepartmentList && errorDepartmentList) {
       this.setState({
         departmentListError: true
       })
     }
-    if ( prevProps.isDepartmentListLoading && !isDepartmentListLoading && departmentList ) {
+    if (prevProps.isDepartmentListLoading && !isDepartmentListLoading && departmentList) {
       this.setState({
-        departments: departmentList.items
+        department: departmentList.items
       })
     }
-    if( !prevProps.isCreateDepartmentLoading && isCreateDepartmentLoading ) {
+    if (!prevProps.isCreateDepartmentLoading && isCreateDepartmentLoading) {
       this.setState({
         loading: true
       })
     }
-    if( !prevProps.errorCreateDepartment && errorCreateDepartment ) {
+    if (!prevProps.errorCreateDepartment && errorCreateDepartment) {
       this.setState({
         departmentError: true,
         loading: false
       })
     }
-    if ( prevProps.isCreateDepartmentLoading && !isCreateDepartmentLoading && departments ) {
-      if( !errorCreateDepartment ) {
+    if (prevProps.isCreateDepartmentLoading && !isCreateDepartmentLoading && departments) {
+      if (!errorCreateDepartment) {
         this.setState({
-          deparments: this.state.departments.push(departments.items[0].departments[0]),
+          deparment: department.push(departments.items[0].departments[0]),
           loading: false,
           departmentError: false,
-        })
+        });
       }
     }
+
   }
 
   componentDidMount() {
-    this.props.fetchDepartmentList(0, 50);
+    const { fetchDepartmentList } = this.props;
+    fetchDepartmentList(0, 100);
   }
 
   handleClick = () => {
-    this.props.createDepartment(this.departmentModel);
+    const { createDepartment } = this.props;
+    createDepartment(this.departmentModel);
+  }
+
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.departmentModel[name] = [value];
+    this.setState({ departmentError: false })
   }
 
   render() {
-    const { loading, departmentError } = this.state;
+    const { loading, departmentError, department } = this.state;
     const { classes } = this.props;
-
     return (
       <div className={classes.root}>
         <Grid container spacing={40}>
           <Grid item xs={12} sm={12} />
           <Grid item xs={6} sm={11}>
             <Input
-              error = {departmentError}
-              onChange={value => {this.departmentModel.departments = [value];
-                this.setState({departmentError: false})
-              }}
+              error={departmentError}
+              onChange={this.handleChange}
               labelName={translate('Department')}
               inputType="text"
+              name="departments"
+              value={this.departmentModel.departments}
             />
           </Grid>
           <Grid item xs={6} sm={1}>
@@ -108,7 +127,7 @@ class Department extends React.Component {
           </Grid>
           <Grid item xs={12} sm={12}>
             <SimpleTable
-              data={this.state.departments}
+              data={department}
               header={translate('TenantDepartments')}
             />
           </Grid>
@@ -119,8 +138,17 @@ class Department extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { errorDepartmentList, isDepartmentListLoading, departmentList } = state.departmentList;
-  const { errorCreateDepartment, isCreateDepartmentLoading, departments } = state.createDepartment;
+  const {
+    errorDepartmentList,
+    isDepartmentListLoading
+  } = state.departmentList;
+  const {
+    errorCreateDepartment,
+    isCreateDepartmentLoading,
+    departments
+  } = state.createDepartment;
+  const departmentList = state.departmentList.departmentList;
+
   return {
     errorDepartmentList,
     isDepartmentListLoading,
