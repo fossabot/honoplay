@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Honoplay.Persistence.Configurations
 {
-    public sealed class WorkingStatusConfiguration : IEntityTypeConfiguration<WorkingStatus>
+    public class WorkingStatusConfiguration : IEntityTypeConfiguration<WorkingStatus>
 
     {
         public void Configure(EntityTypeBuilder<WorkingStatus> builder)
