@@ -26,7 +26,7 @@ namespace Honoplay.Application.WorkingStatuses.Queries
         {
             var redisKey = $"WorkingStatusesByHostName{request.HostName}";
 
-            var query = await _cacheService.RedisCacheAsync<IList<WorkingStatusesListModel>>(redisKey: redisKey, redisLogic: delegate
+            var workingStatusesList = await _cacheService.RedisCacheAsync<IList<WorkingStatusesListModel>>(redisKey: redisKey, redisLogic: delegate
             {
                 var currentTenant = _context.Tenants
                     .Include(x => x.TenantAdminUsers)
@@ -47,20 +47,22 @@ namespace Honoplay.Application.WorkingStatuses.Queries
                     .Select(WorkingStatusesListModel.Projection)
                     .ToList();
 
-            }, cancellationToken);
+            }, cancellationToken: cancellationToken);
 
-            if (!query.Any())
+            if (!workingStatusesList.Any())
             {
                 throw new NotFoundException();
             }
 
-            query = query
+            workingStatusesList = workingStatusesList
                 .OrderBy(x => x.Name)
                 .Skip(request.Skip)
                 .Take(request.Take)
                 .ToList();
 
-            return new ResponseModel<WorkingStatusesListModel>(numberOfTotalItems: query.Count, numberOfSkippedItems: request.Skip, source: query);
+            return new ResponseModel<WorkingStatusesListModel>(numberOfTotalItems: workingStatusesList.Count,
+                numberOfSkippedItems: request.Skip,
+                source: workingStatusesList);
         }
     }
 }
