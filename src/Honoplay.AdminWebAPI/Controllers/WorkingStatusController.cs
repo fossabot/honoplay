@@ -1,11 +1,5 @@
-﻿using System.Linq;
-using System.Net;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Honoplay.Application._Infrastructure;
-using Honoplay.Application.Departments.Commands.CreateDepartment;
+﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Application.Departments.Queries.GetDepartmentsList;
-using Honoplay.Application.Tenants.Commands.UpdateTenant;
 using Honoplay.Application.WorkingStatuses.Commands.CreateWorkingStatus;
 using Honoplay.Application.WorkingStatuses.Commands.UpdateWorkingStatus;
 using Honoplay.Application.WorkingStatuses.Queries;
@@ -14,6 +8,10 @@ using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using System.Net;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
