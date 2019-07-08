@@ -27,18 +27,19 @@ namespace Honoplay.Application.Trainers.Queries.GetTrainersList
             var redisKey = $"TrainersWithDepartmentsByHostName{request.HostName}";
             var query = await _cacheService.RedisCacheAsync<IList<TrainersListModel>>(redisKey, delegate
             {
-                var currentTenant = _context.Tenants.FirstOrDefaultAsync(x =>
-                        x.HostName == request.HostName,
-                    cancellationToken);
+                var currentTenant = _context.Tenants
+                    .Include(i => i.TenantAdminUsers)
+                    .Include(i => i.Departments)
+                    .FirstOrDefaultAsync(x =>
+                        x.HostName == request.HostName
+                        && _context.TenantAdminUsers.Any(y =>
+                            y.AdminUserId == request.AdminUserId
+                            && y.TenantId == x.Id)
+                        , cancellationToken);
 
-                var isExist = _context.TenantAdminUsers.AnyAsync(x =>
-                        x.AdminUserId == request.AdminUserId
-                        && x.TenantId == currentTenant.Result.Id,
-                    cancellationToken);
-
-                return _context.Trainers.Where(x => isExist.Result)
+                return _context.Trainers.Where(t => currentTenant.Result.Departments.Any(d => d.Id == t.DepartmentId))
                     .AsNoTracking()
-                    .OrderBy(x => x.Name)
+                    .OrderBy(ob => ob.Name)
                     .Skip(request.Skip)
                     .Take(request.Take)
                     .Select(TrainersListModel.Projection)

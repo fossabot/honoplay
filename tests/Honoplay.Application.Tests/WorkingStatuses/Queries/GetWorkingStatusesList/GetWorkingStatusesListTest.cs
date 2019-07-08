@@ -8,6 +8,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.WorkingStatuses.Queries;
+using Honoplay.Persistence.CacheManager;
 using Xunit;
 
 namespace Honoplay.Application.Tests.WorkingStatuses.Queries.GetWorkingStatusesList
@@ -16,60 +18,63 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Queries.GetWorkingStatusesL
     {
         private readonly HonoplayDbContext _context;
         private readonly int _adminUserId;
-        private const string _hostName = "localhost";
+        private const string HostName = "localhost";
         private readonly GetWorkingStatusesListQueryHandler _queryHandler;
 
         public GetWorkingStatusesListTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _queryHandler = new GetWorkingStatusesListQueryHandler(_context, cache.Object);
+            _context = InitAndGetDbContext(out _adminUserId);
+            _queryHandler = new GetWorkingStatusesListQueryHandler(_context, new CacheManager(cache.Object));
         }
 
-        private HonoplayDbContext InitAndGetDbContext()
+        private HonoplayDbContext InitAndGetDbContext(out int adminUserId)
         {
             var context = GetDbContext();
-
             var salt = ByteArrayExtensions.GetRandomSalt();
+
             var adminUser = new AdminUser
             {
-                Email = "TestAdminUser01@omegabigdata.com",
-                Password = "Passw0rd".GetSHA512(salt),
+                Id = 1,
+                Email = "test@omegabigdata.com",
+                Password = "pass".GetSHA512(salt),
                 PasswordSalt = salt,
-                LastPasswordChangeDateTime = DateTime.Today.AddDays(-5),
+                LastPasswordChangeDateTime = DateTimeOffset.Now.AddDays(-5)
             };
             context.AdminUsers.Add(adminUser);
 
+            adminUserId = adminUser.Id;
+
             var tenant = new Tenant
             {
-                Name = "TestTenant#01",
-                HostName = _hostName
+                Name = "testTenant",
+                HostName = "localhost",
+                CreatedBy = adminUserId
             };
-
             context.Tenants.Add(tenant);
 
             context.TenantAdminUsers.Add(new TenantAdminUser
             {
                 TenantId = tenant.Id,
-                AdminUserId = adminUser.Id,
-                CreatedBy = adminUser.Id
+                AdminUserId = adminUserId,
+                CreatedBy = adminUserId
             });
 
             context.WorkingStatuses.Add(new WorkingStatus
             {
                 Name = "testStatus",
-                TenantId = tenant.Id
+                TenantId = tenant.Id,
+                CreatedBy = adminUserId
             });
 
-            _context.SaveChanges();
-
-            return _context;
-
+            context.SaveChanges();
+            return context;
         }
 
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetWorkingStatusesListQuery(_adminUserId, _hostName, skip: 0, take: 10);
+            var query = new GetWorkingStatusesListQuery(_adminUserId, HostName, skip: 0, take: 10);
 
             var model = await _queryHandler.Handle(query, CancellationToken.None);
 
@@ -81,7 +86,7 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Queries.GetWorkingStatusesL
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetWorkingStatusesListQuery(_adminUserId, _hostName, skip: 0, take: 0);
+            var query = new GetWorkingStatusesListQuery(_adminUserId+1, HostName, skip: -1, take: 0);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _queryHandler.Handle(query, CancellationToken.None));

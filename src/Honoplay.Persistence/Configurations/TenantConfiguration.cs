@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-
-
 namespace Honoplay.Persistence.Configurations
 {
     public sealed class TenantConfiguration : IEntityTypeConfiguration<Tenant>

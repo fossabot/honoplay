@@ -30,11 +30,13 @@ namespace Honoplay.Persistence.Configurations
             //Department
             builder.HasOne(x => x.Department)
                 .WithMany(y => y.Trainees)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasForeignKey(x => x.DepartmentId);
 
             //WorkingStatus
             builder.HasOne(x => x.WorkingStatus)
                 .WithMany(y => y.Trainees)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasForeignKey(x => x.WorkingStatusId);
 
         }

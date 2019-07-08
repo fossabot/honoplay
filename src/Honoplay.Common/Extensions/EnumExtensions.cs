@@ -1,7 +1,5 @@
 ﻿using System.Net;
 
-
-
 namespace Honoplay.Common.Extensions
 {
     public static class EnumExtensions

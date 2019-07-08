@@ -71,6 +71,8 @@ namespace Honoplay.Application.Tests.Trainees.Commands.CreateTrainee
             var workingStatus = new WorkingStatus
             {
                 Name = "testWorkingStatus",
+                TenantId = tenant.Id,
+                CreatedBy = adminUser.Id
             };
 
             context.WorkingStatuses.Add(workingStatus);

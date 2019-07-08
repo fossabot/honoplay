@@ -73,6 +73,8 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
             var workingStatus = new WorkingStatus
             {
                 Name = "testWorkingStatus",
+                TenantId = tenant.Id,
+                CreatedBy = adminUser.Id
             };
 
             context.WorkingStatuses.Add(workingStatus);
