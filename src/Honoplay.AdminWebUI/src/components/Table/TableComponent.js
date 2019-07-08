@@ -1,40 +1,40 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
-import {Table, TableBody, TableCell, 
-        TablePagination, TableRow, Paper, 
-        Checkbox, MuiThemeProvider} from '@material-ui/core';
+import {
+  Table, TableBody, TableCell,
+  TablePagination, TableRow, Paper,
+  Checkbox, MuiThemeProvider
+} from '@material-ui/core';
 
 import TableMenu from './TableMenu';
 import EnhancedTableHead from './EnhancedTableHead';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
 
-import { Style, theme} from './Style';
+import { Style, theme } from './Style';
 
 
 class TableComponent extends React.Component {
   constructor(props) {
-        super(props);
-        this.state = {
-            selected: [],
-            data: props.data,
-            columns: props.columns,
-            page: 0,
-            rowsPerPage: 5,
-          };
-        this.handleChangePage=this.handleChangePage.bind(this);
-        this.handleChangeRowsPerPage=this.handleChangeRowsPerPage.bind(this);
+    super(props);
+    this.state = {
+      selected: [],
+      page: 0,
+      rowsPerPage: 5,
+    };
+    this.handleChangePage = this.handleChangePage.bind(this);
+    this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
   }
 
-  handleSelectAllClick (event)  {
-    if (event.target.checked) {
-        this.setState(state => ({ selected: state.data.map(n => n.id) }));
-        return;
-    }
-    this.setState({ selected: [] });
+  handleSelectAllClick(event) {
+    // if (event.target.checked) {
+    //   this.setState(state => ({ selected: state.data.map(n => n.id) }));
+    //   return;
+    // }
+    // this.setState({ selected: [] });
   };
 
-  handleClick (id) {
+  handleClick(id) {
     const { selected } = this.state;
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
@@ -55,54 +55,54 @@ class TableComponent extends React.Component {
     this.setState({ selected: newSelected });
   };
 
-  handleChangePage (event,page) {
+  handleChangePage(event, page) {
     this.setState({ page });
   };
-  
-  handleChangeRowsPerPage (event) {
+
+  handleChangeRowsPerPage(event) {
     this.setState({ page: 0, rowsPerPage: event.target.value });
   };
 
-  isSelected  (id) {return this.state.selected.indexOf(id) !== -1;}
+  isSelected(id) { return this.state.selected.indexOf(id) !== -1; }
 
   handleDelete(index) {
-    const id= this.state.data.map(row => row.id);
-    const data = [...this.state.data];
-    index.map( k=> {
-      let n = id.indexOf(k);
-      id.splice(n,1);
-      data.splice(n,1);
-    });
-    this.setState({data});
-    this.setState({selected: []});
+    // const id = this.state.data.map(row => row.id);
+    // const data = [...this.state.data];
+    // index.map(k => {
+    //   let n = id.indexOf(k);
+    //   id.splice(n, 1);
+    //   data.splice(n, 1);
+    // });
+    // this.setState({ data });
+    // this.setState({ selected: [] });
   };
 
   render() {
-    const { classes } = this.props;
-    const { data, columns, selected, rowsPerPage, page } = this.state;
+    const { classes, data, columns } = this.props;
+    const { selected, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     return (
       <MuiThemeProvider theme={theme} >
-        <Paper classes={{root: classes.tableRoot,typography: classes.typography}}>
-          <EnhancedTableToolbar numSelected={selected.length} 
-                                handleDelete={this.handleDelete.bind(this,selected)}/>
+        <Paper classes={{ root: classes.tableRoot, typography: classes.typography }}>
+          <EnhancedTableToolbar numSelected={selected.length}
+            handleDelete={this.handleDelete.bind(this, selected)} />
           <div className={classes.tableWrapper}>
             <Table className={classes.table} aria-labelledby="tableTitle">
               <EnhancedTableHead
                 numSelected={selected.length}
                 onSelectAllClick={this.handleSelectAllClick.bind(this)}
                 rowCount={data.length}
-                columns={this.state.columns}
+                columns={columns}
               />
               <TableBody>
                 {data
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((data,id) => {
+                  .map((data, id) => {
                     const isSelected = this.isSelected(data.id);
                     return (
                       <TableRow
                         hover
-                        onChange={this.handleClick.bind(this,(data.id))}
+                        onChange={this.handleClick.bind(this, (data.id))}
                         role="checkbox"
                         aria-checked={isSelected}
                         tabIndex={-1}
@@ -111,27 +111,27 @@ class TableComponent extends React.Component {
                         id={'container-desk'}
                       >
                         <TableCell padding="checkbox"
-                                   className={classes.tableCell}>
-                          <Checkbox checked={isSelected} 
-                                    color='secondary'
+                          className={classes.tableCell}>
+                          <Checkbox checked={isSelected}
+                            color='secondary'
                           />
                         </TableCell>
-                          {columns.map((column,id) =>
-                          
+                        {columns.map((column, id) =>
+
                           <TableCell className={classes.tableCell} key={id}>{data[column.field]}</TableCell>
-                          )}
-                          { selected.includes(data.id) ?
-                            <TableCell className={classes.tableCell}>
-                              <TableMenu handleDelete={this.handleDelete.bind(this,selected)}/>
-                            </TableCell> :
-                            <TableCell/>
-                          }
-                        </TableRow>               
-                    );                 
-                  })}             
+                        )}
+                        {selected.includes(data.id) ?
+                          <TableCell className={classes.tableCell}>
+                            <TableMenu handleDelete={this.handleDelete.bind(this, selected)} />
+                          </TableCell> :
+                          <TableCell />
+                        }
+                      </TableRow>
+                    );
+                  })}
                 {emptyRows > 0 && (
                   <TableRow style={{ height: 49 * emptyRows }}>
-                    <TableCell colSpan={6} className={classes.tableCell}/>
+                    <TableCell colSpan={6} className={classes.tableCell} />
                   </TableRow>
                 )}
               </TableBody>

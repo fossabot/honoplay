@@ -59,27 +59,20 @@ class Trainee extends React.Component {
       isDepartmentListLoading,
       departmentList } = this.props;
 
-    const { traineeList, departments } = this.state;
-
     if (prevProps.isTraineeListLoading && !isTraineeListLoading && trainees) {
-      trainees.items.map(trainee => {
-        this.setState({
-          trainees: traineeList.push(trainee),
-        })
+      this.setState({
+        traineeList: trainees.items
       })
     }
     if (prevProps.isDepartmentListLoading && !isDepartmentListLoading && departmentList) {
-      departmentList.items.map(department => {
-        this.setState({
-          departments: departments.push(department)
-        })
+      this.setState({
+        departments: departmentList.items
       })
     }
   }
 
   componentDidMount() {
     this.props.fetchTraineeList(0, 50);
-    this.props.fetchDepartmentList(0, 50);
   }
 
   handleChange = (e) => {
@@ -98,7 +91,6 @@ class Trainee extends React.Component {
       gender,
       traineeColumns,
       traineeList } = this.state;
-
     return (
       <div className={classes.root} id="kisiEkle">
         <Grid container spacing={40}>

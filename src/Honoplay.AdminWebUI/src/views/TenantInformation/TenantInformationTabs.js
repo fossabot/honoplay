@@ -23,14 +23,14 @@ import Trainee from "./Trainee";
 
 import { connect } from "react-redux";
 import { createTenant } from "@omegabigdata/honoplay-redux-helper/Src/actions/Tenant";
-import { createTrainee } from "@omegabigdata/honoplay-redux-helper/Src/actions/Trainee";
+import { createTrainee, fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Trainee";
 import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Department";
 
 class TenantInformationTabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      tabValue: 2,
+      tabValue: 0,
       loading: false,
       success: false,
       disabledTab1: true,
@@ -96,6 +96,7 @@ class TenantInformationTabs extends React.Component {
         });
       }
       if (prevProps.isCreateTraineeLoading && !isCreateTraineeLoading && newTrainee) {
+        this.props.fetchTraineeList(0,50);
         this.setState({
           loading: false,
           success: true,
@@ -130,6 +131,7 @@ class TenantInformationTabs extends React.Component {
     }
     if (tabValue == 2) {
       createTrainee(newTraineeModel);
+      console.log(newTraineeModel);
     }
   };
 
@@ -147,11 +149,6 @@ class TenantInformationTabs extends React.Component {
     }
     this.setState({ open: false });
   };
-
-  componentDidMount() {
-    const { fetchDepartmentList } = this.props;
-    fetchDepartmentList(0, 50);
-  }
 
   render() {
     const {
@@ -319,7 +316,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
   createTenant,
   createTrainee,
-  fetchDepartmentList
+  fetchDepartmentList,
+  fetchTraineeList
 };
 
 export default connect(

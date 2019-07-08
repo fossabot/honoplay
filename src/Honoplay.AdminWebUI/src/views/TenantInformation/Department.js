@@ -79,7 +79,7 @@ class Department extends React.Component {
 
   componentDidMount() {
     const { fetchDepartmentList } = this.props;
-    fetchDepartmentList(0, 100);
+    fetchDepartmentList(0, 50);
   }
 
   handleClick = () => {
@@ -140,14 +140,14 @@ class Department extends React.Component {
 const mapStateToProps = state => {
   const {
     errorDepartmentList,
-    isDepartmentListLoading
+    isDepartmentListLoading,
+    departmentList
   } = state.departmentList;
   const {
     errorCreateDepartment,
     isCreateDepartmentLoading,
     departments
   } = state.createDepartment;
-  const departmentList = state.departmentList.departmentList;
 
   return {
     errorDepartmentList,
