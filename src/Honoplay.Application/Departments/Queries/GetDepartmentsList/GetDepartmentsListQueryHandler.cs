@@ -11,8 +11,7 @@ using System.Threading.Tasks;
 
 namespace Honoplay.Application.Departments.Queries.GetDepartmentsList
 {
-    public class
-        GetDepartmentsListQueryHandler : IRequestHandler<GetDepartmentsListQuery, ResponseModel<DepartmentsListModel>>
+    public class GetDepartmentsListQueryHandler : IRequestHandler<GetDepartmentsListQuery, ResponseModel<DepartmentsListModel>>
     {
         private readonly HonoplayDbContext _context;
         private readonly ICacheService _cacheService;

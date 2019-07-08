@@ -13,6 +13,7 @@ namespace Honoplay.Domain.Entities
 
             TenantAdminUsers = new HashSet<TenantAdminUser>();
             Departments = new HashSet<Department>();
+            WorkingStatuses = new HashSet<WorkingStatus>();
         }
         public Guid Id { get; set; }
 
@@ -20,9 +21,10 @@ namespace Honoplay.Domain.Entities
         public string Description { get; set; }
         public string HostName { get; set; }
         public byte[] Logo { get; set; }
-        [JsonIgnore]
 
+        [JsonIgnore]
         public virtual ICollection<TenantAdminUser> TenantAdminUsers { get; set; }
         public virtual ICollection<Department> Departments { get; set; }
+        public virtual ICollection<WorkingStatus> WorkingStatuses { get; set; }
     }
 }

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Honoplay.Common.Constants
+﻿namespace Honoplay.Common.Constants
 {
     public static class StringConstants
     {

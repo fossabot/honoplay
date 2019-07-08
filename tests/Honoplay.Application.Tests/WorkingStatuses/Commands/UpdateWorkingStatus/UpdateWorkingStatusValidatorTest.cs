@@ -1,4 +1,6 @@
-﻿using Xunit;
+﻿using FluentValidation.TestHelper;
+using Honoplay.Application.WorkingStatuses.Commands.UpdateWorkingStatus;
+using Xunit;
 
 namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatus
 {
@@ -6,9 +8,9 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
     {
         private readonly UpdateWorkingStatusValidator _validator;
 
-        public UpdateWorkingStatusValidatorTest(UpdateWorkingStatusValidator validator)
+        public UpdateWorkingStatusValidatorTest()
         {
-            _validator = validator;
+            _validator = new UpdateWorkingStatusValidator();
         }
 
         [Fact]
@@ -19,7 +21,6 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
                 Id = 1,
                 Name = "asdasd",
                 HostName = "localhost",
-                CreatedBy = 1,
                 UpdatedBy = 1
             }).IsValid);
         }
@@ -28,7 +29,6 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
         public void ShouldBeNotValidForNullOrEmpty()
         {
             _validator.ShouldHaveValidationErrorFor(x => x.Name, string.Empty);
-            _validator.ShouldHaveValidationErrorFor(x => x.UpdatedBy, 0);
         }
     }
 }

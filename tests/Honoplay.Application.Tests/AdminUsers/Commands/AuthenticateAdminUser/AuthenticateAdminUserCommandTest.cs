@@ -1,13 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
+﻿using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
-using Microsoft.Extensions.Caching.Distributed;
-using Moq;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Honoplay.Application.Tests.AdminUsers.Commands.AuthenticateAdminUser

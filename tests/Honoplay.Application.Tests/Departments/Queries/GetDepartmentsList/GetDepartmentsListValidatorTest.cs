@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
 using Honoplay.Application.Departments.Queries.GetDepartmentsList;
 using Xunit;
 
@@ -17,7 +16,7 @@ namespace Honoplay.Application.Tests.Departments.Queries.GetDepartmentsList
         [Fact]
         public void ShouldBeValid()
         {
-            Assert.True(_validator.Validate(new GetDepartmentsListQueryModel{Take = 5}).IsValid);
+            Assert.True(_validator.Validate(new GetDepartmentsListQueryModel { Take = 5 }).IsValid);
         }
 
         [Fact]

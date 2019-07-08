@@ -18,8 +18,8 @@ namespace Honoplay.Persistence
         public DbSet<Tenant> Tenants { get; set; }
         public DbSet<TenantAdminUser> TenantAdminUsers { get; set; }
         public DbSet<Department> Departments { get; set; }
-        public DbSet<Trainee> Trainees { get; set; }
         public DbSet<WorkingStatus> WorkingStatuses { get; set; }
+        public DbSet<Trainee> Trainees { get; set; }
         public DbSet<Trainer> Trainers { get; set; }
         public DbSet<Profession> Professions { get; set; }
 

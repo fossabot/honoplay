@@ -1,10 +1,13 @@
-﻿using Honoplay.Common._Exceptions;
+﻿using Honoplay.Application.WorkingStatuses.Commands.UpdateWorkingStatus;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -16,13 +19,13 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
         private readonly HonoplayDbContext _context;
         private readonly int _adminUserId;
         private readonly int _workingStatusId;
-        private readonly UpdateWorkingStatusCommandHandler _workingStatusCommandHandler;
+        private readonly UpdateWorkingStatusCommandHandler _commandHandler;
 
-        public UpdateWorkingStatusCommandTest(UpdateWorkingStatusCommandHandler workingStatusCommandHandler)
+        public UpdateWorkingStatusCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
             _context = InitAndGetDbContext(out _adminUserId, out _workingStatusId);
-            _workingStatusCommandHandler = workingStatusCommandHandler(_context, cache.Object);
+            _commandHandler = new UpdateWorkingStatusCommandHandler(_context, new CacheManager(cache.Object));
         }
 
 
@@ -60,13 +63,13 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
             var workingStatus = new WorkingStatus
             {
                 Name = "testWorkingStatus",
-                HostName = "localhost",
+                TenantId = tenant.Id,
                 CreatedBy = adminUser.Id
             };
+            context.WorkingStatuses.Add(workingStatus);
 
             context.SaveChanges();
 
-            tenantId = tenant.Id;
             adminUserId = adminUser.Id;
             workingStatusId = workingStatus.Id;
 
@@ -76,7 +79,7 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var updateWorkingStatusCommand = new UpdateWorkingStatusCommand()
+            var updateWorkingStatusCommand = new UpdateWorkingStatusCommand
             {
                 Id = _workingStatusId,
                 HostName = "localhost",
