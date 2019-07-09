@@ -11,7 +11,6 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
         public string HostName { get; }
         public byte[] Logo { get; }
 
-
         public CreateTenantModel(Guid id, DateTimeOffset createdAt, string name, string description, string hostName, byte[] logo)
         {
             Id = id;

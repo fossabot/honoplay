@@ -7,6 +7,7 @@ using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -26,8 +27,10 @@ namespace Honoplay.AdminWebAPI.Controllers
             try
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
+                var tenantId = Guid.Parse(Claims[ClaimTypes.Webpage]);
+
                 command.AdminUserId = userId;
-                command.HostName = HonoHost;
+                command.TenantId = tenantId;
 
                 var model = await Mediator.Send(command);
                 return Ok(model);
@@ -54,8 +57,9 @@ namespace Honoplay.AdminWebAPI.Controllers
             try
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
+                var tenantId = Guid.Parse(Claims[ClaimTypes.Webpage]);
 
-                var models = await Mediator.Send(new GetDepartmentsListQuery(userId, HonoHost, query.Skip, query.Take));
+                var models = await Mediator.Send(new GetDepartmentsListQuery(userId, tenantId, query.Skip, query.Take));
 
                 return Ok(models);
 

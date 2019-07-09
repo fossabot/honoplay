@@ -1,13 +1,14 @@
 ﻿using Honoplay.Application._Infrastructure;
 using MediatR;
+using System;
 
 namespace Honoplay.Application.Departments.Queries.GetDepartmentsList
 {
     public class GetDepartmentsListQuery : IRequest<ResponseModel<DepartmentsListModel>>
     {
-        public GetDepartmentsListQuery(int adminUserId, string hostName, int skip, int take)
+        public GetDepartmentsListQuery(int adminUserId, Guid tenantId, int skip, int take)
         {
-            HostName = hostName;
+            TenantId = tenantId;
             AdminUserId = adminUserId;
             Skip = skip;
             Take = take;
@@ -19,7 +20,7 @@ namespace Honoplay.Application.Departments.Queries.GetDepartmentsList
         }
 
         public int AdminUserId { get; private set; }
-        public string HostName { get; private set; }
+        public Guid TenantId { get; private set; }
         public int Skip { get; private set; }
         public int Take { get; private set; }
 

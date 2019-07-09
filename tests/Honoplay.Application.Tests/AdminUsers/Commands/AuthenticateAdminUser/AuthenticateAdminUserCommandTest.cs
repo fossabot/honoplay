@@ -26,19 +26,31 @@ namespace Honoplay.Application.Tests.AdminUsers.Commands.AuthenticateAdminUser
         {
             var context = GetDbContext();
             tenantGuid = Guid.NewGuid();
-            context.Tenants.Add(new Tenant
-            {
-                Id = _testTenantGuid,
-                Name = "TestTenant#01"
-            });
-
             var salt = ByteArrayExtensions.GetRandomSalt();
-            context.AdminUsers.Add(new AdminUser
+
+            var adminUser = new AdminUser
             {
                 Email = "TestAdminUser01@omegabigdata.com",
                 Password = "Passw0rd".GetSHA512(salt),
                 PasswordSalt = salt,
                 LastPasswordChangeDateTime = DateTime.Today.AddDays(-5),
+            };
+            context.AdminUsers.Add(adminUser);
+
+            var tenant = new Tenant
+            {
+                Id = _testTenantGuid,
+                Name = "TestTenant#01",
+                HostName = "localhost",
+                CreatedBy = adminUser.Id
+            };
+            context.Tenants.Add(tenant);
+
+            context.TenantAdminUsers.Add(new TenantAdminUser
+            {
+                AdminUserId = adminUser.Id,
+                CreatedBy = adminUser.Id,
+                TenantId = tenant.Id
             });
 
             context.SaveChanges();
@@ -51,7 +63,8 @@ namespace Honoplay.Application.Tests.AdminUsers.Commands.AuthenticateAdminUser
             var command = new AuthenticateAdminUserCommand
             {
                 Email = "TestAdminUser01@omegabigdata.com",
-                Password = "Passw0rd"
+                Password = "Passw0rd",
+                HostName = "localhost"
             };
 
             var adminUser = await _commandHandler.Handle(command, CancellationToken.None);
@@ -65,7 +78,8 @@ namespace Honoplay.Application.Tests.AdminUsers.Commands.AuthenticateAdminUser
             var command = new AuthenticateAdminUserCommand
             {
                 Email = "TestAdminUser01@omegabigdata.com",
-                Password = "Passw0rdEX"
+                Password = "Passw0rdEX",
+                HostName = "localhost"
             };
 
             await Assert.ThrowsAsync<Exception>(async () =>
@@ -78,7 +92,8 @@ namespace Honoplay.Application.Tests.AdminUsers.Commands.AuthenticateAdminUser
             var command = new AuthenticateAdminUserCommand
             {
                 Email = "TestAdminUser01@omegabigdata.com",
-                Password = "passw0rd"
+                Password = "passw0rd",
+                HostName = "localhost"
             };
 
             await Assert.ThrowsAsync<Exception>(async () =>
@@ -91,7 +106,8 @@ namespace Honoplay.Application.Tests.AdminUsers.Commands.AuthenticateAdminUser
             var command = new AuthenticateAdminUserCommand
             {
                 Email = "TestAdminUser01@omegabigdata.com",
-                Password = "Passw0rd2"
+                Password = "Passw0rd2",
+                HostName = "localhost"
             };
 
             var dbUser = _context

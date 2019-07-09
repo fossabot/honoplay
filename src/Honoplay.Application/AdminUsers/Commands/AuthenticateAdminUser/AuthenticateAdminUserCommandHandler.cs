@@ -62,9 +62,7 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
 
             var tenantId = _context.TenantAdminUsers
                 .Include(x => x.Tenant)
-                .Where(x => x.AdminUserId == adminUser.Id && x.Tenant.HostName == request.HostName)
-                .AsNoTracking()
-                .First().TenantId;
+                .First(x => x.AdminUserId == adminUser.Id && x.Tenant.HostName == request.HostName).TenantId;
 
             return new AdminUserAuthenticateModel(id: adminUser.Id,
                                            email: adminUser.Email,

@@ -1,5 +1,4 @@
 ﻿using Honoplay.Application._Infrastructure;
-using Honoplay.Application.Departments.Queries.GetDepartmentsList;
 using Honoplay.Application.WorkingStatuses.Commands.CreateWorkingStatus;
 using Honoplay.Application.WorkingStatuses.Commands.UpdateWorkingStatus;
 using Honoplay.Application.WorkingStatuses.Queries;
@@ -87,7 +86,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             try
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
-                var models = await Mediator.Send(new GetDepartmentsListQuery(userId, HonoHost, query.Skip, query.Take));
+                var models = await Mediator.Send(new GetWorkingStatusesListQuery(userId, HonoHost, query.Skip, query.Take));
                 return Ok(models);
             }
             catch (NotFoundException)

@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
 using Honoplay.Application.Departments.Commands.CreateDepartment;
+using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Departments.Commands.CreateDepartment
@@ -20,7 +21,7 @@ namespace Honoplay.Application.Tests.Departments.Commands.CreateDepartment
                 new CreateDepartmentCommand
                 {
                     AdminUserId = 1,
-                    HostName = "localhost",
+                    TenantId = new Guid(),
                     Departments = new List<string> { "yazilim", "tasarim" }
                 }
                 ).IsValid);

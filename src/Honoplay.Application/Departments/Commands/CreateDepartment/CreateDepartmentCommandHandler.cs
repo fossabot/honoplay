@@ -30,24 +30,14 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
         public async Task<ResponseModel<CreateDepartmentModel>> Handle(CreateDepartmentCommand request,
             CancellationToken cancellationToken)
         {
-            var addDepartmentList = new List<Department>();
+            var newDepartments = new List<Department>();
 
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
-                var redisKey = $"DepartmentsByHostName{request.HostName}";
+                var redisKey = $"DepartmentsByTenantId{request.TenantId}";
                 try
                 {
-                    var currentTenant = await _context.Tenants.Include(x => x.Departments)
-                        .FirstOrDefaultAsync(x =>
-                                x.HostName == request.HostName
-                                && x.TenantAdminUsers.Any(y =>
-                                    y.AdminUserId == request.AdminUserId),
-                            cancellationToken);
-
-                    if (currentTenant is null)
-                    {
-                        throw new NotFoundException(nameof(Tenant), request.HostName);
-                    }
+                    var departmensByTenantId = _context.Departments.Where(x => x.TenantId == request.TenantId);
 
                     foreach (var requestDepartment in request.Departments)
                     {
@@ -55,20 +45,17 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
                         {
                             CreatedBy = request.AdminUserId,
                             Name = requestDepartment,
-                            TenantId = currentTenant.Id
+                            TenantId = request.TenantId
 
                         };
-                        addDepartmentList.Add(department);
+                        newDepartments.Add(department);
                     }
 
-                    await _context.Departments.AddRangeAsync(addDepartmentList, cancellationToken);
+                    await _context.Departments.AddRangeAsync(newDepartments, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
 
                     await _cacheService.RedisCacheUpdateAsync(redisKey,
-                        delegate
-                         {
-                             return currentTenant.Departments.ToList();
-                         },
+                        delegate { return departmensByTenantId; },
                         cancellationToken);
 
                     transaction.Commit();
@@ -77,7 +64,7 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
                 {
                     transaction.Rollback();
-                    throw new ObjectAlreadyExistsException(nameof(Tenant), request.HostName);
+                    throw new ObjectAlreadyExistsException(nameof(Department), request.Departments);
                 }
                 catch (NotFoundException)
                 {
@@ -91,7 +78,7 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
                 }
             }
 
-            var departments = new CreateDepartmentModel(departments: addDepartmentList);
+            var departments = new CreateDepartmentModel(departments: newDepartments);
             return new ResponseModel<CreateDepartmentModel>(departments);
         }
     }

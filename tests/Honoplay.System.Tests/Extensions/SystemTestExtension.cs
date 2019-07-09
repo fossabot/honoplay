@@ -23,8 +23,8 @@ namespace Honoplay.System.Tests.Extensions
             var httpResponse = client.PostAsync("api/AdminUser/Authenticate", new StringContent(content, Encoding.UTF8, StringConstants.ApplicationJson)).Result;
 
             var token = JsonConvert.DeserializeObject<Dictionary<string, object>>(httpResponse.Content.ReadAsStringAsync().Result)["token"];
-
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.ToString());
+
             return client;
         }
     }

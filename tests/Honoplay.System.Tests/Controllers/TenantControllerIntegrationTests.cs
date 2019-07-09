@@ -29,9 +29,9 @@ namespace Honoplay.System.Tests.Controllers
             // The endpoint or route of the controller action.
             var command = new CreateTenantCommand
             {
-                Name = "tenan1",
-                HostName = "tenant1",
-                Description = "desc",
+                Name = "tenaasdasd1",
+                HostName = "tasdenant",
+                Description = "desasc",
                 CreatedBy = 1
             };
 

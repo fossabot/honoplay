@@ -47,7 +47,7 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
                         CreatedBy = request.CreatedBy,
                     });
 
-                    await _context.SaveChangesAsync(cancellationToken);
+                     _context.SaveChanges();
 
                     transaction.Commit();
                 }
