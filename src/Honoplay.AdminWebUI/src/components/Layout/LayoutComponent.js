@@ -2,8 +2,10 @@ import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import MenuIcon from '@material-ui/icons/Menu';
 import { withStyles } from '@material-ui/core/styles';
-import {AppBar, CssBaseline, Drawer, 
-        Hidden, IconButton, Toolbar, List} from '@material-ui/core';
+import {
+  AppBar, CssBaseline, Drawer,
+  Hidden, IconButton, Toolbar, List
+} from '@material-ui/core';
 import { Style } from './Style';
 
 import TrainerCard from './TrainerCard';
@@ -15,62 +17,63 @@ class Layout extends React.Component {
 
   constructor(props) {
     super(props);
-        
+
     this.state = {
-        mobileOpen: false,
+      mobileOpen: false,
     };
 
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this)
   }
-  handleDrawerToggle()
-  {
+  handleDrawerToggle() {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
 
   render() {
-    const { classes, theme , children} = this.props;
+    const { classes, theme, children } = this.props;
     const drawer = (
-        <div className={classes.drawerLayout}> 
-          <div className={classes.companyLayout}>
-            <CompanyCard companyName="Framer Bilişim Teknolojileri"/>
-          </div>      
-          <div className={classes.listLayout}>
-            <List 
+      <div className={classes.drawerLayout}>
+        <div className={classes.companyLayout}>
+          <CompanyCard companyName="Framer Bilişim Teknolojileri" />
+        </div>
+
+        <div className={classes.listLayout}>
+          <List
             component="nav">
-            <ListItem 
-              pageLink={"/home/sorular"} 
-              pageIcon={"question-circle"} 
+            <ListItem
+              pageLink={"/home/questions"}
+              pageIcon={"question-circle"}
               pageName={translate('Questions')} />
             <ListItem
-              pageLink={"/home/egitimserisi"} 
-              pageIcon={"list-ol"} 
-              pageName={translate('TrainerSeries')}/>
-            <ListItem 
-              pageLink={"/home/egitmenler"} 
-              pageIcon={"graduation-cap"} 
+              pageLink={"/home/trainerseries"}
+              pageIcon={"list-ol"}
+              pageName={translate('TrainerSeries')} />
+            <ListItem
+              pageLink={"/home/trainers"}
+              pageIcon={"graduation-cap"}
               pageName={translate('Trainers')} />
-            <ListItem 
-              pageLink={"/home/katilimcilar"} 
-              pageIcon={"users"} 
+            <ListItem
+              pageLink={"/home/trainees"}
+              pageIcon={"users"}
               pageName={translate('Trainees')} />
             <ListItem
-              pageLink={"/home/sirketbilgileri"}
+              pageLink={"/home/tenantinformation"}
               pageIcon={"briefcase"}
               pageName={translate('TenantInformation')} />
-            <ListItem 
-              pageLink={"/home/kullaniciyonetimi"} 
-              pageIcon={"cog"} 
+            <ListItem
+              pageLink={"/home/usermanagement"}
+              pageIcon={"cog"}
               pageName={translate('UserManagement')} />
             <ListItem
-              pageLink={"/home/raporlar"} 
-              pageIcon={"chart-pie"} 
+              pageLink={"/home/reports"}
+              pageIcon={"chart-pie"}
               pageName={translate('Reports')} />
-              </List>     
-          </div>        
-          <div  className={classes.trainerLayout}>
-            <TrainerCard trainerName="Ahmet Frankfurt"/>
-          </div>
-        </div>                 
+          </List>
+        </div>
+
+        <div className={classes.trainerLayout}>
+          <TrainerCard trainerName="Ahmet Frankfurt" />
+        </div>
+      </div>
     );
     return (
       <div className={classes.root}>
@@ -87,7 +90,7 @@ class Layout extends React.Component {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <nav className={classes.drawer}>        
+        <nav className={classes.drawer}>
           <Hidden smUp implementation="css">
             <Drawer
               container={this.props.container}
