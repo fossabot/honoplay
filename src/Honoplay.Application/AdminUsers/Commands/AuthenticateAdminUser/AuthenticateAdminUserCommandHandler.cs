@@ -5,7 +5,6 @@ using Honoplay.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,7 +38,6 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
             var passwordHash = request.Password?.GetSHA512(salt);
             var today = DateTimeOffset.Now;
             var isPasswordExpired = today.Subtract(adminUser.LastPasswordChangeDateTime).Days > 90;
-            List<Guid> tenants = new List<Guid>();
 
             if (!passwordHash.SequenceEqual(adminUser.Password))
             {
@@ -47,7 +45,7 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
                 try
                 {
                     await _context.SaveChangesAsync(cancellationToken);
-                    tenants = _context.TenantAdminUsers.Where(x => x.AdminUserId == adminUser.Id).AsNoTracking().Select(x => x.TenantId).ToList();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -62,11 +60,18 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
                 throw new Exception();
             }
 
+            var tenantId = _context.TenantAdminUsers
+                .Include(x => x.Tenant)
+                .Where(x => x.AdminUserId == adminUser.Id && x.Tenant.HostName == request.HostName)
+                .AsNoTracking()
+                .First().TenantId;
+
             return new AdminUserAuthenticateModel(id: adminUser.Id,
                                            email: adminUser.Email,
                                            name: adminUser.Name,
                                            isPasswordExpired: isPasswordExpired,
-                                           tenants: tenants,
+                                           tenantId: tenantId,
+                                           hostName: request.HostName,
                                            jsValidators: jsValidators);
         }
     }

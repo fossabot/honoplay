@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Honoplay.Domain.Entities;
 
 namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
 {
@@ -8,17 +9,19 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
         public int Id { get; }
         public string Email { get; }
         public string Name { get; }
-        public string Tenants { get; }
+        public Guid TenantId { get; }
+        public string HostName { get; }
         public bool IsPasswordExpired { get; }
         public string JsValidators { get; }
 
-        public AdminUserAuthenticateModel(int id, string email, string name, bool isPasswordExpired, List<Guid> tenants, string jsValidators)
+        public AdminUserAuthenticateModel(int id, string email, string name, bool isPasswordExpired, Guid tenantId, string hostName, string jsValidators)
         {
             Id = id;
             Email = email;
             Name = name;
             IsPasswordExpired = isPasswordExpired;
-            Tenants = string.Join(",", tenants);
+            TenantId = tenantId;
+            HostName = hostName;
             JsValidators = jsValidators;
         }
     }

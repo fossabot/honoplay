@@ -31,7 +31,8 @@ namespace Honoplay.AdminWebAPI.Services
                     new Claim(ClaimTypes.Email, user.Email),
                     new Claim(ClaimTypes.Role, "AdminUser"),
                     new Claim(ClaimTypes.Name, user.Name),
-                    new Claim(ClaimTypes.UserData, user.Tenants),
+                    new Claim(ClaimTypes.UserData, user.TenantId.ToString()),
+                    new Claim(ClaimTypes.Webpage, user.HostName)
                 }),
                 NotBefore = DateTime.UtcNow,
                 Expires = DateTime.UtcNow.AddDays(20),

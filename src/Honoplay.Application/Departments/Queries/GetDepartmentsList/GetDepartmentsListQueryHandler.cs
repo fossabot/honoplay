@@ -37,7 +37,8 @@ namespace Honoplay.Application.Departments.Queries.GetDepartmentsList
                         && x.TenantId == currentTenant.Id,
                     cancellationToken).Result;
 
-                return _context.Departments.Where(x => isExist.TenantId == x.TenantId)
+                return _context.Departments
+                    .Where(x => isExist.TenantId == x.TenantId)
                     .AsNoTracking()
                     .Select(DepartmentsListModel.Projection)
                     .ToList();

@@ -20,8 +20,8 @@ using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
-
 
 namespace Honoplay.AdminWebAPI
 {
@@ -31,8 +31,7 @@ namespace Honoplay.AdminWebAPI
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
+        private IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -88,7 +87,14 @@ namespace Honoplay.AdminWebAPI
                 };
                 x.Events = new JwtBearerEvents
                 {
-                    OnTokenValidated = y => Task.CompletedTask,
+                    OnTokenValidated = y =>
+                    {
+                        if (y.Principal.Claims.First(c => c.Type == ClaimTypes.Webpage).Value != y.HttpContext.Request.Host.Host)
+                        {
+                            y.Fail(new UnauthorizedAccessException());
+                        }
+                        return Task.CompletedTask;
+                    },
                     OnAuthenticationFailed = y =>
                     {
                         Console.WriteLine("Exception:{0}", y.Exception.Message);
