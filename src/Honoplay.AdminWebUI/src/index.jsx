@@ -5,9 +5,10 @@ import Login from './views/Login/Login';
 import { init } from '@omegabigdata/terasu-api-proxy';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { projeId } from './helpers/Terasu';
 import store from './redux/store';
 
-init(3);
+init(projeId);
 
 render(
     <Provider store={store}>

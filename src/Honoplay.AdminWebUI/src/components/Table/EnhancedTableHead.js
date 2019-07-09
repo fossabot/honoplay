@@ -5,16 +5,8 @@ import {TableHead, TableRow, TableCell,
 import { Style, theme } from './Style';
 
 class EnhancedTableHead extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state= {
-          columns: props.columns
-        }
-    }
-
   render() {
-    const { onSelectAllClick, numSelected, rowCount, classes } = this.props;
-    const { columns } = this.state;
+    const { onSelectAllClick, numSelected, rowCount, classes, columns } = this.props;
     return (
       <MuiThemeProvider theme={theme}>
         <TableHead>
@@ -31,7 +23,7 @@ class EnhancedTableHead extends React.Component {
             {columns.map(
               (column,id) => (
                 <TableCell className={classes.tableCell} key={id}>
-                  {column}
+                  {column.title}
                 </TableCell>
               ),
                 this,
