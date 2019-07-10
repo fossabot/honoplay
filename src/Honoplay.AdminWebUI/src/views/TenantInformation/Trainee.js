@@ -13,6 +13,8 @@ import Table from '../../components/Table/TableComponent';
 import { connect } from "react-redux";
 import { fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Trainee";
 import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Department";
+import { fetchWorkingStatusList } from "@omegabigdata/honoplay-redux-helper/Src/actions/WorkingStatus";
+import { genderToString } from '../../helpers/Converter';
 
 class Trainee extends React.Component {
 
@@ -21,11 +23,7 @@ class Trainee extends React.Component {
     this.state = {
       traineeList: [],
       departments: [],
-      workingStatus: [
-        { id: 1, name: 'Çalışan', },
-        { id: 2, name: 'Aday', },
-        { id: 3, name: 'Stajyer', },
-      ],
+      workingStatuses: [],
       gender: [
         { id: 0, name: 'Erkek', },
         { id: 1, name: 'Kadın', }
@@ -57,16 +55,28 @@ class Trainee extends React.Component {
       trainees,
       errorDepartmentList,
       isDepartmentListLoading,
-      departmentList } = this.props;
+      departmentList,
+      isWorkingStatusListLoading,
+      workingStatusList
+
+    } = this.props;
 
     if (prevProps.isTraineeListLoading && !isTraineeListLoading && trainees) {
-      this.setState({
-        traineeList: trainees.items
-      })
+      if ( !errorTraineeList ) {
+        genderToString(trainees.items);
+        this.setState({
+          traineeList: trainees.items
+        })
+      }
     }
     if (prevProps.isDepartmentListLoading && !isDepartmentListLoading && departmentList) {
       this.setState({
         departments: departmentList.items
+      })
+    }
+    if (prevProps.isWorkingStatusListLoading && !isWorkingStatusListLoading && workingStatusList) {
+      this.setState({
+        workingStatuses: workingStatusList.items
       })
     }
   }
@@ -87,10 +97,11 @@ class Trainee extends React.Component {
       isErrorTrainee } = this.props;
     const {
       departments,
-      workingStatus,
+      workingStatuses,
       gender,
       traineeColumns,
       traineeList } = this.state;
+
     return (
       <div className={classes.root} id="kisiEkle">
         <Grid container spacing={40}>
@@ -104,7 +115,7 @@ class Trainee extends React.Component {
           <Grid item xs={12} sm={12}>
             <DropDown
               error={isErrorTrainee}
-              data={workingStatus}
+              data={workingStatuses}
               labelName={translate('WorkingStatus')}
               describable
               onChange={this.handleChange}
@@ -187,25 +198,36 @@ const mapStateToProps = state => {
     isDepartmentListLoading,
     departmentList
   } = state.departmentList;
+
   const {
     isTraineeListLoading,
     errorTraineeList,
     trainees
   } = state.traineeList;
 
+  const {
+    isWorkingStatusListLoading,
+    workingStatusList,
+    errorWorkingStatusList
+  } = state.workingStatusList;
+  
   return {
     isTraineeListLoading,
     errorTraineeList,
     trainees,
     errorDepartmentList,
     isDepartmentListLoading,
-    departmentList
+    departmentList,
+    isWorkingStatusListLoading,
+    workingStatusList,
+    errorWorkingStatusList
   };
 };
 
 const mapDispatchToProps = {
   fetchTraineeList,
   fetchDepartmentList,
+  fetchWorkingStatusList
 };
 
 export default connect(

@@ -1,13 +1,31 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
-import {Dialog, Paper, DialogActions, DialogContent, 
-        DialogTitle, Slide, List, FormGroup, FormControlLabel, 
-        Radio , MuiThemeProvider, Grid} from '@material-ui/core';
-import {Style, theme} from './Style';
+import {
+  Dialog,
+  Paper,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Slide,
+  List,
+  FormGroup,
+  FormControlLabel,
+  Radio,
+  MuiThemeProvider,
+  Grid,
+  CircularProgress
+} from '@material-ui/core';
+import { Style, theme } from './Style';
 import Input from '../Input/InputTextComponent';
 import Button from '../Button/ButtonComponent';
 import Search from '../Input/SearchInputComponent';
+
+import { connect } from "react-redux";
+import {
+  fetchWorkingStatusList,
+  postWorkingStatus
+} from "@omegabigdata/honoplay-redux-helper/Src/actions/WorkingStatus";
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;
@@ -15,22 +33,90 @@ function Transition(props) {
 
 class ModalComponent extends React.Component {
   constructor(props) {
-      super(props);
-      this.state= {  
-        selectedValue: '',   
-        data: props.data
-      }
-      this.handleChange=this.handleChange.bind(this);
+    super(props);
+    this.state = {
+      selectedValue: '',
+      loading: false,
+      workingStatusModel: {
+        name: ''
+      },
+      workingStatusError: false,
+      workingStatus: []
+    }
   }
-  
-  handleChange (event) {
-    this.setState({ selectedValue: event.target.value });
-    
+
+  handleClick = () => {
+    const { postWorkingStatus } = this.props;
+    const { workingStatusModel } = this.state;
+    postWorkingStatus(workingStatusModel);
+  }
+
+  handleChangeValue = (event) => {
+    this.setState({
+      selectedValue: event.target.value
+    });
   };
 
+  handleChange = (e) => {
+    this.setState({
+      workingStatusModel: {
+        name: e.target.value
+      }
+    })
+  }
+
+  componentDidMount() {
+    const { fetchWorkingStatusList } = this.props;
+    fetchWorkingStatusList(0,50);
+  } 
+
+  componentDidUpdate(prevProps) {
+    const {
+      isWorkingStatusCreateLoading,
+      workingStatusCreate,
+      errorWorkingStatusCreate,
+    } = this.props;
+
+    if (!prevProps.isWorkingStatusCreateLoading && isWorkingStatusCreateLoading) {
+      console.log('burda');
+      this.setState({
+        loading: true
+      })
+    }
+    if (!prevProps.errorWorkingStatusCreate && errorWorkingStatusCreate) {
+      console.log('burda error');
+      this.setState({
+        workingStatusError: true,
+        loading: false
+      })
+    }
+    if (prevProps.isWorkingStatusCreateLoading && !isWorkingStatusCreateLoading && workingStatusCreate) {
+      console.log('burda eklicem');
+      if (!errorWorkingStatusCreate) {
+        this.setState({
+          loading: false,
+          workingStatusError: false
+        });
+      }
+    }
+  }
+
   render() {
-    const { data, selectedValue } = this.state;
-    const {open, handleClickClose, modalTitle, modalInputName, classes} = this.props;
+    const {
+      selectedValue,
+      loading,
+      workingStatusModel
+    } = this.state;
+
+    const {
+      open,
+      handleClickClose,
+      modalTitle,
+      modalInputName,
+      classes,
+      data
+    } = this.props;
+
     return (
       <MuiThemeProvider theme={theme}>
         <div>
@@ -40,58 +126,77 @@ class ModalComponent extends React.Component {
             open={open}
             TransitionComponent={Transition}
             onClose={handleClickClose}
-            aria-labelledby="dialog-slide-title"           
+            aria-labelledby="dialog-slide-title"
           >
-            <DialogTitle id="dialog-slide-title">
+            <DialogTitle
+              id="dialog-slide-title">
               {modalTitle}
             </DialogTitle>
             <DialogContent>
-            <Grid container spacing={24}>
-              <Grid item xs={12} sm={12}></Grid>
-              <Grid item xs={10} sm={11}>
-                <Input labelName={modalInputName}
-                       inputType="text"                     
-                />
-              </Grid>
-              <Grid item xs={2} sm={1}>
-                <Button buttonColor="secondary" 
-                        buttonName={translate('Add')}
-                />
-              </Grid>
-              <Grid item xs={12} sm={12}></Grid>
-              <Grid item xs={12} sm={9}></Grid>
-              <Grid item xs={12} sm={3}>
-                <Search/>
-              </Grid>
-              <Grid item xs={12} sm={9}></Grid>
-              <Grid item xs={12} sm={12}>
-                <Paper className={classes.modalPaper}>
-                    {data.map((data,id) => {                   
-                      return(
-                        <List dense key={id} className={classes.contextDialog}> 
+              <Grid container spacing={24}>
+                <Grid item xs={12} sm={12}></Grid>
+                <Grid item xs={10} sm={11}>
+                  <Input
+                    onChange={this.handleChange}
+                    labelName={modalInputName}
+                    inputType="text"
+                    name="name"
+                    value={workingStatusModel.name}
+                  />
+                </Grid>
+                <Grid item xs={2} sm={1}>
+                  <Button
+                    buttonColor="secondary"
+                    buttonName={translate('Add')}
+                    onClick={this.handleClick}
+                    disabled={loading}
+                  />
+                  {loading && (
+                    <CircularProgress
+                      size={24}
+                      disableShrink={true}
+                      className={classes.buttonProgress}
+                    />
+                  )}
+                </Grid>
+                <Grid item xs={12} sm={12}></Grid>
+                <Grid item xs={12} sm={9}></Grid>
+                <Grid item xs={12} sm={3}>
+                  <Search />
+                </Grid>
+                <Grid item xs={12} sm={9}></Grid>
+                <Grid item xs={12} sm={12}>
+                  <Paper
+                    className={classes.modalPaper}>
+                    {data.map((data, id) => {
+                      return (
+                        <List
+                          dense
+                          key={id}
+                          className={classes.contextDialog}>
                           <FormGroup row>
-                              <FormControlLabel
-                                control= {                                  
-                                  <Radio  checked={selectedValue === data.name}
-                                          onClick={this.handleChange}
-                                          value={data.name}
-                                          color= 'secondary'
-                                  />
-                                }
-                                label={data.name}
-                              />            
+                            <FormControlLabel
+                              control={
+                                <Radio checked={selectedValue === data.name}
+                                  onClick={this.handleChangeValue}
+                                  value={data.name}
+                                  color='secondary'
+                                />
+                              }
+                              label={data.name}
+                            />
                           </FormGroup>
                         </List>
                       );
-                    })}    
-                </Paper>
-              </Grid>
+                    })}
+                  </Paper>
+                </Grid>
               </Grid>
             </DialogContent>
             <DialogActions >
-              <Button 
-                buttonColor="primary" 
-                buttonName= {translate('Save')}
+              <Button
+                buttonColor="primary"
+                buttonName={translate('Save')}
               />
             </DialogActions>
           </Dialog>
@@ -101,4 +206,35 @@ class ModalComponent extends React.Component {
   }
 }
 
-export default  withStyles(Style)(ModalComponent);
+const mapStateToProps = state => {
+
+  const {
+    isWorkingStatusCreateLoading,
+    workingStatusCreate,
+    errorWorkingStatusCreate
+  } = state.workingStatusCreate;
+  const {
+    isWorkingStatusListLoading,
+    workingStatusList,
+    errorWorkingStatusList
+  } = state.workingStatusList;
+  
+  return {
+    isWorkingStatusCreateLoading,
+    workingStatusCreate,
+    errorWorkingStatusCreate,
+    isWorkingStatusListLoading,
+    workingStatusList,
+    errorWorkingStatusList
+  };
+};
+
+const mapDispatchToProps = {
+  postWorkingStatus,
+  fetchWorkingStatusList
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(Style)(ModalComponent));
