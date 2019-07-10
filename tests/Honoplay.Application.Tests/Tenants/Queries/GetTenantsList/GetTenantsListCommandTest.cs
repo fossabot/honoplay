@@ -1,11 +1,11 @@
 ﻿using Honoplay.Application.Tenants.Queries.GetTenantsList;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Common._Exceptions;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
@@ -64,7 +64,7 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTenantsListQuery(_adminUserId);
+            var query = new GetTenantsListQuery(tenantId: _testTenantGuid, null, null);
 
             var tenantModel = await _queryHandler.Handle(query, CancellationToken.None);
 
@@ -74,7 +74,7 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
         [Fact]
         public async Task ShouldThrowErrorWhenInvalidInformation()
         {
-            var query = new GetTenantsListQuery(adminUserId:111, skip:10, take:10);
+            var query = new GetTenantsListQuery(tenantId: _testTenantGuid, skip: -3, take: 10);
             await Assert.ThrowsAsync<NotFoundException>(async () =>
            await _queryHandler.Handle(query, CancellationToken.None));
         }

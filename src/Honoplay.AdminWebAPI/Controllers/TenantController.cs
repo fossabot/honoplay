@@ -59,9 +59,9 @@ namespace Honoplay.AdminWebAPI.Controllers
         {
             try
             {
-                var userId = Claims[ClaimTypes.Sid].ToInt();
+                var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var model = await Mediator.Send(new GetTenantsListQuery(userId, command.Skip, command.Take));
+                var model = await Mediator.Send(new GetTenantsListQuery(tenantId, command.Skip, command.Take));
                 return Ok(model);
             }
             catch (NotFoundException)
