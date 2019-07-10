@@ -37,7 +37,7 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
                 var redisKey = $"DepartmentsByTenantId{request.TenantId}";
                 try
                 {
-                    var departmensByTenantId = _context.Departments.Where(x => x.TenantId == request.TenantId);
+                    var departmensByTenantId = _context.Departments.Where(x => x.TenantId == request.TenantId).ToListAsync(cancellationToken);
 
                     foreach (var requestDepartment in request.Departments)
                     {
