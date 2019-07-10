@@ -26,12 +26,13 @@ namespace Honoplay.System.Tests.Controllers
         public async Task CanCreateTenant()
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
+
             // The endpoint or route of the controller action.
             var command = new CreateTenantCommand
             {
-                Name = "tenan1",
-                HostName = "tenant1",
-                Description = "desc",
+                Name = "tenaasdasd1",
+                HostName = "tasdenant",
+                Description = "desasc",
                 CreatedBy = 1
             };
 
@@ -45,7 +46,6 @@ namespace Honoplay.System.Tests.Controllers
             Assert.True(httpResponse.IsSuccessStatusCode);
             Assert.Equal(HttpStatusCode.Created, httpResponse.StatusCode);
         }
-
         [Fact]
         public async Task CanUpdateTenant()
         {
@@ -54,7 +54,7 @@ namespace Honoplay.System.Tests.Controllers
             //Init model
             var command = new UpdateTenantCommand
             {
-                Id = Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a"),
+                Id = Guid.Parse("f3878709-3cba-4ed3-4c03-08d70375909d"),
                 HostName = "omega2",
                 Name = "test update",
                 Description = "desc",
@@ -80,7 +80,7 @@ namespace Honoplay.System.Tests.Controllers
 
             // The endpoint or route of the controller action.
 
-            var httpResponse = await client.GetAsync($"api/Tenant/{Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a")}");
+            var httpResponse = await client.GetAsync($"api/Tenant/{Guid.Parse("f3878709-3cba-4ed3-4c03-08d70375909d")}");
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();

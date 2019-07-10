@@ -11,8 +11,6 @@ using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
 
-
-
 namespace Honoplay.Application.AdminUsers.Commands.UpdateAdminUser
 {
     public class UpdateAdminUserCommandHandler : IRequestHandler<UpdateAdminUserCommand, ResponseModel<UpdateAdminUserModel>>

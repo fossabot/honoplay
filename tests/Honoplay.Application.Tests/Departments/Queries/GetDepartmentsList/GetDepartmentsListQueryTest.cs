@@ -17,15 +17,16 @@ namespace Honoplay.Application.Tests.Departments.Queries.GetDepartmentsList
         private readonly HonoplayDbContext _context;
         private readonly GetDepartmentsListQueryHandler _queryHandler;
         private readonly int _adminUserId;
+        private readonly Guid _tenantId;
 
         public GetDepartmentsListQueryTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _adminUserId);
+            _context = InitAndGetDbContext(out _tenantId, out _adminUserId);
             _queryHandler = new GetDepartmentsListQueryHandler(_context, new CacheManager(cache.Object));
         }
 
-        private HonoplayDbContext InitAndGetDbContext(out int adminUserId)
+        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId)
         {
             var context = GetDbContext();
             var salt = ByteArrayExtensions.GetRandomSalt();
@@ -64,6 +65,7 @@ namespace Honoplay.Application.Tests.Departments.Queries.GetDepartmentsList
                 TenantId = tenant.Id
             });
 
+            tenantId = tenant.Id;
             context.SaveChanges();
             return context;
         }
@@ -71,7 +73,7 @@ namespace Honoplay.Application.Tests.Departments.Queries.GetDepartmentsList
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetDepartmentsListQuery(_adminUserId, hostName: "localhost", skip: 0, take: 10);
+            var query = new GetDepartmentsListQuery(_adminUserId, tenantId: _tenantId, skip: 0, take: 10);
 
             var departmentModel = await _queryHandler.Handle(query, CancellationToken.None);
 
@@ -81,7 +83,7 @@ namespace Honoplay.Application.Tests.Departments.Queries.GetDepartmentsList
         [Fact]
         public async Task ShouldItemsCount1WhenTake1()
         {
-            var query = new GetDepartmentsListQuery(_adminUserId, hostName: "localhost", skip: 0, take: 1);
+            var query = new GetDepartmentsListQuery(_adminUserId, tenantId: _tenantId, skip: 0, take: 1);
 
             var departmentModel = await _queryHandler.Handle(query, CancellationToken.None);
 

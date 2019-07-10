@@ -10,6 +10,7 @@ namespace Honoplay.System.Tests
         public static void PopulateTestData(HonoplayDbContext dbContext)
         {
             var tenantId = Guid.Parse("b0dfcb00-6195-46a7-834e-c58276c3242a");
+            var secondTenantId = Guid.Parse("f3878709-3cba-4ed3-4c03-08d70375909d");
             dbContext.Tenants.Add(new Tenant
             {
                 Id = tenantId,
@@ -19,7 +20,6 @@ namespace Honoplay.System.Tests
             });
 
             var salt = ByteArrayExtensions.GetRandomSalt();
-
             var adminUser = new AdminUser
             {
                 Email = "registered@omegabigdata.com",
@@ -37,6 +37,21 @@ namespace Honoplay.System.Tests
                 CreatedBy = adminUser.Id
             });
 
+            dbContext.Tenants.Add(new Tenant
+            {
+                Id = secondTenantId,
+                Name = "api-tesasdt",
+                Description = "test",
+                HostName = "localhosttt",
+            });
+
+            dbContext.TenantAdminUsers.Add(new TenantAdminUser
+            {
+                TenantId = secondTenantId,
+                AdminUserId = adminUser.Id,
+                CreatedBy = adminUser.Id
+            });
+
             var department = new Department
             {
                 CreatedBy = adminUser.Id,
@@ -47,7 +62,9 @@ namespace Honoplay.System.Tests
 
             var workingStatus = new WorkingStatus
             {
-                Name = "Full-Time"
+                Name = "Full-Time",
+                CreatedBy = adminUser.Id,
+                TenantId = tenantId
             };
             dbContext.WorkingStatuses.Add(workingStatus);
 
@@ -66,7 +83,7 @@ namespace Honoplay.System.Tests
                 DepartmentId = department.Id,
                 CreatedBy = adminUser.Id,
                 Email = "yunuskas55@gmail.com",
-                ProfessionId = profession.Id,
+                ProfessionId = profession.Id
             };
             dbContext.Trainers.Add(trainer);
 
