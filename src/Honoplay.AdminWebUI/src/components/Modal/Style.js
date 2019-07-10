@@ -1,20 +1,28 @@
+import { deepPurple, deepOrange, green } from '@material-ui/core/colors';
+import { createMuiTheme } from '@material-ui/core';
+
 export const Style = (theme) => ({
-    modalPaper: {
-      maxHeight: 200, 
-      overflow: 'auto',
-      display: 'flex',
-      justifyContent: 'left',
-      flexWrap: 'wrap',
-      padding: theme.spacing.unit / 20,
-      paddingBottom: 20
-    },
-    contextDialog: {
-      paddingLeft: 20,
-      paddingTop: 5
-    },
+  modalPaper: {
+    maxHeight: 200,
+    overflow: 'auto',
+    display: 'flex',
+    justifyContent: 'left',
+    flexWrap: 'wrap',
+    padding: theme.spacing.unit / 20,
+    paddingBottom: 20
+  },
+  contextDialog: {
+    paddingLeft: 20,
+    paddingTop: 5
+  },
+  buttonProgress: {
+    color: green[500],
+    position: 'absolute',
+    marginTop: -30,
+    marginLeft: 18
+  },
 });
-import {deepPurple, deepOrange} from '@material-ui/core/colors';
-import {createMuiTheme} from '@material-ui/core';
+
 export const theme = createMuiTheme({
   palette: {
     primary: deepPurple,
