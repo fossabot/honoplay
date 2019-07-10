@@ -1,7 +1,6 @@
 ﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Application.Departments.Commands.CreateDepartment;
 using Honoplay.Application.Departments.Queries.GetDepartmentsList;
-using Honoplay.Application.Tenants.Commands.UpdateTenant;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -27,7 +26,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             try
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
-                var tenantId = Guid.Parse(Claims[ClaimTypes.Webpage]);
+                var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
                 command.AdminUserId = userId;
                 command.TenantId = tenantId;
@@ -41,7 +40,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             }
             catch (ObjectAlreadyExistsException ex)
             {
-                return Conflict(new ResponseModel<UpdateTenantModel>(new Error(HttpStatusCode.Conflict, ex)));
+                return Conflict(new ResponseModel<CreateDepartmentModel>(new Error(HttpStatusCode.Conflict, ex)));
             }
             catch
             {
@@ -57,7 +56,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             try
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
-                var tenantId = Guid.Parse(Claims[ClaimTypes.Webpage]);
+                var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
                 var models = await Mediator.Send(new GetDepartmentsListQuery(userId, tenantId, query.Skip, query.Take));
 

@@ -33,9 +33,9 @@ namespace Honoplay.AdminWebAPI.Controllers
                 command.HostName = HonoHost;
                 var model = await Mediator.Send(command);
 
-                var result = _userService.GenerateToken(model);
+                var (user, stringToken) = _userService.GenerateToken(model);
 
-                return Ok(new { User = result.user, Token = result.stringToken });
+                return Ok(new { User = user, Token = stringToken });
             }
             catch (Exception)
             {
