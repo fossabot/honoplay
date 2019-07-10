@@ -22,8 +22,8 @@ export const Style = (theme) => ({
     overflowX: 'auto',
   },
   tableCell: {
-    paddingRight: 2,
-    paddingLeft: 2,
+    // paddingRight: 2,
+    // paddingLeft: 2,
   },
   simpleTableRoot: {
     width: '100%',
