@@ -81,13 +81,11 @@ class ModalComponent extends React.Component {
     } = this.props;
 
     if (!prevProps.isWorkingStatusCreateLoading && isWorkingStatusCreateLoading) {
-      console.log('burda');
       this.setState({
         loadingCreate: true
       })
     }
     if (!prevProps.errorWorkingStatusCreate && errorWorkingStatusCreate) {
-      console.log('burda error');
       this.setState({
         createError: true,
         loadingCreate: false
@@ -102,13 +100,11 @@ class ModalComponent extends React.Component {
       }
     }
     if (!prevProps.isWorkingStatusListLoading && isWorkingStatusListLoading) {
-      console.log('burda');
       this.setState({
         loadingList: true
       })
     }
     if (!prevProps.errorWorkingStatusList && errorWorkingStatusList) {
-      console.log('burda error');
       this.setState({
         listError: true,
         loadingList: false

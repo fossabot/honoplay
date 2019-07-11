@@ -75,7 +75,6 @@ class Trainee extends React.Component {
       })
     }
     if (prevProps.isWorkingStatusListLoading && !isWorkingStatusListLoading && workingStatusList) {
-      console.log(workingStatusList);
       this.setState({
         workingStatuses: workingStatusList.items
       })
