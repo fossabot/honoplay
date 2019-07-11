@@ -1,17 +1,18 @@
-﻿using Honoplay.Common._Exceptions;
-using Honoplay.Application._Infrastructure;
+﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Application.Trainees.Commands.CreateTrainee;
 using Honoplay.Application.Trainees.Commands.UpdateTrainee;
 using Honoplay.Application.Trainees.Queries.GetTraineeDetail;
+using Honoplay.Application.Trainees.Queries.GetTraineesList;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Honoplay.Application.Trainees.Queries.GetTraineesList;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
@@ -33,7 +34,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 command.CreatedBy = userId;
-                command.HostName = HonoHost;
+                command.TenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
                 var model = await Mediator.Send(command);
                 return Created($"api/trainee/{model.Items.Single().Name}", model);

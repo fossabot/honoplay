@@ -25,20 +25,18 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
         }
         public async Task<ResponseModel<CreateTraineeModel>> Handle(CreateTraineeCommand request, CancellationToken cancellationToken)
         {
-            var redisKey = $"TraineesWithDepartmentsByHostName{request.HostName}";
+            var redisKey = $"TraineesWithDepartmentsByTenantId{request.TenantId}";
 
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
-                    var isExist = await _context.Departments.AnyAsync(x =>
-                            x.Id == request.DepartmentId &&
-                            _context.TenantAdminUsers.Any(y =>
-                                y.AdminUserId == request.CreatedBy &&
-                                y.TenantId == x.TenantId)
-                        , cancellationToken);
+                    var isExistAnyDepartment = await _context.Departments.AnyAsync(x =>
+                        x.TenantId == request.TenantId
+                        && x.Id == request.DepartmentId,
+                        cancellationToken);
 
-                    if (!isExist)
+                    if (!isExistAnyDepartment)
                     {
                         throw new NotFoundException(nameof(Department), request.DepartmentId);
                     }
@@ -61,9 +59,7 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
                     await _cacheService.RedisCacheUpdateAsync(redisKey, delegate
                     {
                         return _context.Trainees.Include(x => x.Department)
-                            .Where(x => _context.TenantAdminUsers.Any(y =>
-                                            y.TenantId == x.Department.TenantId &&
-                                            y.AdminUserId == request.CreatedBy))
+                            .Where(x => x.Department.TenantId == request.TenantId)
                             .ToList();
                     }, cancellationToken);
 
