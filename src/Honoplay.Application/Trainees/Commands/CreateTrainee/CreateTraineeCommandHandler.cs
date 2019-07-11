@@ -26,8 +26,19 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
         public async Task<ResponseModel<CreateTraineeModel>> Handle(CreateTraineeCommand request, CancellationToken cancellationToken)
         {
             var redisKey = $"TraineesWithDepartmentsByTenantId{request.TenantId}";
+            var trainee = new Trainee
+            {
+                Name = request.Name,
+                DepartmentId = request.DepartmentId,
+                Gender = request.Gender,
+                NationalIdentityNumber = request.NationalIdentityNumber,
+                PhoneNumber = request.PhoneNumber,
+                Surname = request.Surname,
+                WorkingStatusId = request.WorkingStatusId,
+                CreatedBy = request.CreatedBy,
+            };
 
-            using (var transaction = _context.Database.BeginTransaction())
+            using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
                 try
                 {
@@ -41,19 +52,7 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
                         throw new NotFoundException(nameof(Department), request.DepartmentId);
                     }
 
-                    var trainee = new Trainee
-                    {
-                        Name = request.Name,
-                        DepartmentId = request.DepartmentId,
-                        Gender = request.Gender,
-                        NationalIdentityNumber = request.NationalIdentityNumber,
-                        PhoneNumber = request.PhoneNumber,
-                        Surname = request.Surname,
-                        WorkingStatusId = request.WorkingStatusId,
-                        CreatedBy = request.CreatedBy,
-                    };
-
-                    await _context.AddAsync(trainee, cancellationToken);
+                    await _context.Trainees.AddAsync(trainee, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
 
                     await _cacheService.RedisCacheUpdateAsync(redisKey, delegate
@@ -83,7 +82,7 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
                 }
             }
 
-            var traineeModel = new CreateTraineeModel(request.Name, request.Surname, request.NationalIdentityNumber, request.PhoneNumber, request.Gender);
+            var traineeModel = new CreateTraineeModel(trainee.Id, trainee.CreatedAt, trainee.Name, trainee.Surname, trainee.NationalIdentityNumber, trainee.PhoneNumber, trainee.Gender);
             return new ResponseModel<CreateTraineeModel>(traineeModel);
         }
     }

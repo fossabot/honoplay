@@ -29,7 +29,7 @@ namespace Honoplay.Application.Trainees.Commands.UpdateTrainee
             var redisKey = $"TraineesWithDepartmentsByTenantId{request.TenantId}";
             var updateAt = DateTimeOffset.Now;
 
-            using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
+            using (IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
                 try
                 {

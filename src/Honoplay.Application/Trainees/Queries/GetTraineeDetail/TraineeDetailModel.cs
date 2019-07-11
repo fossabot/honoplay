@@ -6,6 +6,11 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
 {
     public struct TraineeDetailModel
     {
+        public int Id { get; set; }
+        public int CreatedBy { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
+        public int? UpdatedBy { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string NationalIdentityNumber { get; set; }
@@ -18,11 +23,16 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
             {
                 return trainee => new TraineeDetailModel
                 {
+                    Id = trainee.Id,
+                    CreatedAt = trainee.CreatedAt,
+                    CreatedBy = trainee.CreatedBy,
+                    UpdatedBy = trainee.UpdatedBy,
+                    UpdatedAt = trainee.UpdatedAt,
                     Gender = trainee.Gender,
                     PhoneNumber = trainee.PhoneNumber,
                     NationalIdentityNumber = trainee.NationalIdentityNumber,
                     Surname = trainee.Surname,
-                    Name = trainee.Name
+                    Name = trainee.Name,
                 };
             }
         }
