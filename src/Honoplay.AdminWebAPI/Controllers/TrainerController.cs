@@ -60,8 +60,9 @@ namespace Honoplay.AdminWebAPI.Controllers
             try
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
+                var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var models = await Mediator.Send(new GetTrainersListQuery(userId, HonoHost, query.Skip, query.Take));
+                var models = await Mediator.Send(new GetTrainersListQuery(userId, tenantId, query.Skip, query.Take));
 
                 return Ok(models);
 
