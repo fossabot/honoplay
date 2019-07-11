@@ -1,5 +1,6 @@
 ﻿using FluentValidation.TestHelper;
 using Honoplay.Application.WorkingStatuses.Commands.UpdateWorkingStatus;
+using System;
 using Xunit;
 
 namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatus
@@ -20,7 +21,7 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
             {
                 Id = 1,
                 Name = "asdasd",
-                HostName = "localhost",
+                TenantId = Guid.NewGuid(),
                 UpdatedBy = 1
             }).IsValid);
         }
@@ -29,6 +30,7 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
         public void ShouldBeNotValidForNullOrEmpty()
         {
             _validator.ShouldHaveValidationErrorFor(x => x.Name, string.Empty);
+            _validator.ShouldHaveValidationErrorFor(x => x.Id, 0);
         }
     }
 }
