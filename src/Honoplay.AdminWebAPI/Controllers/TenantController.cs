@@ -31,8 +31,9 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 var command = new GetTenantDetailQuery(userId, id);
-                var model = await Mediator.Send(command);
-                return Ok(model);
+                var tenantDetailModel = await Mediator.Send(command);
+
+                return Ok(tenantDetailModel);
             }
             catch (NotFoundException)
             {
@@ -61,8 +62,9 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var model = await Mediator.Send(new GetTenantsListQuery(tenantId, command.Skip, command.Take));
-                return Ok(model);
+                var tenantsListModel = await Mediator.Send(new GetTenantsListQuery(tenantId, command.Skip, command.Take));
+
+                return Ok(tenantsListModel);
             }
             catch (NotFoundException)
             {
@@ -86,8 +88,9 @@ namespace Honoplay.AdminWebAPI.Controllers
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 command.CreatedBy = userId;
 
-                var model = await Mediator.Send(command);
-                return Created($"api/tenant/{model.Items.Single().Id}", model);
+                var createTenantModel = await Mediator.Send(command);
+
+                return Created($"api/tenant/{createTenantModel.Items.Single().Id}", createTenantModel);
             }
             catch (ObjectAlreadyExistsException ex)
             {
@@ -110,8 +113,9 @@ namespace Honoplay.AdminWebAPI.Controllers
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 command.UpdatedBy = userId;
 
-                var model = await Mediator.Send(command);
-                return Ok(model);
+                var updateTenantModel = await Mediator.Send(command);
+
+                return Ok(updateTenantModel);
             }
             catch (NotFoundException)
             {

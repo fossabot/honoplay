@@ -31,8 +31,9 @@ namespace Honoplay.AdminWebAPI.Controllers
                 command.CreatedBy = Claims[ClaimTypes.Sid].ToInt();
                 command.TenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var model = await Mediator.Send(command);
-                return Created($"api/workingStatus/{model.Items.Single().Name}", model);
+                var createWorkingStatusModel = await Mediator.Send(command);
+
+                return Created($"api/workingStatus/{createWorkingStatusModel.Items.Single().Name}", createWorkingStatusModel);
             }
             catch (NotFoundException)
             {
@@ -59,8 +60,9 @@ namespace Honoplay.AdminWebAPI.Controllers
                 command.UpdatedBy = Claims[ClaimTypes.Sid].ToInt();
                 command.TenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var model = await Mediator.Send(command);
-                return Ok(model);
+                var updateWorkingStatusModel = await Mediator.Send(command);
+
+                return Ok(updateWorkingStatusModel);
             }
             catch (NotFoundException)
             {
@@ -87,8 +89,9 @@ namespace Honoplay.AdminWebAPI.Controllers
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var models = await Mediator.Send(new GetWorkingStatusesListQuery(userId, tenantId, query.Skip, query.Take));
-                return Ok(models);
+                var workingStatusesListModel = await Mediator.Send(new GetWorkingStatusesListQuery(userId, tenantId, query.Skip, query.Take));
+
+                return Ok(workingStatusesListModel);
             }
             catch (NotFoundException)
             {

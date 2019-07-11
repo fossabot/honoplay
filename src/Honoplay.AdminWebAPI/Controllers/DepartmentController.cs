@@ -31,8 +31,8 @@ namespace Honoplay.AdminWebAPI.Controllers
                 command.AdminUserId = userId;
                 command.TenantId = tenantId;
 
-                var model = await Mediator.Send(command);
-                return Ok(model);
+                var createDepartmentModel = await Mediator.Send(command);
+                return Ok(createDepartmentModel);
             }
             catch (NotFoundException)
             {
@@ -55,12 +55,11 @@ namespace Honoplay.AdminWebAPI.Controllers
         {
             try
             {
-                var userId = Claims[ClaimTypes.Sid].ToInt();
                 var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var models = await Mediator.Send(new GetDepartmentsListQuery(tenantId, query.Skip, query.Take));
+                var departmentsListModel = await Mediator.Send(new GetDepartmentsListQuery(tenantId, query.Skip, query.Take));
 
-                return Ok(models);
+                return Ok(departmentsListModel);
 
             }
             catch (NotFoundException)

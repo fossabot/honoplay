@@ -32,12 +32,12 @@ namespace Honoplay.AdminWebAPI.Controllers
         {
             try
             {
-                var userId = Claims[ClaimTypes.Sid].ToInt();
-                command.CreatedBy = userId;
+                command.CreatedBy = Claims[ClaimTypes.Sid].ToInt();
                 command.TenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var model = await Mediator.Send(command);
-                return Created($"api/trainee/{model.Items.Single().Name}", model);
+                var createTraineeModel = await Mediator.Send(command);
+
+                return Created($"api/trainee/{createTraineeModel.Items.Single().Name}", createTraineeModel);
             }
             catch (ObjectAlreadyExistsException ex)
             {
@@ -58,12 +58,12 @@ namespace Honoplay.AdminWebAPI.Controllers
         {
             try
             {
-                var userId = Claims[ClaimTypes.Sid].ToInt();
-                command.UpdatedBy = userId;
+                command.UpdatedBy = Claims[ClaimTypes.Sid].ToInt();
                 command.TenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var model = await Mediator.Send(command);
-                return Ok(model);
+                var updateTraineeModel = await Mediator.Send(command);
+
+                return Ok(updateTraineeModel);
             }
             catch (NotFoundException)
             {
@@ -90,8 +90,9 @@ namespace Honoplay.AdminWebAPI.Controllers
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var model = await Mediator.Send(new GetTraineesListQuery(userId, tenantId, query.Skip, query.Take));
-                return Ok(model);
+                var traineesListModel = await Mediator.Send(new GetTraineesListQuery(userId, tenantId, query.Skip, query.Take));
+
+                return Ok(traineesListModel);
             }
             catch (NotFoundException)
             {
@@ -114,8 +115,9 @@ namespace Honoplay.AdminWebAPI.Controllers
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var model = await Mediator.Send(new GetTraineeDetailQuery(id, userId, tenantId));
-                return Ok(model);
+                var traineesListModel = await Mediator.Send(new GetTraineeDetailQuery(id, userId, tenantId));
+
+                return Ok(traineesListModel);
             }
             catch (NotFoundException)
             {

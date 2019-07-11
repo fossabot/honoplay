@@ -65,9 +65,9 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantDetail
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTenantDetailQuery(_adminUserId, _testTenantGuid);
+            var tenantDetailQuery = new GetTenantDetailQuery(_adminUserId, _testTenantGuid);
 
-            var tenantModel = await _queryHandler.Handle(query, CancellationToken.None);
+            var tenantModel = await _queryHandler.Handle(tenantDetailQuery, CancellationToken.None);
 
             Assert.Null(tenantModel.Errors);
             Assert.Equal(_context.Tenants.FirstOrDefault()?.Name, tenantModel.Items.Single().Name, ignoreCase: true);
@@ -76,9 +76,9 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantDetail
         [Fact]
         public async Task ShouldThrowErrorWhenInvalidInformation()
         {
-            var query = new GetTenantDetailQuery(_adminUserId, Guid.NewGuid());
+            var tenantDetailQuery = new GetTenantDetailQuery(_adminUserId, Guid.NewGuid());
             await Assert.ThrowsAsync<NotFoundException>(async () =>
-           await _queryHandler.Handle(query, CancellationToken.None));
+           await _queryHandler.Handle(tenantDetailQuery, CancellationToken.None));
         }
 
         public void Dispose()

@@ -101,9 +101,9 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineesList
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTraineesListQuery(adminUserId: _adminUserId, tenantId: _tenantId, skip: 0, take: 11);
+            var traineesListQuery = new GetTraineesListQuery(adminUserId: _adminUserId, tenantId: _tenantId, skip: 0, take: 11);
 
-            var model = await _queryHandler.Handle(query, CancellationToken.None);
+            var model = await _queryHandler.Handle(traineesListQuery, CancellationToken.None);
 
             Assert.Null(model.Errors);
             Assert.Equal(expected: _context.Trainees.FirstOrDefault()?.Name, actual: model.Items.Single().Name, ignoreCase: true);
@@ -114,10 +114,10 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineesList
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetTraineesListQuery(adminUserId: _adminUserId, tenantId: _tenantId, skip: 0, take: 0);
+            var traineesListQuery = new GetTraineesListQuery(adminUserId: _adminUserId, tenantId: _tenantId, skip: 0, take: 0);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
-                await _queryHandler.Handle(query, CancellationToken.None));
+                await _queryHandler.Handle(traineesListQuery, CancellationToken.None));
         }
 
 

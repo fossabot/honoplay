@@ -25,7 +25,7 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
 
         public async Task<ResponseModel<CreateTenantModel>> Handle(CreateTenantCommand request, CancellationToken cancellationToken)
         {
-            var addTenant = new Tenant
+            var newTenant = new Tenant
             {
                 Name = request.Name,
                 Description = request.Description,
@@ -38,11 +38,11 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
             {
                 try
                 {
-                    await _context.Tenants.AddAsync(addTenant, cancellationToken);
+                    await _context.Tenants.AddAsync(newTenant, cancellationToken);
 
                     await _context.TenantAdminUsers.AddAsync(new TenantAdminUser
                     {
-                        TenantId = addTenant.Id,
+                        TenantId = newTenant.Id,
                         AdminUserId = request.CreatedBy,
                         CreatedBy = request.CreatedBy
                     }, cancellationToken);
@@ -64,14 +64,14 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
                 }
             }
 
-            var model = new CreateTenantModel(id: addTenant.Id,
-                createdAt: addTenant.CreatedAt,
-                name: addTenant.Name,
-                description: addTenant.Description,
-                hostName: addTenant.HostName,
-                logo: addTenant.Logo);
+            var createTenantModel = new CreateTenantModel(id: newTenant.Id,
+                createdAt: newTenant.CreatedAt,
+                name: newTenant.Name,
+                description: newTenant.Description,
+                hostName: newTenant.HostName,
+                logo: newTenant.Logo);
 
-            return new ResponseModel<CreateTenantModel>(model);
+            return new ResponseModel<CreateTenantModel>(createTenantModel);
         }
     }
 }

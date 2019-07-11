@@ -15,6 +15,7 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineesList
     {
         private readonly HonoplayDbContext _context;
         private readonly ICacheService _cacheService;
+
         public GetTraineesListQueryHandler(HonoplayDbContext context, ICacheService cacheService)
         {
             _context = context;
@@ -25,27 +26,29 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineesList
         {
             var redisKey = $"TraineesWithDepartmentsByTenantId{request.TenantId}";
 
-            var query = await _cacheService.RedisCacheAsync<IList<TraineesListModel>>(redisKey, delegate
+            var allTrainees = await _cacheService.RedisCacheAsync<IList<TraineesListModel>>(redisKey, delegate
             {
-
                 return _context.Trainees
                     .Include(x => x.Department)
                     .Where(x => x.Department.TenantId == request.TenantId)
                     .AsNoTracking()
                     .OrderBy(x => x.Name)
-                    .Skip(request.Skip)
-                    .Take(request.Take)
                     .Select(TraineesListModel.Projection)
                     .ToList();
 
             }, cancellationToken);
 
-            if (!query.Any())
+            var filteredTrainees = allTrainees
+                .Skip(request.Skip)
+                .Take(request.Take)
+                .ToList();
+
+            if (!filteredTrainees.Any())
             {
                 throw new NotFoundException();
             }
 
-            return new ResponseModel<TraineesListModel>(numberOfTotalItems: query.Count, numberOfSkippedItems: request.Skip, source: query);
+            return new ResponseModel<TraineesListModel>(numberOfTotalItems: allTrainees.Count, numberOfSkippedItems: request.Skip, source: filteredTrainees);
 
 
         }

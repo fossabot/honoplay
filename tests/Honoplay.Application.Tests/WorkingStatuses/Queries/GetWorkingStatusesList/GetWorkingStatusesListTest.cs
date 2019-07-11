@@ -1,5 +1,4 @@
 ﻿using Honoplay.Application.WorkingStatuses.Queries;
-using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -76,12 +75,12 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Queries.GetWorkingStatusesL
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetWorkingStatusesListQuery(adminUserId: _adminUserId, tenantId: _tenantId, skip: 0, take: 10);
+            var workingStatusesListQuery = new GetWorkingStatusesListQuery(adminUserId: _adminUserId, tenantId: _tenantId, skip: 0, take: 10);
 
-            var model = await _queryHandler.Handle(query, CancellationToken.None);
+            var workingStatusesListModel = await _queryHandler.Handle(workingStatusesListQuery, CancellationToken.None);
 
-            Assert.Null(model.Errors);
-            Assert.Equal(expected: _context.WorkingStatuses.FirstOrDefault()?.Name, actual: model.Items.Single().Name, ignoreCase: true);
+            Assert.Null(workingStatusesListModel.Errors);
+            Assert.Equal(expected: _context.WorkingStatuses.FirstOrDefault()?.Name, actual: workingStatusesListModel.Items.Single().Name, ignoreCase: true);
 
         }
 
