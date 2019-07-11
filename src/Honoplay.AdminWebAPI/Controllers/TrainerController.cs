@@ -29,8 +29,9 @@ namespace Honoplay.AdminWebAPI.Controllers
             try
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
+                var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var models = await Mediator.Send(new GetTrainerDetailQuery(userId, id, HonoHost));
+                var models = await Mediator.Send(new GetTrainerDetailQuery(userId, id, tenantId));
 
                 return Ok(models);
 
