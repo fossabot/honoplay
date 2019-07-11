@@ -6,7 +6,9 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
     {
         public GetTraineeDetailValidator()
         {
-            RuleFor(x => x.Id).NotNull().NotEmpty();
+            RuleFor(x => x.Id)
+                .NotNull()
+                .NotEmpty();
         }
     }
 }

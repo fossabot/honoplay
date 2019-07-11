@@ -41,7 +41,7 @@ namespace Honoplay.Application._Infrastructure
         /// <param name="numberOfSkippedItems"></param>
         /// <param name="source"></param>
         /// <param name="errors"></param>
-        public ResponseModel(long numberOfTotalItems, long numberOfSkippedItems, IEnumerable<T> source, IEnumerable<Error> errors) : this(numberOfTotalItems: numberOfTotalItems, numberOfSkippedItems: numberOfSkippedItems, source: source)
+        public ResponseModel(long numberOfTotalItems, long? numberOfSkippedItems, IEnumerable<T> source, IEnumerable<Error> errors) : this(numberOfTotalItems: numberOfTotalItems, numberOfSkippedItems: numberOfSkippedItems, source: source)
         {
             Errors = errors;
         }
@@ -62,7 +62,7 @@ namespace Honoplay.Application._Infrastructure
         /// <param name="numberOfTotalItems"></param>
         /// <param name="numberOfSkippedItems"></param>
         /// <param name="source"></param>
-        public ResponseModel(long numberOfTotalItems, long numberOfSkippedItems, IEnumerable<T> source)
+        public ResponseModel(long numberOfTotalItems, long? numberOfSkippedItems, IEnumerable<T> source)
         {
             Items = source;
             NumberOfItems = Items.Count();
@@ -72,8 +72,8 @@ namespace Honoplay.Application._Infrastructure
         }
 
         public long NumberOfTotalItems { get; }
-        public long NumberOfItems { get; }
-        public long NumberOfSkippedItems { get; }
+        public long? NumberOfItems { get; }
+        public long? NumberOfSkippedItems { get; }
 
         public string DataType { get; }
 

@@ -6,8 +6,12 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantsList
     {
         public GetTenantsListValidator()
         {
-            RuleFor(x => x.Skip).NotNull().GreaterThan(-1);
-            RuleFor(x => x.Take).NotNull().GreaterThan(4).LessThan(101);
+            RuleFor(x => x.Skip)
+                .GreaterThan(-1);
+
+            RuleFor(x => x.Take)
+                .GreaterThan(4)
+                .LessThan(101);
         }
     }
 }

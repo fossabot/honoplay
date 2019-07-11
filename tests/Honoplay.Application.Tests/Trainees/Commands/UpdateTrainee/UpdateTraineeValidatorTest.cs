@@ -12,6 +12,7 @@ namespace Honoplay.Application.Tests.Trainees.Commands.UpdateTrainee
         {
             _validator = new UpdateTraineeValidator();
         }
+
         [Fact]
         public void ShouldBeValid()
         {
@@ -38,33 +39,28 @@ namespace Honoplay.Application.Tests.Trainees.Commands.UpdateTrainee
             _validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, string.Empty);
             _validator.ShouldHaveValidationErrorFor(x => x.WorkingStatusId, 0);
             _validator.ShouldHaveValidationErrorFor(x => x.DepartmentId, 0);
-            _validator.ShouldHaveValidationErrorFor(x => x.Gender, 0);
             _validator.ShouldHaveValidationErrorFor(x => x.Surname, string.Empty);
-            _validator.ShouldHaveValidationErrorFor(x => x.Id, 0);
         }
 
         [Fact]
         public void ShouldBeNotValidForLessThan()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x.Gender, -1);
+            _validator.ShouldHaveValidationErrorFor(x => x.Gender, -5);
         }
 
         [Fact]
         public void ShouldBeNotValidForGreaterThan()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x.Gender, -1);
+            _validator.ShouldHaveValidationErrorFor(x => x.Gender, 3);
         }
 
         [Fact]
         public void ShouldBeNotValidForMaxLength()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x.Name, string.Join("", Enumerable.Repeat("x", 151)));
-        }
-
-        [Fact]
-        public void ShouldBeNotValidForMinLength()
-        {
-            _validator.ShouldHaveValidationErrorFor(x => x.Name, "");
+            _validator.ShouldHaveValidationErrorFor(x => x.Name, string.Join("", Enumerable.Repeat("x", 51)));
+            _validator.ShouldHaveValidationErrorFor(x => x.Surname, string.Join("", Enumerable.Repeat("x", 51)));
+            _validator.ShouldHaveValidationErrorFor(x => x.NationalIdentityNumber, string.Join("", Enumerable.Repeat("x", 31)));
+            _validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, string.Join("", Enumerable.Repeat("x", 21)));
         }
     }
 }

@@ -6,10 +6,24 @@ namespace Honoplay.Application.Tenants.Commands.UpdateTenant
     {
         public UpdateTenantValidator()
         {
-            RuleFor(x => x.Id).NotNull().NotEmpty();
-            RuleFor(x => x.Name).MinimumLength(1).MaximumLength(50).NotNull().NotEmpty();
-            RuleFor(x => x.HostName).MinimumLength(1).MaximumLength(150).NotNull().NotEmpty();
-            RuleFor(x => x.Description).MaximumLength(250);
+            RuleFor(x => x.Id)
+                .NotNull()
+                .NotEmpty();
+
+            RuleFor(x => x.Name)
+                .NotNull()
+                .NotEmpty()
+                .MinimumLength(1)
+                .MaximumLength(50);
+
+            RuleFor(x => x.HostName)
+                .NotNull()
+                .NotEmpty()
+                .MinimumLength(1)
+                .MaximumLength(150);
+
+            RuleFor(x => x.Description)
+                .MaximumLength(250);
         }
     }
 

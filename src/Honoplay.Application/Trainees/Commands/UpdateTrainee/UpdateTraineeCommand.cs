@@ -1,4 +1,5 @@
-﻿using Honoplay.Application._Infrastructure;
+﻿using System;
+using Honoplay.Application._Infrastructure;
 using MediatR;
 using Newtonsoft.Json;
 
@@ -17,7 +18,7 @@ namespace Honoplay.Application.Trainees.Commands.UpdateTrainee
         [JsonIgnore]
         public int UpdatedBy { get; set; }
         [JsonIgnore]
-        public string HostName { get; set; }
+        public Guid TenantId { get; set; }
 
     }
 }

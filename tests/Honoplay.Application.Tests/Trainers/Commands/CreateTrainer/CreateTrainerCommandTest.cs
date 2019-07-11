@@ -21,16 +21,17 @@ namespace Honoplay.Application.Tests.Trainers.Commands.CreateTrainer
         private readonly int _professionId;
         private readonly int _departmentId;
         private readonly int _adminUserId;
+        private readonly Guid _tenantId;
 
         public CreateTrainerCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _professionId, out _departmentId, out _adminUserId);
+            _context = InitAndGetDbContext(out _professionId, out _departmentId, out _adminUserId, out _tenantId);
             _commandHandler = new CreateTrainerCommandHandler(_context, new CacheManager(cache.Object));
         }
 
         //Arrange
-        private HonoplayDbContext InitAndGetDbContext(out int professionId, out int departmentId, out int adminUserId)
+        private HonoplayDbContext InitAndGetDbContext(out int professionId, out int departmentId, out int adminUserId, out Guid tenantId)
         {
             var context = GetDbContext();
 
@@ -81,6 +82,7 @@ namespace Honoplay.Application.Tests.Trainers.Commands.CreateTrainer
             professionId = profession.Id;
             departmentId = department.Id;
             adminUserId = adminUser.Id;
+            tenantId = tenant.Id;
             return context;
         }
 
@@ -96,7 +98,8 @@ namespace Honoplay.Application.Tests.Trainers.Commands.CreateTrainer
                 Surname = "qwdqwdqwd",
                 PhoneNumber = "123123123123",
                 ProfessionId = _professionId,
-                Email = "test123@gmail.com"
+                Email = "test123@gmail.com",
+                TenantId = _tenantId
             };
 
             var trainerModel = await _commandHandler.Handle(createTrainerCommand, CancellationToken.None);

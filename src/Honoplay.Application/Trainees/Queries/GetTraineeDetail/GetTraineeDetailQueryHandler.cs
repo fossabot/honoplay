@@ -25,16 +25,14 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
 
         public async Task<ResponseModel<TraineeDetailModel>> Handle(GetTraineeDetailQuery request, CancellationToken cancellationToken)
         {
-            var redisKey = $"TraineesWithDepartmentsByHostName{request.HostName}";
+            var redisKey = $"TraineesWithDepartmentsByTenantId{request.TenantId}";
 
             var redisTrainees = await _cacheService.RedisCacheAsync<IList<Trainee>>(redisKey, delegate
             {
                 return _context.Trainees.AsNoTracking()
                     .Include(x => x.Department)
-                    .Where(x => x.Id == request.Id &&
-                                _context.TenantAdminUsers
-                                    .Any(y => y.TenantId == x.Department.TenantId &&
-                                              y.AdminUserId == request.AdminUserId))
+                    .Where(x => x.Id == request.Id
+                                && x.Department.TenantId == request.TenantId)
                     .ToList();
             }, cancellationToken);
 

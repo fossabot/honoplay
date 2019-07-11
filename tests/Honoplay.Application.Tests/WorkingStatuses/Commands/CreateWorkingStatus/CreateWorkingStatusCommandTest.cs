@@ -19,16 +19,16 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.CreateWorkingStatu
         private readonly HonoplayDbContext _context;
         private readonly CreateWorkingStatusCommandHandler _commandHandler;
         private readonly int _adminUserId;
-
+        private readonly Guid _tenantId;
         public CreateWorkingStatusCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _adminUserId);
+            _context = InitAndGetDbContext(out _adminUserId, out _tenantId);
             _commandHandler = new CreateWorkingStatusCommandHandler(_context, new CacheManager(cache.Object));
         }
 
         //Arrange
-        private HonoplayDbContext InitAndGetDbContext(out int adminUserId)
+        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out Guid tenantId)
         {
             var context = GetDbContext();
 
@@ -57,8 +57,8 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.CreateWorkingStatu
             });
 
             context.SaveChanges();
-
             adminUserId = adminUser.Id;
+            tenantId = tenant.Id;
 
             return context;
         }
@@ -68,7 +68,7 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.CreateWorkingStatu
         {
             var createWorkingStatusCommand = new CreateWorkingStatusCommand
             {
-                HostName = "localhost",
+                TenantId = _tenantId,
                 Name = "workingStatusName",
                 CreatedBy = _adminUserId
             };
@@ -79,22 +79,6 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.CreateWorkingStatu
             Assert.Equal(expected: createWorkingStatusCommand.Name,
                          actual: workingStatusModel.Items.Single().Name,
                          ignoreCase: true);
-        }
-
-        [Fact]
-        public async Task ShouldThrowErrorWhenInvalidInformation()
-        {
-            var createWorkingStatusCommand = new CreateWorkingStatusCommand
-            {
-                Name = "testWorkingStatusName",
-                HostName = "localhost",
-                CreatedBy = _adminUserId+1
-            };
-
-            await Assert.ThrowsAsync<NotFoundException>(async () =>
-                await _commandHandler.Handle(createWorkingStatusCommand,
-                    CancellationToken.None));
-
         }
 
         public void Dispose()

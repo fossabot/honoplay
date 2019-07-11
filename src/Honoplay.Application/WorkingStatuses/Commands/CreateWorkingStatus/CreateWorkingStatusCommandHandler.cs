@@ -27,35 +27,24 @@ namespace Honoplay.Application.WorkingStatuses.Commands.CreateWorkingStatus
 
         public async Task<ResponseModel<CreateWorkingStatusModel>> Handle(CreateWorkingStatusCommand request, CancellationToken cancellationToken)
         {
-            var redisKey = $"WorkingStatusesByHostName{request.HostName}";
+            var redisKey = $"WorkingStatusesByTenantId{request.TenantId}";
+            var workingStatus = new WorkingStatus
+            {
+                Name = request.Name,
+                CreatedBy = request.CreatedBy,
+                TenantId = request.TenantId
+            };
 
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
                 try
                 {
-                    var currentTenant = await _context.Tenants
-                        .FirstOrDefaultAsync(x => x.HostName == request.HostName
-                            && x.TenantAdminUsers.Any(y => y.AdminUserId == request.CreatedBy),
-                            cancellationToken);
-
-                    if (currentTenant == null)
-                    {
-                        throw new NotFoundException(nameof(Tenant), request.HostName);
-                    }
-
-                    var workingStatus = new WorkingStatus
-                    {
-                        Name = request.Name,
-                        CreatedBy = request.CreatedBy,
-                        TenantId = currentTenant.Id
-                    };
-
                     await _context.WorkingStatuses.AddAsync(workingStatus, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
 
                     await _cacheService.RedisCacheUpdateAsync(redisKey, delegate
                         {
-                            return _context.WorkingStatuses.Where(x => x.TenantId == currentTenant.Id);
+                            return _context.WorkingStatuses.Where(x => x.TenantId == request.TenantId);
                         }, cancellationToken);
 
                     transaction.Commit();
@@ -77,7 +66,7 @@ namespace Honoplay.Application.WorkingStatuses.Commands.CreateWorkingStatus
                     throw new TransactionException();
                 }
             }
-            var workingStatusModel = new CreateWorkingStatusModel(request.Name, request.CreatedBy);
+            var workingStatusModel = new CreateWorkingStatusModel(workingStatus.Id, workingStatus.Name, workingStatus.CreatedBy, workingStatus.CreatedAt);
             return new ResponseModel<CreateWorkingStatusModel>(workingStatusModel);
         }
     }

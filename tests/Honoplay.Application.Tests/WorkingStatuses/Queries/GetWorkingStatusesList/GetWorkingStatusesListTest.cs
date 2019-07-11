@@ -1,15 +1,14 @@
-﻿using Honoplay.Common._Exceptions;
+﻿using Honoplay.Application.WorkingStatuses.Queries;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application.WorkingStatuses.Queries;
-using Honoplay.Persistence.CacheManager;
 using Xunit;
 
 namespace Honoplay.Application.Tests.WorkingStatuses.Queries.GetWorkingStatusesList
@@ -17,18 +16,18 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Queries.GetWorkingStatusesL
     public class GetWorkingStatusesListTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly int _adminUserId;
-        private const string HostName = "localhost";
         private readonly GetWorkingStatusesListQueryHandler _queryHandler;
+        private readonly int _adminUserId;
+        private readonly Guid _tenantId;
 
         public GetWorkingStatusesListTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _adminUserId);
+            _context = InitAndGetDbContext(out _adminUserId, out _tenantId);
             _queryHandler = new GetWorkingStatusesListQueryHandler(_context, new CacheManager(cache.Object));
         }
 
-        private HonoplayDbContext InitAndGetDbContext(out int adminUserId)
+        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out Guid tenantId)
         {
             var context = GetDbContext();
             var salt = ByteArrayExtensions.GetRandomSalt();
@@ -68,28 +67,21 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Queries.GetWorkingStatusesL
             });
 
             context.SaveChanges();
+            tenantId = tenant.Id;
+
             return context;
         }
 
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetWorkingStatusesListQuery(_adminUserId, HostName, skip: 0, take: 10);
+            var workingStatusesListQuery = new GetWorkingStatusesListQuery(adminUserId: _adminUserId, tenantId: _tenantId, skip: 0, take: 10);
 
-            var model = await _queryHandler.Handle(query, CancellationToken.None);
+            var workingStatusesListModel = await _queryHandler.Handle(workingStatusesListQuery, CancellationToken.None);
 
-            Assert.Null(model.Errors);
-            Assert.Equal(expected: _context.WorkingStatuses.FirstOrDefault()?.Name, actual: model.Items.Single().Name, ignoreCase: true);
+            Assert.Null(workingStatusesListModel.Errors);
+            Assert.Equal(expected: _context.WorkingStatuses.FirstOrDefault()?.Name, actual: workingStatusesListModel.Items.Single().Name, ignoreCase: true);
 
-        }
-
-        [Fact]
-        public async Task ShouldThrowErrorWhenInValidInformation()
-        {
-            var query = new GetWorkingStatusesListQuery(_adminUserId+1, HostName, skip: -1, take: 0);
-
-            await Assert.ThrowsAsync<NotFoundException>(async () =>
-                await _queryHandler.Handle(query, CancellationToken.None));
         }
 
         public void Dispose()

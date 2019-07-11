@@ -1,17 +1,18 @@
-﻿using Honoplay.Common._Exceptions;
-using Honoplay.Application._Infrastructure;
+﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Application.Trainees.Commands.CreateTrainee;
 using Honoplay.Application.Trainees.Commands.UpdateTrainee;
 using Honoplay.Application.Trainees.Queries.GetTraineeDetail;
+using Honoplay.Application.Trainees.Queries.GetTraineesList;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Honoplay.Application.Trainees.Queries.GetTraineesList;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
@@ -31,12 +32,12 @@ namespace Honoplay.AdminWebAPI.Controllers
         {
             try
             {
-                var userId = Claims[ClaimTypes.Sid].ToInt();
-                command.CreatedBy = userId;
-                command.HostName = HonoHost;
+                command.CreatedBy = Claims[ClaimTypes.Sid].ToInt();
+                command.TenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var model = await Mediator.Send(command);
-                return Created($"api/trainee/{model.Items.Single().Name}", model);
+                var createTraineeModel = await Mediator.Send(command);
+
+                return Created($"api/trainee/{createTraineeModel.Items.Single().Name}", createTraineeModel);
             }
             catch (ObjectAlreadyExistsException ex)
             {
@@ -57,12 +58,12 @@ namespace Honoplay.AdminWebAPI.Controllers
         {
             try
             {
-                var userId = Claims[ClaimTypes.Sid].ToInt();
-                command.UpdatedBy = userId;
-                command.HostName = HonoHost;
+                command.UpdatedBy = Claims[ClaimTypes.Sid].ToInt();
+                command.TenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var model = await Mediator.Send(command);
-                return Ok(model);
+                var updateTraineeModel = await Mediator.Send(command);
+
+                return Ok(updateTraineeModel);
             }
             catch (NotFoundException)
             {
@@ -87,9 +88,11 @@ namespace Honoplay.AdminWebAPI.Controllers
             try
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
+                var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var model = await Mediator.Send(new GetTraineesListQuery(userId, HonoHost, query.Skip, query.Take));
-                return Ok(model);
+                var traineesListModel = await Mediator.Send(new GetTraineesListQuery(userId, tenantId, query.Skip, query.Take));
+
+                return Ok(traineesListModel);
             }
             catch (NotFoundException)
             {
@@ -110,9 +113,11 @@ namespace Honoplay.AdminWebAPI.Controllers
             try
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
+                var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var model = await Mediator.Send(new GetTraineeDetailQuery(id, userId, HonoHost));
-                return Ok(model);
+                var traineesListModel = await Mediator.Send(new GetTraineeDetailQuery(id, userId, tenantId));
+
+                return Ok(traineesListModel);
             }
             catch (NotFoundException)
             {

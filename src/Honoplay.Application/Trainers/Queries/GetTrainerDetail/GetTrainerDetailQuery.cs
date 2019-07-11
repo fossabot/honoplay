@@ -1,16 +1,17 @@
 ﻿using Honoplay.Application._Infrastructure;
 using MediatR;
 using Newtonsoft.Json;
+using System;
 
 namespace Honoplay.Application.Trainers.Queries.GetTrainerDetail
 {
     public class GetTrainerDetailQuery : IRequest<ResponseModel<TrainerDetailModel>>
     {
-        public GetTrainerDetailQuery(int adminUserId, int id, string hostName)
+        public GetTrainerDetailQuery(int adminUserId, int id, Guid tenantId)
         {
             Id = id;
             AdminUserId = adminUserId;
-            HostName = hostName;
+            TenantId = tenantId;
         }
 
         public GetTrainerDetailQuery()
@@ -22,6 +23,6 @@ namespace Honoplay.Application.Trainers.Queries.GetTrainerDetail
         [JsonIgnore]
         public int AdminUserId { get; private set; }
         [JsonIgnore]
-        public string HostName { get; private set; }
+        public Guid TenantId { get; private set; }
     }
 }

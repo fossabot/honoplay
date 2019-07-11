@@ -1,5 +1,6 @@
 ﻿using FluentValidation.TestHelper;
 using Honoplay.Application.WorkingStatuses.Commands.CreateWorkingStatus;
+using System;
 using Xunit;
 
 namespace Honoplay.Application.Tests.WorkingStatuses.Commands.CreateWorkingStatus
@@ -19,7 +20,7 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.CreateWorkingStatu
             Assert.True(_validator.Validate(new CreateWorkingStatusCommand
             {
                 Name = "asdasd",
-                HostName = "localhost",
+                TenantId = Guid.NewGuid(),
                 CreatedBy = 1,
             }
             ).IsValid);

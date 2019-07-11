@@ -1,5 +1,6 @@
 ﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
 using MediatR;
@@ -43,8 +44,8 @@ namespace Honoplay.Application.Departments.Queries.GetDepartmentsList
 
             departmentsList = departmentsList
                 .OrderBy(x => x.Name)
-                .Skip(request.Skip)
-                .Take(request.Take)
+                .SkipOrAll(request.Skip)
+                .TakeOrAll(request.Take)
                 .ToList();
 
             return new ResponseModel<DepartmentsListModel>(numberOfTotalItems: departmentsList.Count, numberOfSkippedItems: request.Skip, source: departmentsList);
