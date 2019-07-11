@@ -1,4 +1,5 @@
-﻿using FluentValidation.TestHelper;
+﻿using System.Linq;
+using FluentValidation.TestHelper;
 using Honoplay.Application.Trainers.Commands.CreateTrainer;
 using Xunit;
 
@@ -35,14 +36,23 @@ namespace Honoplay.Application.Tests.Trainers.Commands.CreateTrainer
             _validator.ShouldHaveValidationErrorFor(x => x.Name, string.Empty);
             _validator.ShouldHaveValidationErrorFor(x => x.Email, string.Empty);
             _validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, string.Empty);
-            _validator.ShouldHaveValidationErrorFor(x => x.ProfessionId, 0);
             _validator.ShouldHaveValidationErrorFor(x => x.DepartmentId, 0);
+            _validator.ShouldHaveValidationErrorFor(x => x.Surname, string.Empty);
+        }
+
+        [Fact]
+        public void ShouldBeNotValidForMaxLength()
+        {
+            _validator.ShouldHaveValidationErrorFor(x => x.Name, string.Join("", Enumerable.Repeat("x", 51)));
+            _validator.ShouldHaveValidationErrorFor(x => x.Surname, string.Join("", Enumerable.Repeat("x", 51)));
+            _validator.ShouldHaveValidationErrorFor(x => x.Email, string.Join("", Enumerable.Repeat("x", 151)));
+            _validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, string.Join("", Enumerable.Repeat("x", 21)));
         }
 
         [Fact]
         public void ShouldBeNotValidForEmailAddress()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x.Email, "asdasdas");
+            _validator.ShouldHaveValidationErrorFor(x => x.Email, "asd");
         }
     }
 }

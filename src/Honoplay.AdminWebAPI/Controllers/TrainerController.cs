@@ -83,7 +83,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 command.CreatedBy = userId;
-                command.HostName = HonoHost;
+                command.TenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
                 var model = await Mediator.Send(command);
                 return Created($"api/Trainer/{model.Items.Single().Name}", model);
