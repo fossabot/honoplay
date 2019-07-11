@@ -1,6 +1,7 @@
 ﻿using Honoplay.Application._Infrastructure;
 using MediatR;
 using Newtonsoft.Json;
+using System;
 
 namespace Honoplay.Application.WorkingStatuses.Queries
 {
@@ -8,10 +9,10 @@ namespace Honoplay.Application.WorkingStatuses.Queries
     {
         public GetWorkingStatusesListQuery() { }
 
-        public GetWorkingStatusesListQuery(int adminUserId, string hostName, int skip, int take)
+        public GetWorkingStatusesListQuery(int adminUserId, Guid tenantId, int skip, int take)
         {
             AdminUserId = adminUserId;
-            HostName = hostName;
+            TenantId = tenantId;
             Skip = skip;
             Take = take;
         }
@@ -19,7 +20,7 @@ namespace Honoplay.Application.WorkingStatuses.Queries
         [JsonIgnore]
         public int AdminUserId { get; private set; }
         [JsonIgnore]
-        public string HostName { get; private set; }
+        public Guid TenantId { get; private set; }
         public int Skip { get; private set; }
         public int Take { get; private set; }
     }
