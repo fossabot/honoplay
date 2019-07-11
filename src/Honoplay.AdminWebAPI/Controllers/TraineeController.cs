@@ -60,7 +60,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 command.UpdatedBy = userId;
-                command.HostName = HonoHost;
+                command.TenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
                 var model = await Mediator.Send(command);
                 return Ok(model);

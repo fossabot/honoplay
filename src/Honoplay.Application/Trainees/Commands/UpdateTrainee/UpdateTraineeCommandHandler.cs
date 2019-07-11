@@ -26,16 +26,15 @@ namespace Honoplay.Application.Trainees.Commands.UpdateTrainee
         }
         public async Task<ResponseModel<UpdateTraineeModel>> Handle(UpdateTraineeCommand request, CancellationToken cancellationToken)
         {
-            var redisKey = $"TraineesWithDepartmentsByHostName{request.HostName}";
+            var redisKey = $"TraineesWithDepartmentsByTenantId{request.TenantId}";
+            var updateAt = DateTimeOffset.Now;
 
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
                     var trainees = await _context.Trainees.Include(x => x.Department)
-                        .Where(x => _context.TenantAdminUsers.Any(y =>
-                                         y.TenantId == x.Department.TenantId &&
-                                         y.AdminUserId == request.UpdatedBy))
+                        .Where(x => x.Department.TenantId == request.TenantId)
                         .ToListAsync(cancellationToken);
 
                     var trainee = trainees.FirstOrDefault(x => x.Id == request.Id);
@@ -53,7 +52,7 @@ namespace Honoplay.Application.Trainees.Commands.UpdateTrainee
                     trainee.Surname = request.Surname;
                     trainee.WorkingStatusId = request.WorkingStatusId;
                     trainee.UpdatedBy = request.UpdatedBy;
-                    trainee.UpdatedAt = DateTimeOffset.Now;
+                    trainee.UpdatedAt = updateAt;
 
                     _context.Update(trainee);
                     await _context.SaveChangesAsync(cancellationToken);
@@ -83,7 +82,7 @@ namespace Honoplay.Application.Trainees.Commands.UpdateTrainee
                 }
             }
 
-            var traineeModel = new UpdateTraineeModel(request.Id, request.Name, request.Surname, request.NationalIdentityNumber, request.PhoneNumber, request.Gender);
+            var traineeModel = new UpdateTraineeModel(request.Id, request.Name, request.Surname, request.NationalIdentityNumber, request.PhoneNumber, request.Gender, updateAt);
             return new ResponseModel<UpdateTraineeModel>(traineeModel);
         }
     }

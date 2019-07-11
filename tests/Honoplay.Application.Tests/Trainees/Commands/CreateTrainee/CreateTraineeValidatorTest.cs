@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
 using Honoplay.Application.Trainees.Commands.CreateTrainee;
-using Honoplay.Application.Trainers.Commands.CreateTrainer;
+using System.Linq;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainees.Commands.CreateTrainee
