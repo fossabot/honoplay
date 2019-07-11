@@ -1,26 +1,27 @@
-﻿using Honoplay.Application.Tenants.Queries.GetTenantsList;
+﻿using Honoplay.Application.Tenants.Queries.GetTenantDetail;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
+namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantDetail
 {
-    public class GetTenantsListQueryTest : TestBase, IDisposable
+    public class GetTenantDetailQueryTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly GetTenantsListQueryHandler _queryHandler;
+        private readonly GetTenantDetailQueryHandler _queryHandler;
         private readonly Guid _testTenantGuid;
         private readonly int _adminUserId;
 
-        public GetTenantsListQueryTest()
+        public GetTenantDetailQueryTest()
         {
             _context = InitAndGetDbContext(out _testTenantGuid, out _adminUserId);
-            _queryHandler = new GetTenantsListQueryHandler(_context);
+            _queryHandler = new GetTenantDetailQueryHandler(_context);
         }
 
         private HonoplayDbContext InitAndGetDbContext(out Guid tenantGuid, out int adminUserId)
@@ -64,17 +65,18 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTenantsListQuery(tenantId: _testTenantGuid, null, null);
+            var query = new GetTenantDetailQuery(_adminUserId, _testTenantGuid);
 
             var tenantModel = await _queryHandler.Handle(query, CancellationToken.None);
 
             Assert.Null(tenantModel.Errors);
+            Assert.Equal(_context.Tenants.FirstOrDefault()?.Name, tenantModel.Items.Single().Name, ignoreCase: true);
         }
 
         [Fact]
         public async Task ShouldThrowErrorWhenInvalidInformation()
         {
-            var query = new GetTenantsListQuery(tenantId: _testTenantGuid, skip: -3, take: 10);
+            var query = new GetTenantDetailQuery(_adminUserId, Guid.NewGuid());
             await Assert.ThrowsAsync<NotFoundException>(async () =>
            await _queryHandler.Handle(query, CancellationToken.None));
         }
