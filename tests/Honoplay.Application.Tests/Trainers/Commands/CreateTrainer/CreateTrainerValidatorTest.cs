@@ -1,6 +1,6 @@
-﻿using System.Linq;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
 using Honoplay.Application.Trainers.Commands.CreateTrainer;
+using System.Linq;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainers.Commands.CreateTrainer
@@ -38,6 +38,7 @@ namespace Honoplay.Application.Tests.Trainers.Commands.CreateTrainer
             _validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, string.Empty);
             _validator.ShouldHaveValidationErrorFor(x => x.DepartmentId, 0);
             _validator.ShouldHaveValidationErrorFor(x => x.Surname, string.Empty);
+            _validator.ShouldHaveValidationErrorFor(x => x.ProfessionId, 0);
         }
 
         [Fact]
