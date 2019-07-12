@@ -1,6 +1,7 @@
 ﻿using Honoplay.Application._Infrastructure;
 using MediatR;
 using Newtonsoft.Json;
+using System;
 
 namespace Honoplay.Application.WorkingStatuses.Commands.UpdateWorkingStatus
 {
@@ -9,7 +10,7 @@ namespace Honoplay.Application.WorkingStatuses.Commands.UpdateWorkingStatus
         public int Id { get; set; }
         public string Name { get; set; }
         [JsonIgnore]
-        public string HostName { get; set; }
+        public Guid TenantId { get; set; }
         [JsonIgnore]
         public int UpdatedBy { get; set; }
     }

@@ -26,7 +26,7 @@ namespace Honoplay.Application.Tenants.Commands.UpdateTenant
         public async Task<ResponseModel<UpdateTenantModel>> Handle(UpdateTenantCommand request, CancellationToken cancellationToken)
         {
             var updatedAt = DateTimeOffset.Now;
-            using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
+            using (IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
                 try
                 {
@@ -38,7 +38,7 @@ namespace Honoplay.Application.Tenants.Commands.UpdateTenant
 
                     if (tenant is null)
                     {
-                        throw new NotFoundException(nameof(Tenant), request.Id);
+                        throw new NotFoundException(nameof(Tenant), request.HostName);
                     }
 
                     tenant.Name = request.Name;

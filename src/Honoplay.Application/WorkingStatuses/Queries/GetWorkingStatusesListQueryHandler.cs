@@ -24,30 +24,17 @@ namespace Honoplay.Application.WorkingStatuses.Queries
 
         public async Task<ResponseModel<WorkingStatusesListModel>> Handle(GetWorkingStatusesListQuery request, CancellationToken cancellationToken)
         {
-            var redisKey = $"WorkingStatusesByHostName{request.HostName}";
+            var redisKey = $"WorkingStatusesByTenantId{request.TenantId}";
+
+            var allWorkingStatusesList = _context.WorkingStatuses.Where(x => x.TenantId == request.TenantId)
+                .AsNoTracking()
+                .Select(WorkingStatusesListModel.Projection)
+                .ToList();
 
             var workingStatusesList = await _cacheService.RedisCacheAsync<IList<WorkingStatusesListModel>>(redisKey: redisKey, redisLogic: delegate
-            {
-                var currentTenant = _context.Tenants
-                    .Include(x => x.TenantAdminUsers)
-                    .FirstOrDefaultAsync(x =>
-                        x.HostName == request.HostName
-                        && x.TenantAdminUsers.Any(y =>
-                                y.AdminUserId == request.AdminUserId
-                                && y.TenantId == x.Id),
-                        cancellationToken).Result;
-
-                if (currentTenant is null)
                 {
-                    throw new NotFoundException();
-                }
-
-                return _context.WorkingStatuses.Where(x => currentTenant.Id == x.TenantId)
-                    .AsNoTracking()
-                    .Select(WorkingStatusesListModel.Projection)
-                    .ToList();
-
-            }, cancellationToken: cancellationToken);
+                    return allWorkingStatusesList;
+                }, cancellationToken: cancellationToken);
 
             if (!workingStatusesList.Any())
             {
@@ -60,7 +47,7 @@ namespace Honoplay.Application.WorkingStatuses.Queries
                 .Take(request.Take)
                 .ToList();
 
-            return new ResponseModel<WorkingStatusesListModel>(numberOfTotalItems: workingStatusesList.Count,
+            return new ResponseModel<WorkingStatusesListModel>(numberOfTotalItems: allWorkingStatusesList.Count,
                 numberOfSkippedItems: request.Skip,
                 source: workingStatusesList);
         }

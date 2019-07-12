@@ -73,7 +73,7 @@ namespace Honoplay.Application.Tests.Departments.Queries.GetDepartmentsList
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetDepartmentsListQuery(_adminUserId, tenantId: _tenantId, skip: 0, take: 10);
+            var query = new GetDepartmentsListQuery(tenantId: _tenantId, skip: 0, take: 10);
 
             var departmentModel = await _queryHandler.Handle(query, CancellationToken.None);
 
@@ -83,7 +83,7 @@ namespace Honoplay.Application.Tests.Departments.Queries.GetDepartmentsList
         [Fact]
         public async Task ShouldItemsCount1WhenTake1()
         {
-            var query = new GetDepartmentsListQuery(_adminUserId, tenantId: _tenantId, skip: 0, take: 1);
+            var query = new GetDepartmentsListQuery(tenantId: _tenantId, skip: 0, take: 1);
 
             var departmentModel = await _queryHandler.Handle(query, CancellationToken.None);
 

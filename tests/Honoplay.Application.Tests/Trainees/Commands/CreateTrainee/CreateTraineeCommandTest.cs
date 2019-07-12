@@ -21,16 +21,17 @@ namespace Honoplay.Application.Tests.Trainees.Commands.CreateTrainee
         private readonly int _workingStatusId;
         private readonly int _departmentId;
         private readonly int _adminUserId;
+        private readonly Guid _tenantId;
 
         public CreateTraineeCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _workingStatusId, out _departmentId, out _adminUserId);
+            _context = InitAndGetDbContext(out _workingStatusId, out _departmentId, out _adminUserId, out _tenantId);
             _commandHandler = new CreateTraineeCommandHandler(_context, new CacheManager(cache.Object));
         }
 
         //Arrange
-        private HonoplayDbContext InitAndGetDbContext(out int workingStatusId, out int departmentId, out int adminUserId)
+        private HonoplayDbContext InitAndGetDbContext(out int workingStatusId, out int departmentId, out int adminUserId, out Guid tenantId)
         {
             var context = GetDbContext();
 
@@ -82,6 +83,7 @@ namespace Honoplay.Application.Tests.Trainees.Commands.CreateTrainee
             workingStatusId = workingStatus.Id;
             departmentId = department.Id;
             adminUserId = adminUser.Id;
+            tenantId = tenant.Id;
             return context;
         }
 
@@ -89,7 +91,7 @@ namespace Honoplay.Application.Tests.Trainees.Commands.CreateTrainee
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var createTraineeCommand = new CreateTraineeCommand()
+            var createTraineeCommand = new CreateTraineeCommand
             {
                 DepartmentId = _departmentId,
                 CreatedBy = _adminUserId,
@@ -98,7 +100,8 @@ namespace Honoplay.Application.Tests.Trainees.Commands.CreateTrainee
                 NationalIdentityNumber = "1231231231231",
                 Surname = "qwdqwdqwd",
                 PhoneNumber = "123123123123",
-                WorkingStatusId = _workingStatusId
+                WorkingStatusId = _workingStatusId,
+                TenantId = _tenantId
             };
 
             var traineeModel = await _commandHandler.Handle(createTraineeCommand, CancellationToken.None);

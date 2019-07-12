@@ -1,11 +1,12 @@
-﻿using Honoplay.Persistence;
+﻿using Honoplay.Application._Infrastructure;
+using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
+using Honoplay.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Common._Exceptions;
-using Honoplay.Application._Infrastructure;
 
 namespace Honoplay.Application.Tenants.Queries.GetTenantsList
 {
@@ -20,20 +21,25 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantsList
 
         public async Task<ResponseModel<TenantsListModel>> Handle(GetTenantsListQuery request, CancellationToken cancellationToken)
         {
-            var query = _context.Tenants.Where(x => x.TenantAdminUsers.Any(y => y.AdminUserId == request.AdminUserId)).AsNoTracking().OrderBy(x => x.Name);
+            var allTenants = await _context.Tenants
+                .Where(x => x.Id == request.TenantId)
+                .AsNoTracking()
+                .OrderBy(x => x.Name)
+                .ToListAsync(cancellationToken);
 
-            var result = query
-                .Skip(request.Skip)
-                .Take(request.Take)
+            var filteredTenants = allTenants
+                .SkipOrAll(request.Skip)
+                .TakeOrAll(request.Take)
+                .AsQueryable()
                 .Select(TenantsListModel.Projection)
                 .ToList();
 
-            if (!result.Any())
+            if (!filteredTenants.Any())
             {
                 throw new NotFoundException();
             }
 
-            return new ResponseModel<TenantsListModel>(numberOfTotalItems: await query.CountAsync(cancellationToken), numberOfSkippedItems: request.Take, source: result);
+            return new ResponseModel<TenantsListModel>(numberOfTotalItems: allTenants.LongCount(), numberOfSkippedItems: request.Take, source: filteredTenants);
         }
     }
 }
