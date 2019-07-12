@@ -6,8 +6,10 @@ using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Professions.Commands.CreateProfession;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Professions.Commands.CreateProfession
@@ -24,7 +26,7 @@ namespace Honoplay.Application.Tests.Professions.Commands.CreateProfession
             var cache = new Mock<IDistributedCache>();
 
             _context = InitAndGetDbContext(out _tenantId, out _adminUserId);
-            _commandHandler = new CreateProfessionCommandTest(_context, new CacheManager(cache.Object));
+            _commandHandler = new CreateProfessionCommandHandler(_context, new CacheManager(cache.Object));
         }
 
         private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId)

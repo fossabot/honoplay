@@ -1,4 +1,6 @@
-﻿using Honoplay.Application.Departments.Queries.GetDepartmentsList;
+﻿using FluentValidation.TestHelper;
+using Honoplay.Application.Departments.Queries.GetDepartmentsList;
+using Honoplay.Application.Professions.Queries.GetProfessionsList;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Professions.Queries.GetProfessionsList
@@ -9,7 +11,7 @@ namespace Honoplay.Application.Tests.Professions.Queries.GetProfessionsList
 
         public GetProfessionsListValidatorTest()
         {
-            _validator = new GetDepartmentsListValidator();
+            _validator = new GetProfessionsListValidator();
         }
 
         [Fact]

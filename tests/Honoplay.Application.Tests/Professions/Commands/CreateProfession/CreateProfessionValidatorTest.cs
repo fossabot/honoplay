@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using FluentValidation.TestHelper;
+using Honoplay.Application.Professions.Commands.CreateProfession;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Professions.Commands.CreateProfession
 {
-    public class CreateProfessionValidatorTest
+    public class CreateProfessionCommandValidatorTest
     {
         private readonly CreateProfessionValidator _validator;
         public CreateProfessionCommandValidatorTest()
