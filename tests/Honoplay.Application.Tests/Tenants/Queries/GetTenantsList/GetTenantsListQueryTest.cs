@@ -64,7 +64,7 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTenantsListQuery(tenantId: _testTenantGuid, null, null);
+            var query = new GetTenantsListQuery(tenantId: _testTenantGuid, skip: null, take: null);
 
             var tenantModel = await _queryHandler.Handle(query, CancellationToken.None);
 
