@@ -1,12 +1,27 @@
 import React from 'react';
-import { Grid, InputLabel, InputBase } from '@material-ui/core';
+import { 
+  Grid, 
+  InputLabel, 
+  InputBase 
+} from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { Style } from './Style';
 
 const InputTextComponent = (props) => {
 
-  const { classes, labelName, inputType, multiline, name, value, onChange, error } = props;
+  const {
+    classes,
+    labelName,
+    inputType,
+    multiline,
+    name,
+    value,
+    onChange,
+    error,
+    endAdornment
+  } = props;
   return (
+
     <div className={classes.inputRoot}>
       <Grid container spacing={24}>
         {(labelName &&
@@ -24,10 +39,11 @@ const InputTextComponent = (props) => {
             name={name}
             value={value}
             type={inputType}
+            endAdornment={endAdornment}
             fullWidth
             classes={{
               root: classes.bootstrapRoot,
-              input: error ? classes.bootstrapError :  classes.bootstrapInput ,
+              input: error ? classes.bootstrapError : classes.bootstrapInput,
             }}
 
           />

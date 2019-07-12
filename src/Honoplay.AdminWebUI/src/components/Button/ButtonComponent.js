@@ -11,14 +11,14 @@ import {
 } from './Style';
 
 const ButtonComponent = (props) => {
-    const { classes, buttonColor, buttonIcon, buttonName, onClick, disabled } = props;
+    const { classes, buttonColor, buttonIcon, buttonName, onClick, disabled, className } = props;
     return (
         <div>
             <MuiThemeProvider theme={theme}>
                 <Button variant="contained"
                     disabled={disabled}
                     color={buttonColor}
-                    className={classes.button}
+                    className={className ? className : classes.button}
                     onClick={onClick}>
                     {(buttonIcon &&
                         <div className={classes.buttonDiv}>
