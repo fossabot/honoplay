@@ -1,4 +1,5 @@
-﻿using Honoplay.Application._Infrastructure;
+﻿using System;
+using Honoplay.Application._Infrastructure;
 using MediatR;
 using Newtonsoft.Json;
 
@@ -15,6 +16,6 @@ namespace Honoplay.Application.Trainers.Commands.CreateTrainer
         [JsonIgnore]
         public int CreatedBy { get; set; }
         [JsonIgnore]
-        public string HostName { get; set; }
+        public Guid TenantId { get; set; }
     }
 }

@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
 using Honoplay.Application.Trainees.Commands.CreateTrainee;
-using Honoplay.Application.Trainers.Commands.CreateTrainer;
+using System.Linq;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainees.Commands.CreateTrainee
@@ -39,33 +38,28 @@ namespace Honoplay.Application.Tests.Trainees.Commands.CreateTrainee
             _validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, string.Empty);
             _validator.ShouldHaveValidationErrorFor(x => x.WorkingStatusId, 0);
             _validator.ShouldHaveValidationErrorFor(x => x.DepartmentId, 0);
-            _validator.ShouldHaveValidationErrorFor(x => x.Gender, 0);
             _validator.ShouldHaveValidationErrorFor(x => x.Surname, string.Empty);
         }
 
         [Fact]
         public void ShouldBeNotValidForLessThan()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x.Gender, -1);
+            _validator.ShouldHaveValidationErrorFor(x => x.Gender, -5);
         }
 
         [Fact]
         public void ShouldBeNotValidForGreaterThan()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x.Gender, -1);
+            _validator.ShouldHaveValidationErrorFor(x => x.Gender, 3);
         }
 
         [Fact]
         public void ShouldBeNotValidForMaxLength()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x.Name, string.Join("", Enumerable.Repeat("x", 151)));
+            _validator.ShouldHaveValidationErrorFor(x => x.Name, string.Join("", Enumerable.Repeat("x", 51)));
+            _validator.ShouldHaveValidationErrorFor(x => x.Surname, string.Join("", Enumerable.Repeat("x", 51)));
+            _validator.ShouldHaveValidationErrorFor(x => x.NationalIdentityNumber, string.Join("", Enumerable.Repeat("x", 31)));
+            _validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, string.Join("", Enumerable.Repeat("x", 21)));
         }
-
-        [Fact]
-        public void ShouldBeNotValidForMinLength()
-        {
-            _validator.ShouldHaveValidationErrorFor(x => x.Name, "");
-        }
-
     }
 }

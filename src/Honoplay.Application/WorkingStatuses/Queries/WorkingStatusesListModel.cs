@@ -6,14 +6,14 @@ namespace Honoplay.Application.WorkingStatuses.Queries
 {
     public struct WorkingStatusesListModel
     {
-        public int Id { get; set; }
-        public Guid TenantId { get; set; }
-        public string Name { get; set; }
+        public int Id { get; private set; }
+        public Guid TenantId { get; private set; }
+        public string Name { get; private set; }
 
-        public int CreatedBy { get; set; }
+        public int CreatedBy { get; private set; }
         public DateTimeOffset CreatedAt { get; private set; }
         public int? UpdatedBy { get; set; }
-        public DateTimeOffset? UpdatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; private set; }
 
         public static Expression<Func<WorkingStatus, WorkingStatusesListModel>> Projection
         {

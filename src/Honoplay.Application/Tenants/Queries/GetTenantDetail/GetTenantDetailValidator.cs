@@ -6,7 +6,9 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantDetail
     {
         public GetTenantDetailValidator()
         {
-            RuleFor(x => x.Id).NotNull().NotEmpty();
+            RuleFor(x => x.Id)
+                .NotNull()
+                .NotEmpty();
         }
     }
 }

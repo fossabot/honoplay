@@ -22,16 +22,17 @@ namespace Honoplay.Application.Tests.Trainees.Commands.UpdateTrainee
         private readonly int _departmentId;
         private readonly int _adminUserId;
         private readonly int _traineeId;
+        private readonly Guid _tenantId;
 
         public UpdateTraineeCommandTest()
         {
             var distributedCacheMock = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _workingStatusId, out _departmentId, out _adminUserId, out _traineeId);
+            _context = InitAndGetDbContext(out _workingStatusId, out _departmentId, out _adminUserId, out _traineeId, out _tenantId);
             _commandHandler = new UpdateTraineeCommandHandler(_context, new CacheManager(distributedCacheMock.Object));
         }
 
         //Arrange
-        private HonoplayDbContext InitAndGetDbContext(out int workingStatusId, out int departmentId, out int adminUserId, out int traineeId)
+        private HonoplayDbContext InitAndGetDbContext(out int workingStatusId, out int departmentId, out int adminUserId, out int traineeId, out Guid tenantId)
         {
             var context = GetDbContext();
 
@@ -97,6 +98,7 @@ namespace Honoplay.Application.Tests.Trainees.Commands.UpdateTrainee
             departmentId = department.Id;
             adminUserId = adminUser.Id;
             traineeId = trainee.Id;
+            tenantId = tenant.Id;
             return context;
         }
 
@@ -104,7 +106,7 @@ namespace Honoplay.Application.Tests.Trainees.Commands.UpdateTrainee
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var updateTraineeCommand = new UpdateTraineeCommand()
+            var updateTraineeCommand = new UpdateTraineeCommand
             {
                 Id = _traineeId,
                 DepartmentId = _departmentId,
@@ -114,7 +116,8 @@ namespace Honoplay.Application.Tests.Trainees.Commands.UpdateTrainee
                 NationalIdentityNumber = "1231231231231",
                 Surname = "qwdqwdqwd",
                 PhoneNumber = "123123123123",
-                WorkingStatusId = _workingStatusId
+                WorkingStatusId = _workingStatusId,
+                TenantId = _tenantId
             };
 
             var traineeModel = await _commandHandler.Handle(updateTraineeCommand, CancellationToken.None);

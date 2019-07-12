@@ -20,16 +20,17 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
         private readonly GetTrainerDetailQueryHandler _queryHandler;
         private readonly int _trainerId;
         private readonly int _adminUserId;
+        private readonly Guid _tenantId;
 
         public GetTrainerDetailQueryTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _adminUserId, out _trainerId);
+            _context = InitAndGetDbContext(out _adminUserId, out _trainerId, out _tenantId);
             _queryHandler = new GetTrainerDetailQueryHandler(_context, new CacheManager(cache.Object));
         }
 
         //Arrange
-        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out int trainerId)
+        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out int trainerId, out Guid tenantId)
         {
             var context = GetDbContext();
 
@@ -69,7 +70,8 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
             var profession = new Profession
             {
                 Name = "testProfession",
-                CreatedBy = adminUser.Id
+                CreatedBy = adminUser.Id,
+                TenantId = tenant.Id
             };
 
             context.Professions.Add(profession);
@@ -90,13 +92,14 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
 
             adminUserId = adminUser.Id;
             trainerId = trainer.Id;
+            tenantId = tenant.Id;
             return context;
         }
 
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTrainerDetailQuery(_adminUserId, _trainerId, hostName: "localhost");
+            var query = new GetTrainerDetailQuery(_adminUserId, _trainerId, tenantId: _tenantId);
 
             var model = await _queryHandler.Handle(query, CancellationToken.None);
 
@@ -108,7 +111,7 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetTrainerDetailQuery(_adminUserId, _trainerId + 1, hostName: "localhost");
+            var query = new GetTrainerDetailQuery(_adminUserId, _trainerId + 1, tenantId: _tenantId);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _queryHandler.Handle(query, CancellationToken.None));

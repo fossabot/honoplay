@@ -24,20 +24,12 @@ namespace Honoplay.Application.Trainers.Queries.GetTrainersList
         }
         public async Task<ResponseModel<TrainersListModel>> Handle(GetTrainersListQuery request, CancellationToken cancellationToken)
         {
-            var redisKey = $"TrainersWithDepartmentsByHostName{request.HostName}";
+            var redisKey = $"TrainersWithDepartmentsByTenantId{request.TenantId}";
             var query = await _cacheService.RedisCacheAsync<IList<TrainersListModel>>(redisKey, delegate
             {
-                var currentTenant = _context.Tenants
-                    .Include(i => i.TenantAdminUsers)
-                    .Include(i => i.Departments)
-                    .FirstOrDefaultAsync(x =>
-                        x.HostName == request.HostName
-                        && _context.TenantAdminUsers.Any(y =>
-                            y.AdminUserId == request.AdminUserId
-                            && y.TenantId == x.Id)
-                        , cancellationToken);
-
-                return _context.Trainers.Where(t => currentTenant.Result.Departments.Any(d => d.Id == t.DepartmentId))
+                return _context.Trainers
+                    .Include(t => t.Department)
+                    .Where(t => t.Department.TenantId == request.TenantId)
                     .AsNoTracking()
                     .OrderBy(ob => ob.Name)
                     .Skip(request.Skip)

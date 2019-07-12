@@ -1,5 +1,6 @@
 ﻿using FluentValidation.TestHelper;
 using Honoplay.Application.Tenants.Queries.GetTenantsList;
+using System;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
@@ -16,8 +17,8 @@ namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
         [Fact]
         public void ShouldBeValid()
         {
-            Assert.True(_validator.Validate(new GetTenantsListQuery(111)).IsValid);
-            Assert.True(_validator.Validate(new GetTenantsListQuery(111, 0, 5)).IsValid);
+            Assert.True(_validator.Validate(new GetTenantsListQuery()).IsValid);
+            Assert.True(_validator.Validate(new GetTenantsListQuery(Guid.NewGuid(), 0, 5)).IsValid);
         }
 
         [Fact]

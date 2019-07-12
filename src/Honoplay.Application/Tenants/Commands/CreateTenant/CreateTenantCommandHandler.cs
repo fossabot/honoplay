@@ -25,7 +25,7 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
 
         public async Task<ResponseModel<CreateTenantModel>> Handle(CreateTenantCommand request, CancellationToken cancellationToken)
         {
-            var item = new Tenant
+            var newTenant = new Tenant
             {
                 Name = request.Name,
                 Description = request.Description,
@@ -34,20 +34,20 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
                 CreatedBy = request.CreatedBy
             };
 
-            using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
+            using (IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
                 try
                 {
-                    _context.Add(item);
+                    await _context.Tenants.AddAsync(newTenant, cancellationToken);
 
-                    _context.Add(new TenantAdminUser
+                    await _context.TenantAdminUsers.AddAsync(new TenantAdminUser
                     {
-                        TenantId = item.Id,
+                        TenantId = newTenant.Id,
                         AdminUserId = request.CreatedBy,
-                        CreatedBy = request.CreatedBy,
-                    });
+                        CreatedBy = request.CreatedBy
+                    }, cancellationToken);
 
-                     _context.SaveChanges();
+                    await _context.SaveChangesAsync(cancellationToken);
 
                     transaction.Commit();
                 }
@@ -64,14 +64,14 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
                 }
             }
 
-            var model = new CreateTenantModel(id: item.Id,
-                createdAt: item.CreatedAt,
-                name: item.Name,
-                description: item.Description,
-                hostName: item.HostName,
-                logo: item.Logo);
+            var createTenantModel = new CreateTenantModel(id: newTenant.Id,
+                createdAt: newTenant.CreatedAt,
+                name: newTenant.Name,
+                description: newTenant.Description,
+                hostName: newTenant.HostName,
+                logo: newTenant.Logo);
 
-            return new ResponseModel<CreateTenantModel>(model);
+            return new ResponseModel<CreateTenantModel>(createTenantModel);
         }
     }
 }

@@ -6,8 +6,9 @@ namespace Honoplay.Application.WorkingStatuses.Commands.CreateWorkingStatus
     {
         public CreateWorkingStatusValidator()
         {
-            RuleFor(x => x.Name).NotNull();
-            RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.Name)
+                .NotNull()
+                .NotEmpty();
         }
     }
 }
