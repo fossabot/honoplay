@@ -72,7 +72,8 @@ namespace Honoplay.Application.Tests.Trainers.Commands.CreateTrainer
             var profession = new Profession
             {
                 Name = "testProfession",
-                CreatedBy = adminUser.Id
+                CreatedBy = adminUser.Id,
+                TenantId = tenant.Id
             };
 
             context.Professions.Add(profession);
