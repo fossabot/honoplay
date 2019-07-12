@@ -4,7 +4,7 @@ namespace Honoplay.Domain.Entities
 {
     public class TenantAdminUser : BaseEntity
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public Guid TenantId { get; set; }
         public int AdminUserId { get; set; }
