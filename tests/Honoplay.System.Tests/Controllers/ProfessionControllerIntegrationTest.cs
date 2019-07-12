@@ -7,11 +7,13 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Honoplay.Application.Professions.Commands.CreateProfession;
+using Honoplay.Application.Professions.Queries.GetProfessionsList;
 using Xunit;
 
 namespace Honoplay.System.Tests.Controllers
 {
-    public class ProfessionControllerIntegrationTest : IClassFixture<CustomWebApplicationFactory<Startup>>
+    public class ProfessionControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
         private readonly CustomWebApplicationFactory<Startup> _factory;
 
