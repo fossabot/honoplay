@@ -27,21 +27,15 @@ namespace Honoplay.Application.WorkingStatuses.Commands.UpdateWorkingStatus
 
         public async Task<ResponseModel<UpdateWorkingStatusModel>> Handle(UpdateWorkingStatusCommand request, CancellationToken cancellationToken)
         {
-            var redisKey = $"WorkingStatusByHostName{request.HostName}";
+            var redisKey = $"WorkingStatusByTenantId{request.TenantId}";
             var updatedAt = DateTimeOffset.Now;
+
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
                 try
                 {
-                    var workingStatuses = await _context.Tenants
-                        .Include(x => x.TenantAdminUsers)
-                        .Include(x => x.WorkingStatuses)
-                        .Where(x =>
-                                x.HostName == request.HostName
-                                && x.TenantAdminUsers.Any(y =>
-                                    y.AdminUserId == request.UpdatedBy
-                                    && y.TenantId == x.Id))
-                        .SelectMany(x => x.WorkingStatuses)
+                    var workingStatuses = await _context.WorkingStatuses
+                        .Where(x => x.TenantId == request.TenantId)
                         .ToListAsync(cancellationToken);
 
                     var currentWorkingStatus = workingStatuses.FirstOrDefault(x => x.Id == request.Id);
@@ -58,10 +52,7 @@ namespace Honoplay.Application.WorkingStatuses.Commands.UpdateWorkingStatus
                     _context.Update(currentWorkingStatus);
                     await _context.SaveChangesAsync(cancellationToken);
 
-                    await _cacheService.RedisCacheUpdateAsync(redisKey, delegate
-                    {
-                        return workingStatuses;
-                    }, cancellationToken);
+                    await _cacheService.RedisCacheUpdateAsync(redisKey, delegate { return workingStatuses; }, cancellationToken);
 
                     transaction.Commit();
                 }
@@ -84,8 +75,8 @@ namespace Honoplay.Application.WorkingStatuses.Commands.UpdateWorkingStatus
             }
 
             var workingStatusModel = new UpdateWorkingStatusModel(id: request.Id,
+                tenantId: request.TenantId,
                 name: request.Name,
-                hostName: request.HostName,
                 updatedBy: request.UpdatedBy,
                 updatedAt: updatedAt);
 

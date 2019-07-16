@@ -6,3 +6,13 @@ export const genderToString = (array) => {
     })
     return array;
 }
+
+export const departmentToString = (departmentArray, array) => {
+    array.map(item => {
+        departmentArray.map(department => {
+            if( item.departmentId === department.id) {
+                item.departmentId = department.name;
+            }
+        })
+    })
+}

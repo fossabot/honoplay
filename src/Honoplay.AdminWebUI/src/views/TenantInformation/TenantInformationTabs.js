@@ -58,34 +58,46 @@ class TenantInformationTabs extends React.Component {
     if (tabValue == 0) {
       if (!prevProps.errorCreateTenant && errorCreateTenant) {
         this.setState({
+          loading: false,
           isErrorTenant: true,
+          success: false,
           open: true
         });
       }
       if (prevProps.isCreateTenantLoading && !isCreateTenantLoading && newTenant) {
-        this.setState({
-          loading: false,
-          success: true,
-          isErrorTenant: false,
-          open: true,
-          disabledTab1: false,
-          disabledTab2: false,
-        });
+        if (!errorCreateTenant)
+        {
+          this.setState({
+            loading: false,
+            success: true,
+            isErrorTenant: false,
+            open: true,
+            disabledTab1: false,
+            disabledTab2: false,
+          });
+        }
       }
       if (!prevProps.isCreateTenantLoading && isCreateTenantLoading) {
-        this.setState({
-          loading: true,
-          success: false,
-          open: errorCreateTenant && true,
-          isErrorTenant: errorCreateTenant && true,
-        });
+        if (!errorCreateTenant) {
+          this.setState({
+            loading: true,
+            success: false,
+            open: errorCreateTenant && true,
+            isErrorTenant: errorCreateTenant && true,
+          });
+        }
       } else if (prevProps.isCreateTenantLoading && !isCreateTenantLoading) {
-        this.setState({
-          loading: false,
-          success: false,
-          open: true,
-          isErrorTenant: errorCreateTenant && true,
-        });
+        if (!errorCreateTenant)
+        {
+          setTimeout(() => {
+            this.setState({
+              loading: false,
+              success: false,
+              open: true,
+              isErrorTenant: errorCreateTenant && true,
+            });
+          }, 500);
+        }
       }
     }
     if (tabValue == 2) {
@@ -96,7 +108,7 @@ class TenantInformationTabs extends React.Component {
         });
       }
       if (prevProps.isCreateTraineeLoading && !isCreateTraineeLoading && newTrainee) {
-        this.props.fetchTraineeList(0,50);
+        this.props.fetchTraineeList(0, 50);
         this.setState({
           loading: false,
           success: true,
@@ -292,15 +304,15 @@ class TenantInformationTabs extends React.Component {
 }
 
 const mapStateToProps = state => {
-  const { 
+  const {
     errorCreateTenant,
-     isCreateTenantLoading, 
-     newTenant 
-    } = state.createTenant;
-  const { 
-    errorCreateTrainee, 
-    isCreateTraineeLoading, 
-    newTrainee 
+    isCreateTenantLoading,
+    newTenant
+  } = state.createTenant;
+  const {
+    errorCreateTrainee,
+    isCreateTraineeLoading,
+    newTrainee
   } = state.createTrainee;
 
   return {

@@ -36,11 +36,13 @@ class ModalComponent extends React.Component {
     super(props);
     this.state = {
       selectedValue: '',
-      loading: false,
+      loadingCreate: false,
+      loadingList: false,
       workingStatusModel: {
         name: ''
       },
-      workingStatusError: false,
+      createError: false,
+      listError: false,
       workingStatus: []
     }
   }
@@ -49,6 +51,8 @@ class ModalComponent extends React.Component {
     const { postWorkingStatus } = this.props;
     const { workingStatusModel } = this.state;
     postWorkingStatus(workingStatusModel);
+    const { fetchWorkingStatusList } = this.props;
+    fetchWorkingStatusList(0, 50);
   }
 
   handleChangeValue = (event) => {
@@ -61,41 +65,56 @@ class ModalComponent extends React.Component {
     this.setState({
       workingStatusModel: {
         name: e.target.value
-      }
+      },
+      createError: false
     })
   }
-
-  componentDidMount() {
-    const { fetchWorkingStatusList } = this.props;
-    fetchWorkingStatusList(0,50);
-  } 
 
   componentDidUpdate(prevProps) {
     const {
       isWorkingStatusCreateLoading,
       workingStatusCreate,
       errorWorkingStatusCreate,
+      isWorkingStatusListLoading,
+      workingStatusList,
+      errorWorkingStatusList
     } = this.props;
 
     if (!prevProps.isWorkingStatusCreateLoading && isWorkingStatusCreateLoading) {
-      console.log('burda');
       this.setState({
-        loading: true
+        loadingCreate: true
       })
     }
     if (!prevProps.errorWorkingStatusCreate && errorWorkingStatusCreate) {
-      console.log('burda error');
       this.setState({
-        workingStatusError: true,
-        loading: false
+        createError: true,
+        loadingCreate: false
       })
     }
     if (prevProps.isWorkingStatusCreateLoading && !isWorkingStatusCreateLoading && workingStatusCreate) {
-      console.log('burda eklicem');
       if (!errorWorkingStatusCreate) {
         this.setState({
-          loading: false,
-          workingStatusError: false
+          loadingCreate: false,
+          createError: false
+        });
+      }
+    }
+    if (!prevProps.isWorkingStatusListLoading && isWorkingStatusListLoading) {
+      this.setState({
+        loadingList: true
+      })
+    }
+    if (!prevProps.errorWorkingStatusList && errorWorkingStatusList) {
+      this.setState({
+        listError: true,
+        loadingList: false
+      })
+    }
+    if (prevProps.isWorkingStatusListLoading && !isWorkingStatusListLoading && workingStatusList) {
+      if (!errorWorkingStatusList) {
+        this.setState({
+          listError: true,
+          loadingList: false
         });
       }
     }
@@ -105,7 +124,9 @@ class ModalComponent extends React.Component {
     const {
       selectedValue,
       loading,
-      workingStatusModel
+      workingStatusModel,
+      createError,
+      loadingList
     } = this.state;
 
     const {
@@ -137,6 +158,7 @@ class ModalComponent extends React.Component {
                 <Grid item xs={12} sm={12}></Grid>
                 <Grid item xs={10} sm={11}>
                   <Input
+                    error={createError}
                     onChange={this.handleChange}
                     labelName={modalInputName}
                     inputType="text"
@@ -155,7 +177,7 @@ class ModalComponent extends React.Component {
                     <CircularProgress
                       size={24}
                       disableShrink={true}
-                      className={classes.buttonProgress}
+                      className={classes.addProgress}
                     />
                   )}
                 </Grid>
@@ -166,30 +188,37 @@ class ModalComponent extends React.Component {
                 </Grid>
                 <Grid item xs={12} sm={9}></Grid>
                 <Grid item xs={12} sm={12}>
-                  <Paper
-                    className={classes.modalPaper}>
-                    {data.map((data, id) => {
-                      return (
-                        <List
-                          dense
-                          key={id}
-                          className={classes.contextDialog}>
-                          <FormGroup row>
-                            <FormControlLabel
-                              control={
-                                <Radio checked={selectedValue === data.name}
-                                  onClick={this.handleChangeValue}
-                                  value={data.name}
-                                  color='secondary'
-                                />
-                              }
-                              label={data.name}
-                            />
-                          </FormGroup>
-                        </List>
-                      );
-                    })}
-                  </Paper>
+                  {loadingList ?
+                    <CircularProgress
+                      size={30}
+                      disableShrink={true}
+                      className={classes.loadingProgress}
+                    /> :
+                    <Paper
+                      className={classes.modalPaper}>
+                      {data.map((data, id) => {
+                        return (
+                          <List
+                            dense
+                            key={id}
+                            className={classes.contextDialog}>
+                            <FormGroup row>
+                              <FormControlLabel
+                                control={
+                                  <Radio checked={selectedValue === data.name}
+                                    onClick={this.handleChangeValue}
+                                    value={data.name}
+                                    color='secondary'
+                                  />
+                                }
+                                label={data.name}
+                              />
+                            </FormGroup>
+                          </List>
+                        );
+                      })}
+                    </Paper>
+                  }
                 </Grid>
               </Grid>
             </DialogContent>
@@ -218,7 +247,7 @@ const mapStateToProps = state => {
     workingStatusList,
     errorWorkingStatusList
   } = state.workingStatusList;
-  
+
   return {
     isWorkingStatusCreateLoading,
     workingStatusCreate,

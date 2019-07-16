@@ -11,17 +11,25 @@ namespace Honoplay.Application.Trainers.Commands.UpdateTrainer
                 .NotNull();
 
             RuleFor(x => x.Name)
+                .NotNull()
                 .NotEmpty()
-                .NotNull();
+                .MaximumLength(50);
+
+            RuleFor(x => x.Surname)
+                .NotNull()
+                .NotEmpty()
+                .MaximumLength(50);
 
             RuleFor(x => x.Email)
-                .NotEmpty()
                 .NotNull()
-                .EmailAddress();
+                .NotEmpty()
+                .EmailAddress()
+                .MaximumLength(150);
 
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty()
-                .NotNull();
+                .NotNull()
+                .MaximumLength(20);
 
             RuleFor(x => x.DepartmentId)
                 .NotEmpty()

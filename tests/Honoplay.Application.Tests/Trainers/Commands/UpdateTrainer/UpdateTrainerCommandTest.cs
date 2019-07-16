@@ -1,15 +1,15 @@
-﻿using Honoplay.Common._Exceptions;
-using Honoplay.Application.Trainers.Commands.UpdateTrainer;
+﻿using Honoplay.Application.Trainers.Commands.UpdateTrainer;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
+using Honoplay.Persistence.CacheManager;
+using Microsoft.Extensions.Caching.Distributed;
+using Moq;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Persistence.CacheManager;
-using Microsoft.Extensions.Caching.Distributed;
-using Moq;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainers.Commands.UpdateTrainer
@@ -22,16 +22,17 @@ namespace Honoplay.Application.Tests.Trainers.Commands.UpdateTrainer
         private readonly int _departmentId;
         private readonly int _adminUserId;
         private readonly int _trainerId;
+        private readonly Guid _tenantId;
 
         public UpdateTrainerCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _professionId, out _departmentId, out _adminUserId, out _trainerId);
+            _context = InitAndGetDbContext(out _professionId, out _departmentId, out _adminUserId, out _trainerId, out _tenantId);
             _commandHandler = new UpdateTrainerCommandHandler(_context, new CacheManager(cache.Object));
         }
 
         //Arrange
-        private HonoplayDbContext InitAndGetDbContext(out int professionId, out int departmentId, out int adminUserId, out int trainerId)
+        private HonoplayDbContext InitAndGetDbContext(out int professionId, out int departmentId, out int adminUserId, out int trainerId, out Guid tenantId)
         {
             var context = GetDbContext();
 
@@ -72,7 +73,8 @@ namespace Honoplay.Application.Tests.Trainers.Commands.UpdateTrainer
             var profession = new Profession
             {
                 Name = "testProfession",
-                CreatedBy = adminUser.Id
+                CreatedBy = adminUser.Id,
+                TenantId = tenant.Id
             };
 
             context.Professions.Add(profession);
@@ -95,6 +97,7 @@ namespace Honoplay.Application.Tests.Trainers.Commands.UpdateTrainer
             departmentId = department.Id;
             adminUserId = adminUser.Id;
             trainerId = trainer.Id;
+            tenantId = tenant.Id;
             return context;
         }
 
@@ -110,7 +113,8 @@ namespace Honoplay.Application.Tests.Trainers.Commands.UpdateTrainer
                 Surname = "qwdqwdqasdwd",
                 PhoneNumber = "123123123123",
                 ProfessionId = _professionId,
-                Email = "test@test.com"
+                Email = "test@test.com",
+                TenantId = _tenantId
             };
 
             var trainerModel = await _commandHandler.Handle(updateTrainerCommand, CancellationToken.None);
@@ -131,7 +135,8 @@ namespace Honoplay.Application.Tests.Trainers.Commands.UpdateTrainer
                 Name = "testTrainer",
                 Surname = "qwdqwdqwd",
                 PhoneNumber = "123123123123",
-                ProfessionId = _professionId
+                ProfessionId = _professionId,
+                TenantId = _tenantId
             };
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>

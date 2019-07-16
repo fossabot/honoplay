@@ -15,11 +15,17 @@ export const Style = (theme) => ({
     paddingLeft: 20,
     paddingTop: 5
   },
-  buttonProgress: {
+  addProgress: {
     color: green[500],
     position: 'absolute',
     marginTop: -30,
     marginLeft: 18
+  },
+  loadingProgress: {
+    color: green[500],
+    position: 'absolute',
+    marginTop: -20,
+    marginLeft: 420
   },
 });
 

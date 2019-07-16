@@ -2,6 +2,8 @@ import React from "react";
 import { translate } from "@omegabigdata/terasu-api-proxy";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import {
   Paper,
   Checkbox,
@@ -12,7 +14,9 @@ import {
   MuiThemeProvider,
   TextField,
   Typography,
-  CircularProgress
+  CircularProgress,
+  InputAdornment,
+  IconButton
 } from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Style, theme } from "./Style";
@@ -66,6 +70,13 @@ class Login extends React.Component {
     });
   }
 
+  handleClickShowPassword = () => {
+    this.setState(
+      state => ({
+        showPassword: !state.showPassword
+      }));
+  };
+
   render() {
     const { classes, isTokenLoading } = this.props;
     const { email, password, error } = this.state;
@@ -81,10 +92,10 @@ class Login extends React.Component {
                 color="primary"
               />
             ) : (
-              <Avatar className={classes.avatar}>
-                <LockOutlinedIcon />
-              </Avatar>
-            )}
+                <Avatar className={classes.avatar}>
+                  <LockOutlinedIcon />
+                </Avatar>
+              )}
             <Typography variant="h5" className={classes.typography}>
               {translate("Login")}
             </Typography>
@@ -107,11 +118,22 @@ class Login extends React.Component {
                   className={classes.marginInput}
                   label={translate("Password")}
                   name="password"
-                  type="password"
+                  type={this.state.showPassword ? 'text' : 'password'}
                   id="password"
                   autoComplete="current-password"
                   onChange={this.handleChange}
                   value={password}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          onClick={this.handleClickShowPassword}
+                        >
+                          {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
                 />
               </FormControl>
               <FormControlLabel

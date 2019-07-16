@@ -83,6 +83,7 @@ class Trainee extends React.Component {
 
   componentDidMount() {
     this.props.fetchTraineeList(0, 50);
+    this.props.fetchWorkingStatusList(0,50);
   }
 
   handleChange = (e) => {

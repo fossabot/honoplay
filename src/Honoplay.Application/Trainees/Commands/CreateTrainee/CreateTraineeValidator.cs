@@ -7,16 +7,19 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
         public CreateTraineeValidator()
         {
             RuleFor(x => x.Name)
+                .NotNull()
                 .NotEmpty()
-                .NotNull();
+                .MaximumLength(50);
 
             RuleFor(x => x.Surname)
+                .NotNull()
                 .NotEmpty()
-                .NotNull();
+                .MaximumLength(50);
 
             RuleFor(x => x.PhoneNumber)
                 .NotEmpty()
-                .NotNull();
+                .NotNull()
+                .MaximumLength(20);
 
             RuleFor(x => x.DepartmentId)
                 .NotEmpty()
@@ -24,19 +27,17 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
 
             RuleFor(x => x.NationalIdentityNumber)
                 .NotEmpty()
-                .NotNull();
+                .NotNull()
+                .MaximumLength(30);
+
             RuleFor(x => x.WorkingStatusId)
                 .NotEmpty()
                 .NotNull();
 
             RuleFor(x => x.Gender)
-                .NotEmpty()
                 .NotNull()
                 .GreaterThan(-1)
                 .LessThan(2);
-
-            RuleFor(x => x.DepartmentId).NotEmpty().NotEmpty();
-            RuleFor(x => x.Name).MaximumLength(150).MinimumLength(1);
         }
     }
 }

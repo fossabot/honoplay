@@ -6,11 +6,14 @@ namespace Honoplay.Application.WorkingStatuses.Commands.UpdateWorkingStatus
     {
         public UpdateWorkingStatusValidator()
         {
-            RuleFor(x => x.Name).NotNull();
-            RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.Id)
+                .NotNull()
+                .NotEmpty();
 
-            RuleFor(x => x.Id).NotNull();
-            RuleFor(x => x.Id).NotEmpty();
+            RuleFor(x => x.Name)
+                .NotNull()
+                .NotEmpty();
+
         }
     }
 }

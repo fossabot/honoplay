@@ -17,19 +17,20 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
     public class UpdateWorkingStatusCommandTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
+        private readonly UpdateWorkingStatusCommandHandler _commandHandler;
         private readonly int _adminUserId;
         private readonly int _workingStatusId;
-        private readonly UpdateWorkingStatusCommandHandler _commandHandler;
+        private readonly Guid _tenantId;
 
         public UpdateWorkingStatusCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _adminUserId, out _workingStatusId);
+            _context = InitAndGetDbContext(out _adminUserId, out _workingStatusId, out _tenantId);
             _commandHandler = new UpdateWorkingStatusCommandHandler(_context, new CacheManager(cache.Object));
         }
 
 
-        public HonoplayDbContext InitAndGetDbContext(out int adminUserId, out int workingStatusId)
+        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out int workingStatusId, out Guid tenantId)
         {
             var context = GetDbContext();
 
@@ -72,6 +73,7 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
 
             adminUserId = adminUser.Id;
             workingStatusId = workingStatus.Id;
+            tenantId = tenant.Id;
 
             return context;
         }
@@ -82,9 +84,9 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
             var updateWorkingStatusCommand = new UpdateWorkingStatusCommand
             {
                 Id = _workingStatusId,
-                HostName = "localhost",
-                UpdatedBy = _adminUserId,
                 Name = "testWorkingStatusUpdate",
+                TenantId = _tenantId,
+                UpdatedBy = _adminUserId
             };
 
             var workingStatusModel = await _commandHandler.Handle(updateWorkingStatusCommand, CancellationToken.None);
@@ -100,9 +102,9 @@ namespace Honoplay.Application.Tests.WorkingStatuses.Commands.UpdateWorkingStatu
             var updateWorkingStatusCommand = new UpdateWorkingStatusCommand
             {
                 Id = _workingStatusId + 1,
-                HostName = "localhost",
-                UpdatedBy = _adminUserId,
                 Name = "testWorkingStatusUpdate",
+                TenantId = _tenantId,
+                UpdatedBy = _adminUserId
             };
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>

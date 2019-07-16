@@ -24,6 +24,7 @@ export const Style = (theme) => ({
     },
     buttonSuccess: {
       backgroundColor: green[500],
+      boxShadow: '0 .5rem 1rem rgba(0,128,0,1)',
       '&:hover': {
         backgroundColor: green[700],
       },
