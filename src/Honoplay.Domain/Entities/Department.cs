@@ -9,6 +9,7 @@ namespace Honoplay.Domain.Entities
         public Department()
         {
             Trainees = new HashSet<Trainee>();
+            Trainers = new HashSet<Trainer>();
         }
         public int Id { get; set; }
         public string Name { get; set; }

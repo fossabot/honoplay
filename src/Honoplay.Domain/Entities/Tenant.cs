@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using Newtonsoft.Json;
 
 namespace Honoplay.Domain.Entities
 {
@@ -14,6 +14,7 @@ namespace Honoplay.Domain.Entities
             TenantAdminUsers = new HashSet<TenantAdminUser>();
             Departments = new HashSet<Department>();
             WorkingStatuses = new HashSet<WorkingStatus>();
+            Questions = new HashSet<Question>();
         }
         public Guid Id { get; set; }
 
@@ -27,5 +28,6 @@ namespace Honoplay.Domain.Entities
         public virtual ICollection<Department> Departments { get; set; }
         public virtual ICollection<Profession> Professions { get; set; }
         public virtual ICollection<WorkingStatus> WorkingStatuses { get; set; }
+        public virtual ICollection<Question> Questions { get; set; }
     }
 }
