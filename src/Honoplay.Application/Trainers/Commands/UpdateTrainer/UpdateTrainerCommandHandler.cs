@@ -28,23 +28,22 @@ namespace Honoplay.Application.Trainers.Commands.UpdateTrainer
 
         public async Task<ResponseModel<UpdateTrainerModel>> Handle(UpdateTrainerCommand request, CancellationToken cancellationToken)
         {
-            var redisKey = $"TrainersWithDepartmentsByHostName{request.HostName}";
+            var redisKey = $"TrainersWithDepartmentsByTenantId{request.TenantId}";
+            var updateAt = DateTimeOffset.Now;
 
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
                     var trainers = await _context.Trainers.Include(x => x.Department)
-                        .Where(x => _context.TenantAdminUsers.Any(y =>
-                                         y.TenantId == x.Department.TenantId &&
-                                         y.AdminUserId == request.UpdatedBy))
+                        .Where(x => x.Department.TenantId == request.TenantId)
                         .ToListAsync(cancellationToken);
 
                     var trainer = trainers.FirstOrDefault(x => x.Id == request.Id);
 
                     if (trainer is null)
                     {
-                        throw new NotFoundException(nameof(Department), request.DepartmentId);
+                        throw new NotFoundException(nameof(trainer), request.Id);
                     }
 
                     trainer.Name = request.Name;
@@ -52,7 +51,7 @@ namespace Honoplay.Application.Trainers.Commands.UpdateTrainer
                     trainer.PhoneNumber = request.PhoneNumber;
                     trainer.Surname = request.Surname;
                     trainer.UpdatedBy = request.UpdatedBy;
-                    trainer.UpdatedAt = DateTimeOffset.Now;
+                    trainer.UpdatedAt = updateAt;
                     trainer.Email = request.Email;
                     trainer.ProfessionId = request.ProfessionId;
 
@@ -82,7 +81,7 @@ namespace Honoplay.Application.Trainers.Commands.UpdateTrainer
                 }
             }
 
-            var trainerModel = new UpdateTrainerModel(request.Id, request.Name, request.Surname, request.Email, request.PhoneNumber, request.DepartmentId, request.ProfessionId);
+            var trainerModel = new UpdateTrainerModel(request.Id, updateAt, request.Name, request.Surname, request.Email, request.PhoneNumber, request.DepartmentId, request.ProfessionId);
             return new ResponseModel<UpdateTrainerModel>(trainerModel);
         }
     }

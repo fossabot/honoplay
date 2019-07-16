@@ -26,6 +26,7 @@ namespace Honoplay.Domain.Entities
         [JsonIgnore]
         public virtual ICollection<TenantAdminUser> TenantAdminUsers { get; set; }
         public virtual ICollection<Department> Departments { get; set; }
+        public virtual ICollection<Profession> Professions { get; set; }
         public virtual ICollection<WorkingStatus> WorkingStatuses { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
     }

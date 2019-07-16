@@ -1,5 +1,4 @@
 ﻿using Honoplay.Application.Departments.Commands.CreateDepartment;
-using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;

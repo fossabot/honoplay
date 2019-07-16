@@ -94,8 +94,13 @@ class Department extends React.Component {
   }
 
   render() {
-    const { loading, departmentError, department } = this.state;
+    const {
+      loading,
+      departmentError,
+      department
+    } = this.state;
     const { classes } = this.props;
+
     return (
       <div className={classes.root}>
         <Grid container spacing={40}>

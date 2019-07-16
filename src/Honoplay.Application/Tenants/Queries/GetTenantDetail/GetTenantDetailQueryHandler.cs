@@ -1,12 +1,12 @@
-﻿using System.Linq;
+﻿using Honoplay.Application._Infrastructure;
+using Honoplay.Common._Exceptions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Common._Exceptions;
-using Honoplay.Application._Infrastructure;
 
 namespace Honoplay.Application.Tenants.Queries.GetTenantDetail
 {
@@ -34,8 +34,8 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantDetail
                 throw new NotFoundException(nameof(Tenant), request.Id);
             }
 
-            var model = TenantDetailModel.Create(tenant);
-            return new ResponseModel<TenantDetailModel>(model);
+            var tenantDetailModel = TenantDetailModel.Create(tenant);
+            return new ResponseModel<TenantDetailModel>(tenantDetailModel);
         }
     }
 }

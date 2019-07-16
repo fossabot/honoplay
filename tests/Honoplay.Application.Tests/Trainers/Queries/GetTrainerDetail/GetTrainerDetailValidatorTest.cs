@@ -1,5 +1,6 @@
 ﻿using FluentValidation.TestHelper;
 using Honoplay.Application.Trainers.Queries.GetTrainerDetail;
+using System;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
@@ -16,7 +17,7 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
         [Fact]
         public void ShouldBeValid()
         {
-            Assert.True(_validator.Validate(new GetTrainerDetailQuery(adminUserId: 1, id: 1, hostName: "localhost")).IsValid);
+            Assert.True(_validator.Validate(new GetTrainerDetailQuery(adminUserId: 1, id: 1, tenantId: Guid.NewGuid())).IsValid);
         }
 
         [Fact]

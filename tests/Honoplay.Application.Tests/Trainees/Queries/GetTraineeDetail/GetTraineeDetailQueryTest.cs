@@ -20,19 +20,19 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
         private readonly GetTraineeDetailQueryHandler _queryHandler;
         private readonly int _traineeId;
         private readonly int _adminUserId;
-        private readonly string _hostName = "localhost";
+        private readonly Guid _tenantId;
 
         public GetTraineeDetailQueryTest()
         {
             var distributedCacheMock = new Mock<IDistributedCache>();
 
-            _context = InitAndGetDbContext(out _adminUserId, out _traineeId);
+            _context = InitAndGetDbContext(out _adminUserId, out _traineeId, out _tenantId);
             _queryHandler = new GetTraineeDetailQueryHandler(_context, new CacheManager(distributedCacheMock.Object));
         }
 
 
         //Arrange
-        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out int traineeId)
+        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out int traineeId, out Guid tenantId)
         {
             var context = GetDbContext();
 
@@ -96,6 +96,7 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
 
             adminUserId = adminUser.Id;
             traineeId = trainee.Id;
+            tenantId = tenant.Id;
             return context;
         }
 
@@ -103,7 +104,7 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTraineeDetailQuery(_traineeId, _adminUserId, _hostName);
+            var query = new GetTraineeDetailQuery(_traineeId, _adminUserId, _tenantId);
 
             var model = await _queryHandler.Handle(query, CancellationToken.None);
 
@@ -112,16 +113,14 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
 
         }
 
-
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetTraineeDetailQuery(_traineeId + 1, _adminUserId, _hostName);
+            var query = new GetTraineeDetailQuery(_traineeId + 1, _adminUserId, _tenantId);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _queryHandler.Handle(query, CancellationToken.None));
         }
-
 
         public void Dispose()
         {

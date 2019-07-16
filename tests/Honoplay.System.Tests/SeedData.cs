@@ -71,7 +71,8 @@ namespace Honoplay.System.Tests
             var profession = new Profession
             {
                 Name = "Web",
-                CreatedBy = adminUser.Id
+                CreatedBy = adminUser.Id,
+                TenantId = tenantId
             };
             dbContext.Professions.Add(profession);
 

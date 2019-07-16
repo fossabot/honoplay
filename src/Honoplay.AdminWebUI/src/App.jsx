@@ -6,6 +6,7 @@ import Layout from "./components/Layout/LayoutComponent";
 import Questions from "./views/Questions/Questions";
 import TenantInformation from "./views/TenantInformation/TenantInformation";
 import Trainers from "./views/Trainers/Trainers";
+import UserManagement from "./views/UserManagement/UserManagement";
 
 import setToken from "@omegabigdata/honoplay-redux-helper/Src/actions/index";
 
@@ -25,6 +26,7 @@ class App extends Component {
         <Route path="/home/questions" component={Questions} />
         <Route path="/home/tenantinformation" component={TenantInformation} />
         <Route path="/home/trainers" component={Trainers}/>
+        <Route path="/home/usermanagement" component={UserManagement}/>
       </Layout>
     );
   }

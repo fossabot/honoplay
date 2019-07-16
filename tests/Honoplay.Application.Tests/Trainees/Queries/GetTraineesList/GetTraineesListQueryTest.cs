@@ -1,4 +1,5 @@
-﻿using Honoplay.Common._Exceptions;
+﻿using Honoplay.Application.Trainees.Queries.GetTraineesList;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -9,7 +10,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application.Trainees.Queries.GetTraineesList;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineesList
@@ -18,19 +18,19 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineesList
     {
         private readonly HonoplayDbContext _context;
         private readonly GetTraineesListQueryHandler _queryHandler;
-        private readonly string _hostName;
+        private readonly Guid _tenantId;
         private readonly int _adminUserId;
 
         public GetTraineesListQueryTest()
         {
             var distributedCacheMock = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _adminUserId, out _hostName);
+            _context = InitAndGetDbContext(out _adminUserId, out _tenantId);
             _queryHandler = new GetTraineesListQueryHandler(_context, new CacheManager(distributedCacheMock.Object));
         }
 
 
         //Arrange
-        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out string hostName)
+        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out Guid tenantId)
         {
             var context = GetDbContext();
 
@@ -93,7 +93,7 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineesList
             context.SaveChanges();
 
             adminUserId = adminUser.Id;
-            hostName = tenant.HostName;
+            tenantId = tenant.Id;
             return context;
         }
 
@@ -101,9 +101,9 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineesList
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTraineesListQuery(_adminUserId, _hostName, skip: 0, take: 11);
+            var traineesListQuery = new GetTraineesListQuery(adminUserId: _adminUserId, tenantId: _tenantId, skip: 0, take: 11);
 
-            var model = await _queryHandler.Handle(query, CancellationToken.None);
+            var model = await _queryHandler.Handle(traineesListQuery, CancellationToken.None);
 
             Assert.Null(model.Errors);
             Assert.Equal(expected: _context.Trainees.FirstOrDefault()?.Name, actual: model.Items.Single().Name, ignoreCase: true);
@@ -114,10 +114,10 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineesList
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetTraineesListQuery(_adminUserId, _hostName, skip: 0, take: 0);
+            var traineesListQuery = new GetTraineesListQuery(adminUserId: _adminUserId, tenantId: _tenantId, skip: 0, take: 0);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
-                await _queryHandler.Handle(query, CancellationToken.None));
+                await _queryHandler.Handle(traineesListQuery, CancellationToken.None));
         }
 
 

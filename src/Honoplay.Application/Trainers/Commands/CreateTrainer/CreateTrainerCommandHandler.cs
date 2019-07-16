@@ -27,34 +27,31 @@ namespace Honoplay.Application.Trainers.Commands.CreateTrainer
 
         public async Task<ResponseModel<CreateTrainerModel>> Handle(CreateTrainerCommand request, CancellationToken cancellationToken)
         {
-            var redisKey = $"TrainersWithDepartmentsByHostName{request.HostName}";
+            var redisKey = $"TrainersWithDepartmentsByTenantId{request.TenantId}";
+            var trainer = new Trainer
+            {
+                Name = request.Name,
+                CreatedBy = request.CreatedBy,
+                DepartmentId = request.DepartmentId,
+                Email = request.Email,
+                PhoneNumber = request.PhoneNumber,
+                ProfessionId = request.ProfessionId,
+                Surname = request.Surname,
+            };
 
-            using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
+            using (IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
                 try
                 {
-                    var isExist = await _context.Departments.AnyAsync(x =>
-                            x.Id == request.DepartmentId &&
-                            _context.TenantAdminUsers.Any(y =>
-                                    y.AdminUserId == request.CreatedBy &&
-                                    y.TenantId == x.TenantId)
-                        , cancellationToken);
+                    var isExistAnyDepartment = await _context.Departments.AnyAsync(x =>
+                            x.TenantId == request.TenantId
+                            && x.Id == request.DepartmentId,
+                        cancellationToken);
 
-                    if (!isExist)
+                    if (!isExistAnyDepartment)
                     {
                         throw new NotFoundException(nameof(Department), request.DepartmentId);
                     }
-
-                    var trainer = new Trainer
-                    {
-                        Name = request.Name,
-                        CreatedBy = request.CreatedBy,
-                        DepartmentId = request.DepartmentId,
-                        Email = request.Email,
-                        PhoneNumber = request.PhoneNumber,
-                        ProfessionId = request.ProfessionId,
-                        Surname = request.Surname,
-                    };
 
                     await _context.AddAsync(trainer, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
@@ -62,9 +59,7 @@ namespace Honoplay.Application.Trainers.Commands.CreateTrainer
                     await _cacheService.RedisCacheUpdateAsync(redisKey, delegate
                     {
                         return _context.Trainers.Include(x => x.Department)
-                            .Where(x => _context.TenantAdminUsers.Any(y =>
-                                y.TenantId == x.Department.TenantId &&
-                                y.AdminUserId == request.CreatedBy))
+                            .Where(x => x.Department.TenantId == request.TenantId)
                             .ToList();
                     }, cancellationToken);
 
@@ -88,12 +83,14 @@ namespace Honoplay.Application.Trainers.Commands.CreateTrainer
                 }
 
                 var trainerModel = new CreateTrainerModel(
-                    request.Name,
-                    request.Surname,
-                    request.Email,
-                    request.PhoneNumber,
-                    request.DepartmentId,
-                    request.ProfessionId);
+                    trainer.Id,
+                    trainer.CreatedAt,
+                    trainer.Name,
+                    trainer.Surname,
+                    trainer.Email,
+                    trainer.PhoneNumber,
+                    trainer.DepartmentId,
+                    trainer.ProfessionId);
 
                 return new ResponseModel<CreateTrainerModel>(trainerModel);
             }
