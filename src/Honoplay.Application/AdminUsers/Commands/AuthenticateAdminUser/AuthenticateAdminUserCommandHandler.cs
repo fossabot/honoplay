@@ -60,9 +60,18 @@ namespace Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser
                 throw new Exception();
             }
 
-            var tenantId = _context.TenantAdminUsers
-                .Include(x => x.Tenant)
-                .First(x => x.AdminUserId == adminUser.Id && x.Tenant.HostName == request.HostName).TenantId;
+            Guid tenantId;
+            try
+            {
+                tenantId = _context.TenantAdminUsers
+                    .Include(x => x.Tenant)
+                    .First(x => x.AdminUserId == adminUser.Id && x.Tenant.HostName == request.HostName).TenantId;
+            }
+            catch (Exception)
+            {
+                throw new UnauthorizedAccessException();
+            }
+
 
             return new AdminUserAuthenticateModel(id: adminUser.Id,
                                            email: adminUser.Email,
