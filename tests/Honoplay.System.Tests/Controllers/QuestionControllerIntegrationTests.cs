@@ -1,12 +1,15 @@
 ﻿using Honoplay.AdminWebAPI;
+using Honoplay.Application.Questions.Commands.CreateQuestion;
+using Honoplay.Application.Questions.Commands.UpdateQuestion;
+using Honoplay.Application.Questions.Queries.GetQuestionsList;
 using Honoplay.Common.Constants;
 using Honoplay.System.Tests.Extensions;
 using Newtonsoft.Json;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Honoplay.Application.Questions.Commands.CreateQuestion;
 using Xunit;
 
 namespace Honoplay.System.Tests.Controllers
@@ -80,6 +83,8 @@ namespace Honoplay.System.Tests.Controllers
 
             var getQuestionsListQuery = new GetQuestionsListQuery
             {
+                CreatedBy = 1,
+                TenantId = Guid.Parse("f3878709-3cba-4ed3-4c03-08d70375909d"),
                 Skip = 0,
                 Take = 10
             };
