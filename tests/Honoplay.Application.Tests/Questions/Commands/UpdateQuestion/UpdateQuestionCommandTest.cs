@@ -1,4 +1,5 @@
-﻿using Honoplay.Common.Extensions;
+﻿using Honoplay.Application.Questions.Commands.UpdateQuestion;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
@@ -80,7 +81,7 @@ namespace Honoplay.Application.Tests.Questions.Commands.UpdateQuestion
             {
                 Id = _questionId,
                 TenantId = _tenantId,
-                CreatedBy = _adminUserId,
+                UpdatedBy = _adminUserId,
                 Text = "Asagidakilerden hangisi asagidadir?",
                 Duration = 3
             };
@@ -88,7 +89,6 @@ namespace Honoplay.Application.Tests.Questions.Commands.UpdateQuestion
             var questionModel = await _updateQuestionCommandHandler.Handle(updateQuestion, CancellationToken.None);
 
             Assert.Null(questionModel.Errors);
-            Assert.NotNull(questionModel.Items.Single().CreateQuestionModel);
         }
 
         public void Dispose() => _context?.Dispose();
