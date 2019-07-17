@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Honoplay.Application.Questions.Commands.CreateQuestion;
 using Xunit;
 
 namespace Honoplay.System.Tests.Controllers
