@@ -1,6 +1,6 @@
 ﻿using Xunit;
 
-namespace Honoplay.Application.Tests.Questions.Commands
+namespace Honoplay.Application.Tests.Questions.Commands.CreateQuestion
 {
     public class CreateQuestionValidatorTest
     {
