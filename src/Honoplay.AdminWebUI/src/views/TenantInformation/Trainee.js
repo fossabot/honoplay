@@ -10,6 +10,8 @@ import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
 import Table from '../../components/Table/TableComponent';
 
+import TraineesUpdate from './TraineesUpdate';
+
 import { connect } from "react-redux";
 import { fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Trainee";
 import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Department";
@@ -184,7 +186,9 @@ class Trainee extends React.Component {
               <Table
                 columns={traineeColumns}
                 data={traineeList}
-              />
+              >
+                <TraineesUpdate/>
+              </Table>
             </div>
           </Grid>
         </Grid>
