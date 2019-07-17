@@ -1,40 +1,56 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
+import Edit from '@material-ui/icons/Edit';
 import {
-  Table, TableBody, TableCell,
-  TablePagination, TableRow, Paper,
-  Checkbox, MuiThemeProvider
+  Table,
+  TableBody,
+  TableCell,
+  TablePagination,
+  TableRow,
+  Paper,
+  Checkbox,
+  MuiThemeProvider,
+  IconButton,
 } from '@material-ui/core';
-
-import TableMenu from './TableMenu';
-import EnhancedTableHead from './EnhancedTableHead';
-import EnhancedTableToolbar from './EnhancedTableToolbar';
-
 import { Style, theme } from './Style';
 
+import EnhancedTableHead from './EnhancedTableHead';
+import EnhancedTableToolbar from './EnhancedTableToolbar';
+import Modal from '../Modal/Modal';
 
 class TableComponent extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
+      openDialog: false,
       selected: [],
       page: 0,
       rowsPerPage: 5,
     };
-    this.handleChangePage = this.handleChangePage.bind(this);
-    this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
   }
 
-  handleSelectAllClick(event) {
-    // if (event.target.checked) {
-    //   this.setState(state => ({ selected: state.data.map(n => n.id) }));
-    //   return;
-    // }
-    // this.setState({ selected: [] });
+  handleClickOpenDialog = () => {
+    this.setState({ openDialog: true });
   };
 
-  handleClick(id) {
+  handleCloseDialog = () => {
+    this.setState({ openDialog: false });
+  };
+
+  handleSelectAllClick = (event) => {
+    const { data } = this.props;
+    if (event.target.checked) {
+      this.setState({
+        selected: data.map(n => n.id)
+      })
+      return;
+    }
+    this.setState({ selected: [] });
+  };
+
+  handleClick = (id) => {
     const { selected } = this.state;
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
@@ -51,46 +67,76 @@ class TableComponent extends React.Component {
         selected.slice(selectedIndex + 1),
       );
     }
-
     this.setState({ selected: newSelected });
   };
 
-  handleChangePage(event, page) {
+  handleChangePage = (event, page) => {
     this.setState({ page });
   };
 
-  handleChangeRowsPerPage(event) {
-    this.setState({ page: 0, rowsPerPage: event.target.value });
+  handleChangeRowsPerPage = (event) => {
+    const { data } = this.props;
+    if (data.length > 0) {
+      this.setState({
+        page: 0,
+        rowsPerPage: event.target.value
+      });
+    }
   };
 
-  isSelected(id) { return this.state.selected.indexOf(id) !== -1; }
+  isSelected = (id) => {
+    const { selected } = this.state;
+    return selected.indexOf(id) !== -1;
+  }
 
-  handleDelete(index) {
-    // const id = this.state.data.map(row => row.id);
-    // const data = [...this.state.data];
-    // index.map(k => {
-    //   let n = id.indexOf(k);
-    //   id.splice(n, 1);
-    //   data.splice(n, 1);
-    // });
-    // this.setState({ data });
-    // this.setState({ selected: [] });
+  handleDelete = (index) => {
+    const { data } = this.props;
+    const id = data.map(row => row.id);
+    const tableData = [...data];
+    index.map(k => {
+      let n = id.indexOf(k);
+      id.splice(n, 1);
+      data.splice(n, 1);
+    });
+    this.setState({ tableData });
+    this.setState({ selected: [] });
   };
 
   render() {
-    const { classes, data, columns } = this.props;
-    const { selected, rowsPerPage, page } = this.state;
+    const {
+      classes,
+      data,
+      columns,
+      children
+    } = this.props;
+    const {
+      selected,
+      rowsPerPage,
+      page,
+      openDialog
+    } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     return (
+
       <MuiThemeProvider theme={theme} >
-        <Paper classes={{ root: classes.tableRoot, typography: classes.typography }}>
-          <EnhancedTableToolbar numSelected={selected.length}
-            handleDelete={this.handleDelete.bind(this, selected)} />
-          <div className={classes.tableWrapper}>
-            <Table className={classes.table} aria-labelledby="tableTitle">
+        <Paper
+          classes={{
+            root: classes.tableRoot,
+            typography: classes.typography
+          }}>
+          <EnhancedTableToolbar
+            numSelected={selected.length}
+            handleDelete={() => this.handleDelete(selected)}
+          />
+          <div
+            className={classes.tableWrapper}>
+            <Table
+              className={classes.table}
+              size="small"
+            >
               <EnhancedTableHead
                 numSelected={selected.length}
-                onSelectAllClick={this.handleSelectAllClick.bind(this)}
+                onSelectAllClick={this.handleSelectAllClick}
                 rowCount={data.length}
                 columns={columns}
               />
@@ -100,38 +146,51 @@ class TableComponent extends React.Component {
                   .map((data, id) => {
                     const isSelected = this.isSelected(data.id);
                     return (
+
                       <TableRow
                         hover
-                        onChange={this.handleClick.bind(this, (data.id))}
+                        onClick={() => this.handleClick(data.id)}
                         role="checkbox"
                         aria-checked={isSelected}
                         tabIndex={-1}
                         selected={isSelected}
                         key={id}
-                        id={'container-desk'}
                       >
-                        <TableCell padding="checkbox"
+                        <TableCell
+                          padding="checkbox"
                           className={classes.tableCell}>
-                          <Checkbox checked={isSelected}
+                          <Checkbox
+                            checked={isSelected}
                             color='secondary'
                           />
                         </TableCell>
                         {columns.map((column, id) =>
-
-                          <TableCell className={classes.tableCell} key={id}>{data[column.field]}</TableCell>
+                          <TableCell
+                            className={classes.tableCell}
+                            key={id}>{data[column.field]}
+                          </TableCell>
                         )}
                         {selected.includes(data.id) ?
-                          <TableCell className={classes.tableCell}>
-                            <TableMenu handleDelete={this.handleDelete.bind(this, selected)} />
+                          <TableCell
+                            className={classes.tableCell}>
+                            <IconButton onClick={this.handleClickOpenDialog}>
+                              <Edit />
+                            </IconButton>
                           </TableCell> :
                           <TableCell />
                         }
                       </TableRow>
                     );
-                  })}
+                  })
+                }
                 {emptyRows > 0 && (
-                  <TableRow style={{ height: 49 * emptyRows }}>
-                    <TableCell colSpan={6} className={classes.tableCell} />
+                  <TableRow
+                    style={{ height: 35 * emptyRows }}>
+                    <TableCell colSpan={6} align="center"
+                      className={classes.text}
+                    >
+                      {data.length === 0 && translate('NoRecordsToDisplay')}
+                    </TableCell>
                   </TableRow>
                 )}
               </TableBody>
@@ -145,16 +204,16 @@ class TableComponent extends React.Component {
             count={data.length}
             rowsPerPage={rowsPerPage}
             page={page}
-            backIconButtonProps={{
-              'aria-label': 'Previous Page',
-            }}
-            nextIconButtonProps={{
-              'aria-label': 'Next Page',
-            }}
             onChangePage={this.handleChangePage}
             onChangeRowsPerPage={this.handleChangeRowsPerPage}
           />
         </Paper>
+        <Modal
+          open={openDialog}
+          handleClose={this.handleCloseDialog}
+        >
+          {children}
+        </Modal>
       </MuiThemeProvider>
     );
   }

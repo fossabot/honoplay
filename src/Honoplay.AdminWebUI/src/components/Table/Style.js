@@ -37,6 +37,9 @@ export const Style = (theme) => ({
   tablecellText: {
     color:'#673ab7',
     fontSize: 15
+  },
+  text: {
+    color: '#757575'
   }
 });
 

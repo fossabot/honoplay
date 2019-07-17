@@ -12,7 +12,11 @@ class Questions extends React.Component {
 constructor(props) {
     super(props);
     this.state= {
-        questionsColumns: ['Sorular', 'Soru Tipi', 'Kategori', ' '],
+        questionsColumns:  [
+          { title: "Sorular", field: "Sorular" },
+          { title: "Soru Tipi", field: "Soru Tipi" },
+          { title: "Kategori", field: "Kategori" },
+        ],
         questionsData: [{  'id': 0,
                          'Sorular':'2025 Arenadaki en iyi tasarımcı kimdir?',
                          'Soru Tipi': 'Görselli',
