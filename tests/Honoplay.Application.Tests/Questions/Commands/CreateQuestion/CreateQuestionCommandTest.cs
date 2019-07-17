@@ -1,34 +1,29 @@
-﻿using Honoplay.Application.Departments.Commands.CreateDepartment;
-using Honoplay.Common.Extensions;
+﻿using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Departments.Commands.CreateDepartment
+namespace Honoplay.Application.Tests.Questions.Commands.CreateQuestion
 {
-    public class CreateDepartmentCommandTest : TestBase, IDisposable
+    public class CreateQuestionCommandTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly CreateDepartmentCommandHandler _commandHandler;
+        private readonly CreateQuestionCommandHandler _createQuestionCommandHandler;
         private readonly Guid _tenantId;
         private readonly int _adminUserId;
 
-        public CreateDepartmentCommandTest()
+        public CreateQuestionCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
-
             _context = InitAndGetDbContext(out _tenantId, out _adminUserId);
-            _commandHandler = new CreateDepartmentCommandHandler(_context, new CacheManager(cache.Object));
+            _createQuestionCommandHandler = new CreateQuestionCommandHandler(_context, new CacheManager(cache.Object));
         }
-
         private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId)
         {
             var context = GetDbContext();
@@ -70,27 +65,20 @@ namespace Honoplay.Application.Tests.Departments.Commands.CreateDepartment
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var command = new CreateDepartmentCommand
+            var createQuestionCommand = new CreateQuestionCommand
             {
-                AdminUserId = _adminUserId,
                 TenantId = _tenantId,
-                Departments = new List<string>
-                {
-                    "a",
-                    "b"
-                }
+                CreatedBy = _adminUserId,
+                Text = "Asagidakilerden hangisi asagidadir?",
+                Duration = 3
             };
 
-            var departmentModel = await _commandHandler.Handle(command, CancellationToken.None);
+            var questionModel = await _createQuestionCommandHandler.Handle(createQuestionCommand, CancellationToken.None);
 
-            Assert.Null(departmentModel.Errors);
-
-            Assert.True(departmentModel.Items.Single().Departments.Count > 0);
+            Assert.Null(questionModel.Errors);
+            Assert.NotNull(questionModel.Items.Single().CreateQuestionModel);
         }
 
-        public void Dispose()
-        {
-            _context?.Dispose();
-        }
+        public void Dispose() => _context?.Dispose();
     }
 }
