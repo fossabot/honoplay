@@ -1,5 +1,4 @@
-﻿using Honoplay.Application.Trainers.Queries.GetTrainerDetail;
-using Honoplay.Common._Exceptions;
+﻿using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -12,25 +11,25 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
+namespace Honoplay.Application.Tests.Questions.Queries.GetQuestionDetail
 {
-    public class GetTrainerDetailQueryTest : TestBase, IDisposable
+    public class GetQuestionDetailQueryTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly GetTrainerDetailQueryHandler _queryHandler;
-        private readonly int _trainerId;
+        private readonly GetQuestionDetailQueryHandler _queryHandler;
+        private readonly int _questionId;
         private readonly int _adminUserId;
         private readonly Guid _tenantId;
 
-        public GetTrainerDetailQueryTest()
+        public GetQuestionDetailQueryTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _adminUserId, out _trainerId, out _tenantId);
-            _queryHandler = new GetTrainerDetailQueryHandler(_context, new CacheManager(cache.Object));
+            _context = InitAndGetDbContext(out _adminUserId, out _questionId, out _tenantId);
+            _queryHandler = new GetQuestionDetailQueryHandler(_context, new CacheManager(cache.Object));
         }
 
         //Arrange
-        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out int trainerId, out Guid tenantId)
+        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out int questionId, out Guid tenantId)
         {
             var context = GetDbContext();
 
@@ -59,39 +58,19 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
                 CreatedBy = adminUser.Id
             });
 
-            var department = new Department
+            var question = new Question
             {
+                TenantId = tenant.Id,
+                Duration = 10,
+                Text = "adqwd",
                 CreatedBy = adminUser.Id,
-                Name = "testDepartment",
-                TenantId = tenant.Id
             };
-
-            context.Departments.Add(department);
-            var profession = new Profession
-            {
-                Name = "testProfession",
-                CreatedBy = adminUser.Id,
-                TenantId = tenant.Id
-            };
-
-            context.Professions.Add(profession);
-
-            var trainer = new Trainer
-            {
-                Name = "testName",
-                DepartmentId = department.Id,
-                Surname = "testSurname",
-                PhoneNumber = "testNumber11111",
-                CreatedBy = adminUser.Id,
-                Email = "test@test.com",
-                ProfessionId = profession.Id
-            };
-            context.Trainers.Add(trainer);
+            context.Questions.Add(question);
 
             context.SaveChanges();
 
             adminUserId = adminUser.Id;
-            trainerId = trainer.Id;
+            questionId = question.Id;
             tenantId = tenant.Id;
             return context;
         }
@@ -99,19 +78,19 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTrainerDetailQuery(_adminUserId, _trainerId, _tenantId);
+            var query = new GetQuestionDetailQuery(_adminUserId, _questionId, _tenantId);
 
             var model = await _queryHandler.Handle(query, CancellationToken.None);
 
             Assert.Null(model.Errors);
-            Assert.Equal(expected: _context.Trainers.FirstOrDefault()?.Name, actual: model.Items.Single().Name, ignoreCase: true);
+            Assert.Equal(expected: _context.Questions.FirstOrDefault()?.Text, actual: model.Items.Single().Name, ignoreCase: true);
 
         }
 
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetTrainerDetailQuery(_adminUserId, _trainerId + 1, _tenantId);
+            var query = new GetQuestionDetailQuery(_adminUserId, _questionId + 1, _tenantId);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _queryHandler.Handle(query, CancellationToken.None));
