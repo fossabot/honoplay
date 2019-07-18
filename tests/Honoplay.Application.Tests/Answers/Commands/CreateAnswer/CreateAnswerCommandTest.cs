@@ -78,6 +78,8 @@ namespace Honoplay.Application.Tests.Answers.Commands.CreateAnswer
         {
             var createAnswer = new CreateAnswerCommand
             {
+                TenantId = _tenantId,
+                CreatedBy = _adminUserId,
                 QuestionId = _questionId,
                 Text = "answer1",
                 OrderBy = 1
