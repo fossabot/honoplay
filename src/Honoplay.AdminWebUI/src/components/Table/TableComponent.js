@@ -33,6 +33,7 @@ class TableComponent extends React.Component {
 
   handleClickOpenDialog = () => {
     this.setState({ openDialog: true });
+
   };
 
   handleCloseDialog = () => {
@@ -101,6 +102,7 @@ class TableComponent extends React.Component {
     this.setState({ tableData });
     this.setState({ selected: [] });
   };
+  dataId = null;
 
   render() {
     const {
@@ -113,7 +115,7 @@ class TableComponent extends React.Component {
       selected,
       rowsPerPage,
       page,
-      openDialog
+      openDialog,
     } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     return (
@@ -172,6 +174,7 @@ class TableComponent extends React.Component {
                         )}
                         {selected.includes(data.id) ?
                           <TableCell
+                            onClick={() => localStorage.setItem("dataid", data.id)}
                             className={classes.tableCell}>
                             <IconButton onClick={this.handleClickOpenDialog}>
                               <Edit />
