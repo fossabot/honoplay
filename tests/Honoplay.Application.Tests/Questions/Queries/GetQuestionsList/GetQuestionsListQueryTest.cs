@@ -1,4 +1,5 @@
-﻿using Honoplay.Common.Extensions;
+﻿using Honoplay.Application.Questions.Queries.GetQuestionsList;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
@@ -73,7 +74,7 @@ namespace Honoplay.Application.Tests.Questions.Queries.GetQuestionsList
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var questionsListQuery = new GetQuestionsListQuery(tenantId: _tenantId, skip: 0, take: 10);
+            var questionsListQuery = new GetQuestionsListQuery(createdBy: _adminUserId, tenantId: _tenantId, skip: 0, take: 10);
 
             var questionModel = await _queryHandler.Handle(questionsListQuery, CancellationToken.None);
 
@@ -83,16 +84,13 @@ namespace Honoplay.Application.Tests.Questions.Queries.GetQuestionsList
         [Fact]
         public async Task ShouldItemsCount1WhenTake1()
         {
-            var questionsListQuery = new GetQuestionsListQuery(tenantId: _tenantId, skip: 0, take: 1);
+            var questionsListQuery = new GetQuestionsListQuery(createdBy: _adminUserId, tenantId: _tenantId, skip: 0, take: 1);
 
             var questionModel = await _queryHandler.Handle(questionsListQuery, CancellationToken.None);
 
             Assert.Single(questionModel.Items);
         }
 
-        public void Dispose()
-        {
-            _context?.Dispose();
-        }
+        public void Dispose() => _context?.Dispose();
     }
 }

@@ -5,8 +5,10 @@ using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Questions.Commands.CreateQuestion;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Questions.Commands.CreateQuestion
@@ -76,7 +78,6 @@ namespace Honoplay.Application.Tests.Questions.Commands.CreateQuestion
             var questionModel = await _createQuestionCommandHandler.Handle(createQuestionCommand, CancellationToken.None);
 
             Assert.Null(questionModel.Errors);
-            Assert.NotNull(questionModel.Items.Single().CreateQuestionModel);
         }
 
         public void Dispose() => _context?.Dispose();

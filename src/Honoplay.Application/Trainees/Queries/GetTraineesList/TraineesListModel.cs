@@ -14,9 +14,10 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineesList
         public int Gender { get; set; }
         public int CreatedBy { get; set; }
         public DateTimeOffset CreatedAt { get; set; }
-
         public int? UpdatedBy { get; set; }
         public DateTimeOffset? UpdatedAt { get; set; }
+        public int WorkingStatusId { get; set; }
+        public int DepartmentId { get; set; }
 
         public static Expression<Func<Trainee, TraineesListModel>> Projection => trainee => new TraineesListModel
         {
@@ -29,7 +30,9 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineesList
             UpdatedBy = trainee.UpdatedBy,
             UpdatedAt = trainee.UpdatedAt,
             CreatedAt = trainee.CreatedAt,
-            CreatedBy = trainee.CreatedBy
+            CreatedBy = trainee.CreatedBy,
+            WorkingStatusId = trainee.WorkingStatusId,
+            DepartmentId = trainee.DepartmentId
         };
 
         public static TraineesListModel Create(Trainee trainee)
