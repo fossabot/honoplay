@@ -9,7 +9,7 @@ namespace Honoplay.Application.Tests.Answers.Commands.UpdateAnswer
 
         public UpdateAnswerValidatorTest()
         {
-            _updateAnswerValidator = new UpdateAnswerValidator;
+            _updateAnswerValidator = new UpdateAnswerValidator();
         }
 
         [Fact]
@@ -18,7 +18,7 @@ namespace Honoplay.Application.Tests.Answers.Commands.UpdateAnswer
             Assert.True(_updateAnswerValidator.Validate(
                 new UpdateAnswerCommand
                 {
-                    QuestionId = _questionId,
+                    QuestionId = 1,
                     Text = "answer1",
                     OrderBy = 1,
                     Id = 1

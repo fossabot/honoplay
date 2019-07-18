@@ -100,7 +100,6 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
             return context;
         }
 
-
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
@@ -122,9 +121,6 @@ namespace Honoplay.Application.Tests.Trainees.Queries.GetTraineeDetail
                 await _queryHandler.Handle(query, CancellationToken.None));
         }
 
-        public void Dispose()
-        {
-            _context?.Dispose();
-        }
+        public void Dispose() => _context?.Dispose();
     }
 }

@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
 {
-    public class GetTrainerDetailValidatorTest : TestBase
+    public class GetTrainerDetailValidatorTest
     {
         private readonly GetTrainerDetailValidator _validator;
 

@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Honoplay.Application.Tests.Departments.Queries.GetDepartmentsList
 {
-    public class GetDepartmentsListValidatorTest : TestBase
+    public class GetDepartmentsListValidatorTest
     {
         private readonly GetDepartmentsListValidator _validator;
 

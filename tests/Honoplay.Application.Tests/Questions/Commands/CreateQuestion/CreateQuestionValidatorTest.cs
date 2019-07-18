@@ -1,5 +1,4 @@
-﻿using System;
-using FluentValidation.TestHelper;
+﻿using FluentValidation.TestHelper;
 using Honoplay.Application.Questions.Commands.CreateQuestion;
 using Xunit;
 
