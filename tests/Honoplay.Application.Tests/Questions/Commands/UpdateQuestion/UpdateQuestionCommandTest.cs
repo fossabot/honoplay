@@ -16,24 +16,25 @@ namespace Honoplay.Application.Tests.Questions.Commands.UpdateQuestion
     {
         private readonly HonoplayDbContext _context;
         private readonly UpdateQuestionCommandHandler _updateQuestionCommandHandler;
-        private readonly Guid _tenantId;
-        private readonly int _adminUserId;
         private readonly int _questionId;
+        private readonly int _adminUserId;
+        private readonly Guid _tenantId;
 
         public UpdateQuestionCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _questionId);
+            _context = InitAndGetDbContext(out _adminUserId, out _questionId, out _tenantId);
             _updateQuestionCommandHandler = new UpdateQuestionCommandHandler(_context, new CacheManager(cache.Object));
         }
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int questionId)
+
+        //Arrange
+        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out int questionId, out Guid tenantId)
         {
             var context = GetDbContext();
 
             var salt = ByteArrayExtensions.GetRandomSalt();
             var adminUser = new AdminUser
             {
-                Id = 1,
                 Email = "TestAdminUser01@omegabigdata.com",
                 Password = "Passw0rd".GetSHA512(salt),
                 PasswordSalt = salt,
@@ -59,18 +60,17 @@ namespace Honoplay.Application.Tests.Questions.Commands.UpdateQuestion
             var question = new Question
             {
                 TenantId = tenant.Id,
+                Duration = 10,
+                Text = "adqwd",
                 CreatedBy = adminUser.Id,
-                Text = "asdasd",
-                Duration = 3
             };
-            _context.Questions.Add(question);
+            context.Questions.Add(question);
 
             context.SaveChanges();
 
             adminUserId = adminUser.Id;
-            tenantId = tenant.Id;
             questionId = question.Id;
-
+            tenantId = tenant.Id;
             return context;
         }
 

@@ -1,4 +1,5 @@
-﻿using Honoplay.Common._Exceptions;
+﻿using Honoplay.Application.Questions.Queries.GetQuestionDetail;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -78,19 +79,19 @@ namespace Honoplay.Application.Tests.Questions.Queries.GetQuestionDetail
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetQuestionDetailQuery(_adminUserId, _questionId, _tenantId);
+            var query = new GetQuestionDetailQuery(_questionId, _adminUserId, _tenantId);
 
             var model = await _queryHandler.Handle(query, CancellationToken.None);
 
             Assert.Null(model.Errors);
-            Assert.Equal(expected: _context.Questions.FirstOrDefault()?.Text, actual: model.Items.Single().Name, ignoreCase: true);
+            Assert.Equal(expected: _context.Questions.FirstOrDefault()?.Text, actual: model.Items.Single().Text, ignoreCase: true);
 
         }
 
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetQuestionDetailQuery(_adminUserId, _questionId + 1, _tenantId);
+            var query = new GetQuestionDetailQuery(123 + _questionId, _adminUserId, _tenantId);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _queryHandler.Handle(query, CancellationToken.None));
