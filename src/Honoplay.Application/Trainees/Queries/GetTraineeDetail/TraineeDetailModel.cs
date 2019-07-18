@@ -16,6 +16,8 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
         public string NationalIdentityNumber { get; set; }
         public string PhoneNumber { get; set; }
         public int Gender { get; set; }
+        public int WorkingStatusId { get; set; }
+        public int DepartmentId { get; set; }
 
         private static Expression<Func<Trainee, TraineeDetailModel>> Projection
         {
@@ -33,6 +35,8 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
                     NationalIdentityNumber = trainee.NationalIdentityNumber,
                     Surname = trainee.Surname,
                     Name = trainee.Name,
+                    WorkingStatusId = trainee.WorkingStatusId,
+                    DepartmentId = trainee.DepartmentId
                 };
             }
         }
