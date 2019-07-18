@@ -28,8 +28,7 @@ const EnhancedTableToolbar = props => {
             <Typography 
               variant="subtitle1" 
               className={classes.typography}>
-              {numSelected} 
-              {translate('Selected')}
+              {numSelected} {translate('Selected')}
             </Typography>
           )}
         </div>
