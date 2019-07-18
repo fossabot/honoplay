@@ -1,5 +1,4 @@
-﻿using Honoplay.Application.Professions.Queries.GetProfessionsList;
-using Honoplay.Common.Extensions;
+﻿using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
@@ -10,21 +9,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Professions.Queries.GetProfessionsList
+namespace Honoplay.Application.Tests.Answers.Queries.GetAnswersList
 {
-    public class GetProfessionsListQueryTest : TestBase, IDisposable
+    public class GetAnswersListQueryTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly GetProfessionsListQueryHandler _queryHandler;
+        private readonly GetAnswersListQueryHandler _getAnswersListQueryHandler;
+        private readonly int _adminUserId;
+        private readonly int _answerId;
         private readonly Guid _tenantId;
 
-        public GetProfessionsListQueryTest()
+        public GetAnswersListQueryTest()
         {
             var cache = new Mock<IDistributedCache>();
             _context = InitAndGetDbContext(out _tenantId);
-            _queryHandler = new GetProfessionsListQueryHandler(_context, new CacheManager(cache.Object));
+            _getAnswersListQueryHandler = new GetAnswersListQueryHandler(_context, new CacheManager(cache.Object));
         }
-
         private HonoplayDbContext InitAndGetDbContext(out Guid tenantId)
         {
             var context = GetDbContext();
@@ -39,6 +39,7 @@ namespace Honoplay.Application.Tests.Professions.Queries.GetProfessionsList
                 LastPasswordChangeDateTime = DateTimeOffset.Now.AddDays(-5)
             };
             context.AdminUsers.Add(adminUser);
+
 
             var tenant = new Tenant
             {
@@ -55,12 +56,23 @@ namespace Honoplay.Application.Tests.Professions.Queries.GetProfessionsList
                 CreatedBy = adminUser.Id
             });
 
-            context.Professions.Add(new Profession
+            var question = new Question
             {
-                Name = "testProfession",
+                Duration = 3,
+                Text = "testQuestion",
                 CreatedBy = adminUser.Id,
                 TenantId = tenant.Id
-            });
+            };
+            context.Questions.Add(question);
+
+            var answer = new Answer
+            {
+                CreatedBy = adminUser.Id,
+                OrderBy = 2,
+                QuestionId = question.Id,
+                Text = "testAnswer"
+            };
+            context.Answers.Add(answer);
 
             tenantId = tenant.Id;
             context.SaveChanges();
@@ -70,21 +82,21 @@ namespace Honoplay.Application.Tests.Professions.Queries.GetProfessionsList
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetProfessionsListQuery(tenantId: _tenantId, skip: 0, take: 10);
+            var getAnswersListQuery = new GetAnswersListQuery(tenantId: _tenantId, skip: 0, take: 10);
 
-            var professionModel = await _queryHandler.Handle(query, CancellationToken.None);
+            var answerModel = await _getAnswersListQueryHandler.Handle(getAnswersListQuery, CancellationToken.None);
 
-            Assert.Null(professionModel.Errors);
+            Assert.Null(answerModel.Errors);
         }
 
         [Fact]
         public async Task ShouldItemsCount1WhenTake1()
         {
-            var query = new GetProfessionsListQuery(tenantId: _tenantId, skip: 0, take: 1);
+            var getAnswersListQuery = new GetAnswersListQuery(tenantId: _tenantId, skip: 0, take: 1);
 
-            var professionModel = await _queryHandler.Handle(query, CancellationToken.None);
+            var answerModel = await _getAnswersListQueryHandler.Handle(getAnswersListQuery, CancellationToken.None);
 
-            Assert.Single(professionModel.Items);
+            Assert.Single(answerModel.Items);
         }
 
         public void Dispose() => _context?.Dispose();

@@ -1,4 +1,5 @@
-﻿using Honoplay.Application.Professions.Queries.GetProfessionsList;
+﻿using Honoplay.Application.Trainees.Queries.GetTraineeDetail;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -6,25 +7,27 @@ using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Professions.Queries.GetProfessionsList
+namespace Honoplay.Application.Tests.Answers.Queries.GetAnswerDetail
 {
-    public class GetProfessionsListQueryTest : TestBase, IDisposable
+    public class GetAnswerDetailQueryTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly GetProfessionsListQueryHandler _queryHandler;
+        private readonly GetAnswerDetailQueryHandler _getAnswerDetailQueryHandler;
+        private readonly int _adminUserId;
+        private readonly int _answerId;
         private readonly Guid _tenantId;
 
-        public GetProfessionsListQueryTest()
+        public GetAnswerDetailQueryTest()
         {
             var cache = new Mock<IDistributedCache>();
             _context = InitAndGetDbContext(out _tenantId);
-            _queryHandler = new GetProfessionsListQueryHandler(_context, new CacheManager(cache.Object));
+            _getAnswerDetailQueryHandler = new GetAnswerDetailQueryHandler(_context, new CacheManager(cache.Object));
         }
-
         private HonoplayDbContext InitAndGetDbContext(out Guid tenantId)
         {
             var context = GetDbContext();
@@ -39,6 +42,7 @@ namespace Honoplay.Application.Tests.Professions.Queries.GetProfessionsList
                 LastPasswordChangeDateTime = DateTimeOffset.Now.AddDays(-5)
             };
             context.AdminUsers.Add(adminUser);
+
 
             var tenant = new Tenant
             {
@@ -55,12 +59,23 @@ namespace Honoplay.Application.Tests.Professions.Queries.GetProfessionsList
                 CreatedBy = adminUser.Id
             });
 
-            context.Professions.Add(new Profession
+            var question = new Question
             {
-                Name = "testProfession",
+                Duration = 3,
+                Text = "testQuestion",
                 CreatedBy = adminUser.Id,
                 TenantId = tenant.Id
-            });
+            };
+            context.Questions.Add(question);
+
+            var answer = new Answer
+            {
+                CreatedBy = adminUser.Id,
+                OrderBy = 2,
+                QuestionId = question.Id,
+                Text = "testAnswer"
+            };
+            context.Answers.Add(answer);
 
             tenantId = tenant.Id;
             context.SaveChanges();
@@ -70,21 +85,22 @@ namespace Honoplay.Application.Tests.Professions.Queries.GetProfessionsList
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetProfessionsListQuery(tenantId: _tenantId, skip: 0, take: 10);
+            var query = new GetTraineeDetailQuery(_answerId, _adminUserId, _tenantId);
 
-            var professionModel = await _queryHandler.Handle(query, CancellationToken.None);
+            var model = await _getAnswerDetailQueryHandler.Handle(query, CancellationToken.None);
 
-            Assert.Null(professionModel.Errors);
+            Assert.Null(model.Errors);
+            Assert.Equal(expected: _context.Trainees.FirstOrDefault()?.Name, actual: model.Items.Single().Name, ignoreCase: true);
+
         }
 
         [Fact]
-        public async Task ShouldItemsCount1WhenTake1()
+        public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetProfessionsListQuery(tenantId: _tenantId, skip: 0, take: 1);
+            var query = new GetTraineeDetailQuery(_answerId + 1, _adminUserId, _tenantId);
 
-            var professionModel = await _queryHandler.Handle(query, CancellationToken.None);
-
-            Assert.Single(professionModel.Items);
+            await Assert.ThrowsAsync<NotFoundException>(async () =>
+                await _getAnswerDetailQueryHandler.Handle(query, CancellationToken.None));
         }
 
         public void Dispose() => _context?.Dispose();

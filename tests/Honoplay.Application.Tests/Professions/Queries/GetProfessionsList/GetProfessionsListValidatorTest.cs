@@ -1,5 +1,4 @@
 ﻿using FluentValidation.TestHelper;
-using Honoplay.Application.Departments.Queries.GetDepartmentsList;
 using Honoplay.Application.Professions.Queries.GetProfessionsList;
 using Xunit;
 

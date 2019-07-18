@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Honoplay.Application.Tests.Tenants.Queries.GetTenantsList
 {
-    public class GetTenantsListValidatorTest : TestBase
+    public class GetTenantsListValidatorTest
     {
         private readonly GetTenantsListValidator _validator;
 
