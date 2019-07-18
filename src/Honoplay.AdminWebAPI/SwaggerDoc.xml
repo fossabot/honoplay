@@ -4,6 +4,34 @@
         <name>Honoplay.AdminWebAPI</name>
     </assembly>
     <members>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.QuestionController.Post(Honoplay.Application.Questions.Commands.CreateQuestion.CreateQuestionCommand)">
+            <summary>
+            This service create question.
+            </summary>
+            <param name="command">Create question model</param>
+            <returns>CreateQuestionModel with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.QuestionController.Put(Honoplay.Application.Questions.Commands.UpdateQuestion.UpdateQuestionCommand)">
+            <summary>
+            This service update question.
+            </summary>
+            <param name="command">Update question model</param>
+            <returns>UpdateQuestionModel with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.QuestionController.Get(Honoplay.Application.Questions.Queries.GetQuestionsList.GetQuestionsListQueryModel)">
+            <summary>
+            This service update question.
+            </summary>
+            <param name="query">GetAll question model</param>
+            <returns>Get all questions list by tenant id with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.QuestionController.Get(System.Int32)">
+            <summary>
+            This service update question.
+            </summary>
+            <param name="id">Get question model</param>
+            <returns>Get question by tenant id and question id with status code.</returns>
+        </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.TenantController.Get(System.Guid)">
             <summary>
             Retrieve the tenant by ID.
