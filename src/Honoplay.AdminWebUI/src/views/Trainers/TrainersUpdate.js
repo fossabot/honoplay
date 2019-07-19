@@ -12,8 +12,7 @@ import DropDown from '../../components/Input/DropDownInputComponent';
 import Button from '../../components/Button/ButtonComponent';
 
 import { connect } from "react-redux";
-import { fetchTrainee, updateTrainee, fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Trainee";
-import { fetchWorkingStatusList } from "@omegabigdata/honoplay-redux-helper/Src/actions/WorkingStatus";
+import { updateTrainer, fetchTrainer, fetchTrainersList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Trainer";
 import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Department";
 
 class TraineesUpdate extends React.Component {
@@ -21,22 +20,16 @@ class TraineesUpdate extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            workingStatuses: [],
             departments: [],
-            gender: [
-                { id: 0, name: 'Erkek', },
-                { id: 1, name: 'Kadın', }
-            ],
-            traineeModel: {
+            trainerModel: {
                 name: '',
                 surname: '',
-                nationalIdentityNumber: '',
+                email: '',
                 phoneNumber: '',
-                gender: '',
-                workingStatusId: '',
-                departmentId: ''
+                departmentId: '',
+                professionId: ''
             },
-            loadingTrainee: false,
+            loadingTrainer: false,
             loadingUpdate: false,
             success: false,
             updateError: false
@@ -47,55 +40,56 @@ class TraineesUpdate extends React.Component {
 
     componentDidUpdate(prevProps) {
         const {
-            isWorkingStatusListLoading,
-            workingStatusList,
-            isTraineeLoading,
-            errorTrainee,
-            trainee,
             isDepartmentListLoading,
             departmentList,
-            isUpdateTraineeLoading,
-            errorUpdateTrainee,
-            updatedTrainee,
+            isUpdateTrainerLoading,
+            errorUpdateTrainer,
+            updateTrainer,
+            isTrainerLoading,
+            errorTrainer,
+            trainer,
         } = this.props;
 
-        if (prevProps.isTraineeLoading && !isTraineeLoading) {
+        if (prevProps.isTrainerLoading && !isTrainerLoading) {
+            console.log('geliyoor');
             this.setState({
-                loadingTrainee: true
+                loadingTrainer: true
             })
         }
-        if (prevProps.isTraineeLoading && !isTraineeLoading && trainee) {
-            if (!errorTrainee) {
+        if (prevProps.isTrainerLoading && !isTrainerLoading && trainer) {
+            console.log('buradayım');
+            console.log('beni mi istedin',trainer.items);
+            if (!errorTrainer) {
                 this.setState({
-                    traineeModel: trainee.items[0],
+                    trainerModel: trainer.items[0],
                 })
             }
-        }
-        if (prevProps.isWorkingStatusListLoading && !isWorkingStatusListLoading && workingStatusList) {
-            this.setState({
-                workingStatuses: workingStatusList.items
-            })
         }
         if (prevProps.isDepartmentListLoading && !isDepartmentListLoading && departmentList) {
             this.setState({
                 departments: departmentList.items
             })
         }
-        if (!prevProps.isUpdateTraineeLoading && isUpdateTraineeLoading) {
+        if (prevProps.isUpdateTrainerLoading && !isUpdateTrainerLoading) {
+            console.log('burda');
             this.setState({
                 loadingUpdate: true
             })
         }
-        if (!prevProps.errorUpdateTrainee && errorUpdateTrainee) {
+        if (!prevProps.errorUpdateTrainer && errorUpdateTrainer) {
+            console.log('burda2');
+            console.log(errorUpdateTrainer);
             this.setState({
                 updateError: true,
                 loadingUpdate: false,
                 success: false
             })
         }
-        if (prevProps.isUpdateTraineeLoading && !isUpdateTraineeLoading && updatedTrainee) {
-            if (!errorUpdateTrainee) {
-                this.props.fetchTraineeList(0,50);
+        if (prevProps.isUpdateTrainerLoading && !isUpdateTrainerLoading && updateTrainer) {
+            console.log('burda3');
+            if (!errorUpdateTrainer) {
+                console.log('burda4');
+                this.props.fetchTrainersList(0, 50);
                 this.setState({
                     updateError: false,
                     loadingUpdate: false,
@@ -109,16 +103,15 @@ class TraineesUpdate extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchWorkingStatusList(0, 50);
         this.props.fetchDepartmentList(0, 50);
-        this.props.fetchTrainee(parseInt(this.dataId));
+        this.props.fetchTrainer(parseInt(this.dataId));
     }
 
     handleChange = (e) => {
         const { name, value } = e.target;
         this.setState(prevState => ({
-            traineeModel: {
-                ...prevState.traineeModel,
+            trainerModel: {
+                ...prevState.trainerModel,
                 [name]: value
             },
             updateError: false
@@ -126,28 +119,28 @@ class TraineesUpdate extends React.Component {
     }
 
     handleClick = () => {
-        this.props.updateTrainee(this.state.traineeModel);
+        this.props.updateTrainer(this.state.trainerModel);
+        console.log(this.state.trainerModel);
     }
 
     render() {
         const { classes } = this.props;
         const {
-            loadingTrainee,
-            traineeModel,
-            workingStatuses,
+            loadingTrainer,
             departments,
-            gender,
             success,
             loadingUpdate,
-            updateError
+            updateError,
+            trainerModel
         } = this.state;
         const buttonClassname = classNames({
             [classes.buttonSuccess]: success
         });
+        console.log(this.dataId);
         return (
 
             <div className={classes.root}>
-                {loadingTrainee == false ?
+                {loadingTrainer == false ?
                     <CircularProgress
                         size={50}
                         disableShrink={true}
@@ -155,21 +148,13 @@ class TraineesUpdate extends React.Component {
                     /> :
                     <Grid container spacing={24}>
                         <Grid item xs={12} sm={12}>
-                            <DropDown
-                                error={updateError}
-                                data={workingStatuses}
-                                labelName={translate('WorkingStatus')}
-                                onChange={this.handleChange}
-                                name="workingStatusId"
-                                value={traineeModel.workingStatusId}
-                            />
                             <Input
                                 error={updateError}
                                 labelName={translate('Name')}
                                 inputType="text"
                                 onChange={this.handleChange}
                                 name="name"
-                                value={traineeModel.name}
+                                value={trainerModel.name}
                             />
                             <Input
                                 error={updateError}
@@ -177,23 +162,15 @@ class TraineesUpdate extends React.Component {
                                 inputType="text"
                                 onChange={this.handleChange}
                                 name="surname"
-                                value={traineeModel.surname}
-                            />
-                            <DropDown
-                                error={updateError}
-                                data={departments}
-                                labelName={translate('Department')}
-                                onChange={this.handleChange}
-                                name="departmentId"
-                                value={traineeModel.departmentId}
+                                value={trainerModel.surname}
                             />
                             <Input
                                 error={updateError}
-                                labelName={translate('NationalIdentityNumber')}
+                                labelName={translate('EmailAddress')}
                                 inputType="text"
                                 onChange={this.handleChange}
-                                name="nationalIdentityNumber"
-                                value={traineeModel.nationalIdentityNumber}
+                                name="email"
+                                value={trainerModel.email}
                             />
                             <Input
                                 error={updateError}
@@ -201,15 +178,23 @@ class TraineesUpdate extends React.Component {
                                 inputType="text"
                                 onChange={this.handleChange}
                                 name="phoneNumber"
-                                value={traineeModel.phoneNumber}
+                                value={trainerModel.phoneNumber}
                             />
                             <DropDown
                                 error={updateError}
-                                data={gender}
-                                labelName={translate('Gender')}
+                                data={departments}
+                                labelName={translate('Department')}
                                 onChange={this.handleChange}
-                                name="gender"
-                                value={traineeModel.gender}
+                                name="departmentId"
+                                value={trainerModel.departmentId}
+                            />
+                            <Input
+                                error={updateError}
+                                labelName={translate('TrainerExpertise')}
+                                inputType="text"
+                                onChange={this.handleChange}
+                                name="professionId"
+                                value={trainerModel.professionId}
                             />
                         </Grid>
                         <Grid item xs={12} sm={12} />
@@ -242,16 +227,18 @@ class TraineesUpdate extends React.Component {
 const mapStateToProps = state => {
 
     const {
-        isUpdateTraineeLoading,
-        errorUpdateTrainee,
-        updatedTrainee,
-    } = state.updateTrainee;
+        isTrainerLoading,
+        errorTrainer,
+        trainer
+    } = state.trainer;
+
+    console.log('dırım dırım dırım dırmdım',trainer);
 
     const {
-        isTraineeLoading,
-        errorTrainee,
-        trainee
-    } = state.trainee;
+        isTrainerListLoading,
+        errorTrainerList,
+        trainersList
+    } = state.trainersList;
 
     const {
         errorDepartmentList,
@@ -260,33 +247,32 @@ const mapStateToProps = state => {
     } = state.departmentList;
 
     const {
-        isWorkingStatusListLoading,
-        workingStatusList,
-        errorWorkingStatusList
-    } = state.workingStatusList;
+        isUpdateTrainerLoading,
+        errorUpdateTrainer,
+        updateTrainer
+    } = state.updateTrainer;
 
     return {
+        isTrainerLoading,
+        errorTrainer,
+        trainer,
+        isTrainerListLoading,
+        errorTrainerList,
+        trainersList,
         errorDepartmentList,
         isDepartmentListLoading,
         departmentList,
-        isTraineeLoading,
-        errorTrainee,
-        trainee,
-        isWorkingStatusListLoading,
-        workingStatusList,
-        errorWorkingStatusList,
-        isUpdateTraineeLoading,
-        errorUpdateTrainee,
-        updatedTrainee,
+        isUpdateTrainerLoading,
+        errorUpdateTrainer,
+        updateTrainer
     };
 };
 
 const mapDispatchToProps = {
-    fetchWorkingStatusList,
-    fetchTrainee,
     fetchDepartmentList,
-    updateTrainee,
-    fetchTraineeList
+    updateTrainer,
+    fetchTrainer,
+    fetchTrainersList
 };
 
 export default connect(

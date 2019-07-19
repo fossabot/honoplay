@@ -22,6 +22,7 @@ import {
 import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Department";
 
 import { departmentToString } from "../../helpers/Converter";
+import TrainersUpdate from './TrainersUpdate';
 
 class Trainers extends React.Component {
 
@@ -104,7 +105,10 @@ class Trainers extends React.Component {
         if (prevProps.isTrainerListLoading && !isTrainerListLoading && trainersList) {
             if (!errorTrainerList) {
                 this.props.fetchTrainersList(0,50);
-                departmentToString(departmentList.items,trainersList.items);
+                if ( departmentList && trainersList )
+                {
+                    departmentToString(departmentList.items,trainersList.items);
+                }
                 this.setState({
                     trainer: trainersList.items,
                 });
@@ -248,7 +252,9 @@ class Trainers extends React.Component {
                         <Table
                             columns={trainerColumns}
                             data={trainer}
-                        />
+                        >
+                            <TrainersUpdate/>
+                        </Table>
                     </Grid>
                 </Grid>
             </div>
