@@ -51,14 +51,11 @@ class TraineesUpdate extends React.Component {
         } = this.props;
 
         if (prevProps.isTrainerLoading && !isTrainerLoading) {
-            console.log('geliyoor');
             this.setState({
                 loadingTrainer: true
             })
         }
         if (prevProps.isTrainerLoading && !isTrainerLoading && trainer) {
-            console.log('buradayım');
-            console.log('beni mi istedin',trainer.items);
             if (!errorTrainer) {
                 this.setState({
                     trainerModel: trainer.items[0],
@@ -70,14 +67,12 @@ class TraineesUpdate extends React.Component {
                 departments: departmentList.items
             })
         }
-        if (prevProps.isUpdateTrainerLoading && !isUpdateTrainerLoading) {
-            console.log('burda');
+        if (!prevProps.isUpdateTrainerLoading && isUpdateTrainerLoading) {
             this.setState({
                 loadingUpdate: true
             })
         }
         if (!prevProps.errorUpdateTrainer && errorUpdateTrainer) {
-            console.log('burda2');
             console.log(errorUpdateTrainer);
             this.setState({
                 updateError: true,
@@ -86,9 +81,7 @@ class TraineesUpdate extends React.Component {
             })
         }
         if (prevProps.isUpdateTrainerLoading && !isUpdateTrainerLoading && updateTrainer) {
-            console.log('burda3');
             if (!errorUpdateTrainer) {
-                console.log('burda4');
                 this.props.fetchTrainersList(0, 50);
                 this.setState({
                     updateError: false,
@@ -136,7 +129,6 @@ class TraineesUpdate extends React.Component {
         const buttonClassname = classNames({
             [classes.buttonSuccess]: success
         });
-        console.log(this.dataId);
         return (
 
             <div className={classes.root}>
@@ -231,8 +223,6 @@ const mapStateToProps = state => {
         errorTrainer,
         trainer
     } = state.trainer;
-
-    console.log('dırım dırım dırım dırmdım',trainer);
 
     const {
         isTrainerListLoading,
