@@ -102,6 +102,24 @@ namespace Honoplay.System.Tests
 
             dbContext.Trainees.Add(trainee);
 
+            var question = new Question
+            {
+                TenantId = tenantId,
+                CreatedBy = adminUser.Id,
+                Duration = 123,
+                Text = "Yukaridaki yukarida midir?",
+            };
+            dbContext.Questions.Add(question);
+
+            var answer = new Answer
+            {
+                OrderBy = 1,
+                CreatedBy = adminUser.Id,
+                Text = "yukaridadir",
+                QuestionId = question.Id
+            };
+            dbContext.Answers.Add(answer);
+
             dbContext.SaveChanges();
         }
     }

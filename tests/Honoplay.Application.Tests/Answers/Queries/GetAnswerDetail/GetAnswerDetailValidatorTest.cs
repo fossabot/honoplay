@@ -1,4 +1,7 @@
-﻿using Xunit;
+﻿using System;
+using FluentValidation.TestHelper;
+using Honoplay.Application.Answers.Queries.GetAnswerDetail;
+using Xunit;
 
 namespace Honoplay.Application.Tests.Answers.Queries.GetAnswerDetail
 {
@@ -13,15 +16,13 @@ namespace Honoplay.Application.Tests.Answers.Queries.GetAnswerDetail
         [Fact]
         public void ShouldBeValid()
         {
-            Assert.True(_getAnswerDetailValidator.Validate(new GetAnswerDetailQueryModel { Take = 5 }).IsValid);
+            Assert.True(_getAnswerDetailValidator.Validate(new GetAnswerDetailQuery(adminUserId: 1, id: 1, tenantId: Guid.NewGuid())).IsValid);
         }
 
         [Fact]
-        public void ShouldBeNotValid()
+        public void ShouldBeNotValidForNullOrEmpty()
         {
-            _getAnswerDetailValidator.ShouldHaveValidationErrorFor(x => x.Skip, -1);
-            _getAnswerDetailValidator.ShouldHaveValidationErrorFor(x => x.Take, 3);
-            _getAnswerDetailValidator.ShouldHaveValidationErrorFor(x => x.Take, 102);
+            _getAnswerDetailValidator.ShouldHaveValidationErrorFor(x => x.Id, 0);
         }
     }
 }

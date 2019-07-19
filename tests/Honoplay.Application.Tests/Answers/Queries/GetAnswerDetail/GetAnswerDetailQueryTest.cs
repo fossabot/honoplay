@@ -1,4 +1,4 @@
-﻿using Honoplay.Application.Trainees.Queries.GetTraineeDetail;
+﻿using Honoplay.Application.Answers.Queries.GetAnswerDetail;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
@@ -25,10 +25,10 @@ namespace Honoplay.Application.Tests.Answers.Queries.GetAnswerDetail
         public GetAnswerDetailQueryTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _tenantId);
+            _context = InitAndGetDbContext(out _tenantId, out _answerId, out _adminUserId);
             _getAnswerDetailQueryHandler = new GetAnswerDetailQueryHandler(_context, new CacheManager(cache.Object));
         }
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId)
+        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int answerId, out int adminUserId)
         {
             var context = GetDbContext();
             var salt = ByteArrayExtensions.GetRandomSalt();
@@ -42,7 +42,6 @@ namespace Honoplay.Application.Tests.Answers.Queries.GetAnswerDetail
                 LastPasswordChangeDateTime = DateTimeOffset.Now.AddDays(-5)
             };
             context.AdminUsers.Add(adminUser);
-
 
             var tenant = new Tenant
             {
@@ -70,14 +69,17 @@ namespace Honoplay.Application.Tests.Answers.Queries.GetAnswerDetail
 
             var answer = new Answer
             {
+                Id=1,
                 CreatedBy = adminUser.Id,
                 OrderBy = 2,
                 QuestionId = question.Id,
-                Text = "testAnswer"
+                Text = "testAnswer",
             };
             context.Answers.Add(answer);
 
             tenantId = tenant.Id;
+            answerId = answer.Id;
+            adminUserId = adminUser.Id;
             context.SaveChanges();
             return context;
         }
@@ -85,19 +87,19 @@ namespace Honoplay.Application.Tests.Answers.Queries.GetAnswerDetail
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTraineeDetailQuery(_answerId, _adminUserId, _tenantId);
+            var answerDetailQuery = new GetAnswerDetailQuery(_adminUserId, _answerId, _tenantId);
 
-            var model = await _getAnswerDetailQueryHandler.Handle(query, CancellationToken.None);
+            var answerDetailResponseModel = await _getAnswerDetailQueryHandler.Handle(answerDetailQuery, CancellationToken.None);
 
-            Assert.Null(model.Errors);
-            Assert.Equal(expected: _context.Trainees.FirstOrDefault()?.Name, actual: model.Items.Single().Name, ignoreCase: true);
+            Assert.Null(answerDetailResponseModel.Errors);
+            Assert.Equal(expected: _context.Answers.First().Text, actual: answerDetailResponseModel.Items.First().Text, ignoreCase: true);
 
         }
 
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetTraineeDetailQuery(_answerId + 1, _adminUserId, _tenantId);
+            var query = new GetAnswerDetailQuery(_adminUserId, _answerId + 1, _tenantId);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _getAnswerDetailQueryHandler.Handle(query, CancellationToken.None));

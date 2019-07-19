@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Answers.Commands.CreateAnswer;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Answers.Commands.CreateAnswer
