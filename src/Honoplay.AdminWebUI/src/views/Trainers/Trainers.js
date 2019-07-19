@@ -21,6 +21,7 @@ import {
 } from "@omegabigdata/honoplay-redux-helper/Src/actions/Trainer";
 
 import { departmentToString } from "../../helpers/Converter";
+import TrainersUpdate from './TrainersUpdate';
 
 import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Department";
 import { createProfession, fetchProfessionList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Profession";
@@ -98,13 +99,13 @@ class Trainers extends React.Component {
                 departments: departmentList.items
             })
         }
-        if (prevProps.isProfessionListLoading && !isProfessionListLoading && professionList) {     
-            console.log('burda'); 
-            console.log(professionList);
+        if (prevProps.isProfessionListLoading && !isProfessionListLoading && professionList) {
+            console.log('burda');
+            console.log('deneme',professionList);
             this.setState({
-                professions: professionList.success.data.items
+                professions: professionList.items
             })
-            
+
         }
         if (!prevProps.isCreateTrainerLoading && isCreateTrainerLoading) {
             this.setState({
@@ -127,7 +128,7 @@ class Trainers extends React.Component {
             }
         }
         if (prevProps.isTrainerListLoading && !isTrainerListLoading && trainersList) {
-            if (!errorTrainerList) {
+            if (!errorTrainerList && departmentList && trainersList) {
                 departmentToString(departmentList.items, trainersList.items);
                 this.setState({
                     trainer: trainersList.items,
@@ -146,7 +147,7 @@ class Trainers extends React.Component {
             })
         }
         if (prevProps.isCreateProfessionLoading && !isCreateProfessionLoading && newProfession) {
-            this.props.fetchProfessionList(0,50);
+            this.props.fetchProfessionList(0, 50);
             if (!errorCreateProfession) {
                 console.log('denemeeee');
             }
@@ -162,7 +163,7 @@ class Trainers extends React.Component {
         } = this.props;
         fetchDepartmentList(0, 50);
         fetchTrainersList(0, 50);
-        fetchProfessionList(0,50);
+        fetchProfessionList(0, 50);
     }
 
     handleChange = (e) => {
@@ -172,6 +173,7 @@ class Trainers extends React.Component {
         this.setState({
             departmentListError: false,
             trainerError: false,
+            ExpertiseError: false
         })
     }
 
@@ -307,7 +309,9 @@ class Trainers extends React.Component {
                         <Table
                             columns={trainerColumns}
                             data={trainer}
-                        />
+                        >
+                            <TrainersUpdate />
+                        </Table>
                     </Grid>
                 </Grid>
             </div>
