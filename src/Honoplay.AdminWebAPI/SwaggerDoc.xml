@@ -4,6 +4,34 @@
         <name>Honoplay.AdminWebAPI</name>
     </assembly>
     <members>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.AnswerController.Post(Honoplay.Application.Answers.Commands.CreateAnswer.CreateAnswerCommand)">
+            <summary>
+            This service create answer.
+            </summary>
+            <param name="command">Create answer model</param>
+            <returns>CreateAnswerModel with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.AnswerController.Put(Honoplay.Application.Answers.Commands.UpdateAnswer.UpdateAnswerCommand)">
+            <summary>
+            This service update answer.
+            </summary>
+            <param name="command">Update answer model</param>
+            <returns>UpdateAnswerModel with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.AnswerController.Get(Honoplay.Application.Answers.Queries.GetAnswersList.GetAnswersListQueryModel)">
+            <summary>
+            This service update answer.
+            </summary>
+            <param name="query">GetAll answer model</param>
+            <returns>Get all answers list by tenant id with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.AnswerController.Get(System.Int32)">
+            <summary>
+            This service update answer.
+            </summary>
+            <param name="id">Get answer model</param>
+            <returns>Get answer by tenant id and answer id with status code.</returns>
+        </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.QuestionController.Post(Honoplay.Application.Questions.Commands.CreateQuestion.CreateQuestionCommand)">
             <summary>
             This service create question.

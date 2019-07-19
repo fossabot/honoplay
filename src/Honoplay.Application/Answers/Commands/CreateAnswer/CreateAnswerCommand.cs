@@ -5,7 +5,7 @@ using System;
 
 namespace Honoplay.Application.Answers.Commands.CreateAnswer
 {
-    public class CreateAnswerCommand : IRequest<CreateAnswerModel>, IRequest<ResponseModel<CreateAnswerModel>>
+    public class CreateAnswerCommand : IRequest<ResponseModel<CreateAnswerModel>>
     {
         [JsonIgnore]
         public int CreatedBy { get; set; }

@@ -25,14 +25,14 @@ namespace Honoplay.Application.Answers.Queries.GetAnswerDetail
 
         public async Task<ResponseModel<AnswerDetailModel>> Handle(GetAnswerDetailQuery request, CancellationToken cancellationToken)
         {
-            var redisKey = $"AnswersTenantId{request.TenantId}";
-
+            var redisKey = $"AnswersWithQuestionByTenantId{request.TenantId}";
             var redisAnswers = await _cacheService.RedisCacheAsync<IList<Answer>>(redisKey, delegate
             {
-                return _context.Answers.AsNoTracking()
-                    .Include(x => x.Question)
-                    .Where(x => x.Question.TenantId == request.TenantId)
-                    .ToList();
+                return _context.Answers
+                .Include(x => x.Question)
+                .AsNoTracking()
+                .Where(x => x.Question.TenantId == request.TenantId)
+                .ToList();
             }, cancellationToken);
 
             var answer = redisAnswers.FirstOrDefault(x => x.Id == request.Id);

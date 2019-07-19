@@ -27,7 +27,7 @@ namespace Honoplay.Application.Answers.Commands.UpdateAnswer
 
         public async Task<ResponseModel<UpdateAnswerModel>> Handle(UpdateAnswerCommand request, CancellationToken cancellationToken)
         {
-            var redisKey = $"AnswersByTenantId{request.TenantId}";
+            var redisKey = $"AnswersWithQuestionByTenantId{request.TenantId}";
             var updatedAt = DateTimeOffset.Now;
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {

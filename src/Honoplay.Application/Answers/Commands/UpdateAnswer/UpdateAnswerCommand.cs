@@ -6,7 +6,7 @@ using Honoplay.Application._Infrastructure;
 
 namespace Honoplay.Application.Answers.Commands.UpdateAnswer
 {
-    public class UpdateAnswerCommand : IRequest<CreateAnswerModel>, IRequest<ResponseModel<UpdateAnswerModel>>
+    public class UpdateAnswerCommand : IRequest<ResponseModel<UpdateAnswerModel>>
     {
         public int Id { get; set; }
         [JsonIgnore]
