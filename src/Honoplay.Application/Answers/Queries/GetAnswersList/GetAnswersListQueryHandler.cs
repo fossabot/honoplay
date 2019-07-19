@@ -5,7 +5,6 @@ using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,23 +26,21 @@ namespace Honoplay.Application.Answers.Queries.GetAnswersList
             CancellationToken cancellationToken)
         {
             var redisKey = $"AnswersWithQuestionByTenantId{request.TenantId}";
-            var answersList = await _cacheService.RedisCacheAsync<IList<AnswersListModel>>(redisKey, delegate
+            var allAnswersList = await _cacheService.RedisCacheAsync(redisKey, delegate
             {
                 return _context.Answers
-                    .AsNoTracking()
                     .Include(x => x.Question)
-                    .Where(x => x.Question.TenantId == request.TenantId)
-                    .Select(AnswersListModel.Projection)
-                    .ToList();
-
+                    .AsNoTracking()
+                    .Where(x => x.Question.TenantId == request.TenantId);
             }, cancellationToken);
 
-            if (!answersList.Any())
+            if (!allAnswersList.Any())
             {
                 throw new NotFoundException();
             }
 
-            answersList = answersList
+            var answersList = allAnswersList
+                .Select(AnswersListModel.Projection)
                 .OrderBy(x => x.Id)
                 .SkipOrAll(request.Skip)
                 .TakeOrAll(request.Take)

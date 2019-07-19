@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
-using Honoplay.Application.Answers.Queries.GetAnswersList;
 
-namespace Honoplay.Application.Professions.Queries.GetProfessionsList
+namespace Honoplay.Application.Answers.Queries.GetAnswersList
 {
     public class GetAnswersListValidator : AbstractValidator<GetAnswersListQueryModel>
     {

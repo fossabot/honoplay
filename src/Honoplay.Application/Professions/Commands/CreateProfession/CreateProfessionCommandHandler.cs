@@ -41,14 +41,14 @@ namespace Honoplay.Application.Professions.Commands.CreateProfession
 
                     foreach (var requestProfession in request.Professions)
                     {
-                        var department = new Profession
+                        var profession = new Profession
                         {
                             CreatedBy = request.AdminUserId,
                             Name = requestProfession,
                             TenantId = request.TenantId
 
                         };
-                        newProfessions.Add(department);
+                        newProfessions.Add(profession);
                     }
 
                     await _context.Professions.AddRangeAsync(newProfessions, cancellationToken);
