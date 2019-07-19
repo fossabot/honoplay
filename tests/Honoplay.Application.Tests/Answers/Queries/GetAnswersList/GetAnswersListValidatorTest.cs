@@ -1,4 +1,7 @@
-﻿using Xunit;
+﻿using FluentValidation.TestHelper;
+using Honoplay.Application.Answers.Queries.GetAnswersList;
+using Honoplay.Application.Professions.Queries.GetProfessionsList;
+using Xunit;
 
 namespace Honoplay.Application.Tests.Answers.Queries.GetAnswersList
 {

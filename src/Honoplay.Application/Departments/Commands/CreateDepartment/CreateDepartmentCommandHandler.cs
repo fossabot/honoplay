@@ -30,15 +30,13 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
         public async Task<ResponseModel<CreateDepartmentModel>> Handle(CreateDepartmentCommand request,
             CancellationToken cancellationToken)
         {
+            var redisKey = $"DepartmentsByTenantId{request.TenantId}";
             var newDepartments = new List<Department>();
 
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
-                var redisKey = $"DepartmentsByTenantId{request.TenantId}";
                 try
                 {
-                    var departmentsByTenantId = _context.Departments.Where(x => x.TenantId == request.TenantId).ToListAsync(cancellationToken);
-
                     foreach (var requestDepartment in request.Departments)
                     {
                         var department = new Department
@@ -53,6 +51,8 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
 
                     await _context.Departments.AddRangeAsync(newDepartments, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
+
+                    var departmentsByTenantId = _context.Departments.Where(x => x.TenantId == request.TenantId).ToListAsync(cancellationToken);
 
                     await _cacheService.RedisCacheUpdateAsync(redisKey,
                         delegate { return departmentsByTenantId; },

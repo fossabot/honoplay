@@ -1,4 +1,5 @@
-﻿using Honoplay.Common.Extensions;
+﻿using Honoplay.Application.Answers.Commands.UpdateAnswer;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
@@ -73,7 +74,7 @@ namespace Honoplay.Application.Tests.Answers.Commands.UpdateAnswer
                 QuestionId = question.Id,
                 Text = "Answer1",
             };
-            _context.Answers.Add(answer);
+            context.Answers.Add(answer);
 
             context.SaveChanges();
 
@@ -92,7 +93,7 @@ namespace Honoplay.Application.Tests.Answers.Commands.UpdateAnswer
             {
                 Id = _answerId,
                 TenantId = _tenantId,
-                CreatedBy = _adminUserId,
+                UpdatedBy = _adminUserId,
                 QuestionId = _questionId,
                 Text = "answer1",
                 OrderBy = 1
