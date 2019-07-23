@@ -66,8 +66,8 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
                 {
                     transaction.Rollback();
 
-                    var conflictItemFirstIndex = ex.InnerException.Message.IndexOf(value: ",", StringComparison.Ordinal) + 2;
-                    var conflictItemLenght = ex.InnerException.Message.IndexOf(value: ")", StringComparison.Ordinal) - conflictItemFirstIndex;
+                    var conflictItemFirstIndex = ex.InnerException.Message.IndexOf(value: ",", comparisonType: StringComparison.Ordinal) + 2;
+                    var conflictItemLenght = ex.InnerException.Message.IndexOf(value: ")", comparisonType: StringComparison.Ordinal) - conflictItemFirstIndex;
 
                     var conflictItem = ex.InnerException.Message
                         .Substring(startIndex: conflictItemFirstIndex,
