@@ -49,7 +49,9 @@ constructor(props) {
                         }]
     };
 }
-
+handleClick = () => {
+  this.props.history.push("/home/addquestion");
+}
 render() {
   const { classes } = this.props;
   
@@ -63,6 +65,7 @@ render() {
           </Grid>
           <Grid item xs={6} sm={2}> 
             <Button 
+              onClick= {this.handleClick}
               buttonColor="secondary" 
               buttonIcon="plus"
               buttonName={translate('NewQuestion')}
