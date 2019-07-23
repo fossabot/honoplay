@@ -65,7 +65,16 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
                 {
                     transaction.Rollback();
-                    throw new ObjectAlreadyExistsException(nameof(Department), request.Departments);
+
+                    var conflictItemFirstIndex = ex.InnerException.Message.IndexOf(value: ",", StringComparison.Ordinal) + 2;
+                    var conflictItemLenght = ex.InnerException.Message.IndexOf(value: ")", StringComparison.Ordinal) - conflictItemFirstIndex;
+
+                    var conflictItem = ex.InnerException.Message
+                        .Substring(startIndex: conflictItemFirstIndex,
+                                   length: conflictItemLenght);
+
+                    throw new ObjectAlreadyExistsException(name: nameof(Department),
+                                                           key: conflictItem);
                 }
                 catch (NotFoundException)
                 {

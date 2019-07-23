@@ -71,6 +71,7 @@ namespace Honoplay.Application.WorkingStatuses.Commands.CreateWorkingStatus
                                                                   workingStatus.Name,
                                                                   workingStatus.CreatedBy,
                                                                   workingStatus.CreatedAt);
+
             return new ResponseModel<CreateWorkingStatusModel>(workingStatusModel);
         }
     }
