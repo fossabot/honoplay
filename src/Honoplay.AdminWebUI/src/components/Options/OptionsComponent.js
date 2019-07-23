@@ -23,7 +23,7 @@ class OptionsComponent extends React.Component {
                         </Typography>
                     </Grid>
                     {data.map((data, id) => (
-                        <Grid container direction="row" spacing={24}>
+                        <Grid container direction="row" spacing={24} key={id}>
                             <Grid item xs={12} sm={12} />
                             <Grid item xs={12} sm={1}>
                                 <Checkbox
@@ -33,7 +33,6 @@ class OptionsComponent extends React.Component {
                             <Grid item xs={12} sm={1} >
                                 <Input
                                     disabled
-                                    key={id}
                                     inputType="text"
                                     value={data.order}
                                 />
@@ -41,7 +40,6 @@ class OptionsComponent extends React.Component {
                             <Grid item xs={12} sm={10} >
                                 <Input
                                     disabled
-                                    key={id}
                                     inputType="text"
                                     value={data.answer}
                                 />
