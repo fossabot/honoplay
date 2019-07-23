@@ -5,7 +5,6 @@ using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,28 +26,25 @@ namespace Honoplay.Application.Departments.Queries.GetDepartmentsList
             CancellationToken cancellationToken)
         {
             var redisKey = $"DepartmentsByTenantId{request.TenantId}";
-            var departmentsList = await _cacheService.RedisCacheAsync<IList<DepartmentsListModel>>(redisKey, delegate
-            {
-                return _context.Departments
+            var departmentsQuery = await _cacheService.RedisCacheAsync(redisKey,
+                _ => _context.Departments
                     .Where(x => x.TenantId == request.TenantId)
                     .AsNoTracking()
-                    .Select(DepartmentsListModel.Projection)
-                    .ToList();
+            , cancellationToken);
 
-            }, cancellationToken);
-
-            if (!departmentsList.Any())
+            if (!departmentsQuery.Any())
             {
                 throw new NotFoundException();
             }
 
-            departmentsList = departmentsList
-                .OrderBy(x => x.Name)
+            var departmentsList = await departmentsQuery
                 .SkipOrAll(request.Skip)
                 .TakeOrAll(request.Take)
-                .ToList();
+                .Select(DepartmentsListModel.Projection)
+                .OrderBy(x => x.Id)
+                .ToListAsync(cancellationToken);
 
-            return new ResponseModel<DepartmentsListModel>(numberOfTotalItems: departmentsList.Count, numberOfSkippedItems: request.Skip, source: departmentsList);
+            return new ResponseModel<DepartmentsListModel>(numberOfTotalItems: departmentsQuery.LongCount(), numberOfSkippedItems: request.Skip, source: departmentsList);
 
         }
     }

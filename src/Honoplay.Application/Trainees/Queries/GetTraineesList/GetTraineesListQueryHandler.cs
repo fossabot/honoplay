@@ -1,6 +1,6 @@
 ﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Common._Exceptions;
-using Honoplay.Domain.Entities;
+using Honoplay.Common.Extensions;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
 using MediatR;
@@ -26,29 +26,29 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineesList
         {
             var redisKey = $"TraineesWithDepartmentsByTenantId{request.TenantId}";
 
-            var allTrainees = await _cacheService.RedisCacheAsync(redisKey, delegate
-            {
-                return _context.Trainees
+            var traineesQuery = await _cacheService.RedisCacheAsync(redisKey,
+                _ => _context.Trainees
                     .Include(x => x.Department)
                     .Where(x => x.Department.TenantId == request.TenantId)
-                    .AsNoTracking();
-            }, cancellationToken);
+                    .AsNoTracking()
+                , cancellationToken);
 
-            var filteredTrainees = allTrainees
-                .Skip(request.Skip)
-                .Take(request.Take)
+            var traineesList = await traineesQuery
+                .SkipOrAll(request.Skip)
+                .TakeOrAll(request.Take)
                 .Select(TraineesListModel.Projection)
-                .OrderBy(x => x.Name)
-                .ToList();
+                .OrderBy(x => x.Id)
+                .ToListAsync(cancellationToken);
 
-            if (!filteredTrainees.Any())
+
+            if (!traineesList.Any())
             {
                 throw new NotFoundException();
             }
 
-            return new ResponseModel<TraineesListModel>(numberOfTotalItems: allTrainees.ToList().Count,
+            return new ResponseModel<TraineesListModel>(numberOfTotalItems: traineesQuery.LongCount(),
                                                         numberOfSkippedItems: request.Skip,
-                                                        source: filteredTrainees);
+                                                        source: traineesList);
 
 
         }

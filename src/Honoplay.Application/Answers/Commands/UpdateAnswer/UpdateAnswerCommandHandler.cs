@@ -66,14 +66,11 @@ namespace Honoplay.Application.Answers.Commands.UpdateAnswer
                         UpdatedAt = x.UpdatedAt
                     }).ToList();
 
-                    await _cacheService.RedisCacheUpdateAsync(redisKey,
-                        delegate
-                        {
-                            return answersByTenantId;
-                        },
-                        cancellationToken);
-
                     transaction.Commit();
+
+                    await _cacheService.RedisCacheUpdateAsync(redisKey,
+                        _ => answersByTenantId,
+                        cancellationToken);
                 }
                 catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))

@@ -34,7 +34,7 @@ namespace Honoplay.Application.Tenants.Commands.CreateTenant
                 CreatedBy = request.CreatedBy
             };
 
-            using (IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
+            using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
                 try
                 {

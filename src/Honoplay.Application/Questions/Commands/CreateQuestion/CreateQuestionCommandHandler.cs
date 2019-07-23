@@ -42,13 +42,13 @@ namespace Honoplay.Application.Questions.Commands.CreateQuestion
                 {
                     await _context.Questions.AddAsync(newQuestion, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
-
-                    await _cacheService.RedisCacheUpdateAsync(redisKey, delegate
-                        {
-                            return _context.Questions.Where(x => x.TenantId == request.TenantId);
-                        }, cancellationToken);
-
                     transaction.Commit();
+
+                    await _cacheService.RedisCacheUpdateAsync(redisKey,
+                        _ => _context.Questions
+                            .Where(x => x.TenantId == request.TenantId)
+                            .ToList()
+                        , cancellationToken);
                 }
                 catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))

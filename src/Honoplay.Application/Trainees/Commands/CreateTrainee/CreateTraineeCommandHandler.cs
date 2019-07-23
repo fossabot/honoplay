@@ -54,15 +54,14 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
 
                     await _context.Trainees.AddAsync(trainee, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
-
-                    await _cacheService.RedisCacheUpdateAsync(redisKey, delegate
-                    {
-                        return _context.Trainees.Include(x => x.Department)
-                            .Where(x => x.Department.TenantId == request.TenantId)
-                            .ToList();
-                    }, cancellationToken);
-
                     transaction.Commit();
+
+                    await _cacheService.RedisCacheUpdateAsync(redisKey,
+                        _ => _context.Trainees
+                            .Include(x => x.Department)
+                            .Where(x => x.Department.TenantId == request.TenantId)
+                            .ToList()
+                        , cancellationToken);
                 }
                 catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
@@ -82,7 +81,9 @@ namespace Honoplay.Application.Trainees.Commands.CreateTrainee
                 }
             }
 
-            var traineeModel = new CreateTraineeModel(trainee.Id, trainee.CreatedAt, trainee.Name, trainee.Surname, trainee.NationalIdentityNumber, trainee.PhoneNumber, trainee.Gender);
+            var traineeModel = new CreateTraineeModel(trainee.Id,
+                trainee.CreatedAt,
+                trainee.Name, trainee.Surname, trainee.NationalIdentityNumber, trainee.PhoneNumber, trainee.Gender);
             return new ResponseModel<CreateTraineeModel>(traineeModel);
         }
     }

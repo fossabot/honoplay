@@ -5,11 +5,11 @@ namespace Honoplay.Common.Extensions
 {
     public static class LinqExtensions
     {
-        public static IEnumerable<T> SkipOrAll<T>(this IEnumerable<T> src, int? skip)
+        public static IQueryable<T> SkipOrAll<T>(this IQueryable<T> src, int? skip)
         {
             return skip.HasValue ? src.Skip((int)skip) : src;
         }
-        public static IEnumerable<T> TakeOrAll<T>(this IEnumerable<T> src, int? take)
+        public static IQueryable<T> TakeOrAll<T>(this IQueryable<T> src, int? take)
         {
             return take.HasValue ? src.Take((int)take) : src;
         }
