@@ -1,12 +1,12 @@
 
-const Style = theme => ({
+export const Style = theme => ({
   root: {
     flexGrow: 1,
     padding: 8 * 3
   },
 });
 
-export default Style;
+
 
 import {createMuiTheme} from '@material-ui/core';
 import {deepPurple, deepOrange} from '@material-ui/core/colors';
