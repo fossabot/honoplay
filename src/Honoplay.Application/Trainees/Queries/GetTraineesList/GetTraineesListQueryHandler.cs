@@ -33,21 +33,22 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineesList
                     .AsNoTracking()
                 , cancellationToken);
 
-            if (!traineesQuery.Any())
-            {
-                throw new NotFoundException();
-            }
-
-            var filteredTrainees = await traineesQuery
+            var traineesList = await traineesQuery
                 .SkipOrAll(request.Skip)
                 .TakeOrAll(request.Take)
                 .Select(TraineesListModel.Projection)
                 .OrderBy(x => x.Id)
                 .ToListAsync(cancellationToken);
 
+
+            if (!traineesList.Any())
+            {
+                throw new NotFoundException();
+            }
+
             return new ResponseModel<TraineesListModel>(numberOfTotalItems: traineesQuery.LongCount(),
                                                         numberOfSkippedItems: request.Skip,
-                                                        source: filteredTrainees);
+                                                        source: traineesList);
 
 
         }

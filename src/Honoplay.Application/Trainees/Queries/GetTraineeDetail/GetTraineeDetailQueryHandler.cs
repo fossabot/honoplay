@@ -32,7 +32,6 @@ namespace Honoplay.Application.Trainees.Queries.GetTraineeDetail
                     .Include(x => x.Department)
                     .Where(x => x.Id == request.Id 
                                 && x.Department.TenantId == request.TenantId)
-                    .ToList()
                 , cancellationToken);
 
             var trainee = redisTrainees.FirstOrDefault(x => x.Id == request.Id);

@@ -31,12 +31,7 @@ namespace Honoplay.Application.Trainers.Queries.GetTrainersList
                     .Where(t => t.Department.TenantId == request.TenantId)
                     .AsNoTracking()
                 , cancellationToken);
-
-            if (!trainersQuery.Any())
-            {
-                throw new NotFoundException();
-            }
-
+            
             var trainersList = await trainersQuery
                 .SkipOrAll(request.Skip)
                 .TakeOrAll(request.Take)
@@ -44,7 +39,14 @@ namespace Honoplay.Application.Trainers.Queries.GetTrainersList
                 .OrderBy(x => x.Id)
                 .ToListAsync(cancellationToken);
 
-            return new ResponseModel<TrainersListModel>(numberOfTotalItems: trainersQuery.LongCount(), numberOfSkippedItems: request.Take, source: trainersList);
+            if (!trainersList.Any())
+            {
+                throw new NotFoundException();
+            }
+
+            return new ResponseModel<TrainersListModel>(numberOfTotalItems: trainersQuery.LongCount(),
+                                                        numberOfSkippedItems: request.Take,
+                                                        source: trainersList);
         }
     }
 }
