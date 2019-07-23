@@ -21,25 +21,23 @@ namespace Honoplay.Application.Tenants.Queries.GetTenantsList
 
         public async Task<ResponseModel<TenantsListModel>> Handle(GetTenantsListQuery request, CancellationToken cancellationToken)
         {
-            var allTenants = await _context.Tenants
+            var tenantsQuery = _context.Tenants
                 .Where(x => x.Id == request.TenantId)
-                .AsNoTracking()
-                .OrderBy(x => x.Name)
-                .ToListAsync(cancellationToken);
+                .AsNoTracking();
 
-            var filteredTenants = allTenants
+            var filteredTenants = await tenantsQuery
                 .SkipOrAll(request.Skip)
                 .TakeOrAll(request.Take)
-                .AsQueryable()
                 .Select(TenantsListModel.Projection)
-                .ToList();
+                .OrderBy(x => x.Id)
+                .ToListAsync(cancellationToken);
 
             if (!filteredTenants.Any())
             {
                 throw new NotFoundException();
             }
 
-            return new ResponseModel<TenantsListModel>(numberOfTotalItems: allTenants.LongCount(), numberOfSkippedItems: request.Take, source: filteredTenants);
+            return new ResponseModel<TenantsListModel>(numberOfTotalItems: tenantsQuery.LongCount(), numberOfSkippedItems: request.Take, source: filteredTenants);
         }
     }
 }

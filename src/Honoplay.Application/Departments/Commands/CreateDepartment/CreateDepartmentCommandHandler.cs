@@ -6,7 +6,6 @@ using Honoplay.Persistence.CacheService;
 using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -33,7 +32,7 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
             var redisKey = $"DepartmentsByTenantId{request.TenantId}";
             var newDepartments = new List<Department>();
 
-            using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
+            using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
                 try
                 {
@@ -52,13 +51,15 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
                     await _context.Departments.AddRangeAsync(newDepartments, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
 
-                    var departmentsByTenantId = _context.Departments.Where(x => x.TenantId == request.TenantId).ToListAsync(cancellationToken);
-
-                    await _cacheService.RedisCacheUpdateAsync(redisKey,
-                        delegate { return departmentsByTenantId; },
-                        cancellationToken);
+                    var departmentsByTenantId = await _context.Departments
+                        .Where(x => x.TenantId == request.TenantId)
+                        .ToListAsync(cancellationToken);
 
                     transaction.Commit();
+
+                    await _cacheService.RedisCacheUpdateAsync(redisKey,
+                        _ => departmentsByTenantId,
+                        cancellationToken);
                 }
                 catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))

@@ -26,27 +26,25 @@ namespace Honoplay.Application.Answers.Queries.GetAnswersList
             CancellationToken cancellationToken)
         {
             var redisKey = $"AnswersWithQuestionByTenantId{request.TenantId}";
-            var allAnswersList = await _cacheService.RedisCacheAsync(redisKey, delegate
-            {
-                return _context.Answers
+            var answersQuery = await _cacheService.RedisCacheAsync(redisKey, _ => _context.Answers
                     .Include(x => x.Question)
                     .AsNoTracking()
-                    .Where(x => x.Question.TenantId == request.TenantId);
-            }, cancellationToken);
+                    .Where(x => x.Question.TenantId == request.TenantId)
+                , cancellationToken);
 
-            if (!allAnswersList.Any())
+            if (!answersQuery.Any())
             {
                 throw new NotFoundException();
             }
 
-            var answersList = allAnswersList
-                .Select(AnswersListModel.Projection)
-                .OrderBy(x => x.Id)
+            var answersList = await answersQuery
                 .SkipOrAll(request.Skip)
                 .TakeOrAll(request.Take)
-                .ToList();
+                .Select(AnswersListModel.Projection)
+                .OrderBy(x => x.Id)
+                .ToListAsync(cancellationToken);
 
-            return new ResponseModel<AnswersListModel>(numberOfTotalItems: answersList.Count, numberOfSkippedItems: request.Skip, source: answersList);
+            return new ResponseModel<AnswersListModel>(numberOfTotalItems: answersQuery.LongCount(), numberOfSkippedItems: request.Skip, source: answersList);
 
         }
     }

@@ -26,28 +26,25 @@ namespace Honoplay.Application.Questions.Queries.GetQuestionsList
         public async Task<ResponseModel<QuestionsListModel>> Handle(GetQuestionsListQuery request, CancellationToken cancellationToken)
         {
             var redisKey = $"QuestionsByTenantId{request.TenantId}";
-            var questionsList = await _cacheService.RedisCacheAsync<IList<QuestionsListModel>>(redisKey, delegate
-            {
-                return _context.Questions
+            var questionsQuery = await _cacheService.RedisCacheAsync(redisKey,
+                _ => _context.Questions
                     .Where(x => x.TenantId == request.TenantId)
                     .AsNoTracking()
-                    .Select(QuestionsListModel.Projection)
-                    .ToList();
+                , cancellationToken);
 
-            }, cancellationToken);
-
-            if (!questionsList.Any())
+            if (!questionsQuery.Any())
             {
                 throw new NotFoundException();
             }
 
-            questionsList = questionsList
-                .OrderBy(x => x.Id)
+            var questionsList = await questionsQuery
                 .SkipOrAll(request.Skip)
                 .TakeOrAll(request.Take)
-                .ToList();
+                .Select(QuestionsListModel.Projection)
+                .OrderBy(x => x.Id)
+                .ToListAsync(cancellationToken);
 
-            return new ResponseModel<QuestionsListModel>(numberOfTotalItems: questionsList.Count, numberOfSkippedItems: request.Skip, source: questionsList);
+            return new ResponseModel<QuestionsListModel>(numberOfTotalItems: questionsQuery.LongCount(), numberOfSkippedItems: request.Skip, source: questionsList);
 
         }
     }

@@ -6,6 +6,7 @@ using Honoplay.Persistence.CacheService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -38,7 +39,7 @@ namespace Honoplay.Application.Answers.Commands.CreateAnswer
                 try
                 {
                     var questionIsExist = await _context.Questions
-                        .AnyAsync(x => 
+                        .AnyAsync(x =>
                             x.Id == request.QuestionId,
                             cancellationToken);
 
@@ -49,18 +50,15 @@ namespace Honoplay.Application.Answers.Commands.CreateAnswer
 
                     await _context.Answers.AddAsync(newAnswer, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
+                    
+                    transaction.Commit();
 
                     await _cacheService.RedisCacheUpdateAsync(redisKey,
-                        delegate
-                        {
-                            return _context.Answers
-                                .AsNoTracking()
-                                .Include(x => x.Question)
-                                .ToListAsync(cancellationToken);
-                        },
-                        cancellationToken);
-
-                    transaction.Commit();
+                        _ => _context.Answers
+                            .AsNoTracking()
+                            .Include(x => x.Question)
+                            .ToList()
+                        , cancellationToken);
                 }
                 catch (NotFoundException)
                 {

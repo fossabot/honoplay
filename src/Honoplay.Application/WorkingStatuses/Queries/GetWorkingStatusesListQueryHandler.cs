@@ -1,6 +1,6 @@
 ﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Common._Exceptions;
-using Honoplay.Domain.Entities;
+using Honoplay.Common.Extensions;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
 using MediatR;
@@ -26,26 +26,25 @@ namespace Honoplay.Application.WorkingStatuses.Queries
         {
             var redisKey = $"WorkingStatusesByTenantId{request.TenantId}";
 
-            var allWorkingStatusesList = await _cacheService.RedisCacheAsync(redisKey: redisKey, redisLogic: delegate
-            {
-                return _context.WorkingStatuses
+            var workingStatusesQuery = await _cacheService.RedisCacheAsync(redisKey,
+                _ => _context.WorkingStatuses
                     .Where(x => x.TenantId == request.TenantId)
-                    .AsNoTracking();
-            }, cancellationToken: cancellationToken);
+                    .AsNoTracking()
+                , cancellationToken);
 
-            if (!allWorkingStatusesList.Any())
+            if (!workingStatusesQuery.Any())
             {
                 throw new NotFoundException();
             }
 
-            var workingStatusesList = allWorkingStatusesList
-                .Skip(request.Skip)
-                .Take(request.Take)
+            var workingStatusesList = await workingStatusesQuery
+                .SkipOrAll(request.Skip)
+                .TakeOrAll(request.Take)
+                .OrderBy(x => x.Id)
                 .Select(WorkingStatusesListModel.Projection)
-                .OrderBy(x => x.Name)
-                .ToList();
+                .ToListAsync(cancellationToken);
 
-            return new ResponseModel<WorkingStatusesListModel>(numberOfTotalItems: allWorkingStatusesList.ToList().Count,
+            return new ResponseModel<WorkingStatusesListModel>(numberOfTotalItems: workingStatusesQuery.LongCount(),
                                                                numberOfSkippedItems: request.Skip,
                                                                source: workingStatusesList);
         }

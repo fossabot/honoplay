@@ -5,7 +5,6 @@ using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,28 +26,25 @@ namespace Honoplay.Application.Professions.Queries.GetProfessionsList
             CancellationToken cancellationToken)
         {
             var redisKey = $"ProfessionsByTenantId{request.TenantId}";
-            var professionsList = await _cacheService.RedisCacheAsync<IList<ProfessionsListModel>>(redisKey, delegate
-            {
-                return _context.Professions
-                    .Where(x => x.TenantId == request.TenantId)
-                    .AsNoTracking()
-                    .Select(ProfessionsListModel.Projection)
-                    .ToList();
+            var professionsQuery = await _cacheService.RedisCacheAsync(redisKey,
+                _ => _context.Professions
+                     .Where(x => x.TenantId == request.TenantId)
+                     .AsNoTracking()
+                , cancellationToken);
 
-            }, cancellationToken);
-
-            if (!professionsList.Any())
+            if (!professionsQuery.Any())
             {
                 throw new NotFoundException();
             }
 
-            professionsList = professionsList
-                .OrderBy(x => x.Name)
+            var professionsList = await professionsQuery
                 .SkipOrAll(request.Skip)
                 .TakeOrAll(request.Take)
-                .ToList();
+                .Select(ProfessionsListModel.Projection)
+                .OrderBy(x => x.Id)
+                .ToListAsync(cancellationToken);
 
-            return new ResponseModel<ProfessionsListModel>(numberOfTotalItems: professionsList.Count, numberOfSkippedItems: request.Skip, source: professionsList);
+            return new ResponseModel<ProfessionsListModel>(numberOfTotalItems: professionsQuery.LongCount(), numberOfSkippedItems: request.Skip, source: professionsList);
 
         }
     }
