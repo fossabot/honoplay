@@ -43,7 +43,7 @@ namespace Honoplay.AdminWebAPI
             services.AddDistributedRedisCache(options =>
             {
                 options.InstanceName = "honoplay";
-                options.Configuration = "127.0.0.1";
+                options.Configuration = Environment.GetEnvironmentVariable("REDIS_CACHE_SERVICE")?.ToString();
             });
 
             // Add MediatR
