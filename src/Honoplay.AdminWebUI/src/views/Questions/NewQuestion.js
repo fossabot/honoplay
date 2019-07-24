@@ -6,7 +6,7 @@ import Style from '../Style';
 import Typography from '../../components/Typography/TypographyComponent';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
-import Options from '../../components/Options/OptionsComponent';
+import Options from './Options';
 
 import { connect } from "react-redux";
 import { createQuestion } from "@omegabigdata/honoplay-redux-helper/Src/actions/Question";
@@ -52,7 +52,7 @@ class NewQuestion extends React.Component {
           loading: false,
           questionsError: false,
         });
-      
+
       }
     }
   }
@@ -61,6 +61,7 @@ class NewQuestion extends React.Component {
     text: '',
     duration: ''
   }
+
   handleClick = () => {
     this.props.createQuestion(this.questionsModel);
   }
@@ -68,7 +69,6 @@ class NewQuestion extends React.Component {
   render() {
     const { questionsError, loading, question } = this.state;
     const { classes } = this.props;
-    console.log('aaa', this.state.question);
     return (
       <div className={classes.root}>
         <Grid container spacing={24}>
@@ -115,8 +115,12 @@ class NewQuestion extends React.Component {
               />
             )}
           </Grid>
+          <Grid item xs={12} sm={12}>
+            <Typography
+              pageHeader={translate('Options')}
+            />
+          </Grid>
           <Grid item xs={12} sm={12}> <Divider /> </Grid>
-          <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12}>
             <TextField
@@ -128,8 +132,14 @@ class NewQuestion extends React.Component {
               }}
               value={question}
               rowsMax="4"
+              InputProps={{
+                classes: {
+                  input: classes.textField
+                }
+              }}
             />
           </Grid>
+          <Options/>
         </Grid>
       </div>
     );

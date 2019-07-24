@@ -1,52 +1,36 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, Typography, Checkbox, MuiThemeProvider } from '@material-ui/core';
-import {Style,theme} from './Style';
+import { translate } from '@omegabigdata/terasu-api-proxy';
+import { Grid, Checkbox, MuiThemeProvider, IconButton, TextField } from '@material-ui/core';
+import { Style, theme } from './Style';
 import Input from '../Input/InputTextComponent';
 
 class OptionsComponent extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-    }
-
     render() {
-        const { classes, data } = this.props;
-
+        const { classes, key } = this.props;
         return (
+
             <MuiThemeProvider theme={theme} >
-                <div className={classes.root}>
-                    <Grid item xs={12} sm={12}>
-                        <Typography>
-                            Doğru Cevap ?
-                        </Typography>
+                <Grid container key={key} >
+                    <Grid item xs={12} sm={1}>
+                        <Checkbox 
+                            color='secondary'
+                        />
                     </Grid>
-                    {data.map((data, id) => (
-                        <Grid container direction="row" spacing={24} key={id}>
-                            <Grid item xs={12} sm={12} />
-                            <Grid item xs={12} sm={1}>
-                                <Checkbox
-                                    color='secondary'
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={1} >
-                                <Input
-                                    disabled
-                                    inputType="text"
-                                    value={data.order}
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={10} >
-                                <Input
-                                    disabled
-                                    inputType="text"
-                                    value={data.answer}
-                                />
-                            </Grid>
-                        </Grid>
-                    ))}
-                </div>
+                    <Grid item xs={12} sm={1}>
+                        <Input
+                            inputType="text"
+                            placeholder={translate('Order')}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={5} >
+                        <Input
+                            inputType="text"
+                            placeholder={translate('Answer')}
+                        />
+                    </Grid>
+                </Grid>
             </MuiThemeProvider>
         );
     }

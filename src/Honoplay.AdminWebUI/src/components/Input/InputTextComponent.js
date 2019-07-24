@@ -19,7 +19,8 @@ const InputTextComponent = (props) => {
     onChange,
     error,
     endAdornment,
-    disabled
+    disabled,
+    placeholder
   } = props;
   return (
 
@@ -35,6 +36,7 @@ const InputTextComponent = (props) => {
         )}
         <Grid item xs={12} sm={9}>
           <InputBase
+            placeholder={placeholder}
             disabled={disabled}
             onChange={onChange}
             multiline={multiline}
