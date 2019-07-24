@@ -1,7 +1,7 @@
 ﻿using Honoplay.AdminWebAPI;
-using Honoplay.Application.Answers.Commands.CreateAnswer;
-using Honoplay.Application.Answers.Commands.UpdateAnswer;
-using Honoplay.Application.Answers.Queries.GetAnswersList;
+using Honoplay.Application.Options.Commands.CreateOption;
+using Honoplay.Application.Options.Commands.UpdateOption;
+using Honoplay.Application.Options.Queries.GetOptionsList;
 using Honoplay.Common.Constants;
 using Honoplay.System.Tests.Extensions;
 using Newtonsoft.Json;
@@ -13,32 +13,32 @@ using Xunit;
 
 namespace Honoplay.System.Tests.Controllers
 {
-    public class AnswerControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
+    public class OptionControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
         private readonly CustomWebApplicationFactory<Startup> _factory;
 
-        public AnswerControllerIntegrationTests(CustomWebApplicationFactory<Startup> factory)
+        public OptionControllerIntegrationTests(CustomWebApplicationFactory<Startup> factory)
         {
             _factory = factory;
         }
 
         [Fact]
-        public async Task CanCreateAnswerAsync()
+        public async Task CanCreateOptionAsync()
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var createAnswerCommand = new CreateAnswerCommand
+            var createOptionCommand = new CreateOptionCommand
             {
                 Text = "Asagidakilerden hangisi asagidadir?",
                 OrderBy = 1,
                 QuestionId = 1,
             };
 
-            var serializedAnswerCommand = JsonConvert.SerializeObject(createAnswerCommand);
+            var serializedOptionCommand = JsonConvert.SerializeObject(createOptionCommand);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await authorizedClient.PostAsync(requestUri: "api/Answer",
-                content: new StringContent(content: serializedAnswerCommand,
+            var httpResponse = await authorizedClient.PostAsync(requestUri: "api/Option",
+                content: new StringContent(content: serializedOptionCommand,
                     encoding: Encoding.UTF8,
                     mediaType: StringConstants.ApplicationJson));
 
@@ -50,11 +50,11 @@ namespace Honoplay.System.Tests.Controllers
         }
 
         [Fact]
-        public async Task CanUpdateAnswer()
+        public async Task CanUpdateOption()
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var updateAnswerCommand = new UpdateAnswerCommand
+            var updateOptionCommand = new UpdateOptionCommand
             {
                 Id = 1,
                 Text = "Yukaridakilerden hangisi aslinda asagidadir?",
@@ -62,10 +62,10 @@ namespace Honoplay.System.Tests.Controllers
                 QuestionId = 1
             };
 
-            var serializedUpdateCommand = JsonConvert.SerializeObject(updateAnswerCommand);
+            var serializedUpdateCommand = JsonConvert.SerializeObject(updateOptionCommand);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await authorizedClient.PutAsync(requestUri: "api/Answer",
+            var httpResponse = await authorizedClient.PutAsync(requestUri: "api/Option",
                     content: new StringContent(content: serializedUpdateCommand,
                     encoding: Encoding.UTF8,
                     mediaType: StringConstants.ApplicationJson));
@@ -78,29 +78,29 @@ namespace Honoplay.System.Tests.Controllers
         }
 
         [Fact]
-        public async Task CanGetAnswersList()
+        public async Task CanGetOptionsList()
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var getAnswersListQuery = new GetAnswersListQueryModel
+            var getOptionsListQuery = new GetOptionsListQueryModel
             {
                 Skip = 0,
                 Take = 10
             };
 
             var httpResponse = await authorizedClient.GetAsync(
-                requestUri: $"api/Answer?Skip={getAnswersListQuery.Skip}&Take={getAnswersListQuery.Take}");
+                requestUri: $"api/Option?Skip={getOptionsListQuery.Skip}&Take={getOptionsListQuery.Take}");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
         }
 
         [Fact]
-        public async Task CanGetAnswerDetail()
+        public async Task CanGetOptionDetail()
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await authorizedClient.GetAsync(requestUri: $"api/Answer/1");
+            var httpResponse = await authorizedClient.GetAsync(requestUri: $"api/Option/1");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);

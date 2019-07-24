@@ -4,33 +4,33 @@
         <name>Honoplay.AdminWebAPI</name>
     </assembly>
     <members>
-        <member name="M:Honoplay.AdminWebAPI.Controllers.AnswerController.Post(Honoplay.Application.Answers.Commands.CreateAnswer.CreateAnswerCommand)">
+        <member name="M:Honoplay.AdminWebAPI.Controllers.OptionController.Post(Honoplay.Application.Options.Commands.CreateOption.CreateOptionCommand)">
             <summary>
-            This service create answer.
+            This service create option.
             </summary>
-            <param name="command">Create answer model</param>
-            <returns>CreateAnswerModel with status code.</returns>
+            <param name="command">Create option model</param>
+            <returns>CreateOptionModel with status code.</returns>
         </member>
-        <member name="M:Honoplay.AdminWebAPI.Controllers.AnswerController.Put(Honoplay.Application.Answers.Commands.UpdateAnswer.UpdateAnswerCommand)">
+        <member name="M:Honoplay.AdminWebAPI.Controllers.OptionController.Put(Honoplay.Application.Options.Commands.UpdateOption.UpdateOptionCommand)">
             <summary>
-            This service update answer.
+            This service update option.
             </summary>
-            <param name="command">Update answer model</param>
-            <returns>UpdateAnswerModel with status code.</returns>
+            <param name="command">Update option model</param>
+            <returns>UpdateOptionModel with status code.</returns>
         </member>
-        <member name="M:Honoplay.AdminWebAPI.Controllers.AnswerController.Get(Honoplay.Application.Answers.Queries.GetAnswersList.GetAnswersListQueryModel)">
+        <member name="M:Honoplay.AdminWebAPI.Controllers.OptionController.Get(Honoplay.Application.Options.Queries.GetOptionsList.GetOptionsListQueryModel)">
             <summary>
-            This service update answer.
+            This service update option.
             </summary>
-            <param name="query">GetAll answer model</param>
-            <returns>Get all answers list by tenant id with status code.</returns>
+            <param name="query">GetAll option model</param>
+            <returns>Get all options list by tenant id with status code.</returns>
         </member>
-        <member name="M:Honoplay.AdminWebAPI.Controllers.AnswerController.Get(System.Int32)">
+        <member name="M:Honoplay.AdminWebAPI.Controllers.OptionController.Get(System.Int32)">
             <summary>
-            This service update answer.
+            This service update option.
             </summary>
-            <param name="id">Get answer model</param>
-            <returns>Get answer by tenant id and answer id with status code.</returns>
+            <param name="id">Get option model</param>
+            <returns>Get option by tenant id and option id with status code.</returns>
         </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.QuestionController.Post(Honoplay.Application.Questions.Commands.CreateQuestion.CreateQuestionCommand)">
             <summary>

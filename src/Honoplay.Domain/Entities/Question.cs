@@ -7,14 +7,14 @@ namespace Honoplay.Domain.Entities
     {
         public Question()
         {
-            Answers = new HashSet<Answer>();
+            Options = new HashSet<Option>();
         }
         public int Id { get; set; }
         public Guid TenantId { get; set; }
         public string Text { get; set; }
         public int Duration { get; set; }
 
-        public virtual ICollection<Answer> Answers { get; set; }
+        public virtual ICollection<Option> Options { get; set; }
         public Tenant Tenant { get; set; }
     }
 }
