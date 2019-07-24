@@ -6,7 +6,7 @@ namespace Honoplay.Application.Options.Commands.CreateOption
     {
         public CreateOptionValidator()
         {
-            RuleFor(x => x.OrderBy)
+            RuleFor(x => x.VisibilityOrder)
                 .NotNull()
                 .NotEmpty();
 

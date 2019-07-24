@@ -46,7 +46,7 @@ namespace Honoplay.Application.Options.Commands.UpdateOption
                         throw new NotFoundException(nameof(Option), request.Id);
                     }
 
-                    updateOption.OrderBy = request.OrderBy;
+                    updateOption.VisibilityOrder = request.VisibilityOrder;
                     updateOption.QuestionId = request.QuestionId;
                     updateOption.Text = request.Text;
                     updateOption.UpdatedAt = updatedAt;
@@ -60,7 +60,7 @@ namespace Honoplay.Application.Options.Commands.UpdateOption
                         Id = x.Id,
                         CreatedBy = x.CreatedBy,
                         UpdatedBy = x.UpdatedBy,
-                        OrderBy = x.OrderBy,
+                        VisibilityOrder = x.VisibilityOrder,
                         QuestionId = x.QuestionId,
                         Text = x.Text,
                         UpdatedAt = x.UpdatedAt
@@ -94,7 +94,7 @@ namespace Honoplay.Application.Options.Commands.UpdateOption
             }
             var updateOptionModel = new UpdateOptionModel(request.Id,
                                                           request.Text,
-                                                          request.OrderBy,
+                                                          request.VisibilityOrder,
                                                           request.QuestionId,
                                                           request.UpdatedBy,
                                                           updatedAt);

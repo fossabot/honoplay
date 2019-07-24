@@ -22,7 +22,7 @@ namespace Honoplay.Application.Tests.Options.Commands.UpdateOption
                 {
                     QuestionId = 1,
                     Text = "option1",
-                    OrderBy = 1,
+                    VisibilityOrder = 1,
                     Id = 1
                 }
             ).IsValid);
@@ -33,7 +33,7 @@ namespace Honoplay.Application.Tests.Options.Commands.UpdateOption
         {
             _updateOptionValidator.ShouldHaveValidationErrorFor(x => x.Text, string.Empty);
             _updateOptionValidator.ShouldHaveValidationErrorFor(x => x.QuestionId, 0);
-            _updateOptionValidator.ShouldHaveValidationErrorFor(x => x.OrderBy, 0);
+            _updateOptionValidator.ShouldHaveValidationErrorFor(x => x.VisibilityOrder, 0);
         }
     }
 }

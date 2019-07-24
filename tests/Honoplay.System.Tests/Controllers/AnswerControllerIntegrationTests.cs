@@ -30,7 +30,7 @@ namespace Honoplay.System.Tests.Controllers
             var createOptionCommand = new CreateOptionCommand
             {
                 Text = "Asagidakilerden hangisi asagidadir?",
-                OrderBy = 1,
+                VisibilityOrder = 1,
                 QuestionId = 1,
             };
 
@@ -58,7 +58,7 @@ namespace Honoplay.System.Tests.Controllers
             {
                 Id = 1,
                 Text = "Yukaridakilerden hangisi aslinda asagidadir?",
-                OrderBy = 321,
+                VisibilityOrder = 321,
                 QuestionId = 1
             };
 

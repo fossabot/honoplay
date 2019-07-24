@@ -22,7 +22,7 @@ namespace Honoplay.Application.Tests.Options.Commands.CreateOption
                 {
                     QuestionId = 1,
                     Text = "Option1",
-                    OrderBy = 2
+                    VisibilityOrder = 2
                 }
             ).IsValid);
         }
@@ -32,7 +32,7 @@ namespace Honoplay.Application.Tests.Options.Commands.CreateOption
         {
             _createOptionValidator.ShouldHaveValidationErrorFor(x => x.Text, string.Empty);
             _createOptionValidator.ShouldHaveValidationErrorFor(x => x.QuestionId, 0);
-            _createOptionValidator.ShouldHaveValidationErrorFor(x => x.OrderBy, 0);
+            _createOptionValidator.ShouldHaveValidationErrorFor(x => x.VisibilityOrder, 0);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Honoplay.Application.Options.Commands.UpdateOption
         public int Id { get; private set; }
         public int QuestionId { get; private set; }
         public string Text { get; private set; }
-        public int OrderBy { get; private set; }
+        public int VisibilityOrder { get; private set; }
         public int UpdatedBy { get; private set; }
         public DateTimeOffset UpdatedAt { get; private set; }
 
@@ -16,7 +16,7 @@ namespace Honoplay.Application.Options.Commands.UpdateOption
             Id = id;
             Text = text;
             QuestionId = questionId;
-            OrderBy = orderBy;
+            VisibilityOrder = orderBy;
             UpdatedBy = updatedBy;
             UpdatedAt = updatedAt;
         }

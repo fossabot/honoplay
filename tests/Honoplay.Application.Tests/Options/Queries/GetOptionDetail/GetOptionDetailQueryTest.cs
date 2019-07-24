@@ -71,7 +71,7 @@ namespace Honoplay.Application.Tests.Options.Queries.GetOptionDetail
             {
                 Id=1,
                 CreatedBy = adminUser.Id,
-                OrderBy = 2,
+                VisibilityOrder = 2,
                 QuestionId = question.Id,
                 Text = "testOption",
             };

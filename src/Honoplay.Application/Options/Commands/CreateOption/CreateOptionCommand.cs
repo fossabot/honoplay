@@ -13,6 +13,7 @@ namespace Honoplay.Application.Options.Commands.CreateOption
         public Guid TenantId { get; set; }
         public int QuestionId { get; set; }
         public string Text { get; set; }
-        public int OrderBy { get; set; }
+        public int? VisibilityOrder { get; set; }
+        public bool IsCorrect { get; set; }
     }
 }

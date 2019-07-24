@@ -83,7 +83,7 @@ namespace Honoplay.Application.Tests.Options.Commands.CreateOption
                 CreatedBy = _adminUserId,
                 QuestionId = _questionId,
                 Text = "option1",
-                OrderBy = 1
+                VisibilityOrder = 1
             };
 
             var optionModel = await _createOptionCommandHandler.Handle(createOption, CancellationToken.None);

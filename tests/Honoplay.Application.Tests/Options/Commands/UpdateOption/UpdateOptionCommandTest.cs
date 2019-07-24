@@ -70,7 +70,7 @@ namespace Honoplay.Application.Tests.Options.Commands.UpdateOption
             var option = new Option
             {
                 CreatedBy = adminUser.Id,
-                OrderBy = 2,
+                VisibilityOrder = 2,
                 QuestionId = question.Id,
                 Text = "Option1",
             };
@@ -96,7 +96,7 @@ namespace Honoplay.Application.Tests.Options.Commands.UpdateOption
                 UpdatedBy = _adminUserId,
                 QuestionId = _questionId,
                 Text = "option1",
-                OrderBy = 1
+                VisibilityOrder = 1
             };
 
             var optionModel = await _updateOptionCommandHandler.Handle(updateOption, CancellationToken.None);

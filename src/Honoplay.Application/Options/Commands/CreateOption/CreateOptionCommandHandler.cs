@@ -28,9 +28,10 @@ namespace Honoplay.Application.Options.Commands.CreateOption
             var newOption = new Option
             {
                 CreatedBy = request.CreatedBy,
-                OrderBy = request.OrderBy,
+                VisibilityOrder = request.VisibilityOrder,
                 QuestionId = request.QuestionId,
-                Text = request.Text
+                Text = request.Text,
+                IsCorrect = request.IsCorrect
             };
 
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
@@ -38,7 +39,7 @@ namespace Honoplay.Application.Options.Commands.CreateOption
                 try
                 {
                     var questionIsExist = await _context.Questions
-                        .AnyAsync(x => 
+                        .AnyAsync(x =>
                             x.Id == request.QuestionId,
                             cancellationToken);
 
@@ -75,10 +76,11 @@ namespace Honoplay.Application.Options.Commands.CreateOption
             }
             var createdOption = new CreateOptionModel(newOption.Id,
                                                       newOption.Text,
-                                                      newOption.OrderBy,
+                                                      newOption.VisibilityOrder,
                                                       newOption.QuestionId,
                                                       newOption.CreatedBy,
-                                                      newOption.CreatedAt);
+                                                      newOption.CreatedAt,
+                                                      newOption.IsCorrect);
 
             return new ResponseModel<CreateOptionModel>(createdOption);
         }

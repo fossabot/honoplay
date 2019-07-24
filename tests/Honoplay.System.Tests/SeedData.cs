@@ -113,7 +113,7 @@ namespace Honoplay.System.Tests
 
             var option = new Option
             {
-                OrderBy = 1,
+                VisibilityOrder = 1,
                 CreatedBy = adminUser.Id,
                 Text = "yukaridadir",
                 QuestionId = question.Id

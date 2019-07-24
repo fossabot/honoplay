@@ -9,7 +9,7 @@ namespace Honoplay.Application.Options.Queries.GetOptionsList
         public int Id { get; set; }
         public int QuestionId { get; set; }
         public string Text { get; set; }
-        public int OrderBy { get; set; }
+        public int? VisibilityOrder { get; set; }
         public int CreatedBy { get; set; }
         public DateTimeOffset CreatedAt { get; private set; }
         public int? UpdatedBy { get; set; }
@@ -24,7 +24,7 @@ namespace Honoplay.Application.Options.Queries.GetOptionsList
                     Id = option.Id,
                     Text = option.Text,
                     QuestionId = option.QuestionId,
-                    OrderBy = option.OrderBy,
+                    VisibilityOrder = option.VisibilityOrder,
                     CreatedBy = option.CreatedBy,
                     UpdatedBy = option.UpdatedBy,
                     UpdatedAt = option.UpdatedAt,
