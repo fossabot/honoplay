@@ -20,7 +20,7 @@ else
         --network frontend \
 		--env TZ=Asia/Istanbul \
 		--env SERVICE_ADDRESS=admin.honoplay.com \
-		--env NEW_RELIC_APP_NAME=admin-honoplay-turkey \
+		--env REDIS_CACHE_SERVICE=honoplay_redis_cache_service \
 		--env DC=DC-1 \
         --mount type=bind,source=/root/honoplay_static_files,destination=/app/wwwroot \
         --constraint 'node.labels.is-application-node == true' \
