@@ -25,7 +25,7 @@ import { connect } from "react-redux";
 import {
   fetchWorkingStatusList,
   postWorkingStatus
-} from "@omegabigdata/honoplay-redux-helper/Src/actions/WorkingStatus";
+} from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/WorkingStatus";
 
 function Transition(props) {
   return <Slide direction="up" {...props} />;

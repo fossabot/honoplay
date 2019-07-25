@@ -14,7 +14,7 @@ import Input from '../../components/Input/InputTextComponent';
 import Table from '../../components/Table/TableComponent';
 
 import { connect } from "react-redux";
-import { register } from "@omegabigdata/honoplay-redux-helper/Src/actions/AdminUser";
+import { register } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/AdminUser";
 
 class UserManagement extends React.Component {
 

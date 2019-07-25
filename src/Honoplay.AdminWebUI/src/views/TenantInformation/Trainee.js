@@ -13,9 +13,9 @@ import Table from '../../components/Table/TableComponent';
 import TraineesUpdate from './TraineesUpdate';
 
 import { connect } from "react-redux";
-import { fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Trainee";
-import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Department";
-import { fetchWorkingStatusList } from "@omegabigdata/honoplay-redux-helper/Src/actions/WorkingStatus";
+import { fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee";
+import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department";
+import { fetchWorkingStatusList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/WorkingStatus";
 import { genderToString } from '../../helpers/Converter';
 
 class Trainee extends React.Component {

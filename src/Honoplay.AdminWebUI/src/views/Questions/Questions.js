@@ -9,7 +9,7 @@ import Table from '../../components/Table/TableComponent';
 import QuestionsUpdate from './QuestionsUpdate';
 
 import { connect } from "react-redux";
-import { fetchQuestionList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Question";
+import { fetchQuestionList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Question";
 
 class Questions extends React.Component {
 

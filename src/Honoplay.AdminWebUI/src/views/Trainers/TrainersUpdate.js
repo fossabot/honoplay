@@ -12,8 +12,8 @@ import DropDown from '../../components/Input/DropDownInputComponent';
 import Button from '../../components/Button/ButtonComponent';
 
 import { connect } from "react-redux";
-import { updateTrainer, fetchTrainer, fetchTrainersList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Trainer";
-import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Department";
+import { updateTrainer, fetchTrainer, fetchTrainersList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainer";
+import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department";
 
 class TraineesUpdate extends React.Component {
 

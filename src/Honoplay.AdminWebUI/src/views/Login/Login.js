@@ -21,7 +21,7 @@ import {
 import withStyles from "@material-ui/core/styles/withStyles";
 import { Style, theme } from "./Style";
 import { connect } from "react-redux";
-import { fetchToken } from "@omegabigdata/honoplay-redux-helper/Src/actions/AdminUser";
+import { fetchToken } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/AdminUser";
 
 class Login extends React.Component {
   constructor(props) {

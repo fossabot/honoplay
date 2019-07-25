@@ -18,13 +18,13 @@ import { connect } from "react-redux";
 import {
     createTrainer,
     fetchTrainersList
-} from "@omegabigdata/honoplay-redux-helper/Src/actions/Trainer";
+} from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainer";
 
 import { departmentToString } from "../../helpers/Converter";
 import TrainersUpdate from './TrainersUpdate';
 
-import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Department";
-import { createProfession, fetchProfessionList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Profession";
+import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department";
+import { createProfession, fetchProfessionList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Profession";
 
 
 class Trainers extends React.Component {

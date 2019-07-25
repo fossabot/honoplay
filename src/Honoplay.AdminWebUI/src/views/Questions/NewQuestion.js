@@ -9,7 +9,7 @@ import Button from '../../components/Button/ButtonComponent';
 import Options from './Options';
 
 import { connect } from "react-redux";
-import { createQuestion } from "@omegabigdata/honoplay-redux-helper/Src/actions/Question";
+import { createQuestion } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Question";
 
 class NewQuestion extends React.Component {
 
