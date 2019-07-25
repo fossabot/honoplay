@@ -14,7 +14,7 @@ import { connect } from "react-redux";
 import {
   fetchDepartmentList,
   createDepartment
-} from "@omegabigdata/honoplay-redux-helper/Src/actions/Department";
+} from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department";
 
 class Department extends React.Component {
 

@@ -903,10 +903,10 @@
     axios-retry "^3.1.2"
     chai-http "^4.3.0"
 
-"@omegabigdata/honoplay-redux-helper@^0.2.5":
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-redux-helper/-/honoplay-redux-helper-0.2.5.tgz#e32b7511c93737532b3be8957c17851c2653bbef"
-  integrity sha512-q8/NIxGEfKeYmgyjnOq2yUSppc+MIA+d0J6H+XdUcD9gWSOHYA21ZYWF08GQojuCCca2V3yDjp9Um+NmcTX9Xw==
+"@omegabigdata/honoplay-redux-helper@^0.2.8":
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-redux-helper/-/honoplay-redux-helper-0.2.8.tgz#723177ad62c4d466b6e15784092e00bd00d5aa2f"
+  integrity sha512-VWO04qge8JltQzTbi8C4oMVxq7McCuBVQvhyWE8zOoCr3HlaoicKjUOvKRdhx4LbN47DtjmuIg5Afr7hlNxoMw==
   dependencies:
     "@omegabigdata/honoplay-api-helper-node" "^0.2.1"
     redux "^4.0.1"
@@ -2112,6 +2112,11 @@ core-js-pure@3.1.1:
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.1.1.tgz#92494ab7bae22f156ae93973a5e2738814efa7f8"
   integrity sha512-jH3ZJ0CJ0wwDvWY0olbOComLo6tbWg4kE2x0j4+wlqYnofwF9mYm98YvADuENUzGw69IddmWFCF1FQ2S0jP96A==
 
+core-js@^0.8.3:
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-0.8.4.tgz#c22665f1e0d1b9c3c5e1b08dabd1f108695e4fcf"
+  integrity sha1-wiZl8eDRucPF4bCNq9HxCGleT88=
+
 core-js@^1.0.0:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-1.2.7.tgz#652294c14651db28fa93bd2d5ff2983a4f08c636"
@@ -3273,7 +3278,7 @@ global-prefix@^1.0.1:
     is-windows "^1.0.1"
     which "^1.2.14"
 
-global@^4.3.0:
+global@^4.3.0, global@^4.3.2:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/global/-/global-4.4.0.tgz#3e7b105179006a323ed71aafca3e9c57a5cc6406"
   integrity sha512-wv/LAoHdRE3BeTGz53FAamhGlPLhlssK45usmGFThIi4XqnBmjKQ16u+RNbP7WvigRZDxUsM0J3gcQ5yicaL0w==
@@ -4548,6 +4553,14 @@ mocha@^6.1.4:
     yargs "13.2.2"
     yargs-parser "13.0.0"
     yargs-unparser "1.5.0"
+
+mock-local-storage@^1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/mock-local-storage/-/mock-local-storage-1.1.8.tgz#82a3f7c666bf955d64b286cb71207478f1a29bf7"
+  integrity sha512-x/LPtSBqSROQGjJn60Fp0+rgOHZuuQZysgeSYfhG2l/moD0LLW60bKi4KpmCnNs9S3l0cbS5cmzQFzeKDL7RaQ==
+  dependencies:
+    core-js "^0.8.3"
+    global "^4.3.2"
 
 moo@^0.4.3:
   version "0.4.3"

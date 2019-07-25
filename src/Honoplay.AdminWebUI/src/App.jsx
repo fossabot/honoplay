@@ -9,7 +9,7 @@ import Trainers from "./views/Trainers/Trainers";
 import UserManagement from "./views/UserManagement/UserManagement";
 import NewQuestion from "./views/Questions/NewQuestion";
 
-import setToken from "@omegabigdata/honoplay-redux-helper/Src/actions/index";
+import setToken from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/index";
 
 
 class App extends Component {

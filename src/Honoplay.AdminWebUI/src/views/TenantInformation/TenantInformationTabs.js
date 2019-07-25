@@ -22,9 +22,9 @@ import Department from "./Department";
 import Trainee from "./Trainee";
 
 import { connect } from "react-redux";
-import { createTenant } from "@omegabigdata/honoplay-redux-helper/Src/actions/Tenant";
-import { createTrainee, fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Trainee";
-import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Department";
+import { createTenant } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Tenant";
+import { createTrainee, fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee";
+import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department";
 
 class TenantInformationTabs extends React.Component {
   constructor(props) {

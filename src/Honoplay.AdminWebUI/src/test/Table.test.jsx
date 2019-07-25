@@ -46,14 +46,14 @@ describe('<Table/>', () => {
   
   })
 
-  it('should call TableMenu on TableRow(checkbox) click', () => {
-    const wrapper = shallow (<Table 
-      data = {[{'id':0, 'Name':'Şaduman', 'Surname':'Küçük', 'User Name': 'sadumankucuk'}]}                                  
-      columns = {['Name','Surname','User Name',' ']}/>).dive();
-    wrapper.find(TableRow).at(1).simulate('click');
-    wrapper.setState({selected: [0]});
-    expect(wrapper.find(TableMenu)).to.have.lengthOf(1);
-  })
+//   it('should call TableMenu on TableRow(checkbox) click', () => {
+//     const wrapper = shallow (<Table 
+//       data = {[{'id':0, 'Name':'Şaduman', 'Surname':'Küçük', 'User Name': 'sadumankucuk'}]}                                  
+//       columns = {['Name','Surname','User Name',' ']}/>).dive();
+//     wrapper.find(TableRow).at(1).simulate('click');
+//     wrapper.setState({selected: [0]});
+//     expect(wrapper.find(TableMenu)).to.have.lengthOf(1);
+//   })
 })
 
 describe('<TableToolbar/>', () => {

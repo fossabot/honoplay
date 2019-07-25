@@ -11,7 +11,7 @@ import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 
 import { connect } from "react-redux";
-import { updateQuestion, fetchQuestion, fetchQuestionList } from "@omegabigdata/honoplay-redux-helper/Src/actions/Question";
+import { updateQuestion, fetchQuestion, fetchQuestionList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Question";
 
 
 class QuestionsUpdate extends React.Component {
