@@ -33,7 +33,6 @@ namespace Honoplay.Application.Tests.Options.Commands.UpdateOption
         {
             _updateOptionValidator.ShouldHaveValidationErrorFor(x => x.Text, string.Empty);
             _updateOptionValidator.ShouldHaveValidationErrorFor(x => x.QuestionId, 0);
-            _updateOptionValidator.ShouldHaveValidationErrorFor(x => x.VisibilityOrder, 0);
         }
     }
 }

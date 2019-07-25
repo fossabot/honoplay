@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -39,7 +38,7 @@ namespace Honoplay.AdminWebAPI.Controllers
 
                 var createOptionModel = await Mediator.Send(command);
 
-                return Created($"api/option/{createOptionModel.Items.Single().Text}", createOptionModel);
+                return Created($"api/option/{createOptionModel.Items}", createOptionModel);
             }
             catch (ObjectAlreadyExistsException ex)
             {

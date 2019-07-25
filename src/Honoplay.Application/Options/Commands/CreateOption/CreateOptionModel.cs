@@ -4,13 +4,13 @@ namespace Honoplay.Application.Options.Commands.CreateOption
 {
     public struct CreateOptionModel
     {
-        public int Id { get; private set; }
-        public int QuestionId { get; private set; }
-        public string Text { get; private set; }
-        public int? VisibilityOrder { get; private set; }
-        public int CreatedBy { get; private set; }
-        public DateTimeOffset CreatedAt { get; private set; }
-        public bool IsCorrect { get; set; }
+        public int Id { get; }
+        public int QuestionId { get; }
+        public string Text { get; }
+        public int? VisibilityOrder { get; }
+        public int CreatedBy { get; }
+        public DateTimeOffset CreatedAt { get; }
+        public bool IsCorrect { get; }
 
         public CreateOptionModel(int id, string text, int? visibilityOrder, int questionId, int createdBy, DateTimeOffset createdAt, bool isCorrect)
         {

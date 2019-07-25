@@ -1,4 +1,6 @@
-﻿using FluentValidation;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FluentValidation;
 using FluentValidation.TestHelper;
 using Honoplay.Application.Options.Commands.CreateOption;
 using Xunit;
@@ -17,22 +19,24 @@ namespace Honoplay.Application.Tests.Options.Commands.CreateOption
         [Fact]
         public void ShouldBeValid()
         {
-            Assert.True(_createOptionValidator.Validate(
-                new CreateOptionCommand
+            var newOption = new List<CreateOptionCommandModel>
+            {
+                new CreateOptionCommandModel
                 {
+                    Text = "sample",
                     QuestionId = 1,
-                    Text = "Option1",
-                    VisibilityOrder = 2
+                    IsCorrect = true,
+                    VisibilityOrder = 0
                 }
-            ).IsValid);
+            };
+            Assert.True(_createOptionValidator.Validate(new CreateOptionCommand { CreateOptionModels = newOption }).IsValid);
         }
 
         [Fact]
         public void ShouldBeNotValidForNullOrEmpty()
         {
-            _createOptionValidator.ShouldHaveValidationErrorFor(x => x.Text, string.Empty);
-            _createOptionValidator.ShouldHaveValidationErrorFor(x => x.QuestionId, 0);
-            _createOptionValidator.ShouldHaveValidationErrorFor(x => x.VisibilityOrder, 0);
+            _createOptionValidator.ShouldHaveValidationErrorFor(x => x.CreateOptionModels.FirstOrDefault().Text, string.Empty);
+            _createOptionValidator.ShouldHaveValidationErrorFor(x => x.CreateOptionModels.FirstOrDefault().QuestionId, null);
         }
     }
 }

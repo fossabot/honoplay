@@ -1,4 +1,5 @@
-﻿using Honoplay.AdminWebAPI;
+﻿using System.Collections.Generic;
+using Honoplay.AdminWebAPI;
 using Honoplay.Application.Options.Commands.CreateOption;
 using Honoplay.Application.Options.Commands.UpdateOption;
 using Honoplay.Application.Options.Queries.GetOptionsList;
@@ -29,9 +30,15 @@ namespace Honoplay.System.Tests.Controllers
 
             var createOptionCommand = new CreateOptionCommand
             {
-                Text = "Asagidakilerden hangisi asagidadir?",
-                VisibilityOrder = 1,
-                QuestionId = 1,
+                CreateOptionModels = new List<CreateOptionCommandModel>
+                {
+                    new CreateOptionCommandModel
+                    {
+                        QuestionId = 1,
+                        Text = "option1",
+                        VisibilityOrder = 1
+                    }
+                }
             };
 
             var serializedOptionCommand = JsonConvert.SerializeObject(createOptionCommand);

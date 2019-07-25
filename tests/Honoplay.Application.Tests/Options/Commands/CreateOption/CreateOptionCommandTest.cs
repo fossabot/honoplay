@@ -1,13 +1,14 @@
-﻿using Honoplay.Common.Extensions;
+﻿using Honoplay.Application.Options.Commands.CreateOption;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application.Options.Commands.CreateOption;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Options.Commands.CreateOption
@@ -81,9 +82,15 @@ namespace Honoplay.Application.Tests.Options.Commands.CreateOption
             {
                 TenantId = _tenantId,
                 CreatedBy = _adminUserId,
-                QuestionId = _questionId,
-                Text = "option1",
-                VisibilityOrder = 1
+                CreateOptionModels = new List<CreateOptionCommandModel>
+                {
+                    new CreateOptionCommandModel
+                    {
+                        QuestionId = _questionId,
+                        Text = "option1",
+                        VisibilityOrder = 1
+                    }
+                }
             };
 
             var optionModel = await _createOptionCommandHandler.Handle(createOption, CancellationToken.None);

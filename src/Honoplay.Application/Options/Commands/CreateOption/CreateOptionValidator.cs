@@ -6,18 +6,12 @@ namespace Honoplay.Application.Options.Commands.CreateOption
     {
         public CreateOptionValidator()
         {
-            RuleFor(x => x.VisibilityOrder)
-                .NotNull()
-                .NotEmpty();
-
-            RuleFor(x => x.QuestionId)
-                .NotNull()
-                .NotEmpty();
-
-            RuleFor(x => x.Text)
-                .NotNull()
-                .NotEmpty();
+            RuleForEach(x => x.CreateOptionModels).SetValidator(new InlineValidator<CreateOptionCommandModel> {
+                orderValidator => orderValidator.RuleFor(x => x.Text).NotNull().NotEmpty(),
+                orderValidator => orderValidator.RuleFor(x => x.QuestionId).NotNull().NotEmpty()
+            });
 
         }
+
     }
 }

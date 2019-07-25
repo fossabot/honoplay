@@ -10,10 +10,6 @@ namespace Honoplay.Application.Options.Commands.UpdateOption
                 .NotNull()
                 .NotEmpty();
 
-            RuleFor(x => x.VisibilityOrder)
-                .NotNull()
-                .NotEmpty();
-
             RuleFor(x => x.QuestionId)
                 .NotNull()
                 .NotEmpty();

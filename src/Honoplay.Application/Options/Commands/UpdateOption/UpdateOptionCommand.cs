@@ -15,6 +15,6 @@ namespace Honoplay.Application.Options.Commands.UpdateOption
         public Guid TenantId { get; set; }
         public int QuestionId { get; set; }
         public string Text { get; set; }
-        public int VisibilityOrder { get; set; }
+        public int? VisibilityOrder { get; set; }
     }
 }
