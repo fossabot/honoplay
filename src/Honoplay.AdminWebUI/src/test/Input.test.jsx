@@ -12,11 +12,12 @@ configure({ adapter: new Adapter() });
 
 
 import DropDownInput from '../components/Input/DropDownInputComponent';
-import FileInput from '../components/Input/ImageInputComponent';
+import ImageInput from '../components/Input/ImageInputComponent';
 import Input from '../components/Input/InputTextComponent';
 
-import { IconButton, Modal, Button } from '@material-ui/core';
+import { IconButton, Modal, Button, InputBase } from '@material-ui/core';
 
+//to do update
 describe('<DropDownInput/>', () => {
 
     it('should have props for data and labelName', () => {
@@ -50,16 +51,16 @@ describe('<DropDownInput/>', () => {
     // });
 })
 
-describe('<FileInput/>', () => {
+describe('<ImageInput/>', () => {
     it('should have props for labelName', () => {
-        const wrapper = shallow(<FileInput
+        const wrapper = shallow(<ImageInput
             labelName='Tenant Logo'
         />);
         wrapper.props().labelName.should.be.defined;
     });
 
     it('should have filename cahnge when button is clicked ', () => {
-        const wrapper = shallow(<FileInput
+        const wrapper = shallow(<ImageInput
             labelName="Tenant Logo"
         />).dive();
         wrapper.find(Button).simulate('click');
@@ -69,12 +70,61 @@ describe('<FileInput/>', () => {
 })
 
 describe('<Input/>', () => {
-    it('should have props for labelName and inputType', () => {
+
+    it('should have props for labelName and onChange', () => {
+        const onChange = sinon.spy();
         const wrapper = shallow(<Input
-            labelName='Name'
             inputType='text'
+            onChange={onChange}
         />);
-        wrapper.props().labelName.should.be.defined;
         wrapper.props().inputType.should.be.defined;
+        wrapper.props().onChange.should.be.defined;
+    })
+
+    it('should be of type `function` onChange ', () => {
+        const onChange = sinon.spy();
+        const wrapper = shallow(<Input
+            inputType='text'
+            onChange={onChange}
+        />);
+        expect(typeof wrapper.props().onChange === 'function').to.equal(true);
+    });
+
+    it("should update the state when a value is input", () => {
+        const name = 'test';
+        const onChange = sinon.spy();
+        const wrapper = mount(<Input
+            inputType='text'
+            name='name'
+            value={name}
+            onChange={onChange}
+        />);
+        wrapper.find(InputBase).simulate('change', {
+            target: {
+                name: 'name',
+                value: name,
+            }
+        });
+        expect(wrapper.prop('value')).to.equal('test');
+    })
+
+    it('should display an error when error', () => {
+        const onChange = sinon.spy();
+        const wrapper = shallow(<Input
+            inputType='text'
+            onChange={onChange}
+            error
+        />).dive();
+        expect(wrapper.find(InputBase).prop('error')).to.equal(true);
+    })
+
+    it('should display an placeholder if input has placeholder', () => {
+        const onChange = sinon.spy();
+        const wrapper = shallow(<Input
+            inputType='text'
+            onChange={onChange}
+            placeholder='name'
+        />).dive();
+        expect(wrapper.find(InputBase).prop('placeholder')).to.equal('name');
     })
 })

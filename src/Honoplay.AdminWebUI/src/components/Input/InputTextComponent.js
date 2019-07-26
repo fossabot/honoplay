@@ -18,8 +18,6 @@ const InputTextComponent = (props) => {
     value,
     onChange,
     error,
-    endAdornment,
-    disabled,
     placeholder
   } = props;
   return (
@@ -36,14 +34,13 @@ const InputTextComponent = (props) => {
         )}
         <Grid item xs={12} sm={9}>
           <InputBase
+            error = {error ? true : false}
             placeholder={placeholder}
-            disabled={disabled}
             onChange={onChange}
             multiline={multiline}
             name={name}
             value={value}
             type={inputType}
-            endAdornment={endAdornment}
             fullWidth
             classes={{
               root: classes.bootstrapRoot,
