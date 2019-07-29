@@ -111,14 +111,14 @@ namespace Honoplay.System.Tests
             };
             dbContext.Questions.Add(question);
 
-            var answer = new Answer
+            var option = new Option
             {
-                OrderBy = 1,
+                VisibilityOrder = 1,
                 CreatedBy = adminUser.Id,
                 Text = "yukaridadir",
                 QuestionId = question.Id
             };
-            dbContext.Answers.Add(answer);
+            dbContext.Options.Add(option);
 
             dbContext.SaveChanges();
         }
