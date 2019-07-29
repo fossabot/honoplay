@@ -1,4 +1,4 @@
-import { addReducerToList } from '@omegabigdata/honoplay-redux-helper/index';
+import { addReducerToList } from '@omegabigdata/honoplay-redux-helper/dist/Src/reducers/index';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 

@@ -58,6 +58,38 @@ export const Style = (theme) => ({
       left: -4,
       zIndex: 1,
     },
+    workingStatusDiv: {
+      maxHeight: 200,
+      overflow: 'auto',
+      display: 'flex',
+      justifyContent: 'left',
+      flexWrap: 'wrap',
+      padding: theme.spacing.unit / 1,
+      paddingBottom: 20,
+      borderRadius: 3,
+      borderColor: '#e0e0e0',
+      borderStyle: 'solid',
+      borderWidth: 1,
+    },
+    workingStatusList: {
+      paddingLeft: 20,
+      paddingTop: 5
+    },
+    addProgress: {
+      color: green[500],
+      position: 'absolute',
+      marginTop: -30,
+      marginLeft: 18
+    },
+    loadingProgress: {
+      color: green[500],
+      position: 'absolute',
+      marginTop: -20,
+      marginLeft: 420
+    },
+    searchBar: {
+      width:'100%'
+    }
 });
 
 export const theme = createMuiTheme({

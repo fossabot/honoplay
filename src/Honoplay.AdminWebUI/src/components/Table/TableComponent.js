@@ -17,7 +17,7 @@ import { Style, theme } from './Style';
 
 import EnhancedTableHead from './EnhancedTableHead';
 import EnhancedTableToolbar from './EnhancedTableToolbar';
-import Modal from '../Modal/Modal';
+import Modal from '../Modal/ModalComponent';
 
 class TableComponent extends React.Component {
 

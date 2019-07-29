@@ -13,7 +13,7 @@ configure({ adapter: new Adapter() });
 import Table from '../components/Table/TableComponent';
 import TableToolbar from '../components/Table/EnhancedTableToolbar';
 import TableHead from '../components/Table/EnhancedTableHead';
-import Modal from '../components/Modal/Modal';
+import Modal from '../components/Modal/ModalComponent';
 
 import {
   TableRow, IconButton, Typography,

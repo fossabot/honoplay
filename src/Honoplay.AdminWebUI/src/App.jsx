@@ -13,13 +13,13 @@ import setToken from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/index
 
 
 class App extends Component {
-  componentDidMount() {
-    let token = localStorage.getItem("token");
-    if (token) {
-      console.log("token var :", token);
-      setToken.setToken(token);
-    }
-  }
+  // componentDidMount() {
+  //   let token = localStorage.getItem("token");
+  //   if (token) {
+  //     console.log("token var :", token);
+  //     setToken.setToken(token);
+  //   }
+  // }
 
   render() {
     return (

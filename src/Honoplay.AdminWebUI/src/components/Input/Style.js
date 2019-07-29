@@ -80,14 +80,6 @@ export const Style = (theme) => ({
     nativeWidth: {
       width: '90%'
     },
-    searchRoot: {
-      padding: '2px 4px',
-      display: 'flex',
-      alignItems: 'center',
-    },
-    searchIconButton: {
-      padding: 10,
-    },
 });
 
 import { withStyles } from '@material-ui/core/styles';

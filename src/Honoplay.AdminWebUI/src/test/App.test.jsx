@@ -11,7 +11,7 @@ import Trainers from "../views/Trainers/Trainers";
 import UserManagement from "../views/UserManagement/UserManagement";
 import NewQuestion from "../views/Questions/NewQuestion";
 
-//on the localstorage for token
+// on the localstorage for token
 global.window = {}
 import 'mock-local-storage'
 window.localStorage = global.localStorage

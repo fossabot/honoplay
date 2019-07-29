@@ -14,10 +14,10 @@ configure({ adapter: new Adapter() });
 import DropDownInput from '../components/Input/DropDownInputComponent';
 import ImageInput from '../components/Input/ImageInputComponent';
 import Input from '../components/Input/InputTextComponent';
+import Modal from '../components/Modal/ModalComponent';
 
-import { IconButton, Modal, Button, InputBase } from '@material-ui/core';
+import { IconButton, Button, InputBase } from '@material-ui/core';
 
-//to do update
 describe('<DropDownInput/>', () => {
 
     it('should have props for data and labelName', () => {
@@ -39,16 +39,16 @@ describe('<DropDownInput/>', () => {
         expect(wrapper.find('option').at(1, 2).prop('value')).to.equal(0, 1);
     })
 
-    // it('should open Modal when IconButton click', async () => {
-    //     await init(3);
-    //     const wrapper = mount(<DropDownInput
-    //         data={[{ 'id': 0, 'Name': 'Stajyer' }]}
-    //         labelName='Working Status'
-    //         describable
-    //     />);
-    //     wrapper.find(IconButton).simulate('click');
-    //     expect(wrapper.find(Modal).prop('open')).to.equal(true);
-    // });
+    it('should open Modal when IconButton click', async () => {
+        await init(3);
+        const wrapper = mount(<DropDownInput
+            data={[{ 'id': 0, 'Name': 'Stajyer' }]}
+            labelName='Working Status'
+            describable
+        />);
+        wrapper.find(IconButton).simulate('click');
+        expect(wrapper.find(Modal).prop('open')).to.equal(true);
+    });
 })
 
 describe('<ImageInput/>', () => {
