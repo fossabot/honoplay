@@ -7,7 +7,11 @@ import App from '../App.jsx';
 import { Route } from 'react-router-dom';
 import Questions from '../views/Questions/Questions';
 import TenantInformation from '../views/TenantInformation/TenantInformation';
+import Trainers from "../views/Trainers/Trainers";
+import UserManagement from "../views/UserManagement/UserManagement";
+import NewQuestion from "../views/Questions/NewQuestion";
 
+// on the localstorage for token
 global.window = {}
 import 'mock-local-storage'
 window.localStorage = global.localStorage
@@ -31,6 +35,18 @@ describe('<App/>', () => {
 
   it('Should redirect to Tenant Information page', () => {
     (pathMap['/home/tenantinformation']).should.equal(TenantInformation);
+  })
+
+  it('Should redirect to Trainers page', () => {
+    (pathMap['/home/trainers']).should.equal(Trainers);
+  })
+
+  it('Should redirect to User Management page', () => {
+    (pathMap['/home/usermanagement']).should.equal(UserManagement);
+  })
+
+  it('Should redirect to New Question page', () => {
+    (pathMap['/home/addquestion']).should.equal(NewQuestion);
   })
   
 })

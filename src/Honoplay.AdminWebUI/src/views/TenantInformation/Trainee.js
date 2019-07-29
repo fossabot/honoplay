@@ -11,6 +11,7 @@ import DropDown from '../../components/Input/DropDownInputComponent';
 import Table from '../../components/Table/TableComponent';
 
 import TraineesUpdate from './TraineesUpdate';
+import WorkingStatuses from './WorkingStatus';
 
 import { connect } from "react-redux";
 import { fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee";
@@ -124,7 +125,9 @@ class Trainee extends React.Component {
               onChange={this.handleChange}
               name="workingStatusId"
               value={this.traineeModel.workingStatusId}
-            />
+            >
+              <WorkingStatuses data={workingStatuses}/>
+            </DropDown>
             <Input
               error={isErrorTrainee}
               labelName={translate('Name')}

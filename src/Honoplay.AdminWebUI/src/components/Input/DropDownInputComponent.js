@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Children } from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, InputLabel, NativeSelect, IconButton } from '@material-ui/core';
@@ -23,7 +23,7 @@ class DropDownInputComponent extends React.Component {
 
   render() {
     const { open } = this.state;
-    const { classes, labelName, describable, onChange, error, name, value, data } = this.props;
+    const { classes, labelName, describable, onChange, error, name, value, data, children } = this.props;
     return (
       <div className={classes.inputRoot}>
         <Grid container spacing={24}>
@@ -59,12 +59,12 @@ class DropDownInputComponent extends React.Component {
             }
           </Grid>
         </Grid>
-        <Modal handleClickClose={this.handleClose}
+        <Modal
+          handleClose={this.handleClose}
           open={open}
-          data={data}
-          modalTitle={`${labelName} ${translate('Add')}`}
-          modalInputName={labelName}
-        />
+        >
+          {children}
+        </Modal>
       </div>
     );
   }
