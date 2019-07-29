@@ -26,13 +26,12 @@ namespace Honoplay.Application.Options.Queries.GetOptionsList
             CancellationToken cancellationToken)
         {
             var redisKey = $"OptionsWithQuestionByTenantId{request.TenantId}";
-            var allOptionsList = await _cacheService.RedisCacheAsync(redisKey, delegate
-            {
-                return _context.Options
+            var allOptionsList = await _cacheService.RedisCacheAsync(redisKey,
+                _ => _context.Options
                     .Include(x => x.Question)
                     .AsNoTracking()
-                    .Where(x => x.Question.TenantId == request.TenantId);
-            }, cancellationToken);
+                    .Where(x => x.Question.TenantId == request.TenantId)
+                , cancellationToken);
 
             if (!allOptionsList.Any())
             {
