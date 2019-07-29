@@ -43,7 +43,8 @@ namespace Honoplay.Application.Trainers.Commands.CreateTrainer
             {
                 try
                 {
-                    var isExistAnyDepartment = await _context.Departments.AnyAsync(x =>
+                    var isExistAnyDepartment = await _context.Departments
+                        .AnyAsync(x =>
                             x.TenantId == request.TenantId
                             && x.Id == request.DepartmentId,
                         cancellationToken);
@@ -56,14 +57,14 @@ namespace Honoplay.Application.Trainers.Commands.CreateTrainer
                     await _context.AddAsync(trainer, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
 
-                    await _cacheService.RedisCacheUpdateAsync(redisKey, delegate
-                    {
-                        return _context.Trainers.Include(x => x.Department)
-                            .Where(x => x.Department.TenantId == request.TenantId)
-                            .ToList();
-                    }, cancellationToken);
-
                     transaction.Commit();
+
+                    await _cacheService.RedisCacheUpdateAsync(redisKey,
+                        _ =>
+                            _context.Trainers.Include(x => x.Department)
+                                .Where(x => x.Department.TenantId == request.TenantId)
+                                .ToList()
+                        , cancellationToken);
                 }
                 catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601))
                                                    || (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))

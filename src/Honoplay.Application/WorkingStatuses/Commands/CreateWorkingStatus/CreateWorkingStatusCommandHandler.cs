@@ -42,12 +42,13 @@ namespace Honoplay.Application.WorkingStatuses.Commands.CreateWorkingStatus
                     await _context.WorkingStatuses.AddAsync(workingStatus, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
 
-                    await _cacheService.RedisCacheUpdateAsync(redisKey, delegate
-                        {
-                            return _context.WorkingStatuses.Where(x => x.TenantId == request.TenantId);
-                        }, cancellationToken);
-
                     transaction.Commit();
+
+                    await _cacheService.RedisCacheUpdateAsync(redisKey,
+                        _ => _context.WorkingStatuses
+                            .Where(x => x.TenantId == request.TenantId)
+                            .ToList()
+                        , cancellationToken);
                 }
                 catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
@@ -66,7 +67,11 @@ namespace Honoplay.Application.WorkingStatuses.Commands.CreateWorkingStatus
                     throw new TransactionException();
                 }
             }
-            var workingStatusModel = new CreateWorkingStatusModel(workingStatus.Id, workingStatus.Name, workingStatus.CreatedBy, workingStatus.CreatedAt);
+            var workingStatusModel = new CreateWorkingStatusModel(workingStatus.Id,
+                                                                  workingStatus.Name,
+                                                                  workingStatus.CreatedBy,
+                                                                  workingStatus.CreatedAt);
+
             return new ResponseModel<CreateWorkingStatusModel>(workingStatusModel);
         }
     }

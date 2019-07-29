@@ -35,7 +35,8 @@ namespace Honoplay.Application.Trainers.Commands.UpdateTrainer
             {
                 try
                 {
-                    var trainers = await _context.Trainers.Include(x => x.Department)
+                    var trainers = await _context.Trainers
+                        .Include(x => x.Department)
                         .Where(x => x.Department.TenantId == request.TenantId)
                         .ToListAsync(cancellationToken);
 
@@ -57,11 +58,13 @@ namespace Honoplay.Application.Trainers.Commands.UpdateTrainer
 
                     _context.Update(trainer);
                     await _context.SaveChangesAsync(cancellationToken);
-                    await _cacheService.RedisCacheUpdateAsync(redisKey, delegate
-                    {
-                        return trainers;
-                    }, cancellationToken);
+
                     transaction.Commit();
+
+                    await _cacheService.RedisCacheUpdateAsync(redisKey,
+                        _ =>
+                            trainers
+                        , cancellationToken);
                 }
                 catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
@@ -81,7 +84,14 @@ namespace Honoplay.Application.Trainers.Commands.UpdateTrainer
                 }
             }
 
-            var trainerModel = new UpdateTrainerModel(request.Id, updateAt, request.Name, request.Surname, request.Email, request.PhoneNumber, request.DepartmentId, request.ProfessionId);
+            var trainerModel = new UpdateTrainerModel(request.Id,
+                                                      updateAt,
+                                                      request.Name,
+                                                      request.Surname,
+                                                      request.Email,
+                                                      request.PhoneNumber,
+                                                      request.DepartmentId,
+                                                      request.ProfessionId);
             return new ResponseModel<UpdateTrainerModel>(trainerModel);
         }
     }

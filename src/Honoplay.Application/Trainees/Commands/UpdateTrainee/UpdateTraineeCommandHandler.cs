@@ -33,7 +33,8 @@ namespace Honoplay.Application.Trainees.Commands.UpdateTrainee
             {
                 try
                 {
-                    var trainees = await _context.Trainees.Include(x => x.Department)
+                    var trainees = await _context.Trainees
+                        .Include(x => x.Department)
                         .Where(x => x.Department.TenantId == request.TenantId)
                         .ToListAsync(cancellationToken);
 
@@ -57,12 +58,11 @@ namespace Honoplay.Application.Trainees.Commands.UpdateTrainee
                     _context.Update(trainee);
                     await _context.SaveChangesAsync(cancellationToken);
 
-                    await _cacheService.RedisCacheUpdateAsync(redisKey, delegate
-                     {
-                         return trainees;
-                     }, cancellationToken);
-
                     transaction.Commit();
+
+                    await _cacheService.RedisCacheUpdateAsync(redisKey,
+                        _ => trainees
+                        , cancellationToken);
                 }
                 catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
@@ -82,7 +82,13 @@ namespace Honoplay.Application.Trainees.Commands.UpdateTrainee
                 }
             }
 
-            var traineeModel = new UpdateTraineeModel(request.Id, request.Name, request.Surname, request.NationalIdentityNumber, request.PhoneNumber, request.Gender, updateAt);
+            var traineeModel = new UpdateTraineeModel(request.Id,
+                                                      request.Name,
+                                                      request.Surname,
+                                                      request.NationalIdentityNumber,
+                                                      request.PhoneNumber,
+                                                      request.Gender,
+                                                      updateAt);
             return new ResponseModel<UpdateTraineeModel>(traineeModel);
         }
     }

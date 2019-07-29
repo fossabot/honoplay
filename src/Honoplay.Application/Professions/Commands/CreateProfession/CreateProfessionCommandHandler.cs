@@ -6,7 +6,6 @@ using Honoplay.Persistence.CacheService;
 using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -32,12 +31,14 @@ namespace Honoplay.Application.Professions.Commands.CreateProfession
         {
             var newProfessions = new List<Profession>();
 
-            using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
+            using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
                 var redisKey = $"ProfessionsByTenantId{request.TenantId}";
                 try
                 {
-                    var professionsByTenantId = _context.Professions.Where(x => x.TenantId == request.TenantId).ToListAsync(cancellationToken);
+                    var professionsByTenantId = await _context.Professions
+                        .Where(x => x.TenantId == request.TenantId)
+                        .ToListAsync(cancellationToken);
 
                     foreach (var requestProfession in request.Professions)
                     {
@@ -55,7 +56,7 @@ namespace Honoplay.Application.Professions.Commands.CreateProfession
                     await _context.SaveChangesAsync(cancellationToken);
 
                     await _cacheService.RedisCacheUpdateAsync(redisKey,
-                        delegate { return professionsByTenantId; },
+                        _ => professionsByTenantId,
                         cancellationToken);
 
                     transaction.Commit();
@@ -78,7 +79,7 @@ namespace Honoplay.Application.Professions.Commands.CreateProfession
                 }
             }
 
-            var professions = new CreateProfessionModel(professions: newProfessions);
+            var professions = new CreateProfessionModel(newProfessions);
             return new ResponseModel<CreateProfessionModel>(professions);
         }
     }
