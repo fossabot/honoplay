@@ -32,11 +32,5 @@ namespace Honoplay.Application.Tests.Options.Commands.CreateOption
             Assert.True(_createOptionValidator.Validate(new CreateOptionCommand { CreateOptionModels = newOption }).IsValid);
         }
 
-        [Fact]
-        public void ShouldBeNotValidForNullOrEmpty()
-        {
-            _createOptionValidator.ShouldHaveValidationErrorFor(x => x.CreateOptionModels.FirstOrDefault().Text, string.Empty);
-            _createOptionValidator.ShouldHaveValidationErrorFor(x => x.CreateOptionModels.FirstOrDefault().QuestionId, null);
-        }
     }
 }
