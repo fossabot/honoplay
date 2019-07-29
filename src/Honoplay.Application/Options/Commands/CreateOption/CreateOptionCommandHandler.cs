@@ -57,14 +57,6 @@ namespace Honoplay.Application.Options.Commands.CreateOption
                             IsCorrect = createOptionModel.IsCorrect
                         };
                         newOptions.Add(newOption);
-
-                        createdOptions.Add(new CreateOptionModel(newOption.Id,
-                                                                 newOption.Text,
-                                                                 newOption.VisibilityOrder,
-                                                                 newOption.QuestionId,
-                                                                 newOption.CreatedBy,
-                                                                 newOption.CreatedAt,
-                                                                 newOption.IsCorrect));
                     }
 
                     if (newOptions.Count > 20)
@@ -84,6 +76,14 @@ namespace Honoplay.Application.Options.Commands.CreateOption
                                  .Include(x => x.Question)
                                  .ToListAsync(cancellationToken),
                         cancellationToken);
+
+                    newOptions.ForEach(x => createdOptions.Add(new CreateOptionModel(x.Id,
+                                                                                     x.Text,
+                                                                                     x.VisibilityOrder,
+                                                                                     x.QuestionId,
+                                                                                     x.CreatedBy,
+                                                                                     x.CreatedAt,
+                                                                                     x.IsCorrect)));
                 }
                 catch (NotFoundException)
                 {
