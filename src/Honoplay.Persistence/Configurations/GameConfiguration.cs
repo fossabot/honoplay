@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Honoplay.Persistence.Configurations
 {
-    public class TrainingSeriesConfiguration : IEntityTypeConfiguration<TrainingSeries>
+    public class GameConfiguration : IEntityTypeConfiguration<Game>
     {
-        public void Configure(EntityTypeBuilder<TrainingSeries> builder)
+        public void Configure(EntityTypeBuilder<Game> builder)
         {
             //Id
             builder.HasKey(x => x.Id);
@@ -17,15 +17,6 @@ namespace Honoplay.Persistence.Configurations
             builder.Property(x => x.Name)
                 .IsRequired()
                 .HasMaxLength(50);
-
-            //INDEXES
-            builder.HasIndex(x => new { x.TenantId, x.Name }).IsUnique();
-
-            //RELATIONS
-            //Tenant
-            builder.HasOne(x => x.Tenant)
-                .WithMany(x => x.TrainingSerieses)
-                .HasForeignKey(x => x.TenantId);
         }
     }
 }

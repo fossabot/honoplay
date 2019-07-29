@@ -19,6 +19,7 @@ namespace Honoplay.Persistence.Configurations
 
             //Name
             builder.Property(x => x.Name)
+                .IsRequired()
                 .HasMaxLength(50);
 
             //INDEXES
