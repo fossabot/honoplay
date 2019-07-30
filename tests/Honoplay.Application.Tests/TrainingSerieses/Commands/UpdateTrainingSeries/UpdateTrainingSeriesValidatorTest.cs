@@ -1,6 +1,7 @@
-﻿using System.Linq;
+﻿using FluentValidation.TestHelper;
+using Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries;
+using System.Linq;
 using Xunit;
-    Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries
 
 namespace Honoplay.Application.Tests.TrainingSerieses.Commands.UpdateTrainingSeries
 {

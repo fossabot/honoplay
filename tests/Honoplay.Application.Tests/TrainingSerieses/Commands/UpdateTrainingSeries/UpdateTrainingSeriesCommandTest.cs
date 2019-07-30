@@ -6,6 +6,7 @@ using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -84,7 +85,7 @@ namespace Honoplay.Application.Tests.TrainingSerieses.Commands.UpdateTrainingSer
             {
                 Id = _trainingSeriesId,
                 Name = "updateTest",
-                UpdatedId = _adminUserId,
+                UpdatedBy = _adminUserId,
                 TenantId = _tenantId
             };
 
@@ -102,7 +103,7 @@ namespace Honoplay.Application.Tests.TrainingSerieses.Commands.UpdateTrainingSer
             {
                 Id = _trainingSeriesId + 1,
                 Name = "updateTest",
-                UpdatedId = _adminUserId,
+                UpdatedBy = _adminUserId,
                 TenantId = _tenantId
             };
 
