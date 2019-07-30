@@ -1,21 +1,22 @@
-﻿using Xunit;
+﻿using FluentValidation.TestHelper;
 using Honoplay.Application.TrainingSerieses.Queries.GetTrainingSeriesesList;
+using Xunit;
 
 namespace Honoplay.Application.Tests.TrainingSerieses.Queries.GetTrainingSeriesesList
 {
     public class GetTrainingSeriesesListValidatorTest
     {
-        private readonly GetTrainingSeriesListValidator _validator;
+        private readonly GetTrainingSeriesesListValidator _validator;
 
-        public GetTrainingSeriesListValidatorTest()
+        public GetTrainingSeriesesListValidatorTest()
         {
-            _validator = new GetTrainingSeriesListValidator();
+            _validator = new GetTrainingSeriesesListValidator();
         }
 
         [Fact]
         public void ShouldBeValid()
         {
-            Assert.True(_validator.Validate(new GetTrainingSeriesListQueryModel { Take = 5 }).IsValid);
+            Assert.True(_validator.Validate(new GetTrainingSeriesesListQueryModel { Take = 5 }).IsValid);
         }
 
         [Fact]
