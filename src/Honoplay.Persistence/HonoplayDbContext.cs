@@ -24,6 +24,11 @@ namespace Honoplay.Persistence
         public DbSet<Profession> Professions { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Option> Options { get; set; }
+        public DbSet<TrainingSeries> TrainingSerieses { get; set; }
+        public DbSet<Training> Trainings { get; set; }
+        public DbSet<Classroom> Classrooms { get; set; }
+        public DbSet<Level> Levels { get; set; }
+        public DbSet<Game> Games { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
