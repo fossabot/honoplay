@@ -8,7 +8,11 @@ namespace Honoplay.Application.TrainingSerieses.Commands.CreateTrainingSeries
         {
             RuleForEach(x => x.CreateTrainingSeriesModels)
                 .SetValidator(new InlineValidator<CreateTrainingSeriesCommandModel> {
-                    inlineValidator => inlineValidator.RuleFor(x => x.Name).NotNull().NotEmpty()
+                    inlineValidator => inlineValidator
+                        .RuleFor(x => x.Name)
+                        .NotNull()
+                        .NotEmpty()
+                        .MaximumLength(50)
                 });
         }
     }

@@ -67,7 +67,7 @@ namespace Honoplay.Application.Tests.TrainingSerieses.Commands.UpdateTrainingSer
                 Name = "testTrainingSeries"
             };
 
-            _context.TrainingSerieses.Add(trainingSeries);
+            context.TrainingSerieses.Add(trainingSeries);
 
             context.SaveChanges();
 
@@ -101,7 +101,7 @@ namespace Honoplay.Application.Tests.TrainingSerieses.Commands.UpdateTrainingSer
         {
             var updateTrainingSeriesCommand = new UpdateTrainingSeriesCommand
             {
-                Id = _trainingSeriesId + 1,
+                Id = 1+_trainingSeriesId,
                 Name = "updateTest",
                 UpdatedBy = _adminUserId,
                 TenantId = _tenantId

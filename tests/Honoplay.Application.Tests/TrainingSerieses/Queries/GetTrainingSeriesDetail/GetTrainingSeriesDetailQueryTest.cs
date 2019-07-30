@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.TrainingSerieses.Queries.GetTrainingSeriesDetail;
 using Xunit;
 
 namespace Honoplay.Application.Tests.TrainingSerieses.Queries.GetTrainingSeriesDetail

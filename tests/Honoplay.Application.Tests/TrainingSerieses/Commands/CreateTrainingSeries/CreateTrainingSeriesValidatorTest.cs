@@ -29,17 +29,5 @@ namespace Honoplay.Application.Tests.TrainingSerieses.Commands.CreateTrainingSer
                 }
             }).IsValid);
         }
-
-        [Fact]
-        public void ShouldBeNotValidForMaxLength()
-        {
-            _validator.ShouldHaveValidationErrorFor(x => x.CreateTrainingSeriesModels.Single().Name, string.Join("", Enumerable.Repeat("x", 51)));
-        }
-
-        [Fact]
-        public void ShouldBeNotValidForNullOrEmpty()
-        {
-            _validator.ShouldHaveValidationErrorFor(x => x.CreateTrainingSeriesModels.Single().Name, string.Empty);
-        }
     }
 }

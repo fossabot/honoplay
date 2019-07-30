@@ -12,7 +12,8 @@ namespace Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries
 
             RuleFor(x => x.Name)
                 .NotNull()
-                .NotEmpty();
+                .NotEmpty()
+                .MaximumLength(50);
         }
     }
 }
