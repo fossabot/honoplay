@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Xunit;
+    Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries
 
 namespace Honoplay.Application.Tests.TrainingSerieses.Commands.UpdateTrainingSeries
 {

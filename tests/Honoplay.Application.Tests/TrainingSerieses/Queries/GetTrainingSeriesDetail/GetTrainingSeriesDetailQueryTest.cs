@@ -1,5 +1,4 @@
-﻿using Honoplay.Application.Trainers.Queries.GetTrainerDetail;
-using Honoplay.Common._Exceptions;
+﻿using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -12,25 +11,25 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
+namespace Honoplay.Application.Tests.TrainingSerieses.Queries.GetTrainingSeriesDetail
 {
-    public class GetTrainerDetailQueryTest : TestBase, IDisposable
+    public class GetTrainingSeriesDetailQueryTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly GetTrainerDetailQueryHandler _queryHandler;
-        private readonly int _trainerId;
+        private readonly GetTrainingSeriesDetailQueryHandler _queryHandler;
+        private readonly int _trainingSeriesId;
         private readonly int _adminUserId;
         private readonly Guid _tenantId;
 
-        public GetTrainerDetailQueryTest()
+        public GetTrainingSeriesDetailQueryTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _adminUserId, out _trainerId, out _tenantId);
-            _queryHandler = new GetTrainerDetailQueryHandler(_context, new CacheManager(cache.Object));
+            _context = InitAndGetDbContext(out _adminUserId, out _trainingSeriesId, out _tenantId);
+            _queryHandler = new GetTrainingSeriesDetailQueryHandler(_context, new CacheManager(cache.Object));
         }
 
         //Arrange
-        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out int trainerId, out Guid tenantId)
+        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out int trainingSeriesId, out Guid tenantId)
         {
             var context = GetDbContext();
 
@@ -59,39 +58,18 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
                 CreatedBy = adminUser.Id
             });
 
-            var department = new Department
-            {
-                CreatedBy = adminUser.Id,
-                Name = "testDepartment",
-                TenantId = tenant.Id
-            };
-
-            context.Departments.Add(department);
-            var profession = new Profession
-            {
-                Name = "testProfession",
-                CreatedBy = adminUser.Id,
-                TenantId = tenant.Id
-            };
-
-            context.Professions.Add(profession);
-
-            var trainer = new Trainer
+            var trainingSeries = new TrainingSeries
             {
                 Name = "testName",
-                DepartmentId = department.Id,
-                Surname = "testSurname",
-                PhoneNumber = "testNumber11111",
+                TenantId = tenant.Id,
                 CreatedBy = adminUser.Id,
-                Email = "test@test.com",
-                ProfessionId = profession.Id
             };
-            context.Trainers.Add(trainer);
+            context.TrainingSerieses.Add(trainingSeries);
 
             context.SaveChanges();
 
             adminUserId = adminUser.Id;
-            trainerId = trainer.Id;
+            trainingSeriesId = trainingSeries.Id;
             tenantId = tenant.Id;
             return context;
         }
@@ -99,19 +77,19 @@ namespace Honoplay.Application.Tests.Trainers.Queries.GetTrainerDetail
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var query = new GetTrainerDetailQuery(_adminUserId, _trainerId, _tenantId);
+            var query = new GetTrainingSeriesDetailQuery(_adminUserId, _trainingSeriesId, _tenantId);
 
             var model = await _queryHandler.Handle(query, CancellationToken.None);
 
             Assert.Null(model.Errors);
-            Assert.Equal(expected: _context.Trainers.FirstOrDefault()?.Name, actual: model.Items.Single().Name, ignoreCase: true);
+            Assert.Equal(expected: _context.TrainingSerieses.FirstOrDefault()?.Name, actual: model.Items.Single().Name, ignoreCase: true);
 
         }
 
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var query = new GetTrainerDetailQuery(_adminUserId, _trainerId + 1, _tenantId);
+            var query = new GetTrainingSeriesDetailQuery(_adminUserId, _trainingSeriesId + 1, _tenantId);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _queryHandler.Handle(query, CancellationToken.None));

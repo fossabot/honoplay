@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using Honoplay.Application.TrainingSerieses.Commands.CreateTrainingSeries;
 
 namespace Honoplay.Application.Tests.TrainingSerieses.Commands.CreateTrainingSeries
 {

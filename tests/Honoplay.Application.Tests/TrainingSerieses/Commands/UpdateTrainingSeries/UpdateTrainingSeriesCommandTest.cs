@@ -9,6 +9,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries;
 
 namespace Honoplay.Application.Tests.TrainingSerieses.Commands.UpdateTrainingSeries
 {
@@ -99,7 +100,7 @@ namespace Honoplay.Application.Tests.TrainingSerieses.Commands.UpdateTrainingSer
         {
             var updateTrainingSeriesCommand = new UpdateTrainingSeriesCommand
             {
-                Id = _trainingSeriesId+1,
+                Id = _trainingSeriesId + 1,
                 Name = "updateTest",
                 UpdatedId = _adminUserId,
                 TenantId = _tenantId
