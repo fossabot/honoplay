@@ -1,11 +1,13 @@
-﻿using Honoplay.Common.Extensions;
+﻿using Honoplay.Application.TrainingSerieses.Commands.CreateTrainingSeries;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
-using Honoplay.Application.TrainingSerieses.Commands.CreateTrainingSeries;
 using Moq;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -72,14 +74,20 @@ namespace Honoplay.Application.Tests.TrainingSerieses.Commands.CreateTrainingSer
             {
                 CreatedBy = _adminUserId,
                 TenantId = _tenantId,
-                Name = "testTraining"
+                CreateTrainingSeriesModels = new List<CreateTrainingSeriesCommandModel>
+                {
+                    new CreateTrainingSeriesCommandModel
+                    {
+                        Name = "trainingSeriesSample"
+                    }
+                }
             };
 
             var trainingSeriesResponseModel = await _commandHandler.Handle(command, CancellationToken.None);
 
             Assert.Null(trainingSeriesResponseModel.Errors);
 
-            Assert.True(trainingSeriesResponseModel.Items.Count > 0);
+            Assert.True(trainingSeriesResponseModel.Items.Single().Count > 0);
         }
 
         public void Dispose() => _context?.Dispose();

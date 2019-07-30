@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using FluentValidation.TestHelper;
+using Honoplay.Application.TrainingSerieses.Commands.CreateTrainingSeries;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using Honoplay.Application.TrainingSerieses.Commands.CreateTrainingSeries;
 
 namespace Honoplay.Application.Tests.TrainingSerieses.Commands.CreateTrainingSeries
 {
@@ -32,13 +33,13 @@ namespace Honoplay.Application.Tests.TrainingSerieses.Commands.CreateTrainingSer
         [Fact]
         public void ShouldBeNotValidForMaxLength()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x.Name, string.Join("", Enumerable.Repeat("x", 51)));
+            _validator.ShouldHaveValidationErrorFor(x => x.CreateTrainingSeriesModels.Single().Name, string.Join("", Enumerable.Repeat("x", 51)));
         }
 
         [Fact]
         public void ShouldBeNotValidForNullOrEmpty()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x.Name, string.Empty);
+            _validator.ShouldHaveValidationErrorFor(x => x.CreateTrainingSeriesModels.Single().Name, string.Empty);
         }
     }
 }
