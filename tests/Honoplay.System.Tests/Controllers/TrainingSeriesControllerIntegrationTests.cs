@@ -62,7 +62,7 @@ namespace Honoplay.System.Tests.Controllers
             var updateTrainingSeriesCommand = new UpdateTrainingSeriesCommand
             {
                 Id = 1,
-                Name = "sample"
+                Name = "sample123"
             };
 
             var serializedUpdateCommand = JsonConvert.SerializeObject(updateTrainingSeriesCommand);

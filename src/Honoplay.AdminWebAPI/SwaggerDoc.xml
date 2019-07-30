@@ -89,5 +89,33 @@
             <param name="command">Create trainee model</param>
             <returns>CreateTraineeModel with status code.</returns>
         </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TrainingSeriesController.Post(Honoplay.Application.TrainingSerieses.Commands.CreateTrainingSeries.CreateTrainingSeriesCommand)">
+            <summary>
+            This service create trainingSeries.
+            </summary>
+            <param name="command">Create trainingSeries model</param>
+            <returns>CreateTrainingSeriesModel with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TrainingSeriesController.Put(Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries.UpdateTrainingSeriesCommand)">
+            <summary>
+            This service update trainingSeries.
+            </summary>
+            <param name="command">Update trainingSeries model</param>
+            <returns>UpdateTrainingSeriesModel with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TrainingSeriesController.Get(Honoplay.Application.TrainingSerieses.Queries.GetTrainingSeriesesList.GetTrainingSeriesesListQueryModel)">
+            <summary>
+            This service update trainingSeries.
+            </summary>
+            <param name="query">GetAll trainingSeries model</param>
+            <returns>Get all trainingSerieses list by tenant id with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TrainingSeriesController.Get(System.Int32)">
+            <summary>
+            This service update trainingSeries.
+            </summary>
+            <param name="id">Get trainingSeries model</param>
+            <returns>Get trainingSeries by tenant id and trainingSeries id with status code.</returns>
+        </member>
     </members>
 </doc>

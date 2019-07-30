@@ -76,6 +76,14 @@ namespace Honoplay.System.Tests
             };
             dbContext.Professions.Add(profession);
 
+            var trainingSeries = new TrainingSeries
+            {
+                Name = "series1",
+                CreatedBy = adminUser.Id,
+                TenantId = tenantId
+            };
+            dbContext.TrainingSerieses.Add(trainingSeries);
+
             var trainer = new Trainer
             {
                 Name = "Emre",
