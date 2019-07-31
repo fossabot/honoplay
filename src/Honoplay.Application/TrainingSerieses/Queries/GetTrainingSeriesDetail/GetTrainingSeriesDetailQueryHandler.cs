@@ -24,7 +24,7 @@ namespace Honoplay.Application.TrainingSerieses.Queries.GetTrainingSeriesDetail
 
         public async Task<ResponseModel<TrainingSeriesDetailModel>> Handle(GetTrainingSeriesDetailQuery request, CancellationToken cancellationToken)
         {
-            var redisKey = $"TrainingSeriesesWithQuestionByTenantId{request.TenantId}";
+            var redisKey = $"TrainingSeriesesByTenantId{request.TenantId}";
             var redisTrainingSerieses = await _cacheService.RedisCacheAsync(redisKey,
                 _ => _context.TrainingSerieses
                     .AsNoTracking()

@@ -27,7 +27,7 @@ namespace Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries
 
         public async Task<ResponseModel<UpdateTrainingSeriesModel>> Handle(UpdateTrainingSeriesCommand request, CancellationToken cancellationToken)
         {
-            var redisKey = $"TrainingSeriessWithQuestionByTenantId{request.TenantId}";
+            var redisKey = $"TrainingSeriesesByTenantId{request.TenantId}";
             var updatedAt = DateTimeOffset.Now;
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {

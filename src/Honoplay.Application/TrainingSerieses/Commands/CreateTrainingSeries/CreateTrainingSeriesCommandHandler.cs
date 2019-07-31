@@ -26,7 +26,7 @@ namespace Honoplay.Application.TrainingSerieses.Commands.CreateTrainingSeries
 
         public async Task<ResponseModel<List<CreateTrainingSeriesModel>>> Handle(CreateTrainingSeriesCommand request, CancellationToken cancellationToken)
         {
-            var redisKey = $"TrainingSeriesesWithQuestionByTenantId{request.TenantId}";
+            var redisKey = $"TrainingSeriesesByTenantId{request.TenantId}";
             var newTrainingSerieses = new List<TrainingSeries>();
             var createdTrainingSerieses = new List<CreateTrainingSeriesModel>();
 
