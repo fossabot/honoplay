@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Honoplay.Application.Tests.Trainers.Commands.CreateTrainer
 {
-    public class CreateTrainerValidatorTest : TestBase
+    public class CreateTrainerValidatorTest
     {
         private readonly CreateTrainerValidator _validator;
 

@@ -10,7 +10,7 @@ namespace Honoplay.Domain.Entities
             Trainings = new HashSet<Training>();
         }
         public int Id { get; set; }
-        public int Name { get; set; }
+        public string Name { get; set; }
         public Guid TenantId { get; set; }
 
         public Tenant Tenant { get; set; }

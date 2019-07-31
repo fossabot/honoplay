@@ -127,9 +127,6 @@ namespace Honoplay.Application.Tests.Trainers.Commands.CreateTrainer
                 await _commandHandler.Handle(createTrainerCommand, CancellationToken.None));
         }
 
-        public void Dispose()
-        {
-            _context?.Dispose();
-        }
+        public void Dispose() => _context?.Dispose();
     }
 }

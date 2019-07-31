@@ -1,4 +1,4 @@
-﻿using Honoplay.Application.Professions.Commands.CreateProfession;
+﻿using Honoplay.Application.TrainingSerieses.Commands.CreateTrainingSeries;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -12,21 +12,21 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Professions.Commands.CreateProfession
+namespace Honoplay.Application.Tests.TrainingSerieses.Commands.CreateTrainingSeries
 {
-    public class CreateProfessionCommandTest : TestBase, IDisposable
+    public class CreateTrainingSeriesCommandTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly CreateProfessionCommandHandler _commandHandler;
+        private readonly CreateTrainingSeriesCommandHandler _commandHandler;
         private readonly Guid _tenantId;
         private readonly int _adminUserId;
 
-        public CreateProfessionCommandTest()
+        public CreateTrainingSeriesCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
 
             _context = InitAndGetDbContext(out _tenantId, out _adminUserId);
-            _commandHandler = new CreateProfessionCommandHandler(_context, new CacheManager(cache.Object));
+            _commandHandler = new CreateTrainingSeriesCommandHandler(_context, new CacheManager(cache.Object));
         }
 
         private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId)
@@ -66,27 +66,30 @@ namespace Honoplay.Application.Tests.Professions.Commands.CreateProfession
 
             return context;
         }
+
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var command = new CreateProfessionCommand
+            var command = new CreateTrainingSeriesCommand
             {
-                AdminUserId = _adminUserId,
+                CreatedBy = _adminUserId,
                 TenantId = _tenantId,
-                Professions = new List<string>
+                CreateTrainingSeriesModels = new List<CreateTrainingSeriesCommandModel>
                 {
-                    "a",
-                    "b"
+                    new CreateTrainingSeriesCommandModel
+                    {
+                        Name = "trainingSeriesSample"
+                    }
                 }
             };
 
-            var professionsResponseModel = await _commandHandler.Handle(command, CancellationToken.None);
+            var trainingSeriesResponseModel = await _commandHandler.Handle(command, CancellationToken.None);
 
-            Assert.Null(professionsResponseModel.Errors);
+            Assert.Null(trainingSeriesResponseModel.Errors);
 
-            Assert.True(professionsResponseModel.Items.Single().Professions.Count > 0);
+            Assert.True(trainingSeriesResponseModel.Items.Single().Count > 0);
         }
 
-        public void Dispose() => _context.Dispose();
+        public void Dispose() => _context?.Dispose();
     }
 }
