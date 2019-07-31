@@ -5,30 +5,30 @@ using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
+namespace Honoplay.Application.Tests.Trainings.Commands.UpdateTraining
 {
-    public class CreateCreateTrainingCommandTest : TestBase, IDisposable
+    public class UpdateTrainingCommandTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly CreateCreateTrainingCommandHandler _commandHandler;
+        private readonly UpdateTrainingCommandHandler _commandHandler;
         private readonly Guid _tenantId;
         private readonly int _adminUserId;
         private readonly int _trainingSeriesId;
+        private readonly int _trainingId;
 
-        public CreateCreateTrainingCommandTest()
+        public UpdateTrainingCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
 
-            _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _trainingSeriesId);
-            _commandHandler = new CreateCreateTrainingCommandHandler(_context, new CacheManager(cache.Object));
+            _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _trainingSeriesId, out _trainingId);
+            _commandHandler = new UpdateTrainingCommandHandler(_context, new CacheManager(cache.Object));
         }
 
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int trainingSeriesId)
+        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int trainingSeriesId, out int trainingId)
         {
             var context = GetDbContext();
 
@@ -48,7 +48,6 @@ namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
                 Name = "TestTenant#01",
                 HostName = "localhost"
             };
-
             context.Tenants.Add(tenant);
 
             context.TenantAdminUsers.Add(new TenantAdminUser
@@ -64,14 +63,23 @@ namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
                 CreatedBy = adminUser.Id,
                 Name = "testSeries"
             };
-
             context.TrainingSerieses.Add(trainingSeries);
+
+            var training = new Training
+            {
+                CreatedBy = adminUser.Id,
+                Description = "description",
+                Name = "test",
+                TrainingSeriesId = trainingSeries.Id
+            };
+            context.Trainings.Add(training);
 
             context.SaveChanges();
 
             adminUserId = adminUser.Id;
             tenantId = tenant.Id;
             trainingSeriesId = trainingSeries.Id;
+            trainingId = training.Id;
 
             return context;
         }
@@ -79,19 +87,13 @@ namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var command = new CreateTrainingCommand
+            var command = new UpdateTrainingCommand
             {
                 CreatedBy = _adminUserId,
                 TenantId = _tenantId,
-                CreateTrainingModels = new List<CreateTrainingCommandModel>
-                {
-                    new CreateTrainingCommandModel
-                    {
-                        TrainingSeriesId = _trainingSeriesId,
-                        Name = "trainingSample",
-                        Description = "sampleDescription"
-                    }
-                }
+                TrainingSeriesId = _trainingSeriesId,
+                Name = "trainingSample",
+                Description = "sampleDescription"
             };
 
             var trainingResponseModel = await _commandHandler.Handle(command, CancellationToken.None);
