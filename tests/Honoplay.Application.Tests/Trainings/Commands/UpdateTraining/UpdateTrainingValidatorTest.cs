@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Honoplay.Application.Trainings.Commands.UpdateTraining;
+using Xunit;
 
 namespace Honoplay.Application.Tests.Trainings.Commands.UpdateTraining
 {

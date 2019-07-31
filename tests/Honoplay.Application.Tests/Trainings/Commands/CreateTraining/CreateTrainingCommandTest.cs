@@ -6,8 +6,10 @@ using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Trainings.Commands.CreateTraining;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
@@ -15,7 +17,7 @@ namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
     public class CreateCreateTrainingCommandTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly CreateCreateTrainingCommandHandler _commandHandler;
+        private readonly CreateTrainingCommandHandler _commandHandler;
         private readonly Guid _tenantId;
         private readonly int _adminUserId;
         private readonly int _trainingSeriesId;
@@ -25,7 +27,7 @@ namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
             var cache = new Mock<IDistributedCache>();
 
             _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _trainingSeriesId);
-            _commandHandler = new CreateCreateTrainingCommandHandler(_context, new CacheManager(cache.Object));
+            _commandHandler = new CreateTrainingCommandHandler(_context, new CacheManager(cache.Object));
         }
 
         private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int trainingSeriesId)

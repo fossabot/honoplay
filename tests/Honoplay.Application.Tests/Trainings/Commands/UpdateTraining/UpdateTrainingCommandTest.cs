@@ -1,10 +1,12 @@
-﻿using Honoplay.Common.Extensions;
+﻿using Honoplay.Application.Trainings.Commands.UpdateTraining;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -89,7 +91,8 @@ namespace Honoplay.Application.Tests.Trainings.Commands.UpdateTraining
         {
             var command = new UpdateTrainingCommand
             {
-                CreatedBy = _adminUserId,
+                Id = _trainingId,
+                UpdatedBy = _adminUserId,
                 TenantId = _tenantId,
                 TrainingSeriesId = _trainingSeriesId,
                 Name = "trainingSample",
@@ -100,7 +103,7 @@ namespace Honoplay.Application.Tests.Trainings.Commands.UpdateTraining
 
             Assert.Null(trainingResponseModel.Errors);
 
-            Assert.True(trainingResponseModel.Items.Single().Count > 0);
+            Assert.True(trainingResponseModel.Items.Any());
         }
 
         public void Dispose() => _context?.Dispose();

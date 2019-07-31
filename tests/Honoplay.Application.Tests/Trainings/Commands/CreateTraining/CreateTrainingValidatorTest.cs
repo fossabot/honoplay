@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Honoplay.Application.Trainings.Commands.CreateTraining;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
