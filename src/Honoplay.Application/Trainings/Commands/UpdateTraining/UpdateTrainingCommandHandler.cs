@@ -12,47 +12,48 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries
+namespace Honoplay.Application.Trainings.Commands.UpdateTraining
 {
-    public class UpdateTrainingSeriesCommandHandler : IRequestHandler<UpdateTrainingSeriesCommand, ResponseModel<UpdateTrainingSeriesModel>>
+    public class UpdateTrainingCommandHandler : IRequestHandler<UpdateTrainingCommand, ResponseModel<UpdateTrainingModel>>
     {
         private readonly HonoplayDbContext _context;
         private readonly ICacheService _cacheService;
 
-        public UpdateTrainingSeriesCommandHandler(HonoplayDbContext context, ICacheService cacheService)
+        public UpdateTrainingCommandHandler(HonoplayDbContext context, ICacheService cacheService)
         {
-            _context = context;
             _cacheService = cacheService;
+            _context = context;
         }
 
-        public async Task<ResponseModel<UpdateTrainingSeriesModel>> Handle(UpdateTrainingSeriesCommand request, CancellationToken cancellationToken)
+        public async Task<ResponseModel<UpdateTrainingModel>> Handle(UpdateTrainingCommand request, CancellationToken cancellationToken)
         {
-            var redisKey = $"TrainingSeriesesByTenantId{request.TenantId}";
+            var redisKey = $"TrainingsByTenantId{request.TenantId}";
             var updatedAt = DateTimeOffset.Now;
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
                 try
                 {
 
-                    var trainingSeriesByTenantId = await _context.TrainingSerieses
-                        .Where(x => x.TenantId == request.TenantId)
+                    var trainingsByTenantId = await _context.Trainings
+                        .Include(x => x.TrainingSeries)
+                        .Where(x => x.TrainingSeries.TenantId == request.TenantId)
                         .ToListAsync(cancellationToken);
 
 
-                    var updateTrainingSeries = trainingSeriesByTenantId.FirstOrDefault(x => x.Id == request.Id);
-                    if (updateTrainingSeries is null)
+                    var updateTraining = trainingsByTenantId.FirstOrDefault(x => x.Id == request.Id);
+                    if (updateTraining is null)
                     {
-                        throw new NotFoundException(nameof(TrainingSeries), request.Id);
+                        throw new NotFoundException(nameof(Training), request.Id);
                     }
 
-                    updateTrainingSeries.Name = request.Name;
-                    updateTrainingSeries.UpdatedAt = updatedAt;
-                    updateTrainingSeries.UpdatedBy = request.UpdatedBy;
+                    updateTraining.Name = request.Name;
+                    updateTraining.UpdatedAt = updatedAt;
+                    updateTraining.UpdatedBy = request.UpdatedBy;
 
-                    _context.TrainingSerieses.Update(updateTrainingSeries);
+                    _context.Trainings.Update(updateTraining);
                     await _context.SaveChangesAsync(cancellationToken);
 
-                    trainingSeriesByTenantId = trainingSeriesByTenantId.Select(x => new TrainingSeries
+                    trainingsByTenantId = trainingsByTenantId.Select(x => new Training
                     {
                         Id = x.Id,
                         CreatedBy = x.CreatedBy,
@@ -64,7 +65,7 @@ namespace Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries
                     transaction.Commit();
 
                     await _cacheService.RedisCacheUpdateAsync(redisKey,
-                        _ => trainingSeriesByTenantId,
+                        _ => trainingsByTenantId,
                         cancellationToken);
 
                 }
@@ -72,7 +73,7 @@ namespace Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
                 {
                     transaction.Rollback();
-                    throw new ObjectAlreadyExistsException(nameof(TrainingSeries), request.Id);
+                    throw new ObjectAlreadyExistsException(nameof(Training), request.Id);
                 }
                 catch (NotFoundException)
                 {
@@ -85,12 +86,14 @@ namespace Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries
                     throw new TransactionException();
                 }
             }
-            var updateTrainingSeriesModel = new UpdateTrainingSeriesModel(request.Id,
-                                                                          request.Name,
-                                                                          request.UpdatedBy,
-                                                                          updatedAt);
+            var updateTrainingModel = new UpdateTrainingModel(request.Id,
+                                                              request.TrainingSeriesId,
+                                                              request.Name,
+                                                              request.Description,
+                                                              request.UpdatedBy,
+                                                              updatedAt);
 
-            return new ResponseModel<UpdateTrainingSeriesModel>(updateTrainingSeriesModel);
+            return new ResponseModel<UpdateTrainingModel>(updateTrainingModel);
         }
     }
 }
