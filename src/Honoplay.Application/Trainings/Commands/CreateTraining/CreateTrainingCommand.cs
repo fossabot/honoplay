@@ -17,7 +17,10 @@ namespace Honoplay.Application.Trainings.Commands.CreateTraining
     public class CreateTrainingCommandModel
     {
         public int TrainingSeriesId { get; set; }
+        public int TrainingCategoryId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public DateTimeOffset BeginDateTime { get; set; }
+        public DateTimeOffset EndDateTime { get; set; }
     }
 }

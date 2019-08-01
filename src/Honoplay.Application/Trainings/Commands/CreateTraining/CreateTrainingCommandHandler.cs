@@ -41,7 +41,10 @@ namespace Honoplay.Application.Trainings.Commands.CreateTraining
                             CreatedBy = request.CreatedBy,
                             TrainingSeriesId = createTrainingModel.TrainingSeriesId,
                             Name = createTrainingModel.Name,
-                            Description = createTrainingModel.Description
+                            Description = createTrainingModel.Description,
+                            BeginDateTime = createTrainingModel.BeginDateTime,
+                            EndDateTime = createTrainingModel.EndDateTime,
+                            TrainingCategoryId = createTrainingModel.TrainingCategoryId
                         };
                         newTrainings.Add(newTraining);
                     }
@@ -64,7 +67,7 @@ namespace Honoplay.Application.Trainings.Commands.CreateTraining
                         cancellationToken);
 
                     newTrainings.ForEach(x =>
-                        createdTrainings.Add(new CreateTrainingModel(x.Id, x.TrainingSeriesId, x.Name, x.Description, x.CreatedBy, x.CreatedAt)));
+                        createdTrainings.Add(new CreateTrainingModel(x.Id, x.TrainingSeriesId, x.TrainingCategoryId, x.Name, x.Description, x.CreatedBy, x.CreatedAt, x.BeginDateTime, x.EndDateTime)));
                 }
                 catch (Exception)
                 {

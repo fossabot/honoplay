@@ -18,6 +18,18 @@ namespace Honoplay.Application.Trainings.Commands.CreateTraining
                         .NotNull()
                         .NotEmpty(),
                     inlineValidator => inlineValidator
+                        .RuleFor(x => x.BeginDateTime)
+                        .NotNull()
+                        .NotEmpty(),
+                    inlineValidator => inlineValidator
+                        .RuleFor(x => x.TrainingCategoryId)
+                        .NotNull()
+                        .NotEmpty(),
+                    inlineValidator => inlineValidator
+                        .RuleFor(x => x.EndDateTime)
+                        .NotNull()
+                        .NotEmpty(),
+                    inlineValidator => inlineValidator
                         .RuleFor(x => x.Description)
                         .MaximumLength(500)
                 });

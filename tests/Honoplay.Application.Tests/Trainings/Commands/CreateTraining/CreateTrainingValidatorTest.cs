@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
-using Honoplay.Application.Trainings.Commands.CreateTraining;
+﻿using Honoplay.Application.Trainings.Commands.CreateTraining;
+using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
@@ -22,9 +23,12 @@ namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
                 {
                     new CreateTrainingCommandModel
                     {
-                        Name="testTraining",
-                        Description="testTraining",
-                        TrainingSeriesId=1
+                        TrainingSeriesId = 1,
+                        TrainingCategoryId = 1,
+                        Name = "trainingSample",
+                        Description = "sampleDescription",
+                        EndDateTime = DateTimeOffset.Now.AddDays(5),
+                        BeginDateTime = DateTimeOffset.Now
                     }
                 }
             }).IsValid);

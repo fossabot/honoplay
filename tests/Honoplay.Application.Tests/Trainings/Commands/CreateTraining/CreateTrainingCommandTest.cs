@@ -1,4 +1,5 @@
-﻿using Honoplay.Common.Extensions;
+﻿using Honoplay.Application.Trainings.Commands.CreateTraining;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
@@ -9,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application.Trainings.Commands.CreateTraining;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
@@ -21,16 +21,17 @@ namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
         private readonly Guid _tenantId;
         private readonly int _adminUserId;
         private readonly int _trainingSeriesId;
+        private readonly int _trainingCategoryId;
 
         public CreateCreateTrainingCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
 
-            _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _trainingSeriesId);
+            _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _trainingSeriesId, out _trainingCategoryId);
             _commandHandler = new CreateTrainingCommandHandler(_context, new CacheManager(cache.Object));
         }
 
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int trainingSeriesId)
+        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int trainingSeriesId, out int trainingCategoryId)
         {
             var context = GetDbContext();
 
@@ -66,14 +67,22 @@ namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
                 CreatedBy = adminUser.Id,
                 Name = "testSeries"
             };
-
             context.TrainingSerieses.Add(trainingSeries);
+
+            var trainingCategory = new TrainingCategory
+            {
+                CreatedBy = adminUser.Id,
+                Description = "test",
+                Name = "sample",
+            };
+            context.TrainingCategories.Add(trainingCategory);
 
             context.SaveChanges();
 
             adminUserId = adminUser.Id;
             tenantId = tenant.Id;
             trainingSeriesId = trainingSeries.Id;
+            trainingCategoryId = trainingCategory.Id;
 
             return context;
         }
@@ -90,8 +99,11 @@ namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
                     new CreateTrainingCommandModel
                     {
                         TrainingSeriesId = _trainingSeriesId,
+                        TrainingCategoryId = _trainingCategoryId,
                         Name = "trainingSample",
-                        Description = "sampleDescription"
+                        Description = "sampleDescription",
+                        EndDateTime = DateTimeOffset.Now.AddDays(5),
+                        BeginDateTime = DateTimeOffset.Now
                     }
                 }
             };
