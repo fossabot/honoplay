@@ -59,7 +59,10 @@ namespace Honoplay.Application.Trainings.Commands.UpdateTraining
                         CreatedBy = x.CreatedBy,
                         UpdatedBy = x.UpdatedBy,
                         Name = x.Name,
-                        UpdatedAt = x.UpdatedAt
+                        UpdatedAt = x.UpdatedAt,
+                        TrainingCategoryId = x.TrainingCategoryId,
+                        BeginDateTime = x.BeginDateTime,
+                        EndDateTime = x.EndDateTime,
                     }).ToList();
 
                     transaction.Commit();
@@ -88,10 +91,13 @@ namespace Honoplay.Application.Trainings.Commands.UpdateTraining
             }
             var updateTrainingModel = new UpdateTrainingModel(request.Id,
                                                               request.TrainingSeriesId,
+                                                              request.TrainingCategoryId,
                                                               request.Name,
                                                               request.Description,
                                                               request.UpdatedBy,
-                                                              updatedAt);
+                                                              updatedAt,
+                                                              request.BeginDateTime,
+                                                              request.EndDateTime);
 
             return new ResponseModel<UpdateTrainingModel>(updateTrainingModel);
         }

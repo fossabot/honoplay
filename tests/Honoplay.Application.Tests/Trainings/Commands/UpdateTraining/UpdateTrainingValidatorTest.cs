@@ -1,4 +1,5 @@
 ﻿using Honoplay.Application.Trainings.Commands.UpdateTraining;
+using System;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainings.Commands.UpdateTraining
@@ -20,7 +21,10 @@ namespace Honoplay.Application.Tests.Trainings.Commands.UpdateTraining
                 Id = 1,
                 TrainingSeriesId = 1,
                 Name = "trainingSample",
-                Description = "sampleDescription"
+                Description = "sampleDescription",
+                TrainingCategoryId = 1,
+                BeginDateTime = DateTimeOffset.Now,
+                EndDateTime = DateTimeOffset.Now.AddDays(5),
             }).IsValid);
         }
     }

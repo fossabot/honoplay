@@ -20,17 +20,18 @@ namespace Honoplay.Application.Tests.Trainings.Commands.UpdateTraining
         private readonly Guid _tenantId;
         private readonly int _adminUserId;
         private readonly int _trainingSeriesId;
+        private readonly int _trainingCategoryId;
         private readonly int _trainingId;
 
         public UpdateTrainingCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
 
-            _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _trainingSeriesId, out _trainingId);
+            _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _trainingSeriesId, out _trainingCategoryId, out _trainingId);
             _commandHandler = new UpdateTrainingCommandHandler(_context, new CacheManager(cache.Object));
         }
 
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int trainingSeriesId, out int trainingId)
+        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int trainingSeriesId, out int trainingCategoryId, out int trainingId)
         {
             var context = GetDbContext();
 
@@ -67,8 +68,19 @@ namespace Honoplay.Application.Tests.Trainings.Commands.UpdateTraining
             };
             context.TrainingSerieses.Add(trainingSeries);
 
+            var trainingCategory = new TrainingCategory
+            {
+                CreatedBy = adminUser.Id,
+                Description = "sample",
+                Name = "test"
+            };
+            context.TrainingCategories.Add(trainingCategory);
+
             var training = new Training
             {
+                TrainingCategoryId = trainingCategory.Id,
+                BeginDateTime = DateTimeOffset.Now,
+                EndDateTime = DateTimeOffset.Now.AddDays(5),
                 CreatedBy = adminUser.Id,
                 Description = "description",
                 Name = "test",
@@ -81,6 +93,7 @@ namespace Honoplay.Application.Tests.Trainings.Commands.UpdateTraining
             adminUserId = adminUser.Id;
             tenantId = tenant.Id;
             trainingSeriesId = trainingSeries.Id;
+            trainingCategoryId = trainingCategory.Id;
             trainingId = training.Id;
 
             return context;
@@ -96,7 +109,10 @@ namespace Honoplay.Application.Tests.Trainings.Commands.UpdateTraining
                 TenantId = _tenantId,
                 TrainingSeriesId = _trainingSeriesId,
                 Name = "trainingSample",
-                Description = "sampleDescription"
+                Description = "sampleDescription",
+                TrainingCategoryId = _trainingCategoryId,
+                BeginDateTime = DateTimeOffset.Now,
+                EndDateTime = DateTimeOffset.Now.AddDays(5),
             };
 
             var trainingResponseModel = await _commandHandler.Handle(command, CancellationToken.None);

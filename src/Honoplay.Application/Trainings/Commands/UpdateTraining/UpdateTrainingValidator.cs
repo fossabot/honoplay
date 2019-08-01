@@ -19,6 +19,18 @@ namespace Honoplay.Application.Trainings.Commands.UpdateTraining
                 .NotNull()
                 .NotEmpty();
 
+            RuleFor(x => x.TrainingCategoryId)
+                .NotNull()
+                .NotEmpty();
+
+            RuleFor(x => x.BeginDateTime)
+                .NotNull()
+                .NotEmpty();
+
+            RuleFor(x => x.EndDateTime)
+                .NotNull()
+                .NotEmpty();
+
             RuleFor(x => x.Description)
                 .MaximumLength(500);
         }
