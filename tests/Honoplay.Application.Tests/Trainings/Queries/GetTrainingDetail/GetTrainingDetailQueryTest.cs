@@ -1,4 +1,5 @@
-﻿using Honoplay.Common._Exceptions;
+﻿using Honoplay.Application.Trainings.Queries.GetTrainingDetail;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -9,7 +10,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application.Trainings.Queries.GetTrainingDetail;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainings.Queries.GetTrainingDetail
@@ -67,12 +67,23 @@ namespace Honoplay.Application.Tests.Trainings.Queries.GetTrainingDetail
             };
             context.TrainingSerieses.Add(trainingSeries);
 
+            var trainingCategory = new TrainingCategory
+            {
+                CreatedBy = adminUser.Id,
+                Description = "sample",
+                Name = "test"
+            };
+            context.TrainingCategories.Add(trainingCategory);
+
             var training = new Training
             {
                 CreatedBy = adminUser.Id,
                 Description = "description",
                 Name = "test",
-                TrainingSeriesId = trainingSeries.Id
+                EndDateTime = DateTimeOffset.Now.AddDays(5),
+                BeginDateTime = DateTimeOffset.Now,
+                TrainingSeriesId = trainingSeries.Id,
+                TrainingCategoryId = trainingCategory.Id
             };
             context.Trainings.Add(training);
 

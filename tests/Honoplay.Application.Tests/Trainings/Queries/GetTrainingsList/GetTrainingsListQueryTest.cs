@@ -71,13 +71,23 @@ namespace Honoplay.Application.Tests.Trainings.Queries.GetTrainingsList
                 Name = "testTrainingSeries"
             };
             context.TrainingSerieses.Add(trainingSeries);
+            var trainingCategory = new TrainingCategory
+            {
+                CreatedBy = adminUser.Id,
+                Description = "sample",
+                Name = "test"
+            };
+            context.TrainingCategories.Add(trainingCategory);
 
             var training = new Training
             {
                 CreatedBy = adminUser.Id,
                 Description = "description",
                 Name = "test",
-                TrainingSeriesId = trainingSeries.Id
+                EndDateTime = DateTimeOffset.Now.AddDays(5),
+                BeginDateTime = DateTimeOffset.Now,
+                TrainingSeriesId = trainingSeries.Id,
+                TrainingCategoryId = trainingCategory.Id
             };
             context.Trainings.Add(training);
 
