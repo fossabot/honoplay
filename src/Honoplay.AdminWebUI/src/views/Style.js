@@ -36,6 +36,12 @@ const Style = theme => ({
     marginTop: -30,
     marginLeft: 32
   },
+  questionDiv: {
+    borderColor: '#9e9e9e',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    height: 70
+  }
 });
 
 export default Style;
