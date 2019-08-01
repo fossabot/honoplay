@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { translate } from '@omegabigdata/terasu-api-proxy';
-import { Grid, Checkbox, MuiThemeProvider, Divider } from '@material-ui/core';
+import { Grid, Checkbox, MuiThemeProvider, Divider, Typography } from '@material-ui/core';
 import { Style, theme } from './Style';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
@@ -110,6 +110,11 @@ class Options extends React.Component {
                 <div className={classes.root}>
                     <Grid container spacing={16}>
                         <Grid item xs={12} sm={12} />
+                        <Grid item xs={12} sm={12}>
+                            <Typography>
+                                Doğru Cevap
+                            </Typography>
+                        </Grid>
                         {this.state.options.map((option, id) => (
                             <Grid container direction="row" spacing={16} key={id}>
                                 <Grid item xs={12} sm={1}>

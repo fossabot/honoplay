@@ -44,9 +44,9 @@ class Layout extends React.Component {
               pageIcon={"question-circle"}
               pageName={translate('Questions')} />
             <ListItem
-              pageLink={"/home/trainerseries"}
+              pageLink={"/home/trainingSeries"}
               pageIcon={"list-ol"}
-              pageName={translate('TrainerSeries')} />
+              pageName={translate('TrainingSeries')} />
             <ListItem
               pageLink={"/home/trainers"}
               pageIcon={"graduation-cap"}
