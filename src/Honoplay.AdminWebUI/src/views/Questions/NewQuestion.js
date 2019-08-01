@@ -7,6 +7,7 @@ import Typography from '../../components/Typography/TypographyComponent';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Options from './Options';
+import ControlledExpansionPanels from '../../components/ExpansionPanel/ControlledExpansionPanels ';
 
 import { connect } from "react-redux";
 import { createQuestion } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Question";
@@ -23,6 +24,7 @@ class NewQuestion extends React.Component {
         { order: 2, answer: "Yazılım Departmanı" },
         { order: 3, answer: "İnsan Kaynakları Departmanı" },
       ],
+      questionId: ''
     }
   }
 
@@ -49,6 +51,7 @@ class NewQuestion extends React.Component {
       if (!errorCreateQuestion) {
         this.setState({
           question: newQuestion.items[0].text,
+          questionId: newQuestion.items[0].id,
           loading: false,
           questionsError: false,
         });
@@ -67,7 +70,7 @@ class NewQuestion extends React.Component {
   }
 
   render() {
-    const { questionsError, loading, question } = this.state;
+    const { questionsError, loading, question, questionId } = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -123,23 +126,12 @@ class NewQuestion extends React.Component {
           <Grid item xs={12} sm={12}> <Divider /> </Grid>
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12}>
-            <TextField
-              fullWidth
-              margin="normal"
-              variant="outlined"
-              InputProps={{
-                readOnly: true,
-              }}
-              value={question}
-              rowsMax="4"
-              InputProps={{
-                classes: {
-                  input: classes.textField
-                }
-              }}
-            />
+            <ControlledExpansionPanels open={question}
+              panelDetails={question}
+            >
+              <Options questionId={questionId} />
+            </ControlledExpansionPanels>
           </Grid>
-          <Options/>
         </Grid>
       </div>
     );
@@ -153,6 +145,7 @@ const mapStateToProps = state => {
     errorCreateQuestion
   } = state.createQuestion;
   let newQuestion = createQuestion;
+
   return {
     isCreateQuestionLoading,
     createQuestion,
