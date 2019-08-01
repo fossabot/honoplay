@@ -1,15 +1,16 @@
-﻿using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using Honoplay.AdminWebAPI;
+﻿using Honoplay.AdminWebAPI;
 using Honoplay.Application.Trainings.Commands.CreateTraining;
 using Honoplay.Application.Trainings.Commands.UpdateTraining;
 using Honoplay.Application.Trainings.Queries.GetTrainingsList;
 using Honoplay.Common.Constants;
 using Honoplay.System.Tests.Extensions;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Honoplay.System.Tests.Controllers
@@ -36,7 +37,10 @@ namespace Honoplay.System.Tests.Controllers
                     {
                         TrainingSeriesId = 1,
                         Name = "trainingSample",
-                        Description = "sampleDescription"
+                        Description = "sampleDescription",
+                        TrainingCategoryId = 1,
+                        BeginDateTime = DateTimeOffset.Now,
+                        EndDateTime = DateTimeOffset.Now.AddDays(5)
                     }
                 }
             };
@@ -66,7 +70,10 @@ namespace Honoplay.System.Tests.Controllers
                 Id = 1,
                 TrainingSeriesId = 1,
                 Name = "trainingSample",
-                Description = "sampleDescription"
+                Description = "sampleDescription",
+                TrainingCategoryId = 1,
+                BeginDateTime = DateTimeOffset.Now,
+                EndDateTime = DateTimeOffset.Now.AddDays(5)
             };
 
             var serializedUpdateCommand = JsonConvert.SerializeObject(updateTrainingCommand);
