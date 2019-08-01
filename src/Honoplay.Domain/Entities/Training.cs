@@ -14,8 +14,8 @@ namespace Honoplay.Domain.Entities
         public int TrainingCategoryId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTimeOffset BeginDate { get; set; }
-        public DateTimeOffset EndDated { get; set; }
+        public DateTimeOffset BeginDateTime { get; set; }
+        public DateTimeOffset EndDateTime { get; set; }
 
         public TrainingCategory TrainingCategory { get; set; }
         public TrainingSeries TrainingSeries { get; set; }
