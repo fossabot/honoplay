@@ -30,6 +30,11 @@ namespace Honoplay.Persistence.Configurations
             builder.HasOne(x => x.TrainingSeries)
                 .WithMany(x => x.Trainings)
                 .HasForeignKey(x => x.TrainingSeriesId);
+
+            //TrainingCategory
+            builder.HasOne(x => x.TrainingCategory)
+                .WithMany(x => x.Trainings)
+                .HasForeignKey(x => x.TrainingCategoryId);
         }
     }
 }
