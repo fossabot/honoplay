@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Trainings.Queries.GetTrainingsList;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Trainings.Queries.GetTrainingsList
