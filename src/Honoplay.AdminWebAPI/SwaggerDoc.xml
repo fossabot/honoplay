@@ -89,6 +89,34 @@
             <param name="command">Create trainee model</param>
             <returns>CreateTraineeModel with status code.</returns>
         </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TrainingController.Post(Honoplay.Application.Trainings.Commands.CreateTraining.CreateTrainingCommand)">
+            <summary>
+            This service create training.
+            </summary>
+            <param name="command">Create training model</param>
+            <returns>CreateTrainingModel with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TrainingController.Put(Honoplay.Application.Trainings.Commands.UpdateTraining.UpdateTrainingCommand)">
+            <summary>
+            This service update training.
+            </summary>
+            <param name="command">Update training model</param>
+            <returns>UpdateTrainingModel with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TrainingController.Get(Honoplay.Application.Trainings.Queries.GetTrainingsList.GetTrainingsListQueryModel)">
+            <summary>
+            This service retrieve all trainings by tenant id. Filtered skip and take parameters.
+            </summary>
+            <param name="query">GetAll training model</param>
+            <returns>Get all trainings list by tenant id with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TrainingController.Get(System.Int32)">
+            <summary>
+            This service retrieve training by training id
+            </summary>
+            <param name="id">Get training model</param>
+            <returns>Get training by tenant id and training id with status code.</returns>
+        </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.TrainingSeriesController.Post(Honoplay.Application.TrainingSerieses.Commands.CreateTrainingSeries.CreateTrainingSeriesCommand)">
             <summary>
             This service create trainingSeries.

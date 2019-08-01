@@ -27,19 +27,19 @@ namespace Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries
 
         public async Task<ResponseModel<UpdateTrainingSeriesModel>> Handle(UpdateTrainingSeriesCommand request, CancellationToken cancellationToken)
         {
-            var redisKey = $"TrainingSeriessWithQuestionByTenantId{request.TenantId}";
+            var redisKey = $"TrainingSeriesesByTenantId{request.TenantId}";
             var updatedAt = DateTimeOffset.Now;
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
                 try
                 {
 
-                    var optionsByTenantId = await _context.TrainingSerieses
+                    var trainingSeriesByTenantId = await _context.TrainingSerieses
                         .Where(x => x.TenantId == request.TenantId)
                         .ToListAsync(cancellationToken);
 
 
-                    var updateTrainingSeries = optionsByTenantId.FirstOrDefault(x => x.Id == request.Id);
+                    var updateTrainingSeries = trainingSeriesByTenantId.FirstOrDefault(x => x.Id == request.Id);
                     if (updateTrainingSeries is null)
                     {
                         throw new NotFoundException(nameof(TrainingSeries), request.Id);
@@ -52,7 +52,7 @@ namespace Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries
                     _context.TrainingSerieses.Update(updateTrainingSeries);
                     await _context.SaveChangesAsync(cancellationToken);
 
-                    optionsByTenantId = optionsByTenantId.Select(x => new TrainingSeries
+                    trainingSeriesByTenantId = trainingSeriesByTenantId.Select(x => new TrainingSeries
                     {
                         Id = x.Id,
                         CreatedBy = x.CreatedBy,
@@ -64,7 +64,7 @@ namespace Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries
                     transaction.Commit();
 
                     await _cacheService.RedisCacheUpdateAsync(redisKey,
-                        _ => optionsByTenantId,
+                        _ => trainingSeriesByTenantId,
                         cancellationToken);
 
                 }

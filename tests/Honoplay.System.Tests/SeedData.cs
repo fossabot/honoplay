@@ -84,6 +84,27 @@ namespace Honoplay.System.Tests
             };
             dbContext.TrainingSerieses.Add(trainingSeries);
 
+
+            var trainingCategory = new TrainingCategory
+            {
+                CreatedBy = adminUser.Id,
+                Description = "sample",
+                Name = "test"
+            };
+            dbContext.TrainingCategories.Add(trainingCategory);
+
+            var training = new Training
+            {
+                TrainingCategoryId = trainingCategory.Id,
+                BeginDateTime = DateTimeOffset.Now,
+                EndDateTime = DateTimeOffset.Now.AddDays(5),
+                CreatedBy = adminUser.Id,
+                Description = "description",
+                Name = "test",
+                TrainingSeriesId = trainingSeries.Id
+            };
+            dbContext.Trainings.Add(training);
+
             var trainer = new Trainer
             {
                 Name = "Emre",

@@ -1,8 +1,7 @@
-﻿using Honoplay.Application.TrainingSerieses.Commands.CreateTrainingSeries;
+﻿using Honoplay.Application._Infrastructure;
 using MediatR;
 using Newtonsoft.Json;
 using System;
-using Honoplay.Application._Infrastructure;
 
 namespace Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries
 {
