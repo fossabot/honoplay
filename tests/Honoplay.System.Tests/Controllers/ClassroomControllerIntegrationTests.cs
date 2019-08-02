@@ -1,16 +1,15 @@
 ﻿using Honoplay.AdminWebAPI;
+using Honoplay.Application.Classrooms.Commands.CreateClassroom;
+using Honoplay.Application.Classrooms.Commands.UpdateClassroom;
+using Honoplay.Application.Classrooms.Queries.GetClassroomsList;
 using Honoplay.Common.Constants;
 using Honoplay.System.Tests.Extensions;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Honoplay.Application.Classrooms.Commands.CreateClassroom;
-using Honoplay.Application.Classrooms.Commands.UpdateClassroom;
-using Honoplay.Application.Classrooms.Queries.GetClassroomsList;
 using Xunit;
 
 namespace Honoplay.System.Tests.Controllers
