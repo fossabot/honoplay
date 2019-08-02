@@ -6,8 +6,10 @@ using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Classrooms.Commands.UpdateClassroom;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Classrooms.Commands.UpdateClassroom
