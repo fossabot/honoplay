@@ -18,11 +18,6 @@ namespace Honoplay.Persistence.Configurations
                 .HasMaxLength(50)
                 .IsRequired();
 
-            //Code
-            builder.HasIndex(x => x.Code).IsUnique();
-            builder.Property(x => x.Code)
-                .ValueGeneratedOnAdd();
-
             builder.HasIndex(x => new { x.TrainingId, x.Name }).IsUnique();
 
             //RELATIONS

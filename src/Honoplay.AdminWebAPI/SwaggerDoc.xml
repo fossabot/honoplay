@@ -4,6 +4,34 @@
         <name>Honoplay.AdminWebAPI</name>
     </assembly>
     <members>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.ClassroomController.Post(Honoplay.Application.Classrooms.Commands.CreateClassroom.CreateClassroomCommand)">
+            <summary>
+            This service create classroom.
+            </summary>
+            <param name="command">Create classroom model</param>
+            <returns>CreateClassroomModel with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.ClassroomController.Put(Honoplay.Application.Classrooms.Commands.UpdateClassroom.UpdateClassroomCommand)">
+            <summary>
+            This service update classroom.
+            </summary>
+            <param name="command">Update classroom model</param>
+            <returns>UpdateClassroomModel with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.ClassroomController.Get(Honoplay.Application.Classrooms.Queries.GetClassroomsList.GetClassroomsListQueryModel)">
+            <summary>
+            This service retrieve all classrooms by tenant id. Filtered skip and take parameters.
+            </summary>
+            <param name="query">GetAll classroom model</param>
+            <returns>Get all classrooms list by tenant id with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.ClassroomController.Get(System.Int32)">
+            <summary>
+            This service retrieve classroom by classroom id
+            </summary>
+            <param name="id">Get classroom model</param>
+            <returns>Get classroom by tenant id and classroom id with status code.</returns>
+        </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.OptionController.Post(Honoplay.Application.Options.Commands.CreateOption.CreateOptionCommand)">
             <summary>
             This service create option.
