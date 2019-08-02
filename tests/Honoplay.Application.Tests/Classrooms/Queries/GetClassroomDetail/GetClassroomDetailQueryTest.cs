@@ -13,7 +13,7 @@ using Xunit;
 
 namespace Honoplay.Application.Tests.Classrooms.Queries.GetClassroomDetail
 {
-    public class GetClassroomDetailQueryTest
+    public class GetClassroomDetailQueryTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
         private readonly GetClassroomDetailQueryHandler _getClassroomDetailQueryHandler;
@@ -148,5 +148,7 @@ namespace Honoplay.Application.Tests.Classrooms.Queries.GetClassroomDetail
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _getClassroomDetailQueryHandler.Handle(query, CancellationToken.None));
         }
+
+        public void Dispose() => _context?.Dispose();
     }
 }

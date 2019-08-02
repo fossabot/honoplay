@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Honoplay.Application.Classrooms.Commands.CreateClassroom;
+using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
@@ -18,7 +20,7 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
             Assert.True(_validator.Validate(new CreateClassroomCommand
             {
                 CreatedBy = 1,
-                TenantId = 1,
+                TenantId = Guid.NewGuid(),
                 CreateClassroomModels = new List<CreateClassroomCommandModel>
                 {
                     new CreateClassroomCommandModel
