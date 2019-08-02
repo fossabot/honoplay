@@ -121,7 +121,7 @@ class Options extends React.Component {
                                     <Checkbox
                                         checked={this.state.options.isCorrect}
                                         color='secondary'
-                                        value={this.state.text}
+                                        value={this.state.options.text}
                                         onChange={this.handleChangeChecked}
                                         className={classes.checkbox}
                                     />

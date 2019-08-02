@@ -5,18 +5,29 @@ import { Grid } from '@material-ui/core';
 import Style from '../Style';
 import CardButton from '../../components/Card/CardButton';
 import Typography from '../../components/Typography/TypographyComponent';
+import Modal from '../../components/Modal/ModalComponent';
+import TrainingseriesCreate from './TrainingSeriesCreate';
 
 class TrainingSeries extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      openDialog: false
+    }
   }
 
-  handleClick = () => {
-    this.props.history.push("/home/trainingseries/trainingseriescreate");
-  }
+  handleClickOpenDialog = () => {
+    this.setState({ openDialog: true });
+
+  };
+
+  handleCloseDialog = () => {
+    this.setState({ openDialog: false });
+  };
 
   render() {
+    const { openDialog } = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -30,10 +41,17 @@ class TrainingSeries extends React.Component {
             <CardButton
               cardName={translate('CreateATrainingSeries')}
               cardDescription={translate('YouCanCreateTrainingSetsAndCollectDifferentTrainingsInOneField')}
-              onClick= {this.handleClick}
+              onClick={this.handleClickOpenDialog}
             />
           </Grid>
         </Grid>
+        <Modal
+          titleName={translate('TrainingSeriesName')}
+          open={openDialog}
+          handleClose={this.handleCloseDialog}
+        > 
+          <TrainingseriesCreate />
+        </Modal>
       </div>
     );
   }
