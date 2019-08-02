@@ -1,30 +1,33 @@
-﻿using Honoplay.Common.Extensions;
+﻿using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Classrooms.Queries.GetClassroomsList
+namespace Honoplay.Application.Tests.Classrooms.Queries.GetClassroomDetail
 {
-    public class GetClassroomsListQueryTest : TestBase, IDisposable
+    public class GetClassroomDetailQueryTest
     {
         private readonly HonoplayDbContext _context;
-        private readonly GetClassroomListQueryHandler _getClassroomsListQueryHandler;
+        private readonly GetClassroomDetailQueryHandler _getClassroomDetailQueryHandler;
+        private readonly int _classroomId;
+        private readonly int _adminUserId;
         private readonly Guid _tenantId;
-        public GetClassroomsListQueryTest()
+
+        public GetClassroomDetailQueryTest()
         {
             var cache = new Mock<IDistributedCache>();
-
-            _context = InitAndGetDbContext(out _tenantId);
-            _getClassroomListQueryHandler = new GetClassroomListQueryHandler(_context, new CacheManager(cache.Object));
+            _context = InitAndGetDbContext(out _adminUserId, out _classroomId, out _tenantId);
+            _getClassroomDetailQueryHandler = new GetClassroomDetailQueryHandler(_context, new CacheManager(cache.Object));
         }
-
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId)
+        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out int classroomId, out Guid tenantId)
         {
             var context = GetDbContext();
 
@@ -119,29 +122,31 @@ namespace Honoplay.Application.Tests.Classrooms.Queries.GetClassroomsList
             context.SaveChanges();
 
             tenantId = tenant.Id;
+            classroomId = classroom.Id;
+            adminUserId = adminUser.Id;
             return context;
         }
+
 
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var getClassroomsListQuery = new GetClassroomsListQuery(tenantId: _tenantId, skip: 0, take: 10);
+            var query = new GetClassroomDetailQuery(_adminUserId, _classroomId, _tenantId);
 
-            var classroomsResponseModel = await _getClassroomsListQueryHandler.Handle(getClassroomsListQuery, CancellationToken.None);
+            var model = await _getClassroomDetailQueryHandler.Handle(query, CancellationToken.None);
 
-            Assert.Null(classroomsResponseModel.Errors);
+            Assert.Null(model.Errors);
+            Assert.Equal(expected: _context.Classrooms.FirstOrDefault()?.Name, actual: model.Items.Single().Name, ignoreCase: true);
+
         }
 
         [Fact]
-        public async Task ShouldItemsCount1WhenTake1()
+        public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var getClassroomsListQuery = new GetClassroomsListQuery(tenantId: _tenantId, skip: 0, take: 1);
+            var query = new GetClassroomDetailQuery(_adminUserId, _classroomId + 1, _tenantId);
 
-            var classroomsResponseModel = await _getClassroomsListQueryHandler.Handle(getClassroomsListQuery, CancellationToken.None);
-
-            Assert.Single(classroomsResponseModel.Items);
+            await Assert.ThrowsAsync<NotFoundException>(async () =>
+                await _getClassroomDetailQueryHandler.Handle(query, CancellationToken.None));
         }
-
-        public void Dispose() => _context?.Dispose();
     }
 }
