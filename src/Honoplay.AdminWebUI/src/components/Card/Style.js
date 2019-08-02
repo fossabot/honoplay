@@ -1,5 +1,30 @@
 export const Style = (theme) => ({
-  root: {
+  card: {
+    paddingBottom: 37,
+    margin: theme.spacing.unit / 2,
+  },
+  cardLabel: {
+    color: '#707070',
+    textAlign: 'center',
+    fontSize: 15
+  },
+  cardDate: {
+    color: '#8d8d8d',
+    textAlign: 'center',
+    fontSize: 12
+  },
+  center: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  cardIcon: {
+    display: 'flex',
+    justifyContent: 'flex-end'
+  },
+  chip: {
+    margin: theme.spacing.unit / 2,
+  },
+  cardRoot: {
     display: 'flex',
     justifyContent: 'left',
     flexWrap: 'wrap',

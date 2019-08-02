@@ -70,7 +70,7 @@ class TrainingSeriesCreate extends React.Component {
                         <Grid item xs={12} sm={12} key={id}>
                             <Input
                                 error={trainingError}
-                                labelName={translate('Name')}
+                                labelName={translate('TrainingSeriesName')}
                                 inputType="text"
                                 onChange={e => training.name = e.target.value}
                             />

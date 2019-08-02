@@ -6,14 +6,21 @@ import Style from '../Style';
 import CardButton from '../../components/Card/CardButton';
 import Typography from '../../components/Typography/TypographyComponent';
 import Modal from '../../components/Modal/ModalComponent';
+import Card from '../../components/Card/CardComponents';
 import TrainingseriesCreate from './TrainingSeriesCreate';
+
 
 class TrainingSeries extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      openDialog: false
+      openDialog: false,
+      data: [
+        { key: 1, label: 'Eğitim Serisi 1', date: '01.02.2019' },
+        { key: 2, label: 'Eğitim Serisi 2', date: '03.02.2019' },
+        { key: 3, label: 'Eğitim Serisi 3', date: '01.05.2019' },
+      ]
     }
   }
 
@@ -37,24 +44,30 @@ class TrainingSeries extends React.Component {
               pageHeader={translate('TrainingSeries')}
             />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={3}>
             <CardButton
               cardName={translate('CreateATrainingSeries')}
               cardDescription={translate('YouCanCreateTrainingSetsAndCollectDifferentTrainingsInOneField')}
               onClick={this.handleClickOpenDialog}
             />
           </Grid>
+          <Grid item xs={12} sm={9}>
+            <Card
+              data={this.state.data}
+            />
+          </Grid>
         </Grid>
         <Modal
-          titleName={translate('TrainingSeriesName')}
+          titleName={translate('CreateATrainingSeries')}
           open={openDialog}
           handleClose={this.handleCloseDialog}
-        > 
+        >
           <TrainingseriesCreate />
         </Modal>
       </div>
     );
   }
 }
+
 
 export default withStyles(Style)(TrainingSeries);
