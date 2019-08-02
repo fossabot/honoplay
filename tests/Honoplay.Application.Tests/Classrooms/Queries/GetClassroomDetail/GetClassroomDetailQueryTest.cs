@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Classrooms.Queries.GetClassroomDetail;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Classrooms.Queries.GetClassroomDetail

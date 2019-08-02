@@ -1,4 +1,5 @@
-﻿using Honoplay.Common.Extensions;
+﻿using Honoplay.Application.Classrooms.Commands.CreateClassroom;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
@@ -9,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application.Classrooms.Commands.CreateClassroom;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
