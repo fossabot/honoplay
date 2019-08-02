@@ -1,5 +1,4 @@
-﻿using Honoplay.Application.Trainings.Commands.CreateTraining;
-using Honoplay.Common.Extensions;
+﻿using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
@@ -12,26 +11,26 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
+namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
 {
-    public class CreateTrainingCommandTest : TestBase, IDisposable
+    public class CreateClassroomCommandTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly CreateTrainingCommandHandler _commandHandler;
+        private readonly CreateClassroomCommandHandler _commandHandler;
         private readonly Guid _tenantId;
         private readonly int _adminUserId;
-        private readonly int _trainingSeriesId;
-        private readonly int _trainingCategoryId;
+        private readonly int _trainingId;
+        private readonly int _trainerId;
 
-        public CreateTrainingCommandTest()
+        public CreateClassroomCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
 
-            _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _trainingSeriesId, out _trainingCategoryId);
-            _commandHandler = new CreateTrainingCommandHandler(_context, new CacheManager(cache.Object));
+            _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _trainingId, out _trainerId);
+            _commandHandler = new CreateClassroomCommandHandler(_context, new CacheManager(cache.Object));
         }
 
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int trainingSeriesId, out int trainingCategoryId)
+        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int trainingId, out int trainerId)
         {
             var context = GetDbContext();
 
@@ -77,12 +76,51 @@ namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
             };
             context.TrainingCategories.Add(trainingCategory);
 
+            var training = new Training
+            {
+                CreatedBy = adminUser.Id,
+                BeginDateTime = DateTimeOffset.Now,
+                Description = "test",
+                EndDateTime = DateTimeOffset.Now.AddDays(5),
+                TrainingCategoryId = trainingCategory.Id,
+                TrainingSeriesId = trainingSeries.Id,
+                Name = "sample"
+            };
+            context.Trainings.Add(training);
+
+            var department = new Department
+            {
+                TenantId = tenant.Id,
+                CreatedBy = adminUser.Id,
+                Name = "sampleDepartment"
+            };
+            context.Departments.Add(department);
+
+            var profession = new Profession
+            {
+                TenantId = tenant.Id,
+                CreatedBy = adminUser.Id,
+                Name = "testProfession"
+            };
+            context.Professions.Add(profession);
+
+            var trainer = new Trainer
+            {
+                CreatedBy = adminUser.Id,
+                Name = "sample",
+                DepartmentId = department.Id,
+                Email = "test@omegabigdata.com",
+                PhoneNumber = "16846546544545",
+                ProfessionId = profession.Id,
+                Surname = "test"
+            };
+            context.Trainers.Add(trainer);
             context.SaveChanges();
 
             adminUserId = adminUser.Id;
             tenantId = tenant.Id;
-            trainingSeriesId = trainingSeries.Id;
-            trainingCategoryId = trainingCategory.Id;
+            trainingId = training.Id;
+            trainerId = trainer.Id;
 
             return context;
         }
@@ -90,20 +128,17 @@ namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var command = new CreateTrainingCommand
+            var command = new CreateClassroomCommand
             {
                 CreatedBy = _adminUserId,
                 TenantId = _tenantId,
-                CreateTrainingModels = new List<CreateTrainingCommandModel>
+                CreateClassroomModels = new List<CreateClassroomCommandModel>
                 {
-                    new CreateTrainingCommandModel
+                    new CreateClassroomCommandModel
                     {
-                        TrainingSeriesId = _trainingSeriesId,
-                        TrainingCategoryId = _trainingCategoryId,
-                        Name = "trainingSample",
-                        Description = "sampleDescription",
-                        EndDateTime = DateTimeOffset.Now.AddDays(5),
-                        BeginDateTime = DateTimeOffset.Now
+                        TrainerId = _trainerId,
+                        TrainingId = _trainingId,
+                        Name = "test"
                     }
                 }
             };

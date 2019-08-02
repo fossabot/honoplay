@@ -19,8 +19,9 @@ namespace Honoplay.Persistence.Configurations
                 .IsRequired();
 
             //Code
+            builder.HasIndex(x => x.Code).IsUnique();
             builder.Property(x => x.Code)
-                .IsRequired();
+                .ValueGeneratedOnAdd();
 
             builder.HasIndex(x => new { x.TrainingId, x.Name }).IsUnique();
 
