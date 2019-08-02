@@ -17,8 +17,8 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
         {
             Assert.True(_validator.Validate(new CreateClassroomCommand
             {
-                CreatedBy = _adminUserId,
-                TenantId = _tenantId,
+                CreatedBy = 1,
+                TenantId = 1,
                 CreateClassroomModels = new List<CreateClassroomCommandModel>
                 {
                     new CreateClassroomCommandModel

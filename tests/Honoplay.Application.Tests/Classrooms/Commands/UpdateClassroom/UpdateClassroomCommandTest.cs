@@ -1,36 +1,36 @@
-﻿using Honoplay.Common.Extensions;
+﻿using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
+namespace Honoplay.Application.Tests.Classrooms.Commands.UpdateClassroom
 {
-    public class CreateClassroomCommandTest : TestBase, IDisposable
+    public class UpdateClassroomCommandTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly CreateClassroomCommandHandler _commandHandler;
+        private readonly UpdateClassroomCommandHandler _commandHandler;
         private readonly Guid _tenantId;
         private readonly int _adminUserId;
         private readonly int _trainingId;
         private readonly int _trainerId;
+        private readonly int _classroomId;
 
-        public CreateClassroomCommandTest()
+        public UpdateClassroomCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
 
-            _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _trainingId, out _trainerId);
-            _commandHandler = new CreateClassroomCommandHandler(_context, new CacheManager(cache.Object));
+            _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _trainingId, out _trainerId, out _classroomId);
+            _commandHandler = new UpdateClassroomCommandHandler(_context, new CacheManager(cache.Object));
         }
 
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int trainingId, out int trainerId)
+        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int trainingId, out int trainerId, out int classroomId)
         {
             var context = GetDbContext();
 
@@ -57,20 +57,20 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
             {
                 TenantId = tenant.Id,
                 AdminUserId = adminUser.Id,
-                CreatedBy = adminUser.Id
+                UpdatedBy = adminUser.Id
             });
 
             var trainingSeries = new TrainingSeries
             {
                 TenantId = tenant.Id,
-                CreatedBy = adminUser.Id,
+                UpdatedBy = adminUser.Id,
                 Name = "testSeries"
             };
             context.TrainingSerieses.Add(trainingSeries);
 
             var trainingCategory = new TrainingCategory
             {
-                CreatedBy = adminUser.Id,
+                UpdatedBy = adminUser.Id,
                 Description = "test",
                 Name = "sample",
             };
@@ -78,7 +78,7 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
 
             var training = new Training
             {
-                CreatedBy = adminUser.Id,
+                UpdatedBy = adminUser.Id,
                 BeginDateTime = DateTimeOffset.Now,
                 Description = "test",
                 EndDateTime = DateTimeOffset.Now.AddDays(5),
@@ -91,7 +91,7 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
             var department = new Department
             {
                 TenantId = tenant.Id,
-                CreatedBy = adminUser.Id,
+                UpdatedBy = adminUser.Id,
                 Name = "sampleDepartment"
             };
             context.Departments.Add(department);
@@ -99,14 +99,14 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
             var profession = new Profession
             {
                 TenantId = tenant.Id,
-                CreatedBy = adminUser.Id,
+                UpdatedBy = adminUser.Id,
                 Name = "testProfession"
             };
             context.Professions.Add(profession);
 
             var trainer = new Trainer
             {
-                CreatedBy = adminUser.Id,
+                UpdatedBy = adminUser.Id,
                 Name = "sample",
                 DepartmentId = department.Id,
                 Email = "test@omegabigdata.com",
@@ -115,12 +115,22 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
                 Surname = "test"
             };
             context.Trainers.Add(trainer);
+
+            var classroom = new Classroom
+            {
+                CreatedBy = adminUser.Id,
+                Name = "test",
+                TrainerId = trainer.Id,
+                TrainingId = training.Id,
+            };
+            context.Classrooms.Add(classroom);
             context.SaveChanges();
 
             adminUserId = adminUser.Id;
             tenantId = tenant.Id;
             trainingId = training.Id;
             trainerId = trainer.Id;
+            classroomId = classroom.Id;
 
             return context;
         }
@@ -128,26 +138,37 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var command = new CreateClassroomCommand
+            var updateClassroomCommand = new UpdateClassroomCommand
             {
-                CreatedBy = _adminUserId,
+                UpdatedBy = _adminUserId,
                 TenantId = _tenantId,
-                CreateClassroomModels = new List<CreateClassroomCommandModel>
-                {
-                    new CreateClassroomCommandModel
-                    {
-                        TrainerId = _trainerId,
-                        TrainingId = _trainingId,
-                        Name = "test"
-                    }
-                }
+                Id = _classroomId,
+                TrainerId = _trainerId,
+                TrainingId = _trainingId,
+                Name = "test"
             };
 
-            var classroomResponseModel = await _commandHandler.Handle(command, CancellationToken.None);
+            var classroomResponseModel = await _commandHandler.Handle(updateClassroomCommand, CancellationToken.None);
 
             Assert.Null(classroomResponseModel.Errors);
+            Assert.Equal(expected: updateClassroomCommand.Name, actual: classroomResponseModel.Items.Single().Name, ignoreCase: true);
+        }
 
-            Assert.True(classroomResponseModel.Items.Single().Count > 0);
+        [Fact]
+        public async Task ShouldThrowErrorWhenInvalidInformation()
+        {
+            var updateClassroomCommand = new UpdateClassroomCommand
+            {
+                Id = _classroomId + 1,
+                UpdatedBy = _adminUserId,
+                TenantId = _tenantId,
+                TrainerId = _trainerId,
+                TrainingId = _trainingId,
+                Name = "test"
+            };
+
+            await Assert.ThrowsAsync<NotFoundException>(async () =>
+                await _commandHandler.Handle(updateClassroomCommand, CancellationToken.None));
         }
 
         public void Dispose() => _context?.Dispose();
