@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Classrooms.Queries.GetClassroomsList;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Classrooms.Queries.GetClassroomsList
@@ -14,14 +15,14 @@ namespace Honoplay.Application.Tests.Classrooms.Queries.GetClassroomsList
     public class GetClassroomsListQueryTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly GetClassroomListQueryHandler _getClassroomsListQueryHandler;
+        private readonly GetClassroomsListQueryHandler _getClassroomsListQueryHandler;
         private readonly Guid _tenantId;
         public GetClassroomsListQueryTest()
         {
             var cache = new Mock<IDistributedCache>();
 
             _context = InitAndGetDbContext(out _tenantId);
-            _getClassroomListQueryHandler = new GetClassroomListQueryHandler(_context, new CacheManager(cache.Object));
+            _getClassroomsListQueryHandler = new GetClassroomsListQueryHandler(_context, new CacheManager(cache.Object));
         }
 
         private HonoplayDbContext InitAndGetDbContext(out Guid tenantId)

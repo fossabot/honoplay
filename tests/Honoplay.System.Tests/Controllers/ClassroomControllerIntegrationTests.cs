@@ -8,6 +8,9 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Honoplay.Application.Classrooms.Commands.CreateClassroom;
+using Honoplay.Application.Classrooms.Commands.UpdateClassroom;
+using Honoplay.Application.Classrooms.Queries.GetClassroomsList;
 using Xunit;
 
 namespace Honoplay.System.Tests.Controllers
