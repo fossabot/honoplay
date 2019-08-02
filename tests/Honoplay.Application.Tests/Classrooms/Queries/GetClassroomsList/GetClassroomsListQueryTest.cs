@@ -7,44 +7,42 @@ using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application.Trainings.Queries.GetTrainingsList;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Trainings.Queries.GetTrainingsList
+namespace Honoplay.Application.Tests.Classrooms.Queries.GetClassroomsList
 {
-    public class GetTrainingsListQueryTest : TestBase, IDisposable
+    public class GetClassroomsListQueryTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly GetTrainingsListQueryHandler _getTrainingsListQueryHandler;
+        private readonly GetClassroomListQueryHandler _getClassroomListQueryHandler;
         private readonly Guid _tenantId;
-
-        public GetTrainingsListQueryTest()
+        public GetClassroomsListQueryTest()
         {
             var cache = new Mock<IDistributedCache>();
+
             _context = InitAndGetDbContext(out _tenantId);
-            _getTrainingsListQueryHandler = new GetTrainingsListQueryHandler(_context, new CacheManager(cache.Object));
+            _getClassroomListQueryHandler = new GetClassroomListQueryHandler(_context, new CacheManager(cache.Object));
         }
+
         private HonoplayDbContext InitAndGetDbContext(out Guid tenantId)
         {
             var context = GetDbContext();
-            var salt = ByteArrayExtensions.GetRandomSalt();
 
+            var salt = ByteArrayExtensions.GetRandomSalt();
             var adminUser = new AdminUser
             {
                 Id = 1,
-                Email = "test@omegabigdata.com",
-                Password = "pass".GetSHA512(salt),
+                Email = "TestAdminUser01@omegabigdata.com",
+                Password = "Passw0rd".GetSHA512(salt),
                 PasswordSalt = salt,
-                LastPasswordChangeDateTime = DateTimeOffset.Now.AddDays(-5)
+                LastPasswordChangeDateTime = DateTime.Today.AddDays(-5),
             };
             context.AdminUsers.Add(adminUser);
 
-
             var tenant = new Tenant
             {
-                Name = "testTenant",
-                HostName = "localhost",
-                CreatedBy = adminUser.Id
+                Name = "TestTenant#01",
+                HostName = "localhost"
             };
             context.Tenants.Add(tenant);
 
@@ -55,22 +53,14 @@ namespace Honoplay.Application.Tests.Trainings.Queries.GetTrainingsList
                 CreatedBy = adminUser.Id
             });
 
-            var question = new Question
-            {
-                Duration = 3,
-                Text = "testQuestion",
-                CreatedBy = adminUser.Id,
-                TenantId = tenant.Id
-            };
-            context.Questions.Add(question);
-
             var trainingSeries = new TrainingSeries
             {
-                CreatedBy = adminUser.Id,
                 TenantId = tenant.Id,
-                Name = "testTrainingSeries"
+                CreatedBy = adminUser.Id,
+                Name = "testSeries"
             };
             context.TrainingSerieses.Add(trainingSeries);
+
             var trainingCategory = new TrainingCategory
             {
                 CreatedBy = adminUser.Id,
@@ -81,39 +71,39 @@ namespace Honoplay.Application.Tests.Trainings.Queries.GetTrainingsList
 
             var training = new Training
             {
+                TrainingCategoryId = trainingCategory.Id,
+                BeginDateTime = DateTimeOffset.Now,
+                EndDateTime = DateTimeOffset.Now.AddDays(5),
                 CreatedBy = adminUser.Id,
                 Description = "description",
                 Name = "test",
-                EndDateTime = DateTimeOffset.Now.AddDays(5),
-                BeginDateTime = DateTimeOffset.Now,
-                TrainingSeriesId = trainingSeries.Id,
-                TrainingCategoryId = trainingCategory.Id
+                TrainingSeriesId = trainingSeries.Id
             };
             context.Trainings.Add(training);
+            context.SaveChanges();
 
             tenantId = tenant.Id;
-            context.SaveChanges();
             return context;
         }
 
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var getTrainingsListQuery = new GetTrainingsListQuery(tenantId: _tenantId, skip: 0, take: 10);
+            var getClassroomsListQuery = new GetClassroomsListQuery(tenantId: _tenantId, skip: 0, take: 10);
 
-            var trainingsResponseModel = await _getTrainingsListQueryHandler.Handle(getTrainingsListQuery, CancellationToken.None);
+            var classroomsResponseModel = await _getClassroomsListQueryHandler.Handle(getClassroomsListQuery, CancellationToken.None);
 
-            Assert.Null(trainingsResponseModel.Errors);
+            Assert.Null(classroomsResponseModel.Errors);
         }
 
         [Fact]
         public async Task ShouldItemsCount1WhenTake1()
         {
-            var getTrainingsListQuery = new GetTrainingsListQuery(tenantId: _tenantId, skip: 0, take: 1);
+            var getClassroomsListQuery = new GetClassroomsListQuery(tenantId: _tenantId, skip: 0, take: 1);
 
-            var trainingsResponseModel = await _getTrainingsListQueryHandler.Handle(getTrainingsListQuery, CancellationToken.None);
+            var classroomsResponseModel = await _getClassroomsListQueryHandler.Handle(getClassroomsListQuery, CancellationToken.None);
 
-            Assert.Single(trainingsResponseModel.Items);
+            Assert.Single(classroomsResponseModel.Items);
         }
 
         public void Dispose() => _context?.Dispose();
