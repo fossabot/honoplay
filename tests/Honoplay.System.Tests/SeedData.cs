@@ -149,6 +149,15 @@ namespace Honoplay.System.Tests
             };
             dbContext.Options.Add(option);
 
+            var classroom = new Classroom
+            {
+                CreatedBy = adminUser.Id,
+                Name = "test",
+                TrainerId = trainer.Id,
+                TrainingId = training.Id,
+            };
+            dbContext.Classrooms.Add(classroom);
+
             dbContext.SaveChanges();
         }
     }
