@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace Honoplay.Domain.Entities
+﻿namespace Honoplay.Domain.Entities
 {
-    public class Level : BaseEntity
+    public class Session : BaseEntity
     {
         public int Id { get; set; }
         public int GameId { get; set; }

@@ -158,6 +158,21 @@ namespace Honoplay.System.Tests
             };
             dbContext.Classrooms.Add(classroom);
 
+            var game = new Game
+            {
+                Name = "game1"
+            };
+            dbContext.Games.Add(game);
+
+            var session = new Session
+            {
+                UpdatedBy = adminUser.Id,
+                Name = "test",
+                ClassroomId = classroom.Id,
+                GameId = game.Id,
+            };
+            dbContext.Sessions.Add(session);
+
             dbContext.SaveChanges();
         }
     }

@@ -88,6 +88,34 @@
             <param name="id">Get question model</param>
             <returns>Get question by tenant id and question id with status code.</returns>
         </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.SessionController.Post(Honoplay.Application.Sessions.Commands.CreateSession.CreateSessionCommand)">
+            <summary>
+            This service create session.
+            </summary>
+            <param name="command">Create session model</param>
+            <returns>CreateSessionModel with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.SessionController.Put(Honoplay.Application.Sessions.Commands.UpdateSession.UpdateSessionCommand)">
+            <summary>
+            This service update session.
+            </summary>
+            <param name="command">Update session model</param>
+            <returns>UpdateSessionModel with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.SessionController.Get(Honoplay.Application.Sessions.Queries.GetSessionsList.GetSessionsListQueryModel)">
+            <summary>
+            This service retrieve all sessions by tenant id. Filtered skip and take parameters.
+            </summary>
+            <param name="query">GetAll session model</param>
+            <returns>Get all sessions list by tenant id with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.SessionController.Get(System.Int32)">
+            <summary>
+            This service retrieve session by session id
+            </summary>
+            <param name="id">Get session model</param>
+            <returns>Get session by tenant id and session id with status code.</returns>
+        </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.TenantController.Get(System.Guid)">
             <summary>
             Retrieve the tenant by ID.
