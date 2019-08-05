@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using Honoplay.Application.Sessions.Commands.UpdateSession;
+using Xunit;
 
 namespace Honoplay.Application.Tests.Sessions.Commands.UpdateSession
 {

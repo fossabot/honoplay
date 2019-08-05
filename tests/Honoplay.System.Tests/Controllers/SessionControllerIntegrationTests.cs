@@ -1,4 +1,6 @@
 ﻿using Honoplay.AdminWebAPI;
+using Honoplay.Application.Sessions.Commands.CreateSession;
+using Honoplay.Application.Sessions.Commands.UpdateSession;
 using Honoplay.Common.Constants;
 using Honoplay.System.Tests.Extensions;
 using Newtonsoft.Json;
@@ -7,7 +9,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Honoplay.Application.Sessions.Commands.CreateSession;
 using Xunit;
 
 namespace Honoplay.System.Tests.Controllers
