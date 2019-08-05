@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Honoplay.Application.Sessions.Commands.CreateSession;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Sessions.Commands.CreateSession

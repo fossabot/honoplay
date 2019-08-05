@@ -1,4 +1,4 @@
-﻿using Honoplay.Application.Classrooms.Commands.UpdateClassroom;
+﻿using Honoplay.Application.Sessions.Commands.CreateSession;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -28,7 +28,7 @@ namespace Honoplay.Application.Tests.Sessions.Commands.CreateSession
             var cache = new Mock<IDistributedCache>();
 
             _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _gameId, out _classroomId);
-            _commandHandler = new UpdateClassroomCommandHandler(_context, new CacheManager(cache.Object));
+            _commandHandler = new CreateSessionCommandHandler(_context, new CacheManager(cache.Object));
         }
 
         private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int gameId, out int classroomId)

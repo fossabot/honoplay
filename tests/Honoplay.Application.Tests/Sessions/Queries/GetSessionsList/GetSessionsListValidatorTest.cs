@@ -1,22 +1,21 @@
 ﻿using FluentValidation.TestHelper;
-using Honoplay.Application.Classrooms.Queries.GetClassroomsList;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Classrooms.Queries.GetClassroomsList
+namespace Honoplay.Application.Tests.Sessions.Queries.GetSessionsList
 {
-    public class GetClassroomsListValidatorTest
+    public class GetSessionsListValidatorTest
     {
-        private readonly GetClassroomsListValidator _validator;
+        private readonly GetSessionsListValidator _validator;
 
-        public GetClassroomsListValidatorTest()
+        public GetSessionsListValidatorTest()
         {
-            _validator = new GetClassroomsListValidator();
+            _validator = new GetSessionsListValidator();
         }
 
         [Fact]
         public void ShouldBeValid()
         {
-            Assert.True(_validator.Validate(new GetClassroomsListQueryModel { Take = 5 }).IsValid);
+            Assert.True(_validator.Validate(new GetSessionsListQueryModel { Take = 5 }).IsValid);
         }
 
         [Fact]

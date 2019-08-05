@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Honoplay.Application.Sessions.Commands.CreateSession;
 using Xunit;
 
 namespace Honoplay.System.Tests.Controllers
