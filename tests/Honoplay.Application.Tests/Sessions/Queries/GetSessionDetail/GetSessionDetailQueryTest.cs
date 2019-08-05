@@ -9,6 +9,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Sessions.Queries.GetSessionDetail;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Sessions.Queries.GetSessionDetail

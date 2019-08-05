@@ -1,5 +1,6 @@
 ﻿using FluentValidation.TestHelper;
 using System;
+using Honoplay.Application.Sessions.Queries.GetSessionDetail;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Sessions.Queries.GetSessionDetail
