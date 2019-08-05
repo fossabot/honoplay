@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Honoplay.Persistence.Configurations
 {
-    public class LevelConfiguration : IEntityTypeConfiguration<Level>
+    public class LevelConfiguration : IEntityTypeConfiguration<Session>
     {
-        public void Configure(EntityTypeBuilder<Level> builder)
+        public void Configure(EntityTypeBuilder<Session> builder)
         {
             //Id
             builder.HasKey(x => x.Id);
@@ -21,12 +21,12 @@ namespace Honoplay.Persistence.Configurations
             //RELATIONS
             //Game
             builder.HasOne(x => x.Game)
-                .WithMany(x => x.Levels)
+                .WithMany(x => x.Sessions)
                 .HasForeignKey(x => x.GameId);
 
             //Classroom
             builder.HasOne(x => x.Classroom)
-                .WithMany(x => x.Levels)
+                .WithMany(x => x.Sessions)
                 .HasForeignKey(x => x.ClassroomId);
         }
     }

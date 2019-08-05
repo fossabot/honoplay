@@ -27,7 +27,7 @@ namespace Honoplay.Persistence
         public DbSet<TrainingSeries> TrainingSerieses { get; set; }
         public DbSet<Training> Trainings { get; set; }
         public DbSet<Classroom> Classrooms { get; set; }
-        public DbSet<Level> Levels { get; set; }
+        public DbSet<Session> Sessions { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<TrainingCategory> TrainingCategories { get; set; }
 

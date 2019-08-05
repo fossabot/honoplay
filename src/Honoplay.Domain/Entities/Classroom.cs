@@ -7,7 +7,7 @@ namespace Honoplay.Domain.Entities
         public Classroom()
         {
             Trainees = new HashSet<Trainee>();
-            Levels = new HashSet<Level>();
+            Sessions = new HashSet<Session>();
         }
         public int Id { get; set; }
         public int TrainerId { get; set; }
@@ -18,7 +18,7 @@ namespace Honoplay.Domain.Entities
         public Trainer Trainer { get; set; }
         public Training Training { get; set; }
         public virtual ICollection<Trainee> Trainees { get; set; }
-        public virtual ICollection<Level> Levels { get; set; }
+        public virtual ICollection<Session> Sessions { get; set; }
 
     }
 }
