@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Sessions.Queries.GetSessionsList;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Sessions.Queries.GetSessionsList
