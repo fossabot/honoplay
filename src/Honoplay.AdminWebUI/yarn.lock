@@ -894,21 +894,21 @@
     prop-types "^15.6.0"
     react-is "^16.6.3"
 
-"@omegabigdata/honoplay-api-helper-node@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-api-helper-node/-/honoplay-api-helper-node-0.2.2.tgz#ab913f7fa2c0203d7936c54068ec9945befcce08"
-  integrity sha512-35Z0bBLevukc/AFQeZW6xAP53sgjMkJ5lXVUTbpA50VcHB3KzV9O4C29XO77F8++riBO0BjZX3CeTr5QveSJVw==
+"@omegabigdata/honoplay-api-helper-node@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-api-helper-node/-/honoplay-api-helper-node-0.2.4.tgz#1e80e21fa2beda3987e348348b4a58077318eb34"
+  integrity sha512-3QSPx0NVxf+tcl5bPHa2LFYdGd/6nHG4K22LrqTwWWCJNDQcJ0VsxAdqZDfD/yst2rs7aFmw5wu1udC8RzL3/A==
   dependencies:
     axios "^0.18.0"
     axios-retry "^3.1.2"
     chai-http "^4.3.0"
 
-"@omegabigdata/honoplay-redux-helper@^0.3.3":
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-redux-helper/-/honoplay-redux-helper-0.3.3.tgz#fef6f4dc3de54cd1a87d1e506e65cc0dc379c549"
-  integrity sha512-1dTMB507RcyezTNVe7G4r6vTG7hBVQyo/Myvs5S+0tpfd2PHpkadWAPmP1+5zArJ1iwavq07jT6mVfcd88gOfA==
+"@omegabigdata/honoplay-redux-helper@^0.3.5":
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-redux-helper/-/honoplay-redux-helper-0.3.5.tgz#dc6f082ea7d4c6c0d61ba79a815e298ac548a75b"
+  integrity sha512-C0vbedbJNDkc/4X3RO857s9fow/wvppqLa3bpzDT8WJMdFBrD0V93sGbolSWMv9a3S4R8zojG4j2YimIhMTIhA==
   dependencies:
-    "@omegabigdata/honoplay-api-helper-node" "^0.2.2"
+    "@omegabigdata/honoplay-api-helper-node" "^0.2.4"
     redux "^4.0.1"
     redux-thunk "^2.3.0"
 
@@ -4561,6 +4561,11 @@ mock-local-storage@^1.1.8:
   dependencies:
     core-js "^0.8.3"
     global "^4.3.2"
+
+moment@^2.24.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
 
 moo@^0.4.3:
   version "0.4.3"

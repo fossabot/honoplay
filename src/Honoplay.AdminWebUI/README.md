@@ -69,6 +69,8 @@
     "react-swipeable-views":  Tab componentinin animasyonu için kullanıldı.
     "notistack": snackbar'ların görüntülenmesi için.
 
+    "moment": date format 'DD/MM/YYYY' değiştirebilmek için kullanıldı.
+
 
 ## Testler
 

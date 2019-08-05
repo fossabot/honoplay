@@ -3,6 +3,7 @@ import {
   Dialog,
   Slide,
   DialogContent,
+  DialogTitle
 } from '@material-ui/core';
 
 function Transition(props) {
@@ -12,7 +13,7 @@ function Transition(props) {
 class ModalComponent extends React.Component {
 
   render() {
-    const {open, handleClose, children } = this.props;
+    const { open, handleClose, children, titleName } = this.props;
     return (
 
       <div>
@@ -23,6 +24,7 @@ class ModalComponent extends React.Component {
           onClose={handleClose}
           TransitionComponent={Transition}
         >
+          <DialogTitle>{titleName}</DialogTitle>
           <DialogContent>
             {children}
           </DialogContent>
