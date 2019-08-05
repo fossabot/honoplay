@@ -14,7 +14,7 @@ using Xunit;
 
 namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
 {
-    public class CreateCreateTrainingCommandTest : TestBase, IDisposable
+    public class CreateTrainingCommandTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
         private readonly CreateTrainingCommandHandler _commandHandler;
@@ -23,7 +23,7 @@ namespace Honoplay.Application.Tests.Trainings.Commands.CreateTraining
         private readonly int _trainingSeriesId;
         private readonly int _trainingCategoryId;
 
-        public CreateCreateTrainingCommandTest()
+        public CreateTrainingCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
 

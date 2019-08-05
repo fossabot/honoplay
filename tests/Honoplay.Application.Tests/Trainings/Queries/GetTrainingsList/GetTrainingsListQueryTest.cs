@@ -101,9 +101,9 @@ namespace Honoplay.Application.Tests.Trainings.Queries.GetTrainingsList
         {
             var getTrainingsListQuery = new GetTrainingsListQuery(tenantId: _tenantId, skip: 0, take: 10);
 
-            var trainingSeriesesModel = await _getTrainingsListQueryHandler.Handle(getTrainingsListQuery, CancellationToken.None);
+            var trainingsResponseModel = await _getTrainingsListQueryHandler.Handle(getTrainingsListQuery, CancellationToken.None);
 
-            Assert.Null(trainingSeriesesModel.Errors);
+            Assert.Null(trainingsResponseModel.Errors);
         }
 
         [Fact]
@@ -111,9 +111,9 @@ namespace Honoplay.Application.Tests.Trainings.Queries.GetTrainingsList
         {
             var getTrainingsListQuery = new GetTrainingsListQuery(tenantId: _tenantId, skip: 0, take: 1);
 
-            var trainingSeriesesModel = await _getTrainingsListQueryHandler.Handle(getTrainingsListQuery, CancellationToken.None);
+            var trainingsResponseModel = await _getTrainingsListQueryHandler.Handle(getTrainingsListQuery, CancellationToken.None);
 
-            Assert.Single(trainingSeriesesModel.Items);
+            Assert.Single(trainingsResponseModel.Items);
         }
 
         public void Dispose() => _context?.Dispose();
