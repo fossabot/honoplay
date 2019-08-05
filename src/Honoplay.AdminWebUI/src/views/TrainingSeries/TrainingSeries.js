@@ -9,6 +9,8 @@ import Modal from '../../components/Modal/ModalComponent';
 import Card from '../../components/Card/CardComponents';
 import TrainingseriesCreate from './TrainingSeriesCreate';
 
+import { connect } from "react-redux";
+import { fetchTrainingSeriesList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingSeries';
 
 class TrainingSeries extends React.Component {
 
@@ -16,17 +18,37 @@ class TrainingSeries extends React.Component {
     super(props);
     this.state = {
       openDialog: false,
-      data: [
-        { key: 1, label: 'Eğitim Serisi 1', date: '01.02.2019' },
-        { key: 2, label: 'Eğitim Serisi 2', date: '03.02.2019' },
-        { key: 3, label: 'Eğitim Serisi 3', date: '01.05.2019' },
-      ]
+      trainingSerieses: [],
+      trainingSeriesesError: false,
     }
+  }
+
+  componentDidUpdate(prevProps) {
+    const {
+      isTrainingSeriesListLoading,
+      TrainingSeriesList,
+      errorTrainingSeriesList
+    } = this.props;
+
+    if (!prevProps.errorTrainingSeriesList && errorTrainingSeriesList) {
+      this.setState({
+        trainingSeriesesError: true
+      })
+    }
+    if (prevProps.isTrainingSeriesListLoading && !isTrainingSeriesListLoading && TrainingSeriesList) {
+      this.setState({
+        trainingSerieses: TrainingSeriesList.items
+      })
+    }
+  }
+
+  componentDidMount() {
+    const { fetchTrainingSeriesList } = this.props;
+    fetchTrainingSeriesList(0,50);
   }
 
   handleClickOpenDialog = () => {
     this.setState({ openDialog: true });
-
   };
 
   handleCloseDialog = () => {
@@ -34,7 +56,7 @@ class TrainingSeries extends React.Component {
   };
 
   render() {
-    const { openDialog } = this.state;
+    const { openDialog, trainingSerieses } = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -53,7 +75,7 @@ class TrainingSeries extends React.Component {
           </Grid>
           <Grid item xs={12} sm={9}>
             <Card
-              data={this.state.data}
+              data={trainingSerieses}
             />
           </Grid>
         </Grid>
@@ -70,4 +92,26 @@ class TrainingSeries extends React.Component {
 }
 
 
-export default withStyles(Style)(TrainingSeries);
+const mapStateToProps = state => {
+  const {
+    isTrainingSeriesListLoading,
+    TrainingSeriesList,
+    errorTrainingSeriesList
+  } = state.trainingSeriesList;
+
+
+  return {
+    isTrainingSeriesListLoading,
+    TrainingSeriesList,
+    errorTrainingSeriesList
+  };
+};
+
+const mapDispatchToProps = {
+  fetchTrainingSeriesList
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(Style)(TrainingSeries));

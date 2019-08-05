@@ -7,7 +7,7 @@ import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 
 import { connect } from "react-redux";
-import { createTrainingSeries } from "@omegabigdata/honoplay-redux-helper/Src/actions/TrainingSeries";
+import { createTrainingSeries, fetchTrainingSeriesList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingSeries";
 
 class TrainingSeriesCreate extends React.Component {
 
@@ -17,7 +17,7 @@ class TrainingSeriesCreate extends React.Component {
             trainingError: false,
             loading: false,
             trainingSeries: {
-                trainingSeriesModels: [
+                createTrainingSeriesModels: [
                     {
                         name: ''
                     }
@@ -46,6 +46,7 @@ class TrainingSeriesCreate extends React.Component {
         }
         if (prevProps.isCreateTrainingSeriesLoading && !isCreateTrainingSeriesLoading && createTrainingSeries) {
             if (!errorCreateTrainingSeries) {
+                this.props.fetchTrainingSeriesList(0, 50);
                 this.setState({
                     loading: false,
                     trainingError: false,
@@ -56,7 +57,6 @@ class TrainingSeriesCreate extends React.Component {
     }
 
     handleClick = () => {
-        console.log('state', this.state.trainingSeries);
         this.props.createTrainingSeries(this.state.trainingSeries);
     }
 
@@ -66,7 +66,7 @@ class TrainingSeriesCreate extends React.Component {
         return (
             <div className={classes.root}>
                 <Grid container spacing={24}>
-                    {trainingSeries.trainingSeriesModels.map((training, id) => (
+                    {trainingSeries.createTrainingSeriesModels.map((training, id) => (
                         <Grid item xs={12} sm={12} key={id}>
                             <Input
                                 error={trainingError}
@@ -106,7 +106,7 @@ const mapStateToProps = state => {
     } = state.createTrainingSeries;
 
 
-    console.log(createTrainingSeries);
+    console.log(errorCreateTrainingSeries);
 
     return {
         isCreateTrainingSeriesLoading,
@@ -116,7 +116,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    createTrainingSeries
+    createTrainingSeries,
+    fetchTrainingSeriesList
 };
 
 export default connect(
