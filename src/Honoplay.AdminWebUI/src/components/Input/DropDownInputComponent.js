@@ -44,7 +44,7 @@ class DropDownInputComponent extends React.Component {
               input={error ? <BootstrapInputError fullWidth /> : <BootstrapInput fullWidth />}
             >
               <option>{translate('Choose')}</option>
-              {data.map((data, id) =>
+              {data && data.map((data, id) =>
                 <option value={data.id} key={id}>
                   {data.name}
                 </option>

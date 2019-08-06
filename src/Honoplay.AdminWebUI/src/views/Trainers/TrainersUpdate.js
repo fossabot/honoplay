@@ -73,7 +73,6 @@ class TraineesUpdate extends React.Component {
             })
         }
         if (!prevProps.errorUpdateTrainer && errorUpdateTrainer) {
-            console.log(errorUpdateTrainer);
             this.setState({
                 updateError: true,
                 loadingUpdate: false,

@@ -14,7 +14,7 @@ render(
     <Provider store={store}>
         <Router>
             <Route exact path="/" component={Login} />
-            <Route path="/home" component={App} />
+            <Route path="/honoplay" component={App} />
         </Router>
     </Provider>,
     document.getElementById('root'),
