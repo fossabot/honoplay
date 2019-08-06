@@ -9,9 +9,8 @@ import Trainers from "./views/Trainers/Trainers";
 import UserManagement from "./views/UserManagement/UserManagement";
 import NewQuestion from "./views/Questions/NewQuestion";
 import TrainingSeries from './views/TrainingSeries/TrainingSeries';
-import TrainingSeriesCreate from './views/TrainingSeries/TrainingSeriesCreate';
-// import TrainingCreate from './views/TrainingSeries/TrainingCreate';
-// import TrainingInformation from './views/TrainingSeries/TrainingInformation';
+import TrainingSeriesUpdate from './views/TrainingSeries/TrainingSeriesUpdate';
+import TrainingSeriesInformation from './views/TrainingSeries/TrainingSeriesInformation';
 
 import setToken from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/index";
 
@@ -28,15 +27,14 @@ class App extends Component {
   render() {
     return (
       <Layout>
-        <Route path="/home/questions" component={Questions} />
-        <Route path="/home/tenantinformation" component={TenantInformation} />
-        <Route path="/home/trainers" component={Trainers}/>
-        <Route path="/home/usermanagement" component={UserManagement}/>
-        <Route path="/home/addquestion" component={NewQuestion}/>
-        <Route path="/home/trainingseries" exact component={TrainingSeries}/>
-        <Route path="/home/trainingseries/trainingseriescreate" exact component={TrainingSeriesCreate}/>
-        {/* <Route path="/home/trainingseries/trainingcreate" exact component={TrainingCreate}/>
-        <Route path="/home/trainingseries/traininginformation" exact component={TrainingInformation}/> */}
+        <Route path="/honoplay/questions" component={Questions} />
+        <Route path="/honoplay/tenantinformation" component={TenantInformation} />
+        <Route path="/honoplay/trainers" component={Trainers} />
+        <Route path="/honoplay/usermanagement" component={UserManagement} />
+        <Route path="/honoplay/addquestion" component={NewQuestion} />
+        <Route path="/honoplay/trainingseries" exact component={TrainingSeries} />
+        <Route path="/honoplay/trainingseries/:trainingseriesId" exact component={TrainingSeriesUpdate} />
+        <Route path="/honoplay/trainingseries/:trainingseriesId/training" exact component={TrainingSeriesInformation} />
       </Layout>
     );
   }

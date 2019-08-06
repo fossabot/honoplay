@@ -31,7 +31,7 @@ class CardButton extends React.Component {
                 {cardName}
               </Typography>
               <Typography
-                paragraph={true}
+                paragraph
                 className={classes.paragraphCardButton}>
                 {cardDescription}
               </Typography>

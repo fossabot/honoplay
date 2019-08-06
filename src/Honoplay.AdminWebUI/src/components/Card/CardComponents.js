@@ -1,8 +1,17 @@
 import React from 'react';
 import moment from 'moment';
+import { translate } from '@omegabigdata/terasu-api-proxy';
+import { Link } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
-import { Card, CardContent, Typography, Grid, IconButton, MuiThemeProvider } from '@material-ui/core';
-import Button from '../Button/ButtonComponent';
+import {
+    Card,
+    CardContent,
+    Typography,
+    Grid,
+    IconButton,
+    MuiThemeProvider,
+    Button
+} from '@material-ui/core';
 import { Style, theme } from './Style';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 
@@ -13,8 +22,9 @@ class CardComponent extends React.Component {
     }
 
     render() {
-        const { classes, data } = this.props;
+        const { classes, data, url } = this.props;
         return (
+
             <MuiThemeProvider theme={theme}>
                 <Grid container spacing={24}>
                     <Grid item sm={12}>
@@ -40,13 +50,14 @@ class CardComponent extends React.Component {
                                                     variant="h6"
                                                     className={classes.cardDate}>
                                                     {moment(dateToFormat).format("DD/MM/YYYY")}
-
                                                 </Typography>
                                                 <div className={classes.center}>
                                                     <Button
-                                                        buttonColor="secondary"
-                                                        buttonName="Düzenle"
-                                                    />
+                                                        variant="contained"
+                                                        component={Link}
+                                                        to={`/honoplay/${url}/${data.id}`}>
+                                                        {translate('Edit')}
+                                                    </Button>
                                                 </div>
                                             </CardContent>
                                         </Card>

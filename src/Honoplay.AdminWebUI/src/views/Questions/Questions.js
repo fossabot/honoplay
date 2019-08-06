@@ -48,7 +48,7 @@ class Questions extends React.Component {
   }
 
   handleClick = () => {
-    this.props.history.push("/home/addquestion");
+    this.props.history.push("/honoplay/addquestion");
   }
 
   render() {

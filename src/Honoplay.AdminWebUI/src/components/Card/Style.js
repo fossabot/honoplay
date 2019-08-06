@@ -39,7 +39,7 @@ export const Style = (theme) => ({
   },
   cardButtonTraining: {
     maxWidth: '60%',
-    backgroundColor: '#ff8a65',
+    backgroundColor: '#673ab7',
   },
   iconCardButton: {
     color: 'white',
