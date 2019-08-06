@@ -16,33 +16,14 @@ function getSteps() {
 }
 
 class HorizontalStepper extends React.Component {
-    state = {
-        activeStep: 0,
-    };
 
-    handleNext = () => {
-        this.setState(state => ({
-            activeStep: state.activeStep + 1,
-        }));
-    };
-
-    handleBack = () => {
-        this.setState(state => ({
-            activeStep: state.activeStep - 1,
-        }));
-    };
-
-    handleReset = () => {
-        this.setState({
-            activeStep: 0,
-        });
-    };
 
     render() {
-        const { classes, children } = this.props;
+        const { classes, children, handleNext, handleBack, handleReset, activeStep } = this.props;
         const steps = getSteps();
-        const { activeStep } = this.state;
+        
         return (
+
             <MuiThemeProvider theme={theme}>
                 <div className={classes.root}>
                     <Grid container spacing={40}>
@@ -63,16 +44,16 @@ class HorizontalStepper extends React.Component {
                         <Grid item xs={12} sm={10} />
                         <Grid item xs={12} sm={2}>
                             <div>
-                                {this.state.activeStep === steps.length ? (
+                                {activeStep === steps.length ? (
                                     <div>
-                                        <Button onClick={this.handleReset}>{translate('Reset')}</Button>
+                                        <Button onClick={handleReset}>{translate('Reset')}</Button>
                                     </div>
                                 ) : (
                                         <div>
                                             <div>
                                                 <Button
                                                     disabled={activeStep === 0}
-                                                    onClick={this.handleBack}
+                                                    onClick={handleBack}
                                                     className={classes.backButton}
                                                 >
                                                     {translate('Back')}
@@ -80,7 +61,7 @@ class HorizontalStepper extends React.Component {
                                                 <Button
                                                     variant="contained"
                                                     color="secondary"
-                                                    onClick={this.handleNext}
+                                                    onClick={handleNext}
                                                     className={classes.nextButton}>
                                                     {activeStep === steps.length - 1 ? translate('Save') : translate('NextStep')}
                                                 </Button>

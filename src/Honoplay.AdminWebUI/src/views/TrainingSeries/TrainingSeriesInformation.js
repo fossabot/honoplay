@@ -6,25 +6,102 @@ import Stepper from '../../components/Stepper/HorizontalStepper';
 import Training from '../TrainingSeries/Training';
 import Classroom from '../TrainingSeries/Classroom';
 
+
+import { connect } from "react-redux";
+import { createTraining } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Training";
+
 class TrainingSeriesInformation extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            newTrainingModel: null,
+            loading: false,
+            trainingError: false,
+            activeStep: 0
         }
     }
 
-    render() {
-        const { classes } = this.props;
+    trainingModel = {
+        createTrainingModels: [
 
+        ]
+    }
+
+    componentDidUpdate(prevProps) {
+        const {
+            isCreateTrainingLoading,
+            createTraining,
+            errorCreateTraining
+        } = this.props;
+
+        if (!prevProps.isCreateTrainingLoading && isCreateTrainingLoading) {
+            this.setState({
+                loading: true
+            })
+        }
+        if (!prevProps.errorCreateTraining && errorCreateTraining) {
+            this.setState({
+                trainingError: true,
+                loading: false
+            })
+        }
+        if (prevProps.isCreateTrainingLoading && !isCreateTrainingLoading && createTraining) {
+            if (!errorCreateTraining) {
+                this.setState({
+                    loading: false,
+                    trainingError: false,
+                    activeStep: 1
+                });
+            }
+        }
+
+    }
+
+    handleBack = () => {
+        this.setState(state => ({
+            activeStep: state.activeStep - 1,
+        }));
+    }
+
+    handleReset = () => {
+        this.setState({
+            activeStep: 0,
+        });
+    }
+
+    handleClick = () => {
+        this.trainingModel.createTrainingModels = this.state.newTrainingModel;
+        const { createTraining } = this.props;
+        createTraining(this.trainingModel);
+    }
+
+    trainingSeriesId = this.props.match.params.trainingseriesId;
+
+    render() {
+        const { activeStep, trainingError } = this.state;
+        const { classes } = this.props;
         return (
 
             <div className={classes.root}>
                 <Grid container spacing={16}>
                     <Grid item xs={12} sm={12}>
-                        <Stepper>
-                            <Training/>
-                            <Classroom/>
+                        <Stepper handleNext={this.handleClick}
+                            activeStep={activeStep}
+                            handleBack={this.handleBack}
+                            handleReset={this.handleReset}>
+                            <Training trainingSeriesId={this.trainingSeriesId}
+                                basicTrainingModel={model => {
+                                    if (model) {
+                                        this.setState({
+                                            newTrainingModel: model,
+                                            trainingError: false,
+                                        });
+                                    }
+                                }}
+                                trainingError={trainingError}
+                            />
+                            <Classroom />
                         </Stepper>
                     </Grid>
                 </Grid>
@@ -33,5 +110,26 @@ class TrainingSeriesInformation extends React.Component {
     }
 }
 
+const mapStateToProps = state => {
 
-export default withStyles(Style)(TrainingSeriesInformation);
+    const {
+        isCreateTrainingLoading,
+        createTraining,
+        errorCreateTraining
+    } = state.createTraining;
+
+    return {
+        isCreateTrainingLoading,
+        createTraining,
+        errorCreateTraining
+    };
+};
+
+const mapDispatchToProps = {
+    createTraining
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withStyles(Style)(TrainingSeriesInformation));

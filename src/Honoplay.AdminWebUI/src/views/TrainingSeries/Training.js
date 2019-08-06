@@ -3,51 +3,96 @@ import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import Style from '../Style';
-import Stepper from '../../components/Stepper/HorizontalStepper';
 import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
 
-
-import { connect } from "react-redux";
 
 class Training extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            trainingCategory: [
+                { id: 1, name: 'Yazılım', },
+                { id: 2, name: 'Muhasebe', }
+            ],
+            training: [
+                {
+                    trainingSeriesId: '',
+                    trainingCategoryId: '',
+                    name: '',
+                    description: '',
+                    beginDateTime: '',
+                    endDateTime: ''
+                }
+            ],
+
         }
     }
 
     render() {
-        const { classes } = this.props;
+        const { training, trainingCategory } = this.state;
+        const { classes, trainingSeriesId, trainingError } = this.props;
+
+        this.state.training.map((training, id) => {
+            training.trainingSeriesId = trainingSeriesId;
+        })
 
         return (
 
             <div className={classes.root}>
                 <Grid container spacing={16}>
                     <Grid item xs={12} sm={12}>
-                        <Grid item xs={12} sm={12}>
-                            <Input
-                                labelName={translate('TrainingName')}
-                                inputType="text"
-                            />
-                            <DropDown
-                                labelName={translate('TrainingCategory')}
-                            />
-                            <Input
-                                labelName={translate('BeginDate')}
-                                inputType="date"
-                            />
-                            <Input
-                                labelName={translate('EndDate')}
-                                inputType="date"
-                            />
-                            <Input
-                                multiline
-                                labelName={translate('Description')}
-                                inputType="text"
-                            />
-                        </Grid>
+                        {training.map((training, id) => (
+                            <Grid item xs={12} sm={12} key={id}>
+                                <Input
+                                    error={trainingError}
+                                    labelName={translate('TrainingName')}
+                                    inputType="text"
+                                    onChange={e => {
+                                        training.name = e.target.value;
+                                        this.props.basicTrainingModel(this.state.training);
+                                    }}
+                                />
+                                <DropDown
+                                    error={trainingError}
+                                    labelName={translate('TrainingCategory')}
+                                    data={trainingCategory}
+                                    onChange={e => {
+                                        training.trainingCategoryId = e.target.value;
+                                        this.props.basicTrainingModel(this.state.training);
+                                    }}
+                                />
+                                <Input
+                                    error={trainingError}
+                                    labelName={translate('BeginDate')}
+                                    inputType="date"
+                                    onChange={e => {
+                                        training.beginDateTime = e.target.value;
+                                        this.props.basicTrainingModel(this.state.training);
+                                    }}
+                                />
+                                <Input
+                                    error={trainingError}
+                                    labelName={translate('EndDate')}
+                                    inputType="date"
+                                    onChange={e => {
+                                        training.endDateTime = e.target.value;
+                                        this.props.basicTrainingModel(this.state.training);
+                                    }}
+                                />
+                                <Input
+                                    error={trainingError}
+                                    multiline
+                                    labelName={translate('Description')}
+                                    inputType="text"
+                                    onChange={e => {
+                                        training.description = e.target.value;
+                                        this.props.basicTrainingModel(this.state.training);
+                                    }}
+                                />
+                            </Grid>
+                        ))}
                     </Grid>
                 </Grid>
             </div>
@@ -56,17 +101,4 @@ class Training extends React.Component {
 }
 
 
-const mapStateToProps = state => {
-
-    return {
-
-    };
-};
-
-const mapDispatchToProps = {
-};
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(withStyles(Style)(Training));
+export default withStyles(Style)(Training);
