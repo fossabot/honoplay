@@ -6,6 +6,7 @@ import Style from '../Style';
 import CardButton from '../../components/Card/CardButton';
 import Card from '../../components/Card/CardComponents';
 import Modal from '../../components/Modal/ModalComponent';
+import SessionCreate from './SessionCreate';
 
 
 class Session extends React.Component {
@@ -35,7 +36,7 @@ class Session extends React.Component {
                 <Grid container spacing={24}>
                     <Grid item xs={12} sm={3}>
                         <CardButton
-                            cardName={translate('AddNewClassroom')}
+                            cardName={translate('AddNewSession')}
                             cardDescription={translate('YouCanCreateDifferentTrainingsForEachTrainingSeries')}
                             onClick={this.handleClickOpenDialog}
                             iconName="gamepad"
@@ -49,10 +50,11 @@ class Session extends React.Component {
                     </Grid>
                 </Grid>
                 <Modal
-                    titleName={translate('AddNewClassroom')}
+                    titleName={translate('AddNewSession')}
                     open={openDialog}
                     handleClose={this.handleCloseDialog}
                 >
+                    <SessionCreate />
                 </Modal>
             </div >
         );
