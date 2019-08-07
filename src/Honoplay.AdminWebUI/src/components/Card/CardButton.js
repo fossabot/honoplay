@@ -7,7 +7,7 @@ import { Style, theme } from './Style';
 class CardButton extends React.Component {
 
   render() {
-    const { classes, cardName, cardDescription, onClick, forTraining } = this.props;
+    const { classes, cardName, cardDescription, onClick, forTraining, iconName } = this.props;
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -22,7 +22,7 @@ class CardButton extends React.Component {
                 className={classes.centerCardButton}>
                 <FontAwesomeIcon
                   className={classes.iconCardButton}
-                  icon="graduation-cap">
+                  icon={iconName}>
                 </FontAwesomeIcon>
               </div>
               <Typography

@@ -3,8 +3,9 @@ import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import Style from '../Style';
 import Stepper from '../../components/Stepper/HorizontalStepper';
-import Training from '../TrainingSeries/Training';
-import Classroom from '../TrainingSeries/Classroom';
+import Training from './Training';
+import Classroom from './Classroom';
+import Session from './Session'
 
 
 import { connect } from "react-redux";
@@ -75,11 +76,15 @@ class TrainingSeriesInformation extends React.Component {
     }
 
     handleClick = () => {
-        if ( this.state.activeStep === 0 )
-        {
+        if (this.state.activeStep === 0) {
             this.trainingModel.createTrainingModels = this.state.newTrainingModel;
             const { createTraining } = this.props;
             createTraining(this.trainingModel);
+        }
+        else if (this.state.activeStep === 1) {
+            this.setState(state => ({
+                activeStep: state.activeStep + 1,
+            }));
         }
     }
 
@@ -112,6 +117,7 @@ class TrainingSeriesInformation extends React.Component {
                                 trainingError={trainingError}
                             />
                             <Classroom trainingId={trainingId} />
+                            <Session />
                         </Stepper>
                     </Grid>
                 </Grid>

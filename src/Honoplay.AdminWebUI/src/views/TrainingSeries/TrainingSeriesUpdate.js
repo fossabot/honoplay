@@ -5,7 +5,6 @@ import { Grid } from '@material-ui/core';
 import Style from '../Style';
 import CardButton from '../../components/Card/CardButton';
 import Typography from '../../components/Typography/TypographyComponent';
-import Training from './Training';
 
 import { connect } from "react-redux";
 import { fetchTrainingSeries } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingSeries";
@@ -76,6 +75,7 @@ class TrainingSeriesUpdate extends React.Component {
               cardDescription={translate('YouCanCreateDifferentTrainingsForEachTrainingSeries')}
               onClick={this.handleClick}
               forTraining
+              iconName="graduation-cap"
             />
           </Grid>
           <Grid item xs={12} sm={9}></Grid>

@@ -68,6 +68,7 @@ class Classroom extends React.Component {
                             cardName={translate('AddNewClassroom')}
                             cardDescription={translate('YouCanCreateDifferentTrainingsForEachTrainingSeries')}
                             onClick={this.handleClickOpenDialog}
+                            iconName="users"
                         />
                     </Grid>
                     <Grid item xs={12} sm={9}>
