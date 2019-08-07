@@ -97,7 +97,7 @@ class Options extends React.Component {
     };
 
     render() {
-        const { classes, key, questionId, loading } = this.props;
+        const { classes, questionId, loading } = this.props;
 
         this.state.options.map((option, id) => {
             option.questionId = questionId;

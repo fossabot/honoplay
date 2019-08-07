@@ -66,13 +66,13 @@ class TrainingSeriesCreate extends React.Component {
         return (
             <div className={classes.root}>
                 <Grid container spacing={24}>
-                    {trainingSeries.createTrainingSeriesModels.map((training, id) => (
+                    {trainingSeries.createTrainingSeriesModels.map((trainingSeries, id) => (
                         <Grid item xs={12} sm={12} key={id}>
                             <Input
                                 error={trainingError}
                                 labelName={translate('TrainingSeriesName')}
                                 inputType="text"
-                                onChange={e => training.name = e.target.value}
+                                onChange={e => trainingSeries.name = e.target.value}
                             />
                         </Grid>
                     ))}
