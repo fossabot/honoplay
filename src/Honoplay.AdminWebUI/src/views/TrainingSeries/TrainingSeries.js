@@ -9,7 +9,6 @@ import Typography from '../../components/Typography/TypographyComponent';
 import Modal from '../../components/Modal/ModalComponent';
 import Card from '../../components/Card/CardComponents';
 import TrainingseriesCreate from './TrainingSeriesCreate';
-import TrainingSeriesUpdate from './TrainingSeriesUpdate';
 import { connect } from "react-redux";
 import { fetchTrainingSeriesList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingSeries';
 

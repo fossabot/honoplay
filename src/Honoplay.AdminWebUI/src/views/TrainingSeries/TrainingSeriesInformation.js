@@ -18,7 +18,7 @@ class TrainingSeriesInformation extends React.Component {
             newTrainingModel: null,
             trainingLoading: false,
             trainingError: false,
-            activeStep: 0
+            activeStep: 1
         }
     }
 
