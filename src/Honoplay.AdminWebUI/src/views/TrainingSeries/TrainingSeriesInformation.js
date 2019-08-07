@@ -16,7 +16,7 @@ class TrainingSeriesInformation extends React.Component {
         super(props);
         this.state = {
             newTrainingModel: null,
-            loading: false,
+            trainingLoading: false,
             trainingError: false,
             activeStep: 0
         }
@@ -37,19 +37,19 @@ class TrainingSeriesInformation extends React.Component {
 
         if (!prevProps.isCreateTrainingLoading && isCreateTrainingLoading) {
             this.setState({
-                loading: true
+                trainingLoading: true
             })
         }
         if (!prevProps.errorCreateTraining && errorCreateTraining) {
             this.setState({
                 trainingError: true,
-                loading: false
+                trainingLoading: false
             })
         }
         if (prevProps.isCreateTrainingLoading && !isCreateTrainingLoading && createTraining) {
             if (!errorCreateTraining) {
                 this.setState({
-                    loading: false,
+                    trainingLoading: false,
                     trainingError: false,
                     activeStep: 1
                 });
@@ -79,7 +79,7 @@ class TrainingSeriesInformation extends React.Component {
     trainingSeriesId = this.props.match.params.trainingseriesId;
 
     render() {
-        const { activeStep, trainingError } = this.state;
+        const { activeStep, trainingError, trainingLoading } = this.state;
         const { classes } = this.props;
         return (
 
@@ -89,7 +89,9 @@ class TrainingSeriesInformation extends React.Component {
                         <Stepper handleNext={this.handleClick}
                             activeStep={activeStep}
                             handleBack={this.handleBack}
-                            handleReset={this.handleReset}>
+                            handleReset={this.handleReset}
+                            loading={trainingLoading}
+                        >
                             <Training trainingSeriesId={this.trainingSeriesId}
                                 basicTrainingModel={model => {
                                     if (model) {
