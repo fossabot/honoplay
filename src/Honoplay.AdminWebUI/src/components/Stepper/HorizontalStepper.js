@@ -7,7 +7,8 @@ import {
     StepLabel,
     Button,
     MuiThemeProvider,
-    Grid
+    Grid,
+    CircularProgress
 } from '@material-ui/core';
 import { Style, theme } from './Style';
 
@@ -19,9 +20,9 @@ class HorizontalStepper extends React.Component {
 
 
     render() {
-        const { classes, children, handleNext, handleBack, handleReset, activeStep } = this.props;
+        const { classes, children, handleNext, handleBack, handleReset, activeStep, loading } = this.props;
         const steps = getSteps();
-        
+
         return (
 
             <MuiThemeProvider theme={theme}>
@@ -57,14 +58,22 @@ class HorizontalStepper extends React.Component {
                                                     className={classes.backButton}
                                                 >
                                                     {translate('Back')}
-                                        </Button>
+                                                </Button>
                                                 <Button
                                                     variant="contained"
+                                                    disabled={loading}
                                                     color="secondary"
                                                     onClick={handleNext}
                                                     className={classes.nextButton}>
                                                     {activeStep === steps.length - 1 ? translate('Save') : translate('NextStep')}
                                                 </Button>
+                                                {loading && (
+                                                    <CircularProgress
+                                                        size={24}
+                                                        disableShrink={true}
+                                                        className={classes.buttonProgress}
+                                                    />
+                                                )}
                                             </div>
                                         </div>
                                     )}

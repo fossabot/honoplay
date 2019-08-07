@@ -903,10 +903,10 @@
     axios-retry "^3.1.2"
     chai-http "^4.3.0"
 
-"@omegabigdata/honoplay-redux-helper@^0.3.8":
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-redux-helper/-/honoplay-redux-helper-0.3.8.tgz#72e091d376a894e54e56e3a7631e39aea44c5c03"
-  integrity sha512-5ixYGF6OUHIlOa2+v+grUJ12nVWA1g+MfoYYwusd4onsp/yjY12CO17Qfr5YHQd+fzoskaY7O33iEVoP43onhw==
+"@omegabigdata/honoplay-redux-helper@^0.3.9":
+  version "0.3.9"
+  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-redux-helper/-/honoplay-redux-helper-0.3.9.tgz#306b7e8c4e14ea0432fa30f470c30020dcb46d92"
+  integrity sha512-ojE8AHdVu8O8FnP1ps/9HPVfbTPirdhgBl4QyohgOSP65IGZrbRK1CnN21v49YEhKxXEbxYA5UtyN9yK8qboog==
   dependencies:
     "@omegabigdata/honoplay-api-helper-node" "^0.2.6"
     redux "^4.0.1"

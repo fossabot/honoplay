@@ -4,17 +4,60 @@ import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import Style from '../Style';
 import CardButton from '../../components/Card/CardButton';
+import Card from '../../components/Card/CardComponents';
+import Modal from '../../components/Modal/ModalComponent';
+import ClassroomCreate from './ClassroomCreate';
+
+import { connect } from "react-redux";
+import { fetchClassroomList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom";
+
 
 class Classroom extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            openDialog: false,
+            classroomListError: false,
+            classroomList: []
         }
     }
 
+    componentDidUpdate(prevProps) {
+        const {
+            isClassroomListLoading,
+            classroomsList,
+            errorClassroomList
+        } = this.props;
+
+        if (!prevProps.errorClassroomList && errorClassroomList) {
+            this.setState({
+                classroomListError: true
+            })
+        }
+        if (prevProps.isClassroomListLoading && !isClassroomListLoading && classroomsList) {
+            console.log('şşş', classroomsList);
+            this.setState({
+                classroomList: classroomsList.items
+            })
+        }
+    }
+
+    handleClickOpenDialog = () => {
+        this.setState({ openDialog: true });
+    };
+
+    handleCloseDialog = () => {
+        this.setState({ openDialog: false });
+    };
+
+    componentDidMount() {
+        this.props.fetchClassroomList(0,50);
+    }
+
     render() {
-        const { classes } = this.props;
+        const { openDialog, classroomList } = this.state;
+        const { classes, trainingId } = this.props;
 
         return (
 
@@ -24,15 +67,48 @@ class Classroom extends React.Component {
                         <CardButton
                             cardName={translate('AddNewClassroom')}
                             cardDescription={translate('YouCanCreateDifferentTrainingsForEachTrainingSeries')}
-                            onClick={this.handleClick}
+                            onClick={this.handleClickOpenDialog}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={9}></Grid>
+                    <Grid item xs={12} sm={9}>
+                        <Card
+                            data={classroomList}
+                            url="trainingseries"
+                        />
+                    </Grid>
                 </Grid>
+                <Modal
+                    titleName={translate('AddNewClassroom')}
+                    open={openDialog}
+                    handleClose={this.handleCloseDialog}
+                >
+                    <ClassroomCreate trainingId={trainingId} />
+                </Modal>
             </div >
         );
     }
 }
 
+const mapStateToProps = state => {
 
-export default withStyles(Style)(Classroom);
+    const {
+        isClassroomListLoading,
+        classroomsList,
+        errorClassroomList
+    } = state.classroomList;
+
+    return {
+        isClassroomListLoading,
+        classroomsList,
+        errorClassroomList
+    };
+};
+
+const mapDispatchToProps = {
+    fetchClassroomList
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withStyles(Style)(Classroom));
