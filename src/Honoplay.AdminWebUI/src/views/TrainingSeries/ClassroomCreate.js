@@ -9,14 +9,25 @@ import Button from '../../components/Button/ButtonComponent';
 
 import { connect } from "react-redux";
 import { fetchTrainersList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainer";
+import { createClassroom, fetchClassroomList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom";
 
 class ClassroomCreate extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            loading: false,
+            classroomLoading: false,
+            classroomError: false,
             trainer: null,
+            classroom: {
+                createClassroomModels: [
+                    {
+                        name: '',
+                        trainerId: '',
+                        trainingId: '',
+                    }
+                ]
+            }
         }
     }
 
@@ -25,6 +36,9 @@ class ClassroomCreate extends React.Component {
             isTrainerListLoading,
             errorTrainerList,
             trainersList,
+            isCreateClassroomLoading,
+            createClassroom,
+            errorCreateClassroom
         } = this.props;
 
         if (prevProps.isTrainerListLoading && !isTrainerListLoading && trainersList) {
@@ -34,39 +48,80 @@ class ClassroomCreate extends React.Component {
                 });
             }
         }
+
+        if (!prevProps.isCreateClassroomLoading && isCreateClassroomLoading) {
+            this.setState({
+                classroomLoading: true
+            })
+        }
+        if (!prevProps.errorCreateClassroom && errorCreateClassroom) {
+            this.setState({
+                classroomError: true,
+                classroomLoading: false
+            })
+        }
+        if (prevProps.isCreateClassroomLoading && !isCreateClassroomLoading && createClassroom) {
+            this.props.fetchClassroomList(0, 50);
+            if (!errorCreateClassroom) {
+                this.setState({
+                    classroomLoading: false,
+                    classroomError: false,
+                });
+            }
+        }
     }
-    
+
     componentDidMount() {
         this.props.fetchTrainersList(0, 50);
     }
 
+    handleClick = () => {
+        this.props.createClassroom(this.state.classroom);
+    }
+
     render() {
-        const { loading, trainer } = this.state;
-        const { classes } = this.props;
+        const { classroomLoading, trainer, classroom, classroomError } = this.state;
+        const { classes, trainingId } = this.props;
+
+        this.state.classroom.createClassroomModels.map((classroom) => {
+            classroom.trainingId = trainingId;
+        })
 
         return (
 
             <div className={classes.root}>
                 <Grid container spacing={24}>
-                    <Grid item xs={12} sm={12}>
-                        <Input
-                            labelName={translate('ClassroomName')}
-                            inputType="text"
-                        />
-                        <DropDown
-                            data={trainer}
-                            labelName={translate('Trainer')}
-                        />
-                    </Grid>
+                    {classroom.createClassroomModels.map((classroom, id) => (
+                        <Grid item xs={12} sm={12} key={id}>
+                            <Input
+                                error={classroomError}
+                                labelName={translate('ClassroomName')}
+                                inputType="text"
+                                onChange={e => {
+                                    classroom.name = e.target.value;
+                                    this.setState({ classroomError: false });
+                                }}
+                            />
+                            <DropDown
+                                error={classroomError}
+                                data={trainer}
+                                labelName={translate('Trainer')}
+                                onChange={e => {
+                                    classroom.trainerId = e.target.value;
+                                    this.setState({ classroomError: false });
+                                }}
+                            />
+                        </Grid>
+                    ))}
                     <Grid item xs={12} sm={11} />
                     <Grid item xs={12} sm={1}>
                         <Button
                             buttonColor="primary"
                             buttonName={translate('Save')}
                             onClick={this.handleClick}
-                            disabled={loading}
+                            disabled={classroomLoading}
                         />
-                        {loading && (
+                        {classroomLoading && (
                             <CircularProgress
                                 size={24}
                                 disableShrink={true}
@@ -88,15 +143,26 @@ const mapStateToProps = state => {
         trainersList
     } = state.trainersList;
 
+    const {
+        isCreateClassroomLoading,
+        createClassroom,
+        errorCreateClassroom
+    } = state.createClassroom;
+
     return {
         isTrainerListLoading,
         errorTrainerList,
         trainersList,
+        isCreateClassroomLoading,
+        createClassroom,
+        errorCreateClassroom
     };
 };
 
 const mapDispatchToProps = {
     fetchTrainersList,
+    createClassroom,
+    fetchClassroomList
 };
 
 export default connect(

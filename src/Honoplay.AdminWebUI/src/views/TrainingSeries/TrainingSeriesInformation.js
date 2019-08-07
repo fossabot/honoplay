@@ -18,7 +18,8 @@ class TrainingSeriesInformation extends React.Component {
             newTrainingModel: null,
             trainingLoading: false,
             trainingError: false,
-            activeStep: 1
+            activeStep: 0,
+            trainingId: null,
         }
     }
 
@@ -31,7 +32,7 @@ class TrainingSeriesInformation extends React.Component {
     componentDidUpdate(prevProps) {
         const {
             isCreateTrainingLoading,
-            createTraining,
+            newCreateTraining,
             errorCreateTraining
         } = this.props;
 
@@ -46,8 +47,11 @@ class TrainingSeriesInformation extends React.Component {
                 trainingLoading: false
             })
         }
-        if (prevProps.isCreateTrainingLoading && !isCreateTrainingLoading && createTraining) {
+        if (prevProps.isCreateTrainingLoading && !isCreateTrainingLoading && newCreateTraining) {
             if (!errorCreateTraining) {
+                newCreateTraining.items[0].map((training) => {
+                    this.setState({ trainingId: training.id })
+                })
                 this.setState({
                     trainingLoading: false,
                     trainingError: false,
@@ -71,16 +75,20 @@ class TrainingSeriesInformation extends React.Component {
     }
 
     handleClick = () => {
-        this.trainingModel.createTrainingModels = this.state.newTrainingModel;
-        const { createTraining } = this.props;
-        createTraining(this.trainingModel);
+        if ( this.state.activeStep === 0 )
+        {
+            this.trainingModel.createTrainingModels = this.state.newTrainingModel;
+            const { createTraining } = this.props;
+            createTraining(this.trainingModel);
+        }
     }
 
     trainingSeriesId = this.props.match.params.trainingseriesId;
 
     render() {
-        const { activeStep, trainingError, trainingLoading } = this.state;
+        const { activeStep, trainingError, trainingLoading, trainingId } = this.state;
         const { classes } = this.props;
+
         return (
 
             <div className={classes.root}>
@@ -103,7 +111,7 @@ class TrainingSeriesInformation extends React.Component {
                                 }}
                                 trainingError={trainingError}
                             />
-                            <Classroom />
+                            <Classroom trainingId={trainingId} />
                         </Stepper>
                     </Grid>
                 </Grid>
@@ -120,9 +128,11 @@ const mapStateToProps = state => {
         errorCreateTraining
     } = state.createTraining;
 
+    let newCreateTraining = createTraining;
+
     return {
         isCreateTrainingLoading,
-        createTraining,
+        newCreateTraining,
         errorCreateTraining
     };
 };

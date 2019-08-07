@@ -72,7 +72,10 @@ class TrainingSeriesCreate extends React.Component {
                                 error={trainingError}
                                 labelName={translate('TrainingSeriesName')}
                                 inputType="text"
-                                onChange={e => trainingSeries.name = e.target.value}
+                                onChange={e => {
+                                    trainingSeries.name = e.target.value;
+                                    this.setState({ trainingError: false });
+                                }}
                             />
                         </Grid>
                     ))}
