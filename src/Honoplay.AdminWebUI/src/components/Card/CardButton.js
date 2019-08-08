@@ -4,10 +4,12 @@ import { Typography, CardContent, Card, ButtonBase, MuiThemeProvider } from '@ma
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Style, theme } from './Style';
 
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
+
 class CardButton extends React.Component {
 
   render() {
-    const { classes, cardName, cardDescription, onClick, forTraining } = this.props;
+    const { classes, cardName, cardDescription, onClick, forTraining, iconName } = this.props;
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -22,7 +24,7 @@ class CardButton extends React.Component {
                 className={classes.centerCardButton}>
                 <FontAwesomeIcon
                   className={classes.iconCardButton}
-                  icon="graduation-cap">
+                  icon={iconName}>
                 </FontAwesomeIcon>
               </div>
               <Typography

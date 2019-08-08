@@ -73,6 +73,7 @@ class TrainingSeries extends React.Component {
               cardName={translate('CreateATrainingSeries')}
               cardDescription={translate('YouCanCreateTrainingSetsAndCollectDifferentTrainingsInOneField')}
               onClick={this.handleClickOpenDialog}
+              iconName="graduation-cap"
             />
           </Grid>
           <Grid item xs={12} sm={9}>
