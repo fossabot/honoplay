@@ -15,6 +15,7 @@ import {
 import { Style, theme } from './Style';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 class CardComponent extends React.Component {
     constructor(props) {

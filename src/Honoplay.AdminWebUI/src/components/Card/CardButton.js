@@ -4,6 +4,8 @@ import { Typography, CardContent, Card, ButtonBase, MuiThemeProvider } from '@ma
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Style, theme } from './Style';
 
+window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
+
 class CardButton extends React.Component {
 
   render() {
