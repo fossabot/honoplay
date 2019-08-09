@@ -12,19 +12,15 @@ import Button from '../../components/Button/ButtonComponent';
 import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
 import Table from '../../components/Table/TableComponent';
-import Chip from '../../components/Chip/ChipComponent';
 
 import { connect } from "react-redux";
-import {
-    createTrainer,
-    fetchTrainersList
-} from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainer";
+import { createTrainer, fetchTrainersList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainer";
+import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department";
+import { fetchProfessionList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Profession";
 
 import { departmentToString } from "../../helpers/Converter";
 import TrainersUpdate from './TrainersUpdate';
-
-import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department";
-import { createProfession, fetchProfessionList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Profession";
+import Profession from './Profession';
 
 
 class Trainers extends React.Component {
@@ -38,8 +34,6 @@ class Trainers extends React.Component {
             departmentListError: false,
             trainerError: false,
             loadingTrainer: false,
-            loadingExpertise: false,
-            ExpertiseError: false,
             trainerExpertiseData: [
                 { id: 1, name: 'Web Tasarım', },
                 { id: 2, name: 'Ticaret Hukuk', },
@@ -67,10 +61,6 @@ class Trainers extends React.Component {
         professionId: 1
     };
 
-    professionsModel = {
-        professions: []
-    };
-
     componentDidUpdate(prevProps) {
         const {
             departmentList,
@@ -82,9 +72,6 @@ class Trainers extends React.Component {
             isTrainerListLoading,
             errorTrainerList,
             trainersList,
-            isCreateProfessionLoading,
-            errorCreateProfession,
-            newProfession,
             isProfessionListLoading,
             professionList,
         } = this.props;
@@ -100,8 +87,6 @@ class Trainers extends React.Component {
             })
         }
         if (prevProps.isProfessionListLoading && !isProfessionListLoading && professionList) {
-            console.log('burda');
-            console.log('deneme',professionList);
             this.setState({
                 professions: professionList.items
             })
@@ -135,24 +120,6 @@ class Trainers extends React.Component {
                 });
             }
         }
-        if (prevProps.isCreateProfessionLoading && !isCreateProfessionLoading) {
-            this.setState({
-                loadingExpertise: true
-            })
-        }
-        if (!prevProps.errorCreateProfession && errorCreateProfession) {
-            this.setState({
-                ExpertiseError: true,
-                loadingExpertise: false
-            })
-        }
-        if (prevProps.isCreateProfessionLoading && !isCreateProfessionLoading && newProfession) {
-            this.props.fetchProfessionList(0, 50);
-            if (!errorCreateProfession) {
-                console.log('denemeeee');
-            }
-        }
-
     }
 
     componentDidMount() {
@@ -169,11 +136,9 @@ class Trainers extends React.Component {
     handleChange = (e) => {
         const { name, value } = e.target;
         this.trainerModel[name] = value;
-        this.professionsModel[name] = [value];
         this.setState({
             departmentListError: false,
             trainerError: false,
-            ExpertiseError: false
         })
     }
 
@@ -184,11 +149,6 @@ class Trainers extends React.Component {
         createTrainer(this.trainerModel);
     }
 
-    handleClickProfession = () => {
-        this.props.createProfession(this.professionsModel);
-        console.log(this.professionsModel);
-    }
-
     render() {
         const {
             departments,
@@ -196,9 +156,7 @@ class Trainers extends React.Component {
             trainerError,
             trainer,
             trainerColumns,
-            loadingExpertise,
             professions,
-            ExpertiseError
         } = this.state;
         const { classes } = this.props;
         return (
@@ -250,44 +208,17 @@ class Trainers extends React.Component {
                             name="departmentId"
                             value={this.trainerModel.departmentId}
                         />
-                    </Grid>
-                    <Grid item xs={12} sm={12}>
-                        <Divider />
-                    </Grid>
-                    <Grid item xs={12} sm={12} />
-                    <Grid item xs={12} sm={10}>
-                        <Input
-                            error={ExpertiseError}
+                        <DropDown
+                            error={trainerError}
                             onChange={this.handleChange}
+                            data={professions}
                             labelName={translate('TrainerExpertise')}
-                            inputType="text"
-                            name="professions"
-                            value={this.professionsModel.professions}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={2}>
-                        <Button
-                            onClick={this.handleClickProfession}
-                            buttonColor="secondary"
-                            buttonName={translate('Add')}
-                            disabled={loadingExpertise}
-                        />
-                        {loadingExpertise && (
-                            <CircularProgress
-                                size={24}
-                                disableShrink={true}
-                                className={classes.buttonProgress}
-                            />
-                        )}
-                    </Grid>
-                    <Grid item xs={12} sm={12}>
-                        <Chip
-                            data={professions}>
-                        </Chip>
-                    </Grid>
-                    <Grid item xs={12} sm={12} />
-                    <Grid item xs={12} sm={12}>
-                        <Divider />
+                            name="professionId"
+                            value={this.trainerModel.professionId}
+                            describable
+                        >
+                            <Profession />
+                        </DropDown>
                     </Grid>
                     <Grid item xs={12} sm={11} />
                     <Grid item xs={12} sm={1}>
@@ -304,6 +235,9 @@ class Trainers extends React.Component {
                                 className={classes.buttonProgress}
                             />
                         )}
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                        <Divider />
                     </Grid>
                     <Grid item xs={12} sm={12}>
                         <Table
@@ -339,12 +273,6 @@ const mapStateToProps = state => {
     } = state.trainersList;
 
     const {
-        isCreateProfessionLoading,
-        errorCreateProfession,
-        newProfession
-    } = state.professionCreate;
-
-    const {
         isProfessionListLoading,
         professionList,
         errorProfessionList
@@ -360,9 +288,6 @@ const mapStateToProps = state => {
         isTrainerListLoading,
         errorTrainerList,
         trainersList,
-        isCreateProfessionLoading,
-        errorCreateProfession,
-        newProfession,
         isProfessionListLoading,
         professionList,
         errorProfessionList
@@ -373,7 +298,6 @@ const mapDispatchToProps = {
     createTrainer,
     fetchTrainersList,
     fetchDepartmentList,
-    createProfession,
     fetchProfessionList
 };
 
