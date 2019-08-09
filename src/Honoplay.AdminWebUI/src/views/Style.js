@@ -16,7 +16,7 @@ const Style = theme => ({
     color: green[500],
     position: 'absolute',
     marginTop: -30,
-    marginLeft: 25
+    marginLeft: 19
   },
   buttonSuccess: {
     backgroundColor: green[500],

@@ -7,7 +7,7 @@ import Typography from '../../components/Typography/TypographyComponent';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Options from './Options';
-import ControlledExpansionPanels from '../../components/ExpansionPanel/ControlledExpansionPanels ';
+import ExpansionPanel from '../../components/ExpansionPanel/ControlledExpansionPanels ';
 
 import { connect } from "react-redux";
 import { createQuestion } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Question";
@@ -127,11 +127,11 @@ class NewQuestion extends React.Component {
           <Grid item xs={12} sm={12}> <Divider /> </Grid>
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12}>
-            <ControlledExpansionPanels open={question}
+            <ExpansionPanel open={question}
               panelDetails={question}
             >
               <Options questionId={questionId} />
-            </ControlledExpansionPanels>
+            </ExpansionPanel>
           </Grid>
         </Grid>
       </div>

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { 
-    Paper, 
-    Chip, 
-    Grid } 
-from '@material-ui/core';
+import {
+    Paper,
+    Chip,
+    Grid,
+} from '@material-ui/core';
 import Style from './Style';
 
 
@@ -19,19 +19,17 @@ class ChipComponent extends React.Component {
 
         return (
             <Grid container spacing={24}>
-                <Grid item xs={12}>
-                    <Paper className={classes.chipRoot}>
-                        {data.map(data => {
-                            return (
-                                <Chip
-                                    variant="outlined"
-                                    key={data.id}
-                                    label={data.name}
-                                    className={classes.chip}
-                                />
-                            );
-                        })}
-                    </Paper>
+                <Grid item xs={12} sm={12}>
+                    {data.map(data => {
+                        return (
+                            <Chip
+                                variant="outlined"
+                                key={data.id}
+                                label={data.name}
+                                className={classes.chip}
+                            />
+                        );
+                    })}
                 </Grid>
             </Grid>
         );

@@ -60,6 +60,7 @@ class DropDownInputComponent extends React.Component {
           </Grid>
         </Grid>
         <Modal
+          titleName={labelName}
           handleClose={this.handleClose}
           open={open}
         >
