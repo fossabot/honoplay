@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Common.Extensions;
 
 namespace Honoplay.Application.Professions.Commands.CreateProfession
 {
@@ -65,7 +66,8 @@ namespace Honoplay.Application.Professions.Commands.CreateProfession
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
                 {
                     transaction.Rollback();
-                    throw new ObjectAlreadyExistsException(nameof(Profession), request.Professions);
+
+                    throw new ObjectAlreadyExistsException(nameof(Department), ExceptionMessageExtensions.GetExceptionMessage(ex));
                 }
                 catch (NotFoundException)
                 {
