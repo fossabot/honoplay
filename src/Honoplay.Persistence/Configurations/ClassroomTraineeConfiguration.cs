@@ -8,6 +8,8 @@ namespace Honoplay.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<ClassroomTrainee> builder)
         {
+            builder.HasKey(bc => new { bc.ClassroomId, bc.TraineeId });
+
             //Tenant
             builder.HasOne(x => x.Classroom)
                 .WithMany(x => x.ClassroomTrainees)
@@ -19,7 +21,7 @@ namespace Honoplay.Persistence.Configurations
             builder.HasOne(x => x.Trainee)
                 .WithMany(x => x.ClassroomTrainees)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasForeignKey(x => x.Trainee)
+                .HasForeignKey(x => x.TraineeId)
                 .HasConstraintName("FK_Trainee_ClassroomTrainee");
         }
     }

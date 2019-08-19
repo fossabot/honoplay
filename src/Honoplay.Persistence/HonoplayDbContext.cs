@@ -30,6 +30,7 @@ namespace Honoplay.Persistence
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<TrainingCategory> TrainingCategories { get; set; }
+        public DbSet<ClassroomTrainee> ClassroomTrainees { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
