@@ -1,5 +1,6 @@
 ﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
@@ -66,15 +67,7 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
                 {
                     transaction.Rollback();
 
-                    var conflictItemFirstIndex = ex.InnerException.Message.IndexOf(value: ",", comparisonType: StringComparison.Ordinal) + 2;
-                    var conflictItemLenght = ex.InnerException.Message.IndexOf(value: ")", comparisonType: StringComparison.Ordinal) - conflictItemFirstIndex;
-
-                    var conflictItem = ex.InnerException.Message
-                        .Substring(startIndex: conflictItemFirstIndex,
-                                   length: conflictItemLenght);
-
-                    throw new ObjectAlreadyExistsException(name: nameof(Department),
-                                                           key: conflictItem);
+                    throw new ObjectAlreadyExistsException(nameof(Department), ExceptionMessageExtensions.GetExceptionMessage(ex));
                 }
                 catch (NotFoundException)
                 {

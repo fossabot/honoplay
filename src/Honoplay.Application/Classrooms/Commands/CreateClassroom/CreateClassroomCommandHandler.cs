@@ -8,9 +8,12 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Common.Extensions;
+using Microsoft.Data.Sqlite;
 
 namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
 {
@@ -104,6 +107,18 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                                 .ToList(),
                             x.CreatedBy,
                             x.CreatedAt)));
+                }
+                catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
+                                                   (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
+                {
+                    transaction.Rollback();
+
+                    throw new ObjectAlreadyExistsException(nameof(Department), ExceptionMessageExtensions.GetExceptionMessage(ex));
+                }
+                catch (NotFoundException)
+                {
+                    transaction.Rollback();
+                    throw;
                 }
                 catch (Exception)
                 {
