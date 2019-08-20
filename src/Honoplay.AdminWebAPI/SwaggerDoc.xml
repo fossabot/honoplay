@@ -173,6 +173,13 @@
             <param name="id">Get training model</param>
             <returns>Get training by tenant id and training id with status code.</returns>
         </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TrainingController.GetByTrainingSeriesId(System.Int32)">
+            <summary>
+            This service retrieve training by trainingSeries id
+            </summary>
+            <param name="trainingSeriesId">Get trainings list </param>
+            <returns>Get training by tenant id and trainingSeries id with status code.</returns>
+        </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.TrainingSeriesController.Post(Honoplay.Application.TrainingSerieses.Commands.CreateTrainingSeries.CreateTrainingSeriesCommand)">
             <summary>
             This service create trainingSeries.
