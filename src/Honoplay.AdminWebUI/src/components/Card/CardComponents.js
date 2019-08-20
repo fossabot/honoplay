@@ -13,6 +13,7 @@ import {
     Button
 } from '@material-ui/core';
 import { Style, theme } from './Style';
+import Modal from '../Modal/ModalComponent';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
@@ -20,10 +21,22 @@ window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 class CardComponent extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            open: false,
+        };
     }
 
+    handleOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+
     render() {
-        const { classes, data, url } = this.props;
+        const { open } = this.state;
+        const { classes, data, url, children, titleName } = this.props;
         return (
 
             <MuiThemeProvider theme={theme}>
@@ -55,8 +68,10 @@ class CardComponent extends React.Component {
                                                 <div className={classes.center}>
                                                     <Button
                                                         variant="contained"
-                                                        component={Link}
-                                                        to={`/honoplay/${url}/${data.id}`}>
+                                                        component={url && Link}
+                                                        to={url && `/honoplay/${url}/${data.id}`}
+                                                        onClick={this.handleOpen}
+                                                    >
                                                         {translate('Edit')}
                                                     </Button>
                                                 </div>
@@ -68,6 +83,13 @@ class CardComponent extends React.Component {
                         </div>
                     </Grid>
                 </Grid>
+                <Modal
+                    titleName={titleName}
+                    handleClose={this.handleClose}
+                    open={open}
+                >
+                    {children}
+                </Modal>
             </MuiThemeProvider>
         );
     }

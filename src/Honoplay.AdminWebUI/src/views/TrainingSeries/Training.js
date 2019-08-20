@@ -14,7 +14,6 @@ class Training extends React.Component {
         this.state = {
             trainingCategory: [
                 { id: 1, name: 'Yazılım', },
-                { id: 2, name: 'Muhasebe', }
             ],
             training: [
                 {
