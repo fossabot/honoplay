@@ -125,7 +125,7 @@ class ClassroomCreate extends React.Component {
                             <CircularProgress
                                 size={24}
                                 disableShrink={true}
-                                className={classes.buttonProgress}
+                                className={classes.buttonProgressSave}
                             />
                         )}
                     </Grid>

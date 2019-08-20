@@ -220,8 +220,8 @@ class TenantInformationTabs extends React.Component {
                 variant={isErrorTrainee || isErrorTenant ? "error" : "success"}
                 message={
                   isErrorTrainee || isErrorTenant
-                    ? "İşlem başarısız"
-                    : "İşleminiz başarılı bir şekilde kaydedildi!"
+                    ? translate('OperationFailed!')
+                    : translate('YourTransactionSuccessful')
                 }
               />
             </Snackbar>

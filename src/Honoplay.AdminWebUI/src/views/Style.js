@@ -36,6 +36,12 @@ const Style = theme => ({
     marginTop: -30,
     marginLeft: 32
   },
+  buttonProgressSave: {
+    color: green[500],
+    position: 'absolute',
+    marginTop: -30,
+    marginLeft: 30
+  },
   questionDiv: {
     borderColor: '#9e9e9e',
     borderStyle: 'solid',

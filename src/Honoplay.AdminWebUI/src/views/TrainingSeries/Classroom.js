@@ -36,7 +36,6 @@ class Classroom extends React.Component {
             })
         }
         if (prevProps.isClassroomListLoading && !isClassroomListLoading && classroomsList) {
-            console.log('şşş', classroomsList);
             this.setState({
                 classroomList: classroomsList.items
             })
@@ -52,7 +51,7 @@ class Classroom extends React.Component {
     };
 
     componentDidMount() {
-        this.props.fetchClassroomList(0,50);
+        this.props.fetchClassroomList(0, 50);
     }
 
     render() {
