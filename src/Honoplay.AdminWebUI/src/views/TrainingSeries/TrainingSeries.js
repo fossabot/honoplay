@@ -19,6 +19,7 @@ class TrainingSeries extends React.Component {
       openDialog: false,
       trainingSerieses: [],
       trainingSeriesesError: false,
+      trainingSeriesId: null
     }
   }
 
@@ -80,6 +81,13 @@ class TrainingSeries extends React.Component {
             <Card
               data={trainingSerieses}
               url="trainingseries"
+              id={id => {
+                if (id) {
+                  this.setState({
+                    trainingSeriesId: id
+                  })
+                }
+              }}
             />
           </Grid>
         </Grid>

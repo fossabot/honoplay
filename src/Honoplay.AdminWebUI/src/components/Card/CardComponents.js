@@ -26,8 +26,9 @@ class CardComponent extends React.Component {
         };
     }
 
-    handleOpen = () => {
+    handleOpen = (id) => {
         this.setState({ open: true });
+        this.props.id(id);
     };
 
     handleClose = () => {
@@ -70,7 +71,7 @@ class CardComponent extends React.Component {
                                                         variant="contained"
                                                         component={url && Link}
                                                         to={url && `/honoplay/${url}/${data.id}`}
-                                                        onClick={this.handleOpen}
+                                                        onClick={() => this.handleOpen(data.id)}
                                                     >
                                                         {translate('Edit')}
                                                     </Button>
