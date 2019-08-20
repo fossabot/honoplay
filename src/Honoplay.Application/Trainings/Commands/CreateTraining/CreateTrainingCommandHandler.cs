@@ -8,8 +8,11 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Common.Extensions;
+using Microsoft.Data.Sqlite;
 
 namespace Honoplay.Application.Trainings.Commands.CreateTraining
 {
@@ -68,6 +71,13 @@ namespace Honoplay.Application.Trainings.Commands.CreateTraining
 
                     newTrainings.ForEach(x =>
                         createdTrainings.Add(new CreateTrainingModel(x.Id, x.TrainingSeriesId, x.TrainingCategoryId, x.Name, x.Description, x.CreatedBy, x.CreatedAt, x.BeginDateTime, x.EndDateTime)));
+                }
+                catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
+                                                   (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
+                {
+                    transaction.Rollback();
+
+                    throw new ObjectAlreadyExistsException(nameof(Training), ExceptionMessageExtensions.GetExceptionMessage(ex));
                 }
                 catch (Exception)
                 {

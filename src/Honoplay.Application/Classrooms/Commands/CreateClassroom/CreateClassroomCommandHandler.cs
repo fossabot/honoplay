@@ -8,8 +8,12 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Common.Extensions;
+using Microsoft.Data.Sqlite;
 
 namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
 {
@@ -28,6 +32,7 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
         {
             var redisKey = $"ClassroomsByTenantId{request.TenantId}";
             var newClassrooms = new List<Classroom>();
+            var newClassroomTrainees = new List<ClassroomTrainee>();
             var createdClassrooms = new List<CreateClassroomModel>();
 
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
@@ -36,6 +41,17 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                 {
                     foreach (var createClassroomModel in request.CreateClassroomModels)
                     {
+                        foreach (var traineeId in createClassroomModel.TraineesId)
+                        {
+                            var isExist = await _context.Trainees
+                                .Include(x => x.Department)
+                                .AnyAsync(x => x.Id == traineeId
+                                               && x.Department.TenantId == request.TenantId, cancellationToken);
+                            if (!isExist)
+                            {
+                                throw new NotFoundException(nameof(Trainee), traineeId);
+                            }
+                        }
                         var newClassroom = new Classroom
                         {
                             CreatedBy = request.CreatedBy,
@@ -49,10 +65,28 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                     if (newClassrooms.Count > 20)
                     {
                         _context.BulkInsert(newClassrooms);
+                        foreach (var newClassroom in newClassrooms)
+                        {
+                            newClassroomTrainees.AddRange(newClassroom.ClassroomTrainees.Select(newClassroomTrainee =>
+                                new ClassroomTrainee
+                                {
+                                    ClassroomId = newClassroomTrainee.ClassroomId,
+                                    TraineeId = newClassroomTrainee.TraineeId
+                                }));
+                            var a = newClassroomTrainees.Where(x => x.ClassroomId == newClassroom.Id).Select(x => x.TraineeId).ToList();
+                        }
+
+                        await _context.BulkInsertAsync(newClassroomTrainees, cancellationToken: cancellationToken);
+
                     }
                     else
                     {
                         await _context.Classrooms.AddRangeAsync(newClassrooms, cancellationToken);
+                        newClassroomTrainees.ForEach(newClassroomTrainee => _context.ClassroomTrainees.Add(new ClassroomTrainee
+                        {
+                            ClassroomId = newClassroomTrainee.ClassroomId,
+                            TraineeId = newClassroomTrainee.TraineeId
+                        }));
                         await _context.SaveChangesAsync(cancellationToken);
                     }
 
@@ -64,7 +98,27 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                         cancellationToken);
 
                     newClassrooms.ForEach(x =>
-                        createdClassrooms.Add(new CreateClassroomModel(x.Id, x.TrainerId, x.TrainingId, x.Name, x.CreatedBy, x.CreatedAt)));
+                        createdClassrooms.Add(new CreateClassroomModel(x.Id,
+                            x.TrainerId,
+                            x.TrainingId,
+                            x.Name,
+                            x.ClassroomTrainees
+                                .Select(s => s.TraineeId)
+                                .ToList(),
+                            x.CreatedBy,
+                            x.CreatedAt)));
+                }
+                catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
+                                                   (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
+                {
+                    transaction.Rollback();
+
+                    throw new ObjectAlreadyExistsException(nameof(Department), ExceptionMessageExtensions.GetExceptionMessage(ex));
+                }
+                catch (NotFoundException)
+                {
+                    transaction.Rollback();
+                    throw;
                 }
                 catch (Exception)
                 {

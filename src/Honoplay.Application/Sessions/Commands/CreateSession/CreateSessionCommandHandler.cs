@@ -8,8 +8,11 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Common.Extensions;
+using Microsoft.Data.Sqlite;
 
 namespace Honoplay.Application.Sessions.Commands.CreateSession
 {
@@ -65,6 +68,13 @@ namespace Honoplay.Application.Sessions.Commands.CreateSession
 
                     newSessions.ForEach(x =>
                         createdSessions.Add(new CreateSessionModel(x.Id, x.GameId, x.ClassroomId, x.Name, x.CreatedBy, x.CreatedAt)));
+                }
+                catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
+                                                   (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
+                {
+                    transaction.Rollback();
+
+                    throw new ObjectAlreadyExistsException(nameof(Session), ExceptionMessageExtensions.GetExceptionMessage(ex));
                 }
                 catch (Exception)
                 {

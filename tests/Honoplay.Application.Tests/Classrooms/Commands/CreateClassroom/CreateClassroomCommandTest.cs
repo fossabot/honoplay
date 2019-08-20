@@ -22,16 +22,17 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
         private readonly int _adminUserId;
         private readonly int _trainingId;
         private readonly int _trainerId;
+        private readonly int _traineeId;
 
         public CreateClassroomCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
 
-            _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _trainingId, out _trainerId);
+            _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _trainingId, out _trainerId, out _traineeId);
             _commandHandler = new CreateClassroomCommandHandler(_context, new CacheManager(cache.Object));
         }
 
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int trainingId, out int trainerId)
+        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int trainingId, out int trainerId, out int traineeId)
         {
             var context = GetDbContext();
 
@@ -105,6 +106,27 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
             };
             context.Professions.Add(profession);
 
+            var workingStatus = new WorkingStatus
+            {
+                CreatedBy = adminUser.Id,
+                TenantId = tenant.Id,
+                Name = "test"
+            };
+            context.WorkingStatuses.Add(workingStatus);
+
+            var trainee = new Trainee
+            {
+                CreatedBy = adminUser.Id,
+                DepartmentId = department.Id,
+                Gender = 1,
+                Name = "asdasd",
+                NationalIdentityNumber = "12321421311",
+                PhoneNumber = "912489213123",
+                Surname = "test",
+                WorkingStatusId = 1
+            };
+            context.Trainees.Add(trainee);
+
             var trainer = new Trainer
             {
                 CreatedBy = adminUser.Id,
@@ -119,6 +141,7 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
             context.SaveChanges();
 
             adminUserId = adminUser.Id;
+            traineeId = trainee.Id;
             tenantId = tenant.Id;
             trainingId = training.Id;
             trainerId = trainer.Id;
@@ -137,9 +160,10 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
                 {
                     new CreateClassroomCommandModel
                     {
+                        TraineesId = new List<int>{_traineeId},
                         TrainerId = _trainerId,
                         TrainingId = _trainingId,
-                        Name = "test"
+                        Name = "testasdad"
                     }
                 }
             };

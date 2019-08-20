@@ -19,5 +19,6 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
         public int TrainerId { get; set; }
         public int TrainingId { get; set; }
         public string Name { get; set; }
+        public List<int> TraineesId { get; set; }
     }
 }

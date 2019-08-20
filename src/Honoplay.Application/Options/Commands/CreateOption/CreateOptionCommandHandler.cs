@@ -1,13 +1,16 @@
 ﻿using EFCore.BulkExtensions;
 using Honoplay.Application._Infrastructure;
 using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
 using MediatR;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -84,6 +87,13 @@ namespace Honoplay.Application.Options.Commands.CreateOption
                                                                                      x.CreatedBy,
                                                                                      x.CreatedAt,
                                                                                      x.IsCorrect)));
+                }
+                catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
+                                                   (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
+                {
+                    transaction.Rollback();
+
+                    throw new ObjectAlreadyExistsException(nameof(Option), ExceptionMessageExtensions.GetExceptionMessage(ex));
                 }
                 catch (NotFoundException)
                 {
