@@ -74,7 +74,7 @@ namespace Honoplay.Application.Sessions.Commands.CreateSession
                 {
                     transaction.Rollback();
 
-                    throw new ObjectAlreadyExistsException(nameof(Session), ExceptionMessageExtensions.GetExceptionMessage(ex));
+                    throw new ObjectAlreadyExistsException(nameof(Session), ExceptionExtensions.GetExceptionMessage(ex));
                 }
                 catch (Exception)
                 {

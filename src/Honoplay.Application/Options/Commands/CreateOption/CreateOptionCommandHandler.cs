@@ -93,7 +93,7 @@ namespace Honoplay.Application.Options.Commands.CreateOption
                 {
                     transaction.Rollback();
 
-                    throw new ObjectAlreadyExistsException(nameof(Option), ExceptionMessageExtensions.GetExceptionMessage(ex));
+                    throw new ObjectAlreadyExistsException(nameof(Option), ExceptionExtensions.GetExceptionMessage(ex));
                 }
                 catch (NotFoundException)
                 {

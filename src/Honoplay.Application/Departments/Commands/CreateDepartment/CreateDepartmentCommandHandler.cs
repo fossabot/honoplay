@@ -67,7 +67,7 @@ namespace Honoplay.Application.Departments.Commands.CreateDepartment
                 {
                     transaction.Rollback();
 
-                    throw new ObjectAlreadyExistsException(nameof(Department), ExceptionMessageExtensions.GetExceptionMessage(ex));
+                    throw new ObjectAlreadyExistsException(nameof(Department), ExceptionExtensions.GetExceptionMessage(ex));
                 }
                 catch (NotFoundException)
                 {
