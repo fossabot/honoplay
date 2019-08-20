@@ -7,6 +7,7 @@ import CardButton from '../../components/Card/CardButton';
 import Card from '../../components/Card/CardComponents';
 import Modal from '../../components/Modal/ModalComponent';
 import ClassroomCreate from './ClassroomCreate';
+import ClassroomUpdate from './ClassroomUpdate';
 
 import { connect } from "react-redux";
 import { fetchClassroomList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom";
@@ -19,7 +20,8 @@ class Classroom extends React.Component {
         this.state = {
             openDialog: false,
             classroomListError: false,
-            classroomList: []
+            classroomList: [],
+            classroomId: null,
         }
     }
 
@@ -55,9 +57,9 @@ class Classroom extends React.Component {
     }
 
     render() {
-        const { openDialog, classroomList } = this.state;
+        const { openDialog, classroomList, classroomId } = this.state;
         const { classes, trainingId } = this.props;
-
+        
         return (
 
             <div className={classes.root}>
@@ -73,8 +75,17 @@ class Classroom extends React.Component {
                     <Grid item xs={12} sm={9}>
                         <Card
                             data={classroomList}
-                            url="trainingseries"
-                        />
+                            titleName={translate('Classroom')}
+                            id={id => {
+                                if (id) {
+                                    this.setState({
+                                        classroomId: id
+                                    });
+                                }
+                            }}
+                        >
+                            <ClassroomUpdate classroomId={classroomId}/>
+                        </Card>
                     </Grid>
                 </Grid>
                 <Modal
