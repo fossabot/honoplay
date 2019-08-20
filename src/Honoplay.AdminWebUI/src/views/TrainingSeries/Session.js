@@ -7,6 +7,7 @@ import CardButton from '../../components/Card/CardButton';
 import Card from '../../components/Card/CardComponents';
 import Modal from '../../components/Modal/ModalComponent';
 import SessionCreate from './SessionCreate';
+import SessionUpdate from './SessionUpdate';
 
 import { connect } from "react-redux";
 import { fetchSessionList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Session";
@@ -18,7 +19,8 @@ class Session extends React.Component {
         this.state = {
             openDialog: false,
             sessionListError: false,
-            sessionList: []
+            sessionList: [],
+            sessionId: null
         }
     }
 
@@ -42,7 +44,7 @@ class Session extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchSessionList(0,50);
+        this.props.fetchSessionList(0, 50);
     }
 
     handleClickOpenDialog = () => {
@@ -54,7 +56,7 @@ class Session extends React.Component {
     };
 
     render() {
-        const { openDialog, sessionList } = this.state;
+        const { openDialog, sessionList, sessionId } = this.state;
         const { classes, classroomId } = this.props;
 
         return (
@@ -72,8 +74,18 @@ class Session extends React.Component {
                     <Grid item xs={12} sm={9}>
                         <Card
                             data={sessionList}
-                            url="trainingseries"
-                        />
+                            titleName={translate('UpdateSession')}
+                            id={id => {
+                                if (id) {
+                                    console.log(id);
+                                    this.setState({
+                                        sessionId: id
+                                    });
+                                }
+                            }}
+                        >
+                            <SessionUpdate sessionId={sessionId} />
+                        </Card>
                     </Grid>
                 </Grid>
                 <Modal
