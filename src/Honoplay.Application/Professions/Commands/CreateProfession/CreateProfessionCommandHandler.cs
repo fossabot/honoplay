@@ -67,7 +67,7 @@ namespace Honoplay.Application.Professions.Commands.CreateProfession
                 {
                     transaction.Rollback();
 
-                    throw new ObjectAlreadyExistsException(nameof(Profession), ExceptionMessageExtensions.GetExceptionMessage(ex));
+                    throw new ObjectAlreadyExistsException(nameof(Profession), ExceptionExtensions.GetExceptionMessage(ex));
                 }
                 catch (NotFoundException)
                 {
