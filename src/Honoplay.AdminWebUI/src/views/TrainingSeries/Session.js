@@ -8,6 +8,8 @@ import Card from '../../components/Card/CardComponents';
 import Modal from '../../components/Modal/ModalComponent';
 import SessionCreate from './SessionCreate';
 
+import { connect } from "react-redux";
+import { fetchSessionList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Session";
 
 class Session extends React.Component {
 
@@ -15,7 +17,32 @@ class Session extends React.Component {
         super(props);
         this.state = {
             openDialog: false,
+            sessionListError: false,
+            sessionList: []
         }
+    }
+
+    componentDidUpdate(prevProps) {
+        const {
+            isSessionListLoading,
+            sessionList,
+            errorSessionList
+        } = this.props;
+
+        if (!prevProps.errorSessionList && errorSessionList) {
+            this.setState({
+                sessionListError: true
+            })
+        }
+        if (prevProps.isSessionListLoading && !isSessionListLoading && sessionList) {
+            this.setState({
+                sessionList: sessionList.items
+            })
+        }
+    }
+
+    componentDidMount() {
+        this.props.fetchSessionList(0,50);
     }
 
     handleClickOpenDialog = () => {
@@ -27,8 +54,8 @@ class Session extends React.Component {
     };
 
     render() {
-        const { openDialog, classroomList } = this.state;
-        const { classes, trainingId } = this.props;
+        const { openDialog, sessionList } = this.state;
+        const { classes, classroomId } = this.props;
 
         return (
 
@@ -43,10 +70,10 @@ class Session extends React.Component {
                         />
                     </Grid>
                     <Grid item xs={12} sm={9}>
-                        {/* <Card
-                            data={classroomList}
+                        <Card
+                            data={sessionList}
                             url="trainingseries"
-                        /> */}
+                        />
                     </Grid>
                 </Grid>
                 <Modal
@@ -54,7 +81,7 @@ class Session extends React.Component {
                     open={openDialog}
                     handleClose={this.handleCloseDialog}
                 >
-                    <SessionCreate />
+                    <SessionCreate classroomId={classroomId} />
                 </Modal>
             </div >
         );
@@ -62,4 +89,26 @@ class Session extends React.Component {
 }
 
 
-export default withStyles(Style)(Session);
+const mapStateToProps = state => {
+
+    const {
+        isSessionListLoading,
+        sessionList,
+        errorSessionList
+    } = state.sessionList;
+
+    return {
+        isSessionListLoading,
+        sessionList,
+        errorSessionList
+    };
+};
+
+const mapDispatchToProps = {
+    fetchSessionList
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withStyles(Style)(Session));

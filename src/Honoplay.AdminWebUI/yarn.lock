@@ -894,21 +894,21 @@
     prop-types "^15.6.0"
     react-is "^16.6.3"
 
-"@omegabigdata/honoplay-api-helper-node@^0.2.6":
-  version "0.2.6"
-  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-api-helper-node/-/honoplay-api-helper-node-0.2.6.tgz#dc09ff2abd5568a21f2cb54fec749fc58828a362"
-  integrity sha512-ndnDctzWKdapHjQ+LtM5jElF+yPRL/CtFumw5rcmi66d5bkAfR0S3lLuheROXTJsLgGA36eoW2Of2tPX7fOwIw==
+"@omegabigdata/honoplay-api-helper-node@^0.2.8":
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-api-helper-node/-/honoplay-api-helper-node-0.2.8.tgz#62ae2a8d51924ca506f39c5a4bd98bc720af7e33"
+  integrity sha512-BFsXW5Sqnf+fszSBN6YwmWR6dRtQkXB121JoBgkf464cMubYpJssXpOlLHyF30UtOzOmdtHOgYuQjd3TroYVBw==
   dependencies:
     axios "^0.18.0"
     axios-retry "^3.1.2"
     chai-http "^4.3.0"
 
-"@omegabigdata/honoplay-redux-helper@^0.3.9":
-  version "0.3.9"
-  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-redux-helper/-/honoplay-redux-helper-0.3.9.tgz#306b7e8c4e14ea0432fa30f470c30020dcb46d92"
-  integrity sha512-ojE8AHdVu8O8FnP1ps/9HPVfbTPirdhgBl4QyohgOSP65IGZrbRK1CnN21v49YEhKxXEbxYA5UtyN9yK8qboog==
+"@omegabigdata/honoplay-redux-helper@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-redux-helper/-/honoplay-redux-helper-0.4.1.tgz#253c25d450f06d3f03a702fbc33be327748b6808"
+  integrity sha512-9BNi5oZIB27llwMMzBiCMXuxBKyEeIEssLd8am0PaNyy7LNONc44PFJNK7ftUycFjqF0bfZ30TfhBJFEL/efZg==
   dependencies:
-    "@omegabigdata/honoplay-api-helper-node" "^0.2.6"
+    "@omegabigdata/honoplay-api-helper-node" "^0.2.8"
     redux "^4.0.1"
     redux-thunk "^2.3.0"
 
