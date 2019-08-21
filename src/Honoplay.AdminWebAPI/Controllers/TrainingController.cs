@@ -3,6 +3,7 @@ using Honoplay.Application.Trainings.Commands.CreateTraining;
 using Honoplay.Application.Trainings.Commands.UpdateTraining;
 using Honoplay.Application.Trainings.Queries.GetTrainingDetail;
 using Honoplay.Application.Trainings.Queries.GetTrainingsList;
+using Honoplay.Application.Trainings.Queries.GetTrainingsListByTrainingSeriesId;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -128,6 +129,36 @@ namespace Honoplay.AdminWebAPI.Controllers
                 var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
                 var trainingsListModel = await Mediator.Send(new GetTrainingDetailQuery(userId, id, tenantId));
+
+                return Ok(trainingsListModel);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt());
+            }
+        }
+        /// <summary>
+        /// This service retrieve training by trainingSeries id
+        /// </summary>
+        /// <param name="trainingSeriesId">Get trainings list </param>
+        /// <returns>Get training by tenant id and trainingSeries id with status code.</returns>
+        [HttpGet]
+        [Route("GetTrainingsByTrainingSeriesId")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ResponseModel<TrainingsListModel>>> GetByTrainingSeriesId([FromQuery]int trainingSeriesId)
+        {
+            try
+            {
+                var userId = Claims[ClaimTypes.Sid].ToInt();
+                var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
+
+                var trainingsListModel = await Mediator.Send(new GetTrainingsListByTrainingSeriesIdQuery(userId, trainingSeriesId, tenantId));
 
                 return Ok(trainingsListModel);
             }

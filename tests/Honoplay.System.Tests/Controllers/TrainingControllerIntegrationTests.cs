@@ -119,5 +119,15 @@ namespace Honoplay.System.Tests.Controllers
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
         }
+        [Fact]
+        public async Task CanGetTrainingsByTrainingSeriesId()
+        {
+            var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
+
+            var httpResponse = await authorizedClient.GetAsync(requestUri: $"api/Training?trainingSeriesId=1");
+
+            httpResponse.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+        }
     }
 }

@@ -113,7 +113,7 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                 {
                     transaction.Rollback();
 
-                    throw new ObjectAlreadyExistsException(nameof(Department), ExceptionMessageExtensions.GetExceptionMessage(ex));
+                    throw new ObjectAlreadyExistsException(nameof(Department), ExceptionExtensions.GetExceptionMessage(ex));
                 }
                 catch (NotFoundException)
                 {

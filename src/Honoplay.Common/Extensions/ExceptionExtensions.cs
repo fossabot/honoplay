@@ -3,7 +3,7 @@ using System;
 
 namespace Honoplay.Common.Extensions
 {
-    public static class ExceptionMessageExtensions
+    public static class ExceptionExtensions
     {
         public static string GetExceptionMessage(DbUpdateException exception)
         {

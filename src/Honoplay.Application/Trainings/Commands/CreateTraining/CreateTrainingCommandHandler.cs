@@ -77,7 +77,7 @@ namespace Honoplay.Application.Trainings.Commands.CreateTraining
                 {
                     transaction.Rollback();
 
-                    throw new ObjectAlreadyExistsException(nameof(Training), ExceptionMessageExtensions.GetExceptionMessage(ex));
+                    throw new ObjectAlreadyExistsException(nameof(Training), ExceptionExtensions.GetExceptionMessage(ex));
                 }
                 catch (Exception)
                 {
