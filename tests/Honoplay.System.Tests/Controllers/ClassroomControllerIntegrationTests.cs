@@ -108,7 +108,17 @@ namespace Honoplay.System.Tests.Controllers
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await authorizedClient.GetAsync(requestUri: $"api/Classroom/1");
+            var httpResponse = await authorizedClient.GetAsync(requestUri: "api/Classroom/1");
+
+            httpResponse.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+        }
+        [Fact]
+        public async Task CanGetClassroomsListByTrainingId()
+        {
+            var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
+
+            var httpResponse = await authorizedClient.GetAsync(requestUri: "api/Classroom?trainingId=1");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);

@@ -32,6 +32,13 @@
             <param name="id">Get classroom model</param>
             <returns>Get classroom by tenant id and classroom id with status code.</returns>
         </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.ClassroomController.GetByTrainingSeriesId(System.Int32)">
+            <summary>
+            This service retrieve classroom list by training id
+            </summary>
+            <param name="trainingId">Get classrooms</param>
+            <returns>Get classrooms by tenant id and training id with status code.</returns>
+        </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.OptionController.Post(Honoplay.Application.Options.Commands.CreateOption.CreateOptionCommand)">
             <summary>
             This service create option.
