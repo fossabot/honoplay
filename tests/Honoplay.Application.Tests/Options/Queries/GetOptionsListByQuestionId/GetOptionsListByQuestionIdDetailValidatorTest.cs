@@ -22,7 +22,7 @@ namespace Honoplay.Application.Tests.Options.Queries.GetOptionsListByQuestionId
         [Fact]
         public void ShouldBeNotValidForNullOrEmpty()
         {
-            _getOptionsListByQuestionIdValidator.ShouldHaveValidationErrorFor(x => x.Id, 0);
+            _getOptionsListByQuestionIdValidator.ShouldHaveValidationErrorFor(x => x.QuestionId, 0);
         }
     }
 }

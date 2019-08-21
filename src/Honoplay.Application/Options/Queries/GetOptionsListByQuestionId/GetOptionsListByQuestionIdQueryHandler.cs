@@ -32,10 +32,10 @@ namespace Honoplay.Application.Options.Queries.GetOptionsListByQuestionId
                     .Where(x => x.Question.TenantId == request.TenantId)
                 , cancellationToken);
 
-            if (!allOptionsListByQuestionId.Any())
-            {
-                throw new NotFoundException();
-            }
+            //if (!allOptionsListByQuestionId.Any())
+            //{
+            //    throw new NotFoundException();
+            //}
 
             var optionsListByQuestionId = allOptionsListByQuestionId
                 .Where(x => x.QuestionId == request.QuestionId)

@@ -152,6 +152,7 @@ namespace Honoplay.Application.Tests.Options.Queries.GetSessionsListByClassroomI
             var optionsListByQuestionIdResponseModel = await _getSessionsListByClassroomIdQueryHandler.Handle(optionsListByQuestionIdQuery, CancellationToken.None);
 
             Assert.Null(optionsListByQuestionIdResponseModel.Errors);
+            Assert.NotEmpty(optionsListByQuestionIdResponseModel.Items);
             Assert.Equal(expected: _context.Sessions.First().Name, actual: optionsListByQuestionIdResponseModel.Items.First().Name, ignoreCase: true);
 
         }
@@ -161,8 +162,9 @@ namespace Honoplay.Application.Tests.Options.Queries.GetSessionsListByClassroomI
         {
             var optionsListByQuestionIdQuery = new GetSessionsListByClassroomIdQuery(_classroomId + 1, _tenantId);
 
-            await Assert.ThrowsAsync<NotFoundException>(async () =>
-                await _getSessionsListByClassroomIdQueryHandler.Handle(optionsListByQuestionIdQuery, CancellationToken.None));
+            var optionsListByQuestionIdResponseModel = await _getSessionsListByClassroomIdQueryHandler.Handle(optionsListByQuestionIdQuery, CancellationToken.None);
+
+            Assert.Empty(optionsListByQuestionIdResponseModel.Items);
         }
 
         public void Dispose() => _context?.Dispose();
