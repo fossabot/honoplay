@@ -112,5 +112,15 @@ namespace Honoplay.System.Tests.Controllers
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
         }
+        [Fact]
+        public async Task CanGetOptionsListByQuestionIdDetail()
+        {
+            var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
+
+            var httpResponse = await authorizedClient.GetAsync(requestUri: $"api/Question/1/Option");
+
+            httpResponse.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+        }
     }
 }

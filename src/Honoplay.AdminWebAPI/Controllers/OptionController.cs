@@ -3,6 +3,7 @@ using Honoplay.Application.Options.Commands.CreateOption;
 using Honoplay.Application.Options.Commands.UpdateOption;
 using Honoplay.Application.Options.Queries.GetOptionDetail;
 using Honoplay.Application.Options.Queries.GetOptionsList;
+using Honoplay.Application.Options.Queries.GetOptionsListByQuestionId;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -29,7 +30,7 @@ namespace Honoplay.AdminWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ResponseModel<CreateOptionModel>>> Post([FromBody]CreateOptionCommand command)
+        public async Task<ActionResult<ResponseModel<CreateOptionModel>>> Post([FromBody] CreateOptionCommand command)
         {
             try
             {
@@ -49,6 +50,7 @@ namespace Honoplay.AdminWebAPI.Controllers
                 return StatusCode(HttpStatusCode.InternalServerError.ToInt());
             }
         }
+
         /// <summary>
         /// This service update option.
         /// </summary>
@@ -59,7 +61,7 @@ namespace Honoplay.AdminWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ResponseModel<UpdateOptionModel>>> Put([FromBody]UpdateOptionCommand command)
+        public async Task<ActionResult<ResponseModel<UpdateOptionModel>>> Put([FromBody] UpdateOptionCommand command)
         {
             try
             {
@@ -93,7 +95,7 @@ namespace Honoplay.AdminWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ResponseModel<OptionsListModel>>> Get([FromQuery]GetOptionsListQueryModel query)
+        public async Task<ActionResult<ResponseModel<OptionsListModel>>> Get([FromQuery] GetOptionsListQueryModel query)
         {
             try
             {
@@ -130,6 +132,36 @@ namespace Honoplay.AdminWebAPI.Controllers
                 var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
                 var optionsListModel = await Mediator.Send(new GetOptionDetailQuery(userId, id, tenantId));
+
+                return Ok(optionsListModel);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt());
+            }
+        }
+
+        /// <summary>
+        /// This service update option.
+        /// </summary>
+        /// <param name="id">Get option model</param>
+        /// <returns>Get option by tenant id and option id with status code.</returns>
+        [HttpGet]
+        [Route("/api/Question/{questionId}/Option")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ResponseModel<OptionsListModel>>> GetQuestionsListByQuestionId(int questionId)
+        {
+            try
+            {
+                var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
+
+                var optionsListModel = await Mediator.Send(new GetOptionsListByQuestionIdQuery(questionId, tenantId));
 
                 return Ok(optionsListModel);
             }
