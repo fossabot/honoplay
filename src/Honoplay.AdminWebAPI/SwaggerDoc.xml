@@ -71,7 +71,7 @@
             <summary>
             This service update option.
             </summary>
-            <param name="id">Get option model</param>
+            <param name="questionId">Get option model</param>
             <returns>Get option by tenant id and option id with status code.</returns>
         </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.QuestionController.Post(Honoplay.Application.Questions.Commands.CreateQuestion.CreateQuestionCommand)">
