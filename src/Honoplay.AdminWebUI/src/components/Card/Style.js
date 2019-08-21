@@ -7,13 +7,11 @@ export const Style = (theme) => ({
   cardLabel: {
     color: '#707070',
     textAlign: 'center',
-    fontSize: 15,
     paddingBottom: 15
   },
   cardDate: {
     color: '#8d8d8d',
     textAlign: 'center',
-    fontSize: 12,
     paddingBottom: 15
   },
   center: {
@@ -45,6 +43,10 @@ export const Style = (theme) => ({
     color: 'white',
     fontSize: 40,
   },
+  iconCard: {
+    color: 'black',
+    fontSize: 40,
+  },
   centerCardButton: {
     display: 'flex',
     justifyContent: 'center',
@@ -64,10 +66,13 @@ export const Style = (theme) => ({
     width: '100%',
     fontSize: 13
   },
+  infoCard: {
+    maxWidth: '%100',
+  },
 
 });
 
-import {createMuiTheme} from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core';
 export const theme = createMuiTheme({
   typography: {
     useNextVariants: true,

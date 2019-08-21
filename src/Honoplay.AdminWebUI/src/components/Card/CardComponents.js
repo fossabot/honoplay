@@ -10,10 +10,11 @@ import {
     Grid,
     IconButton,
     MuiThemeProvider,
-    Button
+    Button,
 } from '@material-ui/core';
 import { Style, theme } from './Style';
 import Modal from '../Modal/ModalComponent';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
@@ -37,14 +38,14 @@ class CardComponent extends React.Component {
 
     render() {
         const { open } = this.state;
-        const { classes, data, url, children, titleName } = this.props;
+        const { classes, data, url, children, titleName, cardInfo, iconName, numberOfTrainees } = this.props;
         return (
 
             <MuiThemeProvider theme={theme}>
                 <Grid container spacing={24}>
                     <Grid item sm={12}>
                         <div className={classes.cardRoot}>
-                            {data.map((data, i) => {
+                            {data && data.map((data, i) => {
                                 const dateToFormat = data.createdAt;
                                 return (
                                     <Grid item xs={6} sm={3} key={data.id}>
@@ -56,25 +57,39 @@ class CardComponent extends React.Component {
                                                 </IconButton>
                                             </div>
                                             <CardContent>
+                                                {cardInfo &&
+                                                    <div
+                                                        className={classes.centerCardButton}>
+                                                        <FontAwesomeIcon
+                                                            className={classes.iconCard}
+                                                            icon={iconName}>
+                                                        </FontAwesomeIcon>
+                                                    </div>
+                                                }
                                                 <Typography
-                                                    variant="h6"
+                                                    variant="h6" component="h2"
                                                     className={classes.cardLabel}>
                                                     {data.name}
                                                 </Typography>
                                                 <Typography
-                                                    variant="h6"
+                                                    component="p"
                                                     className={classes.cardDate}>
-                                                    {moment(dateToFormat).format("DD/MM/YYYY")}
+                                                    {cardInfo ?
+                                                        `${numberOfTrainees}${' '}${translate('Trainee')}`
+                                                        : moment(dateToFormat).format("DD/MM/YYYY")
+                                                    }
                                                 </Typography>
                                                 <div className={classes.center}>
-                                                    <Button
-                                                        variant="contained"
-                                                        component={url && Link}
-                                                        to={url && `/honoplay/${url}/${data.id}`}
-                                                        onClick={() => this.handleOpen(data.id)}
-                                                    >
-                                                        {translate('Edit')}
-                                                    </Button>
+                                                    {cardInfo ? "" :
+                                                        <Button
+                                                            variant="contained"
+                                                            component={url && Link}
+                                                            to={url && `/honoplay/${url}/${data.id}`}
+                                                            onClick={() => this.handleOpen(data.id)}
+                                                        >
+                                                            {translate('Edit')}
+                                                        </Button>
+                                                    }
                                                 </div>
                                             </CardContent>
                                         </Card>

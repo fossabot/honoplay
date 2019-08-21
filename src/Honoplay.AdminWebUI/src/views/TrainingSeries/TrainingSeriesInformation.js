@@ -6,6 +6,7 @@ import Stepper from '../../components/Stepper/HorizontalStepper';
 import Training from './Training';
 import Classroom from './Classroom';
 import Session from './Session'
+import Summary from './Summary';
 
 
 import { connect } from "react-redux";
@@ -86,6 +87,11 @@ class TrainingSeriesInformation extends React.Component {
                 activeStep: state.activeStep + 1,
             }));
         }
+        if (this.state.activeStep === 2) {
+            this.setState(state => ({
+                activeStep: state.activeStep + 1,
+            }));
+        }
     }
 
     trainingSeriesId = this.props.match.params.trainingseriesId;
@@ -118,6 +124,7 @@ class TrainingSeriesInformation extends React.Component {
                             />
                             <Classroom trainingId={trainingId} />
                             <Session />
+                            <Summary trainingId={trainingId} />
                         </Stepper>
                     </Grid>
                 </Grid>
