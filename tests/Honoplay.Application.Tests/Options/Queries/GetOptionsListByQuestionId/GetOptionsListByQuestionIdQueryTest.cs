@@ -1,4 +1,4 @@
-﻿using Honoplay.Application.Options.Queries.GetOptionDetail;
+﻿using Honoplay.Application.Options.Queries.GetOptionsListByQuestionId;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
@@ -12,23 +12,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Options.Queries.GetOptionDetail
+namespace Honoplay.Application.Tests.Options.Queries.GetOptionsListByQuestionId
 {
-    public class GetOptionDetailQueryTest : TestBase, IDisposable
+    public class GetOptionsListByQuestionIdQueryTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly GetOptionDetailQueryHandler _getOptionDetailQueryHandler;
-        private readonly int _adminUserId;
-        private readonly int _optionId;
+        private readonly GetOptionsListByQuestionIdQueryHandler _getOptionsListByQuestionIdQueryHandler;
+        private readonly int _questionId;
         private readonly Guid _tenantId;
 
-        public GetOptionDetailQueryTest()
+        public GetOptionsListByQuestionIdQueryTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _tenantId, out _optionId, out _adminUserId);
-            _getOptionDetailQueryHandler = new GetOptionDetailQueryHandler(_context, new CacheManager(cache.Object));
+            _context = InitAndGetDbContext(out _tenantId, out _questionId);
+            _getOptionsListByQuestionIdQueryHandler = new GetOptionsListByQuestionIdQueryHandler(_context, new CacheManager(cache.Object));
         }
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int optionId, out int adminUserId)
+        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int questionId)
         {
             var context = GetDbContext();
             var salt = ByteArrayExtensions.GetRandomSalt();
@@ -69,7 +68,7 @@ namespace Honoplay.Application.Tests.Options.Queries.GetOptionDetail
 
             var option = new Option
             {
-                Id=1,
+                Id = 1,
                 CreatedBy = adminUser.Id,
                 VisibilityOrder = 2,
                 QuestionId = question.Id,
@@ -78,8 +77,7 @@ namespace Honoplay.Application.Tests.Options.Queries.GetOptionDetail
             context.Options.Add(option);
 
             tenantId = tenant.Id;
-            optionId = option.Id;
-            adminUserId = adminUser.Id;
+            questionId = question.Id;
             context.SaveChanges();
             return context;
         }
@@ -87,22 +85,22 @@ namespace Honoplay.Application.Tests.Options.Queries.GetOptionDetail
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var optionDetailQuery = new GetOptionDetailQuery(_adminUserId, _optionId, _tenantId);
+            var optionsListByQuestionIdQuery = new GetOptionsListByQuestionIdQuery(_questionId, _tenantId);
 
-            var optionDetailResponseModel = await _getOptionDetailQueryHandler.Handle(optionDetailQuery, CancellationToken.None);
+            var optionsListByQuestionIdResponseModel = await _getOptionsListByQuestionIdQueryHandler.Handle(optionsListByQuestionIdQuery, CancellationToken.None);
 
-            Assert.Null(optionDetailResponseModel.Errors);
-            Assert.Equal(expected: _context.Options.First().Text, actual: optionDetailResponseModel.Items.First().Text, ignoreCase: true);
+            Assert.Null(optionsListByQuestionIdResponseModel.Errors);
+            Assert.Equal(expected: _context.Options.First().Text, actual: optionsListByQuestionIdResponseModel.Items.First().Text, ignoreCase: true);
 
         }
 
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var optionDetailQuery = new GetOptionDetailQuery(_adminUserId, _optionId + 1, _tenantId);
+            var optionsListByQuestionIdQuery = new GetOptionsListByQuestionIdQuery(_questionId, _tenantId);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
-                await _getOptionDetailQueryHandler.Handle(optionDetailQuery, CancellationToken.None));
+                await _getOptionsListByQuestionIdQueryHandler.Handle(optionsListByQuestionIdQuery, CancellationToken.None));
         }
 
         public void Dispose() => _context?.Dispose();
