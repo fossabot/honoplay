@@ -1,5 +1,4 @@
-﻿using Honoplay.Application.Classrooms.Queries.GetClassroomsListByTrainingId;
-using Honoplay.Common.Extensions;
+﻿using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
@@ -8,25 +7,25 @@ using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Classrooms.Queries.GetClassroomsList;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Classrooms.Queries.GetClassroomsList
 {
-    public class GetClassroomsListByTrainingIdQueryTest : TestBase, IDisposable
+    public class GetClassroomsListQueryTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly GetClassroomsListByTrainingIdQueryHandler _getClassroomsListByTrainingIdQueryHandler;
+        private readonly GetClassroomsListQueryHandler _getClassroomsListQueryHandler;
         private readonly Guid _tenantId;
-        private readonly int _trainingId;
-        public GetClassroomsListByTrainingIdQueryTest()
+        public GetClassroomsListQueryTest()
         {
             var cache = new Mock<IDistributedCache>();
 
-            _context = InitAndGetDbContext(out _tenantId, out _trainingId);
-            _getClassroomsListByTrainingIdQueryHandler = new GetClassroomsListByTrainingIdQueryHandler(_context, new CacheManager(cache.Object));
+            _context = InitAndGetDbContext(out _tenantId);
+            _getClassroomsListQueryHandler = new GetClassroomsListQueryHandler(_context, new CacheManager(cache.Object));
         }
 
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int trainingId)
+        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId)
         {
             var context = GetDbContext();
 
@@ -121,28 +120,27 @@ namespace Honoplay.Application.Tests.Classrooms.Queries.GetClassroomsList
             context.SaveChanges();
 
             tenantId = tenant.Id;
-            trainingId = training.Id;
             return context;
         }
 
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var getClassroomsListByTrainingIdQuery = new GetClassroomsListByTrainingIdQuery(_tenantId, _trainingId);
+            var getClassroomsListQuery = new GetClassroomsListQuery(tenantId: _tenantId, skip: 0, take: 10);
 
-            var classroomsByTrainingIdResponseModel = await _getClassroomsListByTrainingIdQueryHandler.Handle(getClassroomsListByTrainingIdQuery, CancellationToken.None);
+            var classroomsResponseModel = await _getClassroomsListQueryHandler.Handle(getClassroomsListQuery, CancellationToken.None);
 
-            Assert.Null(classroomsByTrainingIdResponseModel.Errors);
+            Assert.Null(classroomsResponseModel.Errors);
         }
 
         [Fact]
         public async Task ShouldItemsCount1WhenTake1()
         {
-            var getClassroomsListByTrainingIdQuery = new GetClassroomsListByTrainingIdQuery(_tenantId, _trainingId);
+            var getClassroomsListQuery = new GetClassroomsListQuery(tenantId: _tenantId, skip: 0, take: 1);
 
-            var classroomsByTrainingIdResponseModel = await _getClassroomsListByTrainingIdQueryHandler.Handle(getClassroomsListByTrainingIdQuery, CancellationToken.None);
+            var classroomsResponseModel = await _getClassroomsListQueryHandler.Handle(getClassroomsListQuery, CancellationToken.None);
 
-            Assert.Single(classroomsByTrainingIdResponseModel.Items);
+            Assert.Single(classroomsResponseModel.Items);
         }
 
         public void Dispose() => _context?.Dispose();

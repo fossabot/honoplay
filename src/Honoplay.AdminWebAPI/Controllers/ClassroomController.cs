@@ -3,6 +3,7 @@ using Honoplay.Application.Classrooms.Commands.CreateClassroom;
 using Honoplay.Application.Classrooms.Commands.UpdateClassroom;
 using Honoplay.Application.Classrooms.Queries.GetClassroomDetail;
 using Honoplay.Application.Classrooms.Queries.GetClassroomsList;
+using Honoplay.Application.Classrooms.Queries.GetClassroomsListByTrainingId;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -128,6 +129,36 @@ namespace Honoplay.AdminWebAPI.Controllers
                 var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
                 var classroomsListModel = await Mediator.Send(new GetClassroomDetailQuery(userId, id, tenantId));
+
+                return Ok(classroomsListModel);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt());
+            }
+        }
+
+        /// <summary>
+        /// This service retrieve classroom list by training id
+        /// </summary>
+        /// <param name="trainingId">Get classrooms</param>
+        /// <returns>Get classrooms by tenant id and training id with status code.</returns>
+        [HttpGet]
+        [Route("/api/Training/{trainingId}/Classroom")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ResponseModel<ClassroomsListByTrainingIdModel>>> GetByTrainingSeriesId(int trainingId)
+        {
+            try
+            {
+                var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
+
+                var classroomsListModel = await Mediator.Send(new GetClassroomsListByTrainingIdQuery(tenantId, trainingId));
 
                 return Ok(classroomsListModel);
             }
