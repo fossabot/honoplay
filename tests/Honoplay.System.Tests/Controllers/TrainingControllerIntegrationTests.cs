@@ -124,7 +124,7 @@ namespace Honoplay.System.Tests.Controllers
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await authorizedClient.GetAsync(requestUri: $"api/Training?trainingSeriesId=1");
+            var httpResponse = await authorizedClient.GetAsync(requestUri: $"api/TrainingSeries/1/Training");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);

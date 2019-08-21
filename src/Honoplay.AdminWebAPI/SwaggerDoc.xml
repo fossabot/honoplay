@@ -182,7 +182,7 @@
         </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.TrainingController.GetByTrainingSeriesId(System.Int32)">
             <summary>
-            This service retrieve training by trainingSeries id
+            This service retrieve training by trainingSeriesId
             </summary>
             <param name="trainingSeriesId">Get trainings list </param>
             <returns>Get training by tenant id and trainingSeries id with status code.</returns>

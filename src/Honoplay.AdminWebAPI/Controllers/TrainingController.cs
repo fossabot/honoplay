@@ -151,7 +151,7 @@ namespace Honoplay.AdminWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ResponseModel<TrainingsListModel>>> GetByTrainingSeriesId([FromQuery]int trainingSeriesId)
+        public async Task<ActionResult<ResponseModel<TrainingsListModel>>> GetByTrainingSeriesId(int trainingSeriesId)
         {
             try
             {
