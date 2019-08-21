@@ -146,7 +146,7 @@ namespace Honoplay.AdminWebAPI.Controllers
         }
 
         /// <summary>
-        /// This service update option.
+        /// This service retrieve session by question id
         /// </summary>
         /// <param name="questionId">Get option model</param>
         /// <returns>Get option by tenant id and option id with status code.</returns>
