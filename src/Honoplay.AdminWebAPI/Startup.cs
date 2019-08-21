@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Routing;
 
 namespace Honoplay.AdminWebAPI
 {
@@ -45,7 +46,7 @@ namespace Honoplay.AdminWebAPI
                 options.InstanceName = "honoplay";
                 options.Configuration = Environment.GetEnvironmentVariable("REDIS_CACHE_SERVICE")?.ToString();
             });
-
+            services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
             // Add MediatR
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
@@ -150,7 +151,6 @@ namespace Honoplay.AdminWebAPI
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "HonoPlay API V1");
-
             });
 
             app.UseCors(builder => builder
