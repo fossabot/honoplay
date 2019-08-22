@@ -112,7 +112,6 @@ class TraineesUpdate extends React.Component {
 
     handleClick = () => {
         this.props.updateTrainer(this.state.trainerModel);
-        console.log(this.state.trainerModel);
     }
 
     render() {
@@ -128,6 +127,9 @@ class TraineesUpdate extends React.Component {
         const buttonClassname = classNames({
             [classes.buttonSuccess]: success
         });
+
+        console.log('sdsadsa', this.dataId);
+
         return (
 
             <div className={classes.root}>

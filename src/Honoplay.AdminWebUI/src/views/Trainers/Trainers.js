@@ -86,6 +86,7 @@ class Trainers extends React.Component {
                 departments: departmentList.items
             })
         }
+
         if (prevProps.isProfessionListLoading && !isProfessionListLoading && professionList) {
             this.setState({
                 professions: professionList.items
@@ -113,8 +114,10 @@ class Trainers extends React.Component {
             }
         }
         if (prevProps.isTrainerListLoading && !isTrainerListLoading && trainersList) {
-            if (!errorTrainerList && departmentList && trainersList) {
-                departmentToString(departmentList.items, trainersList.items);
+            if (!errorTrainerList) {
+                if (departmentList && trainersList) {
+                    departmentToString(departmentList.items, trainersList.items);
+                }
                 this.setState({
                     trainer: trainersList.items,
                 });
@@ -123,14 +126,9 @@ class Trainers extends React.Component {
     }
 
     componentDidMount() {
-        const {
-            fetchTrainersList,
-            fetchDepartmentList,
-            fetchProfessionList
-        } = this.props;
-        fetchDepartmentList(0, 50);
-        fetchTrainersList(0, 50);
-        fetchProfessionList(0, 50);
+        this.props.fetchTrainersList(0, 50);
+        this.props.fetchDepartmentList(0, 50);
+        this.props.fetchProfessionList(0, 50);
     }
 
     handleChange = (e) => {
@@ -159,7 +157,9 @@ class Trainers extends React.Component {
             professions,
         } = this.state;
         const { classes } = this.props;
+
         return (
+
             <div className={classes.root}>
                 <Grid container spacing={24}>
                     <Typography
@@ -243,6 +243,9 @@ class Trainers extends React.Component {
                         <Table
                             columns={trainerColumns}
                             data={trainer}
+                            isSelected={selected => { }}
+                            remove
+                            update
                         >
                             <TrainersUpdate />
                         </Table>

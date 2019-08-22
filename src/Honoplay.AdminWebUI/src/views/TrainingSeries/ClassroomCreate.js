@@ -6,9 +6,12 @@ import Style from '../Style';
 import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
 import Button from '../../components/Button/ButtonComponent';
+import Table from '../../components/Table/TableComponent';
+import { genderToString } from '../../helpers/Converter';
 
 import { connect } from "react-redux";
 import { fetchTrainersList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainer";
+import { fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee";
 import { createClassroom, fetchClassroomList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom";
 
 class ClassroomCreate extends React.Component {
@@ -25,11 +28,22 @@ class ClassroomCreate extends React.Component {
                         name: '',
                         trainerId: '',
                         trainingId: '',
+                        traineesId: []
                     }
                 ]
-            }
+            },
+            traineeColumns: [
+                { title: "Ad", field: "name" },
+                { title: "Soyad", field: "surname" },
+                { title: "TCKN", field: "nationalIdentityNumber" },
+                { title: "Cep Telefonu", field: "phoneNumber" },
+                { title: "Cinsiyet", field: "gender" }
+            ],
+            traineeList: [],
         }
     }
+
+    selecteds = null;
 
     componentDidUpdate(prevProps) {
         const {
@@ -38,7 +52,10 @@ class ClassroomCreate extends React.Component {
             trainersList,
             isCreateClassroomLoading,
             createClassroom,
-            errorCreateClassroom
+            errorCreateClassroom,
+            isTraineeListLoading,
+            errorTraineeList,
+            trainees
         } = this.props;
 
         if (prevProps.isTrainerListLoading && !isTrainerListLoading && trainersList) {
@@ -69,18 +86,28 @@ class ClassroomCreate extends React.Component {
                 });
             }
         }
+        if (prevProps.isTraineeListLoading && !isTraineeListLoading && trainees) {
+            if (!errorTraineeList) {
+                genderToString(trainees.items);
+                this.setState({
+                    traineeList: trainees.items
+                })
+            }
+        }
     }
 
     componentDidMount() {
         this.props.fetchTrainersList(0, 50);
+        this.props.fetchTraineeList(0, 50);
     }
 
     handleClick = () => {
+        console.log(this.state.classroom);
         this.props.createClassroom(this.state.classroom);
     }
 
     render() {
-        const { classroomLoading, trainer, classroom, classroomError } = this.state;
+        const { classroomLoading, trainer, classroom, classroomError, traineeColumns, traineeList } = this.state;
         const { classes, trainingId } = this.props;
 
         this.state.classroom.createClassroomModels.map((classroom) => {
@@ -92,25 +119,37 @@ class ClassroomCreate extends React.Component {
             <div className={classes.root}>
                 <Grid container spacing={24}>
                     {classroom.createClassroomModels.map((classroom, id) => (
-                        <Grid item xs={12} sm={12} key={id}>
-                            <Input
-                                error={classroomError}
-                                labelName={translate('ClassroomName')}
-                                inputType="text"
-                                onChange={e => {
-                                    classroom.name = e.target.value;
-                                    this.setState({ classroomError: false });
-                                }}
-                            />
-                            <DropDown
-                                error={classroomError}
-                                data={trainer}
-                                labelName={translate('Trainer')}
-                                onChange={e => {
-                                    classroom.trainerId = e.target.value;
-                                    this.setState({ classroomError: false });
-                                }}
-                            />
+                         <Grid item xs={12} sm={12} key={id}>
+                            <Grid item xs={12} sm={12}>
+                                <Input
+                                    error={classroomError}
+                                    labelName={translate('ClassroomName')}
+                                    inputType="text"
+                                    onChange={e => {
+                                        classroom.name = e.target.value;
+                                        this.setState({ classroomError: false });
+                                    }}
+                                />
+                                <DropDown
+                                    error={classroomError}
+                                    data={trainer}
+                                    labelName={translate('Trainer')}
+                                    onChange={e => {
+                                        classroom.trainerId = e.target.value;
+                                        this.setState({ classroomError: false });
+                                    }}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={12}/>
+                            <Grid item xs={12} sm={12}>
+                                <Table
+                                    columns={traineeColumns}
+                                    data={traineeList}
+                                    isSelected={selected => {
+                                        classroom.traineesId = selected;
+                                    }}
+                                />
+                            </Grid>
                         </Grid>
                     ))}
                     <Grid item xs={12} sm={11} />
@@ -149,20 +188,30 @@ const mapStateToProps = state => {
         errorCreateClassroom
     } = state.createClassroom;
 
+    const {
+        isTraineeListLoading,
+        errorTraineeList,
+        trainees
+    } = state.traineeList;
+
     return {
         isTrainerListLoading,
         errorTrainerList,
         trainersList,
         isCreateClassroomLoading,
         createClassroom,
-        errorCreateClassroom
+        errorCreateClassroom,
+        isTraineeListLoading,
+        errorTraineeList,
+        trainees
     };
 };
 
 const mapDispatchToProps = {
     fetchTrainersList,
     createClassroom,
-    fetchClassroomList
+    fetchClassroomList,
+    fetchTraineeList,
 };
 
 export default connect(
