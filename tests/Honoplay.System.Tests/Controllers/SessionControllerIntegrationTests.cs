@@ -112,5 +112,16 @@ namespace Honoplay.System.Tests.Controllers
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
         }
+
+        [Fact]
+        public async Task CanGetSessionsListByClassroomId()
+        {
+            var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
+
+            var httpResponse = await authorizedClient.GetAsync(requestUri: "api/Classroom/1/Session");
+
+            httpResponse.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+        }
     }
 }

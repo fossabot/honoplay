@@ -1,5 +1,4 @@
 ﻿using Honoplay.Application.Options.Queries.GetOptionsListByQuestionId;
-using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -59,6 +58,7 @@ namespace Honoplay.Application.Tests.Options.Queries.GetOptionsListByQuestionId
 
             var question = new Question
             {
+                Id = 1,
                 Duration = 3,
                 Text = "testQuestion",
                 CreatedBy = adminUser.Id,
@@ -97,10 +97,12 @@ namespace Honoplay.Application.Tests.Options.Queries.GetOptionsListByQuestionId
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var optionsListByQuestionIdQuery = new GetOptionsListByQuestionIdQuery(_questionId, _tenantId);
+            var optionsListByQuestionIdQuery = new GetOptionsListByQuestionIdQuery(5 + _questionId, _tenantId);
 
-            await Assert.ThrowsAsync<NotFoundException>(async () =>
-                await _getOptionsListByQuestionIdQueryHandler.Handle(optionsListByQuestionIdQuery, CancellationToken.None));
+            var optionsListByQuestionIdResponseModel = await _getOptionsListByQuestionIdQueryHandler.Handle(optionsListByQuestionIdQuery, CancellationToken.None);
+
+            Assert.Empty(optionsListByQuestionIdResponseModel.Items);
+
         }
 
         public void Dispose() => _context?.Dispose();

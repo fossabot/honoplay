@@ -3,6 +3,7 @@ using Honoplay.Application.Sessions.Commands.CreateSession;
 using Honoplay.Application.Sessions.Commands.UpdateSession;
 using Honoplay.Application.Sessions.Queries.GetSessionDetail;
 using Honoplay.Application.Sessions.Queries.GetSessionsList;
+using Honoplay.Application.Sessions.Queries.GetSessionsListByClassroomId;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -128,6 +129,36 @@ namespace Honoplay.AdminWebAPI.Controllers
                 var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
                 var sessionsListModel = await Mediator.Send(new GetSessionDetailQuery(userId, id, tenantId));
+
+                return Ok(sessionsListModel);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt());
+            }
+        }
+
+        /// <summary>
+        /// This service retrieve session by session id
+        /// </summary>
+        /// <param name="classroomId">Get session model</param>
+        /// <returns>Get session by tenant id and classroom id with status code.</returns>
+        [HttpGet]
+        [Route("/api/Classroom/{classroomId}/Session")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ResponseModel<SessionsListByClassroomIdModel>>> GetSessionsListByClassroomId(int classroomId)
+        {
+            try
+            {
+                var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
+
+                var sessionsListModel = await Mediator.Send(new GetSessionsListByClassroomIdQuery(classroomId, tenantId));
 
                 return Ok(sessionsListModel);
             }
