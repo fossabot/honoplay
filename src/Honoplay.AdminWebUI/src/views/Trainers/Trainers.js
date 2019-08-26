@@ -34,20 +34,13 @@ class Trainers extends React.Component {
             departmentListError: false,
             trainerError: false,
             loadingTrainer: false,
-            trainerExpertiseData: [
-                { id: 1, name: 'Web Tasarım', },
-                { id: 2, name: 'Ticaret Hukuk', },
-                { id: 3, name: 'Yazılım', },
-                { id: 4, name: 'Siber Güvenlik', },
-                { id: 5, name: 'İnsan Kaynakları', },
-            ],
             trainerColumns: [
-                { title: "Ad", field: "name" },
-                { title: "Soyad", field: "surname" },
-                { title: "TCKN", field: "email" },
-                { title: "Cep Telefonu", field: "phoneNumber" },
-                { title: "Departman", field: "departmentId" },
-                { title: "Uzmanlık Alanları", field: "professionId" }
+                { title: translate('Name'), field: "name" },
+                { title: translate('Surname'), field: "surname" },
+                { title: translate('NationalIdentityNumber'), field: "email" },
+                { title: translate('PhoneNumber'), field: "phoneNumber" },
+                { title: translate('Department'), field: "departmentId" },
+                { title: translate('TrainerExpertise'), field: "professionId" }
             ],
         };
     }
@@ -58,7 +51,7 @@ class Trainers extends React.Component {
         email: '',
         phoneNumber: '',
         departmentId: '',
-        professionId: 1
+        professionId: ''
     };
 
     componentDidUpdate(prevProps) {

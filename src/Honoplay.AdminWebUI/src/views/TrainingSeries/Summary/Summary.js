@@ -83,7 +83,6 @@ class Summary extends React.Component {
             })
         }
         if (prevProps.isClassroomListByTrainingIdLoading && !isClassroomListByTrainingIdLoading && classroomsListByTrainingId) {
-            console.log(classroomsListByTrainingId);
             this.setState({
                 classroomList: classroomsListByTrainingId.items
             })

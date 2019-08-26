@@ -33,11 +33,11 @@ class ClassroomCreate extends React.Component {
                 ]
             },
             traineeColumns: [
-                { title: "Ad", field: "name" },
-                { title: "Soyad", field: "surname" },
-                { title: "TCKN", field: "nationalIdentityNumber" },
-                { title: "Cep Telefonu", field: "phoneNumber" },
-                { title: "Cinsiyet", field: "gender" }
+                { title: translate('Name'), field: "name" },
+                { title: translate('Surname'), field: "surname" },
+                { title: translate('NationalIdentityNumber'), field: "nationalIdentityNumber" },
+                { title: translate('PhoneNumber'), field: "phoneNumber" },
+                { title: translate('Gender'), field: "gender" }
             ],
             traineeList: [],
         }
@@ -120,7 +120,7 @@ class ClassroomCreate extends React.Component {
             <div className={classes.root}>
                 <Grid container spacing={24}>
                     {classroom.createClassroomModels.map((classroom, id) => (
-                         <Grid item xs={12} sm={12} key={id}>
+                        <Grid item xs={12} sm={12} key={id}>
                             <Grid item xs={12} sm={12}>
                                 <Input
                                     error={classroomError}
@@ -141,7 +141,7 @@ class ClassroomCreate extends React.Component {
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={12}/>
+                            <Grid item xs={12} sm={12} />
                             <Grid item xs={12} sm={12}>
                                 <Table
                                     columns={traineeColumns}

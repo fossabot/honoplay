@@ -127,9 +127,7 @@ class TraineesUpdate extends React.Component {
         const buttonClassname = classNames({
             [classes.buttonSuccess]: success
         });
-
-        console.log('sdsadsa', this.dataId);
-
+        
         return (
 
             <div className={classes.root}>

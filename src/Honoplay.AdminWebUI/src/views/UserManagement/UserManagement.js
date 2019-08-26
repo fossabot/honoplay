@@ -11,7 +11,6 @@ import Style from '../Style';
 import Typography from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Input from '../../components/Input/InputTextComponent';
-import Table from '../../components/Table/TableComponent';
 
 import { connect } from "react-redux";
 import { register } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/AdminUser";
@@ -24,18 +23,6 @@ class UserManagement extends React.Component {
             loading: false,
             error: false,
             success: false,
-            adminUserColumns: [
-                { title: "Ad", field: "name" },
-                { title: "Soyad", field: "surname" },
-                { title: "Kullanıcı Adı", field: "username" },
-            ],
-            adminUserData: [{
-                'id': 0,
-                'name': 'Alper',
-                'surname': 'Halıcı',
-                'username': 'alperhalici'
-            },
-            ]
         };
     }
 
@@ -91,7 +78,9 @@ class UserManagement extends React.Component {
             error,
             success,
         } = this.state;
+
         const { classes } = this.props;
+
         const buttonClassname = classNames({
             [classes.buttonSuccess]: success
         });
@@ -164,12 +153,6 @@ class UserManagement extends React.Component {
                     <Grid item xs={12} sm={12}>
                         <Divider />
                     </Grid>
-                    {/* <Grid item xs={12} sm={12}>
-                        <Table
-                            columns={this.state.adminUserColumns}
-                            data={this.state.adminUserData}
-                        />
-                    </Grid> */}
                 </Grid>
             </div>
         );
@@ -183,7 +166,6 @@ const mapStateToProps = state => {
         registerModel,
         errorRegister
     } = state.register;
-    console.log(state.register);
     return {
         isRegisterLoading,
         registerModel,

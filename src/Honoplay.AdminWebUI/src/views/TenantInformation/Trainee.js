@@ -32,11 +32,11 @@ class Trainee extends React.Component {
         { id: 1, name: 'Kadın', }
       ],
       traineeColumns: [
-        { title: "Ad", field: "name" },
-        { title: "Soyad", field: "surname" },
-        { title: "TCKN", field: "nationalIdentityNumber" },
-        { title: "Cep Telefonu", field: "phoneNumber" },
-        { title: "Cinsiyet", field: "gender" }
+        { title: translate('Name'), field: "name" },
+        { title: translate('Surname'), field: "surname" },
+        { title: translate('NationalIdentityNumber'), field: "nationalIdentityNumber" },
+        { title: translate('PhoneNumber'), field: "phoneNumber" },
+        { title: translate('Gender'), field: "gender" }
       ],
     };
   }
@@ -107,12 +107,12 @@ class Trainee extends React.Component {
       traineeList } = this.state;
 
     return (
-      <div className={classes.root} id="kisiEkle">
+      <div className={classes.root} id="addTrainee">
         <Grid container spacing={40}>
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12}>
             <div />
-            <a href="#kisiler" className={classes.linkStyle}>
+            <a href="#trainees" className={classes.linkStyle}>
               {`${translate('Trainee')} ${translate('Add')}`}
             </a>
           </Grid>
@@ -179,13 +179,13 @@ class Trainee extends React.Component {
           </Grid>
           <Grid item xs={12} sm={12}><Divider /></Grid>
           <Grid item xs={12} sm={12}>
-            <a href='#kisiEkle'
+            <a href='#addTrainee'
               className={classes.linkStyle}>
               {translate('Trainees')}
             </a>
           </Grid>
           <Grid item xs={12} sm={12}>
-            <div id="kisiler">
+            <div id="trainees">
               <Table
                 columns={traineeColumns}
                 data={traineeList}

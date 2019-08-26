@@ -103,9 +103,7 @@ class TrainingSeriesUpdate extends React.Component {
               id={id => {
 
               }}
-            >
-
-            </Card>
+            />
           </Grid>
         </Grid>
       </div>
