@@ -2,7 +2,7 @@
 
 namespace Honoplay.AdminWebAPI.Interfaces
 {
-    public interface IUserService
+    public interface IAdminUserService
     {
         (AdminUserAuthenticateModel user, string stringToken) GenerateToken(AdminUserAuthenticateModel user);
         string RenewToken(string token);

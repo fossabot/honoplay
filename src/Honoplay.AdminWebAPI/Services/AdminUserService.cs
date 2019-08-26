@@ -8,11 +8,11 @@ using System.Security.Claims;
 
 namespace Honoplay.AdminWebAPI.Services
 {
-    public class UserService : IUserService
+    public class AdminUserService : IUserService
     {
         private readonly AppSettings _appSettings;
 
-        public UserService(IOptions<AppSettings> appSettings)
+        public AdminUserService(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
         }
