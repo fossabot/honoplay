@@ -1,16 +1,18 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, Divider, TextField, CircularProgress } from '@material-ui/core';
+import { Grid, Divider, CircularProgress } from '@material-ui/core';
 import Style from '../Style';
 import Typography from '../../components/Typography/TypographyComponent';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Options from './Options';
 import ExpansionPanel from '../../components/ExpansionPanel/ControlledExpansionPanels ';
+import Table from '../../components/Table/TableComponent';
 
 import { connect } from "react-redux";
 import { createQuestion } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Question";
+import { fetchOptionsByQuestionId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options";
 
 class NewQuestion extends React.Component {
 
@@ -19,12 +21,13 @@ class NewQuestion extends React.Component {
     this.state = {
       questionsError: false,
       question: '',
-      answerData: [
-        { order: 1, answer: "Tasarım Departmanı" },
-        { order: 2, answer: "Yazılım Departmanı" },
-        { order: 3, answer: "İnsan Kaynakları Departmanı" },
+      questionId: null,
+      optionsColumns: [
+        { title: translate('Order'), field: "visibilityOrder" },
+        { title: translate('Options'), field: "text" },
+        //{ title: translate('CorrectAnswer'), field: "isCorrect" }
       ],
-      questionId: ''
+      options: []
     }
   }
 
@@ -32,7 +35,10 @@ class NewQuestion extends React.Component {
     const {
       isCreateQuestionLoading,
       errorCreateQuestion,
-      newQuestion
+      newQuestion,
+      isOptionListByQuestionIdLoading,
+      optionsListByQuestionId,
+      errorOptionListByQuestionId
     } = this.props;
 
 
@@ -58,6 +64,17 @@ class NewQuestion extends React.Component {
 
       }
     }
+
+    if (!prevProps.errorOptionListByQuestionId && errorOptionListByQuestionId) {
+      this.setState({
+        classroomListError: true
+      })
+    }
+    if (prevProps.isOptionListByQuestionIdLoading && !isOptionListByQuestionIdLoading && optionsListByQuestionId) {
+      this.setState({
+        options: optionsListByQuestionId.items
+      })
+    }
   }
 
   questionsModel = {
@@ -65,15 +82,19 @@ class NewQuestion extends React.Component {
     duration: ''
   }
 
+  componentDidMount() {
+    this.props.fetchOptionsByQuestionId(this.state.questionId);
+  }
+
   handleClick = () => {
     this.props.createQuestion(this.questionsModel);
   }
 
   render() {
-    const { questionsError, loading, question, questionId } = this.state;
+    const { questionsError, loading, question, questionId, optionsColumns, options } = this.state;
     const { classes } = this.props;
     return (
-      
+
       <div className={classes.root}>
         <Grid container spacing={24}>
           <Grid item xs={12} sm={12}>
@@ -115,7 +136,7 @@ class NewQuestion extends React.Component {
               <CircularProgress
                 size={24}
                 disableShrink={true}
-                className={classes.buttonProgress}
+                className={classes.buttonProgressSave}
               />
             )}
           </Grid>
@@ -132,6 +153,15 @@ class NewQuestion extends React.Component {
             >
               <Options questionId={questionId} />
             </ExpansionPanel>
+            <Grid item xs={12} sm={12}>
+              <Table
+                columns={optionsColumns}
+                data={options}
+                isSelected={selected => { }}
+                remove
+              >
+              </Table>
+            </Grid>
           </Grid>
         </Grid>
       </div>
@@ -145,18 +175,29 @@ const mapStateToProps = state => {
     createQuestion,
     errorCreateQuestion
   } = state.createQuestion;
+
   let newQuestion = createQuestion;
+
+  const {
+    isOptionListByQuestionIdLoading,
+    optionsListByQuestionId,
+    errorOptionListByQuestionId
+  } = state.optionListByQuestionId;
 
   return {
     isCreateQuestionLoading,
     createQuestion,
     errorCreateQuestion,
-    newQuestion
+    newQuestion,
+    isOptionListByQuestionIdLoading,
+    optionsListByQuestionId,
+    errorOptionListByQuestionId
   };
 };
 
 const mapDispatchToProps = {
-  createQuestion
+  createQuestion,
+  fetchOptionsByQuestionId
 };
 
 export default connect(

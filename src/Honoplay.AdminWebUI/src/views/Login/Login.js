@@ -32,8 +32,6 @@ class Login extends React.Component {
       password: " ",
       error: false
     };
-    this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -53,7 +51,7 @@ class Login extends React.Component {
     }
   }
 
-  handleChange(e) {
+  handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
     this.setState({
@@ -61,7 +59,7 @@ class Login extends React.Component {
     });
   }
 
-  handleClick() {
+  handleClick = () => {
     const { email, password } = this.state;
     this.props.fetchToken(email, password);
     this.setState({
