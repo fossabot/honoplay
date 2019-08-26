@@ -8,7 +8,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { projeId } from './helpers/Terasu';
 import store from './redux/store';
 
-init(projeId);
 
 render(
     <Provider store={store}>
