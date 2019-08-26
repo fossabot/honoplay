@@ -1,11 +1,11 @@
 import React from "react";
-
+import PageWrapper from "./Containers/PageWrapper";
 
 function App() {
   return (
-    <div>
-      <h1>Selamss</h1>
-    </div>
+    <PageWrapper>
+      <h1>Selam</h1>
+    </PageWrapper>
   );
 }
 export default App;

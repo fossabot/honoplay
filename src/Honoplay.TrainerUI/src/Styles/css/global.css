@@ -1,0 +1,45 @@
+﻿body {
+  background: no-repeat center center fixed url(../../Assets/img/bg.jpg);
+  background-size: cover;
+  overflow-x: hidden;
+}
+
+.box {
+  max-width: 768px;
+  width: 90%;
+  margin: 50px auto;
+  background: #fff;
+  border-radius: 5px;
+}
+
+.box2 {
+  max-width: 1100px;
+  width: 90%;
+  margin: 50px auto;
+  background: #fff;
+  border-radius: 5px;
+}
+
+.form .form-control {
+  height: 55px;
+  border-radius: 25px;
+  border: 1px solid #eaeaea;
+}
+
+.su {
+  font-size: 14px;
+  padding-left: 10px;
+}
+
+.my-btn {
+  background: #e92428 !important;
+  color: #fff !important;
+  font-weight: bold !important;
+}
+
+.my-btn2 {
+  color: #e92428 !important;
+  border: 1px solid #e92428 !important;
+  background: #fff !important;
+  font-weight: bold !important;
+}
