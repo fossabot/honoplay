@@ -24,7 +24,9 @@ class ModalComponent extends React.Component {
           onClose={handleClose}
           TransitionComponent={Transition}
         >
-          <DialogTitle>{titleName}</DialogTitle>
+          {titleName &&
+            <DialogTitle>{titleName}</DialogTitle>
+          }
           <DialogContent>
             {children}
           </DialogContent>

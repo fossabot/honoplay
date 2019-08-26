@@ -87,7 +87,9 @@ class TableComponent extends React.Component {
 
   isSelected = (id) => {
     const { selected } = this.state;
-    return selected.indexOf(id) !== -1;
+    let isSelected = selected.indexOf(id) !== -1;
+    this.props.isSelected(selected);
+    return isSelected;
   }
 
   handleDelete = (index) => {
@@ -102,6 +104,7 @@ class TableComponent extends React.Component {
     this.setState({ tableData });
     this.setState({ selected: [] });
   };
+
   dataId = null;
 
   render() {
@@ -109,7 +112,9 @@ class TableComponent extends React.Component {
       classes,
       data,
       columns,
-      children
+      children,
+      update,
+      remove
     } = this.props;
     const {
       selected,
@@ -118,6 +123,7 @@ class TableComponent extends React.Component {
       openDialog,
     } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+
     return (
 
       <MuiThemeProvider theme={theme} >
@@ -126,10 +132,12 @@ class TableComponent extends React.Component {
             root: classes.tableRoot,
             typography: classes.typography
           }}>
-          <EnhancedTableToolbar
-            numSelected={selected.length}
-            handleDelete={() => this.handleDelete(selected)}
-          />
+          { remove && 
+            <EnhancedTableToolbar
+              numSelected={selected.length}
+              handleDelete={() => this.handleDelete(selected)}
+            />
+          }
           <div
             className={classes.tableWrapper}>
             <Table
@@ -172,7 +180,7 @@ class TableComponent extends React.Component {
                             key={id}>{data[column.field]}
                           </TableCell>
                         )}
-                        {selected.includes(data.id) ?
+                        {selected.includes(data.id) && update ?
                           <TableCell
                             onClick={() => localStorage.setItem("dataid", data.id)}
                             className={classes.tableCell}>

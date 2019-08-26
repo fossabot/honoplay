@@ -65,7 +65,7 @@ class Trainee extends React.Component {
     } = this.props;
 
     if (prevProps.isTraineeListLoading && !isTraineeListLoading && trainees) {
-      if ( !errorTraineeList ) {
+      if (!errorTraineeList) {
         genderToString(trainees.items);
         this.setState({
           traineeList: trainees.items
@@ -86,7 +86,7 @@ class Trainee extends React.Component {
 
   componentDidMount() {
     this.props.fetchTraineeList(0, 50);
-    this.props.fetchWorkingStatusList(0,50);
+    this.props.fetchWorkingStatusList(0, 50);
   }
 
   handleChange = (e) => {
@@ -126,7 +126,7 @@ class Trainee extends React.Component {
               name="workingStatusId"
               value={this.traineeModel.workingStatusId}
             >
-              <WorkingStatuses data={workingStatuses}/>
+              <WorkingStatuses data={workingStatuses} />
             </DropDown>
             <Input
               error={isErrorTrainee}
@@ -189,8 +189,11 @@ class Trainee extends React.Component {
               <Table
                 columns={traineeColumns}
                 data={traineeList}
+                isSelected={selected => { }}
+                remove
+                update
               >
-                <TraineesUpdate/>
+                <TraineesUpdate />
               </Table>
             </div>
           </Grid>
@@ -218,7 +221,7 @@ const mapStateToProps = state => {
     workingStatusList,
     errorWorkingStatusList
   } = state.workingStatusList;
-  
+
   return {
     isTraineeListLoading,
     errorTraineeList,

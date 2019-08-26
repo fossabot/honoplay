@@ -75,6 +75,9 @@ class Questions extends React.Component {
             <Table
               columns={questionsColumns}
               data={questions}
+              isSelected ={selected => {}}
+              remove
+              update
             >
               <QuestionsUpdate/>
             </Table>
