@@ -1,8 +1,7 @@
 ﻿import React, { Component } from "react";
 import { hot } from "react-hot-loader";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import Layout from "./components/Layout/LayoutComponent";
-import Login from "./views/Login/Login";
 
 import Questions from "./views/Questions/Questions";
 import TenantInformation from "./views/TenantInformation/TenantInformation";
@@ -35,14 +34,14 @@ class App extends Component {
           <Route path="/honoplay/usermanagement" component={UserManagement} />
           <Route path="/honoplay/addquestion" component={NewQuestion} />
           <Route path="/honoplay/trainingseries" exact component={TrainingSeries} />
-          <Route path="/honoplay/trainingseries/:trainingseriesId" exact component={TrainingSeriesUpdate} />
-          <Route path="/honoplay/trainingseries/:trainingseriesId/training" exact component={TrainingSeriesInformation} />
+          <Route path="/honoplay/trainingseriesdetail" exact component={TrainingSeriesUpdate} />
+          <Route path="/honoplay/trainingseriesdetail/training" exact component={TrainingSeriesInformation} />
         </Layout>
       );
     }
     else {
       return (
-        <Route path="/" component={Login} />
+        <Redirect to="/login" />
       );
     }
   }

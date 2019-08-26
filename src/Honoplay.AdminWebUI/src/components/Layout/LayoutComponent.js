@@ -8,7 +8,6 @@ import {
 } from '@material-ui/core';
 import { Style } from './Style';
 
-import TrainerCard from './TrainerCard';
 import ListItem from './ListItemComponent';
 import CompanyCard from './CompanyCard';
 
@@ -52,10 +51,6 @@ class Layout extends React.Component {
               pageIcon={"graduation-cap"}
               pageName={translate('Trainers')} />
             <ListItem
-              pageLink={"/honoplay/trainees"}
-              pageIcon={"users"}
-              pageName={translate('Trainees')} />
-            <ListItem
               pageLink={"/honoplay/tenantinformation"}
               pageIcon={"briefcase"}
               pageName={translate('TenantInformation')} />
@@ -68,10 +63,6 @@ class Layout extends React.Component {
               pageIcon={"chart-pie"}
               pageName={translate('Reports')} />
           </List>
-        </div>
-
-        <div className={classes.trainerLayout}>
-          <TrainerCard trainerName="Ahmet Frankfurt" />
         </div>
       </div>
     );

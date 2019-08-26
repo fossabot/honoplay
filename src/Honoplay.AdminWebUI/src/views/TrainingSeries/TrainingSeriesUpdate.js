@@ -25,7 +25,7 @@ class TrainingSeriesUpdate extends React.Component {
     }
   }
 
-  trainingSeriesId = this.props.match.params.trainingseriesId;
+  trainingSeriesId = localStorage.getItem("trainingSeriesId");
 
   componentDidUpdate(prevProps) {
     const {
@@ -53,7 +53,7 @@ class TrainingSeriesUpdate extends React.Component {
   }
 
   handleClick = () => {
-    this.props.history.push(`/honoplay/trainingseries/${this.trainingSeriesId}/training`);
+    this.props.history.push(`/honoplay/trainingseriesdetail/training`);
   }
 
   render() {

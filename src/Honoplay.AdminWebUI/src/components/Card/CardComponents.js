@@ -84,7 +84,7 @@ class CardComponent extends React.Component {
                                                         <Button
                                                             variant="contained"
                                                             component={url && Link}
-                                                            to={url && `/honoplay/${url}/${data.id}`}
+                                                            to={url && `/honoplay/${url}`}
                                                             onClick={() => this.handleOpen(data.id)}
                                                         >
                                                             {translate('Edit')}
