@@ -137,10 +137,6 @@ class Login extends React.Component {
                   }}
                 />
               </FormControl>
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label={translate("RememberMe")}
-              />
               <Button
                 fullWidth
                 variant="contained"

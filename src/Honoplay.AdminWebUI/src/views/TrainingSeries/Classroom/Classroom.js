@@ -7,10 +7,10 @@ import CardButton from '../../../components/Card/CardButton';
 import Card from '../../../components/Card/CardComponents';
 import Modal from '../../../components/Modal/ModalComponent';
 import ClassroomCreate from './ClassroomCreate';
-import ClassroomUpdate from './ClassroomUpdate';
 
 import { connect } from "react-redux";
 import { fetchClassroomListByTrainingId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom";
+import SessionCreate from '../Session/SessionCreate';
 
 
 class Classroom extends React.Component {
@@ -79,7 +79,8 @@ class Classroom extends React.Component {
                     <Grid item xs={12} sm={9}>
                         <Card
                             data={classroomList}
-                            titleName={translate('UpdateClassroom')}
+                            forClassroom
+                            titleName={translate('AddNewSession')}
                             id={id => {
                                 if (id) {
                                     this.setState({
@@ -88,7 +89,7 @@ class Classroom extends React.Component {
                                 }
                             }}
                         >
-                            <ClassroomUpdate classroomId={classroomId} />
+                            <SessionCreate classroomId={classroomId} />
                         </Card>
                     </Grid>
                 </Grid>

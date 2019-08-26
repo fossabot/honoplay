@@ -5,8 +5,8 @@ import Style from '../Style';
 import Stepper from '../../components/Stepper/HorizontalStepper';
 import Training from './Training/Training';
 import Classroom from './Classroom/Classroom';
-import Session from './Session/Session'
 import Summary from './Summary/Summary';
+
 
 
 import { connect } from "react-redux";
@@ -22,7 +22,6 @@ class TrainingSeriesInformation extends React.Component {
             trainingError: false,
             activeStep: 0,
             trainingId: null,
-            classroomId: null
         }
     }
 
@@ -88,17 +87,15 @@ class TrainingSeriesInformation extends React.Component {
                 activeStep: state.activeStep + 1,
             }));
         }
-        if (this.state.activeStep === 2) {
-            this.setState(state => ({
-                activeStep: state.activeStep + 1,
-            }));
+        else if (this.state.activeStep === 2) {
+            this.props.history.push("/honoplay/trainingseriesdetail");
         }
     }
 
     trainingSeriesId = localStorage.getItem("trainingSeriesId");
 
     render() {
-        const { activeStep, trainingError, trainingLoading, trainingId, classroomId } = this.state;
+        const { activeStep, trainingError, trainingLoading, trainingId } = this.state;
         const { classes } = this.props;
 
         return (
@@ -123,16 +120,7 @@ class TrainingSeriesInformation extends React.Component {
                                 }}
                                 trainingError={trainingError}
                             />
-                            <Classroom
-                                trainingId={trainingId}
-                                classroomCreateId={id => {
-                                    if (id) {
-                                        this.setState({
-                                            classroomId: id
-                                        })
-                                    }
-                                }} />
-                            <Session classroomId={classroomId} />
+                            <Classroom trainingId={trainingId} />
                             <Summary trainingId={trainingId} />
                         </Stepper>
                     </Grid>

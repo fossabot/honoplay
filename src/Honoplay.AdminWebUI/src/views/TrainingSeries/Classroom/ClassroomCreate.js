@@ -40,7 +40,6 @@ class ClassroomCreate extends React.Component {
                 { title: "Cinsiyet", field: "gender" }
             ],
             traineeList: [],
-            classroomId: null
         }
     }
 
@@ -81,11 +80,6 @@ class ClassroomCreate extends React.Component {
         if (prevProps.isCreateClassroomLoading && !isCreateClassroomLoading && newClassroom) {
             this.props.fetchClassroomListByTrainingId(this.trainingId);
             if (!errorCreateClassroom) {
-                newClassroom.items[0].map((classroom) => {
-                    this.setState({
-                        classroomId: classroom.id
-                    });
-                })
                 this.setState({
                     classroomLoading: false,
                     classroomError: false,
@@ -109,7 +103,6 @@ class ClassroomCreate extends React.Component {
 
     handleClick = () => {
         this.props.createClassroom(this.state.classroom);
-        this.props.classroomId(this.state.classroomId);
     }
 
     render() {

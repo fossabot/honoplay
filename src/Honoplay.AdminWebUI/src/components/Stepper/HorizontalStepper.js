@@ -13,7 +13,7 @@ import {
 import { Style, theme } from './Style';
 
 function getSteps() {
-    return [translate('TrainingInformation'), translate('Classroom'), translate('Game'), translate('Summary&Confirmation')];
+    return [translate('TrainingInformation'), translate('Classroom'), translate('Summary&Confirmation')];
 }
 
 class HorizontalStepper extends React.Component {
@@ -45,38 +45,31 @@ class HorizontalStepper extends React.Component {
                         <Grid item xs={12} sm={10} />
                         <Grid item xs={12} sm={2}>
                             <div>
-                                {activeStep === steps.length ? (
-                                    <div>
-                                        <Button onClick={handleReset}>{translate('Reset')}</Button>
-                                    </div>
-                                ) : (
-                                        <div>
-                                            <div>
-                                                <Button
-                                                    disabled={activeStep === 0}
-                                                    onClick={handleBack}
-                                                    className={classes.backButton}
-                                                >
-                                                    {translate('Back')}
-                                                </Button>
-                                                <Button
-                                                    variant="contained"
-                                                    disabled={loading}
-                                                    color="secondary"
-                                                    onClick={handleNext}
-                                                    className={classes.nextButton}>
-                                                    {activeStep === steps.length - 1 ? translate('Save') : translate('NextStep')}
-                                                </Button>
-                                                {loading && (
-                                                    <CircularProgress
-                                                        size={24}
-                                                        disableShrink={true}
-                                                        className={classes.buttonProgress}
-                                                    />
-                                                )}
-                                            </div>
-                                        </div>
+                                <div>
+                                    <Button
+                                        disabled={activeStep === 0}
+                                        onClick={handleBack}
+                                        className={classes.backButton}
+                                    >
+                                        {translate('Back')}
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        disabled={loading}
+                                        color="secondary"
+                                        onClick={handleNext}
+                                        className={classes.nextButton}>
+                                        {activeStep === steps.length - 1 ? translate('Save') : translate('NextStep')}
+                                    </Button>
+                                    {loading && (
+                                        <CircularProgress
+                                            size={24}
+                                            disableShrink={true}
+                                            className={classes.buttonProgress}
+                                        />
                                     )}
+                                </div>
+
                             </div>
                         </Grid>
                     </Grid>

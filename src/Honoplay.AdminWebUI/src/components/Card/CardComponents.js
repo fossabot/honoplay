@@ -38,7 +38,7 @@ class CardComponent extends React.Component {
 
     render() {
         const { open } = this.state;
-        const { classes, data, url, children, titleName, cardInfo, iconName, numberOfTrainees } = this.props;
+        const { classes, data, url, children, titleName, cardInfo, iconName, numberOfTrainees, forClassroom } = this.props;
         return (
 
             <MuiThemeProvider theme={theme}>
@@ -50,12 +50,14 @@ class CardComponent extends React.Component {
                                 return (
                                     <Grid item xs={6} sm={3} key={data.id}>
                                         <Card className={classes.card} key={i}>
-                                            <div className={classes.cardIcon}>
-                                                <IconButton
-                                                    key={data.id}>
-                                                    <DeleteOutlinedIcon />
-                                                </IconButton>
-                                            </div>
+                                            {cardInfo ? '' :
+                                                <div className={classes.cardIcon}>
+                                                    <IconButton
+                                                        key={data.id}>
+                                                        <DeleteOutlinedIcon />
+                                                    </IconButton>
+                                                </div>
+                                            }
                                             <CardContent>
                                                 {cardInfo &&
                                                     <div
@@ -75,7 +77,7 @@ class CardComponent extends React.Component {
                                                     component="p"
                                                     className={classes.cardDate}>
                                                     {cardInfo ?
-                                                        `${numberOfTrainees}${' '}${translate('Trainee')}`
+                                                        ''
                                                         : moment(dateToFormat).format("DD/MM/YYYY")
                                                     }
                                                 </Typography>
@@ -87,7 +89,7 @@ class CardComponent extends React.Component {
                                                             to={url && `/honoplay/${url}`}
                                                             onClick={() => this.handleOpen(data.id)}
                                                         >
-                                                            {translate('Edit')}
+                                                            {forClassroom ? translate('AddSession') : translate('Edit')}
                                                         </Button>
                                                     }
                                                 </div>

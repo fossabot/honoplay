@@ -1,15 +1,14 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, CircularProgress, Snackbar } from '@material-ui/core';
+import { Grid, CircularProgress } from '@material-ui/core';
 import Style from '../../Style';
 import Input from '../../../components/Input/InputTextComponent';
 import DropDown from '../../../components/Input/DropDownInputComponent';
 import Button from '../../../components/Button/ButtonComponent';
-import MySnackbarContentWrapper from "../../../components/Snackbar/SnackbarContextComponent";
 
 import { connect } from "react-redux";
-import { createSession, fetchSessionListByClassroomId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Session";
+import { createSession } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Session";
 
 class SessionCreate extends React.Component {
 
@@ -57,7 +56,6 @@ class SessionCreate extends React.Component {
             })
         }
         if (prevProps.isCreateSessionLoading && !isCreateSessionLoading && newSession) {
-            this.props.fetchSessionListByClassroomId(this.classroomId);
             if (!errorCreateSession) {
                 this.setState({
                     sessionLoading: false,
@@ -71,15 +69,8 @@ class SessionCreate extends React.Component {
         this.props.createSession(this.state.session);
     }
 
-    handleClose = (reason) => {
-        if (reason === "clickaway") {
-            return;
-        }
-        this.setState({ open: false });
-    };
-
     render() {
-        const { sessionLoading, game, session, classroomListError, open, sessionError } = this.state;
+        const { sessionLoading, game, session, sessionError } = this.state;
         const { classes, classroomId } = this.props;
 
         this.state.session.createSessionModels.map((session) => {
@@ -87,8 +78,6 @@ class SessionCreate extends React.Component {
         })
 
         this.classroomId = classroomId;
-
-        console.log('claasss', this.classroomId);
 
         return (
 
@@ -102,6 +91,9 @@ class SessionCreate extends React.Component {
                                 inputType="text"
                                 onChange={e => {
                                     session.name = e.target.value;
+                                    this.setState({
+                                        sessionError: false
+                                    })
                                 }}
                             />
                             <DropDown
@@ -110,6 +102,9 @@ class SessionCreate extends React.Component {
                                 labelName={translate('Game')}
                                 onChange={e => {
                                     session.gameId = e.target.value;
+                                    this.setState({
+                                        sessionError: false
+                                    })
                                 }}
                             />
                         </Grid>
@@ -131,24 +126,6 @@ class SessionCreate extends React.Component {
                         )}
                     </Grid>
                 </Grid>
-                <Snackbar
-                    anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "left"
-                    }}
-                    autoHideDuration={7000}
-                    open={open}
-                    onClose={this.handleClose}
-                >
-                    <MySnackbarContentWrapper
-                        onClose={this.handleClose}
-                        variant={classroomListError && "error"}
-                        message={
-                            classroomListError
-                            && translate('YouMustAddAClassBeforeCreatingASession')
-                        }
-                    />
-                </Snackbar>
             </div >
         );
     }
@@ -164,7 +141,6 @@ const mapStateToProps = state => {
 
     let newSession = createSession;
 
-
     return {
         isCreateSessionLoading,
         newSession,
@@ -174,7 +150,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     createSession,
-    fetchSessionListByClassroomId
 };
 
 export default connect(
