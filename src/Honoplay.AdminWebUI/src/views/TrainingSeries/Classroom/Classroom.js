@@ -2,15 +2,15 @@ import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import Style from '../Style';
-import CardButton from '../../components/Card/CardButton';
-import Card from '../../components/Card/CardComponents';
-import Modal from '../../components/Modal/ModalComponent';
+import Style from '../../Style';
+import CardButton from '../../../components/Card/CardButton';
+import Card from '../../../components/Card/CardComponents';
+import Modal from '../../../components/Modal/ModalComponent';
 import ClassroomCreate from './ClassroomCreate';
 import ClassroomUpdate from './ClassroomUpdate';
 
 import { connect } from "react-redux";
-import { fetchClassroomList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom";
+import { fetchClassroomListByTrainingId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom";
 
 
 class Classroom extends React.Component {
@@ -25,21 +25,23 @@ class Classroom extends React.Component {
         }
     }
 
+    trainingId = null;
+
     componentDidUpdate(prevProps) {
         const {
-            isClassroomListLoading,
-            classroomsList,
-            errorClassroomList
+            isClassroomListByTrainingIdLoading,
+            classroomsListByTrainingId,
+            errorClassroomListByTrainingId
         } = this.props;
 
-        if (!prevProps.errorClassroomList && errorClassroomList) {
+        if (!prevProps.errorClassroomListByTrainingId && errorClassroomListByTrainingId) {
             this.setState({
                 classroomListError: true
             })
         }
-        if (prevProps.isClassroomListLoading && !isClassroomListLoading && classroomsList) {
+        if (prevProps.isClassroomListByTrainingIdLoading && !isClassroomListByTrainingIdLoading && classroomsListByTrainingId) {
             this.setState({
-                classroomList: classroomsList.items
+                classroomList: classroomsListByTrainingId.items
             })
         }
     }
@@ -53,13 +55,15 @@ class Classroom extends React.Component {
     };
 
     componentDidMount() {
-        this.props.fetchClassroomList(0, 50);
+        this.props.fetchClassroomListByTrainingId(this.trainingId);
     }
 
     render() {
         const { openDialog, classroomList, classroomId } = this.state;
         const { classes, trainingId } = this.props;
-        
+
+        this.trainingId = trainingId;
+
         return (
 
             <div className={classes.root}>
@@ -84,7 +88,7 @@ class Classroom extends React.Component {
                                 }
                             }}
                         >
-                            <ClassroomUpdate classroomId={classroomId}/>
+                            <ClassroomUpdate classroomId={classroomId} />
                         </Card>
                     </Grid>
                 </Grid>
@@ -93,7 +97,9 @@ class Classroom extends React.Component {
                     open={openDialog}
                     handleClose={this.handleCloseDialog}
                 >
-                    <ClassroomCreate trainingId={trainingId} />
+                    <ClassroomCreate
+                        trainingId={this.trainingId}
+                    />
                 </Modal>
             </div >
         );
@@ -103,20 +109,20 @@ class Classroom extends React.Component {
 const mapStateToProps = state => {
 
     const {
-        isClassroomListLoading,
-        classroomsList,
-        errorClassroomList
-    } = state.classroomList;
+        isClassroomListByTrainingIdLoading,
+        classroomsListByTrainingId,
+        errorClassroomListByTrainingId
+    } = state.classroomListByTrainingId;
 
     return {
-        isClassroomListLoading,
-        classroomsList,
-        errorClassroomList
+        isClassroomListByTrainingIdLoading,
+        classroomsListByTrainingId,
+        errorClassroomListByTrainingId
     };
 };
 
 const mapDispatchToProps = {
-    fetchClassroomList
+    fetchClassroomListByTrainingId
 };
 
 export default connect(

@@ -3,10 +3,10 @@ import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import Style from '../Style';
 import Stepper from '../../components/Stepper/HorizontalStepper';
-import Training from './Training';
-import Classroom from './Classroom';
-import Session from './Session'
-import Summary from './Summary';
+import Training from './Training/Training';
+import Classroom from './Classroom/Classroom';
+import Session from './Session/Session'
+import Summary from './Summary/Summary';
 
 
 import { connect } from "react-redux";
@@ -22,6 +22,7 @@ class TrainingSeriesInformation extends React.Component {
             trainingError: false,
             activeStep: 0,
             trainingId: null,
+            classroomId: null
         }
     }
 
@@ -94,10 +95,10 @@ class TrainingSeriesInformation extends React.Component {
         }
     }
 
-    trainingSeriesId = this.props.match.params.trainingseriesId;
+    trainingSeriesId = localStorage.getItem("trainingSeriesId");
 
     render() {
-        const { activeStep, trainingError, trainingLoading, trainingId } = this.state;
+        const { activeStep, trainingError, trainingLoading, trainingId, classroomId } = this.state;
         const { classes } = this.props;
 
         return (
@@ -122,8 +123,16 @@ class TrainingSeriesInformation extends React.Component {
                                 }}
                                 trainingError={trainingError}
                             />
-                            <Classroom trainingId={trainingId} />
-                            <Session />
+                            <Classroom
+                                trainingId={trainingId}
+                                classroomCreateId={id => {
+                                    if (id) {
+                                        this.setState({
+                                            classroomId: id
+                                        })
+                                    }
+                                }} />
+                            <Session classroomId={classroomId} />
                             <Summary trainingId={trainingId} />
                         </Stepper>
                     </Grid>

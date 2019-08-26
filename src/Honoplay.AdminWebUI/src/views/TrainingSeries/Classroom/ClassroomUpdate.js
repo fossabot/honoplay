@@ -3,10 +3,10 @@ import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import classNames from "classnames";
 import { Grid, CircularProgress } from '@material-ui/core';
-import Style from '../Style';
-import Input from '../../components/Input/InputTextComponent';
-import DropDown from '../../components/Input/DropDownInputComponent';
-import Button from '../../components/Button/ButtonComponent';
+import Style from '../../Style';
+import Input from '../../../components/Input/InputTextComponent';
+import DropDown from '../../../components/Input/DropDownInputComponent';
+import Button from '../../../components/Button/ButtonComponent';
 
 import { connect } from "react-redux";
 import { fetchTrainersList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainer";

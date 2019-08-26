@@ -7,10 +7,10 @@ import {
     Grid
 } from '@material-ui/core';
 import Edit from '@material-ui/icons/Edit';
-import Style from '../Style';
-import InfoCard from '../../components/Card/InfoCard';
-import Card from '../../components/Card/CardComponents';
-import Header from '../../components/Typography/TypographyComponent';
+import Style from '../../Style';
+import InfoCard from '../../../components/Card/InfoCard';
+import Card from '../../../components/Card/CardComponents';
+import Header from '../../../components/Typography/TypographyComponent';
 
 
 import { connect } from "react-redux";

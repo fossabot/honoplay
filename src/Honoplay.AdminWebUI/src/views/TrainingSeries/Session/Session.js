@@ -2,15 +2,15 @@ import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import Style from '../Style';
-import CardButton from '../../components/Card/CardButton';
-import Card from '../../components/Card/CardComponents';
-import Modal from '../../components/Modal/ModalComponent';
+import Style from '../../Style';
+import CardButton from '../../../components/Card/CardButton';
+import Card from '../../../components/Card/CardComponents';
+import Modal from '../../../components/Modal/ModalComponent';
 import SessionCreate from './SessionCreate';
 import SessionUpdate from './SessionUpdate';
 
 import { connect } from "react-redux";
-import { fetchSessionList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Session";
+import { fetchSessionListByClassroomId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Session";
 
 class Session extends React.Component {
 
@@ -24,27 +24,29 @@ class Session extends React.Component {
         }
     }
 
+    classroomId = null;
+
     componentDidUpdate(prevProps) {
         const {
-            isSessionListLoading,
-            sessionList,
-            errorSessionList
+            isSessionListByClassroomIdLoading,
+            sessionListByClassroomId,
+            errorSessionListByClassroomId
         } = this.props;
 
-        if (!prevProps.errorSessionList && errorSessionList) {
+        if (!prevProps.errorSessionListByClassroomId && errorSessionListByClassroomId) {
             this.setState({
                 sessionListError: true
             })
         }
-        if (prevProps.isSessionListLoading && !isSessionListLoading && sessionList) {
+        if (prevProps.isSessionListByClassroomIdLoading && !isSessionListByClassroomIdLoading && sessionListByClassroomId) {
             this.setState({
-                sessionList: sessionList.items
+                sessionList: sessionListByClassroomId.items
             })
         }
     }
 
     componentDidMount() {
-        this.props.fetchSessionList(0, 50);
+        this.props.fetchSessionListByClassroomId(this.classroomId);
     }
 
     handleClickOpenDialog = () => {
@@ -58,6 +60,10 @@ class Session extends React.Component {
     render() {
         const { openDialog, sessionList, sessionId } = this.state;
         const { classes, classroomId } = this.props;
+
+        this.classroomId = classroomId;
+
+        console.log(classroomId);
 
         return (
 
@@ -93,7 +99,7 @@ class Session extends React.Component {
                     open={openDialog}
                     handleClose={this.handleCloseDialog}
                 >
-                    <SessionCreate classroomId={classroomId} />
+                    <SessionCreate classroomId={this.classroomId} />
                 </Modal>
             </div >
         );
@@ -104,20 +110,20 @@ class Session extends React.Component {
 const mapStateToProps = state => {
 
     const {
-        isSessionListLoading,
-        sessionList,
-        errorSessionList
-    } = state.sessionList;
+        isSessionListByClassroomIdLoading,
+        sessionListByClassroomId,
+        errorSessionListByClassroomId
+    } = state.sessionListByClassroomId;
 
     return {
-        isSessionListLoading,
-        sessionList,
-        errorSessionList
+        isSessionListByClassroomIdLoading,
+        sessionListByClassroomId,
+        errorSessionListByClassroomId
     };
 };
 
 const mapDispatchToProps = {
-    fetchSessionList
+    fetchSessionListByClassroomId
 };
 
 export default connect(

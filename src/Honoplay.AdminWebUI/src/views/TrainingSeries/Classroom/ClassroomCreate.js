@@ -2,17 +2,17 @@ import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, CircularProgress } from '@material-ui/core';
-import Style from '../Style';
-import Input from '../../components/Input/InputTextComponent';
-import DropDown from '../../components/Input/DropDownInputComponent';
-import Button from '../../components/Button/ButtonComponent';
-import Table from '../../components/Table/TableComponent';
-import { genderToString } from '../../helpers/Converter';
+import Style from '../../Style';
+import Input from '../../../components/Input/InputTextComponent';
+import DropDown from '../../../components/Input/DropDownInputComponent';
+import Button from '../../../components/Button/ButtonComponent';
+import Table from '../../../components/Table/TableComponent';
+import { genderToString } from '../../../helpers/Converter';
 
 import { connect } from "react-redux";
 import { fetchTrainersList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainer";
 import { fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee";
-import { createClassroom, fetchClassroomList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom";
+import { createClassroom, fetchClassroomListByTrainingId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom";
 
 class ClassroomCreate extends React.Component {
 
@@ -40,10 +40,11 @@ class ClassroomCreate extends React.Component {
                 { title: "Cinsiyet", field: "gender" }
             ],
             traineeList: [],
+            classroomId: null
         }
     }
 
-    selecteds = null;
+    trainingId = null;
 
     componentDidUpdate(prevProps) {
         const {
@@ -51,7 +52,7 @@ class ClassroomCreate extends React.Component {
             errorTrainerList,
             trainersList,
             isCreateClassroomLoading,
-            createClassroom,
+            newClassroom,
             errorCreateClassroom,
             isTraineeListLoading,
             errorTraineeList,
@@ -77,9 +78,14 @@ class ClassroomCreate extends React.Component {
                 classroomLoading: false
             })
         }
-        if (prevProps.isCreateClassroomLoading && !isCreateClassroomLoading && createClassroom) {
-            this.props.fetchClassroomList(0, 50);
+        if (prevProps.isCreateClassroomLoading && !isCreateClassroomLoading && newClassroom) {
+            this.props.fetchClassroomListByTrainingId(this.trainingId);
             if (!errorCreateClassroom) {
+                newClassroom.items[0].map((classroom) => {
+                    this.setState({
+                        classroomId: classroom.id
+                    });
+                })
                 this.setState({
                     classroomLoading: false,
                     classroomError: false,
@@ -102,8 +108,8 @@ class ClassroomCreate extends React.Component {
     }
 
     handleClick = () => {
-        console.log(this.state.classroom);
         this.props.createClassroom(this.state.classroom);
+        this.props.classroomId(this.state.classroomId);
     }
 
     render() {
@@ -113,6 +119,8 @@ class ClassroomCreate extends React.Component {
         this.state.classroom.createClassroomModels.map((classroom) => {
             classroom.trainingId = trainingId;
         })
+
+        this.trainingId = trainingId;
 
         return (
 
@@ -188,6 +196,8 @@ const mapStateToProps = state => {
         errorCreateClassroom
     } = state.createClassroom;
 
+    let newClassroom = createClassroom;
+
     const {
         isTraineeListLoading,
         errorTraineeList,
@@ -199,7 +209,7 @@ const mapStateToProps = state => {
         errorTrainerList,
         trainersList,
         isCreateClassroomLoading,
-        createClassroom,
+        newClassroom,
         errorCreateClassroom,
         isTraineeListLoading,
         errorTraineeList,
@@ -210,7 +220,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     fetchTrainersList,
     createClassroom,
-    fetchClassroomList,
+    fetchClassroomListByTrainingId,
     fetchTraineeList,
 };
 
