@@ -1,4 +1,4 @@
-﻿namespace Honoplay.AdminWebAPI
+﻿namespace Honoplay.TrainerWebAPI
 {
     public class AppSettings
     {

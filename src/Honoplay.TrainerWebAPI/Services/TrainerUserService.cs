@@ -1,23 +1,23 @@
-﻿using Honoplay.AdminWebAPI.Interfaces;
-using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
+﻿using Honoplay.TrainerWebAPI.Interfaces;
+using Honoplay.Application.TrainerUsers.Commands.AuthenticateTrainerUser;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace Honoplay.AdminWebAPI.Services
+namespace Honoplay.TrainerWebAPI.Services
 {
-    public class AdminUserService : IAdminUserService
+    public class TrainerUserService : ITrainerUserService
     {
         private readonly AppSettings _appSettings;
 
-        public AdminUserService(IOptions<AppSettings> appSettings)
+        public TrainerUserService(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
         }
 
-        public (AdminUserAuthenticateModel user, string stringToken) GenerateToken(AdminUserAuthenticateModel user)
+        public (TrainerUserAuthenticateModel user, string stringToken) GenerateToken(TrainerUserAuthenticateModel user)
         {
 
             //// authentication successful so generate jwt token
@@ -29,7 +29,7 @@ namespace Honoplay.AdminWebAPI.Services
                 {
                     new Claim(ClaimTypes.Sid, user.Id.ToString()),
                     new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.Role, "AdminUser"),
+                    new Claim(ClaimTypes.Role, "TrainerUser"),
                     new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.Webpage, user.HostName),
                     new Claim(ClaimTypes.UserData, user.TenantId.ToString())

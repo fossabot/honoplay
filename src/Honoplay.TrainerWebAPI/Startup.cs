@@ -4,12 +4,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using FluentValidation.AspNetCore;
-using Honoplay.AdminWebAPI;
+using Honoplay.TrainerWebAPI;
 using Honoplay.Application;
 using Honoplay.Common.Constants;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
 using Honoplay.Persistence.CacheService;
+using Honoplay.TrainerWebAPI.Interfaces;
+using Honoplay.TrainerWebAPI.Services;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -52,7 +54,7 @@ namespace Honoplay.TrainerWebAPI
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>)); // TODO: çalışan bir nokta görülmediği için kontrol amaçlı kapatıldı
             services.AddMediatR(AssemblyIdentifier.Get());
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITrainerUserService, TrainerUserService>();
             services.AddSingleton<ICacheService, CacheManager>();
 
             // Add DbContext using SQL Server Provider

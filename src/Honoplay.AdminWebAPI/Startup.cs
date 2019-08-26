@@ -53,7 +53,7 @@ namespace Honoplay.AdminWebAPI
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>)); // TODO: çalışan bir nokta görülmediği için kontrol amaçlı kapatıldı
             services.AddMediatR(AssemblyIdentifier.Get());
 
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAdminUserService, AdminUserService>();
             services.AddSingleton<ICacheService, CacheManager>();
 
             // Add DbContext using SQL Server Provider
