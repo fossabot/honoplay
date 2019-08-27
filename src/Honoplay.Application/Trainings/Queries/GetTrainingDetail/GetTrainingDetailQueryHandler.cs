@@ -32,14 +32,14 @@ namespace Honoplay.Application.Trainings.Queries.GetTrainingDetail
                     .Where(x => x.TrainingSeries.TenantId == request.TenantId)
                 , cancellationToken);
 
-            var training = redisTrainings.FirstOrDefault(x => x.Id == request.Id);
+            var classroom = redisTrainings.FirstOrDefault(x => x.Id == request.Id);
 
-            if (training is null)
+            if (classroom is null)
             {
                 throw new NotFoundException(nameof(Training), request.Id);
             }
 
-            var model = TrainingDetailModel.Create(training);
+            var model = TrainingDetailModel.Create(classroom);
             return new ResponseModel<TrainingDetailModel>(model);
         }
     }
