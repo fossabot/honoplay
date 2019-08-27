@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Honoplay.Domain.Entities
 {
-    public class Trainee : BaseEntity
+    public class TraineeUser : BaseEntity
     {
-        public Trainee()
+        public TraineeUser()
         {
-            ClassroomTrainees = new HashSet<ClassroomTrainee>();
+            ClassroomTraineeUsers = new HashSet<ClassroomTraineeUser>();
         }
         public int Id { get; set; }
         public string Name { get; set; }
@@ -19,7 +19,7 @@ namespace Honoplay.Domain.Entities
         public int DepartmentId { get; set; }
 
 
-        public virtual ICollection<ClassroomTrainee> ClassroomTrainees { get; set; }
+        public virtual ICollection<ClassroomTraineeUser> ClassroomTraineeUsers { get; set; }
         [JsonIgnore]
         public WorkingStatus WorkingStatus { get; set; }
         [JsonIgnore]

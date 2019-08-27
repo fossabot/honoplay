@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace Honoplay.TraineeWebAPI
+namespace Honoplay.TraineeUserWebAPI
 {
     public class Program
     {

@@ -1,8 +1,8 @@
 ﻿using Honoplay.Application._Infrastructure;
-using Honoplay.Application.Trainees.Commands.CreateTrainee;
-using Honoplay.Application.Trainees.Commands.UpdateTrainee;
-using Honoplay.Application.Trainees.Queries.GetTraineeDetail;
-using Honoplay.Application.Trainees.Queries.GetTraineesList;
+using Honoplay.Application.TraineeUsers.Commands.CreateTraineeUser;
+using Honoplay.Application.TraineeUsers.Commands.UpdateTraineeUser;
+using Honoplay.Application.TraineeUsers.Queries.GetTraineeUserDetail;
+using Honoplay.Application.TraineeUsers.Queries.GetTraineeUsersList;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -17,31 +17,31 @@ using System.Threading.Tasks;
 namespace Honoplay.AdminWebAPI.Controllers
 {
     [Authorize]
-    public class TraineeController : BaseController
+    public class TraineeUserController : BaseController
     {
         /// <summary>
-        /// This service create trainee.
+        /// This service create traineeUser.
         /// </summary>
-        /// <param name="command">Create trainee model</param>
-        /// <returns>CreateTraineeModel with status code.</returns>
+        /// <param name="command">Create traineeUser model</param>
+        /// <returns>CreateTraineeUserModel with status code.</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ResponseModel<CreateTraineeModel>>> Post([FromBody]CreateTraineeCommand command)
+        public async Task<ActionResult<ResponseModel<CreateTraineeUserModel>>> Post([FromBody]CreateTraineeUserCommand command)
         {
             try
             {
                 command.CreatedBy = Claims[ClaimTypes.Sid].ToInt();
                 command.TenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var createTraineeModel = await Mediator.Send(command);
+                var createTraineeUserModel = await Mediator.Send(command);
 
-                return Created($"api/trainee/{createTraineeModel.Items.Single().Name}", createTraineeModel);
+                return Created($"api/traineeUser/{createTraineeUserModel.Items.Single().Name}", createTraineeUserModel);
             }
             catch (ObjectAlreadyExistsException ex)
             {
-                return Conflict(new ResponseModel<CreateTraineeModel>(new Error(HttpStatusCode.Conflict, ex)));
+                return Conflict(new ResponseModel<CreateTraineeUserModel>(new Error(HttpStatusCode.Conflict, ex)));
             }
             catch
             {
@@ -54,16 +54,16 @@ namespace Honoplay.AdminWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<ResponseModel<UpdateTraineeModel>>> Put([FromBody]UpdateTraineeCommand command)
+        public async Task<ActionResult<ResponseModel<UpdateTraineeUserModel>>> Put([FromBody]UpdateTraineeUserCommand command)
         {
             try
             {
                 command.UpdatedBy = Claims[ClaimTypes.Sid].ToInt();
                 command.TenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var updateTraineeModel = await Mediator.Send(command);
+                var updateTraineeUserModel = await Mediator.Send(command);
 
-                return Ok(updateTraineeModel);
+                return Ok(updateTraineeUserModel);
             }
             catch (NotFoundException)
             {
@@ -71,7 +71,7 @@ namespace Honoplay.AdminWebAPI.Controllers
             }
             catch (ObjectAlreadyExistsException ex)
             {
-                return Conflict(new ResponseModel<UpdateTraineeModel>(new Error(HttpStatusCode.Conflict, ex)));
+                return Conflict(new ResponseModel<UpdateTraineeUserModel>(new Error(HttpStatusCode.Conflict, ex)));
             }
             catch
             {
@@ -83,16 +83,16 @@ namespace Honoplay.AdminWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ResponseModel<TraineesListModel>>> Get([FromQuery]GetTraineesListQueryModel query)
+        public async Task<ActionResult<ResponseModel<TraineeUsersListModel>>> Get([FromQuery]GetTraineeUsersListQueryModel query)
         {
             try
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var traineesListModel = await Mediator.Send(new GetTraineesListQuery(userId, tenantId, query.Skip, query.Take));
+                var traineeUsersListModel = await Mediator.Send(new GetTraineeUsersListQuery(userId, tenantId, query.Skip, query.Take));
 
-                return Ok(traineesListModel);
+                return Ok(traineeUsersListModel);
             }
             catch (NotFoundException)
             {
@@ -108,16 +108,16 @@ namespace Honoplay.AdminWebAPI.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ResponseModel<TraineesListModel>>> Get(int id)
+        public async Task<ActionResult<ResponseModel<TraineeUsersListModel>>> Get(int id)
         {
             try
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var traineesListModel = await Mediator.Send(new GetTraineeDetailQuery(id, userId, tenantId));
+                var traineeUsersListModel = await Mediator.Send(new GetTraineeUserDetailQuery(id, userId, tenantId));
 
-                return Ok(traineesListModel);
+                return Ok(traineeUsersListModel);
             }
             catch (NotFoundException)
             {

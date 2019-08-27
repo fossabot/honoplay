@@ -25,7 +25,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Honoplay.TraineeWebAPI
+namespace Honoplay.TraineeUserWebAPI
 {
     public class Startup
     {

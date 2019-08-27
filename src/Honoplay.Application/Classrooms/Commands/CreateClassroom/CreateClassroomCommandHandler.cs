@@ -32,7 +32,7 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
         {
             var redisKey = $"ClassroomsByTenantId{request.TenantId}";
             var newClassrooms = new List<Classroom>();
-            var newClassroomTrainees = new List<ClassroomTrainee>();
+            var newClassroomTraineeUsers = new List<ClassroomTraineeUser>();
             var createdClassrooms = new List<CreateClassroomModel>();
 
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
@@ -41,15 +41,15 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                 {
                     foreach (var createClassroomModel in request.CreateClassroomModels)
                     {
-                        foreach (var traineeId in createClassroomModel.TraineesId)
+                        foreach (var traineeUserId in createClassroomModel.TraineeUsersId)
                         {
-                            var isExist = await _context.Trainees
+                            var isExist = await _context.TraineeUsers
                                 .Include(x => x.Department)
-                                .AnyAsync(x => x.Id == traineeId
+                                .AnyAsync(x => x.Id == traineeUserId
                                                && x.Department.TenantId == request.TenantId, cancellationToken);
                             if (!isExist)
                             {
-                                throw new NotFoundException(nameof(Trainee), traineeId);
+                                throw new NotFoundException(nameof(TraineeUser), traineeUserId);
                             }
                         }
                         var newClassroom = new Classroom
@@ -72,18 +72,18 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                         {
                             foreach (var createClassroomModel in request.CreateClassroomModels)
                             {
-                                foreach (var i in createClassroomModel.TraineesId)
+                                foreach (var i in createClassroomModel.TraineeUsersId)
                                 {
-                                    newClassroomTrainees.Add(new ClassroomTrainee
+                                    newClassroomTraineeUsers.Add(new ClassroomTraineeUser
                                     {
                                         ClassroomId = newClassroom.Id,
-                                        TraineeId = i
+                                        TraineeUserId = i
                                     });
                                 }
                             }
                         }
 
-                        await _context.BulkInsertAsync(newClassroomTrainees, cancellationToken: cancellationToken);
+                        await _context.BulkInsertAsync(newClassroomTraineeUsers, cancellationToken: cancellationToken);
 
                     }
                     else
@@ -94,12 +94,12 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
 
                             foreach (var createClassroomModel in request.CreateClassroomModels)
                             {
-                                foreach (var i in createClassroomModel.TraineesId)
+                                foreach (var i in createClassroomModel.TraineeUsersId)
                                 {
-                                    await _context.ClassroomTrainees.AddAsync(new ClassroomTrainee
+                                    await _context.ClassroomTraineeUsers.AddAsync(new ClassroomTraineeUser
                                     {
                                         ClassroomId = newClassroom.Id,
-                                        TraineeId = i
+                                        TraineeUserId = i
                                     }, cancellationToken);
                                 }
                             }
@@ -119,8 +119,8 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                             x.TrainerUserId,
                             x.TrainingId,
                             x.Name,
-                            x.ClassroomTrainees
-                                .Select(s => s.TraineeId)
+                            x.ClassroomTraineeUsers
+                                .Select(s => s.TraineeUserId)
                                 .ToList(),
                             x.CreatedBy,
                             x.CreatedAt)));

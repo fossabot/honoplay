@@ -5,7 +5,7 @@
     </assembly>
     <members>
         <!-- Badly formed XML comment ignored for member "M:Honoplay.TrainerWebAPI.Controllers.ClassroomController.GetByTrainingId(System.Int32)" -->
-        <member name="M:Honoplay.TrainerWebAPI.Controllers.TraineeController.GetByTrainerId(System.Int32)">
+        <member name="M:Honoplay.TrainerWebAPI.Controllers.TraineeUserController.GetByTrainerId(System.Int32)">
             <summary>
             This service retrieve trainings by trainingId
             </summary>

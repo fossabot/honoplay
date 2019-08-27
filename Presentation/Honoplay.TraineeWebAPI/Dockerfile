@@ -4,16 +4,16 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/core/sdk:2.2-stretch AS build
 WORKDIR /src
-COPY ["Presentation/Honoplay.TraineeWebAPI/Honoplay.TraineeWebAPI.csproj", "Presentation/Honoplay.TraineeWebAPI/"]
-RUN dotnet restore "Presentation/Honoplay.TraineeWebAPI/Honoplay.TraineeWebAPI.csproj"
+COPY ["Presentation/Honoplay.TraineeUserWebAPI/Honoplay.TraineeUserWebAPI.csproj", "Presentation/Honoplay.TraineeUserWebAPI/"]
+RUN dotnet restore "Presentation/Honoplay.TraineeUserWebAPI/Honoplay.TraineeUserWebAPI.csproj"
 COPY . .
-WORKDIR "/src/Presentation/Honoplay.TraineeWebAPI"
-RUN dotnet build "Honoplay.TraineeWebAPI.csproj" -c Release -o /app
+WORKDIR "/src/Presentation/Honoplay.TraineeUserWebAPI"
+RUN dotnet build "Honoplay.TraineeUserWebAPI.csproj" -c Release -o /app
 
 FROM build AS publish
-RUN dotnet publish "Honoplay.TraineeWebAPI.csproj" -c Release -o /app
+RUN dotnet publish "Honoplay.TraineeUserWebAPI.csproj" -c Release -o /app
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app .
-ENTRYPOINT ["dotnet", "Honoplay.TraineeWebAPI.dll"]
+ENTRYPOINT ["dotnet", "Honoplay.TraineeUserWebAPI.dll"]

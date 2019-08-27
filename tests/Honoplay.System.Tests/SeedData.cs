@@ -117,7 +117,7 @@ namespace Honoplay.System.Tests
             };
             dbContext.TrainerUsers.Add(trainerUser);
 
-            var trainee = new Trainee
+            var traineeUser = new TraineeUser
             {
                 DepartmentId = department.Id,
                 Name = "Yunus Emre",
@@ -129,7 +129,7 @@ namespace Honoplay.System.Tests
                 WorkingStatusId = workingStatus.Id
             };
 
-            dbContext.Trainees.Add(trainee);
+            dbContext.TraineeUsers.Add(traineeUser);
 
             var question = new Question
             {

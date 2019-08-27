@@ -1,6 +1,6 @@
 ﻿using Honoplay.AdminWebAPI.Controllers;
 using Honoplay.Application._Infrastructure;
-using Honoplay.Application.Trainees.Queries.GetTraineesListByClassroomId;
+using Honoplay.Application.TraineeUsers.Queries.GetTraineeUsersListByClassroomId;
 using Honoplay.Application.Trainings.Queries.GetTrainingsList;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace Honoplay.TrainerWebAPI.Controllers
 {
     [Authorize]
-    public class TraineeController : BaseController
+    public class TraineeUserController : BaseController
     {
         /// <summary>
         /// This service retrieve trainings by trainingId
@@ -23,7 +23,7 @@ namespace Honoplay.TrainerWebAPI.Controllers
         /// <param name="classroomId">Get trainings list </param>
         /// <returns>Get trainings by tenant id and trainerUser id with status code.</returns>
         [HttpGet]
-        [Route("/api/Classroom/{classroomId}/Trainee")]
+        [Route("/api/Classroom/{classroomId}/TraineeUser")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -34,7 +34,7 @@ namespace Honoplay.TrainerWebAPI.Controllers
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var trainingsListModel = await Mediator.Send(new GetTraineesListByClassroomIdQuery(userId, classroomId, tenantId));
+                var trainingsListModel = await Mediator.Send(new GetTraineeUsersListByClassroomIdQuery(userId, classroomId, tenantId));
 
                 return Ok(trainingsListModel);
             }

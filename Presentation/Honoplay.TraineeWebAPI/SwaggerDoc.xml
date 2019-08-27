@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Honoplay.TraineeWebAPI</name>
+        <name>Honoplay.TraineeUserWebAPI</name>
     </assembly>
     <members>
     </members>
