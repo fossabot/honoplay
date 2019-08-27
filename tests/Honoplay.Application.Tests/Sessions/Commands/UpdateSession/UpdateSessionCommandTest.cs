@@ -106,7 +106,7 @@ namespace Honoplay.Application.Tests.Sessions.Commands.UpdateSession
             };
             context.Professions.Add(profession);
 
-            var trainer = new Trainer
+            var trainerUser = new TrainerUser
             {
                 UpdatedBy = adminUser.Id,
                 Name = "sample",
@@ -116,13 +116,13 @@ namespace Honoplay.Application.Tests.Sessions.Commands.UpdateSession
                 ProfessionId = profession.Id,
                 Surname = "test"
             };
-            context.Trainers.Add(trainer);
+            context.TrainerUsers.Add(trainerUser);
 
             var classroom = new Classroom
             {
                 UpdatedBy = adminUser.Id,
                 Name = "test",
-                TrainerId = trainer.Id,
+                TrainerUserId = trainerUser.Id,
                 TrainingId = training.Id,
             };
             context.Classrooms.Add(classroom);

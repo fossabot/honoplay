@@ -12,7 +12,7 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
         [JsonIgnore]
         public Guid TenantId { get; set; }
         public int Id { get; set; }
-        public int TrainerId { get; set; }
+        public int TrainerUserId { get; set; }
         public int TrainingId { get; set; }
         public string Name { get; set; }
     }
