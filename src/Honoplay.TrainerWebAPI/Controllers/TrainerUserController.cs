@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Honoplay.TrainerUserWebAPI.Controllers
 {
-    [AllowAnonymous]
+    [Authorize]
     public class TrainerUserController : BaseController
     {
         private readonly ITrainerUserService _trainerUserService;
@@ -19,6 +19,7 @@ namespace Honoplay.TrainerUserWebAPI.Controllers
             _trainerUserService = trainerUserService;
         }
 
+        [AllowAnonymous]
         [HttpPost("Authenticate")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

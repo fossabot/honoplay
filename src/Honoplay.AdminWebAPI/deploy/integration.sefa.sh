@@ -19,7 +19,7 @@ else
         --network backend \
         --network frontend \
 		--env TZ=Asia/Istanbul \
-		--env SERVICE_ADDRESS=demo.honoplay.com\\swagger \
+		--env SERVICE_ADDRESS=admin.honoplay.com \
 		--env REDIS_CACHE_SERVICE=honoplay_redis_cache_service \
 		--env DC=DC-1 \
         --mount type=bind,source=/root/honoplay_static_files,destination=/app/wwwroot \

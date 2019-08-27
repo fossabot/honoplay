@@ -34,12 +34,12 @@ namespace Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries
                 try
                 {
 
-                    var trainingSeriesByTenantId = await _context.TrainingSerieses
+                    var classroomSeriesByTenantId = await _context.TrainingSerieses
                         .Where(x => x.TenantId == request.TenantId)
                         .ToListAsync(cancellationToken);
 
 
-                    var updateTrainingSeries = trainingSeriesByTenantId.FirstOrDefault(x => x.Id == request.Id);
+                    var updateTrainingSeries = classroomSeriesByTenantId.FirstOrDefault(x => x.Id == request.Id);
                     if (updateTrainingSeries is null)
                     {
                         throw new NotFoundException(nameof(TrainingSeries), request.Id);
@@ -52,7 +52,7 @@ namespace Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries
                     _context.TrainingSerieses.Update(updateTrainingSeries);
                     await _context.SaveChangesAsync(cancellationToken);
 
-                    trainingSeriesByTenantId = trainingSeriesByTenantId.Select(x => new TrainingSeries
+                    classroomSeriesByTenantId = classroomSeriesByTenantId.Select(x => new TrainingSeries
                     {
                         Id = x.Id,
                         CreatedBy = x.CreatedBy,
@@ -64,7 +64,7 @@ namespace Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries
                     transaction.Commit();
 
                     await _cacheService.RedisCacheUpdateAsync(redisKey,
-                        _ => trainingSeriesByTenantId,
+                        _ => classroomSeriesByTenantId,
                         cancellationToken);
 
                 }
