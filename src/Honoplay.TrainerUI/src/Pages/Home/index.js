@@ -8,10 +8,10 @@ class Home extends Component {
   render() {
     return (
       <PageWrapper {...this.state} boxNumber="2">
-        <div class="col-sm-12">
-          <h4 class="font-weight-bold text-primary mb-4">Eğitimlerim</h4>
-          <table class="table">
-            <thead class="thead-light">
+        <div className="col-sm-12">
+          <h4 className="font-weight-bold text-primary mb-4">Eğitimlerim</h4>
+          <table className="table">
+            <thead className="thead-light">
               <tr>
                 <th scope="col">Eğitim Tarihi</th>
                 <th scope="col">Eğitim Adı</th>
@@ -27,7 +27,9 @@ class Home extends Component {
                     <td>{data.TrainerName}</td>
                     <td>{data.Location}</td>
                     <td>
-                      <Link to="/trainingdetail">İncele</Link>
+                      <Link to={{ pathname: "/trainingdetail", state: data }}>
+                        İncele
+                      </Link>
                     </td>
                   </tr>
                 );

@@ -3,8 +3,29 @@ import PageWrapper from "../../Containers/PageWrapper";
 import { Logo, Vector } from "../../Assets/index";
 import { Button } from "../../Components/Button";
 import { Link } from "react-router-dom";
+import History from "../../Helpers/History";
+import { TraineeList } from "../../Helpers/DummyData";
 
 class Training extends Component {
+  state = {
+    selectedTraining: {
+      TrainerDate: null,
+      TrainerName: null,
+      Location: null,
+      Id: 0
+    }
+  };
+  componentDidMount() {
+    const { location } = this.props;
+
+    if (!location.state) {
+      History.goBack();
+    }
+    this.setState({
+      selectedTraining: location.state
+    });
+  }
+
   render() {
     return (
       <PageWrapper {...this.state} boxNumber="2">
@@ -15,7 +36,7 @@ class Training extends Component {
                 <Link to="homepage">Eğitimler</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
-                Satış ve Pazarlama Eğitimi
+                {this.state.selectedTraining.TrainerName}
               </li>
             </ol>
           </nav>
@@ -30,9 +51,9 @@ class Training extends Component {
             </thead>
             <tbody>
               <tr>
-                <td>01.07.2019</td>
-                <td>Satış ve Pazarlama Eğitimi</td>
-                <td>Lütfü Kırdar Gösteri Merkezi</td>
+                <td> {this.state.selectedTraining.TrainerDate}</td>
+                <td> {this.state.selectedTraining.TrainerName}</td>
+                <td> {this.state.selectedTraining.Location}</td>
               </tr>
             </tbody>
           </table>
@@ -67,58 +88,27 @@ class Training extends Component {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Ahmet</td>
-                  <td>Tunca</td>
-                  <td>0000 000 0000</td>
-                  <td>Tunca Ltd.</td>
-                  <td>CTO</td>
-                  <td>
-                    <i
-                      className="fas fa-check-circle text-success"
-                      style={{ fonstSize: 22 }}
-                    ></i>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ahmet</td>
-                  <td>Tunca</td>
-                  <td>0000 000 0000</td>
-                  <td>Tunca Ltd.</td>
-                  <td>CTO</td>
-                  <td>
-                    <i
-                      className="fas fa-times-circle text-secondary"
-                      style={{ fonstSize: 22 }}
-                    ></i>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ahmet</td>
-                  <td>Tunca</td>
-                  <td>0000 000 0000</td>
-                  <td>Tunca Ltd.</td>
-                  <td>CTO</td>
-                  <td>
-                    <i
-                      className="fas fa-times-circle text-secondary"
-                      style={{ fonstSize: 22 }}
-                    ></i>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Ahmet</td>
-                  <td>Tunca</td>
-                  <td>0000 000 0000</td>
-                  <td>Tunca Ltd.</td>
-                  <td>CTO</td>
-                  <td>
-                    <i
-                      className="fas fa-check-circle text-success"
-                      style={{ fonstSize: 22 }}
-                    ></i>
-                  </td>
-                </tr>
+                {TraineeList.filter(
+                  q => q.TraineId == this.state.selectedTraining.Id
+                ).map(t => {
+                  return (
+                    <tr>
+                      <td>{t.Name}</td>
+                      <td>{t.Surname}</td>
+                      <td>{t.PhoneNumber}</td>
+                      <td>{t.TenantName}</td>
+                      <td>{t.Role}</td>
+                      <td>
+                        <i
+                          className={`fas fa-check-circle text-${
+                            t.IsLogin ? "success" : "secondary"
+                          }`}
+                          style={{ fonstSize: 22 }}
+                        ></i>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
 
@@ -153,7 +143,11 @@ class Training extends Component {
             </nav>
 
             <div className="mt-5">
-              <Link to="/joincode" className="btn btn-primary mr-2">
+              <Link
+                target="new_blank"
+                to="/joincode"
+                className="btn btn-primary mr-2"
+              >
                 Katılım Kodunu Göster
               </Link>
               {/* <Button title="Katılım Kodunu Göster" color={"primary mr-2"} /> */}

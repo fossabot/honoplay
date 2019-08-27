@@ -42,3 +42,69 @@ export const TrainerList = [
     Location: "Eryaman 5. Etap Carsi"
   }
 ];
+
+export const TraineeList = [
+  {
+    Name: "Agha",
+    Surname: "Huseynov",
+    PhoneNumber: "5530829742",
+    TenantName: "Omega BigData",
+    Role: "Software Engineer",
+    IsLogin: false,
+    TraineId: 1
+  },
+  {
+    Name: "Emre",
+    Surname: "Kas",
+    PhoneNumber: "5530829742",
+    TenantName: "Omega BigData",
+    Role: "Software Engineer",
+    IsLogin: true,
+    TraineId: 1
+  },
+  {
+    Name: "Esra",
+    Surname: "Dogan",
+    PhoneNumber: "5530829742",
+    TenantName: "Omega BigData",
+    Role: "Software Engineer",
+    IsLogin: true,
+    TraineId: 1
+  },
+  {
+    Name: "Saduman Kucuk",
+    Surname: "Daha Kucuk",
+    PhoneNumber: "5530829742",
+    TenantName: "Omega BigData",
+    Role: "Software Engineer",
+    IsLogin: false,
+    TraineId: 1
+  },
+  {
+    Name: "Gizem",
+    Surname: "Korkmaz",
+    PhoneNumber: "5530829742",
+    TenantName: "Omega BigData",
+    Role: "Software Engineer",
+    IsLogin: false,
+    TraineId: 1
+  },
+  {
+    Name: "Raif",
+    Surname: "Merter",
+    PhoneNumber: "5530829742",
+    TenantName: "Omega BigData",
+    Role: "Software Engineer",
+    IsLogin: false,
+    TraineId: 2
+  },
+  {
+    Name: "Cihan",
+    Surname: "Yakar",
+    PhoneNumber: "5530829742",
+    TenantName: "Omega BigData",
+    Role: "Software Engineer",
+    IsLogin: true,
+    TraineId: 2
+  }
+];
