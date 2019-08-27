@@ -4,10 +4,14 @@ import { translate } from '@omegabigdata/terasu-api-proxy';
 import { Grid } from '@material-ui/core';
 import Style from '../Style';
 import CardButton from '../../components/Card/CardButton';
+import Card from '../../components/Card/CardComponents';
 import Typography from '../../components/Typography/TypographyComponent';
 
 import { connect } from "react-redux";
 import { fetchTrainingSeries } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingSeries";
+import { fetchTrainingListByTrainingSeriesId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Training";
+
+import TrainingUpdate from "./Training/TrainingSummary";
 
 
 class TrainingSeriesUpdate extends React.Component {
@@ -22,16 +26,22 @@ class TrainingSeriesUpdate extends React.Component {
           }
         ]
       },
+      trainingList: [],
+      trainingListError: false,
+      trainingId: null,
     }
   }
 
-  trainingSeriesId = this.props.match.params.trainingseriesId;
+  trainingSeriesId = localStorage.getItem("trainingSeriesId");
 
   componentDidUpdate(prevProps) {
     const {
       isTrainingSeriesLoading,
       trainingSeries,
-      errorTrainingSeries
+      errorTrainingSeries,
+      isTrainingListByTrainingSeriesIdLoading,
+      TrainingListByTrainingSeriesId,
+      errorTrainingListByTrainingSeriesId
     } = this.props;
 
     if (prevProps.isTrainingSeriesLoading && !isTrainingSeriesLoading) {
@@ -46,18 +56,29 @@ class TrainingSeriesUpdate extends React.Component {
         })
       }
     }
+    if (!prevProps.errorTrainingListByTrainingSeriesId && errorTrainingListByTrainingSeriesId) {
+      this.setState({
+        trainingListError: true
+      })
+    }
+    if (prevProps.isTrainingListByTrainingSeriesIdLoading && !isTrainingListByTrainingSeriesIdLoading && TrainingListByTrainingSeriesId) {
+      this.setState({
+        trainingList: TrainingListByTrainingSeriesId.items
+      })
+    }
   }
 
   componentDidMount() {
     this.props.fetchTrainingSeries(this.trainingSeriesId);
+    this.props.fetchTrainingListByTrainingSeriesId(this.trainingSeriesId);
   }
 
   handleClick = () => {
-    this.props.history.push(`/honoplay/trainingseries/${this.trainingSeriesId}/training`);
+    this.props.history.push(`/honoplay/trainingseriesdetail/training`);
   }
 
   render() {
-    const { trainingSeries } = this.state;
+    const { trainingSeries, trainingList, trainingId } = this.state;
     const { classes } = this.props;
 
     return (
@@ -78,7 +99,21 @@ class TrainingSeriesUpdate extends React.Component {
               iconName="graduation-cap"
             />
           </Grid>
-          <Grid item xs={12} sm={9}></Grid>
+          <Grid item xs={12} sm={9}>
+            <Card
+              summary
+              data={trainingList}
+              id={id => {
+                if(id) {
+                  this.setState({
+                    trainingId: id
+                  })
+                }
+              }}
+            >
+              <TrainingUpdate trainingId={trainingId}/>
+            </Card>
+          </Grid>
         </Grid>
       </div>
     );
@@ -93,16 +128,25 @@ const mapStateToProps = state => {
     errorTrainingSeries
   } = state.trainingSeries;
 
+  const {
+    isTrainingListByTrainingSeriesIdLoading,
+    TrainingListByTrainingSeriesId,
+    errorTrainingListByTrainingSeriesId
+  } = state.trainingListByTrainingSeriesId;
 
   return {
     isTrainingSeriesLoading,
     trainingSeries,
-    errorTrainingSeries
+    errorTrainingSeries,
+    isTrainingListByTrainingSeriesIdLoading,
+    TrainingListByTrainingSeriesId,
+    errorTrainingListByTrainingSeriesId
   };
 };
 
 const mapDispatchToProps = {
-  fetchTrainingSeries
+  fetchTrainingSeries,
+  fetchTrainingListByTrainingSeriesId
 };
 
 export default connect(

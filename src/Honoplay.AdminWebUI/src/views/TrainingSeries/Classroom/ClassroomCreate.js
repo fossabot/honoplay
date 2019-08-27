@@ -2,17 +2,17 @@ import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, CircularProgress } from '@material-ui/core';
-import Style from '../Style';
-import Input from '../../components/Input/InputTextComponent';
-import DropDown from '../../components/Input/DropDownInputComponent';
-import Button from '../../components/Button/ButtonComponent';
-import Table from '../../components/Table/TableComponent';
-import { genderToString } from '../../helpers/Converter';
+import Style from '../../Style';
+import Input from '../../../components/Input/InputTextComponent';
+import DropDown from '../../../components/Input/DropDownInputComponent';
+import Button from '../../../components/Button/ButtonComponent';
+import Table from '../../../components/Table/TableComponent';
+import { genderToString } from '../../../helpers/Converter';
 
 import { connect } from "react-redux";
 import { fetchTrainersList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainer";
 import { fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee";
-import { createClassroom, fetchClassroomList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom";
+import { createClassroom, fetchClassroomListByTrainingId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom";
 
 class ClassroomCreate extends React.Component {
 
@@ -33,17 +33,17 @@ class ClassroomCreate extends React.Component {
                 ]
             },
             traineeColumns: [
-                { title: "Ad", field: "name" },
-                { title: "Soyad", field: "surname" },
-                { title: "TCKN", field: "nationalIdentityNumber" },
-                { title: "Cep Telefonu", field: "phoneNumber" },
-                { title: "Cinsiyet", field: "gender" }
+                { title: translate('Name'), field: "name" },
+                { title: translate('Surname'), field: "surname" },
+                { title: translate('NationalIdentityNumber'), field: "nationalIdentityNumber" },
+                { title: translate('PhoneNumber'), field: "phoneNumber" },
+                { title: translate('Gender'), field: "gender" }
             ],
             traineeList: [],
         }
     }
 
-    selecteds = null;
+    trainingId = null;
 
     componentDidUpdate(prevProps) {
         const {
@@ -51,7 +51,7 @@ class ClassroomCreate extends React.Component {
             errorTrainerList,
             trainersList,
             isCreateClassroomLoading,
-            createClassroom,
+            newClassroom,
             errorCreateClassroom,
             isTraineeListLoading,
             errorTraineeList,
@@ -77,8 +77,8 @@ class ClassroomCreate extends React.Component {
                 classroomLoading: false
             })
         }
-        if (prevProps.isCreateClassroomLoading && !isCreateClassroomLoading && createClassroom) {
-            this.props.fetchClassroomList(0, 50);
+        if (prevProps.isCreateClassroomLoading && !isCreateClassroomLoading && newClassroom) {
+            this.props.fetchClassroomListByTrainingId(this.trainingId);
             if (!errorCreateClassroom) {
                 this.setState({
                     classroomLoading: false,
@@ -102,7 +102,6 @@ class ClassroomCreate extends React.Component {
     }
 
     handleClick = () => {
-        console.log(this.state.classroom);
         this.props.createClassroom(this.state.classroom);
     }
 
@@ -114,12 +113,14 @@ class ClassroomCreate extends React.Component {
             classroom.trainingId = trainingId;
         })
 
+        this.trainingId = trainingId;
+
         return (
 
             <div className={classes.root}>
                 <Grid container spacing={24}>
                     {classroom.createClassroomModels.map((classroom, id) => (
-                         <Grid item xs={12} sm={12} key={id}>
+                        <Grid item xs={12} sm={12} key={id}>
                             <Grid item xs={12} sm={12}>
                                 <Input
                                     error={classroomError}
@@ -140,7 +141,7 @@ class ClassroomCreate extends React.Component {
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={12} sm={12}/>
+                            <Grid item xs={12} sm={12} />
                             <Grid item xs={12} sm={12}>
                                 <Table
                                     columns={traineeColumns}
@@ -188,6 +189,8 @@ const mapStateToProps = state => {
         errorCreateClassroom
     } = state.createClassroom;
 
+    let newClassroom = createClassroom;
+
     const {
         isTraineeListLoading,
         errorTraineeList,
@@ -199,7 +202,7 @@ const mapStateToProps = state => {
         errorTrainerList,
         trainersList,
         isCreateClassroomLoading,
-        createClassroom,
+        newClassroom,
         errorCreateClassroom,
         isTraineeListLoading,
         errorTraineeList,
@@ -210,7 +213,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     fetchTrainersList,
     createClassroom,
-    fetchClassroomList,
+    fetchClassroomListByTrainingId,
     fetchTraineeList,
 };
 

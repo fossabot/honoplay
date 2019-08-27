@@ -24,8 +24,8 @@ class TraineesUpdate extends React.Component {
             workingStatuses: [],
             departments: [],
             gender: [
-                { id: 0, name: 'Erkek', },
-                { id: 1, name: 'Kadın', }
+                { id: 0, name: translate('Male')},
+                { id: 1, name: translate('Female')}
             ],
             traineeModel: {
                 name: '',

@@ -2,13 +2,13 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { Grid } from '@material-ui/core';
-import { Link } from "react-router-dom";
 import Style from '../Style';
 import CardButton from '../../components/Card/CardButton';
 import Typography from '../../components/Typography/TypographyComponent';
 import Modal from '../../components/Modal/ModalComponent';
 import Card from '../../components/Card/CardComponents';
 import TrainingseriesCreate from './TrainingSeriesCreate';
+
 import { connect } from "react-redux";
 import { fetchTrainingSeriesList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingSeries';
 
@@ -19,7 +19,6 @@ class TrainingSeries extends React.Component {
       openDialog: false,
       trainingSerieses: [],
       trainingSeriesesError: false,
-      trainingSeriesId: null
     }
   }
 
@@ -80,12 +79,10 @@ class TrainingSeries extends React.Component {
           <Grid item xs={12} sm={9}>
             <Card
               data={trainingSerieses}
-              url="trainingseries"
+              url="trainingseriesdetail"
               id={id => {
                 if (id) {
-                  this.setState({
-                    trainingSeriesId: id
-                  })
+                  localStorage.setItem("trainingSeriesId", id)
                 }
               }}
             />

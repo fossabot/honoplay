@@ -3,10 +3,10 @@ import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import Style from '../Style';
 import Stepper from '../../components/Stepper/HorizontalStepper';
-import Training from './Training';
-import Classroom from './Classroom';
-import Session from './Session'
-import Summary from './Summary';
+import Training from './Training/Training';
+import Classroom from './Classroom/Classroom';
+import Summary from './Summary/Summary';
+
 
 
 import { connect } from "react-redux";
@@ -87,14 +87,12 @@ class TrainingSeriesInformation extends React.Component {
                 activeStep: state.activeStep + 1,
             }));
         }
-        if (this.state.activeStep === 2) {
-            this.setState(state => ({
-                activeStep: state.activeStep + 1,
-            }));
+        else if (this.state.activeStep === 2) {
+            this.props.history.push("/honoplay/trainingseriesdetail");
         }
     }
 
-    trainingSeriesId = this.props.match.params.trainingseriesId;
+    trainingSeriesId = localStorage.getItem("trainingSeriesId");
 
     render() {
         const { activeStep, trainingError, trainingLoading, trainingId } = this.state;
@@ -123,7 +121,6 @@ class TrainingSeriesInformation extends React.Component {
                                 trainingError={trainingError}
                             />
                             <Classroom trainingId={trainingId} />
-                            <Session />
                             <Summary trainingId={trainingId} />
                         </Stepper>
                     </Grid>

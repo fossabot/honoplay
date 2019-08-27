@@ -108,9 +108,6 @@ const mapStateToProps = state => {
         errorCreateTrainingSeries
     } = state.createTrainingSeries;
 
-
-    console.log(errorCreateTrainingSeries);
-
     return {
         isCreateTrainingSeriesLoading,
         createTrainingSeries,

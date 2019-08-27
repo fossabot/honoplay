@@ -17,8 +17,8 @@ class Questions extends React.Component {
     super(props);
     this.state = {
       questionsColumns: [
-        { title: "Soru Metni", field: "text" },
-        { title: "Saniye", field: "duration" }],
+        { title: translate('QuestionText'), field: "text" },
+        { title: translate('Duration'), field: "duration" }],
       questions: []
     };
   }

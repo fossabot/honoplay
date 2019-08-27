@@ -6,8 +6,6 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import {
   Paper,
-  Checkbox,
-  FormControlLabel,
   FormControl,
   Button,
   Avatar,
@@ -23,6 +21,7 @@ import { Style, theme } from "./Style";
 import { connect } from "react-redux";
 import { fetchToken } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/AdminUser";
 
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -31,8 +30,6 @@ class Login extends React.Component {
       password: " ",
       error: false
     };
-    this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidUpdate(prevProps) {
@@ -52,7 +49,7 @@ class Login extends React.Component {
     }
   }
 
-  handleChange(e) {
+  handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
     this.setState({
@@ -60,7 +57,7 @@ class Login extends React.Component {
     });
   }
 
-  handleClick() {
+  handleClick = () => {
     const { email, password } = this.state;
     this.props.fetchToken(email, password);
     this.setState({
@@ -136,10 +133,6 @@ class Login extends React.Component {
                   }}
                 />
               </FormControl>
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label={translate("RememberMe")}
-              />
               <Button
                 fullWidth
                 variant="contained"

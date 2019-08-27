@@ -42,11 +42,7 @@ export const Style = (theme) => ({
       flexDirection:'column',
     },
     listLayout: {
-      flex:10,
-    },
-    trainerLayout: {
-      flex:1,
-      justifyContent: 'flex-end',
+      flex:8,
     },
     companyLayout: {
       flex:3,
