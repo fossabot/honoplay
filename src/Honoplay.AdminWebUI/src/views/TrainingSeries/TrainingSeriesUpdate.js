@@ -11,6 +11,8 @@ import { connect } from "react-redux";
 import { fetchTrainingSeries } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingSeries";
 import { fetchTrainingListByTrainingSeriesId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Training";
 
+import TrainingUpdate from "./Training/TrainingSummary";
+
 
 class TrainingSeriesUpdate extends React.Component {
 
@@ -25,7 +27,8 @@ class TrainingSeriesUpdate extends React.Component {
         ]
       },
       trainingList: [],
-      trainingListError: false
+      trainingListError: false,
+      trainingId: null,
     }
   }
 
@@ -75,7 +78,7 @@ class TrainingSeriesUpdate extends React.Component {
   }
 
   render() {
-    const { trainingSeries, trainingList } = this.state;
+    const { trainingSeries, trainingList, trainingId } = this.state;
     const { classes } = this.props;
 
     return (
@@ -98,12 +101,18 @@ class TrainingSeriesUpdate extends React.Component {
           </Grid>
           <Grid item xs={12} sm={9}>
             <Card
+              summary
               data={trainingList}
-              titleName={translate('Update')}
               id={id => {
-
+                if(id) {
+                  this.setState({
+                    trainingId: id
+                  })
+                }
               }}
-            />
+            >
+              <TrainingUpdate trainingId={trainingId}/>
+            </Card>
           </Grid>
         </Grid>
       </div>

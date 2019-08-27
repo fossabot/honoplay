@@ -40,7 +40,6 @@ class Trainers extends React.Component {
                 { title: translate('NationalIdentityNumber'), field: "email" },
                 { title: translate('PhoneNumber'), field: "phoneNumber" },
                 { title: translate('Department'), field: "departmentId" },
-                { title: translate('TrainerExpertise'), field: "professionId" }
             ],
         };
     }
@@ -84,7 +83,6 @@ class Trainers extends React.Component {
             this.setState({
                 professions: professionList.items
             })
-
         }
         if (!prevProps.isCreateTrainerLoading && isCreateTrainerLoading) {
             this.setState({

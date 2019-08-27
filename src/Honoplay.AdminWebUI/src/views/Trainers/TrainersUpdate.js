@@ -14,12 +14,14 @@ import Button from '../../components/Button/ButtonComponent';
 import { connect } from "react-redux";
 import { updateTrainer, fetchTrainer, fetchTrainersList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainer";
 import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department";
+import { fetchProfessionList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Profession";
 
 class TraineesUpdate extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            professions: [],
             departments: [],
             trainerModel: {
                 name: '',
@@ -48,7 +50,15 @@ class TraineesUpdate extends React.Component {
             isTrainerLoading,
             errorTrainer,
             trainer,
+            isProfessionListLoading,
+            professionList,
         } = this.props;
+
+        if (prevProps.isProfessionListLoading && !isProfessionListLoading && professionList) {
+            this.setState({
+                professions: professionList.items
+            })
+        }
 
         if (prevProps.isTrainerLoading && !isTrainerLoading) {
             this.setState({
@@ -97,6 +107,7 @@ class TraineesUpdate extends React.Component {
     componentDidMount() {
         this.props.fetchDepartmentList(0, 50);
         this.props.fetchTrainer(parseInt(this.dataId));
+        this.props.fetchProfessionList(0, 50);
     }
 
     handleChange = (e) => {
@@ -122,12 +133,13 @@ class TraineesUpdate extends React.Component {
             success,
             loadingUpdate,
             updateError,
-            trainerModel
+            trainerModel,
+            professions
         } = this.state;
         const buttonClassname = classNames({
             [classes.buttonSuccess]: success
         });
-        
+
         return (
 
             <div className={classes.root}>
@@ -179,11 +191,11 @@ class TraineesUpdate extends React.Component {
                                 name="departmentId"
                                 value={trainerModel.departmentId}
                             />
-                            <Input
+                            <DropDown
                                 error={updateError}
-                                labelName={translate('TrainerExpertise')}
-                                inputType="text"
                                 onChange={this.handleChange}
+                                data={professions}
+                                labelName={translate('TrainerExpertise')}
                                 name="professionId"
                                 value={trainerModel.professionId}
                             />
@@ -241,6 +253,12 @@ const mapStateToProps = state => {
         updateTrainer
     } = state.updateTrainer;
 
+    const {
+        isProfessionListLoading,
+        professionList,
+        errorProfessionList
+    } = state.professionList;
+
     return {
         isTrainerLoading,
         errorTrainer,
@@ -253,7 +271,10 @@ const mapStateToProps = state => {
         departmentList,
         isUpdateTrainerLoading,
         errorUpdateTrainer,
-        updateTrainer
+        updateTrainer,
+        isProfessionListLoading,
+        professionList,
+        errorProfessionList
     };
 };
 
@@ -261,7 +282,8 @@ const mapDispatchToProps = {
     fetchDepartmentList,
     updateTrainer,
     fetchTrainer,
-    fetchTrainersList
+    fetchTrainersList,
+    fetchProfessionList
 };
 
 export default connect(

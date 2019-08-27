@@ -23,7 +23,7 @@ class QuestionsUpdate extends React.Component {
                 text: '',
                 duration: ''
             },
-            loadingTrainee: false,
+            loadingQuestion: false,
             loadingUpdate: false,
             success: false,
             updateError: false
@@ -44,7 +44,7 @@ class QuestionsUpdate extends React.Component {
 
         if (prevProps.isQuestionLoading && !isQuestionLoading) {
             this.setState({
-                loadingTrainee: true
+                loadingQuestion: true
             })
         }
         if (prevProps.isQuestionLoading && !isQuestionLoading && question) {
@@ -104,7 +104,7 @@ class QuestionsUpdate extends React.Component {
     render() {
         const { classes } = this.props;
         const {
-            loadingTrainee,
+            loadingQuestion,
             questionModel,
             success,
             loadingUpdate,
@@ -116,7 +116,7 @@ class QuestionsUpdate extends React.Component {
         return (
 
             <div className={classes.root}>
-                {loadingTrainee == false ?
+                {loadingQuestion == false ?
                     <CircularProgress
                         size={50}
                         disableShrink={true}
