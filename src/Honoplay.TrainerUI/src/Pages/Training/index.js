@@ -5,6 +5,8 @@ import { Button } from "../../Components/Button";
 import { Link } from "react-router-dom";
 import History from "../../Helpers/History";
 import { TraineeList } from "../../Helpers/DummyData";
+import withAuth from "../../Hoc/CheckAuth";
+import WithAuth from "../../Hoc/CheckAuth";
 
 class Training extends Component {
   state = {
@@ -150,7 +152,6 @@ class Training extends Component {
               >
                 Katılım Kodunu Göster
               </Link>
-              {/* <Button title="Katılım Kodunu Göster" color={"primary mr-2"} /> */}
 
               <Button title="Oyunu Başlat" />
             </div>
@@ -161,4 +162,4 @@ class Training extends Component {
   }
 }
 
-export default Training;
+export default WithAuth(Training);

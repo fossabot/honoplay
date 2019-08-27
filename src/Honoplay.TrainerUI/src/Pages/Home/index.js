@@ -3,6 +3,7 @@ import PageWrapper from "../../Containers/PageWrapper";
 import { Logo, Vector } from "../../Assets/index";
 import { Link } from "react-router-dom";
 import { TrainerList } from "../../Helpers/DummyData";
+import WithAuth from "../../Hoc/CheckAuth";
 
 class Home extends Component {
   render() {
@@ -22,7 +23,7 @@ class Home extends Component {
             <tbody>
               {TrainerList.map(data => {
                 return (
-                  <tr>
+                  <tr key={data.Id}>
                     <td>{data.TrainerDate}</td>
                     <td>{data.TrainerName}</td>
                     <td>{data.Location}</td>
@@ -42,4 +43,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default WithAuth(Home);

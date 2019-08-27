@@ -13,7 +13,7 @@ import History from "./Helpers/History";
 render(
   <Provider store={store}>
     <BrowserRouter history={History}>
-      <Route exact path="/" component={Home} />
+      <Route exact path="/" component={Login} />
       <Route path="/login" component={Login} />
       <Route path="/homepage" component={Home} />
       <Route path="/trainingdetail" component={Training} />
