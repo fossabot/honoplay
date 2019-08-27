@@ -136,7 +136,7 @@ class ClassroomCreate extends React.Component {
                                     data={trainer}
                                     labelName={translate('Trainer')}
                                     onChange={e => {
-                                        classroom.trainerId = e.target.value;
+                                        classroom.trainerUserId = e.target.value;
                                         this.setState({ classroomError: false });
                                     }}
                                 />

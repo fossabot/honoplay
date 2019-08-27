@@ -4,8 +4,14 @@ import { translate } from '@omegabigdata/terasu-api-proxy';
 import classNames from "classnames";
 import {
     Grid,
-    CircularProgress
+    CircularProgress,
+    TextField,
+    InputAdornment,
+    IconButton,
+    InputLabel
 } from '@material-ui/core';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Style from '../Style';
 import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
@@ -29,12 +35,14 @@ class TraineesUpdate extends React.Component {
                 email: '',
                 phoneNumber: '',
                 departmentId: '',
-                professionId: ''
+                professionId: '',
+                password: ''
             },
             loadingTrainer: false,
             loadingUpdate: false,
             success: false,
-            updateError: false
+            updateError: false,
+            confirm: null
         }
     }
 
@@ -91,15 +99,23 @@ class TraineesUpdate extends React.Component {
         }
         if (prevProps.isUpdateTrainerLoading && !isUpdateTrainerLoading && updateTrainer) {
             if (!errorUpdateTrainer) {
-                this.props.fetchTrainersList(0, 50);
-                this.setState({
-                    updateError: false,
-                    loadingUpdate: false,
-                    success: true,
-                });
-                setTimeout(() => {
-                    this.setState({ success: false });
-                }, 1000);
+                if (this.state.confirm == this.state.trainerModel.password) {
+                    this.props.fetchTrainersList(0, 50);
+                    this.setState({
+                        updateError: false,
+                        loadingUpdate: false,
+                        success: true,
+                    });
+                    setTimeout(() => {
+                        this.setState({ success: false });
+                    }, 1000);
+                } else {
+                    this.setState({
+                        updateError: true,
+                        success: false,
+                        loadingUpdate: false,
+                    });
+                }
             }
         }
     }
@@ -117,13 +133,21 @@ class TraineesUpdate extends React.Component {
                 ...prevState.trainerModel,
                 [name]: value
             },
-            updateError: false
+            updateError: false,
+            [name]: value
         }))
     }
 
     handleClick = () => {
         this.props.updateTrainer(this.state.trainerModel);
     }
+
+    handleClickShowPassword = () => {
+        this.setState(
+            state => ({
+                showPassword: !state.showPassword
+            }));
+    };
 
     render() {
         const { classes } = this.props;
@@ -198,6 +222,58 @@ class TraineesUpdate extends React.Component {
                                 labelName={translate('TrainerExpertise')}
                                 name="professionId"
                                 value={trainerModel.professionId}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={3}>
+                            <InputLabel className={classes.bootstrapFormLabel}>
+                                {translate('Password')}
+                            </InputLabel>
+                        </Grid>
+                        <Grid item xs={12} sm={9}>
+                            <TextField
+                                error={updateError && true}
+                                className={classes.passwordInput}
+                                name="password"
+                                type={this.state.showPassword ? 'text' : 'password'}
+                                autoComplete="current-password"
+                                onChange={this.handleChange}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={this.handleClickShowPassword}
+                                            >
+                                                {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={3}>
+                            <InputLabel className={classes.bootstrapFormLabel}>
+                                {translate('Confirm')}
+                            </InputLabel>
+                        </Grid>
+                        <Grid item xs={12} sm={9}>
+                            <TextField
+                                error={updateError && true}
+                                className={classes.passwordInput}
+                                name="confirm"
+                                type={this.state.showPassword ? 'text' : 'password'}
+                                autoComplete="current-password"
+                                onChange={this.handleChange}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={this.handleClickShowPassword}
+                                            >
+                                                {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={12} />

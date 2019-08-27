@@ -4,9 +4,15 @@ import { withStyles } from '@material-ui/core/styles';
 import {
     Grid,
     Divider,
-    CircularProgress
+    CircularProgress,
+    TextField,
+    InputAdornment,
+    IconButton,
+    InputLabel
 } from '@material-ui/core';
 import Style from '../Style';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Typography from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Input from '../../components/Input/InputTextComponent';
@@ -50,7 +56,8 @@ class Trainers extends React.Component {
         email: '',
         phoneNumber: '',
         departmentId: '',
-        professionId: ''
+        professionId: '',
+        password: ''
     };
 
     componentDidUpdate(prevProps) {
@@ -138,6 +145,14 @@ class Trainers extends React.Component {
         createTrainer(this.trainerModel);
     }
 
+
+    handleClickShowPassword = () => {
+        this.setState(
+            state => ({
+                showPassword: !state.showPassword
+            }));
+    };
+
     render() {
         const {
             departments,
@@ -210,6 +225,33 @@ class Trainers extends React.Component {
                         >
                             <Profession />
                         </DropDown>
+                    </Grid>
+                    <Grid item xs={12} sm={3}>
+                        <InputLabel className={classes.bootstrapFormLabel}>
+                            {translate('Password')}
+                        </InputLabel>
+                    </Grid>
+                    <Grid item xs={12} sm={9}>
+                        <TextField
+                            error={trainerError && true}
+                            className={classes.passwordInput}
+                            name="password"
+                            type={this.state.showPassword ? 'text' : 'password'}
+                            autoComplete="current-password"
+                            onChange={this.handleChange}
+                            value={this.trainerModel.password}
+                            InputProps={{
+                                endAdornment: (
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            onClick={this.handleClickShowPassword}
+                                        >
+                                            {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                                        </IconButton>
+                                    </InputAdornment>
+                                ),
+                            }}
+                        />
                     </Grid>
                     <Grid item xs={12} sm={11} />
                     <Grid item xs={12} sm={1}>

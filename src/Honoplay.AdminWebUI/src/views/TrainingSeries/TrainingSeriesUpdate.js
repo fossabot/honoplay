@@ -102,6 +102,7 @@ class TrainingSeriesUpdate extends React.Component {
           <Grid item xs={12} sm={9}>
             <Card
               data={trainingList}
+              titleName={translate('Update')}
               id={id => {
                 if(id) {
                   this.setState({
