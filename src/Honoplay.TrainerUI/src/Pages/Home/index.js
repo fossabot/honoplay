@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PageWrapper from "../../Containers/PageWrapper";
 import { Logo, Vector } from "../../Assets/index";
+import { Link } from "react-router-dom";
+import { TrainerList } from "../../Helpers/DummyData";
 
 class Home extends Component {
   render() {
@@ -18,38 +20,18 @@ class Home extends Component {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>01.07.2019</td>
-                <td>Satış ve Pazarlama Eğitimi</td>
-                <td>Lütfü Kırdar Gösteri Merkezi</td>
-                <td>
-                  <a href="#">İncele</a>
-                </td>
-              </tr>
-              <tr>
-                <td>01.07.2019</td>
-                <td>Satış ve Pazarlama Eğitimi</td>
-                <td>Lütfü Kırdar Gösteri Merkezi</td>
-                <td>
-                  <a href="#">İncele</a>
-                </td>
-              </tr>
-              <tr>
-                <td>01.07.2019</td>
-                <td>Satış ve Pazarlama Eğitimi</td>
-                <td>Lütfü Kırdar Gösteri Merkezi</td>
-                <td>
-                  <a href="#">İncele</a>
-                </td>
-              </tr>
-              <tr>
-                <td>01.07.2019</td>
-                <td>Satış ve Pazarlama Eğitimi</td>
-                <td>Lütfü Kırdar Gösteri Merkezi</td>
-                <td>
-                  <a href="#">İncele</a>
-                </td>
-              </tr>
+              {TrainerList.map(data => {
+                return (
+                  <tr>
+                    <td>{data.TrainerDate}</td>
+                    <td>{data.TrainerName}</td>
+                    <td>{data.Location}</td>
+                    <td>
+                      <Link to="/trainingdetail">İncele</Link>
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>

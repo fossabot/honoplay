@@ -1,38 +1,44 @@
 import React, { Component } from "react";
 import PageWrapper from "../../Containers/PageWrapper";
 import { Logo, Vector } from "../../Assets/index";
+import { Button } from "../../Components/Button";
+import History from "../../Helpers/History";
 
 class Login extends Component {
   render() {
     return (
       <PageWrapper>
-        <div class="col-sm-7">
-          <img src={Logo} class="img-fluid" />
+        <div className="col-sm-7">
+          <img src={Logo} className="img-fluid" />
           <p class="mt-3 mb-5">
             <b>Omega Bigdata</b> Web Portalına Hoş Geldiniz.
           </p>
 
-          <div class="form">
+          <div className="form">
             <input
               type="text"
-              class="form-control"
+              className="form-control"
               placeholder="Cep Tel / E-Posta"
             />
             <input
               type="password"
-              class="form-control mt-3 mb-2"
+              className="form-control mt-3 mb-2"
               placeholder="Şifre"
             />
 
-            <a href="#" class="su">
+            <a href="#" className="su">
               <u>Şifremi Unuttum</u>
             </a>
 
-            <button class="btn my-btn form-control mt-4">Giriş Yap</button>
+            <Button
+              onClick={() => History.push("/homepage")}
+              title="Giriş Yap"
+              className="btn my-btn form-control mt-4"
+            />
           </div>
         </div>
-        <div class="col-sm-5 text-center">
-          <img src={Vector} class="img-fluid d-none d-sm-block" />
+        <div className="col-sm-5 text-center">
+          <img src={Vector} className="img-fluid d-none d-sm-block" />
         </div>
       </PageWrapper>
     );

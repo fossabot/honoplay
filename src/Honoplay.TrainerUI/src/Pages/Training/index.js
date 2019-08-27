@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PageWrapper from "../../Containers/PageWrapper";
 import { Logo, Vector } from "../../Assets/index";
 import { Button } from "../../Components/Button";
+import { Link } from "react-router-dom";
 
 class Training extends Component {
   render() {
@@ -11,7 +12,7 @@ class Training extends Component {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb">
               <li className="breadcrumb-item">
-                <a href="egitmen-anasayfa.html">Eğitimler</a>
+                <Link to="homepage">Eğitimler</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
                 Satış ve Pazarlama Eğitimi
@@ -152,7 +153,11 @@ class Training extends Component {
             </nav>
 
             <div className="mt-5">
-              <Button title="Katılım Kodunu Göster" color={"primary mr-2"} />
+              <Link to="/joincode" className="btn btn-primary mr-2">
+                Katılım Kodunu Göster
+              </Link>
+              {/* <Button title="Katılım Kodunu Göster" color={"primary mr-2"} /> */}
+
               <Button title="Oyunu Başlat" />
             </div>
           </div>
