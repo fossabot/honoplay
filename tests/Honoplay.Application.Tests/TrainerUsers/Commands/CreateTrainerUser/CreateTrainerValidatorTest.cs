@@ -24,6 +24,7 @@ namespace Honoplay.Application.Tests.TrainerUsers.Commands.CreateTrainerUser
                 CreatedBy = 1,
                 Surname = "asdasd",
                 PhoneNumber = "21412312321",
+                Password = "testPass1*",
                 Email = "asd@gmail.com",
                 ProfessionId = 1
             }
@@ -34,6 +35,7 @@ namespace Honoplay.Application.Tests.TrainerUsers.Commands.CreateTrainerUser
         public void ShouldBeNotValidForNullOrEmpty()
         {
             _validator.ShouldHaveValidationErrorFor(x => x.Name, string.Empty);
+            _validator.ShouldHaveValidationErrorFor(x => x.Email, string.Empty);
             _validator.ShouldHaveValidationErrorFor(x => x.Email, string.Empty);
             _validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, string.Empty);
             _validator.ShouldHaveValidationErrorFor(x => x.DepartmentId, 0);
@@ -47,6 +49,7 @@ namespace Honoplay.Application.Tests.TrainerUsers.Commands.CreateTrainerUser
             _validator.ShouldHaveValidationErrorFor(x => x.Name, string.Join("", Enumerable.Repeat("x", 51)));
             _validator.ShouldHaveValidationErrorFor(x => x.Surname, string.Join("", Enumerable.Repeat("x", 51)));
             _validator.ShouldHaveValidationErrorFor(x => x.Email, string.Join("", Enumerable.Repeat("x", 151)));
+            _validator.ShouldHaveValidationErrorFor(x => x.Email, string.Join("", Enumerable.Repeat("x", 51)));
             _validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, string.Join("", Enumerable.Repeat("x", 21)));
         }
 
