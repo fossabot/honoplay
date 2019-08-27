@@ -29,7 +29,7 @@ class App extends Component {
       <Layout>
         <Route path="/honoplay/questions" component={Questions} />
         <Route path="/honoplay/tenantinformation" component={TenantInformation} />
-        <Route path="/honoplay/trainers" component={Trainers} />
+        <Route path="/honoplay/trainerUsers" component={Trainers} />
         <Route path="/honoplay/usermanagement" component={UserManagement} />
         <Route path="/honoplay/addquestion" component={NewQuestion} />
         <Route path="/honoplay/trainingseries" exact component={TrainingSeries} />

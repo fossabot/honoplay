@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using FluentValidation.AspNetCore;
-using Honoplay.TrainerWebAPI;
+﻿using FluentValidation.AspNetCore;
 using Honoplay.Application;
 using Honoplay.Common.Constants;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
 using Honoplay.Persistence.CacheService;
-using Honoplay.TrainerWebAPI.Interfaces;
-using Honoplay.TrainerWebAPI.Services;
+using Honoplay.TrainerUserWebAPI.Interfaces;
+using Honoplay.TrainerUserWebAPI.Services;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -24,8 +18,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
-namespace Honoplay.TrainerWebAPI
+namespace Honoplay.TrainerUserWebAPI
 {
     public class Startup
     {

@@ -62,7 +62,7 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
                         Name = x.Name,
                         UpdatedAt = x.UpdatedAt,
                         TrainingId = x.TrainingId,
-                        TrainerId = x.TrainerId
+                        TrainerUserId = x.TrainerUserId
                     }).ToList();
 
                     transaction.Commit();
@@ -90,7 +90,7 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
                 }
             }
             var updateClassroomModel = new UpdateClassroomModel(request.Id,
-                                                              request.TrainerId,
+                                                              request.TrainerUserId,
                                                               request.TrainingId,
                                                               request.Name,
                                                               request.UpdatedBy,

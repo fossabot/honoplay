@@ -1,6 +1,6 @@
-﻿using Honoplay.Application.Trainers.Commands.AuthenticateTrainerUser;
+﻿using Honoplay.Application.TrainerUsers.Commands.AuthenticateTrainerUser;
 
-namespace Honoplay.TrainerWebAPI.Interfaces
+namespace Honoplay.TrainerUserWebAPI.Interfaces
 {
     public interface ITrainerUserService
     {

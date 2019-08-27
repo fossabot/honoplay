@@ -15,7 +15,7 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
                 .NotEmpty()
                 .MaximumLength(50);
 
-            RuleFor(x => x.TrainerId)
+            RuleFor(x => x.TrainerUserId)
                 .NotNull()
                 .NotEmpty();
 

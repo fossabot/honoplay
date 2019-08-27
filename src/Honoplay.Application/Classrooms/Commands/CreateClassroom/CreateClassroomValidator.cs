@@ -14,7 +14,7 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                         .NotEmpty()
                         .MaximumLength(50),
                     inlineValidator => inlineValidator
-                        .RuleFor(x => x.TrainerId)
+                        .RuleFor(x => x.TrainerUserId)
                         .NotNull()
                         .NotEmpty(),
                     inlineValidator => inlineValidator

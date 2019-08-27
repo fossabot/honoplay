@@ -1,4 +1,4 @@
-﻿using Honoplay.TrainerWebAPI.Interfaces;
+﻿using Honoplay.TrainerUserWebAPI.Interfaces;
 using Honoplay.Application.TrainerUsers.Commands.AuthenticateTrainerUser;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -6,7 +6,7 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace Honoplay.TrainerWebAPI.Services
+namespace Honoplay.TrainerUserWebAPI.Services
 {
     public class TrainerUserService : ITrainerUserService
     {
@@ -32,7 +32,7 @@ namespace Honoplay.TrainerWebAPI.Services
                     new Claim(ClaimTypes.Role, "TrainerUser"),
                     new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.Webpage, user.HostName),
-                    new Claim(ClaimTypes.UserData, user.TenantId.ToString())
+                    new Claim(ClaimTypes.UserData, user.DepartmentId.ToString())
                 }),
                 NotBefore = DateTime.UtcNow,
                 Expires = DateTime.UtcNow.AddDays(20),

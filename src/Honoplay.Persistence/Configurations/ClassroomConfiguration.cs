@@ -26,10 +26,10 @@ namespace Honoplay.Persistence.Configurations
                 .WithMany(x => x.Classrooms)
                 .HasForeignKey(x => x.TrainingId);
 
-            //Trainer
-            builder.HasOne(x => x.Trainer)
+            //TrainerUser
+            builder.HasOne(x => x.TrainerUser)
                 .WithMany(x => x.Classrooms)
-                .HasForeignKey(x => x.TrainerId);
+                .HasForeignKey(x => x.TrainerUserId);
         }
     }
 }

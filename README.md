@@ -60,7 +60,7 @@ https://www.nuget.org/packages/moq/
 ## Redis Cache
 Redis cache genellikle çok fazla kullanılan verilere daha hızlı ulaşabilmek için kullanılır. Bu yüzden de kullanılan verileri KEY-VALUE şeklinde RAM üzerine kaydeder.
 İstenirse sabit disklere de kayıt yapılabilir.
-Projede giriş yapan AdminUser rolündeki kişinin Departments, Trainers, Trainee ile işlem yaparken daha hızlı yapabilmesi için kullanılmıştır.
+Projede giriş yapan AdminUser rolündeki kişinin Departments, TrainerUsers, Trainee ile işlem yaparken daha hızlı yapabilmesi için kullanılmıştır.
 
 https://www.nuget.org/packages/Microsoft.Extensions.Caching.Redis/2.2.0
 
