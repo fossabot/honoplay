@@ -12,6 +12,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Common.Extensions;
 
 namespace Honoplay.Application.TrainerUsers.Commands.CreateTrainerUser
 {
@@ -28,6 +29,7 @@ namespace Honoplay.Application.TrainerUsers.Commands.CreateTrainerUser
         public async Task<ResponseModel<CreateTrainerUserModel>> Handle(CreateTrainerUserCommand request, CancellationToken cancellationToken)
         {
             var redisKey = $"TrainerUsersWithDepartmentsByTenantId{request.TenantId}";
+            var salt = ByteArrayExtensions.GetRandomSalt();
             var trainerUser = new TrainerUser
             {
                 Name = request.Name,
@@ -37,6 +39,9 @@ namespace Honoplay.Application.TrainerUsers.Commands.CreateTrainerUser
                 PhoneNumber = request.PhoneNumber,
                 ProfessionId = request.ProfessionId,
                 Surname = request.Surname,
+                LastPasswordChangeDateTime = DateTimeOffset.Now,
+                PasswordSalt = salt,
+                Password = request.Password.GetSHA512(salt),
             };
 
             using (IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync(cancellationToken))

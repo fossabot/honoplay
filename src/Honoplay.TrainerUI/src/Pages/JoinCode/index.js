@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PageWrapper from "../../Containers/PageWrapper";
+import WithAuth from "../../Hoc/CheckAuth";
 
 class JoinCode extends Component {
   render() {
@@ -16,4 +17,4 @@ class JoinCode extends Component {
   }
 }
 
-export default JoinCode;
+export default WithAuth(JoinCode);

@@ -19,6 +19,7 @@
     "@omegabigdata/honoplay-redux-helper": "^0.4.2",
     "css-loader": "^3.2.0",
     "file-loader": "^4.2.0",
+    "history": "^4.9.0",
     "react": "^16.8.6",
     "react-dom": "npm:@hot-loader/react-dom",
     "react-redux": "^7.0.3",
