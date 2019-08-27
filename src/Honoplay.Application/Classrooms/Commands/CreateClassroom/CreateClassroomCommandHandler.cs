@@ -1,10 +1,12 @@
 ﻿using EFCore.BulkExtensions;
 using Honoplay.Application._Infrastructure;
 using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
 using MediatR;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,8 +14,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Common.Extensions;
-using Microsoft.Data.Sqlite;
 
 namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
 {
@@ -59,21 +59,28 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                             Name = createClassroomModel.Name,
                             TrainingId = createClassroomModel.TrainingId
                         };
+
                         newClassrooms.Add(newClassroom);
                     }
 
                     if (newClassrooms.Count > 20)
                     {
-                        _context.BulkInsert(newClassrooms);
+                        await _context.BulkInsertAsync(newClassrooms, cancellationToken: cancellationToken);
+
+
                         foreach (var newClassroom in newClassrooms)
                         {
-                            newClassroomTrainees.AddRange(newClassroom.ClassroomTrainees.Select(newClassroomTrainee =>
-                                new ClassroomTrainee
+                            foreach (var createClassroomModel in request.CreateClassroomModels)
+                            {
+                                foreach (var i in createClassroomModel.TraineesId)
                                 {
-                                    ClassroomId = newClassroomTrainee.ClassroomId,
-                                    TraineeId = newClassroomTrainee.TraineeId
-                                }));
-                            var a = newClassroomTrainees.Where(x => x.ClassroomId == newClassroom.Id).Select(x => x.TraineeId).ToList();
+                                    newClassroomTrainees.Add(new ClassroomTrainee
+                                    {
+                                        ClassroomId = newClassroom.Id,
+                                        TraineeId = i
+                                    });
+                                }
+                            }
                         }
 
                         await _context.BulkInsertAsync(newClassroomTrainees, cancellationToken: cancellationToken);
@@ -81,12 +88,22 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                     }
                     else
                     {
-                        await _context.Classrooms.AddRangeAsync(newClassrooms, cancellationToken);
-                        newClassroomTrainees.ForEach(newClassroomTrainee => _context.ClassroomTrainees.Add(new ClassroomTrainee
+                        foreach (var newClassroom in newClassrooms)
                         {
-                            ClassroomId = newClassroomTrainee.ClassroomId,
-                            TraineeId = newClassroomTrainee.TraineeId
-                        }));
+                            await _context.Classrooms.AddAsync(newClassroom, cancellationToken);
+
+                            foreach (var createClassroomModel in request.CreateClassroomModels)
+                            {
+                                foreach (var i in createClassroomModel.TraineesId)
+                                {
+                                    await _context.ClassroomTrainees.AddAsync(new ClassroomTrainee
+                                    {
+                                        ClassroomId = newClassroom.Id,
+                                        TraineeId = i
+                                    }, cancellationToken);
+                                }
+                            }
+                        }
                         await _context.SaveChangesAsync(cancellationToken);
                     }
 
