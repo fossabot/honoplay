@@ -60,7 +60,6 @@ class TrainingSummary extends React.Component {
             })
         }
         if (prevProps.isTrainingLoading && !isTrainingLoading && training) {
-            console.log('sdsad', training);
             if (!errorTraining) {
                 this.setState({
                     training: training.items[0],

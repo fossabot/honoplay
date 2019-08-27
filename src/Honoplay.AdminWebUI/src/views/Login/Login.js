@@ -36,7 +36,6 @@ class Login extends React.Component {
     const { token, errorToken } = this.props;
 
     if (token !== prevProps.token) {
-      console.log(token);
       if (token) {
         localStorage.setItem("token", token.token);
         this.props.history.push("/honoplay");
