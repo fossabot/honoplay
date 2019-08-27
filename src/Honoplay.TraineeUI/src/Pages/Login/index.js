@@ -31,7 +31,7 @@ class Login extends Component {
             </a>
 
             <Button
-              onClick={() => History.push("/homepage")}
+              onClick={() => History.push("/joingame")}
               title="Giriş Yap"
               className="btn my-btn form-control mt-4"
             />
