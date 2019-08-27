@@ -1,5 +1,6 @@
 ﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
@@ -30,6 +31,8 @@ namespace Honoplay.Application.TrainerUsers.Commands.UpdateTrainerUser
         {
             var redisKey = $"TrainerUsersWithDepartmentsByTenantId{request.TenantId}";
             var updateAt = DateTimeOffset.Now;
+            var salt = ByteArrayExtensions.GetRandomSalt();
+
 
             using (IDbContextTransaction transaction = _context.Database.BeginTransaction())
             {
@@ -54,6 +57,9 @@ namespace Honoplay.Application.TrainerUsers.Commands.UpdateTrainerUser
                     trainerUser.UpdatedBy = request.UpdatedBy;
                     trainerUser.UpdatedAt = updateAt;
                     trainerUser.Email = request.Email;
+                    trainerUser.PasswordSalt = salt;
+                    trainerUser.Password = request.Password.GetSHA512(salt);
+                    trainerUser.LastPasswordChangeDateTime = updateAt;
                     trainerUser.ProfessionId = request.ProfessionId;
 
                     _context.Update(trainerUser);

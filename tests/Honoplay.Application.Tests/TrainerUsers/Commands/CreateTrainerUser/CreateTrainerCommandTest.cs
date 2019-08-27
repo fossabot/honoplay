@@ -97,6 +97,7 @@ namespace Honoplay.Application.Tests.TrainerUsers.Commands.CreateTrainerUser
                 CreatedBy = _adminUserId,
                 Name = "testTrainerUser",
                 Surname = "qwdqwdqwd",
+                Password = "testPass1*",
                 PhoneNumber = "123123123123",
                 ProfessionId = _professionId,
                 Email = "test123@gmail.com",
@@ -118,6 +119,7 @@ namespace Honoplay.Application.Tests.TrainerUsers.Commands.CreateTrainerUser
                 DepartmentId = _departmentId + 1,
                 CreatedBy = _adminUserId,
                 Name = "testTrainerUser",
+                Password = "testPass1*",
                 Surname = "qwdqwdqwd",
                 PhoneNumber = "123123123123",
                 ProfessionId = _professionId
