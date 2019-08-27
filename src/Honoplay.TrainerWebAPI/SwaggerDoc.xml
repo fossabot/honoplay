@@ -4,5 +4,12 @@
         <name>Honoplay.TrainerWebAPI</name>
     </assembly>
     <members>
+        <member name="M:Honoplay.TrainerWebAPI.Controllers.TrainingController.GetByTrainerId(System.Int32)">
+            <summary>
+            This service retrieve training by trainingSeriesId
+            </summary>
+            <param name="trainerUserId">Get trainings list </param>
+            <returns>Get training by tenant id and trainingSeries id with status code.</returns>
+        </member>
     </members>
 </doc>
