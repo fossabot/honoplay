@@ -7,15 +7,15 @@ import {
     Grid
 } from '@material-ui/core';
 import Edit from '@material-ui/icons/Edit';
-import Style from '../Style';
-import InfoCard from '../../components/Card/InfoCard';
-import Card from '../../components/Card/CardComponents';
-import Header from '../../components/Typography/TypographyComponent';
+import Style from '../../Style';
+import InfoCard from '../../../components/Card/InfoCard';
+import Card from '../../../components/Card/CardComponents';
+import Header from '../../../components/Typography/TypographyComponent';
 
 
 import { connect } from "react-redux";
 import { fetchTraining } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Training";
-import { fetchClassroomList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom";
+import { fetchClassroomListByTrainingId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom";
 
 const GridItem = ({ xs = 12, sm = 10, label, value }) => {
     return (
@@ -48,6 +48,7 @@ class Summary extends React.Component {
             },
             loadingTraining: false,
             classroomList: [],
+            trainers: null
         };
     }
 
@@ -58,9 +59,9 @@ class Summary extends React.Component {
             isTrainingLoading,
             training,
             errorTraining,
-            isClassroomListLoading,
-            classroomsList,
-            errorClassroomList
+            isClassroomListByTrainingIdLoading,
+            classroomsListByTrainingId,
+            errorClassroomListByTrainingId
         } = this.props;
 
         if (prevProps.isTrainingLoading && !isTrainingLoading) {
@@ -76,21 +77,21 @@ class Summary extends React.Component {
             }
         }
 
-        if (!prevProps.errorClassroomList && errorClassroomList) {
+        if (!prevProps.errorClassroomListByTrainingId && errorClassroomListByTrainingId) {
             this.setState({
                 classroomListError: true
             })
         }
-        if (prevProps.isClassroomListLoading && !isClassroomListLoading && classroomsList) {
+        if (prevProps.isClassroomListByTrainingIdLoading && !isClassroomListByTrainingIdLoading && classroomsListByTrainingId) {
             this.setState({
-                classroomList: classroomsList.items
+                classroomList: classroomsListByTrainingId.items
             })
         }
     }
 
     componentDidMount() {
         this.props.fetchTraining(this.trainingId);
-        this.props.fetchClassroomList(0, 50);
+        this.props.fetchClassroomListByTrainingId(this.trainingId);
     }
 
     render() {
@@ -134,7 +135,6 @@ class Summary extends React.Component {
                             data={classroomList}
                             cardInfo
                             iconName="users"
-                            numberOfTrainees="300"
                         />
                     </Grid>
                 </Grid>
@@ -152,24 +152,25 @@ const mapStateToProps = state => {
     } = state.training;
 
     const {
-        isClassroomListLoading,
-        classroomsList,
-        errorClassroomList
-    } = state.classroomList;
+        isClassroomListByTrainingIdLoading,
+        classroomsListByTrainingId,
+        errorClassroomListByTrainingId
+    } = state.classroomListByTrainingId;
 
     return {
         isTrainingLoading,
         training,
         errorTraining,
-        isClassroomListLoading,
-        classroomsList,
-        errorClassroomList
+        isClassroomListByTrainingIdLoading,
+        classroomsListByTrainingId,
+        errorClassroomListByTrainingId
+
     };
 };
 
 const mapDispatchToProps = {
     fetchTraining,
-    fetchClassroomList
+    fetchClassroomListByTrainingId
 };
 
 export default connect(

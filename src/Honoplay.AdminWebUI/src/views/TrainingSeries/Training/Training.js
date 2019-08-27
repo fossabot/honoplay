@@ -2,9 +2,9 @@ import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import Style from '../Style';
-import Input from '../../components/Input/InputTextComponent';
-import DropDown from '../../components/Input/DropDownInputComponent';
+import Style from '../../Style';
+import Input from '../../../components/Input/InputTextComponent';
+import DropDown from '../../../components/Input/DropDownInputComponent';
 
 
 class Training extends React.Component {

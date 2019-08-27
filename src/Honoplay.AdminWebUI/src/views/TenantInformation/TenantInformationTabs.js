@@ -143,7 +143,6 @@ class TenantInformationTabs extends React.Component {
     }
     if (tabValue == 2) {
       createTrainee(newTraineeModel);
-      console.log(newTraineeModel);
     }
   };
 
@@ -179,6 +178,7 @@ class TenantInformationTabs extends React.Component {
     });
 
     return (
+      
       <MuiThemeProvider theme={theme}>
         <div className={classes.root}>
           <Grid container spacing={24}>

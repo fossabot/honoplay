@@ -1,16 +1,14 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, CircularProgress, Snackbar } from '@material-ui/core';
-import Style from '../Style';
-import Input from '../../components/Input/InputTextComponent';
-import DropDown from '../../components/Input/DropDownInputComponent';
-import Button from '../../components/Button/ButtonComponent';
-import MySnackbarContentWrapper from "../../components/Snackbar/SnackbarContextComponent";
+import { Grid, CircularProgress } from '@material-ui/core';
+import Style from '../../Style';
+import Input from '../../../components/Input/InputTextComponent';
+import DropDown from '../../../components/Input/DropDownInputComponent';
+import Button from '../../../components/Button/ButtonComponent';
 
 import { connect } from "react-redux";
-import { createSession, fetchSessionList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Session";
-import { fetchClassroomList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom";
+import { createSession } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Session";
 
 class SessionCreate extends React.Component {
 
@@ -31,35 +29,21 @@ class SessionCreate extends React.Component {
                     }
                 ]
             },
-            classroomList: [],
             open: false,
             sessionLoading: false,
             sessionError: false
         }
     }
 
+    classroomId = null;
+
     componentDidUpdate(prevProps) {
         const {
-            isClassroomListLoading,
-            classroomsList,
-            errorClassroomList,
             isCreateSessionLoading,
             newSession,
             errorCreateSession
         } = this.props;
 
-        if (!prevProps.errorClassroomList && errorClassroomList) {
-            this.setState({
-                classroomListError: true,
-                open: true
-            })
-        }
-        if (prevProps.isClassroomListLoading && !isClassroomListLoading && classroomsList) {
-            this.setState({
-                classroomList: classroomsList.items,
-                open: false,
-            })
-        }
         if (!prevProps.isCreateSessionLoading && isCreateSessionLoading) {
             this.setState({
                 sessionLoading: true
@@ -72,7 +56,6 @@ class SessionCreate extends React.Component {
             })
         }
         if (prevProps.isCreateSessionLoading && !isCreateSessionLoading && newSession) {
-           this.props.fetchSessionList(0,50);
             if (!errorCreateSession) {
                 this.setState({
                     sessionLoading: false,
@@ -82,25 +65,19 @@ class SessionCreate extends React.Component {
         }
     }
 
-    componentDidMount() {
-        this.props.fetchClassroomList(0, 50);
-    }
-
     handleClick = () => {
-        console.log(this.state.session);
         this.props.createSession(this.state.session);
     }
 
-    handleClose = (reason) => {
-        if (reason === "clickaway") {
-            return;
-        }
-        this.setState({ open: false });
-    };
-
     render() {
-        const { sessionLoading, game, session, classroomList, classroomListError, open, sessionError } = this.state;
-        const { classes } = this.props;
+        const { sessionLoading, game, session, sessionError } = this.state;
+        const { classes, classroomId } = this.props;
+
+        this.state.session.createSessionModels.map((session) => {
+            session.classroomId = classroomId;
+        })
+
+        this.classroomId = classroomId;
 
         return (
 
@@ -108,20 +85,15 @@ class SessionCreate extends React.Component {
                 <Grid container spacing={24}>
                     {session.createSessionModels.map((session, id) => (
                         <Grid item xs={12} sm={12} key={id}>
-                            <DropDown
-                                error={sessionError}
-                                data={classroomList}
-                                labelName={translate('Classroom')}
-                                onChange={e => {
-                                    session.classroomId = e.target.value;
-                                }}
-                            />
                             <Input
                                 error={sessionError}
                                 labelName={translate('SessionName')}
                                 inputType="text"
                                 onChange={e => {
                                     session.name = e.target.value;
+                                    this.setState({
+                                        sessionError: false
+                                    })
                                 }}
                             />
                             <DropDown
@@ -130,6 +102,9 @@ class SessionCreate extends React.Component {
                                 labelName={translate('Game')}
                                 onChange={e => {
                                     session.gameId = e.target.value;
+                                    this.setState({
+                                        sessionError: false
+                                    })
                                 }}
                             />
                         </Grid>
@@ -151,24 +126,6 @@ class SessionCreate extends React.Component {
                         )}
                     </Grid>
                 </Grid>
-                <Snackbar
-                    anchorOrigin={{
-                        vertical: "bottom",
-                        horizontal: "left"
-                    }}
-                    autoHideDuration={7000}
-                    open={open}
-                    onClose={this.handleClose}
-                >
-                    <MySnackbarContentWrapper
-                        onClose={this.handleClose}
-                        variant={classroomListError && "error"}
-                        message={
-                            classroomListError
-                            && translate('YouMustAddAClassBeforeCreatingASession')
-                        }
-                    />
-                </Snackbar>
             </div >
         );
     }
@@ -184,37 +141,15 @@ const mapStateToProps = state => {
 
     let newSession = createSession;
 
-    console.log('session:', state.createSession);
-
-    const {
-        isSessionListLoading,
-        sessionList,
-        errorSessionList
-    } = state.sessionList;
-
-    const {
-        isClassroomListLoading,
-        classroomsList,
-        errorClassroomList
-    } = state.classroomList;
-
     return {
         isCreateSessionLoading,
         newSession,
         errorCreateSession,
-        isSessionListLoading,
-        sessionList,
-        errorSessionList,
-        isClassroomListLoading,
-        classroomsList,
-        errorClassroomList
     };
 };
 
 const mapDispatchToProps = {
     createSession,
-    fetchSessionList,
-    fetchClassroomList
 };
 
 export default connect(

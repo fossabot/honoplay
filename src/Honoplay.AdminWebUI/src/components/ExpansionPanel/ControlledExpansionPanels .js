@@ -25,7 +25,7 @@ class ControlledExpansionPanels extends React.Component {
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Typography>
+            <Typography  variant="h6" component="h2">
               {panelDetails}
             </Typography>
           </ExpansionPanelDetails>

@@ -1,13 +1,13 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { translate } from '@omegabigdata/terasu-api-proxy';
-import { Grid, Checkbox, MuiThemeProvider, Divider, Typography } from '@material-ui/core';
+import { Grid, Checkbox, MuiThemeProvider, Divider, Typography, CircularProgress } from '@material-ui/core';
 import { Style, theme } from './Style';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 
 import { connect } from "react-redux";
-import { createOption } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options";
+import { createOption, fetchOptionsByQuestionId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options";
 
 class Options extends React.Component {
 
@@ -24,10 +24,6 @@ class Options extends React.Component {
                     isCorrect: false
                 }
             ],
-            optionsColumns: [
-                { title: "Seçenekler", field: "text" },
-                { title: "Sıra", field: "visibilityOrder" },
-              ],
         }
     }
 
@@ -36,6 +32,9 @@ class Options extends React.Component {
 
         ]
     }
+
+
+    questionId = null;
 
     componentDidUpdate(prevProps) {
         const {
@@ -56,6 +55,7 @@ class Options extends React.Component {
             })
         }
         if (prevProps.isCreateOptionLoading && !isCreateOptionLoading && createOption) {
+            this.props.fetchOptionsByQuestionId(this.questionId);
             if (!errorCreateOption) {
                 this.setState({
                     loading: false,
@@ -68,8 +68,7 @@ class Options extends React.Component {
 
     handleClick = () => {
         this.optionsModel.createOptionModels = this.state.options;
-        const { createOption } = this.props;
-        createOption(this.optionsModel);
+        this.props.createOption(this.optionsModel);
     }
 
     handleChangeChecked = (e) => {
@@ -97,13 +96,15 @@ class Options extends React.Component {
     };
 
     render() {
-        const { classes, questionId, loading } = this.props;
+        const { loading } = this.state;
+        const { classes, questionId } = this.props;
 
         this.state.options.map((option, id) => {
             option.questionId = questionId;
         })
 
-        console.log(this.state.options);
+        this.questionId = questionId;
+
         return (
 
             <MuiThemeProvider theme={theme} >
@@ -112,7 +113,7 @@ class Options extends React.Component {
                         <Grid item xs={12} sm={12} />
                         <Grid item xs={12} sm={12}>
                             <Typography>
-                                Doğru Cevap
+                                {translate('CorrectAnswer')}
                             </Typography>
                         </Grid>
                         {this.state.options.map((option, id) => (
@@ -181,9 +182,6 @@ class Options extends React.Component {
                                 />
                             )}
                         </Grid>
-                        <Grid item xs={12} sm={12}>
-
-                        </Grid>
                     </Grid>
                 </div>
             </MuiThemeProvider>
@@ -206,7 +204,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-    createOption
+    createOption,
+    fetchOptionsByQuestionId
 };
 
 
