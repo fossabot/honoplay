@@ -38,7 +38,7 @@ class CardComponent extends React.Component {
 
     render() {
         const { open } = this.state;
-        const { classes, data, url, children, titleName, cardInfo, iconName, forClassroom, summary } = this.props;
+        const { classes, data, url, children, titleName, cardInfo, iconName, forClassroom } = this.props;
         return (
 
             <MuiThemeProvider theme={theme}>
@@ -89,7 +89,7 @@ class CardComponent extends React.Component {
                                                             to={url && `/honoplay/${url}`}
                                                             onClick={() => this.handleOpen(data.id)}
                                                         >
-                                                            {forClassroom ? translate('AddSession'): summary ?  translate('Preview') : translate('Edit')} 
+                                                            {forClassroom ? translate('AddSession') : translate('Edit')} 
                                                             
                                                         </Button>
                                                     }
