@@ -20,21 +20,21 @@ namespace Honoplay.TrainerWebAPI.Controllers
         /// <summary>
         /// This service retrieve trainings by trainingId
         /// </summary>
-        /// <param name="trainingId">Get trainings list </param>
+        /// <param name="classroomId">Get trainings list </param>
         /// <returns>Get trainings by tenant id and trainerUser id with status code.</returns>
         [HttpGet]
-        [Route("/api/Training/{trainingId}/Trainee")]
+        [Route("/api/Classroom/{classroomId}/Trainee")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ResponseModel<TrainingsListModel>>> GetByTrainerId(int trainingId)
+        public async Task<ActionResult<ResponseModel<TrainingsListModel>>> GetByTrainerId(int classroomId)
         {
             try
             {
                 var userId = Claims[ClaimTypes.Sid].ToInt();
                 var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
 
-                var trainingsListModel = await Mediator.Send(new GetTraineesListByClassroomIdQuery(userId, trainingId, tenantId));
+                var trainingsListModel = await Mediator.Send(new GetTraineesListByClassroomIdQuery(userId, classroomId, tenantId));
 
                 return Ok(trainingsListModel);
             }
