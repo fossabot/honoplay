@@ -25,7 +25,7 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
                 {
                     new CreateClassroomCommandModel
                     {
-                        TrainerId = 1,
+                        TrainerUserId = 1,
                         TrainingId = 1,
                         Name = "test"
                     }

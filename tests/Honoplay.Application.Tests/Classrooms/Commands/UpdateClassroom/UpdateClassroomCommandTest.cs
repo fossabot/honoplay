@@ -21,18 +21,18 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.UpdateClassroom
         private readonly Guid _tenantId;
         private readonly int _adminUserId;
         private readonly int _trainingId;
-        private readonly int _trainerId;
+        private readonly int _trainerUserId;
         private readonly int _classroomId;
 
         public UpdateClassroomCommandTest()
         {
             var cache = new Mock<IDistributedCache>();
 
-            _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _trainingId, out _trainerId, out _classroomId);
+            _context = InitAndGetDbContext(out _tenantId, out _adminUserId, out _trainingId, out _trainerUserId, out _classroomId);
             _commandHandler = new UpdateClassroomCommandHandler(_context, new CacheManager(cache.Object));
         }
 
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int trainingId, out int trainerId, out int classroomId)
+        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int adminUserId, out int trainingId, out int trainerUserId, out int classroomId)
         {
             var context = GetDbContext();
 
@@ -106,7 +106,7 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.UpdateClassroom
             };
             context.Professions.Add(profession);
 
-            var trainer = new Trainer
+            var trainerUser = new TrainerUser
             {
                 UpdatedBy = adminUser.Id,
                 Name = "sample",
@@ -116,13 +116,13 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.UpdateClassroom
                 ProfessionId = profession.Id,
                 Surname = "test"
             };
-            context.Trainers.Add(trainer);
+            context.TrainerUsers.Add(trainerUser);
 
             var classroom = new Classroom
             {
                 CreatedBy = adminUser.Id,
                 Name = "test",
-                TrainerId = trainer.Id,
+                TrainerUserId = trainerUser.Id,
                 TrainingId = training.Id,
             };
             context.Classrooms.Add(classroom);
@@ -131,7 +131,7 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.UpdateClassroom
             adminUserId = adminUser.Id;
             tenantId = tenant.Id;
             trainingId = training.Id;
-            trainerId = trainer.Id;
+            trainerUserId = trainerUser.Id;
             classroomId = classroom.Id;
 
             return context;
@@ -145,7 +145,7 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.UpdateClassroom
                 UpdatedBy = _adminUserId,
                 TenantId = _tenantId,
                 Id = _classroomId,
-                TrainerId = _trainerId,
+                TrainerUserId = _trainerUserId,
                 TrainingId = _trainingId,
                 Name = "test"
             };
@@ -164,7 +164,7 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.UpdateClassroom
                 Id = _classroomId + 1,
                 UpdatedBy = _adminUserId,
                 TenantId = _tenantId,
-                TrainerId = _trainerId,
+                TrainerUserId = _trainerUserId,
                 TrainingId = _trainingId,
                 Name = "test"
             };

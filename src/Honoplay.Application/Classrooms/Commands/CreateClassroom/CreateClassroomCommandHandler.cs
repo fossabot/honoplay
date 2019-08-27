@@ -55,7 +55,7 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                         var newClassroom = new Classroom
                         {
                             CreatedBy = request.CreatedBy,
-                            TrainerId = createClassroomModel.TrainerId,
+                            TrainerUserId = createClassroomModel.TrainerUserId,
                             Name = createClassroomModel.Name,
                             TrainingId = createClassroomModel.TrainingId
                         };
@@ -99,7 +99,7 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
 
                     newClassrooms.ForEach(x =>
                         createdClassrooms.Add(new CreateClassroomModel(x.Id,
-                            x.TrainerId,
+                            x.TrainerUserId,
                             x.TrainingId,
                             x.Name,
                             x.ClassroomTrainees

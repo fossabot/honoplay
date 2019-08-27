@@ -7,6 +7,7 @@ import store from "./Redux/store";
 import Login from "./Pages/Login";
 import Home from "./Pages/Home/index";
 import Training from "./Pages/Training";
+import JoinCode from "./Pages/JoinCode";
 
 render(
   <Provider store={store}>
@@ -15,6 +16,7 @@ render(
       <Route path="/login" component={Login} />
       <Route path="/homepage" component={Home} />
       <Route path="/trainingdetail" component={Training} />
+      <Route path="/joincode" component={JoinCode} />
     </Router>
   </Provider>,
   document.getElementById("root")

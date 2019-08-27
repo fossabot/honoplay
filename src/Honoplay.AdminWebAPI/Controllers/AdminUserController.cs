@@ -1,8 +1,8 @@
 ﻿using Honoplay.AdminWebAPI.Interfaces;
-using Honoplay.Common._Exceptions;
 using Honoplay.Application._Infrastructure;
 using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
 using Honoplay.Application.AdminUsers.Commands.RegisterAdminUser;
+using Honoplay.Common._Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -15,11 +15,11 @@ namespace Honoplay.AdminWebAPI.Controllers
     [AllowAnonymous]
     public class AdminUserController : BaseController
     {
-        private readonly IUserService _userService;
+        private readonly IAdminUserService _adminUserService;
 
-        public AdminUserController(IUserService userService)
+        public AdminUserController(IAdminUserService adminUserService)
         {
-            _userService = userService;
+            _adminUserService = adminUserService;
         }
 
         [HttpPost("Authenticate")]
@@ -33,7 +33,7 @@ namespace Honoplay.AdminWebAPI.Controllers
                 command.HostName = HonoHost;
                 var model = await Mediator.Send(command);
 
-                var (user, stringToken) = _userService.GenerateToken(model);
+                var (user, stringToken) = _adminUserService.GenerateToken(model);
 
                 return Ok(new { User = user, Token = stringToken });
             }
@@ -68,7 +68,7 @@ namespace Honoplay.AdminWebAPI.Controllers
         {
             try
             {
-                var token = _userService.RenewToken(renewToken);
+                var token = _adminUserService.RenewToken(renewToken);
                 return StatusCode((int)HttpStatusCode.Created, token);
             }
             catch (ObjectAlreadyExistsException ex)

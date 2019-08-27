@@ -7,7 +7,7 @@ namespace Honoplay.Application.Classrooms.Queries.GetClassroomsListByTrainingId
     public struct ClassroomsListByTrainingIdModel
     {
         public int Id { get; private set; }
-        public int TrainerId { get; private set; }
+        public int TrainerUserId { get; private set; }
         public int TrainingId { get; private set; }
         public string Name { get; private set; }
         public int CreatedBy { get; private set; }
@@ -23,7 +23,7 @@ namespace Honoplay.Application.Classrooms.Queries.GetClassroomsListByTrainingId
                 {
                     Id = classroom.Id,
                     Name = classroom.Name,
-                    TrainerId = classroom.TrainerId,
+                    TrainerUserId = classroom.TrainerUserId,
                     TrainingId = classroom.TrainingId,
                     CreatedBy = classroom.CreatedBy,
                     CreatedAt = classroom.CreatedAt,

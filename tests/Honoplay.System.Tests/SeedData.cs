@@ -105,7 +105,7 @@ namespace Honoplay.System.Tests
             };
             dbContext.Trainings.Add(training);
 
-            var trainer = new Trainer
+            var trainerUser = new TrainerUser
             {
                 Name = "Emre",
                 PhoneNumber = "1234567890",
@@ -115,7 +115,7 @@ namespace Honoplay.System.Tests
                 Email = "yunuskas55@gmail.com",
                 ProfessionId = profession.Id
             };
-            dbContext.Trainers.Add(trainer);
+            dbContext.TrainerUsers.Add(trainerUser);
 
             var trainee = new Trainee
             {
@@ -153,7 +153,7 @@ namespace Honoplay.System.Tests
             {
                 CreatedBy = adminUser.Id,
                 Name = "test",
-                TrainerId = trainer.Id,
+                TrainerUserId = trainerUser.Id,
                 TrainingId = training.Id,
             };
             dbContext.Classrooms.Add(classroom);
