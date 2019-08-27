@@ -24,6 +24,7 @@ namespace Honoplay.Application.Tests.TrainerUsers.Commands.UpdateTrainerUser
                 DepartmentId = 1,
                 UpdatedBy = 1,
                 Surname = "asdasd",
+                Password = "testPass1*",
                 PhoneNumber = "21412312321",
                 Email = "asd@gmail.com",
                 ProfessionId = 1,
@@ -37,6 +38,7 @@ namespace Honoplay.Application.Tests.TrainerUsers.Commands.UpdateTrainerUser
             _validator.ShouldHaveValidationErrorFor(x => x.Id, 0);
             _validator.ShouldHaveValidationErrorFor(x => x.Name, string.Empty);
             _validator.ShouldHaveValidationErrorFor(x => x.Email, string.Empty);
+            _validator.ShouldHaveValidationErrorFor(x => x.Password, string.Empty);
             _validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, string.Empty);
             _validator.ShouldHaveValidationErrorFor(x => x.DepartmentId, 0);
             _validator.ShouldHaveValidationErrorFor(x => x.Surname, string.Empty);
@@ -48,6 +50,7 @@ namespace Honoplay.Application.Tests.TrainerUsers.Commands.UpdateTrainerUser
         {
             _validator.ShouldHaveValidationErrorFor(x => x.Name, string.Join("", Enumerable.Repeat("x", 51)));
             _validator.ShouldHaveValidationErrorFor(x => x.Surname, string.Join("", Enumerable.Repeat("x", 51)));
+            _validator.ShouldHaveValidationErrorFor(x => x.Password, string.Join("", Enumerable.Repeat("x", 51)));
             _validator.ShouldHaveValidationErrorFor(x => x.Email, string.Join("", Enumerable.Repeat("x", 151)));
             _validator.ShouldHaveValidationErrorFor(x => x.PhoneNumber, string.Join("", Enumerable.Repeat("x", 21)));
         }
