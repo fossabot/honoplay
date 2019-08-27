@@ -1,23 +1,23 @@
-﻿using Honoplay.Application.TrainerUsers.Commands.AuthenticateTrainerUser;
-using Honoplay.TrainerUserWebAPI.Interfaces;
+﻿using Honoplay.Application.TraineeUsers.Commands.AuthenticateTraineeUser;
+using Honoplay.TraineeUserWebAPI.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace Honoplay.TrainerUserWebAPI.Services
+namespace Honoplay.TraineeUserWebAPI.Services
 {
-    public class TrainerUserService : ITrainerUserService
+    public class TraineeUserService : ITraineeUserService
     {
         private readonly AppSettings _appSettings;
 
-        public TrainerUserService(IOptions<AppSettings> appSettings)
+        public TraineeUserService(IOptions<AppSettings> appSettings)
         {
             _appSettings = appSettings.Value;
         }
 
-        public (TrainerUserAuthenticateModel user, string stringToken) GenerateToken(TrainerUserAuthenticateModel user)
+        public (TraineeUserAuthenticateModel user, string stringToken) GenerateToken(TraineeUserAuthenticateModel user)
         {
 
             //// authentication successful so generate jwt token
@@ -29,7 +29,7 @@ namespace Honoplay.TrainerUserWebAPI.Services
                 {
                     new Claim(ClaimTypes.Sid, user.Id.ToString()),
                     new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.Role, "TrainerUser"),
+                    new Claim(ClaimTypes.Role, "TraineeUser"),
                     new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.Webpage, user.HostName),
                     new Claim(ClaimTypes.GroupSid, user.DepartmentId.ToString()),

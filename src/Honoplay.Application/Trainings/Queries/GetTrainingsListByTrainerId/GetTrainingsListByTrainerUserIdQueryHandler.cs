@@ -39,7 +39,7 @@ namespace Honoplay.Application.Trainings.Queries.GetTrainingsListByTrainerUserId
             var trainingsList = allTrainingsList.SelectMany(x => x.Classrooms.Where(y => y.TrainerUserId == request.TrainerUserId).Select(z => z.Training))
                 .Select(GetTrainingsListByTrainerUserIdModel.Projection);
 
-            return new ResponseModel<GetTrainingsListByTrainerUserIdModel>(numberOfTotalItems: allTrainingsList.LongCount(), numberOfSkippedItems: 0, source: trainingsList);
+            return new ResponseModel<GetTrainingsListByTrainerUserIdModel>(numberOfTotalItems: trainingsList.LongCount(), numberOfSkippedItems: 0, source: trainingsList);
         }
     }
 }

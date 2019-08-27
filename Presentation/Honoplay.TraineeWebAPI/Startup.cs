@@ -1,4 +1,15 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using FluentValidation.AspNetCore;
+using Honoplay.Application;
+using Honoplay.Common.Constants;
+using Honoplay.Persistence;
+using Honoplay.Persistence.CacheManager;
+using Honoplay.Persistence.CacheService;
+using Honoplay.TraineeUserWebAPI;
+using Honoplay.TraineeUserWebAPI.Interfaces;
+using Honoplay.TraineeUserWebAPI.Services;
+using MediatR;
+using MediatR.Pipeline;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -7,24 +18,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mime;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using FluentValidation.AspNetCore;
-using Honoplay.Application;
-using Honoplay.Common.Constants;
-using MediatR;
-using MediatR.Pipeline;
-using Swashbuckle.AspNetCore.Swagger;
-using Honoplay.Persistence;
-using Honoplay.Persistence.CacheManager;
-using Honoplay.Persistence.CacheService;
-using Honoplay.TrainerUserWebAPI;
-using Honoplay.TrainerUserWebAPI.Interfaces;
-using Honoplay.TrainerUserWebAPI.Services;
 
 namespace Honoplay.TraineeWebAPI
 {
@@ -55,7 +54,7 @@ namespace Honoplay.TraineeWebAPI
             //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>)); // TODO: çalışan bir nokta görülmediği için kontrol amaçlı kapatıldı
             services.AddMediatR(AssemblyIdentifier.Get());
 
-            services.AddScoped<ITrainerUserService, TrainerUserService>();
+            services.AddScoped<ITraineeUserService, TraineeUserService>();
             services.AddSingleton<ICacheService, CacheManager>();
 
             // Add DbContext using SQL Server Provider
