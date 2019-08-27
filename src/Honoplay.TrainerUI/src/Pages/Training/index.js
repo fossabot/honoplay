@@ -144,7 +144,7 @@ class Training extends Component {
 
             <div className="mt-5">
               <Link
-                target="new_blank"
+                target="about_blank"
                 to="/joincode"
                 className="btn btn-primary mr-2"
               >
