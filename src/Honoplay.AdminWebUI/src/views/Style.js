@@ -47,7 +47,14 @@ const Style = theme => ({
     borderStyle: 'solid',
     borderWidth: 1,
     height: 70
-  }
+  },
+  passwordInput : {
+    width: '94%', 
+  },
+  bootstrapFormLabel: {
+    fontSize: 15,
+    color: '#495057'
+  },
 });
 
 export default Style;

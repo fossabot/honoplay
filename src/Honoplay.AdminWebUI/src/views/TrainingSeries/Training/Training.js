@@ -13,7 +13,7 @@ class Training extends React.Component {
         super(props);
         this.state = {
             trainingCategory: [
-                { id: 1, name: 'Yazılım', },
+                { id: 2, name: 'Yazılım', },
             ],
             training: [
                 {
