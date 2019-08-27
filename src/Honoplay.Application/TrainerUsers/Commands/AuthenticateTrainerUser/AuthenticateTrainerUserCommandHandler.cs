@@ -60,12 +60,16 @@ namespace Honoplay.Application.TrainerUsers.Commands.AuthenticateTrainerUser
                 throw new Exception();
             }
 
+            Guid tenantId;
             int departmentId;
             try
             {
-                departmentId = _context.TrainerUsers
+                var currentDepartment = _context.TrainerUsers
                     .Include(x => x.Department.Tenant)
-                    .First(x => x.Id == trainerUser.Id && x.Department.Tenant.HostName == request.HostName).DepartmentId;
+                    .First(x => x.Id == trainerUser.Id && x.Department.Tenant.HostName == request.HostName).Department;
+
+                tenantId = currentDepartment.TenantId;
+                departmentId = currentDepartment.Id;
             }
             catch (Exception)
             {
@@ -78,6 +82,7 @@ namespace Honoplay.Application.TrainerUsers.Commands.AuthenticateTrainerUser
                                            name: trainerUser.Name,
                                            isPasswordExpired: isPasswordExpired,
                                            departmentId: departmentId,
+                                           tenantId: tenantId,
                                            hostName: request.HostName,
                                            jsValidators: jsValidators);
         }
