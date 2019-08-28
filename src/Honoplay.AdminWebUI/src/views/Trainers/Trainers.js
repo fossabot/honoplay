@@ -237,7 +237,6 @@ class Trainers extends React.Component {
                             className={classes.passwordInput}
                             name="password"
                             type={this.state.showPassword ? 'text' : 'password'}
-                            autoComplete="current-password"
                             onChange={this.handleChange}
                             value={this.trainerModel.password}
                             InputProps={{

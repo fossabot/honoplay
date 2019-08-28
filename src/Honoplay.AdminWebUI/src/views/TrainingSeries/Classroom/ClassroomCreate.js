@@ -28,7 +28,7 @@ class ClassroomCreate extends React.Component {
                         name: '',
                         trainerUserId: '',
                         trainingId: '',
-                        traineesId: []
+                        traineeUsersId: []
                     }
                 ]
             },

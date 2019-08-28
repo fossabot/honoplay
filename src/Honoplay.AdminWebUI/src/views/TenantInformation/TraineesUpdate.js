@@ -4,9 +4,15 @@ import { translate } from '@omegabigdata/terasu-api-proxy';
 import classNames from "classnames";
 import {
     Grid,
-    CircularProgress
+    CircularProgress,
+    TextField,
+    InputAdornment,
+    IconButton,
+    InputLabel
 } from '@material-ui/core';
 import Style from '../Style';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
 import Button from '../../components/Button/ButtonComponent';
@@ -24,8 +30,8 @@ class TraineesUpdate extends React.Component {
             workingStatuses: [],
             departments: [],
             gender: [
-                { id: 0, name: translate('Male')},
-                { id: 1, name: translate('Female')}
+                { id: 0, name: translate('Male') },
+                { id: 1, name: translate('Female') }
             ],
             traineeModel: {
                 name: '',
@@ -34,12 +40,14 @@ class TraineesUpdate extends React.Component {
                 phoneNumber: '',
                 gender: '',
                 workingStatusId: '',
-                departmentId: ''
+                departmentId: '',
+                password: ''
             },
             loadingTrainee: false,
             loadingUpdate: false,
             success: false,
-            updateError: false
+            updateError: false,
+            confirmPassword: null
         }
     }
 
@@ -95,15 +103,23 @@ class TraineesUpdate extends React.Component {
         }
         if (prevProps.isUpdateTraineeLoading && !isUpdateTraineeLoading && updatedTrainee) {
             if (!errorUpdateTrainee) {
-                this.props.fetchTraineeList(0,50);
-                this.setState({
-                    updateError: false,
-                    loadingUpdate: false,
-                    success: true,
-                });
-                setTimeout(() => {
-                    this.setState({ success: false });
-                }, 1000);
+                if (this.state.confirmPassword == this.state.traineeModel.password) {
+                    this.props.fetchTraineeList(0, 50);
+                    this.setState({
+                        updateError: false,
+                        loadingUpdate: false,
+                        success: true,
+                    });
+                    setTimeout(() => {
+                        this.setState({ success: false });
+                    }, 1000);
+                } else {
+                    this.setState({
+                        updateError: true,
+                        success: false,
+                        loadingUpdate: false,
+                    });
+                }
             }
         }
     }
@@ -121,7 +137,8 @@ class TraineesUpdate extends React.Component {
                 ...prevState.traineeModel,
                 [name]: value
             },
-            updateError: false
+            updateError: false,
+            [name] : value
         }))
     }
 
@@ -139,7 +156,7 @@ class TraineesUpdate extends React.Component {
             gender,
             success,
             loadingUpdate,
-            updateError
+            updateError,
         } = this.state;
         const buttonClassname = classNames({
             [classes.buttonSuccess]: success
@@ -210,6 +227,56 @@ class TraineesUpdate extends React.Component {
                                 onChange={this.handleChange}
                                 name="gender"
                                 value={traineeModel.gender}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={3}>
+                            <InputLabel className={classes.bootstrapFormLabel}>
+                                {translate('Password')}
+                            </InputLabel>
+                        </Grid>
+                        <Grid item xs={12} sm={9}>
+                            <TextField
+                                error={updateError && true}
+                                className={classes.passwordInput}
+                                name="password"
+                                type={this.state.showPassword ? 'text' : 'password'}
+                                onChange={this.handleChange}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={this.handleClickShowPassword}
+                                            >
+                                                {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={3}>
+                            <InputLabel className={classes.bootstrapFormLabel}>
+                                {translate('Confirm')}
+                            </InputLabel>
+                        </Grid>
+                        <Grid item xs={12} sm={9}>
+                            <TextField
+                                error={updateError && true}
+                                className={classes.passwordInput}
+                                name="confirmPassword"
+                                type={this.state.showPassword ? 'text' : 'password'}
+                                onChange={this.handleChange}
+                                InputProps={{
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <IconButton
+                                                onClick={this.handleClickShowPassword}
+                                            >
+                                                {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                                            </IconButton>
+                                        </InputAdornment>
+                                    ),
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={12} />

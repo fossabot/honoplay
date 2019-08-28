@@ -3,9 +3,15 @@ import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import {
   Grid,
-  Divider
+  Divider,
+  TextField,
+  InputAdornment,
+  IconButton,
+  InputLabel
 } from '@material-ui/core';
 import Style from '../Style';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
 import Table from '../../components/Table/TableComponent';
@@ -48,7 +54,9 @@ class Trainee extends React.Component {
     phoneNumber: '',
     gender: '',
     workingStatusId: '',
-    departmentId: ''
+    departmentId: '',
+    password: '',
+    email:''
   }
 
   componentDidUpdate(prevProps) {
@@ -56,7 +64,6 @@ class Trainee extends React.Component {
       isTraineeListLoading,
       errorTraineeList,
       trainees,
-      errorDepartmentList,
       isDepartmentListLoading,
       departmentList,
       isWorkingStatusListLoading,
@@ -175,6 +182,40 @@ class Trainee extends React.Component {
               onChange={this.handleChange}
               name="gender"
               value={this.traineeModel.gender}
+            />
+            <Input
+              error={isErrorTrainee}
+              labelName={translate('EmailAddress')}
+              inputType="text"
+              name="email"
+              value={this.traineeModel.email}
+              onChange={this.handleChange}
+            />
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <InputLabel className={classes.bootstrapFormLabel}>
+              {translate('Password')}
+            </InputLabel>
+          </Grid>
+          <Grid item xs={12} sm={9}>
+            <TextField
+              error={isErrorTrainee && true}
+              className={classes.passwordInput}
+              name="password"
+              type={this.state.showPassword ? 'text' : 'password'}
+              onChange={this.handleChange}
+              value={this.traineeModel.password}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      onClick={this.handleClickShowPassword}
+                    >
+                      {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
           <Grid item xs={12} sm={12}><Divider /></Grid>
