@@ -42,7 +42,7 @@ class TraineesUpdate extends React.Component {
             loadingUpdate: false,
             success: false,
             updateError: false,
-            confirm: null
+            confirmPassword: null
         }
     }
 
@@ -99,7 +99,7 @@ class TraineesUpdate extends React.Component {
         }
         if (prevProps.isUpdateTrainerLoading && !isUpdateTrainerLoading && updateTrainer) {
             if (!errorUpdateTrainer) {
-                if (this.state.confirm == this.state.trainerModel.password) {
+                if (this.state.confirmPassword == this.state.trainerModel.password) {
                     this.props.fetchTrainersList(0, 50);
                     this.setState({
                         updateError: false,
@@ -235,7 +235,6 @@ class TraineesUpdate extends React.Component {
                                 className={classes.passwordInput}
                                 name="password"
                                 type={this.state.showPassword ? 'text' : 'password'}
-                                autoComplete="current-password"
                                 onChange={this.handleChange}
                                 InputProps={{
                                     endAdornment: (
@@ -259,9 +258,8 @@ class TraineesUpdate extends React.Component {
                             <TextField
                                 error={updateError && true}
                                 className={classes.passwordInput}
-                                name="confirm"
+                                name="confirmPassword"
                                 type={this.state.showPassword ? 'text' : 'password'}
-                                autoComplete="current-password"
                                 onChange={this.handleChange}
                                 InputProps={{
                                     endAdornment: (
