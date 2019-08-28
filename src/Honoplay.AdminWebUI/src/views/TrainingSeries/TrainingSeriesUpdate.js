@@ -1,155 +1,131 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { translate } from '@omegabigdata/terasu-api-proxy';
 import { Grid } from '@material-ui/core';
 import Style from '../Style';
-import CardButton from '../../components/Card/CardButton';
-import Card from '../../components/Card/CardComponents';
-import Typography from '../../components/Typography/TypographyComponent';
+import Stepper from '../../components/Stepper/HorizontalStepper';
+import TrainingUpdate from './Training/TrainingUpdate';
+import Classrooms from './Classroom/Classrooms';
+
 
 import { connect } from "react-redux";
-import { fetchTrainingSeries } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingSeries";
-import { fetchTrainingListByTrainingSeriesId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Training";
+import { updateTraining } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Training";
 
-import TrainingUpdate from "./Training/TrainingUpdate";
+class TrainingSeriesInformation extends React.Component {
 
-
-class TrainingSeriesUpdate extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      trainingSeries: {
-        createTrainingSeriesModels: [
-          {
-            name: ''
-          }
-        ]
-      },
-      trainingList: [],
-      trainingListError: false,
-      trainingId: null,
+    constructor(props) {
+        super(props);
+        this.state = {
+            activeStep: 0,
+            newTrainingModel: null,
+            loadingUpdate: false,
+            updateError: false
+        }
     }
-  }
 
-  trainingSeriesId = localStorage.getItem("trainingSeriesId");
+    trainingId = localStorage.getItem("trainingId");
 
-  componentDidUpdate(prevProps) {
-    const {
-      isTrainingSeriesLoading,
-      trainingSeries,
-      errorTrainingSeries,
-      isTrainingListByTrainingSeriesIdLoading,
-      TrainingListByTrainingSeriesId,
-      errorTrainingListByTrainingSeriesId
-    } = this.props;
+    componentDidUpdate(prevProps) {
+        const {
+            isUpdateTrainingLoading,
+            updateTraining,
+            errorUpdateTraining
+        } = this.props;
 
-    if (prevProps.isTrainingSeriesLoading && !isTrainingSeriesLoading) {
-      this.setState({
-        loadingTrainer: true
-      })
+        if (!prevProps.isUpdateTrainingLoading && isUpdateTrainingLoading) {
+            this.setState({
+                loadingUpdate: true
+            })
+        }
+        if (!prevProps.errorUpdateTraining && errorUpdateTraining) {
+            this.setState({
+                updateError: true,
+                loadingUpdate: false,
+            })
+        }
+        if (prevProps.isUpdateTrainingLoading && !isUpdateTrainingLoading && updateTraining) {
+            if (!errorUpdateTraining) {
+                this.setState({
+                    updateError: false,
+                    loadingUpdate: false,
+                    activeStep: 1
+                });
+            }
+        }
     }
-    if (prevProps.isTrainingSeriesLoading && !isTrainingSeriesLoading && trainingSeries) {
-      if (!errorTrainingSeries) {
+
+
+    handleBack = () => {
+        this.setState(state => ({
+            activeStep: state.activeStep - 1,
+        }));
+    }
+
+    handleReset = () => {
         this.setState({
-          trainingSeries: trainingSeries.items[0]
-        })
-      }
+            activeStep: 0,
+        });
     }
-    if (!prevProps.errorTrainingListByTrainingSeriesId && errorTrainingListByTrainingSeriesId) {
-      this.setState({
-        trainingListError: true
-      })
+
+    handleClick = () => {
+        console.log(this.state.newTrainingModel);
+        this.props.updateTraining(this.state.newTrainingModel);
     }
-    if (prevProps.isTrainingListByTrainingSeriesIdLoading && !isTrainingListByTrainingSeriesIdLoading && TrainingListByTrainingSeriesId) {
-      this.setState({
-        trainingList: TrainingListByTrainingSeriesId.items
-      })
+
+
+    render() {
+        const { activeStep, updateError, loadingUpdate } = this.state;
+        const { classes } = this.props;
+
+        return (
+
+            <div className={classes.root}>
+                <Grid container spacing={16}>
+                    <Grid item xs={12} sm={12}>
+                        <Stepper handleNext={this.handleClick}
+                            activeStep={activeStep}
+                            handleBack={this.handleBack}
+                            handleReset={this.handleReset}
+                            loading={loadingUpdate}
+                        >
+                            <TrainingUpdate trainingId={this.trainingId}
+                                basicTrainingUpdateModel={model => {
+                                    if (model) {
+                                        this.setState({
+                                            newTrainingModel: model,
+                                            updateError: false
+                                        });
+                                    }
+                                }}
+                                updateError={updateError}
+                            />
+                            <Classrooms trainingId={this.trainingId} />
+                        </Stepper>
+                    </Grid>
+                </Grid>
+            </div>
+        );
     }
-  }
-
-  componentDidMount() {
-    this.props.fetchTrainingSeries(this.trainingSeriesId);
-    this.props.fetchTrainingListByTrainingSeriesId(this.trainingSeriesId);
-  }
-
-  handleClick = () => {
-    this.props.history.push(`/honoplay/trainingseriesdetail/training`);
-  }
-
-  render() {
-    const { trainingSeries, trainingList, trainingId } = this.state;
-    const { classes } = this.props;
-
-    return (
-
-      <div className={classes.root}>
-        <Grid container spacing={24}>
-          <Grid item xs={12} sm={12}>
-            <Typography
-              pageHeader={trainingSeries.name}
-            />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <CardButton
-              cardName={translate('CreateTraining')}
-              cardDescription={translate('YouCanCreateDifferentTrainingsForEachTrainingSeries')}
-              onClick={this.handleClick}
-              forTraining
-              iconName="graduation-cap"
-            />
-          </Grid>
-          <Grid item xs={12} sm={9}>
-            <Card
-              data={trainingList}
-              titleName={translate('Update')}
-              id={id => {
-                if(id) {
-                  this.setState({
-                    trainingId: id
-                  })
-                }
-              }}
-            >
-              <TrainingUpdate trainingId={trainingId} trainingSeriesId={this.trainingSeriesId}/>
-            </Card>
-          </Grid>
-        </Grid>
-      </div>
-    );
-  }
 }
 
 const mapStateToProps = state => {
+    const {
+        isUpdateTrainingLoading,
+        updateTraining,
+        errorUpdateTraining
+    } = state.updateTraining;
 
-  const {
-    isTrainingSeriesLoading,
-    trainingSeries,
-    errorTrainingSeries
-  } = state.trainingSeries;
-
-  const {
-    isTrainingListByTrainingSeriesIdLoading,
-    TrainingListByTrainingSeriesId,
-    errorTrainingListByTrainingSeriesId
-  } = state.trainingListByTrainingSeriesId;
-
-  return {
-    isTrainingSeriesLoading,
-    trainingSeries,
-    errorTrainingSeries,
-    isTrainingListByTrainingSeriesIdLoading,
-    TrainingListByTrainingSeriesId,
-    errorTrainingListByTrainingSeriesId
-  };
+    return {
+        isUpdateTrainingLoading,
+        updateTraining,
+        errorUpdateTraining
+    };
 };
 
 const mapDispatchToProps = {
-  fetchTrainingSeries,
-  fetchTrainingListByTrainingSeriesId
+    updateTraining
 };
 
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withStyles(Style)(TrainingSeriesUpdate));
+    mapStateToProps,
+    mapDispatchToProps
+)(withStyles(Style)(TrainingSeriesInformation));
