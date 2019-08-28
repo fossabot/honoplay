@@ -36,11 +36,10 @@ namespace Honoplay.Application.Trainings.Queries.GetTrainingsListByTrainerUserId
                 throw new NotFoundException();
             }
 
-            var trainingsList = allTrainingsList.Where(x => 
-                    x.Classrooms.All(y => y.TrainerUserId == request.Id))
+            var trainingsList = allTrainingsList.SelectMany(x => x.Classrooms.Where(y => y.TrainerUserId == request.TrainerUserId).Select(z => z.Training))
                 .Select(GetTrainingsListByTrainerUserIdModel.Projection);
 
-            return new ResponseModel<GetTrainingsListByTrainerUserIdModel>(numberOfTotalItems: allTrainingsList.LongCount(), numberOfSkippedItems: 0, source: trainingsList);
+            return new ResponseModel<GetTrainingsListByTrainerUserIdModel>(numberOfTotalItems: trainingsList.LongCount(), numberOfSkippedItems: 0, source: trainingsList);
         }
     }
 }

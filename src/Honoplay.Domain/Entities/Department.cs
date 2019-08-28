@@ -8,7 +8,7 @@ namespace Honoplay.Domain.Entities
     {
         public Department()
         {
-            Trainees = new HashSet<Trainee>();
+            TraineeUsers = new HashSet<TraineeUser>();
             TrainerUsers = new HashSet<TrainerUser>();
         }
         public int Id { get; set; }
@@ -17,7 +17,7 @@ namespace Honoplay.Domain.Entities
         [JsonIgnore]
         public Tenant Tenant { get; set; }
         [JsonIgnore]
-        public virtual ICollection<Trainee> Trainees { get; set; }
+        public virtual ICollection<TraineeUser> TraineeUsers { get; set; }
         [JsonIgnore]
         public virtual ICollection<TrainerUser> TrainerUsers { get; set; }
     }

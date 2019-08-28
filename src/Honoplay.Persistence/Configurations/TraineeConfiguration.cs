@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Honoplay.Persistence.Configurations
 {
-    public class TraineeConfiguration : IEntityTypeConfiguration<Trainee>
+    public class TraineeUserConfiguration : IEntityTypeConfiguration<TraineeUser>
     {
-        public void Configure(EntityTypeBuilder<Trainee> builder)
+        public void Configure(EntityTypeBuilder<TraineeUser> builder)
         {
             //Id
             builder.HasKey(x => x.Id);
@@ -29,13 +29,13 @@ namespace Honoplay.Persistence.Configurations
             
             //Department
             builder.HasOne(x => x.Department)
-                .WithMany(y => y.Trainees)
+                .WithMany(y => y.TraineeUsers)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasForeignKey(x => x.DepartmentId);
 
             //WorkingStatus
             builder.HasOne(x => x.WorkingStatus)
-                .WithMany(y => y.Trainees)
+                .WithMany(y => y.TraineeUsers)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasForeignKey(x => x.WorkingStatusId);
 

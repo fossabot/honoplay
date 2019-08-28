@@ -159,12 +159,12 @@
             <param name="command"> Retrieve the tenants by the Skip and Take.</param>
             <returns>Created Tenant</returns>
         </member>
-        <member name="M:Honoplay.AdminWebAPI.Controllers.TraineeController.Post(Honoplay.Application.Trainees.Commands.CreateTrainee.CreateTraineeCommand)">
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TraineeUserController.Post(Honoplay.Application.TraineeUsers.Commands.CreateTraineeUser.CreateTraineeUserCommand)">
             <summary>
-            This service create trainee.
+            This service create traineeUser.
             </summary>
-            <param name="command">Create trainee model</param>
-            <returns>CreateTraineeModel with status code.</returns>
+            <param name="command">Create traineeUser model</param>
+            <returns>CreateTraineeUserModel with status code.</returns>
         </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.TrainingController.Post(Honoplay.Application.Trainings.Commands.CreateTraining.CreateTrainingCommand)">
             <summary>

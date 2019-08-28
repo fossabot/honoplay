@@ -4,25 +4,25 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Honoplay.Persistence.Configurations
 {
-    public class ClassroomTraineeConfiguration : IEntityTypeConfiguration<ClassroomTrainee>
+    public class ClassroomTraineeUserConfiguration : IEntityTypeConfiguration<ClassroomTraineeUser>
     {
-        public void Configure(EntityTypeBuilder<ClassroomTrainee> builder)
+        public void Configure(EntityTypeBuilder<ClassroomTraineeUser> builder)
         {
-            builder.HasKey(bc => new { bc.ClassroomId, bc.TraineeId });
+            builder.HasKey(bc => new { bc.ClassroomId, bc.TraineeUserId });
 
             //Tenant
             builder.HasOne(x => x.Classroom)
-                .WithMany(x => x.ClassroomTrainees)
+                .WithMany(x => x.ClassroomTraineeUsers)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasForeignKey(x => x.ClassroomId)
-                .HasConstraintName("FK_Classroom_ClassroomTrainee");
+                .HasConstraintName("FK_Classroom_ClassroomTraineeUser");
 
             //AdminUser
-            builder.HasOne(x => x.Trainee)
-                .WithMany(x => x.ClassroomTrainees)
+            builder.HasOne(x => x.TraineeUser)
+                .WithMany(x => x.ClassroomTraineeUsers)
                 .OnDelete(DeleteBehavior.Cascade)
-                .HasForeignKey(x => x.TraineeId)
-                .HasConstraintName("FK_Trainee_ClassroomTrainee");
+                .HasForeignKey(x => x.TraineeUserId)
+                .HasConstraintName("FK_TraineeUser_ClassroomTraineeUser");
         }
     }
 }

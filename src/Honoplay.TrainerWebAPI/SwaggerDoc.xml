@@ -5,18 +5,11 @@
     </assembly>
     <members>
         <!-- Badly formed XML comment ignored for member "M:Honoplay.TrainerWebAPI.Controllers.ClassroomController.GetByTrainingId(System.Int32)" -->
-        <member name="M:Honoplay.TrainerWebAPI.Controllers.TraineeController.GetByTrainerId(System.Int32)">
+        <member name="M:Honoplay.TrainerWebAPI.Controllers.TraineeUserController.GetByTrainerId(System.Int32)">
             <summary>
             This service retrieve trainings by trainingId
             </summary>
-            <param name="trainingId">Get trainings list </param>
-            <returns>Get trainings by tenant id and trainerUser id with status code.</returns>
-        </member>
-        <member name="M:Honoplay.TrainerWebAPI.Controllers.TrainingController.GetByTrainerId(System.Int32)">
-            <summary>
-            This service retrieve trainings by trainerUserId
-            </summary>
-            <param name="trainerUserId">Get trainings list </param>
+            <param name="classroomId">Get trainings list </param>
             <returns>Get trainings by tenant id and trainerUser id with status code.</returns>
         </member>
     </members>

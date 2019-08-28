@@ -19,7 +19,7 @@ namespace Honoplay.Persistence
         public DbSet<TenantAdminUser> TenantAdminUsers { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<WorkingStatus> WorkingStatuses { get; set; }
-        public DbSet<Trainee> Trainees { get; set; }
+        public DbSet<TraineeUser> TraineeUsers { get; set; }
         public DbSet<TrainerUser> TrainerUsers { get; set; }
         public DbSet<Profession> Professions { get; set; }
         public DbSet<Question> Questions { get; set; }
@@ -30,7 +30,7 @@ namespace Honoplay.Persistence
         public DbSet<Session> Sessions { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<TrainingCategory> TrainingCategories { get; set; }
-        public DbSet<ClassroomTrainee> ClassroomTrainees { get; set; }
+        public DbSet<ClassroomTraineeUser> ClassroomTraineeUsers { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
