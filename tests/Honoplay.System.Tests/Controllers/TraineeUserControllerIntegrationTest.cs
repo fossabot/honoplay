@@ -31,6 +31,8 @@ namespace Honoplay.System.Tests.Controllers
                 DepartmentId = 1,
                 Gender = 1,
                 CreatedBy = 1,
+                Password = "testPass1*",
+                Email = "asd@gmail.com",
                 PhoneNumber = "65468465466",
                 Surname = "tenant-surname",
                 NationalIdentityNumber = "879684684654",
@@ -61,6 +63,8 @@ namespace Honoplay.System.Tests.Controllers
                 DepartmentId = 1,
                 Gender = 1,
                 PhoneNumber = "65468465466",
+                Password = "teastPass1*",
+                Email = "assd@gmail.com",
                 Surname = "tenant-surname",
                 NationalIdentityNumber = "879684684654",
                 WorkingStatusId = 1
