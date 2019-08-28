@@ -88,22 +88,18 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                     }
                     else
                     {
-                        foreach (var newClassroom in newClassrooms)
+                        for (int i = 0; i < newClassrooms.Count; i++)
                         {
-                            await _context.Classrooms.AddAsync(newClassroom, cancellationToken);
-
-                            foreach (var createClassroomModel in request.CreateClassroomModels)
+                            await _context.Classrooms.AddAsync(newClassrooms[i], cancellationToken);
+                            foreach (var traineeUserId in request.CreateClassroomModels[i].TraineeUsersId)
                             {
-                                foreach (var i in createClassroomModel.TraineeUsersId)
+                                newClassrooms[i].ClassroomTraineeUsers.Add(new ClassroomTraineeUser
                                 {
-                                    await _context.ClassroomTraineeUsers.AddAsync(new ClassroomTraineeUser
-                                    {
-                                        ClassroomId = newClassroom.Id,
-                                        TraineeUserId = i
-                                    }, cancellationToken);
-                                }
+                                    TraineeUserId = traineeUserId
+                                });
                             }
                         }
+
                         await _context.SaveChangesAsync(cancellationToken);
                     }
 
