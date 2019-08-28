@@ -8,6 +8,7 @@ namespace Honoplay.Application.TraineeUsers.Queries.GetTraineeUsersList
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Email { get; set; }
         public string Surname { get; set; }
         public string NationalIdentityNumber { get; set; }
         public string PhoneNumber { get; set; }
@@ -23,6 +24,7 @@ namespace Honoplay.Application.TraineeUsers.Queries.GetTraineeUsersList
         {
             Id = traineeUser.Id,
             Name = traineeUser.Name,
+            Email = traineeUser.Email,
             Surname = traineeUser.Surname,
             NationalIdentityNumber = traineeUser.NationalIdentityNumber,
             PhoneNumber = traineeUser.PhoneNumber,

@@ -1,5 +1,6 @@
 ﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
@@ -26,6 +27,7 @@ namespace Honoplay.Application.TraineeUsers.Commands.CreateTraineeUser
         public async Task<ResponseModel<CreateTraineeUserModel>> Handle(CreateTraineeUserCommand request, CancellationToken cancellationToken)
         {
             var redisKey = $"TraineeUsersWithDepartmentsByTenantId{request.TenantId}";
+            var salt = ByteArrayExtensions.GetRandomSalt();
             var traineeUser = new TraineeUser
             {
                 Name = request.Name,
@@ -36,6 +38,10 @@ namespace Honoplay.Application.TraineeUsers.Commands.CreateTraineeUser
                 Surname = request.Surname,
                 WorkingStatusId = request.WorkingStatusId,
                 CreatedBy = request.CreatedBy,
+                Email = request.Email,
+                LastPasswordChangeDateTime = DateTimeOffset.Now,
+                PasswordSalt = salt,
+                Password = request.Password.GetSHA512(salt)
             };
 
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
@@ -83,7 +89,7 @@ namespace Honoplay.Application.TraineeUsers.Commands.CreateTraineeUser
 
             var traineeUserModel = new CreateTraineeUserModel(traineeUser.Id,
                 traineeUser.CreatedAt,
-                traineeUser.Name, traineeUser.Surname, traineeUser.NationalIdentityNumber, traineeUser.PhoneNumber, traineeUser.Gender);
+                traineeUser.Name, traineeUser.Email, traineeUser.Surname, traineeUser.NationalIdentityNumber, traineeUser.PhoneNumber, traineeUser.Gender);
             return new ResponseModel<CreateTraineeUserModel>(traineeUserModel);
         }
     }
