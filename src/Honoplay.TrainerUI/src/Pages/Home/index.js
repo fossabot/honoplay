@@ -4,8 +4,18 @@ import { Logo, Vector } from "../../Assets/index";
 import { Link } from "react-router-dom";
 import { TrainerList } from "../../Helpers/DummyData";
 import WithAuth from "../../Hoc/CheckAuth";
+import { connect } from "react-redux";
+import { fetchTrainingList } from "@omegabigdata/honoplay-redux-helper/Src/actions/TrainerUser";
 
 class Home extends Component {
+  componentDidMount() {
+    this.props.fetchTrainingList();
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log(this.props.trainingList);
+  }
+
   render() {
     return (
       <PageWrapper {...this.state} boxNumber="2">
@@ -43,4 +53,16 @@ class Home extends Component {
   }
 }
 
-export default WithAuth(Home);
+const mapStateToProps = state => {
+  const {
+    isTrainingListLoading,
+    trainingList,
+    errorTrainingList
+  } = state.trainerUserTrainingList;
+
+  return { isTrainingListLoading, trainingList, errorTrainingList };
+};
+export default connect(
+  mapStateToProps,
+  { fetchTrainingList }
+)(Home);
