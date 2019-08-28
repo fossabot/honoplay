@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 
 namespace Honoplay.Domain.Entities
@@ -12,11 +13,17 @@ namespace Honoplay.Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string Email { get; set; }
         public string NationalIdentityNumber { get; set; }
         public string PhoneNumber { get; set; }
         public int Gender { get; set; }
         public int WorkingStatusId { get; set; }
         public int DepartmentId { get; set; }
+
+        public byte[] Password { get; set; }
+        public byte[] PasswordSalt { get; set; }
+        public DateTimeOffset LastPasswordChangeDateTime { get; set; }
+        public int NumberOfInvalidPasswordAttemps { get; set; }
 
 
         public virtual ICollection<ClassroomTraineeUser> ClassroomTraineeUsers { get; set; }
