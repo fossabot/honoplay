@@ -1,5 +1,6 @@
 ﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
@@ -27,6 +28,7 @@ namespace Honoplay.Application.TraineeUsers.Commands.UpdateTraineeUser
         public async Task<ResponseModel<UpdateTraineeUserModel>> Handle(UpdateTraineeUserCommand request, CancellationToken cancellationToken)
         {
             var redisKey = $"TraineeUsersWithDepartmentsByTenantId{request.TenantId}";
+            var salt = ByteArrayExtensions.GetRandomSalt();
             var updateAt = DateTimeOffset.Now;
 
             using (IDbContextTransaction transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
@@ -54,6 +56,9 @@ namespace Honoplay.Application.TraineeUsers.Commands.UpdateTraineeUser
                     traineeUser.WorkingStatusId = request.WorkingStatusId;
                     traineeUser.UpdatedBy = request.UpdatedBy;
                     traineeUser.UpdatedAt = updateAt;
+                    traineeUser.PasswordSalt = salt;
+                    traineeUser.Password = request.Password.GetSHA512(salt);
+                    traineeUser.LastPasswordChangeDateTime = updateAt;
 
                     _context.Update(traineeUser);
                     await _context.SaveChangesAsync(cancellationToken);
@@ -84,6 +89,7 @@ namespace Honoplay.Application.TraineeUsers.Commands.UpdateTraineeUser
 
             var traineeUserModel = new UpdateTraineeUserModel(request.Id,
                                                       request.Name,
+                                                      request.Email,
                                                       request.Surname,
                                                       request.NationalIdentityNumber,
                                                       request.PhoneNumber,

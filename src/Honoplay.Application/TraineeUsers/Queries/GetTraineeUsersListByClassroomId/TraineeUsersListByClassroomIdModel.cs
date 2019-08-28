@@ -12,6 +12,7 @@ namespace Honoplay.Application.TraineeUsers.Queries.GetTraineeUsersListByClassro
         public int? UpdatedBy { get; set; }
         public DateTimeOffset? UpdatedAt { get; set; }
         public string Name { get; set; }
+        public string Email { get; set; }
         public string Surname { get; set; }
         public string NationalIdentityNumber { get; set; }
         public string PhoneNumber { get; set; }
@@ -27,6 +28,7 @@ namespace Honoplay.Application.TraineeUsers.Queries.GetTraineeUsersListByClassro
                 return traineeUser => new GetTraineeUsersListByClassroomIdModel
                 {
                     Id = traineeUser.Id,
+                    Email = traineeUser.Email,
                     CreatedAt = traineeUser.CreatedAt,
                     CreatedBy = traineeUser.CreatedBy,
                     UpdatedBy = traineeUser.UpdatedBy,

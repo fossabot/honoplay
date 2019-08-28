@@ -24,6 +24,8 @@ namespace Honoplay.Application.Tests.TraineeUsers.Commands.CreateTraineeUser
                 Surname = "asdasd",
                 PhoneNumber = "21412312321",
                 Gender = 1,
+                Password = "testPass1*",
+                Email = "asd@gmail.com",
                 NationalIdentityNumber = "214123123123",
                 WorkingStatusId = 1
             }

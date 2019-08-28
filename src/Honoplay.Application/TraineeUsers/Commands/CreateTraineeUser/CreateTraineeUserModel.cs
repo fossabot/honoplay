@@ -10,12 +10,13 @@ namespace Honoplay.Application.TraineeUsers.Commands.CreateTraineeUser
         public int Id { get; }
         public DateTimeOffset CreatedAt { get; }
         public string Name { get; }
+        public string Email { get; }
         public string Surname { get; }
         public string NationalIdentityNumber { get; }
         public string PhoneNumber { get; }
         public int Gender { get; }
 
-        public CreateTraineeUserModel(int id, DateTimeOffset createdAt, string name, string surname, string nationalIdentityNumber, string phoneNumber, int gender)
+        public CreateTraineeUserModel(int id, DateTimeOffset createdAt, string name, string email, string surname, string nationalIdentityNumber, string phoneNumber, int gender)
         {
             Id = id;
             CreatedAt = createdAt;
@@ -24,6 +25,7 @@ namespace Honoplay.Application.TraineeUsers.Commands.CreateTraineeUser
             NationalIdentityNumber = nationalIdentityNumber;
             PhoneNumber = phoneNumber;
             Gender = gender;
+            Email = email;
         }
 
     }

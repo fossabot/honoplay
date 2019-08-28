@@ -22,6 +22,8 @@ namespace Honoplay.Application.Tests.TraineeUsers.Commands.UpdateTraineeUser
                 Name = "asdasd",
                 DepartmentId = 1,
                 UpdatedBy = 1,
+                Password = "testPass1*",
+                Email = "asd@gmail.com",
                 Surname = "asdasd",
                 PhoneNumber = "21412312321",
                 Gender = 1,
