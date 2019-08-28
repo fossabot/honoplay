@@ -9,11 +9,11 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
         public int TrainerUserId { get; set; }
         public int TrainingId { get; set; }
         public string Name { get; set; }
-        public List<int> TraineesIdList { get; set; }
+        public List<int> TraineeUsersIdList { get; set; }
         public int CreatedBy { get; }
         public DateTimeOffset CreatedAt { get; }
 
-        public CreateClassroomModel(int id, int trainerUserId, int trainingId, string name, List<int> traineesIdList, int createdBy, DateTimeOffset createdAt)
+        public CreateClassroomModel(int id, int trainerUserId, int trainingId, string name, List<int> traineeUsersIdList, int createdBy, DateTimeOffset createdAt)
         {
             Id = id;
             TrainerUserId = trainerUserId;
@@ -21,7 +21,7 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
             Name = name;
             CreatedBy = createdBy;
             CreatedAt = createdAt;
-            TraineesIdList = traineesIdList;
+            TraineeUsersIdList = traineeUsersIdList;
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using EFCore.BulkExtensions;
 using Honoplay.Application._Infrastructure;
 using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
 using MediatR;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,8 +14,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Common.Extensions;
-using Microsoft.Data.Sqlite;
 
 namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
 {
@@ -32,7 +32,7 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
         {
             var redisKey = $"ClassroomsByTenantId{request.TenantId}";
             var newClassrooms = new List<Classroom>();
-            var newClassroomTrainees = new List<ClassroomTrainee>();
+            var newClassroomTraineeUsers = new List<ClassroomTraineeUser>();
             var createdClassrooms = new List<CreateClassroomModel>();
 
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
@@ -41,15 +41,15 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                 {
                     foreach (var createClassroomModel in request.CreateClassroomModels)
                     {
-                        foreach (var traineeId in createClassroomModel.TraineesId)
+                        foreach (var traineeUserId in createClassroomModel.TraineeUsersId)
                         {
-                            var isExist = await _context.Trainees
+                            var isExist = await _context.TraineeUsers
                                 .Include(x => x.Department)
-                                .AnyAsync(x => x.Id == traineeId
+                                .AnyAsync(x => x.Id == traineeUserId
                                                && x.Department.TenantId == request.TenantId, cancellationToken);
                             if (!isExist)
                             {
-                                throw new NotFoundException(nameof(Trainee), traineeId);
+                                throw new NotFoundException(nameof(TraineeUser), traineeUserId);
                             }
                         }
                         var newClassroom = new Classroom
@@ -59,34 +59,51 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                             Name = createClassroomModel.Name,
                             TrainingId = createClassroomModel.TrainingId
                         };
+
                         newClassrooms.Add(newClassroom);
                     }
 
                     if (newClassrooms.Count > 20)
                     {
-                        _context.BulkInsert(newClassrooms);
+                        await _context.BulkInsertAsync(newClassrooms, cancellationToken: cancellationToken);
+
+
                         foreach (var newClassroom in newClassrooms)
                         {
-                            newClassroomTrainees.AddRange(newClassroom.ClassroomTrainees.Select(newClassroomTrainee =>
-                                new ClassroomTrainee
+                            foreach (var createClassroomModel in request.CreateClassroomModels)
+                            {
+                                foreach (var i in createClassroomModel.TraineeUsersId)
                                 {
-                                    ClassroomId = newClassroomTrainee.ClassroomId,
-                                    TraineeId = newClassroomTrainee.TraineeId
-                                }));
-                            var a = newClassroomTrainees.Where(x => x.ClassroomId == newClassroom.Id).Select(x => x.TraineeId).ToList();
+                                    newClassroomTraineeUsers.Add(new ClassroomTraineeUser
+                                    {
+                                        ClassroomId = newClassroom.Id,
+                                        TraineeUserId = i
+                                    });
+                                }
+                            }
                         }
 
-                        await _context.BulkInsertAsync(newClassroomTrainees, cancellationToken: cancellationToken);
+                        await _context.BulkInsertAsync(newClassroomTraineeUsers, cancellationToken: cancellationToken);
 
                     }
                     else
                     {
-                        await _context.Classrooms.AddRangeAsync(newClassrooms, cancellationToken);
-                        newClassroomTrainees.ForEach(newClassroomTrainee => _context.ClassroomTrainees.Add(new ClassroomTrainee
+                        foreach (var newClassroom in newClassrooms)
                         {
-                            ClassroomId = newClassroomTrainee.ClassroomId,
-                            TraineeId = newClassroomTrainee.TraineeId
-                        }));
+                            await _context.Classrooms.AddAsync(newClassroom, cancellationToken);
+
+                            foreach (var createClassroomModel in request.CreateClassroomModels)
+                            {
+                                foreach (var i in createClassroomModel.TraineeUsersId)
+                                {
+                                    await _context.ClassroomTraineeUsers.AddAsync(new ClassroomTraineeUser
+                                    {
+                                        ClassroomId = newClassroom.Id,
+                                        TraineeUserId = i
+                                    }, cancellationToken);
+                                }
+                            }
+                        }
                         await _context.SaveChangesAsync(cancellationToken);
                     }
 
@@ -102,8 +119,8 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                             x.TrainerUserId,
                             x.TrainingId,
                             x.Name,
-                            x.ClassroomTrainees
-                                .Select(s => s.TraineeId)
+                            x.ClassroomTraineeUsers
+                                .Select(s => s.TraineeUserId)
                                 .ToList(),
                             x.CreatedBy,
                             x.CreatedAt)));

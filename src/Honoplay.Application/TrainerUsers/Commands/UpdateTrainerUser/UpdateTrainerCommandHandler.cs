@@ -76,7 +76,7 @@ namespace Honoplay.Application.TrainerUsers.Commands.UpdateTrainerUser
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
                 {
                     transaction.Rollback();
-                    throw new ObjectAlreadyExistsException(nameof(Trainee), request.Name);
+                    throw new ObjectAlreadyExistsException(nameof(TraineeUser), request.Name);
                 }
                 catch (NotFoundException)
                 {

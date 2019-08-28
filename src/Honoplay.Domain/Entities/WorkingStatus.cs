@@ -8,14 +8,14 @@ namespace Honoplay.Domain.Entities
     {
         public WorkingStatus()
         {
-            Trainees = new HashSet<Trainee>();
+            TraineeUsers = new HashSet<TraineeUser>();
         }
         public int Id { get; set; }
         public string Name { get; set; }
         public Guid TenantId { get; set; }
 
         [JsonIgnore]
-        public virtual ICollection<Trainee> Trainees { get; set; }
+        public virtual ICollection<TraineeUser> TraineeUsers { get; set; }
         public Tenant Tenant { get; set; }
     }
 }

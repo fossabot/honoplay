@@ -4,5 +4,13 @@
         <name>Honoplay.TrainerWebAPI</name>
     </assembly>
     <members>
+        <!-- Badly formed XML comment ignored for member "M:Honoplay.TrainerWebAPI.Controllers.ClassroomController.GetByTrainingId(System.Int32)" -->
+        <member name="M:Honoplay.TrainerWebAPI.Controllers.TraineeUserController.GetByTrainerId(System.Int32)">
+            <summary>
+            This service retrieve trainings by trainingId
+            </summary>
+            <param name="classroomId">Get trainings list </param>
+            <returns>Get trainings by tenant id and trainerUser id with status code.</returns>
+        </member>
     </members>
 </doc>
