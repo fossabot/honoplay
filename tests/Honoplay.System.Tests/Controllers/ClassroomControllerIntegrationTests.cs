@@ -36,7 +36,7 @@ namespace Honoplay.System.Tests.Controllers
                     {
                         TrainerUserId = 1,
                         TrainingId = 1,
-                        TraineesId = new List<int>{1},
+                        TraineeUsersId = new List<int>{1},
                         Name = "test"
                     }
                 }

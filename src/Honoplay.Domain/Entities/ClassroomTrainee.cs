@@ -1,11 +1,11 @@
 ﻿namespace Honoplay.Domain.Entities
 {
-    public class ClassroomTrainee
+    public class ClassroomTraineeUser
     {
         public int ClassroomId { get; set; }
-        public int TraineeId { get; set; }
+        public int TraineeUserId { get; set; }
 
         public Classroom Classroom { get; set; }
-        public Trainee Trainee { get; set; }
+        public TraineeUser TraineeUser { get; set; }
     }
 }

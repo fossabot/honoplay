@@ -7,18 +7,16 @@ namespace Honoplay.Application.Trainings.Queries.GetTrainingsListByTrainerUserId
 {
     public class GetTrainingsListByTrainerUserIdQuery : IRequest<ResponseModel<GetTrainingsListByTrainerUserIdModel>>
     {
-        public GetTrainingsListByTrainerUserIdQuery(int adminUserId, int id, Guid tenantId)
+        public GetTrainingsListByTrainerUserIdQuery(int trainerUserId, Guid tenantId)
         {
-            Id = id;
-            AdminUserId = adminUserId;
+            TrainerUserId = trainerUserId;
             TenantId = tenantId;
         }
 
         public GetTrainingsListByTrainerUserIdQuery() { }
 
-        public int Id { get; private set; }
         [JsonIgnore]
-        public int AdminUserId { get; private set; }
+        public int TrainerUserId { get; private set; }
         [JsonIgnore]
         public Guid TenantId { get; private set; }
     }
