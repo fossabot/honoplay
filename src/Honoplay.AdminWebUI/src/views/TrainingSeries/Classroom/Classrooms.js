@@ -3,9 +3,10 @@ import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import Style from '../../Style';
-import CardButton from '../../../components/Card/CardButton';
 import Card from '../../../components/Card/CardComponents';
+import CardButton from '../../../components/Card/CardButton';
 import Modal from '../../../components/Modal/ModalComponent';
+import ClassroomUpdate from './ClassroomUpdate';
 import ClassroomCreate from './ClassroomCreate';
 
 import { connect } from "react-redux";
@@ -14,7 +15,7 @@ import { increment, decrement } from '../../../redux/actions/ActiveStepActions';
 import { changeId } from '../../../redux/actions/ClassroomIdActions';
 
 
-class Classroom extends React.Component {
+class Classrooms extends React.Component {
 
     constructor(props) {
         super(props);
@@ -23,6 +24,7 @@ class Classroom extends React.Component {
             classroomListError: false,
             classroomList: [],
             classroomId: null,
+            openDialog: false,
         }
     }
 
@@ -60,13 +62,12 @@ class Classroom extends React.Component {
     }
 
     render() {
-        const { openDialog, classroomList, classroomId } = this.state;
+        const { classroomList, classroomId, openDialog } = this.state;
         const { classes, trainingId } = this.props;
 
         this.trainingId = trainingId;
 
         return (
-
             <div className={classes.root}>
                 <Grid container spacing={24}>
                     <Grid item xs={12} sm={3}>
@@ -81,6 +82,7 @@ class Classroom extends React.Component {
                         <Card
                             data={classroomList}
                             forClassroom
+                            titleName={translate('Update')}
                             id={id => {
                                 if (id) {
                                     this.props.changeId(id);
@@ -88,6 +90,8 @@ class Classroom extends React.Component {
                                 }
                             }}
                         >
+                            <ClassroomUpdate classroomId={classroomId}
+                                trainingId={trainingId} />
                         </Card>
                     </Grid>
                 </Grid>
@@ -135,4 +139,4 @@ const mapDispatchToProps = {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(withStyles(Style)(Classroom));
+)(withStyles(Style)(Classrooms));

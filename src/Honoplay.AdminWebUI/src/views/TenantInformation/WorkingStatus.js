@@ -40,16 +40,14 @@ class WorkingStatus extends React.Component {
             newWorkingStatus,
             errorWorkingStatusCreate,
             isWorkingStatusListLoading,
-            workingStatusList,
+            newWorkingStatusList,
             errorWorkingStatusList
         } = this.props;
 
-        if (!prevProps.isWorkingStatusListLoading && isWorkingStatusListLoading && workingStatusList) {
-            if (!errorWorkingStatusList) {
-                this.setState({
-                    workingStatuses: workingStatusList.items
-                });
-            }
+        if (prevProps.isWorkingStatusListLoading && !isWorkingStatusListLoading && newWorkingStatusList) {
+            this.setState({
+                workingStatuses: newWorkingStatusList.items
+            });
         }
 
         if (!prevProps.isWorkingStatusCreateLoading && isWorkingStatusCreateLoading) {
@@ -97,6 +95,7 @@ class WorkingStatus extends React.Component {
             createError,
             workingStatuses
         } = this.state;
+
 
         return (
 
@@ -162,13 +161,15 @@ const mapStateToProps = state => {
         errorWorkingStatusList
     } = state.workingStatusList;
 
+    let newWorkingStatusList = workingStatusList;
+
 
     return {
         isWorkingStatusCreateLoading,
         newWorkingStatus,
         errorWorkingStatusCreate,
         isWorkingStatusListLoading,
-        workingStatusList,
+        newWorkingStatusList,
         errorWorkingStatusList
     };
 };

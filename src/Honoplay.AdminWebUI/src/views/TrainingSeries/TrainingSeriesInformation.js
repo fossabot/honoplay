@@ -6,11 +6,14 @@ import Stepper from '../../components/Stepper/HorizontalStepper';
 import Training from './Training/Training';
 import Classroom from './Classroom/Classroom';
 import Summary from './Summary/Summary';
-
+import Session from './Session/Session';
 
 
 import { connect } from "react-redux";
 import { createTraining } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Training";
+import { increment, decrement, reset } from '../../redux/actions/ActiveStepActions';
+import { changeId } from '../../redux/actions/ClassroomIdActions';
+
 
 class TrainingSeriesInformation extends React.Component {
 
@@ -20,7 +23,6 @@ class TrainingSeriesInformation extends React.Component {
             newTrainingModel: null,
             trainingLoading: false,
             trainingError: false,
-            activeStep: 0,
             trainingId: null,
         }
     }
@@ -57,45 +59,37 @@ class TrainingSeriesInformation extends React.Component {
                 this.setState({
                     trainingLoading: false,
                     trainingError: false,
-                    activeStep: 1
                 });
+                this.props.increment(this.props.activeStep);
             }
         }
 
     }
-
-    handleBack = () => {
-        this.setState(state => ({
-            activeStep: state.activeStep - 1,
-        }));
+    componentWillUnmount() {
+        this.props.reset();
     }
 
-    handleReset = () => {
-        this.setState({
-            activeStep: 0,
-        });
+    handleBack = () => {
+        this.props.decrement(this.props.activeStep);
     }
 
     handleClick = () => {
-        if (this.state.activeStep === 0) {
+        if (this.props.activeStep === 0) {
             this.trainingModel.createTrainingModels = this.state.newTrainingModel;
             const { createTraining } = this.props;
             createTraining(this.trainingModel);
-        }
-        else if (this.state.activeStep === 1) {
-            this.setState(state => ({
-                activeStep: state.activeStep + 1,
-            }));
-        }
-        else if (this.state.activeStep === 2) {
+        } else if (this.props.activeStep === 2) {
+            this.props.increment(this.props.activeStep);
+        } else if (this.props.activeStep === 3) {
             this.props.history.push("/honoplay/trainingseriesdetail");
+            this.props.reset();
         }
     }
 
     trainingSeriesId = localStorage.getItem("trainingSeriesId");
 
     render() {
-        const { activeStep, trainingError, trainingLoading, trainingId } = this.state;
+        const { trainingError, trainingLoading, trainingId } = this.state;
         const { classes } = this.props;
 
         return (
@@ -104,9 +98,8 @@ class TrainingSeriesInformation extends React.Component {
                 <Grid container spacing={16}>
                     <Grid item xs={12} sm={12}>
                         <Stepper handleNext={this.handleClick}
-                            activeStep={activeStep}
+                            activeStep={this.props.activeStep}
                             handleBack={this.handleBack}
-                            handleReset={this.handleReset}
                             loading={trainingLoading}
                         >
                             <Training trainingSeriesId={this.trainingSeriesId}
@@ -121,6 +114,7 @@ class TrainingSeriesInformation extends React.Component {
                                 trainingError={trainingError}
                             />
                             <Classroom trainingId={trainingId} />
+                            <Session classroomId={this.props.classroomId}/>
                             <Summary trainingId={trainingId} />
                         </Stepper>
                     </Grid>
@@ -139,16 +133,24 @@ const mapStateToProps = state => {
     } = state.createTraining;
 
     let newCreateTraining = createTraining;
+    let activeStep = state.ActiveStep.activeStep
+    let classroomId = state.ClassroomId.id
 
     return {
         isCreateTrainingLoading,
         newCreateTraining,
-        errorCreateTraining
+        errorCreateTraining,
+        activeStep,
+        classroomId
     };
 };
 
 const mapDispatchToProps = {
-    createTraining
+    createTraining,
+    increment,
+    decrement,
+    reset,
+    changeId
 };
 
 export default connect(
