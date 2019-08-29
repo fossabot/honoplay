@@ -1,6 +1,5 @@
 export const Style = (theme) => ({
   card: {
-    paddingBottom: 37,
     maxWidth: '90%',
     margin: theme.spacing.unit / 1,
   },
@@ -16,7 +15,8 @@ export const Style = (theme) => ({
   },
   center: {
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingBottom: 10
   },
   cardIcon: {
     display: 'flex',

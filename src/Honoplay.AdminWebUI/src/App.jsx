@@ -9,8 +9,9 @@ import Trainers from "./views/Trainers/Trainers";
 import UserManagement from "./views/UserManagement/UserManagement";
 import NewQuestion from "./views/Questions/NewQuestion";
 import TrainingSeries from './views/TrainingSeries/TrainingSeries';
-import TrainingSeriesUpdate from './views/TrainingSeries/TrainingSeriesUpdate';
+import Trainings from './views/TrainingSeries/Trainings';
 import TrainingSeriesInformation from './views/TrainingSeries/TrainingSeriesInformation';
+import TrainingSeriesUpdate from './views/TrainingSeries/TrainingSeriesUpdate';
 
 import setToken from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/index";
 
@@ -33,8 +34,9 @@ class App extends Component {
           <Route path="/honoplay/usermanagement" component={UserManagement} />
           <Route path="/honoplay/addquestion" component={NewQuestion} />
           <Route path="/honoplay/trainingseries" exact component={TrainingSeries} />
-          <Route path="/honoplay/trainingseriesdetail" exact component={TrainingSeriesUpdate} />
+          <Route path="/honoplay/trainingseriesdetail" exact component={Trainings} />
           <Route path="/honoplay/trainingseriesdetail/training" exact component={TrainingSeriesInformation} />
+          <Route path="/honoplay/trainingseriesupdate" exact component={TrainingSeriesUpdate} />
         </Layout>
       );
     }

@@ -25,6 +25,11 @@ const Style = theme => ({
       backgroundColor: green[700],
     },
   },
+  progressStepper: {
+    position: 'absolute',
+    marginTop: -25,
+    marginLeft: 720,
+  },
   progressModal: {
     position: 'absolute',
     marginTop: -25,

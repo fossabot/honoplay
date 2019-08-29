@@ -2,15 +2,13 @@ import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import moment from 'moment';
 import { withStyles } from '@material-ui/core/styles';
-import classNames from "classnames";
 import { Grid, CircularProgress } from '@material-ui/core';
 import Style from '../../Style';
 import Input from '../../../components/Input/InputTextComponent';
 import DropDown from '../../../components/Input/DropDownInputComponent';
-import Button from '../../../components/Button/ButtonComponent';
 
 import { connect } from "react-redux";
-import { fetchTraining, updateTraining, fetchTrainingListByTrainingSeriesId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Training";
+import { fetchTraining } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Training";
 
 
 class TrainingUpdate extends React.Component {
@@ -29,25 +27,18 @@ class TrainingUpdate extends React.Component {
             },
             loadingTraining: false,
             trainingCategory: [
-                { id: 2, name: 'Yazılım', },
+                { id: 1, name: 'Yazılım', },
             ],
-            success: false,
-            loadingUpdate: false,
-            updateError: false
         };
     }
 
     trainingId = null;
-    trainingSeriesId = null;
 
     componentDidUpdate(prevProps) {
         const {
             isTrainingLoading,
             training,
             errorTraining,
-            isUpdateTrainingLoading,
-            updateTraining,
-            errorUpdateTraining
         } = this.props;
 
         if (prevProps.isTrainingLoading && !isTrainingLoading) {
@@ -56,35 +47,13 @@ class TrainingUpdate extends React.Component {
             })
         }
         if (prevProps.isTrainingLoading && !isTrainingLoading && training) {
+            this.props.basicTrainingUpdateModel(training.items[0]);
             if (!errorTraining) {
                 this.setState({
                     training: training.items[0],
+                    loadingTraining: false
                 })
-            }
-        }
-        if (!prevProps.isUpdateTrainingLoading && isUpdateTrainingLoading) {
-            this.setState({
-                loadingUpdate: true
-            })
-        }
-        if (!prevProps.errorUpdateTraining && errorUpdateTraining) {
-            this.setState({
-                updateError: true,
-                loadingUpdate: false,
-                success: false
-            })
-        }
-        if (prevProps.isUpdateTrainingLoading && !isUpdateTrainingLoading && updateTraining) {
-            if (!errorUpdateTraining) {
-                this.props.fetchTrainingListByTrainingSeriesId(this.trainingSeriesId);
-                this.setState({
-                    updateError: false,
-                    loadingUpdate: false,
-                    success: true,
-                });
-                setTimeout(() => {
-                    this.setState({ success: false });
-                }, 1000);
+                
             }
         }
     }
@@ -93,31 +62,11 @@ class TrainingUpdate extends React.Component {
         this.props.fetchTraining(this.trainingId);
     }
 
-    handleChange = (e) => {
-        const { name, value } = e.target;
-        this.setState(prevState => ({
-            training: {
-                ...prevState.training,
-                [name]: value
-            },
-        }))
-    }
-
-    handleClick = () => {
-        this.props.updateTraining(this.state.training);
-    }
-
     render() {
-        const { loadingClassroom, training, trainingCategory, success, loadingUpdate, updateError } = this.state;
-        const { classes, trainingId, trainingSeriesId } = this.props;
+        const { loadingClassroom, training, trainingCategory } = this.state;
+        const { classes, trainingId, updateError } = this.props;
 
         this.trainingId = trainingId;
-        this.trainingSeriesId = trainingSeriesId;
-
-        const buttonClassname = classNames({
-            [classes.buttonSuccess]: success
-        });
-
         return (
 
             <div className={classes.root}>
@@ -134,32 +83,40 @@ class TrainingUpdate extends React.Component {
                                 labelName={translate('TrainingName')}
                                 inputType="text"
                                 value={training.name}
-                                onChange={this.handleChange}
-                                name="name"
+                                onChange={e => {
+                                    training.name = e.target.value;
+                                    this.props.basicTrainingUpdateModel(this.state.training);
+                                }}
                             />
                             <DropDown
                                 error={updateError}
                                 labelName={translate('TrainingCategory')}
                                 data={trainingCategory}
                                 value={training.trainingCategoryId}
-                                onChange={this.handleChange}
-                                name="trainingCategoryId"
+                                onChange={e => {
+                                    training.trainingCategoryId = e.target.value;
+                                    this.props.basicTrainingUpdateModel(this.state.training);
+                                }}
                             />
                             <Input
                                 error={updateError}
                                 labelName={translate('BeginDate')}
                                 inputType="date"
                                 value={moment(training.beginDateTime).format("YYYY-MM-DD")}
-                                onChange={this.handleChange}
-                                name="beginDateTime"
+                                onChange={e => {
+                                    training.beginDateTime = e.target.value;
+                                    this.props.basicTrainingUpdateModel(this.state.training);
+                                }}
                             />
                             <Input
                                 error={updateError}
                                 labelName={translate('EndDate')}
                                 inputType="date"
                                 value={moment(training.endDateTime).format("YYYY-MM-DD")}
-                                onChange={this.handleChange}
-                                name="endDateTime"
+                                onChange={e => {
+                                    training.endDateTime = e.target.value;
+                                    this.props.basicTrainingUpdateModel(this.state.training);
+                                }}
                             />
                             <Input
                                 error={updateError}
@@ -167,28 +124,13 @@ class TrainingUpdate extends React.Component {
                                 labelName={translate('Description')}
                                 inputType="text"
                                 value={training.description}
-                                onChange={this.handleChange}
-                                name="description"
+                                onChange={e => {
+                                    training.description = e.target.value;
+                                    this.props.basicTrainingUpdateModel(this.state.training);
+                                }}
                             />
                         </Grid>
                         <Grid item xs={12} sm={12} />
-                        <Grid item xs={12} sm={11} />
-                        <Grid item xs={12} sm={1}>
-                            <Button
-                                className={buttonClassname}
-                                buttonColor="primary"
-                                buttonName={translate('Update')}
-                                onClick={this.handleClick}
-                                disabled={loadingUpdate}
-                            />
-                            {loadingUpdate && (
-                                <CircularProgress
-                                    size={24}
-                                    disableShrink={true}
-                                    className={classes.buttonProgressUpdate}
-                                />
-                            )}
-                        </Grid>
                     </Grid>
                 }
             </div >
@@ -204,28 +146,17 @@ const mapStateToProps = state => {
         errorTraining
     } = state.training;
 
-    const {
-        isUpdateTrainingLoading,
-        updateTraining,
-        errorUpdateTraining
-    } = state.updateTraining;
-
     const data = training;
 
     return {
         isTrainingLoading,
         training: data,
         errorTraining,
-        isUpdateTrainingLoading,
-        updateTraining,
-        errorUpdateTraining
     };
 };
 
 const mapDispatchToProps = {
     fetchTraining,
-    updateTraining,
-    fetchTrainingListByTrainingSeriesId
 };
 
 export default connect(

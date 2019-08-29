@@ -13,14 +13,14 @@ import {
 import { Style, theme } from './Style';
 
 function getSteps() {
-    return [translate('TrainingInformation'), translate('Classroom'), translate('Summary&Confirmation')];
+    return [translate('TrainingInformation'), translate('Classroom'), translate('Game'), translate('Summary&Confirmation')];
 }
 
 class HorizontalStepper extends React.Component {
 
 
     render() {
-        const { classes, children, handleNext, handleBack, handleReset, activeStep, loading } = this.props;
+        const { classes, children, handleNext, handleBack, activeStep, loading } = this.props;
         const steps = getSteps();
 
         return (
@@ -55,7 +55,7 @@ class HorizontalStepper extends React.Component {
                                     </Button>
                                     <Button
                                         variant="contained"
-                                        disabled={loading}
+                                        disabled={activeStep === 1 && true}
                                         color="secondary"
                                         onClick={handleNext}
                                         className={classes.nextButton}>
