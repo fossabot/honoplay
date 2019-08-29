@@ -5,17 +5,19 @@ import Style from '../Style';
 import Stepper from '../../components/Stepper/HorizontalStepper';
 import TrainingUpdate from './Training/TrainingUpdate';
 import Classrooms from './Classroom/Classrooms';
-
+import Summary from './Summary/Summary';
+import Session from './Session/Session';
 
 import { connect } from "react-redux";
 import { updateTraining } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Training";
+import { increment, decrement, reset } from '../../redux/actions/ActiveStepActions';
+import { changeId } from '../../redux/actions/ClassroomIdActions';
 
 class TrainingSeriesInformation extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            activeStep: 0,
             newTrainingModel: null,
             loadingUpdate: false,
             updateError: false
@@ -47,17 +49,15 @@ class TrainingSeriesInformation extends React.Component {
                 this.setState({
                     updateError: false,
                     loadingUpdate: false,
-                    activeStep: 1
                 });
+                this.props.increment(this.props.activeStep);
             }
         }
     }
 
 
     handleBack = () => {
-        this.setState(state => ({
-            activeStep: state.activeStep - 1,
-        }));
+        this.props.decrement(this.props.activeStep);
     }
 
     handleReset = () => {
@@ -67,13 +67,15 @@ class TrainingSeriesInformation extends React.Component {
     }
 
     handleClick = () => {
-        console.log(this.state.newTrainingModel);
         this.props.updateTraining(this.state.newTrainingModel);
+        if (this.props.activeStep === 3) {
+            this.props.reset();
+            this.props.history.push("/honoplay/trainingseriesdetail");
+        }
     }
 
-
     render() {
-        const { activeStep, updateError, loadingUpdate } = this.state;
+        const { updateError, loadingUpdate } = this.state;
         const { classes } = this.props;
 
         return (
@@ -82,9 +84,8 @@ class TrainingSeriesInformation extends React.Component {
                 <Grid container spacing={16}>
                     <Grid item xs={12} sm={12}>
                         <Stepper handleNext={this.handleClick}
-                            activeStep={activeStep}
+                            activeStep={this.props.activeStep}
                             handleBack={this.handleBack}
-                            handleReset={this.handleReset}
                             loading={loadingUpdate}
                         >
                             <TrainingUpdate trainingId={this.trainingId}
@@ -99,6 +100,8 @@ class TrainingSeriesInformation extends React.Component {
                                 updateError={updateError}
                             />
                             <Classrooms trainingId={this.trainingId} />
+                            <Session classroomId={this.props.classroomId} />
+                            <Summary trainingId={this.trainingId} />
                         </Stepper>
                     </Grid>
                 </Grid>
@@ -114,15 +117,24 @@ const mapStateToProps = state => {
         errorUpdateTraining
     } = state.updateTraining;
 
+    let activeStep = state.ActiveStep.activeStep
+    let classroomId = state.ClassroomId.id
+
     return {
         isUpdateTrainingLoading,
         updateTraining,
-        errorUpdateTraining
+        errorUpdateTraining,
+        activeStep,
+        classroomId,
     };
 };
 
 const mapDispatchToProps = {
-    updateTraining
+    updateTraining,
+    increment,
+    decrement,
+    reset,
+    changeId
 };
 
 export default connect(

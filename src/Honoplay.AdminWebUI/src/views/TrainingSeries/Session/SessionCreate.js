@@ -8,7 +8,7 @@ import DropDown from '../../../components/Input/DropDownInputComponent';
 import Button from '../../../components/Button/ButtonComponent';
 
 import { connect } from "react-redux";
-import { createSession } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Session";
+import { createSession, fetchSessionListByClassroomId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Session";
 
 class SessionCreate extends React.Component {
 
@@ -56,6 +56,7 @@ class SessionCreate extends React.Component {
             })
         }
         if (prevProps.isCreateSessionLoading && !isCreateSessionLoading && newSession) {
+            this.props.fetchSessionListByClassroomId(this.classroomId);
             if (!errorCreateSession) {
                 this.setState({
                     sessionLoading: false,
@@ -150,6 +151,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     createSession,
+    fetchSessionListByClassroomId
 };
 
 export default connect(

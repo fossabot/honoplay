@@ -10,7 +10,8 @@ import ClassroomCreate from './ClassroomCreate';
 
 import { connect } from "react-redux";
 import { fetchClassroomListByTrainingId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom";
-import SessionCreate from '../Session/SessionCreate';
+import { increment, decrement } from '../../../redux/actions/ActiveStepActions';
+import { changeId } from '../../../redux/actions/ClassroomIdActions';
 
 
 class Classroom extends React.Component {
@@ -80,16 +81,13 @@ class Classroom extends React.Component {
                         <Card
                             data={classroomList}
                             forClassroom
-                            titleName={translate('AddNewSession')}
                             id={id => {
                                 if (id) {
-                                    this.setState({
-                                        classroomId: id
-                                    });
+                                    this.props.changeId(id);
+                                    this.props.increment(this.props.activeStep);
                                 }
                             }}
                         >
-                            <SessionCreate classroomId={classroomId} />
                         </Card>
                     </Grid>
                 </Grid>
@@ -115,15 +113,23 @@ const mapStateToProps = state => {
         errorClassroomListByTrainingId
     } = state.classroomListByTrainingId;
 
+    let activeStep = state.ActiveStep.activeStep
+    let id = state.ClassroomId.id
+
     return {
         isClassroomListByTrainingIdLoading,
         classroomsListByTrainingId,
-        errorClassroomListByTrainingId
+        errorClassroomListByTrainingId,
+        activeStep,
+        id
     };
 };
 
 const mapDispatchToProps = {
-    fetchClassroomListByTrainingId
+    fetchClassroomListByTrainingId,
+    increment,
+    decrement,
+    changeId
 };
 
 export default connect(
