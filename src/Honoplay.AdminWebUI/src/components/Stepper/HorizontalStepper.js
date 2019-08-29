@@ -20,7 +20,7 @@ class HorizontalStepper extends React.Component {
 
 
     render() {
-        const { classes, children, handleNext, handleBack, activeStep, loading, disabled } = this.props;
+        const { classes, children, handleNext, handleBack, activeStep, loading } = this.props;
         const steps = getSteps();
 
         return (
@@ -55,7 +55,7 @@ class HorizontalStepper extends React.Component {
                                     </Button>
                                     <Button
                                         variant="contained"
-                                        disabled={disabled}
+                                        disabled={activeStep === 1 && true}
                                         color="secondary"
                                         onClick={handleNext}
                                         className={classes.nextButton}>

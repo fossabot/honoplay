@@ -54,6 +54,10 @@ class TrainingSeriesInformation extends React.Component {
             }
         }
     }
+    
+    componentWillUnmount() {
+        this.props.reset();
+    }
 
 
     handleBack = () => {

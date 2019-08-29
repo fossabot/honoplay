@@ -24,7 +24,6 @@ class TrainingSeriesInformation extends React.Component {
             trainingLoading: false,
             trainingError: false,
             trainingId: null,
-            disabled: false,
         }
     }
 
@@ -66,6 +65,9 @@ class TrainingSeriesInformation extends React.Component {
         }
 
     }
+    componentWillUnmount() {
+        this.props.reset();
+    }
 
     handleBack = () => {
         this.props.decrement(this.props.activeStep);
@@ -76,21 +78,18 @@ class TrainingSeriesInformation extends React.Component {
             this.trainingModel.createTrainingModels = this.state.newTrainingModel;
             const { createTraining } = this.props;
             createTraining(this.trainingModel);
-        } else if (this.props.activeStep === 1) {
+        } else if (this.props.activeStep === 2) {
             this.props.increment(this.props.activeStep);
-            this.setState({
-                disabled: true
-            })
         } else if (this.props.activeStep === 3) {
-            this.props.reset();
             this.props.history.push("/honoplay/trainingseriesdetail");
+            this.props.reset();
         }
     }
 
     trainingSeriesId = localStorage.getItem("trainingSeriesId");
 
     render() {
-        const { trainingError, trainingLoading, trainingId, disabled } = this.state;
+        const { trainingError, trainingLoading, trainingId } = this.state;
         const { classes } = this.props;
 
         return (
@@ -102,7 +101,6 @@ class TrainingSeriesInformation extends React.Component {
                             activeStep={this.props.activeStep}
                             handleBack={this.handleBack}
                             loading={trainingLoading}
-                            disabled={disabled}
                         >
                             <Training trainingSeriesId={this.trainingSeriesId}
                                 basicTrainingModel={model => {
