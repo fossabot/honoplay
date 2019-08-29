@@ -4,6 +4,7 @@ using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +38,7 @@ namespace Honoplay.Application.Trainings.Queries.GetTrainingsListByTrainerUserId
             }
 
             var trainingsList = allTrainingsList.SelectMany(x => x.Classrooms.Where(y => y.TrainerUserId == request.TrainerUserId).Select(z => z.Training))
+                .Distinct()
                 .Select(GetTrainingsListByTrainerUserIdModel.Projection);
 
             return new ResponseModel<GetTrainingsListByTrainerUserIdModel>(numberOfTotalItems: trainingsList.LongCount(), numberOfSkippedItems: 0, source: trainingsList);
