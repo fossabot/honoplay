@@ -1,22 +1,18 @@
 import React, { Component } from "react";
 import PageWrapper from "../../Containers/PageWrapper";
-import { Logo, Vector } from "../../Assets/index";
 import { Link } from "react-router-dom";
-import { TrainerList } from "../../Helpers/DummyData";
-import WithAuth from "../../Hoc/CheckAuth";
 import { connect } from "react-redux";
 import { fetchTrainingList } from "@omegabigdata/honoplay-redux-helper/Src/actions/TrainerUser";
+import WithAuth from "../../Hoc/CheckAuth";
 
 class Home extends Component {
   componentDidMount() {
     this.props.fetchTrainingList();
   }
-
-  componentDidUpdate(prevProps) {
-    console.log(this.props.trainingList);
-  }
-
   render() {
+    if (!this.props.trainingList) {
+      return <PageWrapper></PageWrapper>;
+    }
     return (
       <PageWrapper {...this.state} boxNumber="2">
         <div className="col-sm-12">
@@ -26,19 +22,19 @@ class Home extends Component {
               <tr>
                 <th scope="col">Eğitim Tarihi</th>
                 <th scope="col">Eğitim Adı</th>
-                <th scope="col">Eğitim Yeri</th>
+                <th scope="col">Aciklama</th>
                 <th scope="col">Detay</th>
               </tr>
             </thead>
             <tbody>
-              {TrainerList.map(data => {
+              {this.props.trainingList.items.map((data, index) => {
                 return (
-                  <tr key={data.Id}>
-                    <td>{data.TrainerDate}</td>
-                    <td>{data.TrainerName}</td>
-                    <td>{data.Location}</td>
+                  <tr key={index}>
+                    <td>{data.beginDateTime}</td>
+                    <td>{data.name}</td>
+                    <td>{data.description}</td>
                     <td>
-                      <Link to={{ pathname: "/trainingdetail", state: data }}>
+                      <Link to={{ pathname: "/classroom", state: data.id }}>
                         İncele
                       </Link>
                     </td>
@@ -65,4 +61,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   { fetchTrainingList }
-)(Home);
+)(WithAuth(Home));

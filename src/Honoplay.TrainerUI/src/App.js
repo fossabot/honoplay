@@ -1,39 +1,42 @@
 import React from "react";
-import PageWrapper from "./Containers/PageWrapper";
-import { Logo, Vector } from "./Assets/index";
+import { Router as BrowserRouter, Route } from "react-router-dom";
+import History from "./Helpers/History";
+import Login from "./Pages/Login";
+import Home from "./Pages/Home/index";
+import Training from "./Pages/Training";
+import JoinCode from "./Pages/JoinCode";
+import { connect } from "react-redux";
+import {
+  fethTrainerUserToken,
+  fetchTrainingList
+} from "@omegabigdata/honoplay-redux-helper/Src/actions/TrainerUser";
+import Classroom from "./Pages/Classroom";
+import Logout from "./Helpers/Logout";
 
-function App() {
-  return (
-    <PageWrapper>
-      <div class="col-sm-7">
-        <img src={Logo} class="img-fluid" />
-        <p class="mt-3 mb-5">
-          <b>Omega Bigdata</b> Web Portalına Hoş Geldiniz.
-        </p>
-
-        <div class="form">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Cep Tel / E-Posta"
-          />
-          <input
-            type="password"
-            class="form-control mt-3 mb-2"
-            placeholder="Şifre"
-          />
-
-          <a href="#" class="su">
-            <u>Şifremi Unuttum</u>
-          </a>
-
-          <button class="btn my-btn form-control mt-4">Giriş Yap</button>
-        </div>
-      </div>
-      <div class="col-sm-5 text-center">
-        <img src={Vector} class="img-fluid d-none d-sm-block" />
-      </div>
-    </PageWrapper>
-  );
+class App extends React.Component {
+  render() {
+    return (
+      <>
+        <BrowserRouter history={History}>
+          <Route exact path="/" component={Login} />
+          <Route path="/login" component={Login} />
+          <Route path="/homepage" component={Home} />
+          <Route path="/classroom" component={Classroom} />
+          <Route path="/trainingdetail" component={Training} />
+          <Route path="/joincode" component={JoinCode} />
+          <Route path="/logout" component={Logout} />
+        </BrowserRouter>
+      </>
+    );
+  }
 }
-export default App;
+
+const mapStateToProps = state => {
+  const { userTrainerToken } = state.trainerUserToken;
+  return { userTrainerToken };
+};
+
+export default connect(
+  mapStateToProps,
+  { fethTrainerUserToken, fetchTrainingList }
+)(App);

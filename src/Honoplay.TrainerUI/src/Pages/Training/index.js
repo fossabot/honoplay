@@ -1,34 +1,31 @@
 import React, { Component } from "react";
 import PageWrapper from "../../Containers/PageWrapper";
-import { Logo, Vector } from "../../Assets/index";
 import { Button } from "../../Components/Button";
 import { Link } from "react-router-dom";
 import History from "../../Helpers/History";
 import { TraineeList } from "../../Helpers/DummyData";
-import withAuth from "../../Hoc/CheckAuth";
+import { connect } from "react-redux";
+import { fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/Src/actions/TrainerUser";
 import WithAuth from "../../Hoc/CheckAuth";
 
 class Training extends Component {
-  state = {
-    selectedTraining: {
-      TrainerDate: null,
-      TrainerName: null,
-      Location: null,
-      Id: 0
-    }
-  };
   componentDidMount() {
     const { location } = this.props;
-
     if (!location.state) {
       History.goBack();
     }
-    this.setState({
-      selectedTraining: location.state
-    });
+    this.props.fetchTraineeList(location.state);
+  }
+
+  componentDidUpdate() {
+    console.log("Katilimci :", this.props.traineeList);
   }
 
   render() {
+    if (!this.props.traineeList) {
+      return <PageWrapper></PageWrapper>;
+    }
+
     return (
       <PageWrapper {...this.state} boxNumber="2">
         <div className="col-sm-12">
@@ -38,7 +35,7 @@ class Training extends Component {
                 <Link to="homepage">Eğitimler</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
-                {this.state.selectedTraining.TrainerName}
+                {"aga"}
               </li>
             </ol>
           </nav>
@@ -53,9 +50,9 @@ class Training extends Component {
             </thead>
             <tbody>
               <tr>
-                <td> {this.state.selectedTraining.TrainerDate}</td>
-                <td> {this.state.selectedTraining.TrainerName}</td>
-                <td> {this.state.selectedTraining.Location}</td>
+                <td> {"aa"}</td>
+                <td> {"aa"}</td>
+                <td> {"aa"}</td>
               </tr>
             </tbody>
           </table>
@@ -84,27 +81,21 @@ class Training extends Component {
                   <th scope="col">Ad</th>
                   <th scope="col">Soyad</th>
                   <th scope="col">Cep Telefonu</th>
-                  <th scope="col">Şirket Adı</th>
-                  <th scope="col">Statü</th>
+                  <th scope="col">Eposta</th>
                   <th scope="col">Giriş Yaptı</th>
                 </tr>
               </thead>
               <tbody>
-                {TraineeList.filter(
-                  q => q.TraineId == this.state.selectedTraining.Id
-                ).map(t => {
+                {this.props.traineeList.items.map(t => {
                   return (
-                    <tr>
+                    <tr key={t.id}>
                       <td>{t.Name}</td>
-                      <td>{t.Surname}</td>
-                      <td>{t.PhoneNumber}</td>
-                      <td>{t.TenantName}</td>
-                      <td>{t.Role}</td>
+                      <td>{t.surname}</td>
+                      <td>{t.phoneNumber}</td>
+                      <td>{t.email}</td>
                       <td>
                         <i
-                          className={`fas fa-check-circle text-${
-                            t.IsLogin ? "success" : "secondary"
-                          }`}
+                          className={`fas fa-check-circle text-success`}
                           style={{ fonstSize: 22 }}
                         ></i>
                       </td>
@@ -162,4 +153,17 @@ class Training extends Component {
   }
 }
 
-export default WithAuth(Training);
+const mapStateToProps = state => {
+  const {
+    isTraineeListLoading,
+    traineeList,
+    errorTraineeListError
+  } = state.trainerUserTraineeList;
+
+  return { isTraineeListLoading, traineeList, errorTraineeListError };
+};
+
+export default connect(
+  mapStateToProps,
+  { fetchTraineeList }
+)(WithAuth(Training));
