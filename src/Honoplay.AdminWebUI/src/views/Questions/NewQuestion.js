@@ -9,6 +9,7 @@ import Button from '../../components/Button/ButtonComponent';
 import Options from './Options';
 import ExpansionPanel from '../../components/ExpansionPanel/ControlledExpansionPanels ';
 import Table from '../../components/Table/TableComponent';
+import { booleanToString } from '../../helpers/Converter';
 
 import { connect } from "react-redux";
 import { createQuestion } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Question";
@@ -25,7 +26,7 @@ class NewQuestion extends React.Component {
       optionsColumns: [
         { title: translate('Order'), field: "visibilityOrder" },
         { title: translate('Options'), field: "text" },
-        //{ title: translate('CorrectAnswer'), field: "isCorrect" }
+        { title: translate('Answer'), field: "isCorrect" }
       ],
       options: []
     }
@@ -71,6 +72,7 @@ class NewQuestion extends React.Component {
       })
     }
     if (prevProps.isOptionListByQuestionIdLoading && !isOptionListByQuestionIdLoading && optionsListByQuestionId) {
+      booleanToString(optionsListByQuestionId.items);
       this.setState({
         options: optionsListByQuestionId.items
       })
@@ -93,6 +95,7 @@ class NewQuestion extends React.Component {
   render() {
     const { questionsError, loading, question, questionId, optionsColumns, options } = this.state;
     const { classes } = this.props;
+
     return (
 
       <div className={classes.root}>

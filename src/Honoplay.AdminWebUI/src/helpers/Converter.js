@@ -10,9 +10,18 @@ export const genderToString = (array) => {
 export const departmentToString = (departmentArray, array) => {
     array.map(item => {
         departmentArray.map(department => {
-            if( item.departmentId === department.id) {
+            if (item.departmentId === department.id) {
                 item.departmentId = department.name;
             }
         })
     })
+}
+
+export const booleanToString = (array) => {
+    array.map(item => {
+        if (item.isCorrect == true) {
+            item.isCorrect = "Doğru"
+        } else item.isCorrect = "Yanlış"
+    })
+    return array;
 }

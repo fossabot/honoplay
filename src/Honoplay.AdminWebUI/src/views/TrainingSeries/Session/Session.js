@@ -63,8 +63,6 @@ class Session extends React.Component {
 
         this.classroomId = classroomId;
 
-        console.log(classroomId);
-
         return (
 
             <div className={classes.root}>
