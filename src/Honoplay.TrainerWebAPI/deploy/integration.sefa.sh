@@ -18,11 +18,8 @@ else
         --with-registry-auth \
         --network backend \
         --network frontend \
-		--env TZ=Asia/Istanbul \
-		--env SERVICE_ADDRESS=demo.honoplay.com \
-		--env REDIS_CACHE_SERVICE=honoplay_redis_cache_service \
-		--env DC=DC-1 \
-        --mount type=bind,source=/root/honoplay_static_files,destination=/app/wwwroot \
+	--env TZ=Asia/Istanbul \
+	--env REDIS_CACHE_SERVICE=honoplay_redis_cache_service \
         --constraint 'node.labels.is-application-node == true' \
         ${DOCKER_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER}teamcity
 fi
