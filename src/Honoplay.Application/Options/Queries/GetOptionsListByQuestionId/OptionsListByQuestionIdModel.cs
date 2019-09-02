@@ -10,6 +10,7 @@ namespace Honoplay.Application.Options.Queries.GetOptionsListByQuestionId
         public int QuestionId { get; set; }
         public string Text { get; set; }
         public int? VisibilityOrder { get; set; }
+        public bool IsCorrect { get; set; }
         public int CreatedBy { get; set; }
         public DateTimeOffset CreatedAt { get; private set; }
         public int? UpdatedBy { get; set; }
@@ -28,7 +29,8 @@ namespace Honoplay.Application.Options.Queries.GetOptionsListByQuestionId
                     CreatedBy = option.CreatedBy,
                     UpdatedBy = option.UpdatedBy,
                     UpdatedAt = option.UpdatedAt,
-                    CreatedAt = option.CreatedAt
+                    CreatedAt = option.CreatedAt,
+                    IsCorrect = option.IsCorrect
                 };
             }
         }

@@ -18,7 +18,6 @@ namespace Honoplay.Application.Options.Queries.GetOptionsListByQuestionId
 
         }
 
-        public int Id { get; private set; }
         public int QuestionId { get; private set; }
         [JsonIgnore]
         public Guid TenantId { get; private set; }
