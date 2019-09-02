@@ -1,4 +1,4 @@
-﻿import React, { Component } from "react";
+﻿import React, { Component, useState, useEffect } from "react";
 import { hot } from "react-hot-loader";
 import { Route, Redirect } from "react-router-dom";
 import Layout from "./components/Layout/LayoutComponent";
@@ -12,41 +12,41 @@ import TrainingSeries from './views/TrainingSeries/TrainingSeries';
 import Trainings from './views/TrainingSeries/Trainings';
 import TrainingSeriesInformation from './views/TrainingSeries/TrainingSeriesInformation';
 import TrainingSeriesUpdate from './views/TrainingSeries/TrainingSeriesUpdate';
-
 import setToken from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/index";
 
-class App extends Component {
-  componentDidMount() {
-    let token = localStorage.getItem("token");
-    if (token) {
-      setToken.setToken(token);
+const App = () => {
+  const [token] = useState(localStorage.getItem("token"));
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    setToken.setToken(token)
+    setTimeout(() => {}, 500)
+    setLoaded(true)
+  }, []);
+
+  if (token) {
+    if (!loaded) {
+      return null;
     }
+    return (
+      <Layout>
+        <Route path="/honoplay/questions" component={Questions} />
+        <Route path="/honoplay/tenantinformation" component={TenantInformation} />
+        <Route path="/honoplay/trainers" component={Trainers} />
+        <Route path="/honoplay/usermanagement" component={UserManagement} />
+        <Route path="/honoplay/addquestion" component={NewQuestion} />
+        <Route path="/honoplay/trainingseries" exact component={TrainingSeries} />
+        <Route path="/honoplay/trainingseriesdetail" exact component={Trainings} />
+        <Route path="/honoplay/trainingseriesdetail/training" exact component={TrainingSeriesInformation} />
+        <Route path="/honoplay/trainingseriesupdate" exact component={TrainingSeriesUpdate} />
+      </Layout>
+    );
+  }
+  else {
+    return (
+      <Redirect to="/login" />
+    );
   }
 
-  render() {
-    let token = localStorage.getItem("token");
-    if (token) {
-      return (
-        <Layout>
-          <Route path="/honoplay/questions" component={Questions} />
-          <Route path="/honoplay/tenantinformation" component={TenantInformation} />
-          <Route path="/honoplay/trainers" component={Trainers} />
-          <Route path="/honoplay/usermanagement" component={UserManagement} />
-          <Route path="/honoplay/addquestion" component={NewQuestion} />
-          <Route path="/honoplay/trainingseries" exact component={TrainingSeries} />
-          <Route path="/honoplay/trainingseriesdetail" exact component={Trainings} />
-          <Route path="/honoplay/trainingseriesdetail/training" exact component={TrainingSeriesInformation} />
-          <Route path="/honoplay/trainingseriesupdate" exact component={TrainingSeriesUpdate} />
-        </Layout>
-      );
-    }
-    else {
-      return (
-        <Redirect to="/login" />
-      );
-    }
-
-  }
 }
 
 export default hot(module)(App);
