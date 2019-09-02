@@ -1,5 +1,4 @@
 ﻿using Honoplay.Application._Infrastructure;
-using Honoplay.Common._Exceptions;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
 using MediatR;
@@ -37,7 +36,7 @@ namespace Honoplay.Application.Options.Queries.GetOptionsListByQuestionId
                 .Select(OptionsListByQuestionIdModel.Projection)
                 .ToList();
 
-            return new ResponseModel<OptionsListByQuestionIdModel>(numberOfTotalItems: optionsListByQuestionId.Count, numberOfSkippedItems: 0, source: optionsListByQuestionId);
+            return new ResponseModel<OptionsListByQuestionIdModel>(numberOfTotalItems: allOptionsListByQuestionId.LongCount(), numberOfSkippedItems: 0, source: optionsListByQuestionId);
 
         }
     }
