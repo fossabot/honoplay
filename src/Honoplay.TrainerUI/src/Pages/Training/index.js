@@ -3,9 +3,11 @@ import PageWrapper from "../../Containers/PageWrapper";
 import { Button } from "../../Components/Button";
 import { Link } from "react-router-dom";
 import History from "../../Helpers/History";
-import { TraineeList } from "../../Helpers/DummyData";
 import { connect } from "react-redux";
-import { fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/Src/actions/TrainerUser";
+import {
+  fetchTraineeList,
+  fetchTrainingList
+} from "@omegabigdata/honoplay-redux-helper/Src/actions/TrainerUser";
 import WithAuth from "../../Hoc/CheckAuth";
 
 class Training extends Component {
@@ -14,17 +16,19 @@ class Training extends Component {
     if (!location.state) {
       History.goBack();
     }
-    this.props.fetchTraineeList(location.state);
-  }
 
-  componentDidUpdate() {
-    console.log("Katilimci :", this.props.traineeList);
+    this.props.fetchTraineeList(location.state);
   }
 
   render() {
     if (!this.props.traineeList) {
       return <PageWrapper></PageWrapper>;
     }
+    const selectedTrainingId = localStorage.getItem("selectedTraining");
+
+    const selectedtraining = this.props.trainingList.items.filter(
+      q => q.id == selectedTrainingId
+    )[0];
 
     return (
       <PageWrapper {...this.state} boxNumber="2">
@@ -35,7 +39,7 @@ class Training extends Component {
                 <Link to="homepage">Eğitimler</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
-                {"aga"}
+              {selectedtraining.name}
               </li>
             </ol>
           </nav>
@@ -45,14 +49,14 @@ class Training extends Component {
               <tr>
                 <th scope="col">Eğitim Tarihi</th>
                 <th scope="col">Eğitim Adı</th>
-                <th scope="col">Eğitim Yeri</th>
+                <th scope="col">Eğitim Açıklama</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td> {"aa"}</td>
-                <td> {"aa"}</td>
-                <td> {"aa"}</td>
+                <td> {selectedtraining.beginDateTime}</td>
+                <td> {selectedtraining.name}</td>
+                <td> {selectedtraining.description}</td>
               </tr>
             </tbody>
           </table>
@@ -160,10 +164,17 @@ const mapStateToProps = state => {
     errorTraineeListError
   } = state.trainerUserTraineeList;
 
-  return { isTraineeListLoading, traineeList, errorTraineeListError };
+  const { trainingList } = state.trainerUserTrainingList;
+
+  return {
+    isTraineeListLoading,
+    traineeList,
+    errorTraineeListError,
+    trainingList
+  };
 };
 
 export default connect(
   mapStateToProps,
-  { fetchTraineeList }
+  { fetchTraineeList, fetchTrainingList }
 )(WithAuth(Training));

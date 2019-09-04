@@ -772,21 +772,21 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@omegabigdata/honoplay-api-helper-node@^0.3.7":
-  version "0.3.7"
-  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-api-helper-node/-/honoplay-api-helper-node-0.3.7.tgz#25446c41ce11e553f221095f53dca4eba90542ed"
-  integrity sha512-+sGnr47a46hu7+1YQhZUKWryMX/QS/w+ODkHnQrfXzQ0LDWI7BK6FIMD7RFtscUYsLgpMU4vWLYvUOwq+L8Rvw==
+"@omegabigdata/honoplay-api-helper-node@^0.3.8":
+  version "0.3.8"
+  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-api-helper-node/-/honoplay-api-helper-node-0.3.8.tgz#75e18f8fe5fbddcb35e538e70f9f5bf682f70883"
+  integrity sha512-ptT8HjelxbJFIq9p3pRvUBZKSISzluaL4dNag/2//nQrsJZK7VWa1ZTJyqnhtS7vYhP7JfUk4F2JmPebGrI+AQ==
   dependencies:
     axios "^0.18.0"
     axios-retry "^3.1.2"
     chai-http "^4.3.0"
 
-"@omegabigdata/honoplay-redux-helper@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-redux-helper/-/honoplay-redux-helper-0.5.2.tgz#663134e8c607b9b98e90019f1704f0703afe93c4"
-  integrity sha512-zdu4xsp0cIXXYKtn6uxub2N8cKDYHlHJe2kF5F+eCRCZ/qY+UYEbrMw3Ix0FvOU1Y6RtQFcyBSk4cuTyjftPeg==
+"@omegabigdata/honoplay-redux-helper@^0.5.3":
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-redux-helper/-/honoplay-redux-helper-0.5.3.tgz#fe2bcb1b6e5b1dc0a1253967ea299c9a313317f4"
+  integrity sha512-GELiRezju/4QrvJ7xJgRZq2UZ+unAD2RLmiAXREutf+y2U476x7F9R/VVwhYu1KK1YJvGxWfyMNyLk4NZLVKQA==
   dependencies:
-    "@omegabigdata/honoplay-api-helper-node" "^0.3.7"
+    "@omegabigdata/honoplay-api-helper-node" "^0.3.8"
     redux "^4.0.1"
     redux-thunk "^2.3.0"
 
