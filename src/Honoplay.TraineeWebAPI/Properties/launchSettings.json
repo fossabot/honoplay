@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Honoplay.TrainerUserWebAPI": {
+    "Honoplay.TraineeUserWebAPI": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "api/values",
