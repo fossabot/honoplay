@@ -1,5 +1,4 @@
-﻿using Honoplay.AdminWebAPI.Controllers;
-using Honoplay.Application._Infrastructure;
+﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Application.Trainings.Queries.GetTrainingsList;
 using Honoplay.Application.Trainings.Queries.GetTrainingsListByTrainerUserId;
 using Honoplay.Common._Exceptions;

@@ -4,8 +4,8 @@ using Honoplay.Common.Constants;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
 using Honoplay.Persistence.CacheService;
-using Honoplay.TrainerUserWebAPI.Interfaces;
-using Honoplay.TrainerUserWebAPI.Services;
+using Honoplay.TrainerWebAPI.Interfaces;
+using Honoplay.TrainerWebAPI.Services;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -24,7 +24,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Honoplay.TrainerUserWebAPI
+namespace Honoplay.TrainerWebAPI
 {
     public class Startup
     {
