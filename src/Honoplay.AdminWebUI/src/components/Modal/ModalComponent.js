@@ -6,9 +6,7 @@ import {
   DialogTitle
 } from '@material-ui/core';
 
-function Transition(props) {
-  return <Slide direction="up" {...props} />;
-}
+const Transition = React.forwardRef((props, ref) =>  <Slide direction="up" {...props} ref={ref}/>);
 
 class ModalComponent extends React.Component {
 

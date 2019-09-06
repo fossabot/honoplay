@@ -1,6 +1,6 @@
 export const Style = (theme) => ({
   headRoot: {
-    paddingRight: theme.spacing.unit,
+    paddingRight: theme.spacing(1),
   },
   headSpacer: {
     flex: '1 1 100%',
@@ -13,7 +13,7 @@ export const Style = (theme) => ({
   },
   tableRoot: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(1) * 3,
   },
   table: {
     minWidth: 90,
@@ -27,7 +27,7 @@ export const Style = (theme) => ({
   },
   simpleTableRoot: {
     width: '100%',
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing(1) * 3,
     overflowX: 'auto',
     maxHeight: 350, 
   },

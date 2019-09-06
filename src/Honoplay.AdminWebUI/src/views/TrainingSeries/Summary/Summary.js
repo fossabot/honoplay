@@ -108,7 +108,7 @@ class Summary extends React.Component {
                     titleName={translate('TrainingInformation')}
                     icon={<Edit />}
                 >
-                    <Grid container spacing={8}>
+                    <Grid container spacing={3}>
                         <GridItem sm={2} label={translate('TrainingName')} value={training.name} />
                         <GridItem sm={2} label={translate('TrainingCategory')} value='Yazılım' />
                         <GridItem sm={2} label={translate('BeginDate')} value={moment(training.beginDateTime).format("DD/MM/YYYY")} />
@@ -117,7 +117,7 @@ class Summary extends React.Component {
                         <Grid item xs={12} sm={12} />
                     </Grid>
                 </InfoCard>
-                <Grid container spacing={24}>
+                <Grid container spacing={3}>
                     <Grid item xs={12} sm={12} />
                     <Grid item xs={12} sm={12}>
                         <Header

@@ -93,43 +93,41 @@ class Profession extends React.Component {
         return (
 
             <div className={classes.root}>
-                <DialogContent>
-                    <Grid container spacing={24}>
-                        <Grid item xs={12} sm={11}>
-                            <Input
-                                error={professionError}
-                                onChange={this.handleChange}
-                                labelName={translate('TrainerExpertise')}
-                                inputType="text"
-                                name="professions"
-                                value={this.professionsModel.professions}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={1}>
-                            <Button
-                                onClick={this.handleClickProfession}
-                                buttonColor="secondary"
-                                buttonName={translate('Add')}
-                                disabled={loadingProfession}
-                            />
-                            {loadingProfession && (
-                                <CircularProgress
-                                    size={24}
-                                    disableShrink={true}
-                                    className={classes.buttonProgress}
-                                />
-                            )}
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <Divider />
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <Chip
-                                data={professions}>
-                            </Chip>
-                        </Grid>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} sm={11}>
+                        <Input
+                            error={professionError}
+                            onChange={this.handleChange}
+                            labelName={translate('TrainerExpertise')}
+                            inputType="text"
+                            name="professions"
+                            value={this.professionsModel.professions}
+                        />
                     </Grid>
-                </DialogContent>
+                    <Grid item xs={12} sm={1}>
+                        <Button
+                            onClick={this.handleClickProfession}
+                            buttonColor="secondary"
+                            buttonName={translate('Add')}
+                            disabled={loadingProfession}
+                        />
+                        {loadingProfession && (
+                            <CircularProgress
+                                size={24}
+                                disableShrink={true}
+                                className={classes.buttonProgress}
+                            />
+                        )}
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                        <Divider />
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                        <Chip
+                            data={professions}>
+                        </Chip>
+                    </Grid>
+                </Grid>
             </div>
         );
     }

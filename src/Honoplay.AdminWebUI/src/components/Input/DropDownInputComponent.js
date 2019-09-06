@@ -26,7 +26,7 @@ class DropDownInputComponent extends React.Component {
     const { classes, labelName, describable, onChange, error, name, value, data, children } = this.props;
     return (
       <div className={classes.inputRoot}>
-        <Grid container spacing={24}>
+        <Grid container spacing={3}>
           <Grid item xs={12} sm={3}
             className={classes.labelCenter}>
             <InputLabel htmlFor="bootstrap-input"

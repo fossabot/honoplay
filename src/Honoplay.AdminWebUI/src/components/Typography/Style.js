@@ -1,6 +1,6 @@
 const Style = (theme) => ({
     typography: {
-      margin: theme.spacing.unit,
+      margin: theme.spacing(1),
       color: '#673ab7',
       fontWeight: 'bold',
       fontSize: 18

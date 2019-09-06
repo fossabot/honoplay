@@ -2,7 +2,7 @@ import { green } from '@material-ui/core/colors';
 const Style = theme => ({
   root: {
     flexGrow: 1,
-    padding: 8 * 3
+    padding: 8 * 4
   },
   linkStyle: {
     fontSize: 16,

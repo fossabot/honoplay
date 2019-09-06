@@ -3,14 +3,14 @@ const Style = (theme) => ({
       display: 'flex',
       justifyContent: 'left',
       flexWrap: 'wrap',
-      padding: theme.spacing.unit / 2,
+      padding: theme.spacing(0.5),
       height: 100
     },
     chip: {
-      margin: theme.spacing.unit / 2,
+      margin: theme.spacing(0.5),
     },
     chipTypography: {
-      margin: theme.spacing.unit,
+      margin: theme.spacing(1),
       color: '#495057',
       fontWeight: 'bold',
     },

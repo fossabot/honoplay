@@ -65,7 +65,7 @@ class TrainingSeriesCreate extends React.Component {
         const { classes } = this.props;
         return (
             <div className={classes.root}>
-                <Grid container spacing={24}>
+                <Grid container spacing={3}>
                     {trainingSeries.createTrainingSeriesModels.map((trainingSeries, id) => (
                         <Grid item xs={12} sm={12} key={id}>
                             <Input

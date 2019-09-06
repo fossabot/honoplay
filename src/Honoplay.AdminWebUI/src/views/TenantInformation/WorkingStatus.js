@@ -98,48 +98,44 @@ class WorkingStatus extends React.Component {
 
 
         return (
+            <div className={classes.root}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} sm={11}>
+                        <Input
+                            error={createError}
+                            onChange={this.handleChange}
+                            labelName={translate('WorkingStatus')}
+                            inputType="text"
+                            name="name"
+                            value={this.workingStatusModel.name}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={1}>
+                        <Button
+                            buttonColor="secondary"
+                            buttonName={translate('Add')}
+                            onClick={this.handleClick}
+                            disabled={loadingCreate}
+                        />
+                        {loadingCreate && (
+                            <CircularProgress
+                                size={24}
+                                disableShrink={true}
+                                className={classes.buttonProgress}
+                            />
+                        )}
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                        <Divider />
+                    </Grid>
+                    <Grid item xs={12} sm={12}>
+                        <Chip
+                            data={workingStatuses}>
+                        </Chip>
+                    </Grid>
+                </Grid>
+            </div>
 
-            <MuiThemeProvider theme={theme}>
-                <div className={classes.root}>
-                    <DialogContent>
-                        <Grid container spacing={24}>
-                            <Grid item xs={10} sm={11}>
-                                <Input
-                                    error={createError}
-                                    onChange={this.handleChange}
-                                    labelName={translate('WorkingStatus')}
-                                    inputType="text"
-                                    name="name"
-                                    value={this.workingStatusModel.name}
-                                />
-                            </Grid>
-                            <Grid item xs={2} sm={1}>
-                                <Button
-                                    buttonColor="secondary"
-                                    buttonName={translate('Add')}
-                                    onClick={this.handleClick}
-                                    disabled={loadingCreate}
-                                />
-                                {loadingCreate && (
-                                    <CircularProgress
-                                        size={24}
-                                        disableShrink={true}
-                                        className={classes.buttonProgress}
-                                    />
-                                )}
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <Divider />
-                            </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <Chip
-                                    data={workingStatuses}>
-                                </Chip>
-                            </Grid>
-                        </Grid>
-                    </DialogContent>
-                </div>
-            </MuiThemeProvider>
         );
     }
 }

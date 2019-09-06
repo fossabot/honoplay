@@ -27,7 +27,7 @@ class HorizontalStepper extends React.Component {
 
             <MuiThemeProvider theme={theme}>
                 <div className={classes.root}>
-                    <Grid container spacing={40}>
+                    <Grid container spacing={3}>
                         <Grid item xs={12} sm={12}>
                             <Stepper activeStep={activeStep} alternativeLabel
                                 className={classes.stepper}>

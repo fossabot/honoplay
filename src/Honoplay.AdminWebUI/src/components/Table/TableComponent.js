@@ -142,7 +142,6 @@ class TableComponent extends React.Component {
             className={classes.tableWrapper}>
             <Table
               className={classes.table}
-              size="small"
             >
               <EnhancedTableHead
                 numSelected={selected.length}

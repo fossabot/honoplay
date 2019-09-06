@@ -18,7 +18,7 @@ export const Style = (theme) => ({
     },
     snackbarIconVariant: {
         opacity: 0.9,
-        marginRight: theme.spacing.unit,
+        marginRight: theme.spacing(1),
     },
     snackbarMessage: {
         display: 'flex',

@@ -1,7 +1,7 @@
 export const Style = (theme) => ({
   card: {
     maxWidth: '90%',
-    margin: theme.spacing.unit / 1,
+    margin: theme.spacing(1),
   },
   cardLabel: {
     color: '#707070',
@@ -23,13 +23,13 @@ export const Style = (theme) => ({
     justifyContent: 'flex-end'
   },
   chip: {
-    margin: theme.spacing.unit / 2,
+    margin: theme.spacing(0.5),
   },
   cardRoot: {
     display: 'flex',
     justifyContent: 'left',
     flexWrap: 'wrap',
-    padding: theme.spacing.unit / 2,
+    padding: theme.spacing(0.5),
   },
   cardButton: {
     maxWidth: '60%',
@@ -55,13 +55,13 @@ export const Style = (theme) => ({
   typographyCardButton: {
     color: 'white',
     textAlign: 'center',
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     fontWeight: 'bold',
     fontSize: 15
   },
   paragraphCardButton: {
     color: 'white',
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     textAlign: 'center',
     width: '100%',
     fontSize: 13
