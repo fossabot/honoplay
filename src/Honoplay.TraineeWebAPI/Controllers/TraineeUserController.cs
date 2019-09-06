@@ -1,13 +1,12 @@
-﻿using Honoplay.AdminWebAPI.Controllers;
-using Honoplay.Application.TraineeUsers.Commands.AuthenticateTraineeUser;
-using Honoplay.TraineeUserWebAPI.Interfaces;
+﻿using Honoplay.Application.TraineeUsers.Commands.AuthenticateTraineeUser;
+using Honoplay.TraineeWebAPI.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
-namespace Honoplay.TraineeUserWebAPI.Controllers
+namespace Honoplay.TraineeWebAPI.Controllers
 {
     [Authorize]
     public class TraineeUserController : BaseController

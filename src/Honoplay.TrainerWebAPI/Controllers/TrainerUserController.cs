@@ -1,13 +1,12 @@
-﻿using Honoplay.AdminWebAPI.Controllers;
-using Honoplay.Application.TrainerUsers.Commands.AuthenticateTrainerUser;
-using Honoplay.TrainerUserWebAPI.Interfaces;
+﻿using Honoplay.Application.TrainerUsers.Commands.AuthenticateTrainerUser;
+using Honoplay.TrainerWebAPI.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 
-namespace Honoplay.TrainerUserWebAPI.Controllers
+namespace Honoplay.TrainerWebAPI.Controllers
 {
     [Authorize]
     public class TrainerUserController : BaseController

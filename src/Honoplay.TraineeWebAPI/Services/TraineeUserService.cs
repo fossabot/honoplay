@@ -1,12 +1,12 @@
 ﻿using Honoplay.Application.TraineeUsers.Commands.AuthenticateTraineeUser;
-using Honoplay.TraineeUserWebAPI.Interfaces;
+using Honoplay.TraineeWebAPI.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace Honoplay.TraineeUserWebAPI.Services
+namespace Honoplay.TraineeWebAPI.Services
 {
     public class TraineeUserService : ITraineeUserService
     {

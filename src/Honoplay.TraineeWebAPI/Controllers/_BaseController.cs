@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Honoplay.AdminWebAPI.Controllers
+namespace Honoplay.TraineeWebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

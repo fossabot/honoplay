@@ -1,4 +1,4 @@
-﻿namespace Honoplay.TraineeUserWebAPI
+﻿namespace Honoplay.TraineeWebAPI
 {
     public class AppSettings
     {

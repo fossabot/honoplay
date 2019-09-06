@@ -1,4 +1,4 @@
-﻿using Honoplay.AdminWebAPI.Controllers;
+﻿using Honoplay.TrainerWebAPI.Controllers;
 using Honoplay.Application._Infrastructure;
 using Honoplay.Application.TraineeUsers.Queries.GetTraineeUsersListByClassroomId;
 using Honoplay.Application.Trainings.Queries.GetTrainingsList;
