@@ -133,7 +133,7 @@ class ClassroomUpdate extends React.Component {
                         disableShrink={true}
                         className={classes.progressModal}
                     /> :
-                    <Grid container spacing={24}>
+                    <Grid container spacing={3}>
                         <Grid item xs={12} sm={12} >
                             <Input
                                 labelName={translate('ClassroomName')}

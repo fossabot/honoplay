@@ -85,7 +85,7 @@ class TrainingSeriesInformation extends React.Component {
         return (
 
             <div className={classes.root}>
-                <Grid container spacing={16}>
+                <Grid container spacing={3}>
                     <Grid item xs={12} sm={12}>
                         <Stepper handleNext={this.handleClick}
                             activeStep={this.props.activeStep}

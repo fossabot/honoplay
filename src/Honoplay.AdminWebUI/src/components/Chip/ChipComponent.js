@@ -18,7 +18,7 @@ class ChipComponent extends React.Component {
         const { classes, data } = this.props;
 
         return (
-            <Grid container spacing={24}>
+            <Grid container spacing={10}>
                 <Grid item xs={12} sm={12}>
                     {data.map(data => {
                         return (

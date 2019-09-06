@@ -14,7 +14,8 @@ init(projeId);
 render(
     <Provider store={store}>
         <Router>
-            <Route exact path="/login" component={Login} />
+            <Route exact path="/" component={Login} />
+            <Route path="/login" component={Login} />
             <Route path="/honoplay" component={App} />
         </Router>
     </Provider>,

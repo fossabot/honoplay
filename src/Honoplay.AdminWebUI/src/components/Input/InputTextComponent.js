@@ -23,7 +23,7 @@ const InputTextComponent = (props) => {
   return (
 
     <div className={classes.inputRoot}>
-      <Grid container spacing={24}>
+      <Grid container spacing={3}>
         {(labelName &&
           <Grid item xs={12} sm={3}
             className={classes.labelCenter}>

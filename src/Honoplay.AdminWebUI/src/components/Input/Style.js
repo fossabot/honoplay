@@ -5,7 +5,7 @@ export const Style = (theme) => ({
     },
     bootstrapRoot: {
       'label + &': {
-      marginTop: theme.spacing.unit * 20,
+      marginTop: theme.spacing(5) * 4,
       },
     },
     bootstrapInput: {
@@ -46,7 +46,7 @@ export const Style = (theme) => ({
       backgroundColor: theme.palette.common.white,
       border: '1px solid red',
       fontSize: 16,
-      width: '92.5%',
+      width: '100%',
       height: 20,
       padding: '8px 12px',
       transition: theme.transitions.create(['border-color', 'box-shadow']),
@@ -78,7 +78,7 @@ export const Style = (theme) => ({
       height: 38
     },
     nativeWidth: {
-      width: '90%'
+      width: '95%'
     },
 });
 
@@ -88,7 +88,7 @@ import {InputBase} from '@material-ui/core';
 export const BootstrapInput = withStyles(theme => ({
     root: {
       'label + &': {
-        marginTop: theme.spacing.unit * 3,
+        marginTop: theme.spacing(1) * 3,
       },
     },
     input: {
@@ -125,7 +125,7 @@ export const BootstrapInput = withStyles(theme => ({
   export const BootstrapInputError = withStyles(theme => ({
     root: {
       'label + &': {
-        marginTop: theme.spacing.unit * 3,
+        marginTop: theme.spacing(1) * 3,
       },
     },
     input: {

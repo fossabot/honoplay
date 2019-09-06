@@ -42,7 +42,7 @@ class CardComponent extends React.Component {
         return (
 
             <MuiThemeProvider theme={theme}>
-                <Grid container spacing={24}>
+                <Grid container spacing={10}>
                     <Grid item sm={12}>
                         <div className={classes.cardRoot}>
                             {data && data.map((data, i) => {

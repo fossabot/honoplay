@@ -30,7 +30,7 @@ export const Style = (theme) => ({
     },
     content: {
       flexGrow: 1,
-      padding: theme.spacing.unit * 3,
+      padding: theme.spacing(1) * 3,
       paddingTop: 75,
     },
     toolbar: {
@@ -79,7 +79,7 @@ export const Style = (theme) => ({
       width: drawerWidth,
     },
     nested: {
-      paddingLeft: theme.spacing.unit * 4,
+      paddingLeft: theme.spacing(1) * 4,
     },
 });
 

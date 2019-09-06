@@ -3,6 +3,7 @@ import {createMuiTheme} from '@material-ui/core';
 export const Style = (theme) => ({
     root: {
       flexGrow: 1,
+      padding: 8 * 3
     },
     default_tabStyle: {
         textTransform: 'capitalize',
@@ -44,7 +45,7 @@ export const Style = (theme) => ({
       marginLeft: -12,
     },
     buttonWrapper: {
-      margin: theme.spacing.unit,
+      margin: theme.spacing(1),
       position: 'relative',
     },
     buttonRoot: {
@@ -64,7 +65,7 @@ export const Style = (theme) => ({
       display: 'flex',
       justifyContent: 'left',
       flexWrap: 'wrap',
-      padding: theme.spacing.unit / 1,
+      padding: theme.spacing(1),
       paddingBottom: 20,
       borderRadius: 3,
       borderColor: '#e0e0e0',

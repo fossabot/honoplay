@@ -109,7 +109,7 @@ class Options extends React.Component {
 
             <MuiThemeProvider theme={theme} >
                 <div className={classes.root}>
-                    <Grid container spacing={16}>
+                    <Grid container spacing={3}>
                         <Grid item xs={12} sm={12} />
                         <Grid item xs={12} sm={12}>
                             <Typography>
@@ -117,7 +117,7 @@ class Options extends React.Component {
                             </Typography>
                         </Grid>
                         {this.state.options.map((option, id) => (
-                            <Grid container direction="row" spacing={16} key={id}>
+                            <Grid container direction="row" spacing={3} key={id}>
                                 <Grid item xs={12} sm={1}>
                                     <Checkbox
                                         checked={this.state.options.isCorrect}

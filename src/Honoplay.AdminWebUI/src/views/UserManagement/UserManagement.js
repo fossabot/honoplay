@@ -88,7 +88,7 @@ class UserManagement extends React.Component {
         return (
 
             <div className={classes.root}>
-                <Grid container spacing={24}>
+                <Grid container spacing={3}>
                     <Typography
                         pageHeader={translate('UserManagement')}
                     />

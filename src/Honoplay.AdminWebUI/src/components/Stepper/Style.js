@@ -9,11 +9,11 @@ export const Style = (theme) => ({
         backgroundColor: '#fafafa'
     },
     backButton: {
-        marginRight: theme.spacing.unit,
+        marginRight: theme.spacing(1),
     },
     instructions: {
-        marginTop: theme.spacing.unit,
-        marginBottom: theme.spacing.unit,
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
     },
     nextButton: {
         color: 'white'

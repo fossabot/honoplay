@@ -3,31 +3,31 @@ export const Style = (theme) => ({
     main: {
       width: 'auto',
       display: 'block', 
-      marginLeft: theme.spacing.unit * 3,
-      marginRight: theme.spacing.unit * 3,
-      [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+      marginLeft: theme.spacing(1) * 3,
+      marginRight: theme.spacing(1) * 3,
+      [theme.breakpoints.up(400 + theme.spacing(1) *6)]: {
         width: 400,
         marginLeft: 'auto',
         marginRight: 'auto',
       },
     },
     paper: {
-      marginTop: theme.spacing.unit * 8,
+      marginTop: theme.spacing(1) * 8,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
+      padding: `${theme.spacing(1) * 2}px ${theme.spacing(1) * 3}px ${theme.spacing(1) * 3}px`,
     },
     avatar: {
-      margin: theme.spacing.unit,
+      margin: theme.spacing(1),
       backgroundColor: deepPurple[700]
     },
     form: {
       width: '100%', 
-      marginTop: theme.spacing.unit,
+      marginTop: theme.spacing(1),
     },
     button: {
-      marginTop: theme.spacing.unit * 3,
+      marginTop: theme.spacing(1) * 3,
             color: theme.palette.getContrastText(deepPurple[500]),
       backgroundColor: deepPurple[700],
       '&:hover': {
@@ -36,10 +36,10 @@ export const Style = (theme) => ({
       textTransform: 'capitalize',
     },
     marginInput: {
-      margin: theme.spacing.unit,
+      margin: theme.spacing(1),
     },
     progress: {
-      margin: theme.spacing.unit * 2,
+      margin: theme.spacing(1) * 2,
     },    
   });
 

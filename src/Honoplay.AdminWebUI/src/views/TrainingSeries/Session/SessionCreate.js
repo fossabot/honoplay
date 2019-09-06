@@ -83,7 +83,7 @@ class SessionCreate extends React.Component {
         return (
 
             <div className={classes.root}>
-                <Grid container spacing={24}>
+                <Grid container spacing={3}>
                     {session.createSessionModels.map((session, id) => (
                         <Grid item xs={12} sm={12} key={id}>
                             <Input
