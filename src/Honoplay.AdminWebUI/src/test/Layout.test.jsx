@@ -9,7 +9,6 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
 
 import CompanyCard from '../components/Layout/CompanyCard';
-import TrainerCard from '../components/Layout/TrainerCard';
 import List from '../components/Layout/ListItemComponent';
 import Layout from '../components/Layout/LayoutComponent';
 
@@ -21,15 +20,6 @@ describe('<CompanyCard/>', () => {
             companyName="Framer Bilişim Teknolojileri"
         />);
         wrapper.props().companyName.should.be.defined;
-    });
-})
-
-describe('<TrainerCard/>', () => {
-    it('Should have props  trainerName', () => {
-        const wrapper = shallow(<TrainerCard
-            trainerName="Ahmet Frankfurt"
-        />);
-        wrapper.props().trainerName.should.be.defined;
     });
 })
 

@@ -1,4 +1,6 @@
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { withStyles } from '@material-ui/core/styles';
+import {InputBase} from '@material-ui/core';
+
 export const Style = (theme) => ({
     inputRoot: {
       flexGrow: 1,
@@ -82,8 +84,6 @@ export const Style = (theme) => ({
     },
 });
 
-import { withStyles } from '@material-ui/core/styles';
-import {InputBase} from '@material-ui/core';
 
 export const BootstrapInput = withStyles(theme => ({
     root: {

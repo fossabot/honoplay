@@ -1,4 +1,7 @@
 import { green } from '@material-ui/core/colors';
+import { createMuiTheme } from '@material-ui/core';
+import { deepPurple, deepOrange } from '@material-ui/core/colors';
+
 export const Style = theme => ({
     buttonProgress: {
         color: green[500],
@@ -16,9 +19,6 @@ export const Style = theme => ({
     },
 });
 
-
-import { createMuiTheme } from '@material-ui/core';
-import { deepPurple, deepOrange } from '@material-ui/core/colors';
 export const theme = createMuiTheme({
     palette: {
         primary: deepPurple,
