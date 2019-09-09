@@ -1,4 +1,4 @@
-import should from 'should';
+import should from "should";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { configure, shallow } from 'enzyme';
@@ -30,23 +30,23 @@ describe('<App/>', () => {
   }, {});
 
   it('Should redirect to Questions page', () => {
-    (pathMap['/home/questions']).should.equal(Questions);
+    (pathMap['/honoplay/questions']).should.equal(Questions);
   })
 
   it('Should redirect to Tenant Information page', () => {
-    (pathMap['/home/tenantinformation']).should.equal(TenantInformation);
+    (pathMap['/honoplay/tenantinformation']).should.equal(TenantInformation);
   })
 
   it('Should redirect to Trainers page', () => {
-    (pathMap['/home/trainers']).should.equal(Trainers);
+    (pathMap['/honoplay/trainers']).should.equal(Trainers);
   })
 
   it('Should redirect to User Management page', () => {
-    (pathMap['/home/usermanagement']).should.equal(UserManagement);
+    (pathMap['/honoplay/usermanagement']).should.equal(UserManagement);
   })
 
   it('Should redirect to New Question page', () => {
-    (pathMap['/home/addquestion']).should.equal(NewQuestion);
+    (pathMap['/honoplay/addquestion']).should.equal(NewQuestion);
   })
   
 })

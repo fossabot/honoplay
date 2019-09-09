@@ -1,3 +1,5 @@
+import { createMuiTheme } from '@material-ui/core';
+
 export const Style = (theme) => ({
   card: {
     maxWidth: '90%',
@@ -72,7 +74,6 @@ export const Style = (theme) => ({
 
 });
 
-import { createMuiTheme } from '@material-ui/core';
 export const theme = createMuiTheme({
   typography: {
     useNextVariants: true,

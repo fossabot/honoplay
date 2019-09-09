@@ -1,3 +1,6 @@
+import {createMuiTheme} from '@material-ui/core';
+import {deepPurple, deepOrange} from '@material-ui/core/colors';
+
 export const Style = (theme) => ({
     button: {
         color: 'white',
@@ -8,8 +11,6 @@ export const Style = (theme) => ({
     },
 });
 
-import {createMuiTheme} from '@material-ui/core';
-import {deepPurple, deepOrange} from '@material-ui/core/colors';
 export const theme = createMuiTheme({
   palette: {
     primary: deepPurple,

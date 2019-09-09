@@ -17,7 +17,6 @@ import Modal from '../Modal/ModalComponent';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 
-window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
 
 class CardComponent extends React.Component {
     constructor(props) {

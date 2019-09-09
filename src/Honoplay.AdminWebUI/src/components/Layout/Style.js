@@ -1,4 +1,6 @@
 import {deepPurple, deepOrange} from '@material-ui/core/colors';
+import {createMuiTheme} from '@material-ui/core';
+
 const drawerWidth = 240;
 export const Style = (theme) => ({
     root: {
@@ -83,7 +85,6 @@ export const Style = (theme) => ({
     },
 });
 
-import {createMuiTheme} from '@material-ui/core';
 export const theme = createMuiTheme({
   palette: {
     primary: deepPurple,

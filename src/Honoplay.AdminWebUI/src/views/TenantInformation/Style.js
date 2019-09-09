@@ -1,5 +1,6 @@
 import {green, deepPurple, amber} from '@material-ui/core/colors';
 import {createMuiTheme} from '@material-ui/core';
+
 export const Style = (theme) => ({
     root: {
       flexGrow: 1,
