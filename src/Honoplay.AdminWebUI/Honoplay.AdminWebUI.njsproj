@@ -41,6 +41,8 @@
     <Compile Include="server.js" />
     <Compile Include="webpack.config.js" />
     <Content Include=".babelrc" />
+    <Content Include=".dockerignore" />
+    <Content Include="Dockerfile" />
     <Content Include="public\index.html" />
     <Content Include="src\styles\application.css" />
     <Content Include="package.json" />
