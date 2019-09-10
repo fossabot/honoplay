@@ -6,6 +6,8 @@
   "repository": "",
   "private": true,
   "scripts": {
+    "buildProd": "react-scripts build",
+    "startProd": "react-scripts start",
     "build": "rimraf ./dist && webpack",
     "start": "rimraf ./dist && webpack-dev-server --mode development --colors",
     "test": "mocha --require @babel/register --require ignore-styles **/*.test.jsx",
@@ -29,7 +31,7 @@
     "moment": "^2.24.0",
     "notistack": "^0.8.5",
     "react": "^16.8.6",
-    "react-dom": "npm:@hot-loader/react-dom",
+    "react-dom": "^16.8.6",
     "react-hot-loader": "^4.8.4",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
@@ -37,7 +39,8 @@
     "react-swipeable-views": "^0.13.3",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "url-loader": "^1.1.2"
+    "url-loader": "^1.1.2",
+    "react-scripts": "3.1.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
