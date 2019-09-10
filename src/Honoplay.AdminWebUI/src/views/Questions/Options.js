@@ -71,12 +71,6 @@ class Options extends React.Component {
         this.props.createOption(this.optionsModel);
     }
 
-    handleChangeChecked = (e) => {
-        this.state.options.map((option, id) => {
-            option.isCorrect = true;
-        })
-    }
-
     optionAdd = () => {
         this.setState({
             options: this.state.options.concat([{
@@ -123,7 +117,7 @@ class Options extends React.Component {
                                         checked={this.state.options.isCorrect}
                                         color='secondary'
                                         value={this.state.options.text}
-                                        onChange={this.handleChangeChecked}
+                                        onChange={ e => option.isCorrect = true}
                                         className={classes.checkbox}
                                     />
                                 </Grid>
