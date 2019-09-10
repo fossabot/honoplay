@@ -6,6 +6,9 @@ import Style from "../Style";
 import Input from "../../components/Input/InputTextComponent";
 import ImageInput from "../../components/Input/ImageInputComponent";
 
+import { connect } from "react-redux";
+import { fetchTenant } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Tenant";
+
 class BasicKnowledge extends React.Component {
   constructor(props) {
     super(props);
@@ -15,11 +18,29 @@ class BasicKnowledge extends React.Component {
     name: '',
     description: '',
     logo: '',
-    hostName:
-      Math.random()
-        .toString(36)
-        .substring(2) + new Date().getTime().toString(36)
+    hostName: ''
   };
+
+  tenantId = localStorage.getItem("tenantId");
+
+  componentDidUpdate(prevProps) {
+    const {
+      isTenantLoading,
+      tenant,
+      errorTenant
+    } = this.props;
+
+    if (prevProps.isTenantLoading && !isTenantLoading && tenant) {
+      if (!errorTenant) {
+        this.tenantModel = tenant.items[0]
+      }
+      this.props.basicTenantModel(this.tenantModel);
+    }
+  }
+
+  componentDidMount() {
+    this.props.fetchTenant(this.tenantId.toString());
+  }
 
   handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,18 +48,19 @@ class BasicKnowledge extends React.Component {
     this.props.basicTenantModel(this.tenantModel);
   }
 
+
   render() {
-    const { 
-      classes, 
+    const {
+      classes,
       isErrorTenant } = this.props;
-      
+
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12}>
             <Input
-              error = {isErrorTenant}
+              error={isErrorTenant}
               onChange={this.handleChange}
               labelName={translate("TenantName")}
               inputType="text"
@@ -46,7 +68,7 @@ class BasicKnowledge extends React.Component {
               value={this.tenantModel.name}
             />
             <Input
-              error = {isErrorTenant}
+              error={isErrorTenant}
               onChange={this.handleChange}
               labelName={translate("Description")}
               multiline
@@ -68,4 +90,25 @@ class BasicKnowledge extends React.Component {
   }
 }
 
-export default withStyles(Style)(BasicKnowledge);
+const mapStateToProps = state => {
+  const {
+    isTenantLoading,
+    tenant,
+    errorTenant
+  } = state.tenant;
+
+  return {
+    isTenantLoading,
+    tenant,
+    errorTenant
+  };
+};
+
+const mapDispatchToProps = {
+  fetchTenant
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(Style)(BasicKnowledge));

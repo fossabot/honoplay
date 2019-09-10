@@ -12,8 +12,6 @@ class ImageInputComponent extends React.Component {
       filename: '',
       byteArray: null
     }
-    this.handleImageName = this.handleImageName.bind(this);
-    this.getBase64 = this.getBase64.bind(this);
   }
   handleImageName = (e) => {
     this.setState({
