@@ -50,6 +50,7 @@
     <Content Include="browser-test-run.html" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="deploy\" />
     <Folder Include="src\components\" />
     <Folder Include="browser-test\" />
     <Folder Include="src\styles\" />
