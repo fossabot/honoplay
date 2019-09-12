@@ -22,7 +22,7 @@ namespace Honoplay.TrainerWebAPI.Controllers
         /// <param name="trainingId">Get classrooms</param>
         /// <returns>Get classrooms by tenantId & trainingId & trainerId  with status code.</returns>
         [HttpGet]
-        [Route("/api/Training/{trainingId}/Classroom")]
+        [Route("/Training/{trainingId}/Classroom")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
