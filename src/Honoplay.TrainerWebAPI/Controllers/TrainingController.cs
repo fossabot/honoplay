@@ -17,7 +17,7 @@ namespace Honoplay.TrainerWebAPI.Controllers
     public class TrainingController : BaseController
     {
         [HttpGet]
-        [Route("/api/Training")]
+        //[Route("/Training")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

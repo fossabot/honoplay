@@ -148,7 +148,7 @@ namespace Honoplay.AdminWebAPI.Controllers
         /// <param name="classroomId">Get session model</param>
         /// <returns>Get session by tenant id and classroom id with status code.</returns>
         [HttpGet]
-        [Route("/api/Classroom/{classroomId}/Session")]
+        [Route("/Classroom/{classroomId}/Session")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

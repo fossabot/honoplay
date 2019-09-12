@@ -151,7 +151,7 @@ namespace Honoplay.AdminWebAPI.Controllers
         /// <param name="questionId">Get option model</param>
         /// <returns>Get option by tenant id and option id with status code.</returns>
         [HttpGet]
-        [Route("/api/Question/{questionId}/Option")]
+        [Route("/Question/{questionId}/Option")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
