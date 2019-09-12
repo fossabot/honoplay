@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Honoplay.TraineeWebAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public abstract class BaseController : ControllerBase
     {
