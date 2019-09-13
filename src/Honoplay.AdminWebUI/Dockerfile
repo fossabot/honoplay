@@ -6,8 +6,6 @@ COPY package.json /app/package.json
 RUN npm install --silent
 COPY . /app
 RUN npm run buildProd
-WORKDIR /app/build
-RUN sed -e 's+/static/+./static/+g' index.html > index.tmp && mv index.tmp index.html
 
 # production environment
 FROM nginx:1.16.0-alpine
