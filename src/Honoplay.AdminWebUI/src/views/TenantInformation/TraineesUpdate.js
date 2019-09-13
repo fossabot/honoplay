@@ -138,13 +138,21 @@ class TraineesUpdate extends React.Component {
                 [name]: value
             },
             updateError: false,
-            [name] : value
+            [name]: value
         }))
     }
 
     handleClick = () => {
         this.props.updateTrainee(this.state.traineeModel);
     }
+
+    handleClickShowPassword = () => {
+        this.setState(
+            state => ({
+                showPassword: !state.showPassword
+            }));
+    };
+
 
     render() {
         const { classes } = this.props;

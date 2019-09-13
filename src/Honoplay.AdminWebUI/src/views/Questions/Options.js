@@ -16,16 +16,20 @@ class Options extends React.Component {
         this.state = {
             loading: false,
             optionError: false,
+            order: 1,
             options: [
                 {
-                    questionId: '',
+                    questionId: this.props.questionId,
                     text: '',
-                    visibilityOrder: '',
+                    visibilityOrder: 1,
                     isCorrect: false
                 }
             ],
+            //questionId: props.questionId
         }
     }
+
+    // questionId = null;
 
     optionsModel = {
         createOptionModels: [
@@ -33,14 +37,13 @@ class Options extends React.Component {
         ]
     }
 
-
-    questionId = null;
-
     componentDidUpdate(prevProps) {
         const {
             isCreateOptionLoading,
             createOption,
-            errorCreateOption
+            errorCreateOption,
+            isOptionListByQuestionIdLoading,
+            optionsListByQuestionId,
         } = this.props;
 
         if (!prevProps.isCreateOptionLoading && isCreateOptionLoading) {
@@ -63,7 +66,16 @@ class Options extends React.Component {
                 });
             }
         }
+        if (prevProps.isOptionListByQuestionIdLoading && !isOptionListByQuestionIdLoading && optionsListByQuestionId) {
+            this.setState({
+                options: optionsListByQuestionId.items
+            })
+        }
 
+    }
+
+    componentDidMount() {
+        this.props.fetchOptionsByQuestionId(this.questionId);
     }
 
     handleClick = () => {
@@ -73,31 +85,44 @@ class Options extends React.Component {
 
     optionAdd = () => {
         this.setState({
+            order: ++this.state.order,
             options: this.state.options.concat([{
                 questionId: '',
                 text: '',
-                visibilityOrder: '',
+                visibilityOrder: this.state.order,
                 isCorrect: false
             }])
         });
     }
 
+    handleChangeOption = id => evt => {
+        const newOptions = this.state.options.map((option, optionId) => {
+            if (id !== optionId) return option;
+            return { ...option, text: evt.target.value };
+        });
+        this.setState({ options: newOptions });
+
+        this.optionsModel.createOptionModels = this.state.options;
+        this.props.basicOptionModel(this.optionsModel);
+    };
+
 
     optionRemove = id => () => {
         this.setState({
+            order: --this.state.order,
             options: this.state.options.filter((o, oid) => id !== oid)
         });
     };
 
     render() {
-        const { loading } = this.state;
-        const { classes, questionId } = this.props;
+        const { loading, questionId } = this.state;
+        const { classes } = this.props;
 
-        this.state.options.map((option, id) => {
-            option.questionId = questionId;
-        })
+        // this.questionId = questionId;
 
-        this.questionId = questionId;
+        // this.state.options.map((option, id) => {
+        //     option.questionId = this.questionId;
+        // })
 
         return (
 
@@ -117,7 +142,11 @@ class Options extends React.Component {
                                         checked={this.state.options.isCorrect}
                                         color='secondary'
                                         value={this.state.options.text}
-                                        onChange={ e => option.isCorrect = true}
+                                        onChange={e => {
+                                            option.isCorrect = true;
+                                            this.optionsModel.createOptionModels = this.state.options;
+                                            this.props.basicOptionModel(this.optionsModel);
+                                        }}
                                         className={classes.checkbox}
                                     />
                                 </Grid>
@@ -125,18 +154,15 @@ class Options extends React.Component {
                                     <Input
                                         inputType="text"
                                         placeholder={translate('VisibilityOrder')}
-                                        onChange={e => {
-                                            option.visibilityOrder = e.target.value;
-                                        }}
+                                        value={option.visibilityOrder}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={2} >
                                     <Input
                                         inputType="text"
                                         placeholder={translate('Option')}
-                                        onChange={e => {
-                                            option.text = e.target.value
-                                        }}
+                                        onChange={this.handleChangeOption(id)}
+                                        value={option.text}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={1}>
@@ -160,7 +186,7 @@ class Options extends React.Component {
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}> <Divider /> </Grid>
-                        <Grid item xs={12} sm={11} ></Grid>
+                        {/* <Grid item xs={12} sm={11} ></Grid>
                         <Grid item xs={12} sm={1} >
                             <Button
                                 buttonColor="primary"
@@ -175,7 +201,7 @@ class Options extends React.Component {
                                     className={classes.buttonProgress}
                                 />
                             )}
-                        </Grid>
+                        </Grid> */}
                     </Grid>
                 </div>
             </MuiThemeProvider>
@@ -190,10 +216,19 @@ const mapStateToProps = state => {
         errorCreateOption
     } = state.createOption;
 
+    const {
+        isOptionListByQuestionIdLoading,
+        optionsListByQuestionId,
+        errorOptionListByQuestionId
+    } = state.optionListByQuestionId;
+
     return {
         isCreateOptionLoading,
         createOption,
-        errorCreateOption
+        errorCreateOption,
+        isOptionListByQuestionIdLoading,
+        optionsListByQuestionId,
+        errorOptionListByQuestionId
     };
 };
 

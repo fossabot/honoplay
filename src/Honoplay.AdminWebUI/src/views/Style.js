@@ -25,6 +25,7 @@ const Style = theme => ({
     '&:hover': {
       backgroundColor: green[700],
     },
+    color: 'white'
   },
   progressStepper: {
     position: 'absolute',
@@ -54,8 +55,8 @@ const Style = theme => ({
     borderWidth: 1,
     height: 70
   },
-  passwordInput : {
-    width: '94%', 
+  passwordInput: {
+    width: '94%',
   },
   bootstrapFormLabel: {
     fontSize: 15,
