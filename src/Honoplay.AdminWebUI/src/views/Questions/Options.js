@@ -139,9 +139,9 @@ class Options extends React.Component {
                             <Grid container direction="row" spacing={3} key={id}>
                                 <Grid item xs={12} sm={1}>
                                     <Checkbox
-                                        checked={option.isCorrect}
+                                        checked={Boolean(option.isCorrect)}
                                         color='secondary'
-                                        value={option.isCorrect}
+                                        value={option.text}
                                         onChange={e => {
                                             option.isCorrect = true;
                                             this.props.basicOptionModel(this.optionsModel);
