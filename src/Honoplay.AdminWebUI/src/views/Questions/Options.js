@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { translate } from '@omegabigdata/terasu-api-proxy';
-import { Grid, Checkbox, MuiThemeProvider, Divider, Typography, CircularProgress } from '@material-ui/core';
+import { Grid, Checkbox, MuiThemeProvider, Divider, Typography } from '@material-ui/core';
 import { Style, theme } from './Style';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
@@ -87,7 +87,8 @@ class Options extends React.Component {
             options: this.state.options.concat([{
                 questionId: '',
                 text: '',
-                visibilityOrder: this.state.options[index].visibilityOrder ? this.state.options[index].visibilityOrder + 1 : 1,
+                visibilityOrder: this.state.options[index].visibilityOrder
+                    ? this.state.options[index].visibilityOrder + 1 : 1,
                 isCorrect: false
             }])
         });
@@ -112,7 +113,6 @@ class Options extends React.Component {
     };
 
     render() {
-        const { loading } = this.state;
         const { classes, questionId } = this.props;
 
         this.questionId = questionId;

@@ -81,7 +81,7 @@ class TrainingSeriesInformation extends React.Component {
         } else if (this.props.activeStep === 2) {
             this.props.increment(this.props.activeStep);
         } else if (this.props.activeStep === 3) {
-            this.props.history.push("/honoplay/trainingseriesdetail");
+            this.props.history.push("/admin/trainingseriesdetail");
             this.props.reset();
         }
     }
