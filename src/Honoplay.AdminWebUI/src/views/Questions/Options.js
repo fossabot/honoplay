@@ -16,20 +16,18 @@ class Options extends React.Component {
         this.state = {
             loading: false,
             optionError: false,
-            order: 1,
             options: [
                 {
-                    questionId: this.props.questionId,
+                    questionId: '',
                     text: '',
                     visibilityOrder: 1,
                     isCorrect: false
                 }
             ],
-            //questionId: props.questionId
         }
     }
 
-    // questionId = null;
+    questionId = null;
 
     optionsModel = {
         createOptionModels: [
@@ -84,12 +82,12 @@ class Options extends React.Component {
     }
 
     optionAdd = () => {
+        let index = this.state.options.length - 1;
         this.setState({
-            order: ++this.state.order,
             options: this.state.options.concat([{
                 questionId: '',
                 text: '',
-                visibilityOrder: this.state.order,
+                visibilityOrder: this.state.options[index].visibilityOrder ? this.state.options[index].visibilityOrder + 1 : 1,
                 isCorrect: false
             }])
         });
@@ -102,7 +100,6 @@ class Options extends React.Component {
         });
         this.setState({ options: newOptions });
 
-        this.optionsModel.createOptionModels = this.state.options;
         this.props.basicOptionModel(this.optionsModel);
     };
 
@@ -115,14 +112,17 @@ class Options extends React.Component {
     };
 
     render() {
-        const { loading, questionId } = this.state;
-        const { classes } = this.props;
+        const { loading } = this.state;
+        const { classes, questionId } = this.props;
 
-        // this.questionId = questionId;
+        this.questionId = questionId;
 
-        // this.state.options.map((option, id) => {
-        //     option.questionId = this.questionId;
-        // })
+        this.state.options.map((option, id) => {
+            option.questionId = this.questionId;
+        })
+
+        this.optionsModel.createOptionModels = this.state.options;
+
 
         return (
 
@@ -139,12 +139,11 @@ class Options extends React.Component {
                             <Grid container direction="row" spacing={3} key={id}>
                                 <Grid item xs={12} sm={1}>
                                     <Checkbox
-                                        checked={this.state.options.isCorrect}
+                                        checked={option.isCorrect}
                                         color='secondary'
-                                        value={this.state.options.text}
+                                        value={option.isCorrect}
                                         onChange={e => {
                                             option.isCorrect = true;
-                                            this.optionsModel.createOptionModels = this.state.options;
                                             this.props.basicOptionModel(this.optionsModel);
                                         }}
                                         className={classes.checkbox}
@@ -186,22 +185,6 @@ class Options extends React.Component {
                             />
                         </Grid>
                         <Grid item xs={12} sm={12}> <Divider /> </Grid>
-                        {/* <Grid item xs={12} sm={11} ></Grid>
-                        <Grid item xs={12} sm={1} >
-                            <Button
-                                buttonColor="primary"
-                                buttonName={translate('Save')}
-                                onClick={this.handleClick}
-                                disabled={loading}
-                            />
-                            {loading && (
-                                <CircularProgress
-                                    size={24}
-                                    disableShrink={true}
-                                    className={classes.buttonProgress}
-                                />
-                            )}
-                        </Grid> */}
                     </Grid>
                 </div>
             </MuiThemeProvider>
