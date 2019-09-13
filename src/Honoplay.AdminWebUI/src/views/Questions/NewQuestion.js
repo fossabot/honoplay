@@ -1,5 +1,6 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
+import classNames from "classnames";
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Divider, CircularProgress } from '@material-ui/core';
 import Style from '../Style';
@@ -7,19 +8,19 @@ import Typography from '../../components/Typography/TypographyComponent';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Options from './Options';
-import ExpansionPanel from '../../components/ExpansionPanel/ControlledExpansionPanels ';
 import Table from '../../components/Table/TableComponent';
 import { booleanToString } from '../../helpers/Converter';
 
 import { connect } from "react-redux";
-import { createQuestion } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Question";
-import { fetchOptionsByQuestionId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options";
+import { createQuestion, fetchQuestion, updateQuestion } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Question";
+import { fetchOptionsByQuestionId, createOption } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options";
 
 class NewQuestion extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      newOptionsModel: null,
       questionsError: false,
       question: '',
       questionId: null,
@@ -28,21 +29,52 @@ class NewQuestion extends React.Component {
         { title: translate('Options'), field: "text" },
         { title: translate('Answer'), field: "isCorrect" }
       ],
-      options: []
+      options: [],
+      questionsModel: {
+        text: '',
+        duration: ''
+      },
+      success: false,
+      newOptions: null
     }
   }
+
+  dataId = localStorage.getItem("dataid");
+
 
   componentDidUpdate(prevProps) {
     const {
       isCreateQuestionLoading,
       errorCreateQuestion,
       newQuestion,
+      isQuestionLoading,
+      question,
+      errorQuestion,
+      isUpdateQuestionLoading,
+      updateQuestion,
+      errorUpdateQuestion,
       isOptionListByQuestionIdLoading,
       optionsListByQuestionId,
-      errorOptionListByQuestionId
+      isCreateOptionLoading,
+      createOption,
+      errorCreateOption
     } = this.props;
 
+    if (prevProps.isOptionListByQuestionIdLoading && !isOptionListByQuestionIdLoading && optionsListByQuestionId) {
+      console.log('fsdfds', optionsListByQuestionId)
+      booleanToString(optionsListByQuestionId.items);
+      this.setState({
+        options: optionsListByQuestionId.items
+      })
+    }
 
+    if (prevProps.isQuestionLoading && !isQuestionLoading && question) {
+      if (!errorQuestion) {
+        this.setState({
+          questionsModel: question.items[0]
+        })
+      }
+    }
     if (!prevProps.isCreateQuestionLoading && isCreateQuestionLoading) {
       this.setState({
         loading: true
@@ -62,39 +94,94 @@ class NewQuestion extends React.Component {
           loading: false,
           questionsError: false,
         });
-
+        console.log(this.state.newOptions);
+        //this.props.createOption(this.state.newOptions);
+      }
+    }
+    if (!prevProps.isUpdateQuestionLoading && isUpdateQuestionLoading) {
+      this.setState({
+        loading: true
+      })
+    }
+    if (!prevProps.errorUpdateQuestion && errorUpdateQuestion) {
+      this.setState({
+        questionsError: true,
+        loading: false,
+        success: false
+      })
+    }
+    if (prevProps.isUpdateQuestionLoading && !isUpdateQuestionLoading && updateQuestion) {
+      if (!errorUpdateQuestion) {
+        this.setState({
+          questionsError: false,
+          loading: false,
+          success: true,
+        });
+        setTimeout(() => {
+          this.setState({ success: false });
+        }, 1000);
       }
     }
 
-    if (!prevProps.errorOptionListByQuestionId && errorOptionListByQuestionId) {
+    if (!prevProps.isCreateOptionLoading && isCreateOptionLoading) {
       this.setState({
-        classroomListError: true
+        loading: true
       })
     }
-    if (prevProps.isOptionListByQuestionIdLoading && !isOptionListByQuestionIdLoading && optionsListByQuestionId) {
-      booleanToString(optionsListByQuestionId.items);
+    if (!prevProps.errorCreateOption && errorCreateOption) {
       this.setState({
-        options: optionsListByQuestionId.items
+        optionError: true,
+        loading: false
       })
     }
-  }
-
-  questionsModel = {
-    text: '',
-    duration: ''
+    if (prevProps.isCreateOptionLoading && !isCreateOptionLoading && createOption) {
+      console.log('burada2', this.state.questionId);
+      //this.props.fetchOptionsByQuestionId(this.state.questionId);
+      if (!errorCreateOption) {
+        this.setState({
+          loading: false,
+          optionError: false,
+        });
+      }
+    }
   }
 
   componentDidMount() {
-    this.props.fetchOptionsByQuestionId(this.state.questionId);
+    this.props.fetchOptionsByQuestionId(this.dataId);
+    if (this.dataId) {
+      this.props.fetchQuestion(parseInt(this.dataId));
+      this.setState({
+        questionId: this.dataId
+      })
+    }
+  }
+
+  handleChange = (e) => {
+    const { name, value } = e.target;
+    this.setState(prevState => ({
+      questionsModel: {
+        ...prevState.questionsModel,
+        [name]: value
+      },
+      questionsError: false
+    }))
   }
 
   handleClick = () => {
-    this.props.createQuestion(this.questionsModel);
+    this.props.createQuestion(this.state.questionsModel);
+  }
+
+  handleUpdate = () => {
+    this.props.updateQuestion(this.state.questionsModel);
+    localStorage.removeItem('dataid');
   }
 
   render() {
-    const { questionsError, loading, question, questionId, optionsColumns, options } = this.state;
+    const { questionsError, loading, questionId, optionsColumns, options, success, newOptions } = this.state;
     const { classes } = this.props;
+    const buttonClassname = classNames({
+      [classes.buttonSuccess]: success
+    });
 
     return (
 
@@ -112,29 +199,52 @@ class NewQuestion extends React.Component {
               error={questionsError}
               labelName={translate('QuestionText')}
               inputType="text"
-              onChange={e => {
-                this.questionsModel.text = e.target.value;
-                this.setState({ questionsError: false });
-              }}
+              value={this.state.questionsModel.text}
+              name="text"
+              onChange={this.handleChange}
             />
             <Input
               error={questionsError}
               labelName={translate('Duration')}
-              inputType="text"
-              onChange={e => {
-                this.questionsModel.duration = e.target.value;
-                this.setState({ questionsError: false });
-              }}
+              inputType="number"
+              value={this.state.questionsModel.duration}
+              name="duration"
+              onChange={this.handleChange}
             />
           </Grid>
+          <Grid item xs={12} sm={12}>
+            <Typography
+              pageHeader={translate('Options')}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}> <Divider /> </Grid>
+          <Grid item xs={12} sm={12} />
+          <Options questionId={questionId}
+            basicOptionModel={model => {
+              if (model) {
+                this.setState({
+                  newOptions: model,
+                });
+              }
+            }}
+          />
           <Grid item xs={12} sm={11} />
           <Grid item xs={12} sm={1} >
-            <Button
-              buttonColor="secondary"
-              buttonName={translate('Save')}
-              onClick={this.handleClick}
-              disabled={loading}
-            />
+            {this.dataId ?
+              <Button
+                buttonColor="secondary"
+                buttonName={translate('Update')}
+                onClick={this.handleUpdate}
+                disabled={loading}
+                className={buttonClassname}
+              /> :
+              <Button
+                buttonColor="secondary"
+                buttonName={translate('Save')}
+                onClick={this.handleClick}
+                disabled={loading}
+              />
+            }
             {loading && (
               <CircularProgress
                 size={24}
@@ -144,27 +254,12 @@ class NewQuestion extends React.Component {
             )}
           </Grid>
           <Grid item xs={12} sm={12}>
-            <Typography
-              pageHeader={translate('Options')}
+            <Table
+              columns={optionsColumns}
+              data={options}
+              isSelected={selected => { }}
+              remove
             />
-          </Grid>
-          <Grid item xs={12} sm={12}> <Divider /> </Grid>
-          <Grid item xs={12} sm={12} />
-          <Grid item xs={12} sm={12}>
-            <ExpansionPanel open={question}
-              panelDetails={question}
-            >
-              <Options questionId={questionId} />
-            </ExpansionPanel>
-            <Grid item xs={12} sm={12}>
-              <Table
-                columns={optionsColumns}
-                data={options}
-                isSelected={selected => { }}
-                remove
-              >
-              </Table>
-            </Grid>
           </Grid>
         </Grid>
       </div>
@@ -187,6 +282,25 @@ const mapStateToProps = state => {
     errorOptionListByQuestionId
   } = state.optionListByQuestionId;
 
+  const {
+    isQuestionLoading,
+    question,
+    errorQuestion
+  } = state.question;
+
+  const {
+    isUpdateQuestionLoading,
+    updateQuestion,
+    errorUpdateQuestion
+  } = state.updateQuestion;
+
+  const {
+    isCreateOptionLoading,
+    createOption,
+    errorCreateOption
+  } = state.createOption;
+
+
   return {
     isCreateQuestionLoading,
     createQuestion,
@@ -194,13 +308,25 @@ const mapStateToProps = state => {
     newQuestion,
     isOptionListByQuestionIdLoading,
     optionsListByQuestionId,
-    errorOptionListByQuestionId
+    errorOptionListByQuestionId,
+    isQuestionLoading,
+    question,
+    errorQuestion,
+    isUpdateQuestionLoading,
+    updateQuestion,
+    errorUpdateQuestion,
+    isCreateOptionLoading,
+    createOption,
+    errorCreateOption
   };
 };
 
 const mapDispatchToProps = {
   createQuestion,
-  fetchOptionsByQuestionId
+  fetchOptionsByQuestionId,
+  fetchQuestion,
+  updateQuestion,
+  createOption,
 };
 
 export default connect(

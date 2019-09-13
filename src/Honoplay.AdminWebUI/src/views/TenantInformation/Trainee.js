@@ -56,7 +56,7 @@ class Trainee extends React.Component {
     workingStatusId: '',
     departmentId: '',
     password: '',
-    email:''
+    email: ''
   }
 
   componentDidUpdate(prevProps) {
@@ -101,6 +101,14 @@ class Trainee extends React.Component {
     this.traineeModel[name] = value;
     this.props.basicTraineeModel(this.traineeModel);
   }
+
+  handleClickShowPassword = () => {
+    this.setState(
+      state => ({
+        showPassword: !state.showPassword
+      }));
+  };
+
 
   render() {
     const {
