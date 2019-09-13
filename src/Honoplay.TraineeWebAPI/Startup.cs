@@ -150,7 +150,7 @@ namespace Honoplay.TraineeWebAPI
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/trainee/swagger/v1/swagger.json", "HonoPlay API V1");
+                c.SwaggerEndpoint("/api/trainee/swagger/v1/swagger.json", "HonoPlay API V1");
 
             });
 
