@@ -13,7 +13,7 @@ import { booleanToString } from '../../helpers/Converter';
 
 import { connect } from "react-redux";
 import { createQuestion, fetchQuestion, updateQuestion } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Question";
-import { fetchOptionsByQuestionId, createOption } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options";
+import { fetchOptionsByQuestionId, createOption, updateOption } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options";
 
 class NewQuestion extends React.Component {
 
@@ -41,6 +41,8 @@ class NewQuestion extends React.Component {
 
   dataId = localStorage.getItem("dataid");
 
+  index = null;
+
 
   componentDidUpdate(prevProps) {
     const {
@@ -57,11 +59,13 @@ class NewQuestion extends React.Component {
       optionsListByQuestionId,
       isCreateOptionLoading,
       createOption,
-      errorCreateOption
+      errorCreateOption,
+      isUpdateOptionLoading,
+      updateOption,
+      errorUpdateOption
     } = this.props;
 
     if (prevProps.isOptionListByQuestionIdLoading && !isOptionListByQuestionIdLoading && optionsListByQuestionId) {
-      console.log('fsdfds', optionsListByQuestionId)
       booleanToString(optionsListByQuestionId.items);
       this.setState({
         options: optionsListByQuestionId.items
@@ -94,10 +98,10 @@ class NewQuestion extends React.Component {
           loading: false,
           questionsError: false,
         });
-        console.log(this.state.newOptions);
-        //this.props.createOption(this.state.newOptions);
+        this.props.createOption(this.state.newOptions);
       }
     }
+
     if (!prevProps.isUpdateQuestionLoading && isUpdateQuestionLoading) {
       this.setState({
         loading: true
@@ -135,8 +139,7 @@ class NewQuestion extends React.Component {
       })
     }
     if (prevProps.isCreateOptionLoading && !isCreateOptionLoading && createOption) {
-      console.log('burada2', this.state.questionId);
-      //this.props.fetchOptionsByQuestionId(this.state.questionId);
+      this.props.fetchOptionsByQuestionId(this.state.questionId);
       if (!errorCreateOption) {
         this.setState({
           loading: false,
@@ -147,9 +150,9 @@ class NewQuestion extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchOptionsByQuestionId(this.dataId);
     if (this.dataId) {
       this.props.fetchQuestion(parseInt(this.dataId));
+      this.props.fetchOptionsByQuestionId(this.dataId);
       this.setState({
         questionId: this.dataId
       })
@@ -219,7 +222,7 @@ class NewQuestion extends React.Component {
           </Grid>
           <Grid item xs={12} sm={12}> <Divider /> </Grid>
           <Grid item xs={12} sm={12} />
-          <Options questionId={questionId}
+          <Options questionId={this.dataId ? this.dataId : questionId}
             basicOptionModel={model => {
               if (model) {
                 this.setState({
@@ -300,6 +303,12 @@ const mapStateToProps = state => {
     errorCreateOption
   } = state.createOption;
 
+  const {
+    isUpdateOptionLoading,
+    updateOption,
+    errorUpdateOption
+  } = state.updateOption;
+
 
   return {
     isCreateQuestionLoading,
@@ -317,7 +326,10 @@ const mapStateToProps = state => {
     errorUpdateQuestion,
     isCreateOptionLoading,
     createOption,
-    errorCreateOption
+    errorCreateOption,
+    isUpdateOptionLoading,
+    updateOption,
+    errorUpdateOption
   };
 };
 
@@ -327,6 +339,7 @@ const mapDispatchToProps = {
   fetchQuestion,
   updateQuestion,
   createOption,
+  updateOption
 };
 
 export default connect(
