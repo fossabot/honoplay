@@ -43,7 +43,7 @@ const App = () => {
   }
   else {
     return (
-      <Redirect to="/login" />
+      <Redirect to="./login" />
     );
   }
 
