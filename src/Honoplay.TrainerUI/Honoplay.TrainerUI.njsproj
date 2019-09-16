@@ -9,7 +9,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>f5493799-8648-4569-bc53-0c806e15b05d</ProjectGuid>
+    <ProjectGuid>9d6a5116-e6a3-4b78-ac80-83e591fdc3f3</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <StartupFile>server.js</StartupFile>
     <SearchPath>
@@ -28,9 +28,83 @@
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include=".babelrc" />
+    <Content Include=".dockerignore" />
+    <Content Include="deploy\cache.redis.sh" />
+    <Content Include="deploy\integration.sefa.sh" />
+    <Content Include="Dockerfile" />
+    <Content Include="package-lock.json" />
+    <Content Include="public\index.html" />
     <Content Include="server.js" />
     <Content Include="package.json" />
     <Content Include="README.md" />
+    <Content Include="src\App.js" />
+    <Content Include="src\Assets\img\bg.jpg" />
+    <Content Include="src\Assets\img\checked.png" />
+    <Content Include="src\Assets\img\kod.png" />
+    <Content Include="src\Assets\img\logo.png" />
+    <Content Include="src\Assets\img\vector.png" />
+    <Content Include="src\Assets\index.js" />
+    <Content Include="src\Components\Button\index.js" />
+    <Content Include="src\Containers\PageWrapper\index.js" />
+    <Content Include="src\Helpers\DummyData.js" />
+    <Content Include="src\Helpers\History.js" />
+    <Content Include="src\Helpers\Logout\index.js" />
+    <Content Include="src\Hoc\CheckAuth.js" />
+    <Content Include="src\index.jsx" />
+    <Content Include="src\Pages\Classroom\index.js" />
+    <Content Include="src\Pages\Home\index.js" />
+    <Content Include="src\Pages\JoinCode\index.js" />
+    <Content Include="src\Pages\Login\index.js" />
+    <Content Include="src\Pages\Training\index.js" />
+    <Content Include="src\Redux\store.js" />
+    <Content Include="src\Styles\css\all.css" />
+    <Content Include="src\Styles\css\bootstrap.min.css" />
+    <Content Include="src\Styles\css\global.css" />
+    <Content Include="src\Styles\webfonts\fa-brands-400.eot" />
+    <Content Include="src\Styles\webfonts\fa-brands-400.svg" />
+    <Content Include="src\Styles\webfonts\fa-brands-400.ttf" />
+    <Content Include="src\Styles\webfonts\fa-brands-400.woff" />
+    <Content Include="src\Styles\webfonts\fa-brands-400.woff2" />
+    <Content Include="src\Styles\webfonts\fa-regular-400.eot" />
+    <Content Include="src\Styles\webfonts\fa-regular-400.svg" />
+    <Content Include="src\Styles\webfonts\fa-regular-400.ttf" />
+    <Content Include="src\Styles\webfonts\fa-regular-400.woff" />
+    <Content Include="src\Styles\webfonts\fa-regular-400.woff2" />
+    <Content Include="src\Styles\webfonts\fa-solid-900.eot" />
+    <Content Include="src\Styles\webfonts\fa-solid-900.svg" />
+    <Content Include="src\Styles\webfonts\fa-solid-900.ttf" />
+    <Content Include="src\Styles\webfonts\fa-solid-900.woff" />
+    <Content Include="src\Styles\webfonts\fa-solid-900.woff2" />
+    <Content Include="webpack.config.js" />
+    <Content Include="workspave.code-workspace" />
+    <Content Include="yarn-error.log" />
+    <Content Include="yarn.lock" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="deploy\" />
+    <Folder Include="public\" />
+    <Folder Include="src\" />
+    <Folder Include="src\Assets\" />
+    <Folder Include="src\Assets\img\" />
+    <Folder Include="src\Components\" />
+    <Folder Include="src\Components\Button\" />
+    <Folder Include="src\Containers\" />
+    <Folder Include="src\Containers\PageWrapper\" />
+    <Folder Include="src\Helpers\" />
+    <Folder Include="src\Helpers\Logout\" />
+    <Folder Include="src\Hoc\" />
+    <Folder Include="src\Pages\" />
+    <Folder Include="src\Pages\Classroom\" />
+    <Folder Include="src\Pages\Home\" />
+    <Folder Include="src\Pages\JoinCode\" />
+    <Folder Include="src\Pages\Login\" />
+    <Folder Include="src\Pages\Training\" />
+    <Folder Include="src\Redux\" />
+    <Folder Include="src\Styles\" />
+    <Folder Include="src\Styles\css\" />
+    <Folder Include="src\Styles\webfonts\" />
+    <Folder Include="src\Theme\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>
