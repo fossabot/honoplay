@@ -13,10 +13,10 @@ const variantIcon = {
   success: CheckCircleIcon,
   warning: WarningIcon,
   error: ErrorIcon,
-  info: InfoIcon,
+  info: InfoIcon
 };
 
-const SnackbarContextComponent = (props) => {
+const SnackbarContextComponent = props => {
   const { classes, className, message, onClose, variant, ...other } = props;
   const Icon = variantIcon[variant];
 
@@ -26,7 +26,12 @@ const SnackbarContextComponent = (props) => {
       aria-describedby="client-snackbar"
       message={
         <span id="client-snackbar" className={classes.snackbarMessage}>
-          <Icon className={classNames(classes.snackbarIcon, classes.snackbarIconVariant)} />
+          <Icon
+            className={classNames(
+              classes.snackbarIcon,
+              classes.snackbarIconVariant
+            )}
+          />
           {message}
         </span>
       }
@@ -38,11 +43,10 @@ const SnackbarContextComponent = (props) => {
           onClick={onClose}
         >
           <CloseIcon className={classes.snackbarIcon} />
-        </IconButton>,
+        </IconButton>
       ]}
       {...other}
     />
   );
-}
+};
 export default withStyles(Style)(SnackbarContextComponent);
-

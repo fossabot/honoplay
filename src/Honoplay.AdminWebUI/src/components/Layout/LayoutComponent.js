@@ -3,27 +3,28 @@ import { translate } from '@omegabigdata/terasu-api-proxy';
 import MenuIcon from '@material-ui/icons/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import {
-  AppBar, CssBaseline, Drawer,
-  Hidden, IconButton, Toolbar, List
+  AppBar,
+  CssBaseline,
+  Drawer,
+  Hidden,
+  IconButton,
+  Toolbar,
+  List
 } from '@material-ui/core';
 import { Style } from './Style';
 
 import ListItem from './ListItemComponent';
 import CompanyCard from './CompanyCard';
 
-
 class Layout extends React.Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
-      mobileOpen: false,
+      mobileOpen: false
     };
-
-    this.handleDrawerToggle = this.handleDrawerToggle.bind(this)
   }
-  handleDrawerToggle() {
+  handleDrawerToggle = () => {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
 
@@ -32,36 +33,41 @@ class Layout extends React.Component {
     const drawer = (
       <div className={classes.drawerLayout}>
         <div className={classes.companyLayout}>
-          <CompanyCard/>
+          <CompanyCard />
         </div>
 
         <div className={classes.listLayout}>
-          <List
-            component="nav">
+          <List component="nav">
             <ListItem
-              pageLink={"/admin/questions"}
-              pageIcon={"question-circle"}
-              pageName={translate('Questions')} />
+              pageLink={'/admin/questions'}
+              pageIcon={'question-circle'}
+              pageName={translate('Questions')}
+            />
             <ListItem
-              pageLink={"/admin/trainingseries"}
-              pageIcon={"list-ol"}
-              pageName={translate('TrainingSeries')} />
+              pageLink={'/admin/trainingseries'}
+              pageIcon={'list-ol'}
+              pageName={translate('TrainingSeries')}
+            />
             <ListItem
-              pageLink={"/admin/trainers"}
-              pageIcon={"graduation-cap"}
-              pageName={translate('Trainers')} />
+              pageLink={'/admin/trainers'}
+              pageIcon={'graduation-cap'}
+              pageName={translate('Trainers')}
+            />
             <ListItem
-              pageLink={"/admin/tenantinformation"}
-              pageIcon={"briefcase"}
-              pageName={translate('TenantInformation')} />
+              pageLink={'/admin/tenantinformation'}
+              pageIcon={'briefcase'}
+              pageName={translate('TenantInformation')}
+            />
             <ListItem
-              pageLink={"/admin/usermanagement"}
-              pageIcon={"cog"}
-              pageName={translate('UserManagement')} />
+              pageLink={'/admin/usermanagement'}
+              pageIcon={'cog'}
+              pageName={translate('UserManagement')}
+            />
             <ListItem
-              pageLink={"/admin/reports"}
-              pageIcon={"chart-pie"}
-              pageName={translate('Reports')} />
+              pageLink={'/admin/reports'}
+              pageIcon={'chart-pie'}
+              pageName={translate('Reports')}
+            />
           </List>
         </div>
       </div>
@@ -90,7 +96,7 @@ class Layout extends React.Component {
               open={this.state.mobileOpen}
               onClose={this.handleDrawerToggle}
               classes={{
-                paper: classes.drawerPaper,
+                paper: classes.drawerPaper
               }}
             >
               {drawer}
@@ -99,7 +105,7 @@ class Layout extends React.Component {
           <Hidden xsDown implementation="css">
             <Drawer
               classes={{
-                paper: classes.drawerPaper,
+                paper: classes.drawerPaper
               }}
               variant="permanent"
               open

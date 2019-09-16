@@ -19,28 +19,24 @@ class EnhancedTableHead extends React.Component {
       columns
     } = this.props;
     return (
-
       <MuiThemeProvider theme={theme}>
         <TableHead>
           <TableRow>
-            <TableCell padding="checkbox"
-              className={classes.tableCell}>
+            <TableCell padding="checkbox" className={classes.tableCell}>
               <Checkbox
                 indeterminate={numSelected > 0 && numSelected < rowCount}
                 checked={numSelected === rowCount}
                 onChange={onSelectAllClick}
-                color='secondary'
+                color="secondary"
               />
             </TableCell>
             {columns.map(
               (column, id) => (
-                <TableCell
-                  className={classes.tableCell}
-                  key={id}>
+                <TableCell className={classes.tableCell} key={id}>
                   {column.title}
                 </TableCell>
               ),
-              this,
+              this
             )}
             <TableCell />
           </TableRow>

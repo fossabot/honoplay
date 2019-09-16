@@ -19,31 +19,30 @@ import Table from '../../components/Table/TableComponent';
 import TraineesUpdate from './TraineesUpdate';
 import WorkingStatuses from './WorkingStatus';
 
-import { connect } from "react-redux";
-import { fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee";
-import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department";
-import { fetchWorkingStatusList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/WorkingStatus";
+import { connect } from 'react-redux';
+import { fetchTraineeList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee';
+import { fetchDepartmentList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department';
+import { fetchWorkingStatusList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/WorkingStatus';
 import { genderToString } from '../../helpers/Converter';
 
 class Trainee extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       traineeList: [],
       departments: [],
       workingStatuses: [],
-      gender: [
-        { id: 0, name: 'Erkek', },
-        { id: 1, name: 'Kadın', }
-      ],
+      gender: [{ id: 0, name: 'Erkek' }, { id: 1, name: 'Kadın' }],
       traineeColumns: [
-        { title: translate('Name'), field: "name" },
-        { title: translate('Surname'), field: "surname" },
-        { title: translate('NationalIdentityNumber'), field: "nationalIdentityNumber" },
-        { title: translate('PhoneNumber'), field: "phoneNumber" },
-        { title: translate('Gender'), field: "gender" }
-      ],
+        { title: translate('Name'), field: 'name' },
+        { title: translate('Surname'), field: 'surname' },
+        {
+          title: translate('NationalIdentityNumber'),
+          field: 'nationalIdentityNumber'
+        },
+        { title: translate('PhoneNumber'), field: 'phoneNumber' },
+        { title: translate('Gender'), field: 'gender' }
+      ]
     };
   }
 
@@ -57,7 +56,7 @@ class Trainee extends React.Component {
     departmentId: '',
     password: '',
     email: ''
-  }
+  };
 
   componentDidUpdate(prevProps) {
     const {
@@ -68,7 +67,6 @@ class Trainee extends React.Component {
       departmentList,
       isWorkingStatusListLoading,
       workingStatusList
-
     } = this.props;
 
     if (prevProps.isTraineeListLoading && !isTraineeListLoading && trainees) {
@@ -76,18 +74,26 @@ class Trainee extends React.Component {
         genderToString(trainees.items);
         this.setState({
           traineeList: trainees.items
-        })
+        });
       }
     }
-    if (prevProps.isDepartmentListLoading && !isDepartmentListLoading && departmentList) {
+    if (
+      prevProps.isDepartmentListLoading &&
+      !isDepartmentListLoading &&
+      departmentList
+    ) {
       this.setState({
         departments: departmentList.items
-      })
+      });
     }
-    if (prevProps.isWorkingStatusListLoading && !isWorkingStatusListLoading && workingStatusList) {
+    if (
+      prevProps.isWorkingStatusListLoading &&
+      !isWorkingStatusListLoading &&
+      workingStatusList
+    ) {
       this.setState({
         workingStatuses: workingStatusList.items
-      })
+      });
     }
   }
 
@@ -96,30 +102,27 @@ class Trainee extends React.Component {
     this.props.fetchWorkingStatusList(0, 50);
   }
 
-  handleChange = (e) => {
+  handleChange = e => {
     const { name, value } = e.target;
     this.traineeModel[name] = value;
     this.props.basicTraineeModel(this.traineeModel);
-  }
-
-  handleClickShowPassword = () => {
-    this.setState(
-      state => ({
-        showPassword: !state.showPassword
-      }));
   };
 
+  handleClickShowPassword = () => {
+    this.setState(state => ({
+      showPassword: !state.showPassword
+    }));
+  };
 
   render() {
-    const {
-      classes,
-      isErrorTrainee } = this.props;
+    const { classes, isErrorTrainee } = this.props;
     const {
       departments,
       workingStatuses,
       gender,
       traineeColumns,
-      traineeList } = this.state;
+      traineeList
+    } = this.state;
 
     return (
       <div className={classes.root} id="addTrainee">
@@ -216,20 +219,23 @@ class Trainee extends React.Component {
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
-                    <IconButton
-                      onClick={this.handleClickShowPassword}
-                    >
-                      {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                    <IconButton onClick={this.handleClickShowPassword}>
+                      {this.state.showPassword ? (
+                        <VisibilityOff />
+                      ) : (
+                        <Visibility />
+                      )}
                     </IconButton>
                   </InputAdornment>
-                ),
+                )
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={12}><Divider /></Grid>
           <Grid item xs={12} sm={12}>
-            <a href='#addTrainee'
-              className={classes.linkStyle}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <a href="#addTrainee" className={classes.linkStyle}>
               {translate('Trainees')}
             </a>
           </Grid>
@@ -238,7 +244,7 @@ class Trainee extends React.Component {
               <Table
                 columns={traineeColumns}
                 data={traineeList}
-                isSelected={selected => { }}
+                isSelected={selected => {}}
                 remove
                 update
               >

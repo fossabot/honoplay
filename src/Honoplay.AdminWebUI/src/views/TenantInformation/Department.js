@@ -1,30 +1,26 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
-import {
-  Grid,
-  CircularProgress
-} from '@material-ui/core';
+import { Grid, CircularProgress } from '@material-ui/core';
 import Style from '../Style';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import SimpleTable from '../../components/Table/SimpleTable';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import {
   fetchDepartmentList,
   createDepartment
-} from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department";
+} from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department';
 
 class Department extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       department: [],
       loading: false,
       departmentError: false,
-      departmentListError: false,
+      departmentListError: false
     };
   }
 
@@ -47,34 +43,41 @@ class Department extends React.Component {
     if (!prevProps.errorDepartmentList && errorDepartmentList) {
       this.setState({
         departmentListError: true
-      })
+      });
     }
-    if (prevProps.isDepartmentListLoading && !isDepartmentListLoading && departmentList) {
+    if (
+      prevProps.isDepartmentListLoading &&
+      !isDepartmentListLoading &&
+      departmentList
+    ) {
       this.setState({
         department: departmentList.items
-      })
+      });
     }
     if (!prevProps.isCreateDepartmentLoading && isCreateDepartmentLoading) {
       this.setState({
         loading: true
-      })
+      });
     }
     if (!prevProps.errorCreateDepartment && errorCreateDepartment) {
       this.setState({
         departmentError: true,
         loading: false
-      })
+      });
     }
-    if (prevProps.isCreateDepartmentLoading && !isCreateDepartmentLoading && departments) {
+    if (
+      prevProps.isCreateDepartmentLoading &&
+      !isCreateDepartmentLoading &&
+      departments
+    ) {
       if (!errorCreateDepartment) {
         this.setState({
           deparment: department.push(departments.items[0].departments[0]),
           loading: false,
-          departmentError: false,
+          departmentError: false
         });
       }
     }
-
   }
 
   componentDidMount() {
@@ -85,20 +88,16 @@ class Department extends React.Component {
   handleClick = () => {
     const { createDepartment } = this.props;
     createDepartment(this.departmentModel);
-  }
+  };
 
-  handleChange = (e) => {
+  handleChange = e => {
     const { name, value } = e.target;
     this.departmentModel[name] = [value];
-    this.setState({ departmentError: false })
-  }
+    this.setState({ departmentError: false });
+  };
 
   render() {
-    const {
-      loading,
-      departmentError,
-      department
-    } = this.state;
+    const { loading, departmentError, department } = this.state;
     const { classes } = this.props;
 
     return (

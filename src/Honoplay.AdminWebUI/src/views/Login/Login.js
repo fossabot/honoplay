@@ -1,7 +1,7 @@
-import React from "react";
-import { translate } from "@omegabigdata/terasu-api-proxy";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import React from 'react';
+import { translate } from '@omegabigdata/terasu-api-proxy';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import {
@@ -15,19 +15,18 @@ import {
   CircularProgress,
   InputAdornment,
   IconButton
-} from "@material-ui/core";
-import withStyles from "@material-ui/core/styles/withStyles";
-import { Style, theme } from "./Style";
-import { connect } from "react-redux";
-import { fetchToken } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/AdminUser";
-
+} from '@material-ui/core';
+import withStyles from '@material-ui/core/styles/withStyles';
+import { Style, theme } from './Style';
+import { connect } from 'react-redux';
+import { fetchToken } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/AdminUser';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: " ",
-      password: " ",
+      email: ' ',
+      password: ' ',
       error: false
     };
   }
@@ -37,9 +36,9 @@ class Login extends React.Component {
 
     if (token !== prevProps.token) {
       if (token) {
-        localStorage.setItem("token", token.token);
-        localStorage.setItem("tenantId", token.user.tenantId);
-        this.props.history.push("/admin");
+        localStorage.setItem('token', token.token);
+        localStorage.setItem('tenantId', token.user.tenantId);
+        this.props.history.push('/admin');
       }
     }
     if (errorToken !== prevProps.errorToken) {
@@ -49,29 +48,28 @@ class Login extends React.Component {
     }
   }
 
-  handleChange = (e) => {
+  handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
     this.setState({
       error: false
     });
-  }
+  };
 
   handleClick = () => {
     const { email, password } = this.state;
     this.props.fetchToken(email, password);
     this.setState({
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       error: false
     });
-  }
+  };
 
   handleClickShowPassword = () => {
-    this.setState(
-      state => ({
-        showPassword: !state.showPassword
-      }));
+    this.setState(state => ({
+      showPassword: !state.showPassword
+    }));
   };
 
   render() {
@@ -89,18 +87,18 @@ class Login extends React.Component {
                 color="primary"
               />
             ) : (
-                <Avatar className={classes.avatar}>
-                  <LockOutlinedIcon />
-                </Avatar>
-              )}
+              <Avatar className={classes.avatar}>
+                <LockOutlinedIcon />
+              </Avatar>
+            )}
             <Typography variant="h5" className={classes.typography}>
-              {translate("Login")}
+              {translate('Login')}
             </Typography>
             <form className={classes.form}>
               <FormControl margin="normal" fullWidth>
                 <TextField
                   error={error && true}
-                  label={translate("EmailAddress")}
+                  label={translate('EmailAddress')}
                   id="email"
                   name="email"
                   onChange={this.handleChange}
@@ -111,7 +109,7 @@ class Login extends React.Component {
                 <TextField
                   error={error && true}
                   className={classes.marginInput}
-                  label={translate("Password")}
+                  label={translate('Password')}
                   name="password"
                   type={this.state.showPassword ? 'text' : 'password'}
                   id="password"
@@ -120,13 +118,15 @@ class Login extends React.Component {
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end">
-                        <IconButton
-                          onClick={this.handleClickShowPassword}
-                        >
-                          {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                        <IconButton onClick={this.handleClickShowPassword}>
+                          {this.state.showPassword ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
                         </IconButton>
                       </InputAdornment>
-                    ),
+                    )
                   }}
                 />
               </FormControl>
@@ -137,7 +137,7 @@ class Login extends React.Component {
                 className={classes.button}
                 onClick={this.handleClick}
               >
-                {translate("Login")}
+                {translate('Login')}
               </Button>
             </form>
           </Paper>

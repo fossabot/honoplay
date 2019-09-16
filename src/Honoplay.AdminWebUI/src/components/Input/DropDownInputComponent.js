@@ -1,4 +1,4 @@
-import React, { Children } from 'react';
+import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, InputLabel, NativeSelect, IconButton } from '@material-ui/core';
@@ -10,7 +10,7 @@ class DropDownInputComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
+      open: false
     };
   }
   handleOpen = () => {
@@ -23,14 +23,25 @@ class DropDownInputComponent extends React.Component {
 
   render() {
     const { open } = this.state;
-    const { classes, labelName, describable, onChange, error, name, value, data, children } = this.props;
+    const {
+      classes,
+      labelName,
+      describable,
+      onChange,
+      error,
+      name,
+      value,
+      data,
+      children
+    } = this.props;
     return (
       <div className={classes.inputRoot}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={3}
-            className={classes.labelCenter}>
-            <InputLabel htmlFor="bootstrap-input"
-              className={classes.bootstrapFormLabel}>
+          <Grid item xs={12} sm={3} className={classes.labelCenter}>
+            <InputLabel
+              htmlFor="bootstrap-input"
+              className={classes.bootstrapFormLabel}
+            >
               {labelName}
             </InputLabel>
           </Grid>
@@ -41,29 +52,30 @@ class DropDownInputComponent extends React.Component {
               value={value}
               onChange={onChange}
               className={classes.nativeWidth}
-              input={error ? <BootstrapInputError fullWidth /> : <BootstrapInput fullWidth />}
+              input={
+                error ? (
+                  <BootstrapInputError fullWidth />
+                ) : (
+                  <BootstrapInput fullWidth />
+                )
+              }
             >
               <option>{translate('Choose')}</option>
-              {data && data.map((data, id) =>
-                <option value={data.id} key={id}>
-                  {data.name}
-                </option>
-
-              )}
+              {data &&
+                data.map((data, id) => (
+                  <option value={data.id} key={id}>
+                    {data.name}
+                  </option>
+                ))}
             </NativeSelect>
-            {
-              describable &&
+            {describable && (
               <IconButton onClick={this.handleOpen}>
                 <MoreVertIcon />
               </IconButton>
-            }
+            )}
           </Grid>
         </Grid>
-        <Modal
-          titleName={labelName}
-          handleClose={this.handleClose}
-          open={open}
-        >
+        <Modal titleName={labelName} handleClose={this.handleClose} open={open}>
           {children}
         </Modal>
       </div>

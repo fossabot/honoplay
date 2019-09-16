@@ -1,181 +1,173 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { translate } from '@omegabigdata/terasu-api-proxy';
-import {
-    DialogContent,
-    Grid,
-    CircularProgress,
-    MuiThemeProvider,
-    Divider
-} from '@material-ui/core';
+import { Grid, CircularProgress, Divider } from '@material-ui/core';
 import { Style, theme } from './Style';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Chip from '../../components/Chip/ChipComponent';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import {
-    fetchWorkingStatusList,
-    postWorkingStatus
-} from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/WorkingStatus";
+  fetchWorkingStatusList,
+  postWorkingStatus
+} from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/WorkingStatus';
 
 class WorkingStatus extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            loadingCreate: false,
-            createError: false,
-            workingStatuses: [],
-        }
-    }
-
-    workingStatusModel = {
-        name: ''
+  constructor(props) {
+    super(props);
+    this.state = {
+      loadingCreate: false,
+      createError: false,
+      workingStatuses: []
     };
+  }
 
-    componentDidUpdate(prevProps) {
-        const {
-            isWorkingStatusCreateLoading,
-            newWorkingStatus,
-            errorWorkingStatusCreate,
-            isWorkingStatusListLoading,
-            newWorkingStatusList,
-            errorWorkingStatusList
-        } = this.props;
+  workingStatusModel = {
+    name: ''
+  };
 
-        if (prevProps.isWorkingStatusListLoading && !isWorkingStatusListLoading && newWorkingStatusList) {
-            this.setState({
-                workingStatuses: newWorkingStatusList.items
-            });
-        }
+  componentDidUpdate(prevProps) {
+    const {
+      isWorkingStatusCreateLoading,
+      newWorkingStatus,
+      errorWorkingStatusCreate,
+      isWorkingStatusListLoading,
+      newWorkingStatusList
+    } = this.props;
 
-        if (!prevProps.isWorkingStatusCreateLoading && isWorkingStatusCreateLoading) {
-            this.setState({
-                loadingCreate: true
-            })
-        }
-        if (!prevProps.errorWorkingStatusCreate && errorWorkingStatusCreate) {
-            this.setState({
-                createError: true,
-                loadingCreate: false
-            })
-        }
-        if (prevProps.isWorkingStatusCreateLoading && !isWorkingStatusCreateLoading && newWorkingStatus) {
-            this.props.fetchWorkingStatusList(0, 50);
-            if (!errorWorkingStatusCreate) {
-                this.setState({
-                    loadingCreate: false,
-                    createError: false
-                });
-            }
-        }
+    if (
+      prevProps.isWorkingStatusListLoading &&
+      !isWorkingStatusListLoading &&
+      newWorkingStatusList
+    ) {
+      this.setState({
+        workingStatuses: newWorkingStatusList.items
+      });
     }
 
-    handleChange = (e) => {
-        const { name, value } = e.target;
-        this.workingStatusModel[name] = value;
+    if (
+      !prevProps.isWorkingStatusCreateLoading &&
+      isWorkingStatusCreateLoading
+    ) {
+      this.setState({
+        loadingCreate: true
+      });
+    }
+    if (!prevProps.errorWorkingStatusCreate && errorWorkingStatusCreate) {
+      this.setState({
+        createError: true,
+        loadingCreate: false
+      });
+    }
+    if (
+      prevProps.isWorkingStatusCreateLoading &&
+      !isWorkingStatusCreateLoading &&
+      newWorkingStatus
+    ) {
+      this.props.fetchWorkingStatusList(0, 50);
+      if (!errorWorkingStatusCreate) {
         this.setState({
-            createError: false
-        })
+          loadingCreate: false,
+          createError: false
+        });
+      }
     }
+  }
 
-    handleClick = () => {
-        this.props.postWorkingStatus(this.workingStatusModel);
-    }
+  handleChange = e => {
+    const { name, value } = e.target;
+    this.workingStatusModel[name] = value;
+    this.setState({
+      createError: false
+    });
+  };
 
-    componentDidMount() {
-        this.props.fetchWorkingStatusList(0, 50);
-    }
+  handleClick = () => {
+    this.props.postWorkingStatus(this.workingStatusModel);
+  };
 
-    render() {
-        const { classes } = this.props;
-        const {
-            loadingCreate,
-            createError,
-            workingStatuses
-        } = this.state;
+  componentDidMount() {
+    this.props.fetchWorkingStatusList(0, 50);
+  }
 
+  render() {
+    const { classes } = this.props;
+    const { loadingCreate, createError, workingStatuses } = this.state;
 
-        return (
-            <div className={classes.root}>
-                <Grid container spacing={3}>
-                    <Grid item xs={12} sm={11}>
-                        <Input
-                            error={createError}
-                            onChange={this.handleChange}
-                            labelName={translate('WorkingStatus')}
-                            inputType="text"
-                            name="name"
-                            value={this.workingStatusModel.name}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={1}>
-                        <Button
-                            buttonColor="secondary"
-                            buttonName={translate('Add')}
-                            onClick={this.handleClick}
-                            disabled={loadingCreate}
-                        />
-                        {loadingCreate && (
-                            <CircularProgress
-                                size={24}
-                                disableShrink={true}
-                                className={classes.buttonProgress}
-                            />
-                        )}
-                    </Grid>
-                    <Grid item xs={12} sm={12}>
-                        <Divider />
-                    </Grid>
-                    <Grid item xs={12} sm={12}>
-                        <Chip
-                            data={workingStatuses}>
-                        </Chip>
-                    </Grid>
-                </Grid>
-            </div>
-
-        );
-    }
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={11}>
+            <Input
+              error={createError}
+              onChange={this.handleChange}
+              labelName={translate('WorkingStatus')}
+              inputType="text"
+              name="name"
+              value={this.workingStatusModel.name}
+            />
+          </Grid>
+          <Grid item xs={12} sm={1}>
+            <Button
+              buttonColor="secondary"
+              buttonName={translate('Add')}
+              onClick={this.handleClick}
+              disabled={loadingCreate}
+            />
+            {loadingCreate && (
+              <CircularProgress
+                size={24}
+                disableShrink={true}
+                className={classes.buttonProgress}
+              />
+            )}
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Chip data={workingStatuses}></Chip>
+          </Grid>
+        </Grid>
+      </div>
+    );
+  }
 }
 
-
 const mapStateToProps = state => {
+  const {
+    isWorkingStatusCreateLoading,
+    workingStatusCreate,
+    errorWorkingStatusCreate
+  } = state.workingStatusCreate;
 
-    const {
-        isWorkingStatusCreateLoading,
-        workingStatusCreate,
-        errorWorkingStatusCreate
-    } = state.workingStatusCreate;
+  let newWorkingStatus = workingStatusCreate;
 
-    let newWorkingStatus = workingStatusCreate;
+  const {
+    isWorkingStatusListLoading,
+    workingStatusList,
+    errorWorkingStatusList
+  } = state.workingStatusList;
 
-    const {
-        isWorkingStatusListLoading,
-        workingStatusList,
-        errorWorkingStatusList
-    } = state.workingStatusList;
+  let newWorkingStatusList = workingStatusList;
 
-    let newWorkingStatusList = workingStatusList;
-
-
-    return {
-        isWorkingStatusCreateLoading,
-        newWorkingStatus,
-        errorWorkingStatusCreate,
-        isWorkingStatusListLoading,
-        newWorkingStatusList,
-        errorWorkingStatusList
-    };
+  return {
+    isWorkingStatusCreateLoading,
+    newWorkingStatus,
+    errorWorkingStatusCreate,
+    isWorkingStatusListLoading,
+    newWorkingStatusList,
+    errorWorkingStatusList
+  };
 };
 
 const mapDispatchToProps = {
-    postWorkingStatus,
-    fetchWorkingStatusList
+  postWorkingStatus,
+  fetchWorkingStatusList
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(withStyles(Style)(WorkingStatus));

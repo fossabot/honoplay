@@ -1,16 +1,21 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
-import { CardHeader, CardMedia, IconButton, Menu, MenuItem } from '@material-ui/core';
+import {
+  CardHeader,
+  CardMedia,
+  IconButton,
+  Menu,
+  MenuItem
+} from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Style } from './Style';
 
-import { connect } from "react-redux";
-import { fetchTenant } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Tenant";
+import { connect } from 'react-redux';
+import { fetchTenant } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Tenant';
 
 class CompanyCard extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -24,14 +29,10 @@ class CompanyCard extends React.Component {
     };
   }
 
-  tenantId = localStorage.getItem("tenantId");
+  tenantId = localStorage.getItem('tenantId');
 
   componentDidUpdate(prevProps) {
-    const {
-      isTenantLoading,
-      tenant,
-      errorTenant
-    } = this.props;
+    const { isTenantLoading, tenant, errorTenant } = this.props;
 
     if (prevProps.isTenantLoading && !isTenantLoading && tenant) {
       if (!errorTenant) {
@@ -46,7 +47,7 @@ class CompanyCard extends React.Component {
     this.props.fetchTenant(this.tenantId.toString());
   }
 
-  handleClick = (event) => {
+  handleClick = event => {
     this.setState({ menu: event.currentTarget });
   };
 
@@ -56,7 +57,7 @@ class CompanyCard extends React.Component {
 
   logout = () => {
     localStorage.removeItem('token');
-  }
+  };
 
   render() {
     const { menu } = this.state;
@@ -64,7 +65,6 @@ class CompanyCard extends React.Component {
     const open = Boolean(menu);
 
     return (
-
       <div className={classes.companyCard}>
         <CardHeader
           avatar={
@@ -86,19 +86,22 @@ class CompanyCard extends React.Component {
           }
           title={this.state.tenantModel.name}
         />
-        <Menu id="table-menu" anchorEl={menu} open={open} onClose={this.handleClose}>
-          <MenuItem component={Link} to='/login' onClick={this.logout}>{translate('Logout')}</MenuItem>
+        <Menu
+          id="table-menu"
+          anchorEl={menu}
+          open={open}
+          onClose={this.handleClose}
+        >
+          <MenuItem component={Link} to="/login" onClick={this.logout}>
+            {translate('Logout')}
+          </MenuItem>
         </Menu>
       </div>
     );
   }
 }
 const mapStateToProps = state => {
-  const {
-    isTenantLoading,
-    tenant,
-    errorTenant
-  } = state.tenant;
+  const { isTenantLoading, tenant, errorTenant } = state.tenant;
 
   return {
     isTenantLoading,

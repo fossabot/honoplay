@@ -1,0 +1,29 @@
+{
+  "extends": ["airbnb", "plugin:node/recommended"],
+  "rules": {
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "func-names": "off",
+    "no-process-exit": "off",
+    "object-shorthand": "off",
+    "class-methods-use-this": "off",
+    "no-invalid-this": 0,
+    "babel/no-invalid-this": 1,
+    "react/jsx-sort-prop-types": 0,
+    "semi": 2
+  },
+  "plugins": ["react", "babel"],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 9,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "parser": "babel-eslint"
+}

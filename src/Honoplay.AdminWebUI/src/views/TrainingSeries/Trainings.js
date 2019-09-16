@@ -7,15 +7,13 @@ import CardButton from '../../components/Card/CardButton';
 import Card from '../../components/Card/CardComponents';
 import Typography from '../../components/Typography/TypographyComponent';
 
-import { connect } from "react-redux";
-import { fetchTrainingSeries } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingSeries";
-import { fetchTrainingListByTrainingSeriesId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Training";
+import { connect } from 'react-redux';
+import { fetchTrainingSeries } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingSeries';
+import { fetchTrainingListByTrainingSeriesId } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Training';
 
-import TrainingUpdate from "./Training/TrainingUpdate";
-
+import TrainingUpdate from './Training/TrainingUpdate';
 
 class Trainings extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -27,12 +25,11 @@ class Trainings extends React.Component {
         ]
       },
       trainingList: [],
-      trainingListError: false,
-      trainingId: null,
-    }
+      trainingListError: false
+    };
   }
 
-  trainingSeriesId = localStorage.getItem("trainingSeriesId");
+  trainingSeriesId = localStorage.getItem('trainingSeriesId');
 
   componentDidUpdate(prevProps) {
     const {
@@ -47,24 +44,35 @@ class Trainings extends React.Component {
     if (prevProps.isTrainingSeriesLoading && !isTrainingSeriesLoading) {
       this.setState({
         loadingTrainer: true
-      })
+      });
     }
-    if (prevProps.isTrainingSeriesLoading && !isTrainingSeriesLoading && trainingSeries) {
+    if (
+      prevProps.isTrainingSeriesLoading &&
+      !isTrainingSeriesLoading &&
+      trainingSeries
+    ) {
       if (!errorTrainingSeries) {
         this.setState({
           trainingSeries: trainingSeries.items[0]
-        })
+        });
       }
     }
-    if (!prevProps.errorTrainingListByTrainingSeriesId && errorTrainingListByTrainingSeriesId) {
+    if (
+      !prevProps.errorTrainingListByTrainingSeriesId &&
+      errorTrainingListByTrainingSeriesId
+    ) {
       this.setState({
         trainingListError: true
-      })
+      });
     }
-    if (prevProps.isTrainingListByTrainingSeriesIdLoading && !isTrainingListByTrainingSeriesIdLoading && TrainingListByTrainingSeriesId) {
+    if (
+      prevProps.isTrainingListByTrainingSeriesIdLoading &&
+      !isTrainingListByTrainingSeriesIdLoading &&
+      TrainingListByTrainingSeriesId
+    ) {
       this.setState({
         trainingList: TrainingListByTrainingSeriesId.items
-      })
+      });
     }
   }
 
@@ -75,25 +83,24 @@ class Trainings extends React.Component {
 
   handleClick = () => {
     this.props.history.push(`/admin/trainingseriesdetail/training`);
-  }
+  };
 
   render() {
-    const { trainingSeries, trainingList, trainingId } = this.state;
+    const { trainingSeries, trainingList } = this.state;
     const { classes } = this.props;
 
     return (
-
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12}>
-            <Typography
-              pageHeader={trainingSeries.name}
-            />
+            <Typography pageHeader={trainingSeries.name} />
           </Grid>
           <Grid item xs={12} sm={3}>
             <CardButton
               cardName={translate('CreateTraining')}
-              cardDescription={translate('YouCanCreateDifferentTrainingsForEachTrainingSeries')}
+              cardDescription={translate(
+                'YouCanCreateDifferentTrainingsForEachTrainingSeries'
+              )}
               onClick={this.handleClick}
               forTraining
               iconName="graduation-cap"
@@ -105,11 +112,10 @@ class Trainings extends React.Component {
               url="trainingseriesupdate"
               id={id => {
                 if (id) {
-                  localStorage.setItem("trainingId", id)
+                  localStorage.setItem('trainingId', id);
                 }
               }}
-            >
-            </Card>
+            ></Card>
           </Grid>
         </Grid>
       </div>
@@ -118,7 +124,6 @@ class Trainings extends React.Component {
 }
 
 const mapStateToProps = state => {
-
   const {
     isTrainingSeriesLoading,
     trainingSeries,
