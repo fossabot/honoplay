@@ -6,7 +6,8 @@ import { CardHeader, CardMedia, IconButton, Menu, MenuItem } from '@material-ui/
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Style } from './Style';
 
-import imageUrl from '../../images/deneme.jpg';
+import { connect } from "react-redux";
+import { fetchTenant } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Tenant";
 
 class CompanyCard extends React.Component {
 
@@ -14,7 +15,35 @@ class CompanyCard extends React.Component {
     super(props);
     this.state = {
       menu: null,
+      tenantModel: {
+        name: '',
+        description: '',
+        logo: '',
+        hostName: ''
+      }
     };
+  }
+
+  tenantId = localStorage.getItem("tenantId");
+
+  componentDidUpdate(prevProps) {
+    const {
+      isTenantLoading,
+      tenant,
+      errorTenant
+    } = this.props;
+
+    if (prevProps.isTenantLoading && !isTenantLoading && tenant) {
+      if (!errorTenant) {
+        this.setState({
+          tenantModel: tenant.items[0]
+        });
+      }
+    }
+  }
+
+  componentDidMount() {
+    this.props.fetchTenant(this.tenantId.toString());
   }
 
   handleClick = (event) => {
@@ -26,13 +55,14 @@ class CompanyCard extends React.Component {
   };
 
   logout = () => {
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
   }
 
   render() {
     const { menu } = this.state;
-    const { classes, companyName } = this.props;
+    const { classes } = this.props;
     const open = Boolean(menu);
+
     return (
 
       <div className={classes.companyCard}>
@@ -41,7 +71,7 @@ class CompanyCard extends React.Component {
             <CardMedia
               className={classes.cardMedia}
               component="img"
-              src={imageUrl}
+              src={`data:image/jpeg;base64,${this.state.tenantModel.logo}`}
             />
           }
           action={
@@ -54,7 +84,7 @@ class CompanyCard extends React.Component {
               <ExpandMoreIcon />
             </IconButton>
           }
-          title={companyName}
+          title={this.state.tenantModel.name}
         />
         <Menu id="table-menu" anchorEl={menu} open={open} onClose={this.handleClose}>
           <MenuItem component={Link} to='/login' onClick={this.logout}>{translate('Logout')}</MenuItem>
@@ -63,5 +93,25 @@ class CompanyCard extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  const {
+    isTenantLoading,
+    tenant,
+    errorTenant
+  } = state.tenant;
 
-export default withStyles(Style)(CompanyCard);
+  return {
+    isTenantLoading,
+    tenant,
+    errorTenant
+  };
+};
+
+const mapDispatchToProps = {
+  fetchTenant
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(Style)(CompanyCard));

@@ -18,8 +18,8 @@ class Questions extends React.Component {
       questionsColumns: [
         { title: translate('QuestionText'), field: "text" },
         { title: translate('Duration'), field: "duration" },
-        { title: translate('QuestionType'), field: "createdAt" },
-        { title: translate('Category'), field: "createdBy" },
+        { title: 'Soru Tipi**', field: "createdAt" },
+        { title: 'Kategori**', field: "createdBy" },
       ],
       questions: []
     };

@@ -22,7 +22,7 @@ import Department from "./Department";
 import Trainee from "./Trainee";
 
 import { connect } from "react-redux";
-import { createTenant, updateTenant } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Tenant";
+import { createTenant, updateTenant, fetchTenant } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Tenant";
 import { createTrainee, fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee";
 import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department";
 
@@ -43,17 +43,19 @@ class TenantInformationTabs extends React.Component {
     };
   }
 
+  tenantId = localStorage.getItem("tenantId");
+
   componentDidUpdate(prevProps) {
     const {
-      isCreateTenantLoading,
-      errorCreateTenant,
-      newTenant,
       errorCreateTrainee,
       isCreateTraineeLoading,
       newTrainee,
       isUpdateTenantLoading,
       updatedTenant,
-      errorUpdateTenant
+      errorUpdateTenant,
+      isTenantLoading,
+      tenant,
+      errorTenant
     } = this.props;
 
     const { tabValue } = this.state;
@@ -66,6 +68,7 @@ class TenantInformationTabs extends React.Component {
         });
       }
       if (prevProps.isUpdateTenantLoading && !isUpdateTenantLoading && updatedTenant) {
+        this.props.fetchTenant(this.tenantId.toString());
         this.props.fetchTraineeList(0, 50);
         this.setState({
           loading: false,
@@ -91,7 +94,13 @@ class TenantInformationTabs extends React.Component {
           isErrorTenant: errorUpdateTenant && true,
         });
       }
-
+      if (prevProps.isTenantLoading && !isTenantLoading && tenant) {
+        if (!errorTenant) {
+          this.setState({
+            newTenantModel: tenant.items[0]
+          });
+        }
+      }
     }
     if (tabValue == 2) {
       if (!prevProps.errorCreateTrainee && errorCreateTrainee) {
@@ -127,6 +136,11 @@ class TenantInformationTabs extends React.Component {
     }
 
   }
+
+  componentDidMount() {
+    this.props.fetchTenant(this.tenantId.toString());
+  }
+
   handleButtonClick = () => {
     const { tabValue, newTenantModel, newTraineeModel } = this.state;
 
@@ -296,10 +310,10 @@ class TenantInformationTabs extends React.Component {
 }
 const mapStateToProps = state => {
   const {
-    errorCreateTenant,
-    isCreateTenantLoading,
-    newTenant
-  } = state.createTenant;
+    isTenantLoading,
+    tenant,
+    errorTenant
+  } = state.tenant;
 
   const {
     errorCreateTrainee,
@@ -314,15 +328,15 @@ const mapStateToProps = state => {
   } = state.updateTenant;
 
   return {
-    errorCreateTenant,
-    isCreateTenantLoading,
-    newTenant,
     errorCreateTrainee,
     isCreateTraineeLoading,
     newTrainee,
     isUpdateTenantLoading,
     updatedTenant,
-    errorUpdateTenant
+    errorUpdateTenant,
+    isTenantLoading,
+    tenant,
+    errorTenant
   };
 };
 
@@ -331,7 +345,8 @@ const mapDispatchToProps = {
   createTrainee,
   fetchDepartmentList,
   fetchTraineeList,
-  updateTenant
+  updateTenant,
+  fetchTenant
 };
 
 export default connect(

@@ -77,6 +77,7 @@ class BasicKnowledge extends React.Component {
               value={this.tenantModel.description}
             />
             <ImageInput
+              uri={`data:image/jpeg;base64,${this.tenantModel.logo}`}
               selectedImage={value => {
                 this.tenantModel.logo = value;
                 this.props.basicTenantModel(this.tenantModel);

@@ -32,7 +32,7 @@ class Layout extends React.Component {
     const drawer = (
       <div className={classes.drawerLayout}>
         <div className={classes.companyLayout}>
-          <CompanyCard companyName="Framer Bilişim Teknolojileri" />
+          <CompanyCard/>
         </div>
 
         <div className={classes.listLayout}>
