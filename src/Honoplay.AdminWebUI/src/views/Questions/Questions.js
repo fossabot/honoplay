@@ -17,7 +17,10 @@ class Questions extends React.Component {
     this.state = {
       questionsColumns: [
         { title: translate('QuestionText'), field: "text" },
-        { title: translate('Duration'), field: "duration" }],
+        { title: translate('Duration'), field: "duration" },
+        { title: 'Soru Tipi**', field: "createdAt" },
+        { title: 'Kategori**', field: "createdBy" },
+      ],
       questions: []
     };
   }
@@ -35,6 +38,10 @@ class Questions extends React.Component {
       })
     }
     if (prevProps.isQuestionListLoading && !isQuestionListLoading && questionsList) {
+      questionsList.items.map((question, id) => (
+        question.createdAt = "Düz Metin",
+        question.createdBy = "Genel Kültür"
+      ))
       this.setState({
         questions: questionsList.items
       })

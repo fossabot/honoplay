@@ -103,7 +103,6 @@ class Login extends React.Component {
                   label={translate("EmailAddress")}
                   id="email"
                   name="email"
-                  autoFocus
                   onChange={this.handleChange}
                   value={email}
                 />

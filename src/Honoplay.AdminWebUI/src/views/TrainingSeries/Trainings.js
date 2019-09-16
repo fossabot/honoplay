@@ -74,7 +74,7 @@ class Trainings extends React.Component {
   }
 
   handleClick = () => {
-    this.props.history.push(`/honoplay/trainingseriesdetail/training`);
+    this.props.history.push(`/admin/trainingseriesdetail/training`);
   }
 
   render() {

@@ -3,7 +3,6 @@ import { Button, InputBase, Grid, InputLabel } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { Style } from './Style';
-import { get } from 'http';
 
 class ImageInputComponent extends React.Component {
   constructor(props) {
@@ -15,7 +14,7 @@ class ImageInputComponent extends React.Component {
   }
   handleImageName = (e) => {
     this.setState({
-      filename: e.target.value.replace("C:\\fakepath\\", ""),
+      filename: e.target.value.replace("C:\\fakepath\\", "")
     });
     this.getBase64(e.target.files[0]);
   }
@@ -35,7 +34,6 @@ class ImageInputComponent extends React.Component {
     }
   };
 
-
   render() {
     const { classes, labelName } = this.props;
 
@@ -52,8 +50,7 @@ class ImageInputComponent extends React.Component {
             </Grid>
           )}
           <Grid item xs={8} sm={5}>
-            <InputBase 
-              
+            <InputBase
               classes={{
                 root: classes.bootstrapRoot,
                 input: classes.bootstrapInput,
