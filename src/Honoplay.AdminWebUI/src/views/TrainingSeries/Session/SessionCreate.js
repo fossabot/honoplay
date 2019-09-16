@@ -7,154 +7,155 @@ import Input from '../../../components/Input/InputTextComponent';
 import DropDown from '../../../components/Input/DropDownInputComponent';
 import Button from '../../../components/Button/ButtonComponent';
 
-import { connect } from "react-redux";
-import { createSession, fetchSessionListByClassroomId } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Session";
+import { connect } from 'react-redux';
+import {
+  createSession,
+  fetchSessionListByClassroomId
+} from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Session';
 
 class SessionCreate extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sessionLoading: false,
+      game: [{ id: 1, name: 'Kelime Oyunu' }, { id: 2, name: 'Puzzle' }],
+      session: {
+        createSessionModels: [
+          {
+            gameId: '',
+            classroomId: '',
+            name: ''
+          }
+        ]
+      },
+      open: false,
+      sessionLoading: false,
+      sessionError: false
+    };
+  }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            sessionLoading: false,
-            game: [
-                { id: 1, name: 'Kelime Oyunu', },
-                { id: 2, name: 'Puzzle', }
-            ],
-            session: {
-                createSessionModels: [
-                    {
-                        gameId: '',
-                        classroomId: '',
-                        name: '',
-                    }
-                ]
-            },
-            open: false,
-            sessionLoading: false,
-            sessionError: false
-        }
+  classroomId = null;
+
+  componentDidUpdate(prevProps) {
+    const {
+      isCreateSessionLoading,
+      newSession,
+      errorCreateSession
+    } = this.props;
+
+    if (!prevProps.isCreateSessionLoading && isCreateSessionLoading) {
+      this.setState({
+        sessionLoading: true
+      });
     }
-
-    classroomId = null;
-
-    componentDidUpdate(prevProps) {
-        const {
-            isCreateSessionLoading,
-            newSession,
-            errorCreateSession
-        } = this.props;
-
-        if (!prevProps.isCreateSessionLoading && isCreateSessionLoading) {
-            this.setState({
-                sessionLoading: true
-            })
-        }
-        if (!prevProps.errorCreateSession && errorCreateSession) {
-            this.setState({
-                sessionError: true,
-                sessionLoading: false
-            })
-        }
-        if (prevProps.isCreateSessionLoading && !isCreateSessionLoading && newSession) {
-            this.props.fetchSessionListByClassroomId(this.classroomId);
-            if (!errorCreateSession) {
-                this.setState({
-                    sessionLoading: false,
-                    sessionError: false,
-                });
-            }
-        }
+    if (!prevProps.errorCreateSession && errorCreateSession) {
+      this.setState({
+        sessionError: true,
+        sessionLoading: false
+      });
     }
-
-    handleClick = () => {
-        this.props.createSession(this.state.session);
+    if (
+      prevProps.isCreateSessionLoading &&
+      !isCreateSessionLoading &&
+      newSession
+    ) {
+      this.props.fetchSessionListByClassroomId(this.classroomId);
+      if (!errorCreateSession) {
+        this.setState({
+          sessionLoading: false,
+          sessionError: false
+        });
+      }
     }
+  }
 
-    render() {
-        const { sessionLoading, game, session, sessionError } = this.state;
-        const { classes, classroomId } = this.props;
+  handleClick = () => {
+    this.props.createSession(this.state.session);
+  };
 
-        this.state.session.createSessionModels.map((session) => {
-            session.classroomId = classroomId;
-        })
+  render() {
+    const { sessionLoading, game, session, sessionError } = this.state;
+    const { classes, classroomId } = this.props;
 
-        this.classroomId = classroomId;
+    this.state.session.createSessionModels.map(session => {
+      session.classroomId = classroomId;
+    });
 
-        return (
+    this.classroomId = classroomId;
 
-            <div className={classes.root}>
-                <Grid container spacing={3}>
-                    {session.createSessionModels.map((session, id) => (
-                        <Grid item xs={12} sm={12} key={id}>
-                            <Input
-                                error={sessionError}
-                                labelName={translate('SessionName')}
-                                inputType="text"
-                                onChange={e => {
-                                    session.name = e.target.value;
-                                    this.setState({
-                                        sessionError: false
-                                    })
-                                }}
-                            />
-                            <DropDown
-                                error={sessionError}
-                                data={game}
-                                labelName={translate('Game')}
-                                onChange={e => {
-                                    session.gameId = e.target.value;
-                                    this.setState({
-                                        sessionError: false
-                                    })
-                                }}
-                            />
-                        </Grid>
-                    ))}
-                    <Grid item xs={12} sm={11} />
-                    <Grid item xs={12} sm={1}>
-                        <Button
-                            buttonColor="primary"
-                            buttonName={translate('Save')}
-                            onClick={this.handleClick}
-                            disabled={sessionLoading}
-                        />
-                        {sessionLoading && (
-                            <CircularProgress
-                                size={24}
-                                disableShrink={true}
-                                className={classes.buttonProgressSave}
-                            />
-                        )}
-                    </Grid>
-                </Grid>
-            </div >
-        );
-    }
+    return (
+      <div className={classes.root}>
+        <Grid container spacing={3}>
+          {session.createSessionModels.map((session, id) => (
+            <Grid item xs={12} sm={12} key={id}>
+              <Input
+                error={sessionError}
+                labelName={translate('SessionName')}
+                inputType="text"
+                onChange={e => {
+                  session.name = e.target.value;
+                  this.setState({
+                    sessionError: false
+                  });
+                }}
+              />
+              <DropDown
+                error={sessionError}
+                data={game}
+                labelName={translate('Game')}
+                onChange={e => {
+                  session.gameId = e.target.value;
+                  this.setState({
+                    sessionError: false
+                  });
+                }}
+              />
+            </Grid>
+          ))}
+          <Grid item xs={12} sm={11} />
+          <Grid item xs={12} sm={1}>
+            <Button
+              buttonColor="primary"
+              buttonName={translate('Save')}
+              onClick={this.handleClick}
+              disabled={sessionLoading}
+            />
+            {sessionLoading && (
+              <CircularProgress
+                size={24}
+                disableShrink={true}
+                className={classes.buttonProgressSave}
+              />
+            )}
+          </Grid>
+        </Grid>
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => {
+  const {
+    isCreateSessionLoading,
+    createSession,
+    errorCreateSession
+  } = state.createSession;
 
-    const {
-        isCreateSessionLoading,
-        createSession,
-        errorCreateSession
-    } = state.createSession;
+  let newSession = createSession;
 
-    let newSession = createSession;
-
-    return {
-        isCreateSessionLoading,
-        newSession,
-        errorCreateSession,
-    };
+  return {
+    isCreateSessionLoading,
+    newSession,
+    errorCreateSession
+  };
 };
 
 const mapDispatchToProps = {
-    createSession,
-    fetchSessionListByClassroomId
+  createSession,
+  fetchSessionListByClassroomId
 };
 
 export default connect(
-    mapStateToProps,
-    mapDispatchToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(withStyles(Style)(SessionCreate));

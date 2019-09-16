@@ -10,40 +10,38 @@ class ImageInputComponent extends React.Component {
     this.state = {
       filename: '',
       byteArray: null
-    }
+    };
   }
-  handleImageName = (e) => {
+  handleImageName = e => {
     this.setState({
-      filename: e.target.value.replace("C:\\fakepath\\", "")
+      filename: e.target.value.replace('C:\\fakepath\\', '')
     });
     this.getBase64(e.target.files[0]);
-  }
+  };
 
-  getBase64 = (file) => {
+  getBase64 = file => {
     if (!file) {
       return;
     }
     const reader = new FileReader();
     reader.readAsArrayBuffer(file);
 
-    reader.onload = (e) => {
+    reader.onload = e => {
       const arrayBuffer = e.target.result,
         array = Array.from(new Uint8Array(arrayBuffer));
-      this.props.selectedImage(array)
-      this.setState({ byteArray: array })
-    }
+      this.props.selectedImage(array);
+      this.setState({ byteArray: array });
+    };
   };
 
   render() {
     const { classes, labelName } = this.props;
 
-
     return (
       <div className={classes.inputRoot}>
         <Grid container spacing={3}>
-          {(labelName &&
-            <Grid item xs={12} sm={3}
-              className={classes.labelCenter}>
+          {labelName && (
+            <Grid item xs={12} sm={3} className={classes.labelCenter}>
               <InputLabel className={classes.bootstrapFormLabel}>
                 {labelName}
               </InputLabel>
@@ -53,25 +51,27 @@ class ImageInputComponent extends React.Component {
             <InputBase
               classes={{
                 root: classes.bootstrapRoot,
-                input: classes.bootstrapInput,
+                input: classes.bootstrapInput
               }}
               value={this.state.filename}
               fullWidth
             />
           </Grid>
           <Grid item xs={4} sm={4}>
-            <input accept="image/*"
+            <input
+              accept="image/*"
               className={classes.fileInput}
               id="button-file"
               multiple
               type="file"
               onChange={this.handleImageName}
-
             />
-            <label htmlFor="button-file" >
-              <Button variant="outlined"
+            <label htmlFor="button-file">
+              <Button
+                variant="outlined"
                 component="span"
-                className={classes.fileInputButton}>
+                className={classes.fileInputButton}
+              >
                 {translate('Browse')}
               </Button>
             </label>

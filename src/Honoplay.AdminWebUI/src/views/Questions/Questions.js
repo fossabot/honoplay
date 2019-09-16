@@ -7,19 +7,18 @@ import Typography from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Table from '../../components/Table/TableComponent';
 
-import { connect } from "react-redux";
-import { fetchQuestionList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Question";
+import { connect } from 'react-redux';
+import { fetchQuestionList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Question';
 
 class Questions extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       questionsColumns: [
-        { title: translate('QuestionText'), field: "text" },
-        { title: translate('Duration'), field: "duration" },
-        { title: 'Soru Tipi**', field: "createdAt" },
-        { title: 'Kategori**', field: "createdBy" },
+        { title: translate('QuestionText'), field: 'text' },
+        { title: translate('Duration'), field: 'duration' },
+        { title: 'Soru Tipi**', field: 'createdAt' },
+        { title: 'Kategori**', field: 'createdBy' }
       ],
       questions: []
     };
@@ -35,16 +34,22 @@ class Questions extends React.Component {
     if (!prevProps.errorQuestionList && errorQuestionList) {
       this.setState({
         departmentListError: true
-      })
+      });
     }
-    if (prevProps.isQuestionListLoading && !isQuestionListLoading && questionsList) {
-      questionsList.items.map((question, id) => (
-        question.createdAt = "Düz Metin",
-        question.createdBy = "Genel Kültür"
-      ))
+    if (
+      prevProps.isQuestionListLoading &&
+      !isQuestionListLoading &&
+      questionsList
+    ) {
+      questionsList.items.map(
+        (question, id) => (
+          (question.createdAt = 'Düz Metin'),
+          (question.createdBy = 'Genel Kültür')
+        )
+      );
       this.setState({
         questions: questionsList.items
-      })
+      });
     }
   }
 
@@ -54,9 +59,9 @@ class Questions extends React.Component {
   }
 
   handleClick = () => {
-    this.props.history.push("/admin/addquestion");
-    localStorage.removeItem('dataid')
-  }
+    this.props.history.push('/admin/addquestion');
+    localStorage.removeItem('dataid');
+  };
 
   render() {
     const { questions, questionsColumns } = this.state;
@@ -66,9 +71,7 @@ class Questions extends React.Component {
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={6} sm={11}>
-            <Typography
-              pageHeader={translate('Questions')}
-            />
+            <Typography pageHeader={translate('Questions')} />
           </Grid>
           <Grid item xs={6} sm={1}>
             <Button
@@ -82,7 +85,7 @@ class Questions extends React.Component {
             <Table
               columns={questionsColumns}
               data={questions}
-              isSelected={selected => { }}
+              isSelected={selected => {}}
               remove
               update
               onClick={this.handleClick}
@@ -95,12 +98,11 @@ class Questions extends React.Component {
 }
 
 const mapStateToProps = state => {
-
   const {
     isQuestionListLoading,
     questionsList,
     errorQuestionList
-  } = state.questionList
+  } = state.questionList;
 
   return {
     isQuestionListLoading,

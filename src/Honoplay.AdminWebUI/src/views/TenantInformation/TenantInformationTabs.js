@@ -1,8 +1,8 @@
-import React from "react";
-import { translate } from "@omegabigdata/terasu-api-proxy";
-import { withStyles } from "@material-ui/core/styles";
-import classNames from "classnames";
-import SwipeableViews from "react-swipeable-views";
+import React from 'react';
+import { translate } from '@omegabigdata/terasu-api-proxy';
+import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
+import SwipeableViews from 'react-swipeable-views';
 import {
   Tabs,
   Tab,
@@ -11,20 +11,27 @@ import {
   CircularProgress,
   Button,
   Snackbar
-} from "@material-ui/core";
-import { Style, theme } from "./Style";
-import TabContainer from "../../components/Tabs/TabContainer";
-import Typography from "../../components/Typography/TypographyComponent";
-import MySnackbarContentWrapper from "../../components/Snackbar/SnackbarContextComponent";
+} from '@material-ui/core';
+import { Style, theme } from './Style';
+import TabContainer from '../../components/Tabs/TabContainer';
+import Typography from '../../components/Typography/TypographyComponent';
+import MySnackbarContentWrapper from '../../components/Snackbar/SnackbarContextComponent';
 
-import BasicKnowledge from "./BasicKnowledge";
-import Department from "./Department";
-import Trainee from "./Trainee";
+import BasicKnowledge from './BasicKnowledge';
+import Department from './Department';
+import Trainee from './Trainee';
 
-import { connect } from "react-redux";
-import { createTenant, updateTenant, fetchTenant } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Tenant";
-import { createTrainee, fetchTraineeList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee";
-import { fetchDepartmentList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department";
+import { connect } from 'react-redux';
+import {
+  createTenant,
+  updateTenant,
+  fetchTenant
+} from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Tenant';
+import {
+  createTrainee,
+  fetchTraineeList
+} from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee';
+import { fetchDepartmentList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department';
 
 class TenantInformationTabs extends React.Component {
   constructor(props) {
@@ -43,7 +50,7 @@ class TenantInformationTabs extends React.Component {
     };
   }
 
-  tenantId = localStorage.getItem("tenantId");
+  tenantId = localStorage.getItem('tenantId');
 
   componentDidUpdate(prevProps) {
     const {
@@ -67,7 +74,11 @@ class TenantInformationTabs extends React.Component {
           open: true
         });
       }
-      if (prevProps.isUpdateTenantLoading && !isUpdateTenantLoading && updatedTenant) {
+      if (
+        prevProps.isUpdateTenantLoading &&
+        !isUpdateTenantLoading &&
+        updatedTenant
+      ) {
         this.props.fetchTenant(this.tenantId.toString());
         this.props.fetchTraineeList(0, 50);
         this.setState({
@@ -76,7 +87,7 @@ class TenantInformationTabs extends React.Component {
           isErrorTenant: false,
           open: true,
           disabledTab1: false,
-          disabledTab2: false,
+          disabledTab2: false
         });
       }
       if (!prevProps.isUpdateTenantLoading && isUpdateTenantLoading) {
@@ -84,14 +95,14 @@ class TenantInformationTabs extends React.Component {
           loading: true,
           success: false,
           open: errorUpdateTenant && true,
-          isErrorTenant: errorUpdateTenant && true,
+          isErrorTenant: errorUpdateTenant && true
         });
       } else if (prevProps.isUpdateTenantLoading && !isUpdateTenantLoading) {
         this.setState({
           loading: false,
           success: false,
           open: true,
-          isErrorTenant: errorUpdateTenant && true,
+          isErrorTenant: errorUpdateTenant && true
         });
       }
       if (prevProps.isTenantLoading && !isTenantLoading && tenant) {
@@ -109,13 +120,17 @@ class TenantInformationTabs extends React.Component {
           open: true
         });
       }
-      if (prevProps.isCreateTraineeLoading && !isCreateTraineeLoading && newTrainee) {
+      if (
+        prevProps.isCreateTraineeLoading &&
+        !isCreateTraineeLoading &&
+        newTrainee
+      ) {
         this.props.fetchTraineeList(0, 50);
         this.setState({
           loading: false,
           success: true,
           isErrorTrainee: false,
-          open: true,
+          open: true
         });
       }
       if (!prevProps.isCreateTraineeLoading && isCreateTraineeLoading) {
@@ -123,18 +138,17 @@ class TenantInformationTabs extends React.Component {
           loading: true,
           success: false,
           open: errorCreateTrainee && true,
-          isErrorTrainee: errorCreateTrainee && true,
+          isErrorTrainee: errorCreateTrainee && true
         });
       } else if (prevProps.isCreateTraineeLoading && !isCreateTraineeLoading) {
         this.setState({
           loading: false,
           success: false,
           open: true,
-          isErrorTrainee: errorCreateTrainee && true,
+          isErrorTrainee: errorCreateTrainee && true
         });
       }
     }
-
   }
 
   componentDidMount() {
@@ -156,12 +170,12 @@ class TenantInformationTabs extends React.Component {
     this.setState({ tabValue });
   };
 
-  handleChangeIndex = (index) => {
+  handleChangeIndex = index => {
     this.setState({ tabValue: index });
   };
 
-  handleClose = (reason) => {
-    if (reason === "clickaway") {
+  handleClose = reason => {
+    if (reason === 'clickaway') {
       return;
     }
     this.setState({ open: false });
@@ -184,12 +198,11 @@ class TenantInformationTabs extends React.Component {
     });
 
     return (
-
       <MuiThemeProvider theme={theme}>
         <div className={classes.root}>
           <Grid container spacing={3}>
             <Grid item xs={6} sm={10}>
-              <Typography pageHeader={translate("TenantInformation")} />
+              <Typography pageHeader={translate('TenantInformation')} />
             </Grid>
             <Grid item xs={6} sm={2}>
               <div className={classes.buttonRoot}>
@@ -201,7 +214,7 @@ class TenantInformationTabs extends React.Component {
                     disabled={loading}
                     onClick={this.handleButtonClick}
                   >
-                    {translate("Save")}
+                    {translate('Save')}
                   </Button>
                   {loading && (
                     <CircularProgress
@@ -214,8 +227,8 @@ class TenantInformationTabs extends React.Component {
             </Grid>
             <Snackbar
               anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "left"
+                vertical: 'bottom',
+                horizontal: 'left'
               }}
               autoHideDuration={1500}
               open={open}
@@ -223,7 +236,7 @@ class TenantInformationTabs extends React.Component {
             >
               <MySnackbarContentWrapper
                 onClose={this.handleClose}
-                variant={isErrorTrainee || isErrorTenant ? "error" : "success"}
+                variant={isErrorTrainee || isErrorTenant ? 'error' : 'success'}
                 message={
                   isErrorTrainee || isErrorTenant
                     ? translate('OperationFailed!')
@@ -245,7 +258,7 @@ class TenantInformationTabs extends React.Component {
                       ? classes.active_tab
                       : classes.default_tabStyle
                   }
-                  label={translate("BasicKnowledge")}
+                  label={translate('BasicKnowledge')}
                 />
                 <Tab
                   className={
@@ -253,7 +266,7 @@ class TenantInformationTabs extends React.Component {
                       ? classes.active_tab
                       : classes.default_tabStyle
                   }
-                  label={translate("Department")}
+                  label={translate('Department')}
                   disabled={disabledTab1}
                 />
                 <Tab
@@ -262,12 +275,12 @@ class TenantInformationTabs extends React.Component {
                       ? classes.active_tab
                       : classes.default_tabStyle
                   }
-                  label={translate("Trainees")}
+                  label={translate('Trainees')}
                   disabled={disabledTab2}
                 />
               </Tabs>
               <SwipeableViews
-                axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+                axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
                 index={tabValue}
                 onChangeIndex={this.handleChangeIndex}
               >
@@ -294,7 +307,7 @@ class TenantInformationTabs extends React.Component {
                         this.setState({
                           newTraineeModel: model,
                           isErrorTrainee: false
-                        })
+                        });
                       }
                     }}
                     isErrorTrainee={isErrorTrainee}
@@ -309,11 +322,7 @@ class TenantInformationTabs extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  const {
-    isTenantLoading,
-    tenant,
-    errorTenant
-  } = state.tenant;
+  const { isTenantLoading, tenant, errorTenant } = state.tenant;
 
   const {
     errorCreateTrainee,

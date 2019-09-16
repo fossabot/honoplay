@@ -1,6 +1,6 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
-import classNames from "classnames";
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Divider, CircularProgress } from '@material-ui/core';
 import Style from '../Style';
@@ -11,12 +11,19 @@ import Options from './Options';
 import Table from '../../components/Table/TableComponent';
 import { booleanToString } from '../../helpers/Converter';
 
-import { connect } from "react-redux";
-import { createQuestion, fetchQuestion, updateQuestion } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Question";
-import { fetchOptionsByQuestionId, createOption, updateOption } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options";
+import { connect } from 'react-redux';
+import {
+  createQuestion,
+  fetchQuestion,
+  updateQuestion
+} from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Question';
+import {
+  fetchOptionsByQuestionId,
+  createOption,
+  updateOption
+} from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options';
 
 class NewQuestion extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -25,9 +32,9 @@ class NewQuestion extends React.Component {
       question: '',
       questionId: null,
       optionsColumns: [
-        { title: translate('Order'), field: "visibilityOrder" },
-        { title: translate('Options'), field: "text" },
-        { title: translate('Answer'), field: "isCorrect" }
+        { title: translate('Order'), field: 'visibilityOrder' },
+        { title: translate('Options'), field: 'text' },
+        { title: translate('Answer'), field: 'isCorrect' }
       ],
       options: [],
       questionsModel: {
@@ -36,13 +43,12 @@ class NewQuestion extends React.Component {
       },
       success: false,
       newOptions: null
-    }
+    };
   }
 
-  dataId = localStorage.getItem("dataid");
+  dataId = localStorage.getItem('dataid');
 
   index = null;
-
 
   componentDidUpdate(prevProps) {
     const {
@@ -65,38 +71,46 @@ class NewQuestion extends React.Component {
       errorUpdateOption
     } = this.props;
 
-    if (prevProps.isOptionListByQuestionIdLoading && !isOptionListByQuestionIdLoading && optionsListByQuestionId) {
+    if (
+      prevProps.isOptionListByQuestionIdLoading &&
+      !isOptionListByQuestionIdLoading &&
+      optionsListByQuestionId
+    ) {
       booleanToString(optionsListByQuestionId.items);
       this.setState({
         options: optionsListByQuestionId.items
-      })
+      });
     }
 
     if (prevProps.isQuestionLoading && !isQuestionLoading && question) {
       if (!errorQuestion) {
         this.setState({
           questionsModel: question.items[0]
-        })
+        });
       }
     }
     if (!prevProps.isCreateQuestionLoading && isCreateQuestionLoading) {
       this.setState({
         loading: true
-      })
+      });
     }
     if (!prevProps.errorCreateQuestion && errorCreateQuestion) {
       this.setState({
         questionsError: true,
         loading: false
-      })
+      });
     }
-    if (prevProps.isCreateQuestionLoading && !isCreateQuestionLoading && newQuestion) {
+    if (
+      prevProps.isCreateQuestionLoading &&
+      !isCreateQuestionLoading &&
+      newQuestion
+    ) {
       if (!errorCreateQuestion) {
         this.setState({
           question: newQuestion.items[0].text,
           questionId: newQuestion.items[0].id,
           loading: false,
-          questionsError: false,
+          questionsError: false
         });
         this.props.createOption(this.state.newOptions);
       }
@@ -105,21 +119,25 @@ class NewQuestion extends React.Component {
     if (!prevProps.isUpdateQuestionLoading && isUpdateQuestionLoading) {
       this.setState({
         loading: true
-      })
+      });
     }
     if (!prevProps.errorUpdateQuestion && errorUpdateQuestion) {
       this.setState({
         questionsError: true,
         loading: false,
         success: false
-      })
+      });
     }
-    if (prevProps.isUpdateQuestionLoading && !isUpdateQuestionLoading && updateQuestion) {
+    if (
+      prevProps.isUpdateQuestionLoading &&
+      !isUpdateQuestionLoading &&
+      updateQuestion
+    ) {
       if (!errorUpdateQuestion) {
         this.setState({
           questionsError: false,
           loading: false,
-          success: true,
+          success: true
         });
         setTimeout(() => {
           this.setState({ success: false });
@@ -130,20 +148,24 @@ class NewQuestion extends React.Component {
     if (!prevProps.isCreateOptionLoading && isCreateOptionLoading) {
       this.setState({
         loading: true
-      })
+      });
     }
     if (!prevProps.errorCreateOption && errorCreateOption) {
       this.setState({
         optionError: true,
         loading: false
-      })
+      });
     }
-    if (prevProps.isCreateOptionLoading && !isCreateOptionLoading && createOption) {
+    if (
+      prevProps.isCreateOptionLoading &&
+      !isCreateOptionLoading &&
+      createOption
+    ) {
       this.props.fetchOptionsByQuestionId(this.state.questionId);
       if (!errorCreateOption) {
         this.setState({
           loading: false,
-          optionError: false,
+          optionError: false
         });
       }
     }
@@ -155,11 +177,11 @@ class NewQuestion extends React.Component {
       this.props.fetchOptionsByQuestionId(this.dataId);
       this.setState({
         questionId: this.dataId
-      })
+      });
     }
   }
 
-  handleChange = (e) => {
+  handleChange = e => {
     const { name, value } = e.target;
     this.setState(prevState => ({
       questionsModel: {
@@ -167,33 +189,38 @@ class NewQuestion extends React.Component {
         [name]: value
       },
       questionsError: false
-    }))
-  }
+    }));
+  };
 
   handleClick = () => {
     this.props.createQuestion(this.state.questionsModel);
-  }
+  };
 
   handleUpdate = () => {
     this.props.updateQuestion(this.state.questionsModel);
     localStorage.removeItem('dataid');
-  }
+  };
 
   render() {
-    const { questionsError, loading, questionId, optionsColumns, options, success, newOptions } = this.state;
+    const {
+      questionsError,
+      loading,
+      questionId,
+      optionsColumns,
+      options,
+      success,
+      newOptions
+    } = this.state;
     const { classes } = this.props;
     const buttonClassname = classNames({
       [classes.buttonSuccess]: success
     });
 
     return (
-
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12}>
-            <Typography
-              pageHeader={translate('CreateAQuestion')}
-            />
+            <Typography pageHeader={translate('CreateAQuestion')} />
           </Grid>
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12} />
@@ -216,38 +243,41 @@ class NewQuestion extends React.Component {
             />
           </Grid>
           <Grid item xs={12} sm={12}>
-            <Typography
-              pageHeader={translate('Options')}
-            />
+            <Typography pageHeader={translate('Options')} />
           </Grid>
-          <Grid item xs={12} sm={12}> <Divider /> </Grid>
+          <Grid item xs={12} sm={12}>
+            {' '}
+            <Divider />{' '}
+          </Grid>
           <Grid item xs={12} sm={12} />
-          <Options questionId={this.dataId ? this.dataId : questionId}
+          <Options
+            questionId={this.dataId ? this.dataId : questionId}
             basicOptionModel={model => {
               if (model) {
                 this.setState({
-                  newOptions: model,
+                  newOptions: model
                 });
               }
             }}
           />
           <Grid item xs={12} sm={11} />
-          <Grid item xs={12} sm={1} >
-            {this.dataId ?
+          <Grid item xs={12} sm={1}>
+            {this.dataId ? (
               <Button
                 buttonColor="secondary"
                 buttonName={translate('Update')}
                 onClick={this.handleUpdate}
                 disabled={loading}
                 className={buttonClassname}
-              /> :
+              />
+            ) : (
               <Button
                 buttonColor="secondary"
                 buttonName={translate('Save')}
                 onClick={this.handleClick}
                 disabled={loading}
               />
-            }
+            )}
             {loading && (
               <CircularProgress
                 size={24}
@@ -260,7 +290,7 @@ class NewQuestion extends React.Component {
             <Table
               columns={optionsColumns}
               data={options}
-              isSelected={selected => { }}
+              isSelected={selected => {}}
               remove
             />
           </Grid>
@@ -285,11 +315,7 @@ const mapStateToProps = state => {
     errorOptionListByQuestionId
   } = state.optionListByQuestionId;
 
-  const {
-    isQuestionLoading,
-    question,
-    errorQuestion
-  } = state.question;
+  const { isQuestionLoading, question, errorQuestion } = state.question;
 
   const {
     isUpdateQuestionLoading,
@@ -308,7 +334,6 @@ const mapStateToProps = state => {
     updateOption,
     errorUpdateOption
   } = state.updateOption;
-
 
   return {
     isCreateQuestionLoading,

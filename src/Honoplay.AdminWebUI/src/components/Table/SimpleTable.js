@@ -1,11 +1,14 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
-  Table, TableBody, TableCell,
-  TableHead, TableRow, Paper
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Paper
 } from '@material-ui/core';
 import { Style } from './Style';
-
 
 class SimpleTable extends React.Component {
   render() {
@@ -16,13 +19,11 @@ class SimpleTable extends React.Component {
         <Table className={classes.simpleTable}>
           <TableHead>
             <TableRow>
-              <TableCell className={classes.tablecellText}>
-                {header}
-              </TableCell>
+              <TableCell className={classes.tablecellText}>{header}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map(( row, id ) => (
+            {data.map((row, id) => (
               <TableRow key={id}>
                 <TableCell>{row.name}</TableCell>
               </TableRow>
@@ -33,6 +34,5 @@ class SimpleTable extends React.Component {
     );
   }
 }
-
 
 export default withStyles(Style)(SimpleTable);

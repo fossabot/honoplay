@@ -9,7 +9,7 @@ import Modal from '../../components/Modal/ModalComponent';
 import Card from '../../components/Card/CardComponents';
 import TrainingseriesCreate from './TrainingSeriesCreate';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import { fetchTrainingSeriesList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingSeries';
 
 class TrainingSeries extends React.Component {
@@ -18,10 +18,9 @@ class TrainingSeries extends React.Component {
     this.state = {
       openDialog: false,
       trainingSerieses: [],
-      trainingSeriesesError: false,
-    }
+      trainingSeriesesError: false
+    };
   }
-
 
   componentDidUpdate(prevProps) {
     const {
@@ -33,9 +32,13 @@ class TrainingSeries extends React.Component {
     if (!prevProps.errorTrainingSeriesList && errorTrainingSeriesList) {
       this.setState({
         trainingSeriesesError: true
-      })
+      });
     }
-    if (prevProps.isTrainingSeriesListLoading && !isTrainingSeriesListLoading && TrainingSeriesList) {
+    if (
+      prevProps.isTrainingSeriesListLoading &&
+      !isTrainingSeriesListLoading &&
+      TrainingSeriesList
+    ) {
       this.setState({
         trainingSerieses: TrainingSeriesList.items
       });
@@ -54,24 +57,22 @@ class TrainingSeries extends React.Component {
     this.setState({ openDialog: false });
   };
 
-
   render() {
     const { openDialog, trainingSerieses } = this.state;
     const { classes } = this.props;
 
     return (
-
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={12}>
-            <Typography
-              pageHeader={translate('TrainingSeries')}
-            />
+            <Typography pageHeader={translate('TrainingSeries')} />
           </Grid>
           <Grid item xs={12} sm={3}>
             <CardButton
               cardName={translate('CreateATrainingSeries')}
-              cardDescription={translate('YouCanCreateTrainingSetsAndCollectDifferentTrainingsInOneField')}
+              cardDescription={translate(
+                'YouCanCreateTrainingSetsAndCollectDifferentTrainingsInOneField'
+              )}
               onClick={this.handleClickOpenDialog}
               iconName="graduation-cap"
             />
@@ -82,7 +83,7 @@ class TrainingSeries extends React.Component {
               url="trainingseriesdetail"
               id={id => {
                 if (id) {
-                  localStorage.setItem("trainingSeriesId", id)
+                  localStorage.setItem('trainingSeriesId', id);
                 }
               }}
             />
@@ -100,14 +101,12 @@ class TrainingSeries extends React.Component {
   }
 }
 
-
 const mapStateToProps = state => {
   const {
     isTrainingSeriesListLoading,
     TrainingSeriesList,
     errorTrainingSeriesList
   } = state.trainingSeriesList;
-
 
   return {
     isTrainingSeriesListLoading,
