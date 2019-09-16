@@ -147,7 +147,7 @@ namespace Honoplay.AdminWebAPI.Controllers
         /// <param name="trainingSeriesId">Get trainings list </param>
         /// <returns>Get training by tenant id and trainingSeries id with status code.</returns>
         [HttpGet]
-        [Route("/api/TrainingSeries/{trainingSeriesId}/Training")]
+        [Route("/TrainingSeries/{trainingSeriesId}/Training")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

@@ -39,27 +39,27 @@ class Layout extends React.Component {
           <List
             component="nav">
             <ListItem
-              pageLink={"/honoplay/questions"}
+              pageLink={"/admin/questions"}
               pageIcon={"question-circle"}
               pageName={translate('Questions')} />
             <ListItem
-              pageLink={"/honoplay/trainingseries"}
+              pageLink={"/admin/trainingseries"}
               pageIcon={"list-ol"}
               pageName={translate('TrainingSeries')} />
             <ListItem
-              pageLink={"/honoplay/trainers"}
+              pageLink={"/admin/trainers"}
               pageIcon={"graduation-cap"}
               pageName={translate('Trainers')} />
             <ListItem
-              pageLink={"/honoplay/tenantinformation"}
+              pageLink={"/admin/tenantinformation"}
               pageIcon={"briefcase"}
               pageName={translate('TenantInformation')} />
             <ListItem
-              pageLink={"/honoplay/usermanagement"}
+              pageLink={"/admin/usermanagement"}
               pageIcon={"cog"}
               pageName={translate('UserManagement')} />
             <ListItem
-              pageLink={"/honoplay/reports"}
+              pageLink={"/admin/reports"}
               pageIcon={"chart-pie"}
               pageName={translate('Reports')} />
           </List>

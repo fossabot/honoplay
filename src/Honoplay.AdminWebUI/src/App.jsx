@@ -15,38 +15,38 @@ import TrainingSeriesUpdate from './views/TrainingSeries/TrainingSeriesUpdate';
 import setToken from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/index";
 
 const App = () => {
-  const [token] = useState(localStorage.getItem("token"));
-  const [loaded, setLoaded] = useState(false);
-  useEffect(() => {
-    setToken.setToken(token)
-    setTimeout(() => {}, 500)
-    setLoaded(true)
-  }, []);
+    const [token] = useState(localStorage.getItem("token"));
+    const [loaded, setLoaded] = useState(false);
+    useEffect(() => {
+            setToken.setToken(token);
+            setTimeout(() => {}, 500);
+            setLoaded(true);
+        },
+        []);
 
-  if (token) {
-    if (!loaded) {
-      return null;
+    if (token) {
+        if (!loaded) {
+            return null;
+        }
+        return (
+            <Layout>
+                <Route path="/admin/questions" component={Questions}/>
+                <Route path="/admin/tenantinformation" component={TenantInformation}/>
+                <Route path="/admin/trainers" component={Trainers}/>
+                <Route path="/admin/usermanagement" component={UserManagement}/>
+                <Route path="/admin/addquestion" component={NewQuestion}/>
+                <Route path="/admin/trainingseries" exact component={TrainingSeries}/>
+                <Route path="/admin/trainingseriesdetail" exact component={Trainings}/>
+                <Route path="/admin/trainingseriesdetail/training" exact component={TrainingSeriesInformation}/>
+                <Route path="/admin/trainingseriesupdate" exact component={TrainingSeriesUpdate}/>
+            </Layout>
+        );
+    } else {
+        return (
+            <Redirect to="/admin/login"/>
+        );
     }
-    return (
-      <Layout>
-        <Route path="/honoplay/questions" component={Questions} />
-        <Route path="/honoplay/tenantinformation" component={TenantInformation} />
-        <Route path="/honoplay/trainers" component={Trainers} />
-        <Route path="/honoplay/usermanagement" component={UserManagement} />
-        <Route path="/honoplay/addquestion" component={NewQuestion} />
-        <Route path="/honoplay/trainingseries" exact component={TrainingSeries} />
-        <Route path="/honoplay/trainingseriesdetail" exact component={Trainings} />
-        <Route path="/honoplay/trainingseriesdetail/training" exact component={TrainingSeriesInformation} />
-        <Route path="/honoplay/trainingseriesupdate" exact component={TrainingSeriesUpdate} />
-      </Layout>
-    );
-  }
-  else {
-    return (
-      <Redirect to="/login" />
-    );
-  }
 
-}
+};
 
 export default hot(module)(App);

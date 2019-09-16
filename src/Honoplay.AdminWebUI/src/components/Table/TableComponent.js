@@ -114,7 +114,8 @@ class TableComponent extends React.Component {
       columns,
       children,
       update,
-      remove
+      remove,
+      onClick
     } = this.props;
     const {
       selected,
@@ -132,7 +133,7 @@ class TableComponent extends React.Component {
             root: classes.tableRoot,
             typography: classes.typography
           }}>
-          { remove && 
+          {remove &&
             <EnhancedTableToolbar
               numSelected={selected.length}
               handleDelete={() => this.handleDelete(selected)}
@@ -183,7 +184,9 @@ class TableComponent extends React.Component {
                           <TableCell
                             onClick={() => localStorage.setItem("dataid", data.id)}
                             className={classes.tableCell}>
-                            <IconButton onClick={this.handleClickOpenDialog}>
+                            <IconButton
+                              onClick={onClick ? onClick : this.handleClickOpenDialog}
+                            >
                               <Edit />
                             </IconButton>
                           </TableCell> :

@@ -39,7 +39,7 @@ class Login extends React.Component {
       if (token) {
         localStorage.setItem("token", token.token);
         localStorage.setItem("tenantId", token.user.tenantId);
-        this.props.history.push("/honoplay");
+        this.props.history.push("/admin");
       }
     }
     if (errorToken !== prevProps.errorToken) {
@@ -103,7 +103,6 @@ class Login extends React.Component {
                   label={translate("EmailAddress")}
                   id="email"
                   name="email"
-                  autoComplete="email"
                   autoFocus
                   onChange={this.handleChange}
                   value={email}
@@ -117,7 +116,6 @@ class Login extends React.Component {
                   name="password"
                   type={this.state.showPassword ? 'text' : 'password'}
                   id="password"
-                  autoComplete="current-password"
                   onChange={this.handleChange}
                   value={password}
                   InputProps={{

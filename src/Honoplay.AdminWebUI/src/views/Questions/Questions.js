@@ -6,7 +6,6 @@ import Style from '../Style';
 import Typography from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Table from '../../components/Table/TableComponent';
-import QuestionsUpdate from './QuestionsUpdate';
 
 import { connect } from "react-redux";
 import { fetchQuestionList } from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/Question";
@@ -44,11 +43,12 @@ class Questions extends React.Component {
 
   componentDidMount() {
     const { fetchQuestionList } = this.props;
-    fetchQuestionList(0, 50);
+    fetchQuestionList(0, 100);
   }
 
   handleClick = () => {
-    this.props.history.push("/honoplay/addquestion");
+    this.props.history.push("/admin/addquestion");
+    localStorage.removeItem('dataid')
   }
 
   render() {
@@ -75,12 +75,11 @@ class Questions extends React.Component {
             <Table
               columns={questionsColumns}
               data={questions}
-              isSelected ={selected => {}}
+              isSelected={selected => { }}
               remove
               update
-            >
-              <QuestionsUpdate/>
-            </Table>
+              onClick={this.handleClick}
+            />
           </Grid>
         </Grid>
       </div>
