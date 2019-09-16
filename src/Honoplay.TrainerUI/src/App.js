@@ -18,13 +18,14 @@ class App extends React.Component {
     return (
       <>
         <BrowserRouter history={History}>
+          <Route exact path="/trainer/" component={Login} />
           <Route exact path="/" component={Login} />
-          <Route path="/login" component={Login} />
-          <Route path="/homepage" component={Home} />
-          <Route path="/classroom" component={Classroom} />
-          <Route path="/trainingdetail" component={Training} />
-          <Route path="/joincode" component={JoinCode} />
-          <Route path="/logout" component={Logout} />
+          <Route path="/trainer/login" component={Login} />
+          <Route path="/trainer/homepage" component={Home} />
+          <Route path="/trainer/classroom" component={Classroom} />
+          <Route path="/trainer/trainingdetail" component={Training} />
+          <Route path="/trainer/joincode" component={JoinCode} />
+          <Route path="/trainer/logout" component={Logout} />
         </BrowserRouter>
       </>
     );

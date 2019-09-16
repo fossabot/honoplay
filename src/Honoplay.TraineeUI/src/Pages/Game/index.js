@@ -9,7 +9,7 @@ class Game extends Component {
     return (
       <PageWrapper>
         <iframe
-          src="https://www.construct.net/en/free-online-games/construct-bouncepok-3876/play"
+          src="https://gp.omegabigdata.com/P2bcbe503"
           width="1000"
           height="1000"
         ></iframe>
