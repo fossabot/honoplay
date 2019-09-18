@@ -37,7 +37,8 @@ class CompanyCard extends React.Component {
     if (prevProps.isTenantLoading && !isTenantLoading && tenant) {
       if (!errorTenant) {
         this.setState({
-          tenantModel: tenant.items[0]
+          tenantModel: tenant.items[0],
+          menu: null
         });
       }
     }
@@ -94,6 +95,9 @@ class CompanyCard extends React.Component {
         >
           <MenuItem component={Link} to="/login" onClick={this.logout}>
             {translate('Logout')}
+          </MenuItem>
+          <MenuItem component={Link} to="/admin/profile">
+            {translate('TenantProfile')}
           </MenuItem>
         </Menu>
       </div>

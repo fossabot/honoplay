@@ -15,6 +15,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
 import Table from '../../components/Table/TableComponent';
+import Header from '../../components/Typography/TypographyComponent';
 
 import TraineesUpdate from './TraineesUpdate';
 import WorkingStatuses from './WorkingStatus';
@@ -127,6 +128,7 @@ class Trainee extends React.Component {
     return (
       <div className={classes.root} id="addTrainee">
         <Grid container spacing={3}>
+          <Header pageHeader={translate('Trainees')} />
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12}>
             <div />

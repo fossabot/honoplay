@@ -54,9 +54,9 @@ class Layout extends React.Component {
               pageName={translate('Trainers')}
             />
             <ListItem
-              pageLink={'/admin/tenantinformation'}
+              pageLink={'/admin/trainees'}
               pageIcon={'briefcase'}
-              pageName={translate('TenantInformation')}
+              pageName={translate('Trainees')}
             />
             <ListItem
               pageLink={'/admin/usermanagement'}
