@@ -7,7 +7,8 @@ import {
   TextField,
   InputAdornment,
   IconButton,
-  InputLabel
+  InputLabel,
+  CircularProgress
 } from '@material-ui/core';
 import Style from '../Style';
 import Visibility from '@material-ui/icons/Visibility';
@@ -16,12 +17,16 @@ import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
 import Table from '../../components/Table/TableComponent';
 import Header from '../../components/Typography/TypographyComponent';
+import Button from '../../components/Button/ButtonComponent';
 
 import TraineesUpdate from './TraineesUpdate';
 import WorkingStatuses from './WorkingStatus';
 
 import { connect } from 'react-redux';
-import { fetchTraineeList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee';
+import {
+  fetchTraineeList,
+  createTrainee
+} from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee';
 import { fetchDepartmentList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department';
 import { fetchWorkingStatusList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/WorkingStatus';
 import { genderToString } from '../../helpers/Converter';
@@ -43,21 +48,22 @@ class Trainee extends React.Component {
         },
         { title: translate('PhoneNumber'), field: 'phoneNumber' },
         { title: translate('Gender'), field: 'gender' }
-      ]
+      ],
+      loading: false,
+      isErrorTrainee: false,
+      traineeModel: {
+        name: '',
+        surname: '',
+        nationalIdentityNumber: '',
+        phoneNumber: '',
+        gender: '',
+        workingStatusId: '',
+        departmentId: '',
+        password: '',
+        email: ''
+      }
     };
   }
-
-  traineeModel = {
-    name: '',
-    surname: '',
-    nationalIdentityNumber: '',
-    phoneNumber: '',
-    gender: '',
-    workingStatusId: '',
-    departmentId: '',
-    password: '',
-    email: ''
-  };
 
   componentDidUpdate(prevProps) {
     const {
@@ -67,7 +73,10 @@ class Trainee extends React.Component {
       isDepartmentListLoading,
       departmentList,
       isWorkingStatusListLoading,
-      workingStatusList
+      workingStatusList,
+      errorCreateTrainee,
+      isCreateTraineeLoading,
+      newTrainee
     } = this.props;
 
     if (prevProps.isTraineeListLoading && !isTraineeListLoading && trainees) {
@@ -96,17 +105,48 @@ class Trainee extends React.Component {
         workingStatuses: workingStatusList.items
       });
     }
+
+    if (!prevProps.isCreateTraineeLoading && isCreateTraineeLoading) {
+      this.setState({
+        loading: true
+      });
+    }
+    if (!prevProps.errorCreateTrainee && errorCreateTrainee) {
+      this.setState({
+        isErrorTrainee: true,
+        loading: false
+      });
+    }
+    if (
+      prevProps.isCreateTraineeLoading &&
+      !isCreateTraineeLoading &&
+      newTrainee
+    ) {
+      this.props.fetchTraineeList(0, 50);
+      if (!errorCreateTrainee) {
+        this.setState({
+          loading: false,
+          isErrorTrainee: false
+        });
+      }
+    }
   }
 
   componentDidMount() {
     this.props.fetchTraineeList(0, 50);
     this.props.fetchWorkingStatusList(0, 50);
+    this.props.fetchDepartmentList(0, 50);
   }
 
   handleChange = e => {
     const { name, value } = e.target;
-    this.traineeModel[name] = value;
-    this.props.basicTraineeModel(this.traineeModel);
+    this.setState(prevState => ({
+      traineeModel: {
+        ...prevState.traineeModel,
+        [name]: value
+      },
+      isErrorTrainee: false
+    }));
   };
 
   handleClickShowPassword = () => {
@@ -115,14 +155,21 @@ class Trainee extends React.Component {
     }));
   };
 
+  handleClick = () => {
+    this.props.createTrainee(this.state.traineeModel);
+  };
+
   render() {
-    const { classes, isErrorTrainee } = this.props;
+    const { classes } = this.props;
     const {
       departments,
       workingStatuses,
       gender,
       traineeColumns,
-      traineeList
+      traineeList,
+      loading,
+      isErrorTrainee,
+      traineeModel
     } = this.state;
 
     return (
@@ -144,7 +191,7 @@ class Trainee extends React.Component {
               describable
               onChange={this.handleChange}
               name="workingStatusId"
-              value={this.traineeModel.workingStatusId}
+              value={traineeModel.workingStatusId}
             >
               <WorkingStatuses data={workingStatuses} />
             </DropDown>
@@ -154,7 +201,7 @@ class Trainee extends React.Component {
               inputType="text"
               onChange={this.handleChange}
               name="name"
-              value={this.traineeModel.name}
+              value={traineeModel.name}
             />
             <Input
               error={isErrorTrainee}
@@ -162,7 +209,7 @@ class Trainee extends React.Component {
               inputType="text"
               onChange={this.handleChange}
               name="surname"
-              value={this.traineeModel.surname}
+              value={traineeModel.surname}
             />
             <DropDown
               error={isErrorTrainee}
@@ -170,7 +217,7 @@ class Trainee extends React.Component {
               labelName={translate('Department')}
               onChange={this.handleChange}
               name="departmentId"
-              value={this.traineeModel.departmentId}
+              value={traineeModel.departmentId}
             />
             <Input
               error={isErrorTrainee}
@@ -178,7 +225,7 @@ class Trainee extends React.Component {
               inputType="text"
               onChange={this.handleChange}
               name="nationalIdentityNumber"
-              value={this.traineeModel.nationalIdentityNumber}
+              value={traineeModel.nationalIdentityNumber}
             />
             <Input
               error={isErrorTrainee}
@@ -186,7 +233,7 @@ class Trainee extends React.Component {
               inputType="text"
               onChange={this.handleChange}
               name="phoneNumber"
-              value={this.traineeModel.phoneNumber}
+              value={traineeModel.phoneNumber}
             />
             <DropDown
               error={isErrorTrainee}
@@ -194,14 +241,14 @@ class Trainee extends React.Component {
               labelName={translate('Gender')}
               onChange={this.handleChange}
               name="gender"
-              value={this.traineeModel.gender}
+              value={traineeModel.gender}
             />
             <Input
               error={isErrorTrainee}
               labelName={translate('EmailAddress')}
               inputType="text"
               name="email"
-              value={this.traineeModel.email}
+              value={traineeModel.email}
               onChange={this.handleChange}
             />
           </Grid>
@@ -217,7 +264,7 @@ class Trainee extends React.Component {
               name="password"
               type={this.state.showPassword ? 'text' : 'password'}
               onChange={this.handleChange}
-              value={this.traineeModel.password}
+              value={traineeModel.password}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -232,6 +279,23 @@ class Trainee extends React.Component {
                 )
               }}
             />
+          </Grid>
+          <Grid item xs={12} sm={12} />
+          <Grid item xs={12} sm={11} />
+          <Grid item xs={12} sm={1}>
+            <Button
+              buttonColor="secondary"
+              buttonName={translate('Save')}
+              onClick={this.handleClick}
+              disabled={loading}
+            />
+            {loading && (
+              <CircularProgress
+                size={24}
+                disableShrink={true}
+                className={classes.buttonProgressSave}
+              />
+            )}
           </Grid>
           <Grid item xs={12} sm={12}>
             <Divider />
@@ -279,6 +343,12 @@ const mapStateToProps = state => {
     errorWorkingStatusList
   } = state.workingStatusList;
 
+  const {
+    errorCreateTrainee,
+    isCreateTraineeLoading,
+    newTrainee
+  } = state.createTrainee;
+
   return {
     isTraineeListLoading,
     errorTraineeList,
@@ -288,14 +358,18 @@ const mapStateToProps = state => {
     departmentList,
     isWorkingStatusListLoading,
     workingStatusList,
-    errorWorkingStatusList
+    errorWorkingStatusList,
+    errorCreateTrainee,
+    isCreateTraineeLoading,
+    newTrainee
   };
 };
 
 const mapDispatchToProps = {
   fetchTraineeList,
   fetchDepartmentList,
-  fetchWorkingStatusList
+  fetchWorkingStatusList,
+  createTrainee
 };
 
 export default connect(

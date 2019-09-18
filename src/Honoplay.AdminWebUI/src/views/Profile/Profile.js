@@ -99,7 +99,6 @@ class Profile extends React.Component {
   };
 
   handleClick = () => {
-    console.log(this.state.tenantModel);
     this.props.updateTenant(this.state.tenantModel);
   };
 
