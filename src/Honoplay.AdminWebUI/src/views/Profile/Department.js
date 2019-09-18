@@ -101,42 +101,40 @@ class Department extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div className={classes.root}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={12} />
-          <Grid item xs={6} sm={11}>
-            <Input
-              error={departmentError}
-              onChange={this.handleChange}
-              labelName={translate('Department')}
-              inputType="text"
-              name="departments"
-              value={this.departmentModel.departments}
-            />
-          </Grid>
-          <Grid item xs={6} sm={1}>
-            <Button
-              buttonColor="secondary"
-              buttonName={translate('Add')}
-              onClick={this.handleClick}
-              disabled={loading}
-            />
-            {loading && (
-              <CircularProgress
-                size={24}
-                disableShrink={true}
-                className={classes.buttonProgress}
-              />
-            )}
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <SimpleTable
-              data={department}
-              header={translate('TenantDepartments')}
-            />
-          </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={12} />
+        <Grid item xs={12} sm={11}>
+          <Input
+            error={departmentError}
+            onChange={this.handleChange}
+            labelName={translate('Department')}
+            inputType="text"
+            name="departments"
+            value={this.departmentModel.departments}
+          />
         </Grid>
-      </div>
+        <Grid item xs={12} sm={1}>
+          <Button
+            buttonColor="secondary"
+            buttonName={translate('Add')}
+            onClick={this.handleClick}
+            disabled={loading}
+          />
+          {loading && (
+            <CircularProgress
+              size={24}
+              disableShrink={true}
+              className={classes.buttonProgress}
+            />
+          )}
+        </Grid>
+        <Grid item xs={12} sm={12}>
+          <SimpleTable
+            data={department}
+            header={translate('TenantDepartments')}
+          />
+        </Grid>
+      </Grid>
     );
   }
 }

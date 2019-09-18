@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { render } from 'react-dom';
 import App from './App';
@@ -12,13 +11,12 @@ import store from './redux/store';
 init(projeId);
 
 render(
-    <Provider store={store}>
-        <Router>
-            <Route exact path="/" component={Login} />
-            <Route path="/admin/login" component={Login} />
-            <Route path="/admin" component={App} />
-        </Router>
-    </Provider>,
-    document.getElementById('root'),
+  <Provider store={store}>
+    <Router>
+      <Route exact path="/" component={Login} />
+      <Route exact path="/login" component={Login} />
+      <Route path="/admin" component={App} />
+    </Router>
+  </Provider>,
+  document.getElementById('root')
 );
-

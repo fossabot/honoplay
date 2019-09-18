@@ -35,7 +35,7 @@ class ImageInputComponent extends React.Component {
   };
 
   render() {
-    const { classes, labelName } = this.props;
+    const { classes, labelName, error } = this.props;
 
     return (
       <div className={classes.inputRoot}>
@@ -51,10 +51,11 @@ class ImageInputComponent extends React.Component {
             <InputBase
               classes={{
                 root: classes.bootstrapRoot,
-                input: classes.bootstrapInput
+                input: error ? classes.bootstrapError : classes.bootstrapInput
               }}
               value={this.state.filename}
               fullWidth
+              error={error ? true : false}
             />
           </Grid>
           <Grid item xs={4} sm={4}>
