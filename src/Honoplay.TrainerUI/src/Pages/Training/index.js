@@ -86,7 +86,7 @@ class Training extends Component {
                 </tr>
               </thead>
               <tbody>
-                {[] || this.props.traineeList.items.map(t => {
+                {this.props.traineeList.items && this.props.traineeList.items.map(t => {
                   return (
                     <tr key={t.id}>
                       <td>{t.name}</td>
