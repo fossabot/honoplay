@@ -34,7 +34,7 @@ class Classroom extends Component {
                       <td>{data.name}</td>
                       <td>
                         <Link
-                          to={{ pathname: "/trainingdetail", state: data.id }}
+                          to={{ pathname: "/trainer/trainingdetail", state: data.id }}
                         >
                           İncele
                         </Link>

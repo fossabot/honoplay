@@ -21,9 +21,6 @@ class Training extends Component {
   }
 
   render() {
-    if (!this.props.traineeList) {
-      return <PageWrapper></PageWrapper>;
-    }
     const selectedTrainingId = localStorage.getItem("selectedTraining");
 
     const selectedtraining = this.props.trainingList.items.filter(
@@ -39,7 +36,7 @@ class Training extends Component {
                 <Link to="homepage">Eğitimler</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
-              {selectedtraining.name}
+                {selectedtraining.name}
               </li>
             </ol>
           </nav>
@@ -90,22 +87,23 @@ class Training extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.traineeList.items.map(t => {
-                  return (
-                    <tr key={t.id}>
-                      <td>{t.Name}</td>
-                      <td>{t.surname}</td>
-                      <td>{t.phoneNumber}</td>
-                      <td>{t.email}</td>
-                      <td>
-                        <i
-                          className={`fas fa-check-circle text-success`}
-                          style={{ fonstSize: 22 }}
-                        ></i>
-                      </td>
-                    </tr>
-                  );
-                })}
+                {[] ||
+                  this.props.traineeList.items.map(t => {
+                    return (
+                      <tr key={t.id}>
+                        <td>{t.Name}</td>
+                        <td>{t.surname}</td>
+                        <td>{t.phoneNumber}</td>
+                        <td>{t.email}</td>
+                        <td>
+                          <i
+                            className={`fas fa-check-circle text-success`}
+                            style={{ fonstSize: 22 }}
+                          ></i>
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
 
@@ -142,7 +140,7 @@ class Training extends Component {
             <div className="mt-5">
               <Link
                 target="about_blank"
-                to="/joincode"
+                to="/trainer/joincode"
                 className="btn btn-primary mr-2"
               >
                 Katılım Kodunu Göster

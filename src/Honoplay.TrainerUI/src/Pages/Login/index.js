@@ -20,12 +20,12 @@ class Login extends Component {
       userTrainerToken
     ) {
       localStorage.setItem("token", userTrainerToken.token);
-      History.push("/homepage");
+      History.push("/trainer/homepage");
     }
   }
 
-  email = "test@trainer.com";
-  password = "Password1*";
+  email = "agha@huseynov.com";
+  password = "123456789";
 
   render() {
     return (
@@ -38,14 +38,14 @@ class Login extends Component {
 
           <div className="form">
             <input
-              defaultValue="test@trainer.com"
+              defaultValue="agha@huseynov.com"
               onChange={e => (this.email = e.target.value)}
               type="email"
               className="form-control"
               placeholder="Cep Tel / E-Posta"
             />
             <input
-              defaultValue="Password1*"
+              defaultValue="123456789"
               onChange={e => (this.password = e.target.value)}
               type="password"
               className="form-control mt-3 mb-2"

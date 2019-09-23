@@ -39,7 +39,7 @@ class Home extends Component {
                           console.log("Tiklanan data :", data.id);
                           localStorage.setItem("selectedTraining", data.id);
                         }}
-                        to={{ pathname: "/classroom", state: data.id }}
+                        to={{ pathname: "/trainer/classroom", state: data.id }}
                       >
                         İncele
                       </Link>
