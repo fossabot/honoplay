@@ -3,7 +3,7 @@ import WithAuth from "../../Hoc/CheckAuth";
 
 const Logout = () => {
   localStorage.removeItem("token");
-  return <></>;
+    return <React.Fragment></React.Fragment>;
 };
 
 export default WithAuth(Logout);

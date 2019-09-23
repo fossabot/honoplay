@@ -16,7 +16,7 @@ import Logout from "./Helpers/Logout";
 class App extends React.Component {
   render() {
     return (
-      <>
+        <React.Fragment>
         <BrowserRouter history={History}>
           <Route exact path="/trainer/" component={Login} />
           <Route exact path="/" component={Login} />
@@ -27,7 +27,7 @@ class App extends React.Component {
           <Route path="/trainer/joincode" component={JoinCode} />
           <Route path="/trainer/logout" component={Logout} />
         </BrowserRouter>
-      </>
+        </React.Fragment>
     );
   }
 }
