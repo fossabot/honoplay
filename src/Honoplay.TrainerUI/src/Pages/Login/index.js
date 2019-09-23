@@ -58,9 +58,6 @@ class Login extends Component {
 
             <Button
               onClick={() => {
-                localStorage.setItem("password", this.password);
-                localStorage.setItem("email", this.email);
-
                 this.props.fethTrainerUserToken({
                   email: this.email,
                   password: this.password

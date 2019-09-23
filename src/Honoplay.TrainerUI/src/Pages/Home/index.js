@@ -36,7 +36,6 @@ class Home extends Component {
                     <td>
                       <Link
                         onClick={() => {
-                          console.log("Tiklanan data :", data.id);
                           localStorage.setItem("selectedTraining", data.id);
                         }}
                         to={{ pathname: "/trainer/classroom", state: data.id }}

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import History from "../Helpers/History";
 import actionIndex from "@omegabigdata/honoplay-redux-helper/Src/actions";
+import { store } from "../Redux/store";
 
 const WithAuth = HocComponent => {
   return class extends Component {
@@ -12,14 +13,15 @@ const WithAuth = HocComponent => {
         History.push("/trainer/login");
       }
 
-      const token = localStorage.getItem("token");
+      const token = store.getState().trainerUserToken.userTrainerToken.token;
+      const localStorageToken = localStorage.getItem("token");
 
-      if (token == null) {
+      if (token == null && localStorageToken == null) {
         History.go(0);
       }
 
-      if (token) {
-        actionIndex.setTrainerUserToken(token);
+      if (token || localStorageToken) {
+        actionIndex.setTrainerUserToken(token || localStorageToken);
       }
     }
     render() {

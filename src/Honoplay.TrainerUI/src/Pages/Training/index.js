@@ -16,7 +16,6 @@ class Training extends Component {
     if (!location.state) {
       History.goBack();
     }
-
     this.props.fetchTraineeList(location.state);
   }
 
@@ -87,23 +86,22 @@ class Training extends Component {
                 </tr>
               </thead>
               <tbody>
-                {[] ||
-                  this.props.traineeList.items.map(t => {
-                    return (
-                      <tr key={t.id}>
-                        <td>{t.Name}</td>
-                        <td>{t.surname}</td>
-                        <td>{t.phoneNumber}</td>
-                        <td>{t.email}</td>
-                        <td>
-                          <i
-                            className={`fas fa-check-circle text-success`}
-                            style={{ fonstSize: 22 }}
-                          ></i>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                {this.props.traineeList.items.map(t => {
+                  return (
+                    <tr key={t.id}>
+                      <td>{t.name}</td>
+                      <td>{t.surname}</td>
+                      <td>{t.phoneNumber}</td>
+                      <td>{t.email}</td>
+                      <td>
+                        <i
+                          className={`fas fa-check-circle text-success`}
+                          style={{ fonstSize: 22 }}
+                        ></i>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
 
