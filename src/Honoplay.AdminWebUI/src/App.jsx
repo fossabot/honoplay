@@ -29,7 +29,7 @@ const App = () => {
   if (token) {
     const decode = jwt(token);
     if (decode.exp > Date.now() / 1000) {
-      <Redirect to="/admin/login" />;
+      return <Redirect to="/admin/login" />;
     } else if (!loaded) {
       return null;
     }
