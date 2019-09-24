@@ -58,7 +58,8 @@ class Training extends Component {
           </table>
 
           <div className="mt-5">
-            <p className="font-weight-bold">Kullanıcı Login Olma Oranı</p>
+            {/* // ToDo : Alttaki bilgiler singlR `dan gelecek  (Emre)  */}
+            {/* <p className="font-weight-bold">Kullanıcı Login Olma Oranı</p>
             <div className="progress mb-5" style={{ height: 30 }}>
               <div
                 className="progress-bar"
@@ -70,7 +71,7 @@ class Training extends Component {
               >
                 5 / 21
               </div>
-            </div>
+            </div> */}
 
             <h4 className="font-weight-bold text-primary mb-4">
               Kullanıcı Listesi (21 Adet)
@@ -86,26 +87,28 @@ class Training extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.traineeList.items && this.props.traineeList.items.map(t => {
-                  return (
-                    <tr key={t.id}>
-                      <td>{t.name}</td>
-                      <td>{t.surname}</td>
-                      <td>{t.phoneNumber}</td>
-                      <td>{t.email}</td>
-                      <td>
-                        <i
-                          className={`fas fa-check-circle text-success`}
-                          style={{ fonstSize: 22 }}
-                        ></i>
-                      </td>
-                    </tr>
-                  );
-                })}
+                {this.props.traineeList.items &&
+                  this.props.traineeList.items.map(t => {
+                    return (
+                      <tr key={t.id}>
+                        <td>{t.name}</td>
+                        <td>{t.surname}</td>
+                        <td>{t.phoneNumber}</td>
+                        <td>{t.email}</td>
+                        <td>
+                          <i
+                            className={`fas fa-check-circle text-success`}
+                            style={{ fonstSize: 22 }}
+                          ></i>
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
 
-            <nav aria-label="Page navigation example">
+            {/* Pagination */}
+            {/* <nav aria-label="Page navigation example">
               <ul className="pagination">
                 <li className="page-item">
                   <a className="page-link" href="#" aria-label="Previous">
@@ -133,7 +136,7 @@ class Training extends Component {
                   </a>
                 </li>
               </ul>
-            </nav>
+            </nav> */}
 
             <div className="mt-5">
               <Link
