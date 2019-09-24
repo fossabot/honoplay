@@ -69,6 +69,8 @@ class Classroom extends React.Component {
 
     this.trainingId = trainingId;
 
+    console.log('bilgi', classroomList);
+
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>

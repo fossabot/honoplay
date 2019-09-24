@@ -15,6 +15,7 @@ import Dashboard from './views/Home/Dashboard';
 import Reports from './views/Reports/Reports';
 import Profile from './views/Profile/Profile';
 import setToken from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/index';
+import jwt from 'jwt-decode';
 
 const App = () => {
   const [token] = useState(localStorage.getItem('token'));
@@ -26,13 +27,16 @@ const App = () => {
   }, []);
 
   if (token) {
-    if (!loaded) {
+    const decode = jwt(token);
+    if (decode.exp > Date.now() / 1000) {
+      <Redirect to="/admin/login" />;
+    } else if (!loaded) {
       return null;
     }
     return (
       <Layout>
         <Route path="/admin/profile" component={Profile} />
-        <Route exact path="/admin" component={Dashboard} />
+        <Route exact path="/admin/dashboard" component={Dashboard} />
         <Route path="/admin/reports" component={Reports} />
         <Route path="/admin/questions" component={Questions} />
         <Route path="/admin/trainees" component={Trainees} />

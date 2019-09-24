@@ -114,7 +114,7 @@ class TraineesUpdate extends React.Component {
       updateTrainer
     ) {
       if (!errorUpdateTrainer) {
-        if (this.state.confirmPassword == this.state.trainerModel.password) {
+        if (this.state.confirmPassword === this.state.trainerModel.password) {
           this.props.fetchTrainersList(0, 50);
           this.setState({
             updateError: false,
@@ -180,7 +180,7 @@ class TraineesUpdate extends React.Component {
 
     return (
       <div className={classes.root}>
-        {loadingTrainer == false ? (
+        {loadingTrainer === false ? (
           <CircularProgress
             size={50}
             disableShrink={true}
