@@ -30,7 +30,7 @@ class Home extends Component {
               {this.props.trainingList.items.map((data, index) => {
                 return (
                   <tr key={index}>
-                    <td>{data.beginDateTime}</td>
+                    <td>{data.beginDateTime.formatDate()}</td>
                     <td>{data.name}</td>
                     <td>{data.description}</td>
                     <td>

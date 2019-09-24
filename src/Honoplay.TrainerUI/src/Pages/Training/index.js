@@ -50,7 +50,7 @@ class Training extends Component {
             </thead>
             <tbody>
               <tr>
-                <td> {selectedtraining.beginDateTime}</td>
+                <td> {selectedtraining.beginDateTime.formatDate()}</td>
                 <td> {selectedtraining.name}</td>
                 <td> {selectedtraining.description}</td>
               </tr>
