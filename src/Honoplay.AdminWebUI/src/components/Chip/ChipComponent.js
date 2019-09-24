@@ -4,10 +4,6 @@ import { Chip, Grid } from '@material-ui/core';
 import Style from './Style';
 
 class ChipComponent extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { classes, data } = this.props;
 

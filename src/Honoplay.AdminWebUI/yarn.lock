@@ -1603,21 +1603,21 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@omegabigdata/honoplay-api-helper-node@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-api-helper-node/-/honoplay-api-helper-node-0.4.2.tgz#bc97e2836334bf5b75c99d44b60a4c30f5604773"
-  integrity sha512-o9j5hhjE7/kxJm9VW/vl5Wk42nlIuuOQkzGRUyJOyO4ABHpyV9P89xjTBGom39iY0NHzCnnBcR8WmYHyvrSXmw==
+"@omegabigdata/honoplay-api-helper-node@^0.4.4":
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-api-helper-node/-/honoplay-api-helper-node-0.4.4.tgz#0d4f3470ac0bd64328a7c639a5a22cb090176008"
+  integrity sha512-fHSXiAoGY8x+e/cRmIotxFyFrjzZ6+9HdgP5KldnPQzM0zYfNuuOs6tXIIJ10en6M7r6PPwPNlEsPVMEUJJKLw==
   dependencies:
     axios "^0.18.0"
     axios-retry "^3.1.2"
     chai-http "^4.3.0"
 
-"@omegabigdata/honoplay-redux-helper@^0.5.8":
-  version "0.5.8"
-  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-redux-helper/-/honoplay-redux-helper-0.5.8.tgz#0cb384458f7a1f99e42e6c903c64600c66551b97"
-  integrity sha512-bi4mJMveW5rYCGj4Quir+CH6HF7FK1hQvchmJbDpJU1UM04AxhhaEQy5nK3ny2IXYjoYtB8OVbk84edpvVcxBg==
+"@omegabigdata/honoplay-redux-helper@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-redux-helper/-/honoplay-redux-helper-0.6.0.tgz#07bbc1bdd0cc594f4c872c7003d9df113d6ccda0"
+  integrity sha512-pUgtv0RDpkaL0pc7otQ/3DhU3Qua2oc3a6ElMFMXN25pe9OthRMyYpz6ayLdw59F+6J0tUvRHUa8WHG2daLU7g==
   dependencies:
-    "@omegabigdata/honoplay-api-helper-node" "^0.4.2"
+    "@omegabigdata/honoplay-api-helper-node" "^0.4.4"
     redux "^4.0.1"
     redux-thunk "^2.3.0"
 
@@ -4457,10 +4457,10 @@ entities@^1.1.1, entities@~1.1.1:
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.2.tgz#bdfa735299664dfafd34529ed4f8522a275fea56"
   integrity sha512-f2LZMYl1Fzu7YSBKg+RoROelpOaNrcGmE9AZubeDfrCEia483oW4MI4VyFd5VNHIgQ/7qm1I0wUHK1eJnn2y2w==
 
-enzyme-adapter-react-16@^1.13.0:
-  version "1.13.1"
-  resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.13.1.tgz#2e8ee300e38674b9914ae52b04af9493050355e2"
-  integrity sha512-DCKbkiVlfLTbn4SXO8mXDQx1SmmwON5oKXn2QfQSMCt8eTYGwUXy/OBGSuss6KKwY5w5QfK1sQFxhgFOkMCjrw==
+enzyme-adapter-react-16@^1.14.0:
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/enzyme-adapter-react-16/-/enzyme-adapter-react-16-1.14.0.tgz#204722b769172bcf096cb250d33e6795c1f1858f"
+  integrity sha512-7PcOF7pb4hJUvjY7oAuPGpq3BmlCig3kxXGi2kFx0YzJHppqX1K8IIV9skT1IirxXlu8W7bneKi+oQ10QRnhcA==
   dependencies:
     enzyme-adapter-utils "^1.12.0"
     has "^1.0.3"
@@ -4469,7 +4469,7 @@ enzyme-adapter-react-16@^1.13.0:
     prop-types "^15.7.2"
     react-is "^16.8.6"
     react-test-renderer "^16.0.0-0"
-    semver "^5.6.0"
+    semver "^5.7.0"
 
 enzyme-adapter-utils@^1.12.0:
   version "1.12.0"
@@ -7420,6 +7420,11 @@ just-extend@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/just-extend/-/just-extend-4.0.2.tgz#f3f47f7dfca0f989c55410a7ebc8854b07108afc"
   integrity sha512-FrLwOgm+iXrPV+5zDU6Jqu4gCRXbWEQg2O3SKONsWE4w7AXFRkryS53bpWdaL9cNol+AmR3AEYz6kn+o0fCPnw==
+
+jwt-decode@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
+  integrity sha1-fYa9VmefWM5qhHBKZX3TkruoGnk=
 
 keycode@^2.1.7:
   version "2.2.0"

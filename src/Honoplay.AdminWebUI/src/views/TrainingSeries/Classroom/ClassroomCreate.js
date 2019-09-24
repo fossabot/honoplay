@@ -115,6 +115,7 @@ class ClassroomCreate extends React.Component {
   }
 
   handleClick = () => {
+    console.log('classroom', this.state.classroom);
     this.props.createClassroom(this.state.classroom);
   };
 
@@ -166,7 +167,7 @@ class ClassroomCreate extends React.Component {
                   columns={traineeColumns}
                   data={traineeList}
                   isSelected={selected => {
-                    classroom.traineesId = selected;
+                    classroom.traineeUsersId = selected;
                   }}
                 />
               </Grid>
