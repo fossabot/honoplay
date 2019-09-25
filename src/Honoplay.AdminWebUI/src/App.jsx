@@ -1,23 +1,23 @@
-﻿import React, { Component, useState, useEffect } from "react";
-import { Route, Redirect } from "react-router-dom";
-import Layout from "./components/Layout/LayoutComponent";
+﻿import React, { Component, useState, useEffect } from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import Layout from './components/Layout/LayoutComponent';
 
-import Questions from "./views/Questions/Questions";
-import Trainees from "./views/Trainees/Trainee";
-import Trainers from "./views/Trainers/Trainers";
-import UserManagement from "./views/UserManagement/UserManagement";
-import NewQuestion from "./views/Questions/NewQuestion";
-import TrainingSeries from "./views/TrainingSeries/TrainingSeries";
-import Trainings from "./views/TrainingSeries/Trainings";
-import TrainingSeriesInformation from "./views/TrainingSeries/TrainingSeriesInformation";
-import TrainingSeriesUpdate from "./views/TrainingSeries/TrainingSeriesUpdate";
-import Dashboard from "./views/Home/Dashboard";
-import Reports from "./views/Reports/Reports";
-import Profile from "./views/Profile/Profile";
-import setToken from "@omegabigdata/honoplay-redux-helper/dist/Src/actions/index";
-import { connect } from "react-redux";
-import { renewToken } from "@omegabigdata/honoplay-redux-helper/dist/src/actions/AdminUser";
-import decoder from "jwt-decode";
+import Questions from './views/Questions/Questions';
+import Trainees from './views/Trainees/Trainee';
+import Trainers from './views/Trainers/Trainers';
+import UserManagement from './views/UserManagement/UserManagement';
+import NewQuestion from './views/Questions/NewQuestion';
+import TrainingSeries from './views/TrainingSeries/TrainingSeries';
+import Trainings from './views/TrainingSeries/Trainings';
+import TrainingSeriesInformation from './views/TrainingSeries/TrainingSeriesInformation';
+import TrainingSeriesUpdate from './views/TrainingSeries/TrainingSeriesUpdate';
+import Dashboard from './views/Home/Dashboard';
+import Reports from './views/Reports/Reports';
+import Profile from './views/Profile/Profile';
+import setToken from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/index';
+import { connect } from 'react-redux';
+import { renewToken } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/AdminUser';
+import decoder from 'jwt-decode';
 
 const CheckTokenExp = token => {
   if (!token) return false;
@@ -31,7 +31,7 @@ const CheckTokenExp = token => {
 };
 
 const App = ({ renewToken, newToken }) => {
-  const [token] = useState(localStorage.getItem("token"));
+  const [token] = useState(localStorage.getItem('token'));
   const [isCheckedToken, setIsCheckedToken] = useState(false);
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const App = ({ renewToken, newToken }) => {
   useEffect(() => {
     if (newToken) {
       setToken.setToken(newToken);
-      localStorage.setItem("token", newToken);
+      localStorage.setItem('token', newToken);
       setIsCheckedToken(true);
     }
   }, [newToken]);
@@ -97,9 +97,13 @@ const mapStateToProps = state => {
   };
 };
 
+const mapDispatchToProps = {
+  renewToken
+};
+
 export default connect(
   mapStateToProps,
-  { renewToken }
+  mapDispatchToProps
 )(App);
 
 // export default App;
