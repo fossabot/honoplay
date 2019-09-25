@@ -93,7 +93,7 @@ class CompanyCard extends React.Component {
           open={open}
           onClose={this.handleClose}
         >
-          <MenuItem component={Link} to="/login" onClick={this.logout}>
+          <MenuItem component={Link} to="/admin/login" onClick={this.logout}>
             {translate('Logout')}
           </MenuItem>
           <MenuItem component={Link} to="/admin/profile">
