@@ -8,6 +8,7 @@ import History from "./Helpers/History";
 import JoinGame from "./Pages/JoinGame";
 import Game from "./Pages/Game";
 import EndGame from "./Pages/EndGame";
+import "./Helpers/Extensions";
 
 render(
   <Provider store={store}>
