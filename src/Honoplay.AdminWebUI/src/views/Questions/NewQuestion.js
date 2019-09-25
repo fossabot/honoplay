@@ -8,8 +8,6 @@ import Typography from '../../components/Typography/TypographyComponent';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Options from './Options';
-import Table from '../../components/Table/TableComponent';
-import { booleanToString } from '../../helpers/Converter';
 
 import { connect } from 'react-redux';
 import {
@@ -31,11 +29,6 @@ class NewQuestion extends React.Component {
       questionsError: false,
       question: '',
       questionId: null,
-      optionsColumns: [
-        { title: translate('Order'), field: 'visibilityOrder' },
-        { title: translate('Options'), field: 'text' },
-        { title: translate('Answer'), field: 'isCorrect' }
-      ],
       options: [],
       questionsModel: {
         text: '',
@@ -65,10 +58,7 @@ class NewQuestion extends React.Component {
       optionsListByQuestionId,
       isCreateOptionLoading,
       createOption,
-      errorCreateOption,
-      isUpdateOptionLoading,
-      updateOption,
-      errorUpdateOption
+      errorCreateOption
     } = this.props;
 
     if (
@@ -76,7 +66,6 @@ class NewQuestion extends React.Component {
       !isOptionListByQuestionIdLoading &&
       optionsListByQuestionId
     ) {
-      booleanToString(optionsListByQuestionId.items);
       this.setState({
         options: optionsListByQuestionId.items
       });
@@ -246,8 +235,7 @@ class NewQuestion extends React.Component {
             <Typography pageHeader={translate('Options')} />
           </Grid>
           <Grid item xs={12} sm={12}>
-            {' '}
-            <Divider />{' '}
+            <Divider />
           </Grid>
           <Grid item xs={12} sm={12} />
           <Options
@@ -286,14 +274,7 @@ class NewQuestion extends React.Component {
               />
             )}
           </Grid>
-          <Grid item xs={12} sm={12}>
-            <Table
-              columns={optionsColumns}
-              data={options}
-              isSelected={selected => {}}
-              remove
-            />
-          </Grid>
+          <Grid item xs={12} sm={12}></Grid>
         </Grid>
       </div>
     );
