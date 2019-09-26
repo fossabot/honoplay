@@ -17,10 +17,10 @@ namespace Honoplay.TrainerWebAPI.Controllers
     public class ClassroomController : BaseController
     {
         /// <summary>
-        /// This service retrieve classroom list by trainingId & trainerId
+        /// This service retrieve classroom list by trainingId, trainerId
         /// </summary>
         /// <param name="trainingId">Get classrooms</param>
-        /// <returns>Get classrooms by tenantId & trainingId & trainerId  with status code.</returns>
+        /// <returns>Get classrooms by tenantId, trainingId, trainerId  with status code.</returns>
         [HttpGet]
         [Route("/Training/{trainingId}/Classroom")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
