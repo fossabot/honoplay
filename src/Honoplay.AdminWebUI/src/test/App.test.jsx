@@ -1,16 +1,12 @@
-import should from 'should';
+import 'jsdom-global/register';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { configure, shallow } from 'enzyme';
+import configureStore from 'redux-mock-store';
 
 import App from '../App.jsx';
-import { Route } from 'react-router-dom';
-import Questions from '../views/Questions/Questions';
-import Trainers from '../views/Trainers/Trainers';
-import UserManagement from '../views/UserManagement/UserManagement';
-import NewQuestion from '../views/Questions/NewQuestion';
+import { renewToken } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/AdminUser';
 
-// on the localstorage for token
+//on the localstorage for token
 global.window = {};
 import 'mock-local-storage';
 window.localStorage = global.localStorage;
@@ -19,28 +15,12 @@ import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });
 
-let pathMap = {};
 describe('<App/>', () => {
-  const component = shallow(<App />);
-  pathMap = component.find(Route).reduce((pathMap, route) => {
-    const routeProps = route.props();
-    pathMap[routeProps.path] = routeProps.component;
-    return pathMap;
-  }, {});
+  const mockStore = configureStore();
+  const initialState = { renewToken };
+  const store = mockStore(initialState);
 
-  it('Should redirect to Questions page', () => {
-    pathMap['/honoplay/questions'].should.equal(Questions);
-  });
-
-  it('Should redirect to Trainers page', () => {
-    pathMap['/honoplay/trainers'].should.equal(Trainers);
-  });
-
-  it('Should redirect to User Management page', () => {
-    pathMap['/honoplay/usermanagement'].should.equal(UserManagement);
-  });
-
-  it('Should redirect to New Question page', () => {
-    pathMap['/honoplay/addquestion'].should.equal(NewQuestion);
+  it('Should open App', () => {
+    const wrapper = shallow(<App store={store} />);
   });
 });

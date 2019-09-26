@@ -18,7 +18,6 @@ import setToken from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/index
 import { connect } from 'react-redux';
 import { renewToken } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/AdminUser';
 import decoder from 'jwt-decode';
-import Login from './views/Login/Login';
 
 const CheckTokenExp = token => {
   if (!token) return false;
@@ -31,7 +30,7 @@ const CheckTokenExp = token => {
   return false;
 };
 
-const App = ({ renewToken, newToken, path }) => {
+const App = ({ renewToken, newToken }) => {
   const [token] = useState(localStorage.getItem('token'));
   const [isCheckedToken, setIsCheckedToken] = useState(false);
 
@@ -70,11 +69,7 @@ const App = ({ renewToken, newToken, path }) => {
           <Route path="/admin/trainers" component={Trainers} />
           <Route path="/admin/usermanagement" component={UserManagement} />
           <Route path="/admin/addquestion" component={NewQuestion} />
-          <Route
-            exact
-            path="/admin/trainingseries"
-            component={TrainingSeries}
-          />
+          <Route path="/admin/trainingseries" component={TrainingSeries} />
           <Route
             exact
             path="/admin/trainingseriesdetail"
@@ -86,7 +81,6 @@ const App = ({ renewToken, newToken, path }) => {
             component={TrainingSeriesInformation}
           />
           <Route
-            exact
             path="/admin/trainingseriesupdate"
             component={TrainingSeriesUpdate}
           />
