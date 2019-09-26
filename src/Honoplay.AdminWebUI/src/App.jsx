@@ -1,4 +1,4 @@
-﻿import React, { Component, useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import Layout from './components/Layout/LayoutComponent';
 
@@ -61,21 +61,15 @@ const App = ({ renewToken, newToken, path }) => {
 
     return (
       <Switch>
-        <Route exact path={'/' + path} />
-        <Route exact path="/admin/login" component={Login} />
         <Layout>
-          <Route exact path="/admin/profile" component={Profile} />
-          <Route exact path="/admin/dashboard" component={Dashboard} />
-          <Route exact path="/admin/reports" component={Reports} />
-          <Route exact path="/admin/questions" component={Questions} />
-          <Route exact path="/admin/trainees" component={Trainees} />
-          <Route exact path="/admin/trainers" component={Trainers} />
-          <Route
-            exact
-            path="/admin/usermanagement"
-            component={UserManagement}
-          />
-          <Route exact path="/admin/addquestion" component={NewQuestion} />
+          <Route path="/admin/profile" component={Profile} />
+          <Route path="/admin/dashboard" component={Dashboard} />
+          <Route path="/admin/reports" component={Reports} />
+          <Route path="/admin/questions" component={Questions} />
+          <Route path="/admin/trainees" component={Trainees} />
+          <Route path="/admin/trainers" component={Trainers} />
+          <Route path="/admin/usermanagement" component={UserManagement} />
+          <Route path="/admin/addquestion" component={NewQuestion} />
           <Route
             exact
             path="/admin/trainingseries"
@@ -122,5 +116,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(App);
-
-// export default App;

@@ -14,11 +14,9 @@ render(
   <Provider store={store}>
     <Router>
       <Switch>
+        <Route exact path="/admin/login" component={Login} />
+        <Route path="/admin" component={App} />
         <Route exact path="/" component={Login} />
-        <Route
-          path="/admin"
-          render={({ match: { path } }) => <App path={path} />}
-        />
       </Switch>
     </Router>
   </Provider>,
