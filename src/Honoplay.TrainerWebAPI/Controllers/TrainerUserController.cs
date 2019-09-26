@@ -1,6 +1,6 @@
 ﻿using Honoplay.Application._Infrastructure;
-using Honoplay.Application.TraineeUsers.Commands.CreateTraineeUser;
 using Honoplay.Application.TrainerUsers.Commands.AuthenticateTrainerUser;
+using Honoplay.Application.TrainerUsers.Commands.CreateTrainerUser;
 using Honoplay.Common._Exceptions;
 using Honoplay.TrainerWebAPI.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -55,11 +55,11 @@ namespace Honoplay.TrainerWebAPI.Controllers
             }
             catch (ObjectAlreadyExistsException ex)
             {
-                return Conflict(new ResponseModel<CreateTraineeUserModel>(new Error(HttpStatusCode.Conflict, ex)));
+                return Conflict(new ResponseModel<CreateTrainerUserModel>(new Error(HttpStatusCode.Conflict, ex)));
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new ResponseModel<CreateTraineeUserModel>(new Error(HttpStatusCode.InternalServerError, ex)));
+                return StatusCode(500, new ResponseModel<CreateTrainerUserModel>(new Error(HttpStatusCode.InternalServerError, ex)));
             }
         }
     }
