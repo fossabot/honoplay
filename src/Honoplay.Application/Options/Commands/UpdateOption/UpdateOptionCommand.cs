@@ -1,8 +1,7 @@
-﻿using Honoplay.Application.Options.Commands.CreateOption;
+﻿using Honoplay.Application._Infrastructure;
 using MediatR;
 using Newtonsoft.Json;
 using System;
-using Honoplay.Application._Infrastructure;
 
 namespace Honoplay.Application.Options.Commands.UpdateOption
 {
@@ -16,5 +15,6 @@ namespace Honoplay.Application.Options.Commands.UpdateOption
         public int QuestionId { get; set; }
         public string Text { get; set; }
         public int? VisibilityOrder { get; set; }
+        public bool IsCorrect { get; set; } = false;
     }
 }

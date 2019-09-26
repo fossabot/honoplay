@@ -1,9 +1,13 @@
-﻿using Honoplay.Application.TraineeUsers.Commands.AuthenticateTraineeUser;
+﻿using Honoplay.Application._Infrastructure;
+using Honoplay.Application.TraineeUsers.Commands.AuthenticateTraineeUser;
+using Honoplay.Application.TraineeUsers.Commands.CreateTraineeUser;
+using Honoplay.Common._Exceptions;
 using Honoplay.TraineeWebAPI.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Honoplay.TraineeWebAPI.Controllers
@@ -37,6 +41,26 @@ namespace Honoplay.TraineeWebAPI.Controllers
             catch (Exception)
             {
                 return BadRequest();
+            }
+        }
+
+        [HttpPost("RenewToken")]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult RenewToken([FromBody]string renewToken)
+        {
+            try
+            {
+                var token = _traineeUserService.RenewToken(renewToken);
+                return StatusCode((int)HttpStatusCode.Created, token);
+            }
+            catch (ObjectAlreadyExistsException ex)
+            {
+                return Conflict(new ResponseModel<CreateTraineeUserModel>(new Error(HttpStatusCode.Conflict, ex)));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ResponseModel<CreateTraineeUserModel>(new Error(HttpStatusCode.InternalServerError, ex)));
             }
         }
     }
