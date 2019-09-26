@@ -51,6 +51,7 @@ namespace Honoplay.Application.Options.Commands.UpdateOption
                     updateOption.Text = request.Text;
                     updateOption.UpdatedAt = updatedAt;
                     updateOption.UpdatedBy = request.UpdatedBy;
+                    updateOption.IsCorrect = request.IsCorrect;
 
                     _context.Options.Update(updateOption);
                     await _context.SaveChangesAsync(cancellationToken);
@@ -63,7 +64,8 @@ namespace Honoplay.Application.Options.Commands.UpdateOption
                         VisibilityOrder = x.VisibilityOrder,
                         QuestionId = x.QuestionId,
                         Text = x.Text,
-                        UpdatedAt = x.UpdatedAt
+                        UpdatedAt = x.UpdatedAt,
+                        IsCorrect = x.IsCorrect
                     }).ToList();
 
                     transaction.Commit();
@@ -95,6 +97,7 @@ namespace Honoplay.Application.Options.Commands.UpdateOption
                                                           request.VisibilityOrder,
                                                           request.QuestionId,
                                                           request.UpdatedBy,
+                                                          request.IsCorrect,
                                                           updatedAt);
 
             return new ResponseModel<UpdateOptionModel>(updateOptionModel);
