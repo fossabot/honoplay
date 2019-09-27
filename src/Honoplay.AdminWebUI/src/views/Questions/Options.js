@@ -24,6 +24,7 @@ class Options extends React.Component {
     this.state = {
       loading: false,
       optionError: false,
+      order: 2,
       options: [
         {
           questionId: '',
@@ -80,7 +81,8 @@ class Options extends React.Component {
       optionsListByQuestionId
     ) {
       this.setState({
-        options: optionsListByQuestionId.items
+        options: optionsListByQuestionId.items,
+        order: optionsListByQuestionId.items.length + 1
       });
     }
   }
@@ -95,15 +97,13 @@ class Options extends React.Component {
   };
 
   optionAdd = () => {
-    let index = this.state.options.length - 1;
     this.setState({
+      order: this.state.order + 1,
       options: this.state.options.concat([
         {
           questionId: '',
           text: '',
-          visibilityOrder: this.state.options[index].visibilityOrder
-            ? this.state.options[index].visibilityOrder + 1
-            : 1,
+          visibilityOrder: this.state.order,
           isCorrect: false
         }
       ])
@@ -122,7 +122,7 @@ class Options extends React.Component {
 
   optionRemove = id => () => {
     this.setState({
-      order: --this.state.order,
+      order: this.state.order - 1,
       options: this.state.options.filter((o, oid) => id !== oid)
     });
   };
@@ -175,13 +175,15 @@ class Options extends React.Component {
                     value={option.text}
                   />
                 </Grid>
-                <Grid item xs={12} sm={1}>
-                  <Button
-                    buttonColor="secondary"
-                    onClick={this.optionRemove(id)}
-                    buttonIcon="minus"
-                  />
-                </Grid>
+                {option.text === '' && (
+                  <Grid item xs={12} sm={1}>
+                    <Button
+                      buttonColor="secondary"
+                      onClick={this.optionRemove(id)}
+                      buttonIcon="minus"
+                    />
+                  </Grid>
+                )}
                 <Grid item xs={12} sm={7}></Grid>
                 <Grid item xs={12} sm={12}></Grid>
               </Grid>
@@ -196,8 +198,7 @@ class Options extends React.Component {
               />
             </Grid>
             <Grid item xs={12} sm={12}>
-              {' '}
-              <Divider />{' '}
+              <Divider />
             </Grid>
           </Grid>
         </div>
