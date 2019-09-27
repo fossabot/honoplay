@@ -13,10 +13,7 @@ import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 
 import { connect } from 'react-redux';
-import {
-  createOption,
-  fetchOptionsByQuestionId
-} from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options';
+import { fetchOptionsByQuestionId } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options';
 
 class Options extends React.Component {
   constructor(props) {
@@ -24,6 +21,7 @@ class Options extends React.Component {
     this.state = {
       loading: false,
       optionError: false,
+      order: 2,
       options: [
         {
           questionId: '',
@@ -43,45 +41,20 @@ class Options extends React.Component {
 
   componentDidUpdate(prevProps) {
     const {
-      isCreateOptionLoading,
-      createOption,
-      errorCreateOption,
       isOptionListByQuestionIdLoading,
       optionsListByQuestionId
     } = this.props;
 
-    if (!prevProps.isCreateOptionLoading && isCreateOptionLoading) {
-      this.setState({
-        loading: true
-      });
-    }
-    if (!prevProps.errorCreateOption && errorCreateOption) {
-      this.setState({
-        optionError: true,
-        loading: false
-      });
-    }
-    if (
-      prevProps.isCreateOptionLoading &&
-      !isCreateOptionLoading &&
-      createOption
-    ) {
-      this.props.fetchOptionsByQuestionId(this.questionId);
-      if (!errorCreateOption) {
-        this.setState({
-          loading: false,
-          optionError: false
-        });
-      }
-    }
     if (
       prevProps.isOptionListByQuestionIdLoading &&
       !isOptionListByQuestionIdLoading &&
       optionsListByQuestionId
     ) {
       this.setState({
-        options: optionsListByQuestionId.items
+        options: optionsListByQuestionId.items,
+        order: optionsListByQuestionId.items.length + 1
       });
+      this.props.basicOptionModel(this.optionsModel);
     }
   }
 
@@ -89,21 +62,14 @@ class Options extends React.Component {
     this.props.fetchOptionsByQuestionId(this.questionId);
   }
 
-  handleClick = () => {
-    this.optionsModel.createOptionModels = this.state.options;
-    this.props.createOption(this.optionsModel);
-  };
-
   optionAdd = () => {
-    let index = this.state.options.length - 1;
     this.setState({
+      order: this.state.order + 1,
       options: this.state.options.concat([
         {
           questionId: '',
           text: '',
-          visibilityOrder: this.state.options[index].visibilityOrder
-            ? this.state.options[index].visibilityOrder + 1
-            : 1,
+          visibilityOrder: this.state.order,
           isCorrect: false
         }
       ])
@@ -122,7 +88,7 @@ class Options extends React.Component {
 
   optionRemove = id => () => {
     this.setState({
-      order: --this.state.order,
+      order: this.state.order - 1,
       options: this.state.options.filter((o, oid) => id !== oid)
     });
   };
@@ -175,13 +141,17 @@ class Options extends React.Component {
                     value={option.text}
                   />
                 </Grid>
-                <Grid item xs={12} sm={1}>
-                  <Button
-                    buttonColor="secondary"
-                    onClick={this.optionRemove(id)}
-                    buttonIcon="minus"
-                  />
-                </Grid>
+                {option.id ? (
+                  ''
+                ) : (
+                  <Grid item xs={12} sm={1}>
+                    <Button
+                      buttonColor="secondary"
+                      onClick={this.optionRemove(id)}
+                      buttonIcon="minus"
+                    />
+                  </Grid>
+                )}
                 <Grid item xs={12} sm={7}></Grid>
                 <Grid item xs={12} sm={12}></Grid>
               </Grid>
@@ -196,8 +166,7 @@ class Options extends React.Component {
               />
             </Grid>
             <Grid item xs={12} sm={12}>
-              {' '}
-              <Divider />{' '}
+              <Divider />
             </Grid>
           </Grid>
         </div>
@@ -208,21 +177,12 @@ class Options extends React.Component {
 
 const mapStateToProps = state => {
   const {
-    isCreateOptionLoading,
-    createOption,
-    errorCreateOption
-  } = state.createOption;
-
-  const {
     isOptionListByQuestionIdLoading,
     optionsListByQuestionId,
     errorOptionListByQuestionId
   } = state.optionListByQuestionId;
 
   return {
-    isCreateOptionLoading,
-    createOption,
-    errorCreateOption,
     isOptionListByQuestionIdLoading,
     optionsListByQuestionId,
     errorOptionListByQuestionId
@@ -230,7 +190,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  createOption,
   fetchOptionsByQuestionId
 };
 
