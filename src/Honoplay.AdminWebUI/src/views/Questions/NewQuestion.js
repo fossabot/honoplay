@@ -35,7 +35,8 @@ class NewQuestion extends React.Component {
         duration: ''
       },
       success: false,
-      newOptions: null
+      newOptions: [],
+      createOptionModels: []
     };
   }
 
@@ -132,6 +133,17 @@ class NewQuestion extends React.Component {
           this.setState({ success: false });
         }, 1000);
       }
+
+      this.state.newOptions.createOptionModels.map((option, id) => {
+        if (option.id) {
+          this.props.updateOption(option);
+        } else {
+          this.setState({
+            createOptionModels: this.state.createOptionModels.push(option)
+          });
+          this.props.createOption(this.state.optionsModel);
+        }
+      });
     }
 
     if (!prevProps.isCreateOptionLoading && isCreateOptionLoading) {
@@ -191,15 +203,7 @@ class NewQuestion extends React.Component {
   };
 
   render() {
-    const {
-      questionsError,
-      loading,
-      questionId,
-      optionsColumns,
-      options,
-      success,
-      newOptions
-    } = this.state;
+    const { questionsError, loading, questionId, success } = this.state;
     const { classes } = this.props;
     const buttonClassname = classNames({
       [classes.buttonSuccess]: success

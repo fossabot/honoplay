@@ -13,10 +13,7 @@ import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 
 import { connect } from 'react-redux';
-import {
-  createOption,
-  fetchOptionsByQuestionId
-} from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options';
+import { fetchOptionsByQuestionId } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options';
 
 class Options extends React.Component {
   constructor(props) {
@@ -44,37 +41,10 @@ class Options extends React.Component {
 
   componentDidUpdate(prevProps) {
     const {
-      isCreateOptionLoading,
-      createOption,
-      errorCreateOption,
       isOptionListByQuestionIdLoading,
       optionsListByQuestionId
     } = this.props;
 
-    if (!prevProps.isCreateOptionLoading && isCreateOptionLoading) {
-      this.setState({
-        loading: true
-      });
-    }
-    if (!prevProps.errorCreateOption && errorCreateOption) {
-      this.setState({
-        optionError: true,
-        loading: false
-      });
-    }
-    if (
-      prevProps.isCreateOptionLoading &&
-      !isCreateOptionLoading &&
-      createOption
-    ) {
-      this.props.fetchOptionsByQuestionId(this.questionId);
-      if (!errorCreateOption) {
-        this.setState({
-          loading: false,
-          optionError: false
-        });
-      }
-    }
     if (
       prevProps.isOptionListByQuestionIdLoading &&
       !isOptionListByQuestionIdLoading &&
@@ -84,17 +54,13 @@ class Options extends React.Component {
         options: optionsListByQuestionId.items,
         order: optionsListByQuestionId.items.length + 1
       });
+      this.props.basicOptionModel(this.optionsModel);
     }
   }
 
   componentDidMount() {
     this.props.fetchOptionsByQuestionId(this.questionId);
   }
-
-  handleClick = () => {
-    this.optionsModel.createOptionModels = this.state.options;
-    this.props.createOption(this.optionsModel);
-  };
 
   optionAdd = () => {
     this.setState({
@@ -137,8 +103,6 @@ class Options extends React.Component {
     });
 
     this.optionsModel.createOptionModels = this.state.options;
-
-    console.log(this.state.options);
 
     return (
       <MuiThemeProvider theme={theme}>
@@ -213,21 +177,12 @@ class Options extends React.Component {
 
 const mapStateToProps = state => {
   const {
-    isCreateOptionLoading,
-    createOption,
-    errorCreateOption
-  } = state.createOption;
-
-  const {
     isOptionListByQuestionIdLoading,
     optionsListByQuestionId,
     errorOptionListByQuestionId
   } = state.optionListByQuestionId;
 
   return {
-    isCreateOptionLoading,
-    createOption,
-    errorCreateOption,
     isOptionListByQuestionIdLoading,
     optionsListByQuestionId,
     errorOptionListByQuestionId
@@ -235,7 +190,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  createOption,
   fetchOptionsByQuestionId
 };
 
