@@ -138,6 +138,8 @@ class Options extends React.Component {
 
     this.optionsModel.createOptionModels = this.state.options;
 
+    console.log(this.state.options);
+
     return (
       <MuiThemeProvider theme={theme}>
         <div className={classes.root}>
@@ -175,7 +177,9 @@ class Options extends React.Component {
                     value={option.text}
                   />
                 </Grid>
-                {option.text === '' && (
+                {option.id ? (
+                  ''
+                ) : (
                   <Grid item xs={12} sm={1}>
                     <Button
                       buttonColor="secondary"
