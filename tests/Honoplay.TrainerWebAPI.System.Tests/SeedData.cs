@@ -113,7 +113,10 @@ namespace Honoplay.TrainerWebAPI.System.Tests.IntegrationTests
                 DepartmentId = department.Id,
                 CreatedBy = adminUser.Id,
                 Email = "yunuskas55@gmail.com",
-                ProfessionId = profession.Id
+                ProfessionId = profession.Id,
+                Password = "Passw0rd".GetSHA512(salt),
+                PasswordSalt = salt,
+                LastPasswordChangeDateTime = DateTime.Today.AddDays(-5),
             };
             dbContext.TrainerUsers.Add(trainerUser);
 

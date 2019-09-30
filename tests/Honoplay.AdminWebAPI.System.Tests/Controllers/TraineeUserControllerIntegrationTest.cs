@@ -41,7 +41,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
 
             var json = JsonConvert.SerializeObject(command);
 
-            var httpResponse = await client.PostAsync("api/TraineeUser", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await client.PostAsync("/TraineeUser", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -73,7 +73,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
             var json = JsonConvert.SerializeObject(command);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await client.PutAsync("api/TraineeUser", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await client.PutAsync("/TraineeUser", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -94,7 +94,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
             };
 
             // The endpoint or route of the controller action.
-            var httpResponse = await client.GetAsync(requestUri: $"api/TraineeUser?Skip={getTraineeUserListQueryModel.Skip}&Take={getTraineeUserListQueryModel.Take}");
+            var httpResponse = await client.GetAsync(requestUri: $"/TraineeUser?Skip={getTraineeUserListQueryModel.Skip}&Take={getTraineeUserListQueryModel.Take}");
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -115,7 +115,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
             };
 
             // The endpoint or route of the controller action.
-            var httpResponse = await client.GetAsync(requestUri: $"api/TraineeUser?Skip={getTraineeUserListQueryModel.Skip}&Take={getTraineeUserListQueryModel.Take}");
+            var httpResponse = await client.GetAsync(requestUri: $"/TraineeUser?Skip={getTraineeUserListQueryModel.Skip}&Take={getTraineeUserListQueryModel.Take}");
 
             // Must be unsuccessful.
             Assert.False(httpResponse.IsSuccessStatusCode);
@@ -127,8 +127,8 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            //Request to api/TraineeUser/1 endpoint
-            var httpResponse = await client.GetAsync("api/TraineeUser/1");
+            //Request to /TraineeUser/1 endpoint
+            var httpResponse = await client.GetAsync("/TraineeUser/1");
 
             //Must be successful.
             Assert.True(httpResponse.IsSuccessStatusCode);

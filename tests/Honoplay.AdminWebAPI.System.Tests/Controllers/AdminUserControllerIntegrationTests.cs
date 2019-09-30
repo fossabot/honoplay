@@ -35,7 +35,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
 
             var json = JsonConvert.SerializeObject(command);
 
-            var httpResponse = await _client.PostAsync("api/AdminUser/Register", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await _client.PostAsync("/AdminUser/Register", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -56,7 +56,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
 
             var json = JsonConvert.SerializeObject(command);
 
-            var httpResponse = await _client.PostAsync("api/AdminUser/Authenticate", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await _client.PostAsync("/AdminUser/Authenticate", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();

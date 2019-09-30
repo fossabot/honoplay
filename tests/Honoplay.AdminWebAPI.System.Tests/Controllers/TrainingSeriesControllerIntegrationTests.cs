@@ -42,7 +42,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
             var serializedTrainingSeriesCommand = JsonConvert.SerializeObject(createTrainingSeriesCommand);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await authorizedClient.PostAsync(requestUri: "api/TrainingSeries",
+            var httpResponse = await authorizedClient.PostAsync(requestUri: "/TrainingSeries",
                 content: new StringContent(content: serializedTrainingSeriesCommand,
                     encoding: Encoding.UTF8,
                     mediaType: StringConstants.ApplicationJson));
@@ -68,7 +68,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
             var serializedUpdateCommand = JsonConvert.SerializeObject(updateTrainingSeriesCommand);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await authorizedClient.PutAsync(requestUri: "api/TrainingSeries",
+            var httpResponse = await authorizedClient.PutAsync(requestUri: "/TrainingSeries",
                     content: new StringContent(content: serializedUpdateCommand,
                     encoding: Encoding.UTF8,
                     mediaType: StringConstants.ApplicationJson));
@@ -92,7 +92,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
             };
 
             var httpResponse = await authorizedClient.GetAsync(
-                requestUri: $"api/TrainingSeries?Skip={getTrainingSeriesesListQuery.Skip}&Take={getTrainingSeriesesListQuery.Take}");
+                requestUri: $"/TrainingSeries?Skip={getTrainingSeriesesListQuery.Skip}&Take={getTrainingSeriesesListQuery.Take}");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
@@ -103,7 +103,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await authorizedClient.GetAsync(requestUri: $"api/TrainingSeries/1");
+            var httpResponse = await authorizedClient.GetAsync(requestUri: $"/TrainingSeries/1");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);

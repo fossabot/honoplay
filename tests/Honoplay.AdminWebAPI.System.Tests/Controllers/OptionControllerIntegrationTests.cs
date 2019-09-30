@@ -44,7 +44,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
             var serializedOptionCommand = JsonConvert.SerializeObject(createOptionCommand);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await authorizedClient.PostAsync(requestUri: "api/Option",
+            var httpResponse = await authorizedClient.PostAsync(requestUri: "/Option",
                 content: new StringContent(content: serializedOptionCommand,
                     encoding: Encoding.UTF8,
                     mediaType: StringConstants.ApplicationJson));
@@ -72,7 +72,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
             var serializedUpdateCommand = JsonConvert.SerializeObject(updateOptionCommand);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await authorizedClient.PutAsync(requestUri: "api/Option",
+            var httpResponse = await authorizedClient.PutAsync(requestUri: "/Option",
                     content: new StringContent(content: serializedUpdateCommand,
                     encoding: Encoding.UTF8,
                     mediaType: StringConstants.ApplicationJson));
@@ -96,7 +96,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
             };
 
             var httpResponse = await authorizedClient.GetAsync(
-                requestUri: $"api/Option?Skip={getOptionsListQuery.Skip}&Take={getOptionsListQuery.Take}");
+                requestUri: $"/Option?Skip={getOptionsListQuery.Skip}&Take={getOptionsListQuery.Take}");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
@@ -107,7 +107,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await authorizedClient.GetAsync(requestUri: $"api/Option/1");
+            var httpResponse = await authorizedClient.GetAsync(requestUri: $"/Option/1");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
@@ -117,7 +117,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await authorizedClient.GetAsync(requestUri: $"api/Question/1/Option");
+            var httpResponse = await authorizedClient.GetAsync(requestUri: $"/Question/1/Option");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);

@@ -35,7 +35,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
             var json = JsonConvert.SerializeObject(command);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await client.PostAsync(requestUri: "api/Profession", content: new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await client.PostAsync(requestUri: "/Profession", content: new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
 
@@ -56,7 +56,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
             };
 
             //Get professions request
-            var httpResponse = await client.GetAsync(requestUri: $"api/Profession?Skip={query.Skip}&Take={query.Take}");
+            var httpResponse = await client.GetAsync(requestUri: $"/Profession?Skip={query.Skip}&Take={query.Take}");
 
             httpResponse.EnsureSuccessStatusCode();
 

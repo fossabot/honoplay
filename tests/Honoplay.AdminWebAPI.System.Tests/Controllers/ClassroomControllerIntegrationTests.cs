@@ -1,9 +1,8 @@
-﻿using Honoplay.AdminWebAPI;
+﻿using Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Extensions;
 using Honoplay.Application.Classrooms.Commands.CreateClassroom;
 using Honoplay.Application.Classrooms.Commands.UpdateClassroom;
 using Honoplay.Application.Classrooms.Queries.GetClassroomsList;
 using Honoplay.Common.Constants;
-using Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Extensions;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net;
@@ -45,7 +44,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
             var serializedClassroomCommand = JsonConvert.SerializeObject(createClassroomCommand);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await authorizedClient.PostAsync(requestUri: "api/Classroom",
+            var httpResponse = await authorizedClient.PostAsync(requestUri: "/Classroom",
                 content: new StringContent(content: serializedClassroomCommand,
                     encoding: Encoding.UTF8,
                     mediaType: StringConstants.ApplicationJson));
@@ -73,7 +72,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
             var serializedUpdateCommand = JsonConvert.SerializeObject(updateClassroomCommand);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await authorizedClient.PutAsync(requestUri: "api/Classroom",
+            var httpResponse = await authorizedClient.PutAsync(requestUri: "/Classroom",
                     content: new StringContent(content: serializedUpdateCommand,
                     encoding: Encoding.UTF8,
                     mediaType: StringConstants.ApplicationJson));
@@ -97,7 +96,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
             };
 
             var httpResponse = await authorizedClient.GetAsync(
-                requestUri: $"api/Classroom?Skip={getClassroomsListQuery.Skip}&Take={getClassroomsListQuery.Take}");
+                requestUri: $"/Classroom?Skip={getClassroomsListQuery.Skip}&Take={getClassroomsListQuery.Take}");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
@@ -108,7 +107,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await authorizedClient.GetAsync(requestUri: "api/Classroom/1");
+            var httpResponse = await authorizedClient.GetAsync(requestUri: "/Classroom/1");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
@@ -118,7 +117,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await authorizedClient.GetAsync(requestUri: "api/Training/1/Classroom");
+            var httpResponse = await authorizedClient.GetAsync(requestUri: "/Training/1/Classroom");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);

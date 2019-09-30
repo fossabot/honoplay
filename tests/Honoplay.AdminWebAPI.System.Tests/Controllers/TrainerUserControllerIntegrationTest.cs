@@ -42,7 +42,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
 
             var json = JsonConvert.SerializeObject(command);
 
-            var httpResponse = await client.PostAsync("api/TrainerUser", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await client.PostAsync("/TrainerUser", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -72,7 +72,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
 
             var json = JsonConvert.SerializeObject(command);
 
-            var httpResponse = await client.PutAsync("api/TrainerUser", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await client.PutAsync("/TrainerUser", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -87,7 +87,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await client.GetAsync($"api/TrainerUser/1");
+            var httpResponse = await client.GetAsync($"/TrainerUser/1");
 
             httpResponse.EnsureSuccessStatusCode();
 
@@ -105,7 +105,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
                 Take = 10,
             };
 
-            var httpResponse = await client.GetAsync($"api/TrainerUser?Skip={getTrainerUsersListQueryModel.Skip}&Take={getTrainerUsersListQueryModel.Take}");
+            var httpResponse = await client.GetAsync($"/TrainerUser?Skip={getTrainerUsersListQueryModel.Skip}&Take={getTrainerUsersListQueryModel.Take}");
             httpResponse.EnsureSuccessStatusCode();
 
             Assert.True(httpResponse.IsSuccessStatusCode);
