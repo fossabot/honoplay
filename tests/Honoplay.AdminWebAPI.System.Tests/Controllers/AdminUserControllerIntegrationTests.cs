@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.Controllers
 {
     public class AdminUserControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {

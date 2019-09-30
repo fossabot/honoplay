@@ -1,6 +1,6 @@
 ﻿using Honoplay.AdminWebAPI;
 using Honoplay.Common.Constants;
-using Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Extensions;
+using Honoplay.AdminWebAPI.System.Tests.Extensions;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net;
@@ -11,7 +11,7 @@ using Honoplay.Application.Professions.Commands.CreateProfession;
 using Honoplay.Application.Professions.Queries.GetProfessionsList;
 using Xunit;
 
-namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.Controllers
 {
     public class ProfessionControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {

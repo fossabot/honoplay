@@ -3,7 +3,7 @@ using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using System;
 
-namespace Honoplay.TrainerWebAPI.System.Tests.IntegrationTests
+namespace Honoplay.TrainerWebAPI.System.Tests
 {
     public static class SeedData
     {

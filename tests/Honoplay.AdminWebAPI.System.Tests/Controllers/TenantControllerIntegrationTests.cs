@@ -2,7 +2,7 @@ using Honoplay.AdminWebAPI;
 using Honoplay.Application.Tenants.Commands.CreateTenant;
 using Honoplay.Application.Tenants.Commands.UpdateTenant;
 using Honoplay.Common.Constants;
-using Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Extensions;
+using Honoplay.AdminWebAPI.System.Tests.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.Controllers
 {
     public class TenantControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {

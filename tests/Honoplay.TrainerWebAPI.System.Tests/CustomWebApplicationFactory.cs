@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace Honoplay.TrainerWebAPI.System.Tests.IntegrationTests
+namespace Honoplay.TrainerWebAPI.System.Tests
 {
     public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<Startup>
     {

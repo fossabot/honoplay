@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.TrainerWebAPI.System.Tests.IntegrationTests.Controllers
+namespace Honoplay.TrainerWebAPI.System.Tests.Controllers
 {
     public class TrainerUserControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {

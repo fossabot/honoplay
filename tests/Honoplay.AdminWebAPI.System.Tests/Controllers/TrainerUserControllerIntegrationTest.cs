@@ -3,7 +3,7 @@ using Honoplay.Application.TrainerUsers.Commands.CreateTrainerUser;
 using Honoplay.Application.TrainerUsers.Commands.UpdateTrainerUser;
 using Honoplay.Application.TrainerUsers.Queries.GetTrainerUsersList;
 using Honoplay.Common.Constants;
-using Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Extensions;
+using Honoplay.AdminWebAPI.System.Tests.Extensions;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.Controllers
 {
     public class TrainerUserControllerIntegrationTest : IClassFixture<CustomWebApplicationFactory<Startup>>
     {

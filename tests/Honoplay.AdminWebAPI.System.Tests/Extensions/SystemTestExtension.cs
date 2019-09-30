@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Extensions
+namespace Honoplay.AdminWebAPI.System.Tests.Extensions
 {
     public static class SystemTestExtension
     {

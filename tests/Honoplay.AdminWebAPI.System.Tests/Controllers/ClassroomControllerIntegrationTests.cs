@@ -1,4 +1,4 @@
-﻿using Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Extensions;
+﻿using Honoplay.AdminWebAPI.System.Tests.Extensions;
 using Honoplay.Application.Classrooms.Commands.CreateClassroom;
 using Honoplay.Application.Classrooms.Commands.UpdateClassroom;
 using Honoplay.Application.Classrooms.Queries.GetClassroomsList;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.Controllers
 {
     public class ClassroomControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
