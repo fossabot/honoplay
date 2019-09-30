@@ -14,6 +14,7 @@ import {
 
 import Classroom from "./Pages/Classroom";
 import Logout from "./Helpers/Logout";
+import decoder from "jwt-decode";
 
 const CheckTokenExp = token => {
   if (!token) return false;
