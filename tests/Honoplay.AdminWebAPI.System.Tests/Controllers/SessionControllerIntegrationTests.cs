@@ -1,55 +1,51 @@
 ﻿using Honoplay.AdminWebAPI;
-using Honoplay.Application.Trainings.Commands.CreateTraining;
-using Honoplay.Application.Trainings.Commands.UpdateTraining;
-using Honoplay.Application.Trainings.Queries.GetTrainingsList;
+using Honoplay.Application.Sessions.Commands.CreateSession;
+using Honoplay.Application.Sessions.Commands.UpdateSession;
 using Honoplay.Common.Constants;
-using Honoplay.System.Tests.Extensions;
+using Honoplay.AdminWebAPI.System.Tests.Extensions;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Honoplay.Application.Sessions.Queries.GetSessionsList;
 using Xunit;
 
-namespace Honoplay.System.Tests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.Controllers
 {
-    public class TrainingControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
+    public class SessionControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
         private readonly CustomWebApplicationFactory<Startup> _factory;
 
-        public TrainingControllerIntegrationTests(CustomWebApplicationFactory<Startup> factory)
+        public SessionControllerIntegrationTests(CustomWebApplicationFactory<Startup> factory)
         {
             _factory = factory;
         }
 
         [Fact]
-        public async Task CanCreateTrainingAsync()
+        public async Task CanCreateSessionAsync()
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var createTrainingCommand = new CreateTrainingCommand
+            var createSessionCommand = new CreateSessionCommand
             {
-                CreateTrainingModels = new List<CreateTrainingCommandModel>
+                CreateSessionModels = new List<CreateSessionCommandModel>
                 {
-                    new CreateTrainingCommandModel
+                    new CreateSessionCommandModel
                     {
-                        TrainingSeriesId = 1,
-                        Name = "trainingSample",
-                        Description = "sampleDescription",
-                        TrainingCategoryId = 1,
-                        BeginDateTime = DateTimeOffset.Now,
-                        EndDateTime = DateTimeOffset.Now.AddDays(5)
+                        ClassroomId = 1,
+                        GameId = 1,
+                        Name = "test"
                     }
                 }
             };
 
-            var serializedTrainingCommand = JsonConvert.SerializeObject(createTrainingCommand);
+            var serializedSessionCommand = JsonConvert.SerializeObject(createSessionCommand);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await authorizedClient.PostAsync(requestUri: "api/Training",
-                content: new StringContent(content: serializedTrainingCommand,
+            var httpResponse = await authorizedClient.PostAsync(requestUri: "/Session",
+                content: new StringContent(content: serializedSessionCommand,
                     encoding: Encoding.UTF8,
                     mediaType: StringConstants.ApplicationJson));
 
@@ -61,25 +57,22 @@ namespace Honoplay.System.Tests.Controllers
         }
 
         [Fact]
-        public async Task CanUpdateTraining()
+        public async Task CanUpdateSession()
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var updateTrainingCommand = new UpdateTrainingCommand
+            var updateSessionCommand = new UpdateSessionCommand
             {
                 Id = 1,
-                TrainingSeriesId = 1,
-                Name = "trainingSample",
-                Description = "sampleDescription",
-                TrainingCategoryId = 1,
-                BeginDateTime = DateTimeOffset.Now,
-                EndDateTime = DateTimeOffset.Now.AddDays(5)
+                GameId = 1,
+                ClassroomId = 1,
+                Name = "test"
             };
 
-            var serializedUpdateCommand = JsonConvert.SerializeObject(updateTrainingCommand);
+            var serializedUpdateCommand = JsonConvert.SerializeObject(updateSessionCommand);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await authorizedClient.PutAsync(requestUri: "api/Training",
+            var httpResponse = await authorizedClient.PutAsync(requestUri: "/Session",
                     content: new StringContent(content: serializedUpdateCommand,
                     encoding: Encoding.UTF8,
                     mediaType: StringConstants.ApplicationJson));
@@ -92,39 +85,40 @@ namespace Honoplay.System.Tests.Controllers
         }
 
         [Fact]
-        public async Task CanGetTrainingsList()
+        public async Task CanGetSessionsList()
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var getTrainingsListQuery = new GetTrainingsListQueryModel
+            var getSessionsListQuery = new GetSessionsListQueryModel
             {
                 Skip = 0,
                 Take = 10
             };
 
             var httpResponse = await authorizedClient.GetAsync(
-                requestUri: $"api/Training?Skip={getTrainingsListQuery.Skip}&Take={getTrainingsListQuery.Take}");
+                requestUri: $"/Session?Skip={getSessionsListQuery.Skip}&Take={getSessionsListQuery.Take}");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
         }
 
         [Fact]
-        public async Task CanGetTrainingDetail()
+        public async Task CanGetSessionDetail()
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await authorizedClient.GetAsync(requestUri: $"api/Training/1");
+            var httpResponse = await authorizedClient.GetAsync(requestUri: $"/Session/1");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
         }
+
         [Fact]
-        public async Task CanGetTrainingsByTrainingSeriesId()
+        public async Task CanGetSessionsListByClassroomId()
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await authorizedClient.GetAsync(requestUri: $"api/TrainingSeries/1/Training");
+            var httpResponse = await authorizedClient.GetAsync(requestUri: "/Classroom/1/Session");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);

@@ -3,7 +3,7 @@ using Honoplay.Application.Questions.Commands.CreateQuestion;
 using Honoplay.Application.Questions.Commands.UpdateQuestion;
 using Honoplay.Application.Questions.Queries.GetQuestionsList;
 using Honoplay.Common.Constants;
-using Honoplay.System.Tests.Extensions;
+using Honoplay.AdminWebAPI.System.Tests.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.System.Tests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.Controllers
 {
     public class QuestionControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
@@ -37,7 +37,7 @@ namespace Honoplay.System.Tests.Controllers
             var serializedQuestionCommand = JsonConvert.SerializeObject(createQuestionCommand);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await authorizedClient.PostAsync(requestUri: "api/Question",
+            var httpResponse = await authorizedClient.PostAsync(requestUri: "/Question",
                 content: new StringContent(content: serializedQuestionCommand,
                     encoding: Encoding.UTF8,
                     mediaType: StringConstants.ApplicationJson));
@@ -64,7 +64,7 @@ namespace Honoplay.System.Tests.Controllers
             var serializedUpdateCommand = JsonConvert.SerializeObject(updateQuestionCommand);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await authorizedClient.PutAsync(requestUri: "api/Question",
+            var httpResponse = await authorizedClient.PutAsync(requestUri: "/Question",
                     content: new StringContent(content: serializedUpdateCommand,
                     encoding: Encoding.UTF8,
                     mediaType: StringConstants.ApplicationJson));
@@ -88,7 +88,7 @@ namespace Honoplay.System.Tests.Controllers
             };
 
             var httpResponse = await authorizedClient.GetAsync(
-                requestUri: $"api/Question?Skip={getQuestionsListQuery.Skip}&Take={getQuestionsListQuery.Take}");
+                requestUri: $"/Question?Skip={getQuestionsListQuery.Skip}&Take={getQuestionsListQuery.Take}");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
@@ -99,7 +99,7 @@ namespace Honoplay.System.Tests.Controllers
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await authorizedClient.GetAsync(requestUri: $"api/Question/1");
+            var httpResponse = await authorizedClient.GetAsync(requestUri: $"/Question/1");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);

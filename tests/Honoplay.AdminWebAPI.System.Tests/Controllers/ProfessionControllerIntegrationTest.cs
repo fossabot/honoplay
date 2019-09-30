@@ -1,42 +1,41 @@
 ﻿using Honoplay.AdminWebAPI;
-using Honoplay.Application.Departments.Commands.CreateDepartment;
-using Honoplay.Application.Departments.Queries.GetDepartmentsList;
 using Honoplay.Common.Constants;
-using Honoplay.System.Tests.Extensions;
+using Honoplay.AdminWebAPI.System.Tests.Extensions;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Honoplay.Application.Professions.Commands.CreateProfession;
+using Honoplay.Application.Professions.Queries.GetProfessionsList;
 using Xunit;
 
-namespace Honoplay.System.Tests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.Controllers
 {
-
-    public class DepartmentControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
+    public class ProfessionControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
         private readonly CustomWebApplicationFactory<Startup> _factory;
 
-        public DepartmentControllerIntegrationTests(CustomWebApplicationFactory<Startup> factory)
+        public ProfessionControllerIntegrationTests(CustomWebApplicationFactory<Startup> factory)
         {
             _factory = factory;
         }
         [Fact]
-        public async Task CanCreateDepartment()
+        public async Task CanCreateProfession()
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
             //Init model
-            var command = new CreateDepartmentCommand
+            var command = new CreateProfessionCommand
             {
-                Departments = new List<string> { "Tasarim" }
+                Professions = new List<string> { "Tasarim" }
             };
 
             var json = JsonConvert.SerializeObject(command);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await client.PostAsync(requestUri: "api/Department", content: new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await client.PostAsync(requestUri: "/Profession", content: new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
 
@@ -46,18 +45,18 @@ namespace Honoplay.System.Tests.Controllers
 
 
         [Fact]
-        public async Task CanGetDepartmentsList()
+        public async Task CanGetProfessionsList()
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var query = new GetDepartmentsListQueryModel
+            var query = new GetProfessionsListQueryModel
             {
                 Skip = 0,
                 Take = 10
             };
 
-            //Get departments request
-            var httpResponse = await client.GetAsync(requestUri: $"api/Department?Skip={query.Skip}&Take={query.Take}");
+            //Get professions request
+            var httpResponse = await client.GetAsync(requestUri: $"/Profession?Skip={query.Skip}&Take={query.Take}");
 
             httpResponse.EnsureSuccessStatusCode();
 

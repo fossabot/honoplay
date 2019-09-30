@@ -1,51 +1,51 @@
-﻿using System.Collections.Generic;
-using Honoplay.AdminWebAPI;
-using Honoplay.Application.Options.Commands.CreateOption;
-using Honoplay.Application.Options.Commands.UpdateOption;
-using Honoplay.Application.Options.Queries.GetOptionsList;
+﻿using Honoplay.AdminWebAPI.System.Tests.Extensions;
+using Honoplay.Application.Classrooms.Commands.CreateClassroom;
+using Honoplay.Application.Classrooms.Commands.UpdateClassroom;
+using Honoplay.Application.Classrooms.Queries.GetClassroomsList;
 using Honoplay.Common.Constants;
-using Honoplay.System.Tests.Extensions;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.System.Tests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.Controllers
 {
-    public class OptionControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
+    public class ClassroomControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
         private readonly CustomWebApplicationFactory<Startup> _factory;
 
-        public OptionControllerIntegrationTests(CustomWebApplicationFactory<Startup> factory)
+        public ClassroomControllerIntegrationTests(CustomWebApplicationFactory<Startup> factory)
         {
             _factory = factory;
         }
 
         [Fact]
-        public async Task CanCreateOptionAsync()
+        public async Task CanCreateClassroomAsync()
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var createOptionCommand = new CreateOptionCommand
+            var createClassroomCommand = new CreateClassroomCommand
             {
-                CreateOptionModels = new List<CreateOptionCommandModel>
+                CreateClassroomModels = new List<CreateClassroomCommandModel>
                 {
-                    new CreateOptionCommandModel
+                    new CreateClassroomCommandModel
                     {
-                        QuestionId = 1,
-                        Text = "option1",
-                        VisibilityOrder = 1
+                        TrainerUserId = 1,
+                        TrainingId = 1,
+                        TraineeUsersId = new List<int>{1},
+                        Name = "test"
                     }
                 }
             };
 
-            var serializedOptionCommand = JsonConvert.SerializeObject(createOptionCommand);
+            var serializedClassroomCommand = JsonConvert.SerializeObject(createClassroomCommand);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await authorizedClient.PostAsync(requestUri: "api/Option",
-                content: new StringContent(content: serializedOptionCommand,
+            var httpResponse = await authorizedClient.PostAsync(requestUri: "/Classroom",
+                content: new StringContent(content: serializedClassroomCommand,
                     encoding: Encoding.UTF8,
                     mediaType: StringConstants.ApplicationJson));
 
@@ -57,22 +57,22 @@ namespace Honoplay.System.Tests.Controllers
         }
 
         [Fact]
-        public async Task CanUpdateOption()
+        public async Task CanUpdateClassroom()
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var updateOptionCommand = new UpdateOptionCommand
+            var updateClassroomCommand = new UpdateClassroomCommand
             {
                 Id = 1,
-                Text = "Yukaridakilerden hangisi aslinda asagidadir?",
-                VisibilityOrder = 321,
-                QuestionId = 1
+                TrainerUserId = 1,
+                TrainingId = 1,
+                Name = "test"
             };
 
-            var serializedUpdateCommand = JsonConvert.SerializeObject(updateOptionCommand);
+            var serializedUpdateCommand = JsonConvert.SerializeObject(updateClassroomCommand);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await authorizedClient.PutAsync(requestUri: "api/Option",
+            var httpResponse = await authorizedClient.PutAsync(requestUri: "/Classroom",
                     content: new StringContent(content: serializedUpdateCommand,
                     encoding: Encoding.UTF8,
                     mediaType: StringConstants.ApplicationJson));
@@ -85,39 +85,39 @@ namespace Honoplay.System.Tests.Controllers
         }
 
         [Fact]
-        public async Task CanGetOptionsList()
+        public async Task CanGetClassroomsList()
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var getOptionsListQuery = new GetOptionsListQueryModel
+            var getClassroomsListQuery = new GetClassroomsListQueryModel
             {
                 Skip = 0,
                 Take = 10
             };
 
             var httpResponse = await authorizedClient.GetAsync(
-                requestUri: $"api/Option?Skip={getOptionsListQuery.Skip}&Take={getOptionsListQuery.Take}");
+                requestUri: $"/Classroom?Skip={getClassroomsListQuery.Skip}&Take={getClassroomsListQuery.Take}");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
         }
 
         [Fact]
-        public async Task CanGetOptionDetail()
+        public async Task CanGetClassroomDetail()
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await authorizedClient.GetAsync(requestUri: $"api/Option/1");
+            var httpResponse = await authorizedClient.GetAsync(requestUri: "/Classroom/1");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
         }
         [Fact]
-        public async Task CanGetOptionsListByQuestionIdDetail()
+        public async Task CanGetClassroomsListByTrainingId()
         {
             var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await authorizedClient.GetAsync(requestUri: $"api/Question/1/Option");
+            var httpResponse = await authorizedClient.GetAsync(requestUri: "/Training/1/Classroom");
 
             httpResponse.EnsureSuccessStatusCode();
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);

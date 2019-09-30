@@ -2,7 +2,7 @@ using Honoplay.AdminWebAPI;
 using Honoplay.Application.Tenants.Commands.CreateTenant;
 using Honoplay.Application.Tenants.Commands.UpdateTenant;
 using Honoplay.Common.Constants;
-using Honoplay.System.Tests.Extensions;
+using Honoplay.AdminWebAPI.System.Tests.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.System.Tests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.Controllers
 {
     public class TenantControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
@@ -38,7 +38,7 @@ namespace Honoplay.System.Tests.Controllers
 
             var json = JsonConvert.SerializeObject(command);
 
-            var httpResponse = await client.PostAsync("api/Tenant", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await client.PostAsync("/Tenant", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -64,7 +64,7 @@ namespace Honoplay.System.Tests.Controllers
             var json = JsonConvert.SerializeObject(command);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await client.PutAsync("api/Tenant", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await client.PutAsync("/Tenant", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -80,7 +80,7 @@ namespace Honoplay.System.Tests.Controllers
 
             // The endpoint or route of the controller action.
 
-            var httpResponse = await client.GetAsync($"api/Tenant/{Guid.Parse("f3878709-3cba-4ed3-4c03-08d70375909d")}");
+            var httpResponse = await client.GetAsync($"/Tenant/{Guid.Parse("f3878709-3cba-4ed3-4c03-08d70375909d")}");
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -96,7 +96,7 @@ namespace Honoplay.System.Tests.Controllers
 
             // The endpoint or route of the controller action.
 
-            var httpResponse = await client.GetAsync($"api/Tenant/{Guid.NewGuid()}");
+            var httpResponse = await client.GetAsync($"/Tenant/{Guid.NewGuid()}");
 
             Assert.False(httpResponse.IsSuccessStatusCode);
             Assert.Equal(HttpStatusCode.NotFound, httpResponse.StatusCode);
@@ -107,7 +107,7 @@ namespace Honoplay.System.Tests.Controllers
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await client.GetAsync($"api/Tenant?skip=0&take=10");
+            var httpResponse = await client.GetAsync($"/Tenant?skip=0&take=10");
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();

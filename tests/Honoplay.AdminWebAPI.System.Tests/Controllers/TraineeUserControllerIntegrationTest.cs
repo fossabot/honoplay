@@ -2,7 +2,7 @@
 using Honoplay.Application.TraineeUsers.Commands.CreateTraineeUser;
 using Honoplay.Application.TraineeUsers.Commands.UpdateTraineeUser;
 using Honoplay.Common.Constants;
-using Honoplay.System.Tests.Extensions;
+using Honoplay.AdminWebAPI.System.Tests.Extensions;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
@@ -10,7 +10,7 @@ using System.Text;
 using Honoplay.Application.TraineeUsers.Queries.GetTraineeUsersList;
 using Xunit;
 
-namespace Honoplay.System.Tests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.Controllers
 {
     public class TraineeUserControllerIntegrationTest : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
@@ -41,7 +41,7 @@ namespace Honoplay.System.Tests.Controllers
 
             var json = JsonConvert.SerializeObject(command);
 
-            var httpResponse = await client.PostAsync("api/TraineeUser", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await client.PostAsync("/TraineeUser", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -73,7 +73,7 @@ namespace Honoplay.System.Tests.Controllers
             var json = JsonConvert.SerializeObject(command);
 
             // The endpoint or route of the controller action.
-            var httpResponse = await client.PutAsync("api/TraineeUser", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await client.PutAsync("/TraineeUser", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -94,7 +94,7 @@ namespace Honoplay.System.Tests.Controllers
             };
 
             // The endpoint or route of the controller action.
-            var httpResponse = await client.GetAsync(requestUri: $"api/TraineeUser?Skip={getTraineeUserListQueryModel.Skip}&Take={getTraineeUserListQueryModel.Take}");
+            var httpResponse = await client.GetAsync(requestUri: $"/TraineeUser?Skip={getTraineeUserListQueryModel.Skip}&Take={getTraineeUserListQueryModel.Take}");
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -115,7 +115,7 @@ namespace Honoplay.System.Tests.Controllers
             };
 
             // The endpoint or route of the controller action.
-            var httpResponse = await client.GetAsync(requestUri: $"api/TraineeUser?Skip={getTraineeUserListQueryModel.Skip}&Take={getTraineeUserListQueryModel.Take}");
+            var httpResponse = await client.GetAsync(requestUri: $"/TraineeUser?Skip={getTraineeUserListQueryModel.Skip}&Take={getTraineeUserListQueryModel.Take}");
 
             // Must be unsuccessful.
             Assert.False(httpResponse.IsSuccessStatusCode);
@@ -127,8 +127,8 @@ namespace Honoplay.System.Tests.Controllers
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            //Request to api/TraineeUser/1 endpoint
-            var httpResponse = await client.GetAsync("api/TraineeUser/1");
+            //Request to /TraineeUser/1 endpoint
+            var httpResponse = await client.GetAsync("/TraineeUser/1");
 
             //Must be successful.
             Assert.True(httpResponse.IsSuccessStatusCode);

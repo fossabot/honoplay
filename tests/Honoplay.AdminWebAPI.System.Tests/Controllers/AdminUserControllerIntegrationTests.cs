@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.System.Tests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.Controllers
 {
     public class AdminUserControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
@@ -35,7 +35,7 @@ namespace Honoplay.System.Tests.Controllers
 
             var json = JsonConvert.SerializeObject(command);
 
-            var httpResponse = await _client.PostAsync("api/AdminUser/Register", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await _client.PostAsync("/AdminUser/Register", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -56,7 +56,7 @@ namespace Honoplay.System.Tests.Controllers
 
             var json = JsonConvert.SerializeObject(command);
 
-            var httpResponse = await _client.PostAsync("api/AdminUser/Authenticate", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await _client.PostAsync("/AdminUser/Authenticate", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
