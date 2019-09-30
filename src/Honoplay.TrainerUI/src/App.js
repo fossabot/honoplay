@@ -18,7 +18,6 @@ import Logout from "./Helpers/Logout";
 const CheckTokenExp = token => {
   if (!token) return false;
   const expireDate = decoder(token).exp * 1000;
-
   if (expireDate < Date.now()) {
     return true;
   }
@@ -26,6 +25,15 @@ const CheckTokenExp = token => {
 };
 
 class App extends React.Component {
+  componentDidUpdate() {
+    let token = localStorage.getItem("token");
+    if (CheckTokenExp(token)) {
+      this.props.postTrainerRenewToken(token);
+    }
+    if (this.props.userTrainerRenewToken) {
+      localStorage.setItem("token", token);
+    }
+  }
   render() {
     return (
       <React.Fragment>
@@ -48,7 +56,10 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   const { userTrainerToken } = state.trainerUserToken;
-  return { userTrainerToken };
+
+  const { userTrainerRenewToken } = state.userTraineeRenewToken;
+
+  return { userTrainerToken, userTrainerRenewToken };
 };
 
 export default connect(
