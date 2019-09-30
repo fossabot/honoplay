@@ -1,5 +1,5 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace Honoplay.Domain.Entities
@@ -19,6 +19,7 @@ namespace Honoplay.Domain.Entities
         public int Gender { get; set; }
         public int WorkingStatusId { get; set; }
         public int DepartmentId { get; set; }
+        public int? TraineeGroupId { get; set; }
 
         public byte[] Password { get; set; }
         public byte[] PasswordSalt { get; set; }
@@ -31,5 +32,7 @@ namespace Honoplay.Domain.Entities
         public WorkingStatus WorkingStatus { get; set; }
         [JsonIgnore]
         public Department Department { get; set; }
+        [JsonIgnore]
+        public TraineeGroup TraineeGroup { get; set; }
     }
 }

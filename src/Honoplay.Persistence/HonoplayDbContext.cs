@@ -22,6 +22,7 @@ namespace Honoplay.Persistence
         public DbSet<TraineeUser> TraineeUsers { get; set; }
         public DbSet<TrainerUser> TrainerUsers { get; set; }
         public DbSet<Profession> Professions { get; set; }
+        public DbSet<TraineeGroup> TraineeGroups { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Option> Options { get; set; }
         public DbSet<TrainingSeries> TrainingSerieses { get; set; }
