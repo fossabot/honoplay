@@ -2,7 +2,7 @@
 using Honoplay.Application.Sessions.Commands.CreateSession;
 using Honoplay.Application.Sessions.Commands.UpdateSession;
 using Honoplay.Common.Constants;
-using Honoplay.System.Tests.Extensions;
+using Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Extensions;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using Honoplay.Application.Sessions.Queries.GetSessionsList;
 using Xunit;
 
-namespace Honoplay.System.Tests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
 {
     public class SessionControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {

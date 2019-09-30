@@ -1,14 +1,13 @@
-﻿using System;
-using Honoplay.AdminWebAPI;
-using Honoplay.Persistence;
+﻿using Honoplay.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
 
-namespace Honoplay.System.Tests
+namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests
 {
     public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<Startup>
     {

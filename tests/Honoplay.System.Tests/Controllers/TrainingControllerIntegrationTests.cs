@@ -3,7 +3,7 @@ using Honoplay.Application.Trainings.Commands.CreateTraining;
 using Honoplay.Application.Trainings.Commands.UpdateTraining;
 using Honoplay.Application.Trainings.Queries.GetTrainingsList;
 using Honoplay.Common.Constants;
-using Honoplay.System.Tests.Extensions;
+using Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.System.Tests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
 {
     public class TrainingControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {

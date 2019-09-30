@@ -2,7 +2,7 @@
 using Honoplay.Application.Departments.Commands.CreateDepartment;
 using Honoplay.Application.Departments.Queries.GetDepartmentsList;
 using Honoplay.Common.Constants;
-using Honoplay.System.Tests.Extensions;
+using Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Extensions;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.System.Tests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
 {
 
     public class DepartmentControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>

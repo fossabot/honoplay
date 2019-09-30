@@ -3,7 +3,7 @@ using Honoplay.Application.Questions.Commands.CreateQuestion;
 using Honoplay.Application.Questions.Commands.UpdateQuestion;
 using Honoplay.Application.Questions.Queries.GetQuestionsList;
 using Honoplay.Common.Constants;
-using Honoplay.System.Tests.Extensions;
+using Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -12,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.System.Tests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
 {
     public class QuestionControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {

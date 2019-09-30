@@ -8,11 +8,11 @@ using Honoplay.Application.TrainingSerieses.Commands.CreateTrainingSeries;
 using Honoplay.Application.TrainingSerieses.Commands.UpdateTrainingSeries;
 using Honoplay.Application.TrainingSerieses.Queries.GetTrainingSeriesesList;
 using Honoplay.Common.Constants;
-using Honoplay.System.Tests.Extensions;
+using Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Extensions;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace Honoplay.System.Tests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.IntegrationTests.Controllers
 {
     public class TrainingSeriesControllerIntegrationTests : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
