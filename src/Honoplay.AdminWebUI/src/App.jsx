@@ -21,7 +21,6 @@ import decoder from 'jwt-decode';
 
 const CheckTokenExp = token => {
   if (!token) return false;
-
   const expireDate = decoder(token).exp * 1000;
 
   if (expireDate < Date.now()) {

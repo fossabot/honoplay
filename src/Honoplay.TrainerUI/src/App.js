@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Router as BrowserRouter, Route, Switch } from "react-router-dom";
 import History from "./Helpers/History";
 import Login from "./Pages/Login";
@@ -8,11 +8,22 @@ import JoinCode from "./Pages/JoinCode";
 import { connect } from "react-redux";
 import {
   fethTrainerUserToken,
-  fetchTrainingList
+  fetchTrainingList,
+  postTrainerRenewToken
 } from "@omegabigdata/honoplay-redux-helper/Src/actions/TrainerUser";
 
 import Classroom from "./Pages/Classroom";
 import Logout from "./Helpers/Logout";
+
+const CheckTokenExp = token => {
+  if (!token) return false;
+  const expireDate = decoder(token).exp * 1000;
+
+  if (expireDate < Date.now()) {
+    return true;
+  }
+  return false;
+};
 
 class App extends React.Component {
   render() {
@@ -42,5 +53,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { fethTrainerUserToken, fetchTrainingList }
+  { fethTrainerUserToken, fetchTrainingList, postTrainerRenewToken }
 )(App);
