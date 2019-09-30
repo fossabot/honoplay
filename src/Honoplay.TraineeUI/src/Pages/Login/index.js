@@ -10,7 +10,7 @@ class Login extends Component {
       <PageWrapper>
         <div className="col-sm-7">
           <img src={Logo} className="img-fluid" />
-          <p class="mt-3 mb-5">
+          <p className="mt-3 mb-5">
             <b>Omega Bigdata</b> Web Portalına Hoş Geldiniz.
           </p>
 

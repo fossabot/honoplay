@@ -1241,21 +1241,21 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@omegabigdata/honoplay-api-helper-node@^0.4.4":
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-api-helper-node/-/honoplay-api-helper-node-0.4.4.tgz#0d4f3470ac0bd64328a7c639a5a22cb090176008"
-  integrity sha512-fHSXiAoGY8x+e/cRmIotxFyFrjzZ6+9HdgP5KldnPQzM0zYfNuuOs6tXIIJ10en6M7r6PPwPNlEsPVMEUJJKLw==
+"@omegabigdata/honoplay-api-helper-node@^0.4.5":
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-api-helper-node/-/honoplay-api-helper-node-0.4.5.tgz#1f7c4b5bde73aab2938926a59934461449974d73"
+  integrity sha512-uEVFsDT6mfnwQbuP+SUbo9BOGaukpJCWKlLDFH8pnVUWi/wQtOUxgTj6y/QBhD8s4iRV3Q6g+99Nt76AQ5OD7w==
   dependencies:
     axios "^0.18.0"
     axios-retry "^3.1.2"
     chai-http "^4.3.0"
 
-"@omegabigdata/honoplay-redux-helper@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-redux-helper/-/honoplay-redux-helper-0.6.0.tgz#07bbc1bdd0cc594f4c872c7003d9df113d6ccda0"
-  integrity sha512-pUgtv0RDpkaL0pc7otQ/3DhU3Qua2oc3a6ElMFMXN25pe9OthRMyYpz6ayLdw59F+6J0tUvRHUa8WHG2daLU7g==
+"@omegabigdata/honoplay-redux-helper@^0.6.6":
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-redux-helper/-/honoplay-redux-helper-0.6.6.tgz#7514d48407944c4ed5589de9ed151033ebca3cf1"
+  integrity sha512-IkRRSXoFH80OlIvUqURVYDARSWLwoRtpk4xUQfsXE6jxSYfVgtAbIazCbkEnEqtpM6kxyv+55fEZy0Xds+ClGg==
   dependencies:
-    "@omegabigdata/honoplay-api-helper-node" "^0.4.4"
+    "@omegabigdata/honoplay-api-helper-node" "^0.4.5"
     redux "^4.0.1"
     redux-thunk "^2.3.0"
 
@@ -6228,6 +6228,11 @@ jsx-ast-utils@^2.1.0, jsx-ast-utils@^2.2.1:
   dependencies:
     array-includes "^3.0.3"
     object.assign "^4.1.0"
+
+jwt-decode@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
+  integrity sha1-fYa9VmefWM5qhHBKZX3TkruoGnk=
 
 killable@^1.0.0, killable@^1.0.1:
   version "1.0.1"
