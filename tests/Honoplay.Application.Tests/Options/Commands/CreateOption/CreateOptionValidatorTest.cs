@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using FluentValidation;
-using FluentValidation.TestHelper;
+﻿using FluentValidation;
 using Honoplay.Application.Options.Commands.CreateOption;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Options.Commands.CreateOption
