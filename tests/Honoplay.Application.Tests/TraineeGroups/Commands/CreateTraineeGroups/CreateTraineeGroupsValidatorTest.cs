@@ -14,7 +14,7 @@ namespace Honoplay.Application.Tests.TraineeGroups.Commands.CreateTraineeGroup
         [Fact]
         public void ShouldBeValid()
         {
-            createTraineeGroupCommandModels = new List<CreateTraineeGroupCommandModel> { Name = "yazilim", Name = "tasarim" };
+            var createTraineeGroupCommandModels = new List<CreateTraineeGroupCommandModel> { Name = "yazilim", Name = "tasarim" };
 
             Assert.True(_validator.Validate(new CreateTraineeGroupCommand { CreateTraineeGroupCommandModels = createTraineeGroupCommandModels }).IsValid);
         }
