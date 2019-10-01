@@ -8,6 +8,7 @@ import Typography from '../../components/Typography/TypographyComponent';
 import Modal from '../../components/Modal/ModalComponent';
 import Card from '../../components/Card/CardComponents';
 import TrainingseriesCreate from './TrainingSeriesCreate';
+import CardDeneme from '../../components/CardDeneme';
 
 import { connect } from 'react-redux';
 import { fetchTrainingSeriesList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingSeries';
@@ -62,41 +63,42 @@ class TrainingSeries extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div className={classes.root}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={12}>
-            <Typography pageHeader={translate('TrainingSeries')} />
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            <CardButton
-              cardName={translate('CreateATrainingSeries')}
-              cardDescription={translate(
-                'YouCanCreateTrainingSetsAndCollectDifferentTrainingsInOneField'
-              )}
-              onClick={this.handleClickOpenDialog}
-              iconName="graduation-cap"
-            />
-          </Grid>
-          <Grid item xs={12} sm={9}>
-            <Card
-              data={trainingSerieses}
-              url="trainingseriesdetail"
-              id={id => {
-                if (id) {
-                  localStorage.setItem('trainingSeriesId', id);
-                }
-              }}
-            />
-          </Grid>
-        </Grid>
-        <Modal
-          titleName={translate('CreateATrainingSeries')}
-          open={openDialog}
-          handleClose={this.handleCloseDialog}
-        >
-          <TrainingseriesCreate />
-        </Modal>
-      </div>
+      // <div className={classes.root}>
+      //   <Grid container spacing={3}>
+      //     <Grid item xs={12} sm={12}>
+      //       <Typography pageHeader={translate('TrainingSeries')} />
+      //     </Grid>
+      //     <Grid item xs={12} sm={3}>
+      //       <CardButton
+      //         cardName={translate('CreateATrainingSeries')}
+      //         cardDescription={translate(
+      //           'YouCanCreateTrainingSetsAndCollectDifferentTrainingsInOneField'
+      //         )}
+      //         onClick={this.handleClickOpenDialog}
+      //         iconName="graduation-cap"
+      //       />
+      //     </Grid>
+      //     <Grid item xs={12} sm={9}>
+      //       <Card
+      //         data={trainingSerieses}
+      //         url="trainingseriesdetail"
+      //         id={id => {
+      //           if (id) {
+      //             localStorage.setItem('trainingSeriesId', id);
+      //           }
+      //         }}
+      //       />
+      //     </Grid>
+      //   </Grid>
+      //   <Modal
+      //     titleName={translate('CreateATrainingSeries')}
+      //     open={openDialog}
+      //     handleClose={this.handleCloseDialog}
+      //   >
+      //     <TrainingseriesCreate />
+      //   </Modal>
+      // </div>
+      <CardDeneme data={this.state.trainingSerieses} />
     );
   }
 }
