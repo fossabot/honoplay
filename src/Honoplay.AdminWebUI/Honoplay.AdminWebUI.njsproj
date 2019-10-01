@@ -46,6 +46,7 @@
     <Content Include="public\index.html" />
     <Content Include="src\components\Button\ButtonComponent.js" />
     <Content Include="src\components\Button\Style.js" />
+    <Content Include="src\components\CardDeneme.js" />
     <Content Include="src\components\Card\CardButton.js" />
     <Content Include="src\components\Card\CardComponents.js" />
     <Content Include="src\components\Card\InfoCard.js" />
