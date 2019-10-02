@@ -16,6 +16,7 @@ namespace Honoplay.Application.TraineeGroups.Commands.UpdateTraineeGroup
     }
     public class UpdateTraineeGroupCommandModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

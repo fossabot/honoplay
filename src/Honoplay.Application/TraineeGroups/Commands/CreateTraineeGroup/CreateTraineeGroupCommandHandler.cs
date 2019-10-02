@@ -29,7 +29,7 @@ namespace Honoplay.Application.TraineeGroups.Commands.CreateTraineeGroup
 
         public async Task<ResponseModel<List<CreateTraineeGroupModel>>> Handle(CreateTraineeGroupCommand request, CancellationToken cancellationToken)
         {
-            var redisKey = $"TraineeGroupsWithQuestionByTenantId{request.TenantId}";
+            var redisKey = $"TraineeGroupsByTenantId{request.TenantId}";
             var newTraineeGroups = new List<TraineeGroup>();
             var createdTraineeGroups = new List<CreateTraineeGroupModel>();
 
@@ -41,6 +41,7 @@ namespace Honoplay.Application.TraineeGroups.Commands.CreateTraineeGroup
                     {
                         var newTraineeGroup = new TraineeGroup
                         {
+                            TenantId = request.TenantId,
                             CreatedBy = request.CreatedBy,
                             Name = createTraineeGroupModel.Name
                         };

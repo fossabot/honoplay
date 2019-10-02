@@ -1,5 +1,6 @@
 ﻿using FluentValidation.TestHelper;
 using System;
+using Honoplay.Application.TraineeGroups.Queries.GetTraineeGroupDetail;
 using Xunit;
 
 namespace Honoplay.Application.Tests.TraineeGroups.Queries.GetTraineeGroupDetail
@@ -22,7 +23,7 @@ namespace Honoplay.Application.Tests.TraineeGroups.Queries.GetTraineeGroupDetail
         [Fact]
         public void ShouldBeNotValidForNullOrEmpty()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x, 0);
+            _validator.ShouldHaveValidationErrorFor(x => x.Id, 0);
         }
     }
 }

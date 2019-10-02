@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,9 +30,17 @@ namespace Honoplay.Application.TraineeGroups.Commands.UpdateTraineeGroup
 
         public async Task<ResponseModel<List<UpdateTraineeGroupModel>>> Handle(UpdateTraineeGroupCommand request, CancellationToken cancellationToken)
         {
-            var redisKey = $"TraineeGroupsWithQuestionByTenantId{request.TenantId}";
+            var redisKey = $"TraineeGroupsByTenantId{request.TenantId}";
             var updateTraineeGroups = new List<TraineeGroup>();
             var updatedTraineeGroups = new List<UpdateTraineeGroupModel>();
+
+            var redisTraineeGroups = await _cacheService.RedisCacheAsync(redisKey,
+                _ => _context.TraineeGroups
+                    .AsNoTracking()
+                    .Where(x => x.TenantId == request.TenantId)
+                    .ToList()
+                , cancellationToken);
+
 
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
@@ -39,8 +48,12 @@ namespace Honoplay.Application.TraineeGroups.Commands.UpdateTraineeGroup
                 {
                     foreach (var updateTraineeGroupModel in request.UpdateTraineeGroupCommandModels)
                     {
+                        var traineeGroup = redisTraineeGroups.FirstOrDefault(x => x.Id == updateTraineeGroupModel.Id);
+                        if (traineeGroup != null) throw new TransactionException();
+
                         var updateTraineeGroup = new TraineeGroup
                         {
+                            TenantId = request.TenantId,
                             UpdatedBy = request.UpdatedBy,
                             Name = updateTraineeGroupModel.Name
                         };

@@ -78,11 +78,11 @@ namespace Honoplay.Application.Tests.TraineeGroups.Commands.CreateTraineeGroup
                 {
                     new CreateTraineeGroupCommandModel
                     {
-                        Name = "a"
+                        Name = "aqwdasd"
                     },
                     new CreateTraineeGroupCommandModel
                     {
-                        Name = "b"
+                        Name = "basdasd"
                     }
                 }
             };

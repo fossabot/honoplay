@@ -63,7 +63,7 @@ namespace Honoplay.Application.Tests.TraineeGroups.Commands.UpdateTraineeGroup
             var traineeGroup = new TraineeGroup
             {
                 TenantId = tenant.Id,
-                Name = "Test1",
+                Name = "Test1asd",
                 UpdatedBy = adminUser.Id
             };
             context.Add(traineeGroup);
@@ -82,6 +82,7 @@ namespace Honoplay.Application.Tests.TraineeGroups.Commands.UpdateTraineeGroup
         {
             var command = new UpdateTraineeGroupCommand
             {
+                
                 UpdatedBy = _adminUserId,
                 TenantId = _tenantId,
                 UpdateTraineeGroupCommandModels = new List<UpdateTraineeGroupCommandModel>

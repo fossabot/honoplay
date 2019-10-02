@@ -31,11 +31,5 @@ namespace Honoplay.Application.Tests.TraineeGroups.Commands.CreateTraineeGroup
             Assert.True(_validator.Validate(new CreateTraineeGroupCommand { CreateTraineeGroupCommandModels = createTraineeGroupCommandModels }).IsValid);
         }
 
-        [Fact]
-        public void ShouldBeNotValidForNullOrEmpty()
-        {
-            _validator.ShouldHaveValidationErrorFor(x => x.CreateTraineeGroupCommandModels, new List<CreateTraineeGroupCommandModel>());
-        }
-
     }
 }
