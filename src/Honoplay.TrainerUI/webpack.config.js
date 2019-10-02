@@ -1,5 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
+const html = require("html-webpack-plugin");
+const workbox = require("workbox-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.jsx",
@@ -52,5 +54,15 @@ module.exports = {
     publicPath: "http://localhost:3000/dist/",
     hotOnly: true
   },
-  plugins: [new webpack.HotModuleReplacementPlugin()]
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new html({
+      filename: "index.html"
+    }),
+    new workbox.GenerateSW({
+      swDest: "sw.js",
+      skipWaiting: true,
+      clientsClaim: true
+    })
+  ]
 };
