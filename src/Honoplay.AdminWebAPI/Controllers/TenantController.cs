@@ -25,6 +25,9 @@ namespace Honoplay.AdminWebAPI.Controllers
         /// <param name="id">The ID of the desired Tenant</param>
         /// <returns>Tenant </returns>
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ResponseModel<TenantDetailModel>>> Get(Guid id)
         {
             try
@@ -81,6 +84,9 @@ namespace Honoplay.AdminWebAPI.Controllers
         /// <param name="command"> Retrieve the tenants by the Skip and Take.</param>
         /// <returns>Created Tenant</returns>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ResponseModel<CreateTenantModel>>> Post([FromBody]CreateTenantCommand command)
         {
             try

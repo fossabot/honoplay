@@ -1,8 +1,7 @@
-using Honoplay.AdminWebAPI;
+using Honoplay.AdminWebAPI.System.Tests.Extensions;
 using Honoplay.Application.Tenants.Commands.CreateTenant;
 using Honoplay.Application.Tenants.Commands.UpdateTenant;
 using Honoplay.Common.Constants;
-using Honoplay.AdminWebAPI.System.Tests.Extensions;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -31,7 +30,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.Controllers
             var command = new CreateTenantCommand
             {
                 Name = "tenaasdasd1",
-                HostName = "tasdenant",
+                HostName = "qd1e12qwd",
                 Description = "desasc",
                 CreatedBy = 1
             };

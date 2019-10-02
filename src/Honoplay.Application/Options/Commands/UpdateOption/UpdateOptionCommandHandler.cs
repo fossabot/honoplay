@@ -47,7 +47,6 @@ namespace Honoplay.Application.Options.Commands.UpdateOption
                     }
 
                     updateOption.VisibilityOrder = request.VisibilityOrder;
-                    updateOption.QuestionId = request.QuestionId;
                     updateOption.Text = request.Text;
                     updateOption.UpdatedAt = updatedAt;
                     updateOption.UpdatedBy = request.UpdatedBy;
@@ -62,7 +61,6 @@ namespace Honoplay.Application.Options.Commands.UpdateOption
                         CreatedBy = x.CreatedBy,
                         UpdatedBy = x.UpdatedBy,
                         VisibilityOrder = x.VisibilityOrder,
-                        QuestionId = x.QuestionId,
                         Text = x.Text,
                         UpdatedAt = x.UpdatedAt,
                         IsCorrect = x.IsCorrect
