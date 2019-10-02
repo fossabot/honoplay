@@ -90,7 +90,7 @@ class TrainingSeries extends React.Component {
           </Grid>
           <Grid item xs={12} sm={2}>
             <TextField
-              placeholder="Search"
+              placeholder={translate('Search')}
               margin="none"
               onChange={this.onSearchInputChange}
               InputProps={{
