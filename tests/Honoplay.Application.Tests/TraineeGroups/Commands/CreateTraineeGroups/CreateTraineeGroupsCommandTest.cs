@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.TraineeGroups.Commands.CreateTraineeGroup;
 using Xunit;
 
 namespace Honoplay.Application.Tests.TraineeGroups.Commands.CreateTraineeGroup
@@ -75,8 +76,14 @@ namespace Honoplay.Application.Tests.TraineeGroups.Commands.CreateTraineeGroup
                 TenantId = _tenantId,
                 CreateTraineeGroupCommandModels = new List<CreateTraineeGroupCommandModel>
                 {
-                    Name = "a",
-                    Name = "b"
+                    new CreateTraineeGroupCommandModel
+                    {
+                        Name = "a"
+                    },
+                    new CreateTraineeGroupCommandModel
+                    {
+                        Name = "b"
+                    }
                 }
             };
 
@@ -84,7 +91,7 @@ namespace Honoplay.Application.Tests.TraineeGroups.Commands.CreateTraineeGroup
 
             Assert.Null(traineeGroupModel.Errors);
 
-            Assert.True(traineeGroupModel.Items.Single().TraineeGroups.Count > 0);
+            Assert.True(traineeGroupModel.Items.Single().Count > 0);
         }
 
         public void Dispose()

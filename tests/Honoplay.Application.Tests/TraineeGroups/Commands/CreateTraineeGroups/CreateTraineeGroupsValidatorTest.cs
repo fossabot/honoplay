@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using FluentValidation.TestHelper;
+using Honoplay.Application.TraineeGroups.Commands.CreateTraineeGroup;
+using System.Collections.Generic;
 using Xunit;
 
 namespace Honoplay.Application.Tests.TraineeGroups.Commands.CreateTraineeGroup
@@ -14,7 +16,17 @@ namespace Honoplay.Application.Tests.TraineeGroups.Commands.CreateTraineeGroup
         [Fact]
         public void ShouldBeValid()
         {
-            var createTraineeGroupCommandModels = new List<CreateTraineeGroupCommandModel> { Name = "yazilim", Name = "tasarim" };
+            var createTraineeGroupCommandModels = new List<CreateTraineeGroupCommandModel>
+            {
+                new CreateTraineeGroupCommandModel
+                {
+                    Name = "yazilim"
+                },
+                new CreateTraineeGroupCommandModel
+                {
+                    Name = "tasarim"
+                }
+            };
 
             Assert.True(_validator.Validate(new CreateTraineeGroupCommand { CreateTraineeGroupCommandModels = createTraineeGroupCommandModels }).IsValid);
         }
@@ -22,7 +34,7 @@ namespace Honoplay.Application.Tests.TraineeGroups.Commands.CreateTraineeGroup
         [Fact]
         public void ShouldBeNotValidForNullOrEmpty()
         {
-            _validator.ShouldHaveValidationErrorFor(x => x.TraineeGroups, new List<CreateTraineeGroupCommandModel>());
+            _validator.ShouldHaveValidationErrorFor(x => x.CreateTraineeGroupCommandModels, new List<CreateTraineeGroupCommandModel>());
         }
 
     }
