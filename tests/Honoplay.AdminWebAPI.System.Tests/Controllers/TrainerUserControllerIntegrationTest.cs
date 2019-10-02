@@ -3,7 +3,7 @@ using Honoplay.Application.TrainerUsers.Commands.CreateTrainerUser;
 using Honoplay.Application.TrainerUsers.Commands.UpdateTrainerUser;
 using Honoplay.Application.TrainerUsers.Queries.GetTrainerUsersList;
 using Honoplay.Common.Constants;
-using Honoplay.System.Tests.Extensions;
+using Honoplay.AdminWebAPI.System.Tests.Extensions;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.System.Tests.Controllers
+namespace Honoplay.AdminWebAPI.System.Tests.Controllers
 {
     public class TrainerUserControllerIntegrationTest : IClassFixture<CustomWebApplicationFactory<Startup>>
     {
@@ -42,7 +42,7 @@ namespace Honoplay.System.Tests.Controllers
 
             var json = JsonConvert.SerializeObject(command);
 
-            var httpResponse = await client.PostAsync("api/TrainerUser", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await client.PostAsync("/TrainerUser", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -72,7 +72,7 @@ namespace Honoplay.System.Tests.Controllers
 
             var json = JsonConvert.SerializeObject(command);
 
-            var httpResponse = await client.PutAsync("api/TrainerUser", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+            var httpResponse = await client.PutAsync("/TrainerUser", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
 
             // Must be successful.
             httpResponse.EnsureSuccessStatusCode();
@@ -87,7 +87,7 @@ namespace Honoplay.System.Tests.Controllers
         {
             var client = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
 
-            var httpResponse = await client.GetAsync($"api/TrainerUser/1");
+            var httpResponse = await client.GetAsync($"/TrainerUser/1");
 
             httpResponse.EnsureSuccessStatusCode();
 
@@ -105,7 +105,7 @@ namespace Honoplay.System.Tests.Controllers
                 Take = 10,
             };
 
-            var httpResponse = await client.GetAsync($"api/TrainerUser?Skip={getTrainerUsersListQueryModel.Skip}&Take={getTrainerUsersListQueryModel.Take}");
+            var httpResponse = await client.GetAsync($"/TrainerUser?Skip={getTrainerUsersListQueryModel.Skip}&Take={getTrainerUsersListQueryModel.Take}");
             httpResponse.EnsureSuccessStatusCode();
 
             Assert.True(httpResponse.IsSuccessStatusCode);

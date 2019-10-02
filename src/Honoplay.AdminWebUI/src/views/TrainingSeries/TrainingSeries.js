@@ -1,13 +1,13 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { translate } from '@omegabigdata/terasu-api-proxy';
-import { Grid } from '@material-ui/core';
+import { Grid, Divider } from '@material-ui/core';
 import Style from '../Style';
-import CardButton from '../../components/Card/CardButton';
-import Typography from '../../components/Typography/TypographyComponent';
+import Header from '../../components/Typography/TypographyComponent';
 import Modal from '../../components/Modal/ModalComponent';
-import Card from '../../components/Card/CardComponents';
 import TrainingseriesCreate from './TrainingSeriesCreate';
+import CardDeneme from '../../components/Card/Card';
+import Button from '../../components/Button/ButtonComponent';
 
 import { connect } from 'react-redux';
 import { fetchTrainingSeriesList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingSeries';
@@ -18,7 +18,8 @@ class TrainingSeries extends React.Component {
     this.state = {
       openDialog: false,
       trainingSerieses: [],
-      trainingSeriesesError: false
+      trainingSeriesesError: false,
+      checked: false
     };
   }
 
@@ -40,7 +41,8 @@ class TrainingSeries extends React.Component {
       TrainingSeriesList
     ) {
       this.setState({
-        trainingSerieses: TrainingSeriesList.items
+        trainingSerieses: TrainingSeriesList.items,
+        openDialog: false
       });
     }
   }
@@ -64,21 +66,22 @@ class TrainingSeries extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12}>
-            <Typography pageHeader={translate('TrainingSeries')} />
+          <Grid item xs={12} sm={11}>
+            <Header pageHeader={translate('TrainingSeries')} />
           </Grid>
-          <Grid item xs={12} sm={3}>
-            <CardButton
-              cardName={translate('CreateATrainingSeries')}
-              cardDescription={translate(
-                'YouCanCreateTrainingSetsAndCollectDifferentTrainingsInOneField'
-              )}
+          <Grid item xs={12} sm={1}>
+            <Button
+              buttonColor="primary"
+              buttonName={translate('Add')}
               onClick={this.handleClickOpenDialog}
-              iconName="graduation-cap"
             />
           </Grid>
-          <Grid item xs={12} sm={9}>
-            <Card
+          <Grid item xs={12} sm={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <CardDeneme
+              elevation={1}
               data={trainingSerieses}
               url="trainingseriesdetail"
               id={id => {

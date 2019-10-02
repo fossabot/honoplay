@@ -1,5 +1,4 @@
-﻿using Honoplay.AdminWebAPI;
-using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
+﻿using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
 using Honoplay.Common.Constants;
 using Newtonsoft.Json;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace Honoplay.System.Tests.Extensions
+namespace Honoplay.AdminWebAPI.System.Tests.Extensions
 {
     public static class SystemTestExtension
     {
@@ -20,7 +19,7 @@ namespace Honoplay.System.Tests.Extensions
                 Password = "Passw0rd"
             };
             var content = JsonConvert.SerializeObject(authenticateAdminUserCommand);
-            var httpResponse = client.PostAsync("api/AdminUser/Authenticate", new StringContent(content, Encoding.UTF8, StringConstants.ApplicationJson)).Result;
+            var httpResponse = client.PostAsync("/adminuser/authenticate", new StringContent(content, Encoding.UTF8, StringConstants.ApplicationJson)).Result;
 
             var token = JsonConvert.DeserializeObject<Dictionary<string, object>>(httpResponse.Content.ReadAsStringAsync().Result)["token"];
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.ToString());
