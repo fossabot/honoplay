@@ -18,7 +18,12 @@ import setToken from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/index
 import { connect } from 'react-redux';
 import { renewToken } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/AdminUser';
 import decoder from 'jwt-decode';
+import { StylesProvider, createGenerateClassName } from '@material-ui/styles';
 
+const generateClassName = createGenerateClassName({
+    productionPrefix: 'c',
+    disableGlobal: true
+});
 const CheckTokenExp = token => {
   if (!token) return false;
   const expireDate = decoder(token).exp * 1000;
@@ -57,7 +62,8 @@ const App = ({ renewToken, newToken }) => {
       return null;
     }
 
-    return (
+      return (
+          <StylesProvider generateClassName={generateClassName}>
       <Switch>
         <Layout>
           <Route path="/admin/profile" component={Profile} />
@@ -84,7 +90,8 @@ const App = ({ renewToken, newToken }) => {
             component={TrainingSeriesUpdate}
           />
         </Layout>
-      </Switch>
+              </Switch>
+          </StylesProvider>
     );
   } else {
     return <Redirect to="/admin/login" />;
