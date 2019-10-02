@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 import { store, persistor } from "./Redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import "./Helpers/Extensions";
-import { register } from "../public/serviceWorker";
+import { register } from "./serviceWorker";
 
 register();
 render(
