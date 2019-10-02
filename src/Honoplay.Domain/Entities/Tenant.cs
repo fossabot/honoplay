@@ -13,6 +13,7 @@ namespace Honoplay.Domain.Entities
 
             TenantAdminUsers = new HashSet<TenantAdminUser>();
             Departments = new HashSet<Department>();
+            TraineeGroups = new HashSet<TraineeGroup>();
             WorkingStatuses = new HashSet<WorkingStatus>();
             Questions = new HashSet<Question>();
             TrainingSerieses = new HashSet<TrainingSeries>();
@@ -27,6 +28,7 @@ namespace Honoplay.Domain.Entities
         [JsonIgnore]
         public virtual ICollection<TenantAdminUser> TenantAdminUsers { get; set; }
         public virtual ICollection<Department> Departments { get; set; }
+        public virtual ICollection<TraineeGroup> TraineeGroups { get; set; }
         public virtual ICollection<Profession> Professions { get; set; }
         public virtual ICollection<WorkingStatus> WorkingStatuses { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
