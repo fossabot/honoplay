@@ -18,15 +18,15 @@ namespace Honoplay.Application.Departments.Queries.GetDepartmentsList
         {
             get
             {
-                return depament => new DepartmentsListModel
+                return department => new DepartmentsListModel
                 {
-                    Id = depament.Id,
-                    Name = depament.Name,
-                    TenantId = depament.TenantId,
-                    CreatedBy = depament.CreatedBy,
-                    UpdatedBy = depament.UpdatedBy,
-                    UpdatedAt = depament.UpdatedAt,
-                    CreatedAt = depament.CreatedAt
+                    Id = department.Id,
+                    Name = department.Name,
+                    TenantId = department.TenantId,
+                    CreatedBy = department.CreatedBy,
+                    UpdatedBy = department.UpdatedBy,
+                    UpdatedAt = department.UpdatedAt,
+                    CreatedAt = department.CreatedAt
                 };
             }
         }

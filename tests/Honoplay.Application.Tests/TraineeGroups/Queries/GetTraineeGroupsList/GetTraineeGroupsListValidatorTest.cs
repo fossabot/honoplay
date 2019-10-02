@@ -1,4 +1,5 @@
 ﻿using FluentValidation.TestHelper;
+using Honoplay.Application.TraineeGroups.Queries.GetTraineeGroupsList;
 using Xunit;
 
 namespace Honoplay.Application.Tests.TraineeGroups.Queries.GetTraineeGroupsList
