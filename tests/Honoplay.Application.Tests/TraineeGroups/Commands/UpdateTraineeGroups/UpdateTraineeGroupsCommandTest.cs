@@ -1,10 +1,12 @@
-﻿using Honoplay.Common.Extensions;
+﻿using Honoplay.Application.TraineeGroups.Commands.UpdateTraineeGroup;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -82,14 +84,21 @@ namespace Honoplay.Application.Tests.TraineeGroups.Commands.UpdateTraineeGroup
             {
                 UpdatedBy = _adminUserId,
                 TenantId = _tenantId,
-                Name = "Updated"
+                UpdateTraineeGroupCommandModels = new List<UpdateTraineeGroupCommandModel>
+                {
+                    new UpdateTraineeGroupCommandModel
+                    {
+                        Name = "Updated"
+
+                    }
+                }
             };
 
             var traineeGroupModel = await _commandHandler.Handle(command, CancellationToken.None);
 
             Assert.Null(traineeGroupModel.Errors);
 
-            Assert.True(traineeGroupModel.Items.Single().TraineeGroups.Count > 0);
+            Assert.True(traineeGroupModel.Items.Single().Count > 0);
         }
 
         public void Dispose()
