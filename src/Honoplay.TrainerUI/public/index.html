@@ -28,10 +28,11 @@
       if ("serviceWorker" in navigator) {
         navigator.serviceWorker
           .register("../dist/sw.js")
-          .then(function(registrations) {
-            for (let registration of registrations) {
-              registration.register();
-            }
+          .then(req => {
+            console.log("service worker calisiyor :", req);
+          })
+          .catch(err => {
+            console.log("calismiyor  :", err);
           });
       }
     </script>
