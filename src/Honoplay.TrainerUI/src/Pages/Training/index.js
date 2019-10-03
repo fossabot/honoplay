@@ -87,7 +87,7 @@ class Training extends Component {
                 </tr>
               </thead>
               <tbody>
-                {this.props.traineeList.items &&
+                {this.props.traineeList &&
                   this.props.traineeList.items.map(t => {
                     return (
                       <tr key={t.id}>
