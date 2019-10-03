@@ -173,6 +173,13 @@ namespace Honoplay.AdminWebAPI.System.Tests
             };
             dbContext.Sessions.Add(session);
 
+            dbContext.TraineeGroups.Add(new TraineeGroup
+            {
+                CreatedBy = adminUser.Id,
+                Name = "traineeGroup",
+                TenantId = tenantId
+            });
+
             dbContext.SaveChanges();
         }
     }

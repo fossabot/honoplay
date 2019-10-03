@@ -79,6 +79,9 @@ namespace Honoplay.AdminWebAPI.Controllers
 
         // POST api/<controller>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<ActionResult<ResponseModel<CreateTrainerUserModel>>> Post([FromBody]CreateTrainerUserCommand command)
         {
             try
