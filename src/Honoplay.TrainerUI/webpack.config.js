@@ -58,7 +58,6 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new html({
       filename: "index.html",
-      template: './public/index.html'
     }),
     new workbox.GenerateSW({
       swDest: "sw.js",
