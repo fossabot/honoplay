@@ -26,7 +26,13 @@
     <script src="../dist/bundle.js"></script>
     <script>
       if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("../dist/sw.js");
+        navigator.serviceWorker
+          .register("../dist/sw.js")
+          .then(function(registrations) {
+            for (let registration of registrations) {
+              registration.register();
+            }
+          });
       }
     </script>
   </body>
