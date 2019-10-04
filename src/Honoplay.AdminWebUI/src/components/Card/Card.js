@@ -13,7 +13,6 @@ export default function Card(props) {
   function handleOpen(id) {
     props.id(id);
   }
-
   return (
     <React.Fragment>
       <CssBaseline />
@@ -54,7 +53,7 @@ export default function Card(props) {
                           >
                             <IconButton
                               component={url && Link}
-                              to={url && `/admin/${url}`}
+                              to={url && `${url}/${data.name}`}
                               onClick={() => handleOpen(data.id)}
                             >
                               <Edit />

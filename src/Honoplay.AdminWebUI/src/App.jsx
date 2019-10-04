@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import Layout from './components/Layout/LayoutComponent';
+import Login from './views/Login/Login';
 
 import Questions from './views/Questions/Questions';
 import Trainees from './views/Trainees/Trainee';
@@ -21,8 +22,8 @@ import decoder from 'jwt-decode';
 import { StylesProvider, createGenerateClassName } from '@material-ui/styles';
 
 const generateClassName = createGenerateClassName({
-    productionPrefix: 'c',
-    disableGlobal: true
+  productionPrefix: 'c',
+  disableGlobal: true
 });
 const CheckTokenExp = token => {
   if (!token) return false;
@@ -62,39 +63,40 @@ const App = ({ renewToken, newToken }) => {
       return null;
     }
 
-      return (
-          <StylesProvider generateClassName={generateClassName}>
-      <Switch>
-        <Layout>
-          <Route path="/admin/profile" component={Profile} />
-          <Route path="/admin/dashboard" component={Dashboard} />
-          <Route path="/admin/reports" component={Reports} />
-          <Route path="/admin/questions" component={Questions} />
-          <Route path="/admin/trainees" component={Trainees} />
-          <Route path="/admin/trainers" component={Trainers} />
-          <Route path="/admin/usermanagement" component={UserManagement} />
-          <Route path="/admin/addquestion" component={NewQuestion} />
-          <Route path="/admin/trainingseries" component={TrainingSeries} />
-          <Route
-            exact
-            path="/admin/trainingseriesdetail"
-            component={Trainings}
-          />
-          <Route
-            exact
-            path="/admin/trainingseriesdetail/training"
-            component={TrainingSeriesInformation}
-          />
-          <Route
-            path="/admin/trainingseriesupdate"
-            component={TrainingSeriesUpdate}
-          />
-        </Layout>
-              </Switch>
-          </StylesProvider>
+    return (
+      <StylesProvider generateClassName={generateClassName}>
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Layout>
+            <Route path="/profile" component={Profile} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/reports" component={Reports} />
+            <Route path="/questions" component={Questions} />
+            <Route path="/trainees" component={Trainees} />
+            <Route path="/trainers" component={Trainers} />
+            <Route path="/usermanagement" component={UserManagement} />
+            <Route path="/addquestion" component={NewQuestion} />
+            <Route exact path="/trainingseries" component={TrainingSeries} />
+            <Route
+              exact
+              path="/trainingseries/:trainingName"
+              component={props => <Trainings {...props} />}
+            />
+            <Route
+              exact
+              path="/trainingseriesdetail/training"
+              component={TrainingSeriesInformation}
+            />
+            <Route
+              path="/trainingseriesupdate"
+              component={TrainingSeriesUpdate}
+            />
+          </Layout>
+        </Switch>
+      </StylesProvider>
     );
   } else {
-    return <Redirect to="/admin/login" />;
+    return <Redirect to="/login" />;
   }
 };
 
