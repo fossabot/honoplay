@@ -9,9 +9,7 @@ import {
   IconButton
 } from '@material-ui/core';
 import Style from '../Style';
-import CardButton from '../../components/Card/CardButton';
-import Card from '../../components/Card/CardComponents';
-import Typography from '../../components/Typography/TypographyComponent';
+import Card from '../../components/Card/Card';
 import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
 import Button from '../../components/Button/ButtonComponent';
 import SearchIcon from '@material-ui/icons/Search';
@@ -24,6 +22,7 @@ class Trainings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      search: [],
       trainingSeries: {
         createTrainingSeriesModels: [
           {
@@ -92,7 +91,18 @@ class Trainings extends React.Component {
     this.props.history.push(`/trainingseriesdetail/training`);
   };
 
+  onSearchInputChange = event => {
+    let searched = [];
+    this.state.trainingList.map((training, index) => {
+      if (training.name.includes(event.target.value)) {
+        searched = searched.concat(training);
+      }
+    });
+    this.setState({ search: searched });
+  };
+
   render() {
+    const { trainingList, search } = this.state;
     const { classes, match } = this.props;
 
     return (
@@ -129,14 +139,15 @@ class Trainings extends React.Component {
           </Grid>
           <Grid item xs={12} sm={9}>
             <Card
-              data={trainingList}
-              url="trainingseriesupdate"
+              elevation={1}
+              data={search.length === 0 ? trainingList : search}
+              url="trainingseries"
               id={id => {
                 if (id) {
-                  localStorage.setItem('trainingId', id);
+                  localStorage.setItem('trainingSeriesId', id);
                 }
               }}
-            ></Card>
+            />
           </Grid>
         </Grid>
       </div>
