@@ -1,17 +1,24 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { translate } from '@omegabigdata/terasu-api-proxy';
-import { Grid } from '@material-ui/core';
+import {
+  Grid,
+  Divider,
+  TextField,
+  InputAdornment,
+  IconButton
+} from '@material-ui/core';
 import Style from '../Style';
 import CardButton from '../../components/Card/CardButton';
 import Card from '../../components/Card/CardComponents';
 import Typography from '../../components/Typography/TypographyComponent';
+import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
+import Button from '../../components/Button/ButtonComponent';
+import SearchIcon from '@material-ui/icons/Search';
 
 import { connect } from 'react-redux';
 import { fetchTrainingSeries } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingSeries';
 import { fetchTrainingListByTrainingSeriesId } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Training';
-
-import TrainingUpdate from './Training/TrainingUpdate';
 
 class Trainings extends React.Component {
   constructor(props) {
@@ -82,29 +89,43 @@ class Trainings extends React.Component {
   }
 
   handleClick = () => {
-    this.props.history.push(`/admin/trainingseriesdetail/training`);
+    this.props.history.push(`/trainingseriesdetail/training`);
   };
 
   render() {
-    const { trainingSeries, trainingList } = this.state;
-    const { classes } = this.props;
+    const { classes, match } = this.props;
 
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12}>
-            <Typography pageHeader={trainingSeries.name} />
+          <Grid item xs={12} sm={9}>
+            <BreadCrumbs />
           </Grid>
-          <Grid item xs={12} sm={3}>
-            <CardButton
-              cardName={translate('CreateTraining')}
-              cardDescription={translate(
-                'YouCanCreateDifferentTrainingsForEachTrainingSeries'
-              )}
-              onClick={this.handleClick}
-              forTraining
-              iconName="graduation-cap"
+          <Grid item xs={12} sm={2}>
+            <TextField
+              placeholder={translate('Search')}
+              margin="none"
+              onChange={this.onSearchInputChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton>
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
             />
+          </Grid>
+          <Grid item xs={12} sm={1}>
+            <Button
+              buttonColor="primary"
+              buttonName={translate('Add')}
+              onClick={this.handleClickOpenDialog}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Divider />
           </Grid>
           <Grid item xs={12} sm={9}>
             <Card

@@ -9,12 +9,12 @@ import {
   IconButton
 } from '@material-ui/core';
 import Style from '../Style';
-import Header from '../../components/Typography/TypographyComponent';
 import Modal from '../../components/Modal/ModalComponent';
 import TrainingseriesCreate from './TrainingSeriesCreate';
 import CardDeneme from '../../components/Card/Card';
 import Button from '../../components/Button/ButtonComponent';
 import SearchIcon from '@material-ui/icons/Search';
+import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
 
 import { connect } from 'react-redux';
 import { fetchTrainingSeriesList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingSeries';
@@ -86,7 +86,7 @@ class TrainingSeries extends React.Component {
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={9}>
-            <Header pageHeader={translate('TrainingSeries')} />
+            <BreadCrumbs />
           </Grid>
           <Grid item xs={12} sm={2}>
             <TextField
@@ -118,7 +118,7 @@ class TrainingSeries extends React.Component {
             <CardDeneme
               elevation={1}
               data={search.length === 0 ? trainingSerieses : search}
-              url="trainingseriesdetail"
+              url="trainingseries"
               id={id => {
                 if (id) {
                   localStorage.setItem('trainingSeriesId', id);
