@@ -39,32 +39,32 @@ class Layout extends React.Component {
         <div className={classes.listLayout}>
           <List component="nav">
             <ListItem
-              pageLink={'/questions'}
+              pageLink={'/admin/questions'}
               pageIcon={'question-circle'}
               pageName={translate('Questions')}
             />
             <ListItem
-              pageLink={'/trainingseries'}
+              pageLink={'/admin/trainingseries'}
               pageIcon={'list-ol'}
               pageName={translate('TrainingSeries')}
             />
             <ListItem
-              pageLink={'/trainers'}
+              pageLink={'/admin/trainers'}
               pageIcon={'graduation-cap'}
               pageName={translate('Trainers')}
             />
             <ListItem
-              pageLink={'/trainees'}
+              pageLink={'/admin/trainees'}
               pageIcon={'briefcase'}
               pageName={translate('Trainees')}
             />
             <ListItem
-              pageLink={'/usermanagement'}
+              pageLink={'/admin/usermanagement'}
               pageIcon={'cog'}
               pageName={translate('UserManagement')}
             />
             <ListItem
-              pageLink={'/reports'}
+              pageLink={'/admin/reports'}
               pageIcon={'chart-pie'}
               pageName={translate('Reports')}
             />

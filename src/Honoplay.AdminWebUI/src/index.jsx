@@ -15,10 +15,11 @@ init(projeId);
 
 render(
   <Provider store={store}>
-    <Router basename="/admin" history={history}>
+    <Router history={history}>
       <Switch>
-        <Route exact path="/login" component={Login} />
-        <Route path="/" component={App} />
+        <Route exact path="/admin/login" component={Login} />
+        <Route path="/admin" component={App} />
+        <Route exact path="/" component={Login} />
       </Switch>
     </Router>
   </Provider>,

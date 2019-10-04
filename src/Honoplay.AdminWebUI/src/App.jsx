@@ -1,7 +1,6 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import Layout from './components/Layout/LayoutComponent';
-import Login from './views/Login/Login';
 
 import Questions from './views/Questions/Questions';
 import Trainees from './views/Trainees/Trainee';
@@ -66,29 +65,32 @@ const App = ({ renewToken, newToken }) => {
     return (
       <StylesProvider generateClassName={generateClassName}>
         <Switch>
-          <Route exact path="/" component={Login} />
           <Layout>
-            <Route path="/profile" component={Profile} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/reports" component={Reports} />
-            <Route path="/questions" component={Questions} />
-            <Route path="/trainees" component={Trainees} />
-            <Route path="/trainers" component={Trainers} />
-            <Route path="/usermanagement" component={UserManagement} />
-            <Route path="/addquestion" component={NewQuestion} />
-            <Route exact path="/trainingseries" component={TrainingSeries} />
+            <Route path="/admin/profile" component={Profile} />
+            <Route path="/admin/dashboard" component={Dashboard} />
+            <Route path="/admin/reports" component={Reports} />
+            <Route path="/admin/questions" component={Questions} />
+            <Route path="/admin/trainees" component={Trainees} />
+            <Route path="/admin/trainers" component={Trainers} />
+            <Route path="/admin/usermanagement" component={UserManagement} />
+            <Route path="/admin/addquestion" component={NewQuestion} />
             <Route
               exact
-              path="/trainingseries/:trainingName"
+              path="/admin/trainingseries"
+              component={TrainingSeries}
+            />
+            <Route
+              exact
+              path="/admin/trainingseries/:trainingName"
               component={props => <Trainings {...props} />}
             />
             <Route
               exact
-              path="/trainingseriesdetail/training"
+              path="/admin/trainingseriesdetail/training"
               component={TrainingSeriesInformation}
             />
             <Route
-              path="/trainingseriesupdate"
+              path="/admin/trainingseriesupdate"
               component={TrainingSeriesUpdate}
             />
           </Layout>
@@ -96,7 +98,7 @@ const App = ({ renewToken, newToken }) => {
       </StylesProvider>
     );
   } else {
-    return <Redirect to="/login" />;
+    return <Redirect to="/admin/login" />;
   }
 };
 

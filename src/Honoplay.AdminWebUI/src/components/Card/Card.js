@@ -53,7 +53,7 @@ export default function Card(props) {
                           >
                             <IconButton
                               component={url && Link}
-                              to={url && `${url}/${data.name}`}
+                              to={url && `/admin/${url}/${data.name}`}
                               onClick={() => handleOpen(data.id)}
                             >
                               <Edit />
