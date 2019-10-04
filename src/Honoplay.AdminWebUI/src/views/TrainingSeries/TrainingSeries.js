@@ -11,7 +11,7 @@ import {
 import Style from '../Style';
 import Modal from '../../components/Modal/ModalComponent';
 import TrainingseriesCreate from './TrainingSeriesCreate';
-import CardDeneme from '../../components/Card/Card';
+import Card from '../../components/Card/Card';
 import Button from '../../components/Button/ButtonComponent';
 import SearchIcon from '@material-ui/icons/Search';
 import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
@@ -115,7 +115,7 @@ class TrainingSeries extends React.Component {
             <Divider />
           </Grid>
           <Grid item xs={12} sm={12}>
-            <CardDeneme
+            <Card
               elevation={1}
               data={search.length === 0 ? trainingSerieses : search}
               url="trainingseries"
