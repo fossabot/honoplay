@@ -8,15 +8,17 @@ namespace Honoplay.Application.Questions.Commands.CreateQuestion
         public string Text { get; private set; }
         public int Duration { get; private set; }
         public int CreatedBy { get; private set; }
+        public int? VisualId { get; private set; }
         public DateTimeOffset CreatedAt { get; private set; }
 
-        public CreateQuestionModel(int id, string text, int duration, int createdBy, DateTimeOffset createdAt)
+        public CreateQuestionModel(int id, string text, int duration, int createdBy, DateTimeOffset createdAt, int? visualId)
         {
             Id = id;
             Text = text;
             Duration = duration;
             CreatedBy = createdBy;
             CreatedAt = createdAt;
+            VisualId = visualId;
         }
     }
 }
