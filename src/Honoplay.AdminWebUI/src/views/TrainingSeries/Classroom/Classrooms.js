@@ -1,11 +1,21 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
+import {
+  Grid,
+  Divider,
+  TextField,
+  InputAdornment,
+  IconButton
+} from '@material-ui/core';
 import Style from '../../Style';
-import Card from '../../../components/Card/CardComponents';
-import CardButton from '../../../components/Card/CardButton';
+import Card from '../../../components/Card/Card';
+
 import Modal from '../../../components/Modal/ModalComponent';
+import BreadCrumbs from '../../../components/BreadCrumbs/BreadCrumbs';
+import Button from '../../../components/Button/ButtonComponent';
+import SearchIcon from '@material-ui/icons/Search';
+
 import ClassroomUpdate from './ClassroomUpdate';
 import ClassroomCreate from './ClassroomCreate';
 
@@ -18,6 +28,7 @@ class Classrooms extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      search: [],
       openDialog: false,
       classroomListError: false,
       classroomList: [],
@@ -66,8 +77,18 @@ class Classrooms extends React.Component {
     this.props.fetchClassroomListByTrainingId(this.trainingId);
   }
 
+  onSearchInputChange = event => {
+    let searched = [];
+    this.state.classroomList.map((classroom, index) => {
+      if (classroom.name.includes(event.target.value)) {
+        searched = searched.concat(classroom);
+      }
+    });
+    this.setState({ search: searched });
+  };
+
   render() {
-    const { classroomList, classroomId, openDialog } = this.state;
+    const { classroomList, classroomId, openDialog, search } = this.state;
     const { classes, trainingId } = this.props;
 
     this.trainingId = trainingId;
@@ -75,18 +96,37 @@ class Classrooms extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={3}>
-            <CardButton
-              cardName={translate('AddNewClassroom')}
-              cardDescription={translate(
-                'YouCanCreateDifferentTrainingsForEachTrainingSeries'
-              )}
-              onClick={this.handleClickOpenDialog}
-              iconName="users"
+          <Grid item xs={12} sm={9}>
+            <BreadCrumbs />
+          </Grid>
+          <Grid item xs={12} sm={2}>
+            <TextField
+              placeholder={translate('Search')}
+              margin="none"
+              onChange={this.onSearchInputChange}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <IconButton>
+                      <SearchIcon />
+                    </IconButton>
+                  </InputAdornment>
+                )
+              }}
             />
           </Grid>
-          <Grid item xs={12} sm={9}>
-            <Card
+          <Grid item xs={12} sm={1}>
+            <Button
+              buttonColor="primary"
+              buttonName={translate('Add')}
+              onClick={this.handleClick}
+            />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            {/* <Card
               data={classroomList}
               forClassroom
               titleName={translate('Update')}
@@ -101,16 +141,14 @@ class Classrooms extends React.Component {
                 classroomId={classroomId}
                 trainingId={trainingId}
               />
-            </Card>
+            </Card> */}
+            <Card
+              data={search.length === 0 ? classroomList : search}
+              url="training"
+              id={id => console.log('deneme', id)}
+            />
           </Grid>
         </Grid>
-        <Modal
-          titleName={translate('AddNewClassroom')}
-          open={openDialog}
-          handleClose={this.handleCloseDialog}
-        >
-          <ClassroomCreate trainingId={this.trainingId} />
-        </Modal>
       </div>
     );
   }
