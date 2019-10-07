@@ -13,7 +13,7 @@ namespace Honoplay.Domain.Entities
         public Guid TenantId { get; set; }
         public string Text { get; set; }
         public int Duration { get; set; }
-        public int? VisualId { get; set; }
+        public Guid? VisualId { get; set; }
 
         public virtual ICollection<Option> Options { get; set; }
         public Tenant Tenant { get; set; }
