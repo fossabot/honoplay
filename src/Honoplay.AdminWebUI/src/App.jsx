@@ -81,8 +81,8 @@ const App = ({ renewToken, newToken }) => {
             />
             <Route
               exact
-              path="/admin/trainingseries/:trainingName"
-              component={props => <Trainings {...props} />}
+              path="/admin/trainingseries/:trainingSeriesName/"
+              component={Trainings}
             />
             <Route
               exact
