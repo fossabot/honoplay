@@ -39,6 +39,13 @@
             <param name="trainingId">Get classrooms</param>
             <returns>Get classrooms by tenant id and training id with status code.</returns>
         </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.ContentFileController.Get(System.Guid)">
+            <summary>
+            This service update contentFile.
+            </summary>
+            <param name="id">Get contentFile model</param>
+            <returns>Get contentFile by tenant id and contentFile id with status code.</returns>
+        </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.OptionController.Post(Honoplay.Application.Options.Commands.CreateOption.CreateOptionCommand)">
             <summary>
             This service create option.

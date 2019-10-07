@@ -40,9 +40,6 @@ namespace Honoplay.Application.Questions.Commands.CreateQuestion
             {
                 try
                 {
-                    await _context.ContentFiles.AddAsync(request.ContentFile, cancellationToken);
-                    await _context.SaveChangesAsync(cancellationToken);
-                    newQuestion.VisualId = request.ContentFile.Id;
                     await _context.Questions.AddAsync(newQuestion, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
                     transaction.Commit();

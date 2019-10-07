@@ -37,9 +37,9 @@ namespace Honoplay.AdminWebAPI.Controllers
 
                 return Ok(new { User = user, Token = stringToken });
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e);
             }
         }
         [HttpPost("Register")]

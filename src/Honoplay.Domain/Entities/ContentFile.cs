@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Honoplay.Domain.Entities
 {
@@ -9,7 +10,7 @@ namespace Honoplay.Domain.Entities
             TraineeUsers = new HashSet<TraineeUser>();
             Questions = new HashSet<Question>();
         }
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string ContentType { get; set; }
         public byte[] Data { get; set; }
