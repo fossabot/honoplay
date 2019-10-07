@@ -12,6 +12,7 @@ namespace Honoplay.Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public string ContentType { get; set; }
+        public byte[] Data { get; set; }
         public int Size { get; set; }
         public int? Width { get; set; }
         public int? Height { get; set; }
