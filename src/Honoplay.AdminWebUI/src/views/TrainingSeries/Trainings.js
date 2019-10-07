@@ -103,7 +103,7 @@ class Trainings extends React.Component {
 
   render() {
     const { trainingList, search } = this.state;
-    const { classes, match } = this.props;
+    const { classes } = this.props;
 
     return (
       <div className={classes.root}>
