@@ -69,9 +69,11 @@ class DropDownInputComponent extends React.Component {
                 ))}
             </NativeSelect>
             {describable && (
-              <IconButton onClick={this.handleOpen}>
-                <MoreVertIcon />
-              </IconButton>
+              <Grid item xs={12} sm={1}>
+                <IconButton onClick={this.handleOpen}>
+                  <MoreVertIcon />
+                </IconButton>
+              </Grid>
             )}
           </Grid>
         </Grid>

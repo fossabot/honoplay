@@ -139,7 +139,7 @@ class Trainings extends React.Component {
           <Grid item xs={12} sm={12}>
             <Divider />
           </Grid>
-          <Grid item xs={12} sm={9}>
+          <Grid item xs={12} sm={12}>
             <Card
               elevation={1}
               data={search.length === 0 ? trainingList : search}
