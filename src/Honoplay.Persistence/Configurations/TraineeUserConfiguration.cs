@@ -26,24 +26,27 @@ namespace Honoplay.Persistence.Configurations
                 .HasMaxLength(20);
 
             //RELATIONS
-            
+
             //Department
             builder.HasOne(x => x.Department)
                 .WithMany(y => y.TraineeUsers)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasForeignKey(x => x.DepartmentId);
-            
             //TraineeGroup
             builder.HasOne(x => x.TraineeGroup)
                 .WithMany(y => y.TraineeUsers)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasForeignKey(x => x.TraineeGroupId);
-            
+
             //WorkingStatus
             builder.HasOne(x => x.WorkingStatus)
                 .WithMany(y => y.TraineeUsers)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasForeignKey(x => x.WorkingStatusId);
+            //ContentFile
+            builder.HasOne(x => x.ContentFile)
+                .WithMany(x => x.TraineeUsers)
+                .HasForeignKey(x => x.ProfilPhotoId);
 
         }
     }

@@ -32,6 +32,7 @@ namespace Honoplay.Persistence
         public DbSet<Game> Games { get; set; }
         public DbSet<TrainingCategory> TrainingCategories { get; set; }
         public DbSet<ClassroomTraineeUser> ClassroomTraineeUsers { get; set; }
+        public DbSet<ContentFile> ContentFiles { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

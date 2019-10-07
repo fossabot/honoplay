@@ -20,6 +20,7 @@ namespace Honoplay.Domain.Entities
         public int WorkingStatusId { get; set; }
         public int DepartmentId { get; set; }
         public int? TraineeGroupId { get; set; }
+        public int? ProfilPhotoId { get; set; }
 
         public byte[] Password { get; set; }
         public byte[] PasswordSalt { get; set; }
@@ -34,5 +35,7 @@ namespace Honoplay.Domain.Entities
         public Department Department { get; set; }
         [JsonIgnore]
         public TraineeGroup TraineeGroup { get; set; }
+        [JsonIgnore]
+        public ContentFile ContentFile { get; set; }
     }
 }
