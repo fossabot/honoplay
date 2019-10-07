@@ -1,31 +1,27 @@
 import React from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
-import { deepPurple } from '@material-ui/core/colors';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import withBreadcrumbs from 'react-router-breadcrumbs-hoc';
+import { withStyles } from '@material-ui/core/styles';
+import { Style } from './Style';
 
 const Link = React.forwardRef((props, ref) => (
   <RouterLink {...props} innerRef={ref} />
 ));
 
 function PureBreadcrumbs(props) {
+  const { classes } = props;
   return (
     <Breadcrumbs>
-      <Link
-        to="/admin/dashboard"
-        style={{ textDecoration: 'none', color: deepPurple[500] }}
-      >
+      <Link to="/admin/dashboard" className={classes.text}>
         Dashboard
       </Link>
-      <Link
-        to="/admin/trainingSeries"
-        style={{ textDecoration: 'none', color: deepPurple[500] }}
-      >
+      <Link to="/admin/trainingSeries" className={classes.text}>
         Training Series
       </Link>
       <Link
         to="/admin/trainingseries/:trainingSeriesName/"
-        style={{ textDecoration: 'none', color: deepPurple[500] }}
+        className={classes.text}
       >
         {props.match.params.trainingSeriesName}
       </Link>
@@ -33,4 +29,4 @@ function PureBreadcrumbs(props) {
   );
 }
 
-export default withBreadcrumbs()(PureBreadcrumbs);
+export default withStyles(Style)(withBreadcrumbs()(PureBreadcrumbs));
