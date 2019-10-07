@@ -88,7 +88,9 @@ class Trainings extends React.Component {
   }
 
   handleClick = () => {
-    this.props.history.push(`/trainingseriesdetail/training`);
+    this.props.history.push(
+      `/admin/trainingseries/${this.props.match.params.trainingSeriesName}/training`
+    );
   };
 
   onSearchInputChange = event => {
@@ -131,7 +133,7 @@ class Trainings extends React.Component {
             <Button
               buttonColor="primary"
               buttonName={translate('Add')}
-              onClick={this.handleClickOpenDialog}
+              onClick={this.handleClick}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
