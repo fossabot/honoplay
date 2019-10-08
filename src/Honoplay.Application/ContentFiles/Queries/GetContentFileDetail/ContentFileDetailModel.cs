@@ -28,7 +28,7 @@ namespace Honoplay.Application.ContentFiles.Queries.GetContentFileDetail
                     CreatedBy = contentFile.CreatedBy,
                     CreatedAt = contentFile.CreatedAt,
                     UpdatedBy = contentFile.UpdatedBy,
-                    UpdatedAt = contentFile.UpdatedAt,
+                    UpdatedAt = contentFile.UpdatedAt
                 };
             }
         }
