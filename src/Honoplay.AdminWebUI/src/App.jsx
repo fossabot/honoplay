@@ -11,6 +11,7 @@ import TrainingSeries from './views/TrainingSeries/TrainingSeries';
 import Trainings from './views/TrainingSeries/Trainings';
 import TrainingSeriesInformation from './views/TrainingSeries/TrainingSeriesInformation';
 import TrainingSeriesUpdate from './views/TrainingSeries/TrainingSeriesUpdate';
+import Classrooms from './views/TrainingSeries/Classroom/Classrooms';
 import Dashboard from './views/Home/Dashboard';
 import Reports from './views/Reports/Reports';
 import Profile from './views/Profile/Profile';
@@ -19,6 +20,7 @@ import { connect } from 'react-redux';
 import { renewToken } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/AdminUser';
 import decoder from 'jwt-decode';
 import { StylesProvider, createGenerateClassName } from '@material-ui/styles';
+import Training from './views/TrainingSeries/Training/Training';
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'c',
@@ -83,6 +85,16 @@ const App = ({ renewToken, newToken }) => {
               exact
               path="/admin/trainingseries/:trainingSeriesName/"
               component={Trainings}
+            />
+            <Route
+              exact
+              path="/admin/trainingseries/:trainingSeriesName/training/"
+              component={Training}
+            />
+            <Route
+              exact
+              path="/admin/trainingseries/training/:trainingName/"
+              component={Classrooms}
             />
             <Route
               exact

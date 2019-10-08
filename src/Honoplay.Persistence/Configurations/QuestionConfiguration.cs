@@ -23,7 +23,10 @@ namespace Honoplay.Persistence.Configurations
             builder.HasOne(q => q.Tenant)
                 .WithMany(t => t.Questions)
                 .HasForeignKey(q => q.TenantId);
-
+            //ContentFile
+            builder.HasOne(q => q.ContentFile)
+                .WithMany(cf => cf.Questions)
+                .HasForeignKey(q => q.VisualId);
 
         }
     }

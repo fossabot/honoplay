@@ -200,22 +200,6 @@ class Trainers extends React.Component {
               name="surname"
               value={this.trainerModel.surname}
             />
-            <Input
-              error={trainerError}
-              onChange={this.handleChange}
-              labelName={translate('EmailAddress')}
-              inputType="text"
-              name="email"
-              value={this.trainerModel.email}
-            />
-            <Input
-              error={trainerError}
-              onChange={this.handleChange}
-              labelName={translate('PhoneNumber')}
-              inputType="text"
-              name="phoneNumber"
-              value={this.trainerModel.phoneNumber}
-            />
             <DropDown
               error={trainerError}
               onChange={this.handleChange}
@@ -235,6 +219,22 @@ class Trainers extends React.Component {
             >
               <Profession />
             </DropDown>
+            <Input
+              error={trainerError}
+              onChange={this.handleChange}
+              labelName={translate('EmailAddress')}
+              inputType="text"
+              name="email"
+              value={this.trainerModel.email}
+            />
+            <Input
+              error={trainerError}
+              onChange={this.handleChange}
+              labelName={translate('PhoneNumber')}
+              inputType="text"
+              name="phoneNumber"
+              value={this.trainerModel.phoneNumber}
+            />
           </Grid>
           <Grid item xs={12} sm={3}>
             <InputLabel className={classes.bootstrapFormLabel}>
@@ -243,6 +243,8 @@ class Trainers extends React.Component {
           </Grid>
           <Grid item xs={12} sm={9}>
             <TextField
+              margin="dense"
+              variant="outlined"
               error={trainerError && true}
               className={classes.passwordInput}
               name="password"

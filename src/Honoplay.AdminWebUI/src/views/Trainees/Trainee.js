@@ -259,6 +259,8 @@ class Trainee extends React.Component {
           </Grid>
           <Grid item xs={12} sm={9}>
             <TextField
+              margin="dense"
+              variant="outlined"
               error={isErrorTrainee && true}
               className={classes.passwordInput}
               name="password"

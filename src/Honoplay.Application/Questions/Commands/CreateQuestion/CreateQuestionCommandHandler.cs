@@ -67,7 +67,8 @@ namespace Honoplay.Application.Questions.Commands.CreateQuestion
                                                               newQuestion.Text,
                                                               newQuestion.Duration,
                                                               newQuestion.CreatedBy,
-                                                              newQuestion.CreatedAt);
+                                                              newQuestion.CreatedAt,
+                                                              newQuestion.VisualId);
             return new ResponseModel<CreateQuestionModel>(createQuestionModel);
         }
     }

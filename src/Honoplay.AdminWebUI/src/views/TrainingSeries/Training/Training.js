@@ -1,17 +1,25 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
+import { Grid, Divider } from '@material-ui/core';
+import BreadCrumbs from '../../../components/BreadCrumbs/BreadCrumbs';
+import Button from '../../../components/Button/ButtonComponent';
 import Style from '../../Style';
 import Input from '../../../components/Input/InputTextComponent';
 import DropDown from '../../../components/Input/DropDownInputComponent';
+
+import { connect } from 'react-redux';
+import { createTraining } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Training';
+import { log } from 'util';
 
 class Training extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      trainingLoading: false,
+      trainingError: false,
       trainingCategory: [{ id: 1, name: 'Yazılım' }],
-      training: [
+      createTrainingModels: [
         {
           trainingSeriesId: '',
           trainingCategoryId: '',
@@ -24,19 +32,85 @@ class Training extends React.Component {
     };
   }
 
-  render() {
-    const { training, trainingCategory } = this.state;
-    const { classes, trainingSeriesId, trainingError } = this.props;
+  trainingSeriesId = localStorage.getItem('trainingSeriesId');
 
-    this.state.training.map((training, id) => {
-      training.trainingSeriesId = trainingSeriesId;
+  trainingModel = {
+    createTrainingModels: []
+  };
+
+  componentDidUpdate(prevProps) {
+    const {
+      isCreateTrainingLoading,
+      newCreateTraining,
+      errorCreateTraining
+    } = this.props;
+
+    if (!prevProps.isCreateTrainingLoading && isCreateTrainingLoading) {
+      this.setState({
+        trainingLoading: true
+      });
+    }
+    if (!prevProps.errorCreateTraining && errorCreateTraining) {
+      console.log('asdas');
+
+      this.setState({
+        trainingError: true,
+        trainingLoading: false
+      });
+    }
+    if (
+      prevProps.isCreateTrainingLoading &&
+      !isCreateTrainingLoading &&
+      newCreateTraining
+    ) {
+      if (!errorCreateTraining) {
+        this.setState({
+          trainingLoading: false,
+          trainingError: false
+        });
+        this.props.history.push(
+          `/admin/trainingseries/${this.props.match.params.trainingSeriesName}`
+        );
+      }
+    }
+  }
+
+  handleClick = () => {
+    this.trainingModel.createTrainingModels = this.state.createTrainingModels;
+    this.props.createTraining(this.trainingModel);
+  };
+
+  render() {
+    const {
+      createTrainingModels,
+      trainingCategory,
+      trainingError
+    } = this.state;
+    const { classes } = this.props;
+
+    this.state.createTrainingModels.map((training, id) => {
+      training.trainingSeriesId = this.trainingSeriesId;
     });
 
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
+          <Grid item xs={12} sm={11}>
+            <BreadCrumbs />
+          </Grid>
+          <Grid item xs={12} sm={1}>
+            <Button
+              buttonColor="primary"
+              buttonName={translate('Save')}
+              onClick={this.handleClick}
+            />
+          </Grid>
           <Grid item xs={12} sm={12}>
-            {training.map((training, id) => (
+            <Divider />
+          </Grid>
+          <Grid item xs={12} sm={12} />
+          <Grid item xs={12} sm={12}>
+            {createTrainingModels.map((training, id) => (
               <Grid item xs={12} sm={12} key={id}>
                 <Input
                   error={trainingError}
@@ -44,7 +118,9 @@ class Training extends React.Component {
                   inputType="text"
                   onChange={e => {
                     training.name = e.target.value;
-                    this.props.basicTrainingModel(this.state.training);
+                    this.setState({
+                      trainingError: false
+                    });
                   }}
                 />
                 <DropDown
@@ -53,7 +129,9 @@ class Training extends React.Component {
                   data={trainingCategory}
                   onChange={e => {
                     training.trainingCategoryId = e.target.value;
-                    this.props.basicTrainingModel(this.state.training);
+                    this.setState({
+                      trainingError: false
+                    });
                   }}
                 />
                 <Input
@@ -62,7 +140,9 @@ class Training extends React.Component {
                   inputType="date"
                   onChange={e => {
                     training.beginDateTime = e.target.value;
-                    this.props.basicTrainingModel(this.state.training);
+                    this.setState({
+                      trainingError: false
+                    });
                   }}
                 />
                 <Input
@@ -71,7 +151,9 @@ class Training extends React.Component {
                   inputType="date"
                   onChange={e => {
                     training.endDateTime = e.target.value;
-                    this.props.basicTrainingModel(this.state.training);
+                    this.setState({
+                      trainingError: false
+                    });
                   }}
                 />
                 <Input
@@ -81,7 +163,9 @@ class Training extends React.Component {
                   inputType="text"
                   onChange={e => {
                     training.description = e.target.value;
-                    this.props.basicTrainingModel(this.state.training);
+                    this.setState({
+                      trainingError: false
+                    });
                   }}
                 />
               </Grid>
@@ -93,4 +177,28 @@ class Training extends React.Component {
   }
 }
 
-export default withStyles(Style)(Training);
+const mapStateToProps = state => {
+  const {
+    isCreateTrainingLoading,
+    createTraining,
+    errorCreateTraining
+  } = state.createTraining;
+
+  let newCreateTraining = createTraining;
+  console.log('error', errorCreateTraining);
+
+  return {
+    isCreateTrainingLoading,
+    newCreateTraining,
+    errorCreateTraining
+  };
+};
+
+const mapDispatchToProps = {
+  createTraining
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(Style)(Training));

@@ -16,7 +16,7 @@ export const Style = theme => ({
     backgroundColor: theme.palette.common.white,
     border: '1px solid #ced4da',
     fontSize: 16,
-    width: '92.5%',
+    width: '100%',
     height: 20,
     padding: '8px 12px',
     transition: theme.transitions.create(['border-color', 'box-shadow']),
@@ -80,7 +80,7 @@ export const Style = theme => ({
     height: 38
   },
   nativeWidth: {
-    width: '95%'
+    width: '100%'
   }
 });
 
@@ -96,7 +96,7 @@ export const BootstrapInput = withStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     border: '1px solid #ced4da',
     fontSize: 15,
-    width: '103%',
+    width: '100%',
     padding: '10px 12px',
     transition: theme.transitions.create(['border-color', 'box-shadow']),
     // Use the system font instead of the default Roboto font.
@@ -132,7 +132,7 @@ export const BootstrapInputError = withStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     border: '1px solid red',
     fontSize: 15,
-    width: '103%',
+    width: '100%',
     padding: '10px 12px',
     transition: theme.transitions.create(['border-color', 'box-shadow']),
     // Use the system font instead of the default Roboto font.

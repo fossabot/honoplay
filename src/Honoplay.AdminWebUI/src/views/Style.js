@@ -56,7 +56,7 @@ const Style = theme => ({
     height: 70
   },
   passwordInput: {
-    width: '94%'
+    width: '100%'
   },
   bootstrapFormLabel: {
     fontSize: 15,
