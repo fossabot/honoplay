@@ -8,22 +8,22 @@
       "type": "image/x-icon"
     },
     {
-      "src": "./database128.png",
+      "src": "database128.png",
       "sizes": "128x128",
       "type": "image/png"
     },
     {
-      "src": "./database512.png",
+      "src": "database512.png",
       "sizes": "512x512",
       "type": "image/png"
     },
     {
-      "src": "./database192.png",
+      "src": "database192.png",
       "sizes": "192x192",
       "type": "image/png"
     }
   ],
-  "start_url": "/trainer",
+  "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
   "background_color": "#d32f2f"

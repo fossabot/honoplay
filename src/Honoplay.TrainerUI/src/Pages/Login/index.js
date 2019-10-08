@@ -24,6 +24,12 @@ class Login extends Component {
     }
   }
 
+  componentDidMount() {
+    if (localStorage.getItem("token")) {
+      History.push("/trainer/homepage");
+    }
+  }
+
   email = "agha@huseynov.com";
   password = "123456789";
 

@@ -1,16 +1,16 @@
 ﻿<html>
   <head>
     <meta charset="utf-8" />
-    <link rel="shortcut icon" href="./favicon.ico" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#d32f2f" />
-    <link rel="icon" sizes="192x192" href="./database192.png" />
-    <link rel="apple-touch-icon" href="./database192.png" />
+    <link rel="icon" sizes="192x192" href="database192.png" />
+    <link rel="apple-touch-icon" href="database192.png" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
-    <link rel="manifest" href="manifest.json" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
     <title>Honoplay Trainer</title>
     <meta name="Honoplay Trainer" content="Honoplay Trainer" />
@@ -22,18 +22,5 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
-    <script src="../dist/bundle.js"></script>
-    <script>
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("../dist/sw.js")
-          .then(req => {
-            console.log("service worker calisiyor :", req);
-          })
-          .catch(err => {
-            console.log("calismiyor  :", err);
-          });
-      }
-    </script>
   </body>
 </html>
