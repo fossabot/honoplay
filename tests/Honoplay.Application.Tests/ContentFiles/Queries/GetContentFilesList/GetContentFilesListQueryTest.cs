@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.ContentFiles.Queries.GetContentFilesList;
 using Xunit;
 
 namespace Honoplay.Application.Tests.ContentFiles.Queries.GetContentFilesList
