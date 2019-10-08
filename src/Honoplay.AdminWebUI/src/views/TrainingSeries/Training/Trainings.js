@@ -8,10 +8,10 @@ import {
   InputAdornment,
   IconButton
 } from '@material-ui/core';
-import Style from '../Style';
-import Card from '../../components/Card/Card';
-import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
-import Button from '../../components/Button/ButtonComponent';
+import Style from '../../Style';
+import Card from '../../../components/Card/Card';
+import BreadCrumbs from '../../../components/BreadCrumbs/BreadCrumbs';
+import Button from '../../../components/Button/ButtonComponent';
 import SearchIcon from '@material-ui/icons/Search';
 
 import { connect } from 'react-redux';
@@ -145,7 +145,7 @@ class Trainings extends React.Component {
               url="training"
               id={id => {
                 if (id) {
-                  localStorage.setItem('trainingSeriesId', id);
+                  localStorage.setItem('trainingId', id);
                 }
               }}
             />

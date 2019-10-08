@@ -8,10 +8,12 @@ import Trainers from './views/Trainers/Trainers';
 import UserManagement from './views/UserManagement/UserManagement';
 import NewQuestion from './views/Questions/NewQuestion';
 import TrainingSeries from './views/TrainingSeries/TrainingSeries';
-import Trainings from './views/TrainingSeries/Trainings';
-import TrainingSeriesInformation from './views/TrainingSeries/TrainingSeriesInformation';
-import TrainingSeriesUpdate from './views/TrainingSeries/TrainingSeriesUpdate';
+import Trainings from './views/TrainingSeries/Training/Trainings';
 import Classrooms from './views/TrainingSeries/Classroom/Classrooms';
+import Classroom from './views/TrainingSeries/Classroom/Classroom';
+import Sessions from './views/TrainingSeries/Session/Sessions';
+import Session from './views/TrainingSeries/Session/Session';
+
 import Dashboard from './views/Home/Dashboard';
 import Reports from './views/Reports/Reports';
 import Profile from './views/Profile/Profile';
@@ -98,12 +100,18 @@ const App = ({ renewToken, newToken }) => {
             />
             <Route
               exact
-              path="/admin/trainingseriesdetail/training"
-              component={TrainingSeriesInformation}
+              path="/admin/trainingseries/training/:trainingName/classroom"
+              component={Classroom}
             />
             <Route
-              path="/admin/trainingseriesupdate"
-              component={TrainingSeriesUpdate}
+              exact
+              path="/admin/trainingseries/training/classroom/:classroomName"
+              component={Sessions}
+            />
+            <Route
+              exact
+              path="/admin/trainingseries/training/classroom/:classroomName/session"
+              component={Session}
             />
           </Layout>
         </Switch>
