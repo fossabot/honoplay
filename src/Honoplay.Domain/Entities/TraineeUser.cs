@@ -20,7 +20,7 @@ namespace Honoplay.Domain.Entities
         public int WorkingStatusId { get; set; }
         public int DepartmentId { get; set; }
         public int? TraineeGroupId { get; set; }
-        public int? ProfilPhotoId { get; set; }
+        public Guid? ProfilPhotoId { get; set; }
 
         public byte[] Password { get; set; }
         public byte[] PasswordSalt { get; set; }
