@@ -4,10 +4,11 @@ import { Paper, Typography, IconButton, Divider } from '@material-ui/core';
 import moment from 'moment';
 import Style from './CardStyle';
 import Edit from '@material-ui/icons/Edit';
+import Add from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
 
 export default function Card(props) {
-  const { data, url, url2 } = props;
+  const { data, url, add } = props;
   const classes = Style();
 
   function handleOpen(id) {
@@ -48,20 +49,26 @@ export default function Card(props) {
                             </Typography>
                           </div>
                           <Divider />
+
                           <div
                             style={{ position: 'absolute', right: 0, top: 0 }}
                           >
-                            <IconButton
-                              component={Link}
-                              to={
-                                url
-                                  ? `/admin/trainingseries/${url}/${data.name}`
-                                  : `/admin/trainingseries/${data.name}`
-                              }
-                              onClick={() => handleOpen(data.id)}
-                            >
+                            <IconButton>
                               <Edit />
                             </IconButton>
+                            {add && (
+                              <IconButton
+                                component={Link}
+                                to={
+                                  url
+                                    ? `/admin/trainingseries/${url}/${data.name}`
+                                    : `/admin/trainingseries/${data.name}`
+                                }
+                                onClick={() => handleOpen(data.id)}
+                              >
+                                <Add />
+                              </IconButton>
+                            )}
                           </div>
                         </div>
                       </Paper>
