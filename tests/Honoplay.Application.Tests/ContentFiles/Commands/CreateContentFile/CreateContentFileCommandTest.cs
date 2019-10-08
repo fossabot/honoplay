@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.ContentFiles.Commands.CreateContentFile;
 using Xunit;
 
 namespace Honoplay.Application.Tests.ContentFiles.Commands.CreateContentFile
