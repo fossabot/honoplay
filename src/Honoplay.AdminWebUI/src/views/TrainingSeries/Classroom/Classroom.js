@@ -1,109 +1,211 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
+import { Grid, CircularProgress, Divider } from '@material-ui/core';
 import Style from '../../Style';
-import CardButton from '../../../components/Card/CardButton';
-import Card from '../../../components/Card/CardComponents';
-import Modal from '../../../components/Modal/ModalComponent';
-import ClassroomCreate from './ClassroomCreate';
+import Input from '../../../components/Input/InputTextComponent';
+import DropDown from '../../../components/Input/DropDownInputComponent';
+import Button from '../../../components/Button/ButtonComponent';
+import Table from '../../../components/Table/TableComponent';
+import BreadCrumbs from '../../../components/BreadCrumbs/BreadCrumbs';
+import Header from '../../../components/Typography/TypographyComponent';
+import { genderToString } from '../../../helpers/Converter';
 
 import { connect } from 'react-redux';
-import { fetchClassroomListByTrainingId } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom';
-import { increment, decrement } from '../../../redux/actions/ActiveStepActions';
-import { changeId } from '../../../redux/actions/ClassroomIdActions';
+import { fetchTrainersList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainer';
+import { fetchTraineeList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee';
+import {
+  createClassroom,
+  fetchClassroomListByTrainingId
+} from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom';
 
-class Classroom extends React.Component {
+class ClassroomCreate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      openDialog: false,
-      classroomListError: false,
-      classroomList: []
+      classroomLoading: false,
+      classroomError: false,
+      trainer: null,
+      classroom: {
+        createClassroomModels: [
+          {
+            name: '',
+            trainerUserId: '',
+            trainingId: '',
+            traineeUsersId: []
+          }
+        ]
+      },
+      traineeColumns: [
+        { title: translate('Name'), field: 'name' },
+        { title: translate('Surname'), field: 'surname' },
+        {
+          title: translate('NationalIdentityNumber'),
+          field: 'nationalIdentityNumber'
+        },
+        { title: translate('PhoneNumber'), field: 'phoneNumber' },
+        { title: translate('Gender'), field: 'gender' }
+      ],
+      traineeList: []
     };
   }
 
-  trainingId = null;
+  trainingId = localStorage.getItem('trainingId');
 
   componentDidUpdate(prevProps) {
     const {
-      isClassroomListByTrainingIdLoading,
-      classroomsListByTrainingId,
-      errorClassroomListByTrainingId
+      isTrainerListLoading,
+      errorTrainerList,
+      trainersList,
+      isCreateClassroomLoading,
+      newClassroom,
+      errorCreateClassroom,
+      isTraineeListLoading,
+      errorTraineeList,
+      trainees
     } = this.props;
 
     if (
-      !prevProps.errorClassroomListByTrainingId &&
-      errorClassroomListByTrainingId
+      prevProps.isTrainerListLoading &&
+      !isTrainerListLoading &&
+      trainersList
     ) {
+      if (!errorTrainerList) {
+        this.setState({
+          trainer: trainersList.items
+        });
+      }
+    }
+
+    if (!prevProps.isCreateClassroomLoading && isCreateClassroomLoading) {
       this.setState({
-        classroomListError: true
+        classroomLoading: true
+      });
+    }
+    if (!prevProps.errorCreateClassroom && errorCreateClassroom) {
+      this.setState({
+        classroomError: true,
+        classroomLoading: false
       });
     }
     if (
-      prevProps.isClassroomListByTrainingIdLoading &&
-      !isClassroomListByTrainingIdLoading &&
-      classroomsListByTrainingId
+      prevProps.isCreateClassroomLoading &&
+      !isCreateClassroomLoading &&
+      newClassroom
     ) {
-      this.setState({
-        classroomList: classroomsListByTrainingId.items
-      });
+      this.props.fetchClassroomListByTrainingId(this.trainingId);
+      if (!errorCreateClassroom) {
+        this.setState({
+          classroomLoading: false,
+          classroomError: false
+        });
+        this.props.history.push(
+          `/admin/trainingseries/training/${this.props.match.params.trainingName}`
+        );
+      }
+    }
+    if (prevProps.isTraineeListLoading && !isTraineeListLoading && trainees) {
+      if (!errorTraineeList) {
+        genderToString(trainees.items);
+        this.setState({
+          traineeList: trainees.items
+        });
+      }
     }
   }
 
-  handleClickOpenDialog = () => {
-    this.setState({ openDialog: true });
-  };
-
-  handleCloseDialog = () => {
-    this.setState({ openDialog: false });
-  };
-
   componentDidMount() {
-    this.props.fetchClassroomListByTrainingId(this.trainingId);
+    this.props.fetchTrainersList(0, 50);
+    this.props.fetchTraineeList(0, 50);
   }
 
+  handleClick = () => {
+    this.props.createClassroom(this.state.classroom);
+  };
+
   render() {
-    const { openDialog, classroomList } = this.state;
-    const { classes, trainingId } = this.props;
+    const {
+      classroomLoading,
+      trainer,
+      classroom,
+      classroomError,
+      traineeColumns,
+      traineeList
+    } = this.state;
+    const { classes } = this.props;
 
-    this.trainingId = trainingId;
+    console.log('trainingId', this.trainingId);
 
-    console.log('bilgi', classroomList);
+    this.state.classroom.createClassroomModels.map(classroom => {
+      classroom.trainingId = this.trainingId;
+    });
 
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={3}>
-            <CardButton
-              cardName={translate('AddNewClassroom')}
-              cardDescription={translate(
-                'YouCanCreateDifferentTrainingsForEachTrainingSeries'
-              )}
-              onClick={this.handleClickOpenDialog}
-              iconName="users"
+          <Grid item xs={12} sm={11}>
+            <BreadCrumbs />
+          </Grid>
+          <Grid item xs={12} sm={1}>
+            <Button
+              buttonColor="primary"
+              buttonName={translate('Save')}
+              onClick={this.handleClick}
+              disabled={classroomLoading}
+            />
+            {classroomLoading && (
+              <CircularProgress
+                size={24}
+                disableShrink={true}
+                className={classes.buttonProgressSave}
+              />
+            )}
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12} sm={12} />
+          {classroom.createClassroomModels.map((classroom, id) => (
+            <Grid item xs={12} sm={12} key={id}>
+              <Grid item xs={12} sm={12}>
+                <Input
+                  error={classroomError}
+                  labelName={translate('ClassroomName')}
+                  inputType="text"
+                  onChange={e => {
+                    classroom.name = e.target.value;
+                    this.setState({ classroomError: false });
+                  }}
+                />
+                <DropDown
+                  error={classroomError}
+                  data={trainer}
+                  labelName={translate('Trainer')}
+                  onChange={e => {
+                    classroom.trainerUserId = e.target.value;
+                    this.setState({ classroomError: false });
+                  }}
+                />
+              </Grid>
+            </Grid>
+          ))}
+          <Grid item xs={12} sm={12} />
+          <Grid item xs={12} sm={12}>
+            <Header pageHeader={translate('Trainees')} />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Table
+              columns={traineeColumns}
+              data={traineeList}
+              isSelected={selected => {
+                classroom.traineeUsersId = selected;
+              }}
             />
           </Grid>
-          <Grid item xs={12} sm={9}>
-            <Card
-              data={classroomList}
-              forClassroom
-              id={id => {
-                if (id) {
-                  this.props.changeId(id);
-                  this.props.increment(this.props.activeStep);
-                }
-              }}
-            ></Card>
-          </Grid>
         </Grid>
-        <Modal
-          titleName={translate('AddNewClassroom')}
-          open={openDialog}
-          handleClose={this.handleCloseDialog}
-        >
-          <ClassroomCreate trainingId={this.trainingId} />
-        </Modal>
       </div>
     );
   }
@@ -111,31 +213,46 @@ class Classroom extends React.Component {
 
 const mapStateToProps = state => {
   const {
-    isClassroomListByTrainingIdLoading,
-    classroomsListByTrainingId,
-    errorClassroomListByTrainingId
-  } = state.classroomListByTrainingId;
+    isTrainerListLoading,
+    errorTrainerList,
+    trainersList
+  } = state.trainersList;
 
-  let activeStep = state.ActiveStep.activeStep;
-  let id = state.ClassroomId.id;
+  const {
+    isCreateClassroomLoading,
+    createClassroom,
+    errorCreateClassroom
+  } = state.createClassroom;
+
+  let newClassroom = createClassroom;
+
+  const {
+    isTraineeListLoading,
+    errorTraineeList,
+    trainees
+  } = state.traineeList;
 
   return {
-    isClassroomListByTrainingIdLoading,
-    classroomsListByTrainingId,
-    errorClassroomListByTrainingId,
-    activeStep,
-    id
+    isTrainerListLoading,
+    errorTrainerList,
+    trainersList,
+    isCreateClassroomLoading,
+    newClassroom,
+    errorCreateClassroom,
+    isTraineeListLoading,
+    errorTraineeList,
+    trainees
   };
 };
 
 const mapDispatchToProps = {
+  fetchTrainersList,
+  createClassroom,
   fetchClassroomListByTrainingId,
-  increment,
-  decrement,
-  changeId
+  fetchTraineeList
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(Style)(Classroom));
+)(withStyles(Style)(ClassroomCreate));

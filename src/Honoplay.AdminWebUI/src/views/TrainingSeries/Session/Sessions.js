@@ -15,49 +15,50 @@ import Button from '../../../components/Button/ButtonComponent';
 import SearchIcon from '@material-ui/icons/Search';
 
 import { connect } from 'react-redux';
-import { fetchClassroomListByTrainingId } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom';
-import { increment, decrement } from '../../../redux/actions/ActiveStepActions';
-import { changeId } from '../../../redux/actions/ClassroomIdActions';
+import { fetchSessionListByClassroomId } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Session';
 
-class Classrooms extends React.Component {
+class Session extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       search: [],
       openDialog: false,
-      classroomListError: false,
-      classroomList: [],
-      classroomId: null,
-      openDialog: false
+      sessionListError: false,
+      sessionList: [],
+      sessionId: null
     };
   }
 
-  trainingId = localStorage.getItem('trainingId');
+  classroomId = localStorage.getItem('classroomId');
 
   componentDidUpdate(prevProps) {
     const {
-      isClassroomListByTrainingIdLoading,
-      classroomsListByTrainingId,
-      errorClassroomListByTrainingId
+      isSessionListByClassroomIdLoading,
+      sessionListByClassroomId,
+      errorSessionListByClassroomId
     } = this.props;
 
     if (
-      !prevProps.errorClassroomListByTrainingId &&
-      errorClassroomListByTrainingId
+      !prevProps.errorSessionListByClassroomId &&
+      errorSessionListByClassroomId
     ) {
       this.setState({
-        classroomListError: true
+        sessionListError: true
       });
     }
     if (
-      prevProps.isClassroomListByTrainingIdLoading &&
-      !isClassroomListByTrainingIdLoading &&
-      classroomsListByTrainingId
+      prevProps.isSessionListByClassroomIdLoading &&
+      !isSessionListByClassroomIdLoading &&
+      sessionListByClassroomId
     ) {
       this.setState({
-        classroomList: classroomsListByTrainingId.items
+        sessionList: sessionListByClassroomId.items
       });
     }
+  }
+
+  componentDidMount() {
+    this.props.fetchSessionListByClassroomId(this.classroomId);
   }
 
   handleClickOpenDialog = () => {
@@ -68,15 +69,11 @@ class Classrooms extends React.Component {
     this.setState({ openDialog: false });
   };
 
-  componentDidMount() {
-    this.props.fetchClassroomListByTrainingId(this.trainingId);
-  }
-
   onSearchInputChange = event => {
     let searched = [];
-    this.state.classroomList.map((classroom, index) => {
-      if (classroom.name.includes(event.target.value)) {
-        searched = searched.concat(classroom);
+    this.state.sessionList.map((session, index) => {
+      if (session.name.includes(event.target.value)) {
+        searched = searched.concat(session);
       }
     });
     this.setState({ search: searched });
@@ -84,12 +81,12 @@ class Classrooms extends React.Component {
 
   handleClick = () => {
     this.props.history.push(
-      `/admin/trainingseries/training/${this.props.match.params.trainingName}/classroom`
+      `/admin/trainingseries/training/classroom/${this.props.match.params.classroomName}/session`
     );
   };
 
   render() {
-    const { classroomList, search } = this.state;
+    const { sessionList, search } = this.state;
     const { classes } = this.props;
 
     return (
@@ -126,13 +123,9 @@ class Classrooms extends React.Component {
           </Grid>
           <Grid item xs={12} sm={12}>
             <Card
-              data={search.length === 0 ? classroomList : search}
+              data={search.length === 0 ? sessionList : search}
               url="training/classroom"
-              id={id => {
-                if (id) {
-                  localStorage.setItem('classroomId', id);
-                }
-              }}
+              id={id => {}}
             />
           </Grid>
         </Grid>
@@ -143,31 +136,23 @@ class Classrooms extends React.Component {
 
 const mapStateToProps = state => {
   const {
-    isClassroomListByTrainingIdLoading,
-    classroomsListByTrainingId,
-    errorClassroomListByTrainingId
-  } = state.classroomListByTrainingId;
-
-  let activeStep = state.ActiveStep.activeStep;
-  let id = state.ClassroomId.id;
+    isSessionListByClassroomIdLoading,
+    sessionListByClassroomId,
+    errorSessionListByClassroomId
+  } = state.sessionListByClassroomId;
 
   return {
-    isClassroomListByTrainingIdLoading,
-    classroomsListByTrainingId,
-    errorClassroomListByTrainingId,
-    activeStep,
-    id
+    isSessionListByClassroomIdLoading,
+    sessionListByClassroomId,
+    errorSessionListByClassroomId
   };
 };
 
 const mapDispatchToProps = {
-  fetchClassroomListByTrainingId,
-  increment,
-  decrement,
-  changeId
+  fetchSessionListByClassroomId
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(Style)(Classrooms));
+)(withStyles(Style)(Session));
