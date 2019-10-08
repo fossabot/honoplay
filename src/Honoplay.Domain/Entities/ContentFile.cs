@@ -14,8 +14,10 @@ namespace Honoplay.Domain.Entities
         public string Name { get; set; }
         public string ContentType { get; set; }
         public byte[] Data { get; set; }
+        public Guid TenantId { get; set; }
 
         public virtual ICollection<TraineeUser> TraineeUsers { get; set; }
         public virtual ICollection<Question> Questions { get; set; }
+        public Tenant Tenant { get; set; }
     }
 }

@@ -179,6 +179,15 @@ namespace Honoplay.AdminWebAPI.System.Tests
                 Name = "traineeGroup",
                 TenantId = tenantId
             });
+            dbContext.ContentFiles.Add(new ContentFile
+            {
+                Id = Guid.Parse("4f2b88e3-704c-41d8-a679-f608a159d055"),
+                Name = "contentFile1",
+                ContentType = "contentFile1",
+                Data = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 },
+                TenantId = tenantId,
+                CreatedBy = adminUser.Id
+            });
 
             dbContext.SaveChanges();
         }
