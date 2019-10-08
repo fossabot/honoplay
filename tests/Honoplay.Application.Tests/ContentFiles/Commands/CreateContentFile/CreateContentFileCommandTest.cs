@@ -68,6 +68,9 @@ namespace Honoplay.Application.Tests.ContentFiles.Commands.CreateContentFile
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
+            var rnd = new Random();
+            var randomBytes = new byte[10];
+            rnd.NextBytes(randomBytes);
             var createContentFile = new CreateContentFileCommand
             {
                 TenantId = _tenantId,
@@ -76,7 +79,7 @@ namespace Honoplay.Application.Tests.ContentFiles.Commands.CreateContentFile
                 {
                     new CreateContentFileCommandModel
                     {
-                        Data = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 },
+                        Data = randomBytes,
                         Name = "contentFile1",
                         ContentType = "image/jpeg"
                     }

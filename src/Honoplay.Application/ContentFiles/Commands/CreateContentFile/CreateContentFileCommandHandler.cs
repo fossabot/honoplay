@@ -46,6 +46,7 @@ namespace Honoplay.Application.ContentFiles.Commands.CreateContentFile
                             Name = createContentFileModel.Name,
                             ContentType = createContentFileModel.ContentType,
                             Data = createContentFileModel.Data,
+                            TenantId = request.TenantId
                         };
                         newContentFiles.Add(newContentFile);
                     }

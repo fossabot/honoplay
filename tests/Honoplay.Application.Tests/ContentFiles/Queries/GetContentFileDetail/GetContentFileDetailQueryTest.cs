@@ -73,7 +73,8 @@ namespace Honoplay.Application.Tests.ContentFiles.Queries.GetContentFileDetail
                 CreatedBy = adminUser.Id,
                 Data = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 },
                 Name = "contentFile1",
-                ContentType = "image/jpeg"
+                ContentType = "image/jpeg",
+                TenantId = tenant.Id
             };
             context.ContentFiles.Add(contentFile);
 

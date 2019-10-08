@@ -22,7 +22,7 @@ namespace Honoplay.Application.Tests.ContentFiles.Queries.GetContentFileDetail
         [Fact]
         public void ShouldBeNotValidForNullOrEmpty()
         {
-            _getContentFileDetailValidator.ShouldHaveValidationErrorFor(x => x.Id, null);
+            _getContentFileDetailValidator.ShouldHaveValidationErrorFor(x => x.Id, Guid.Empty);
         }
     }
 }

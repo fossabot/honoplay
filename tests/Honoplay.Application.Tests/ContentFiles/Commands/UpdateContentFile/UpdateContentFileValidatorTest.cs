@@ -33,7 +33,7 @@ namespace Honoplay.Application.Tests.ContentFiles.Commands.UpdateContentFile
         public void ShouldBeNotValidForNullOrEmpty()
         {
             _updateContentFileValidator.ShouldHaveValidationErrorFor(x => x.Data, new byte[] { });
-            _updateContentFileValidator.ShouldHaveValidationErrorFor(x => x.Id, Guid.NewGuid());
+            _updateContentFileValidator.ShouldHaveValidationErrorFor(x => x.Id, Guid.Empty);
         }
     }
 }

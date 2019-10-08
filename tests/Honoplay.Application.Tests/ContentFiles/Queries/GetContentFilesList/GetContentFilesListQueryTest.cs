@@ -1,4 +1,5 @@
-﻿using Honoplay.Common.Extensions;
+﻿using Honoplay.Application.ContentFiles.Queries.GetContentFilesList;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
@@ -7,7 +8,6 @@ using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Honoplay.Application.ContentFiles.Queries.GetContentFilesList;
 using Xunit;
 
 namespace Honoplay.Application.Tests.ContentFiles.Queries.GetContentFilesList
@@ -70,7 +70,8 @@ namespace Honoplay.Application.Tests.ContentFiles.Queries.GetContentFilesList
                 CreatedBy = adminUser.Id,
                 Data = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 },
                 Name = "contentFile1",
-                ContentType = "image/jpeg"
+                ContentType = "image/jpeg",
+                TenantId = tenant.Id
             };
             context.ContentFiles.Add(contentFile);
 
