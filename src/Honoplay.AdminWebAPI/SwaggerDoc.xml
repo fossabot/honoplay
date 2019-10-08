@@ -41,10 +41,10 @@
         </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.ContentFileController.Get(System.Guid)">
             <summary>
-            This service update contentFile.
+            This service retrieve contentFile.
             </summary>
             <param name="id">Get contentFile model</param>
-            <returns>Get contentFile by tenant id and contentFile id with status code.</returns>
+            <returns>Get contentFile by contentFileId with status code.</returns>
         </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.OptionController.Post(Honoplay.Application.Options.Commands.CreateOption.CreateOptionCommand)">
             <summary>
