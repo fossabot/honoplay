@@ -1,5 +1,5 @@
 ﻿import React, { useState, useEffect } from 'react';
-import { Route, Redirect, Switch } from 'react-router-dom';
+import { HashRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import Layout from './components/Layout/LayoutComponent';
 
 import Questions from './views/Questions/Questions';
@@ -68,57 +68,31 @@ const App = ({ renewToken, newToken }) => {
 
     return (
       <StylesProvider generateClassName={generateClassName}>
-        <Switch>
-          <Layout>
-            <Route path="/admin/profile" component={Profile} />
-            <Route path="/admin/dashboard" component={Dashboard} />
-            <Route path="/admin/reports" component={Reports} />
-            <Route path="/admin/questions" component={Questions} />
-            <Route path="/admin/trainees" component={Trainees} />
-            <Route path="/admin/trainers" component={Trainers} />
-            <Route path="/admin/usermanagement" component={UserManagement} />
-            <Route path="/admin/addquestion" component={NewQuestion} />
-            <Route
-              exact
-              path="/admin/trainingseries"
-              component={TrainingSeries}
-            />
-            <Route
-              exact
-              path="/admin/trainingseries/:trainingSeriesName/"
-              component={TrainingSeriesTab}
-            />
-            <Route
-              exact
-              path="/admin/trainingseries/:trainingSeriesName/training/"
-              component={Training}
-            />
-            <Route
-              exact
-              path="/admin/trainingseries/training/:trainingName/"
-              component={TrainingsTab}
-            />
-            <Route
-              exact
-              path="/admin/trainingseries/training/:trainingName/classroom"
-              component={Classroom}
-            />
-            <Route
-              exact
-              path="/admin/trainingseries/training/classroom/:classroomName"
-              component={Sessions}
-            />
-            <Route
-              exact
-              path="/admin/trainingseries/training/classroom/:classroomName/session"
-              component={Session}
-            />
-          </Layout>
-        </Switch>
+        <Router>
+          <Switch>
+            <Layout>
+              <Route exact path="/profile" component={Profile} />
+              <Route exact path="/dashboard" component={Dashboard} />
+              <Route exact path="/reports" component={Reports} />
+              <Route exact path="/questions" component={Questions} />
+              <Route exact path="/trainees" component={Trainees} />
+              <Route exact path="/trainers" component={Trainers} />
+              <Route exact path="/usermanagement" component={UserManagement} />
+              <Route exact path="/addquestion" component={NewQuestion} />
+              <Route exact path="/trainingseries" component={TrainingSeries} />
+              <Route exact path="/trainingseries/:trainingSeriesName/" component={TrainingSeriesTab} />
+              <Route exact path="/trainingseries/:trainingSeriesName/training/" component={Training} />
+              <Route exact path="/trainingseries/training/:trainingName/" component={TrainingsTab} />
+              <Route exact path="/trainingseries/training/:trainingName/classroom" component={Classroom} />
+              <Route exact path="/trainingseries/training/classroom/:classroomName" component={Sessions} />
+              <Route exact path="/trainingseries/training/classroom/:classroomName/session" component={Session} />
+            </Layout>
+          </Switch>
+        </Router>
       </StylesProvider>
     );
   } else {
-    return <Redirect to="/admin/login" />;
+    return <Redirect to="/login" />;
   }
 };
 
