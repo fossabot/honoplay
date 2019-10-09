@@ -8,13 +8,13 @@ import {
   InputAdornment,
   IconButton
 } from '@material-ui/core';
-import Style from '../Style';
-import Modal from '../../components/Modal/ModalComponent';
+import Style from '../../Style';
+import Modal from '../../../components/Modal/ModalComponent';
 import TrainingseriesCreate from './TrainingSeriesCreate';
-import Card from '../../components/Card/Card';
-import Button from '../../components/Button/ButtonComponent';
+import Card from '../../../components/Card/Card';
+import Button from '../../../components/Button/ButtonComponent';
 import SearchIcon from '@material-ui/icons/Search';
-import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
+import BreadCrumbs from '../../../components/BreadCrumbs/BreadCrumbs';
 
 import { connect } from 'react-redux';
 import { fetchTrainingSeriesList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingSeries';
@@ -88,7 +88,7 @@ class TrainingSeries extends React.Component {
           <Grid item xs={12} sm={9}>
             <BreadCrumbs />
           </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={8} sm={2}>
             <TextField
               placeholder={translate('Search')}
               margin="none"
@@ -104,7 +104,7 @@ class TrainingSeries extends React.Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={1}>
+          <Grid item xs={4} sm={1}>
             <Button
               buttonColor="primary"
               buttonName={translate('Add')}

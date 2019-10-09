@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core';
 import Style from '../../Style';
 import Card from '../../../components/Card/Card';
-import BreadCrumbs from '../../../components/BreadCrumbs/BreadCrumbs';
 import Button from '../../../components/Button/ButtonComponent';
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -87,12 +86,6 @@ class Trainings extends React.Component {
     this.props.fetchTrainingListByTrainingSeriesId(this.trainingSeriesId);
   }
 
-  handleClick = () => {
-    this.props.history.push(
-      `/admin/trainingseries/${this.props.match.params.trainingSeriesName}/training`
-    );
-  };
-
   onSearchInputChange = event => {
     let searched = [];
     this.state.trainingList.map((training, index) => {
@@ -105,15 +98,13 @@ class Trainings extends React.Component {
 
   render() {
     const { trainingList, search } = this.state;
-    const { classes } = this.props;
+    const { classes, onClick } = this.props;
 
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={9}>
-            <BreadCrumbs />
-          </Grid>
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={9} />
+          <Grid item xs={8} sm={2}>
             <TextField
               placeholder={translate('Search')}
               margin="none"
@@ -129,15 +120,12 @@ class Trainings extends React.Component {
               }}
             />
           </Grid>
-          <Grid item xs={12} sm={1}>
+          <Grid item xs={4} sm={1}>
             <Button
               buttonColor="primary"
               buttonName={translate('Add')}
-              onClick={this.handleClick}
+              onClick={onClick}
             />
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <Divider />
           </Grid>
           <Grid item xs={12} sm={12}>
             <Card

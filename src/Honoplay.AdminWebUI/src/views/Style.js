@@ -61,6 +61,15 @@ const Style = theme => ({
   bootstrapFormLabel: {
     fontSize: 15,
     color: '#495057'
+  },
+  tabs: {
+    borderBottomColor: '#eeeeee',
+    borderBottomStyle: 'solid',
+    borderBottomWidth: 1
+  },
+  tab: {
+    textTransform: 'capitalize',
+    paddingRight: 150
   }
 });
 
