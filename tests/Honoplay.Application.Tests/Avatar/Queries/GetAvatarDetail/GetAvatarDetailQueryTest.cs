@@ -32,6 +32,7 @@ namespace Honoplay.Application.Tests.Avatars.Queries.GetAvatarDetail
                 Name = "Avatar1",
                 ImageBytes = new byte[] { 0x20 }
             };
+            context.Avatars.Add(avatar);
             context.SaveChanges();
             avatarId = avatar.Id;
             return context;
