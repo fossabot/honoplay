@@ -81,7 +81,7 @@ class Session extends React.Component {
 
   handleClick = () => {
     this.props.history.push(
-      `/admin/trainingseries/training/classroom/${this.props.match.params.classroomName}/session`
+      `/trainingseries/training/classroom/${this.props.match.params.classroomName}/session`
     );
   };
 

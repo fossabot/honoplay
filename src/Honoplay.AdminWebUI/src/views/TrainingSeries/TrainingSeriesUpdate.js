@@ -80,7 +80,7 @@ class TrainingSeriesInformation extends React.Component {
     this.props.updateTraining(this.state.newTrainingModel);
     if (this.props.activeStep === 3) {
       this.props.reset();
-      this.props.history.push('/admin/trainingseriesdetail');
+      this.props.history.push('/trainingseriesdetail');
     }
   };
 

@@ -88,7 +88,7 @@ class Training extends React.Component {
           trainingError: false
         });
         this.props.history.push(
-          `/admin/trainingseries/${this.props.match.params.trainingSeriesName}`
+          `/trainingseries/${this.props.match.params.trainingSeriesName}`
         );
       }
     }

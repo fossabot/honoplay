@@ -99,7 +99,7 @@ class ClassroomCreate extends React.Component {
           classroomError: false
         });
         this.props.history.push(
-          `/admin/trainingseries/training/${this.props.match.params.trainingName}`
+          `/trainingseries/training/${this.props.match.params.trainingName}`
         );
       }
     }

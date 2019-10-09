@@ -69,56 +69,56 @@ const App = ({ renewToken, newToken }) => {
     return (
       <StylesProvider generateClassName={generateClassName}>
         <Switch>
-          <Layout>
-            <Route path="/admin/profile" component={Profile} />
-            <Route path="/admin/dashboard" component={Dashboard} />
-            <Route path="/admin/reports" component={Reports} />
-            <Route path="/admin/questions" component={Questions} />
-            <Route path="/admin/trainees" component={Trainees} />
-            <Route path="/admin/trainers" component={Trainers} />
-            <Route path="/admin/usermanagement" component={UserManagement} />
-            <Route path="/admin/addquestion" component={NewQuestion} />
+          <HashRouter>
+            <Route path="/profile" component={Profile} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/reports" component={Reports} />
+            <Route path="/questions" component={Questions} />
+            <Route path="/trainees" component={Trainees} />
+            <Route path="/trainers" component={Trainers} />
+            <Route path="/usermanagement" component={UserManagement} />
+            <Route path="/addquestion" component={NewQuestion} />
             <Route
               exact
-              path="/admin/trainingseries"
+              path="/trainingseries"
               component={TrainingSeries}
             />
             <Route
               exact
-              path="/admin/trainingseries/:trainingSeriesName/"
+              path="/trainingseries/:trainingSeriesName/"
               component={TrainingSeriesTab}
             />
             <Route
               exact
-              path="/admin/trainingseries/:trainingSeriesName/training/"
+              path="/trainingseries/:trainingSeriesName/training/"
               component={Training}
             />
             <Route
               exact
-              path="/admin/trainingseries/training/:trainingName/"
+              path="/trainingseries/training/:trainingName/"
               component={TrainingsTab}
             />
             <Route
               exact
-              path="/admin/trainingseries/training/:trainingName/classroom"
+              path="/trainingseries/training/:trainingName/classroom"
               component={Classroom}
             />
             <Route
               exact
-              path="/admin/trainingseries/training/classroom/:classroomName"
+              path="/trainingseries/training/classroom/:classroomName"
               component={Sessions}
             />
             <Route
               exact
-              path="/admin/trainingseries/training/classroom/:classroomName/session"
+              path="/trainingseries/training/classroom/:classroomName/session"
               component={Session}
             />
-          </Layout>
+          </HashRouter>
         </Switch>
       </StylesProvider>
     );
   } else {
-    return <Redirect to="/admin/login" />;
+    return <Redirect to="/login" />;
   }
 };
 

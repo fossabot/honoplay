@@ -17,7 +17,7 @@ render(
   <Provider store={store}>
     <Router history={history}>
       <Switch>
-        <Route exact path="/admin/login" component={Login} />
+        <Route exact path="/login" component={Login} />
         <Route path="/admin" component={App} />
         <Route exact path="/" component={Login} />
       </Switch>
