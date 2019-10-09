@@ -6,12 +6,12 @@ namespace Honoplay.Domain.Entities
     {
         public Avatar()
         {
-            TraineeUsersAvatars = new HashSet<TraineeUserAvatar>();
+            TraineeUsers = new HashSet<TraineeUser>();
         }
         public int Id { get; set; }
         public string Name { get; set; }
         public byte[] ImageBytes { get; set; }
 
-        public virtual ICollection<TraineeUserAvatar> TraineeUsersAvatars { get; set; }
+        public virtual ICollection<TraineeUser> TraineeUsers { get; set; }
     }
 }
