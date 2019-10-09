@@ -49,6 +49,7 @@ namespace Honoplay.Application.TraineeUsers.Commands.UpdateTraineeUser
 
                     traineeUser.Name = request.Name;
                     traineeUser.DepartmentId = request.DepartmentId;
+                    traineeUser.AvatarId = request.AvatarId;
                     traineeUser.Gender = request.Gender;
                     traineeUser.NationalIdentityNumber = request.NationalIdentityNumber;
                     traineeUser.PhoneNumber = request.PhoneNumber;
@@ -94,6 +95,7 @@ namespace Honoplay.Application.TraineeUsers.Commands.UpdateTraineeUser
                                                       request.NationalIdentityNumber,
                                                       request.PhoneNumber,
                                                       request.Gender,
+                                                      request.AvatarId,
                                                       updateAt);
             return new ResponseModel<UpdateTraineeUserModel>(traineeUserModel);
         }

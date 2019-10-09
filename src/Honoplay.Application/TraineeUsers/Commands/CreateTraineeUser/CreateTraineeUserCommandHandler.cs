@@ -41,7 +41,8 @@ namespace Honoplay.Application.TraineeUsers.Commands.CreateTraineeUser
                 Email = request.Email,
                 LastPasswordChangeDateTime = DateTimeOffset.Now,
                 PasswordSalt = salt,
-                Password = request.Password.GetSHA512(salt)
+                Password = request.Password.GetSHA512(salt),
+                AvatarId = request.AvatarId
             };
 
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
@@ -88,8 +89,14 @@ namespace Honoplay.Application.TraineeUsers.Commands.CreateTraineeUser
             }
 
             var traineeUserModel = new CreateTraineeUserModel(traineeUser.Id,
-                traineeUser.CreatedAt,
-                traineeUser.Name, traineeUser.Email, traineeUser.Surname, traineeUser.NationalIdentityNumber, traineeUser.PhoneNumber, traineeUser.Gender);
+                                                              traineeUser.CreatedAt,
+                                                              traineeUser.Name,
+                                                              traineeUser.Email,
+                                                              traineeUser.Surname,
+                                                              traineeUser.NationalIdentityNumber,
+                                                              traineeUser.PhoneNumber,
+                                                              traineeUser.Gender,
+                                                              traineeUser.AvatarId);
             return new ResponseModel<CreateTraineeUserModel>(traineeUserModel);
         }
     }
