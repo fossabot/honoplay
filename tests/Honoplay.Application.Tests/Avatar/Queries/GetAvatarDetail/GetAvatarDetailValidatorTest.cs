@@ -17,11 +17,5 @@ namespace Honoplay.Application.Tests.Avatars.Queries.GetAvatarDetail
         {
             Assert.True(_getAvatarDetailValidator.Validate(new GetAvatarDetailQuery(1)).IsValid);
         }
-
-        [Fact]
-        public void ShouldBeNotValidForNullOrEmpty()
-        {
-            _getAvatarDetailValidator.ShouldHaveValidationErrorFor(x => x.Id, null);
-        }
     }
 }
