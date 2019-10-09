@@ -12,12 +12,12 @@ const Link = React.forwardRef((props, ref) => (
 const PureBreadcrumbs = ({ breadcrumbs, classes }) => (
   <Breadcrumbs>
     {breadcrumbs.map(({ breadcrumb, match }, index) =>
-      match.url === '/admin' ? (
+      match.url === '/' ? (
         ''
       ) : (
         <div key={match.url}>
           <Link
-            to={match.url === '/' ? '/admin/dashboard' : match.url || ''}
+            to={match.url === '/' ? '/dashboard' : match.url || ''}
             //
             className={classes.text}
           >

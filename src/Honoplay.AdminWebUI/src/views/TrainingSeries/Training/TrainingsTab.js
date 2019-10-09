@@ -39,7 +39,7 @@ class TrainingsTab extends React.Component {
 
   handleClick = () => {
     this.props.history.push(
-      `/admin/trainingseries/training/${this.props.match.params.trainingName}/classroom`
+      `/trainingseries/training/${this.props.match.params.trainingName}/classroom`
     );
   };
 

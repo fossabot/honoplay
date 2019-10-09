@@ -47,8 +47,8 @@ export default function Card(props) {
                                 component={Link}
                                 to={
                                   url
-                                    ? `/admin/trainingseries/${url}/${data.name}`
-                                    : `/admin/trainingseries/${data.name}`
+                                    ? `/trainingseries/${url}/${data.name}`
+                                    : `/trainingseries/${data.name}`
                                 }
                                 onClick={() => handleOpen(data.id)}
                               >
