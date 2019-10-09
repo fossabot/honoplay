@@ -20,7 +20,7 @@ class TrainingSeriesCreate extends React.Component {
     super(props);
     this.state = {
       success: false,
-      trainingError: false,
+      trainingSeriesError: false,
       loading: false,
       trainingSeries: {
         createTrainingSeriesModels: [
@@ -71,7 +71,7 @@ class TrainingSeriesCreate extends React.Component {
     }
     if (!prevProps.errorCreateTrainingSeries && errorCreateTrainingSeries) {
       this.setState({
-        trainingError: true,
+        trainingSeriesError: true,
         loading: false
       });
     }
@@ -84,7 +84,7 @@ class TrainingSeriesCreate extends React.Component {
         this.props.fetchTrainingSeriesList(0, 50);
         this.setState({
           loading: false,
-          trainingError: false
+          trainingSeriesError: false
         });
       }
     }
@@ -98,7 +98,7 @@ class TrainingSeriesCreate extends React.Component {
     }
     if (!prevProps.errorUpdateTrainingSeries && errorUpdateTrainingSeries) {
       this.setState({
-        trainingError: true,
+        trainingSeriesError: true,
         loading: false,
         success: false
       });
@@ -110,7 +110,7 @@ class TrainingSeriesCreate extends React.Component {
     ) {
       if (!errorUpdateTrainingSeries) {
         this.setState({
-          trainingError: false,
+          trainingSeriesError: false,
           loading: false,
           success: true
         });
@@ -129,14 +129,19 @@ class TrainingSeriesCreate extends React.Component {
     this.props.createTrainingSeries(this.state.trainingSeries);
   };
 
-  handleClickUpdate = () => {
+  handleUpdate = () => {
     this.state.trainingSeries.createTrainingSeriesModels.map(
       (trainingSeries, id) => this.props.updateTrainingSeries(trainingSeries)
     );
   };
 
   render() {
-    const { trainingSeries, trainingError, loading, success } = this.state;
+    const {
+      trainingSeries,
+      trainingSeriesError,
+      loading,
+      success
+    } = this.state;
     const { classes, update } = this.props;
     const buttonClassname = classNames({
       [classes.buttonSuccess]: success
@@ -152,7 +157,7 @@ class TrainingSeriesCreate extends React.Component {
                 <Button
                   buttonColor="primary"
                   buttonName={translate('Update')}
-                  onClick={this.handleClickUpdate}
+                  onClick={this.handleUpdate}
                   className={buttonClassname}
                   disabled={loading}
                 />
@@ -171,12 +176,12 @@ class TrainingSeriesCreate extends React.Component {
             (trainingSeries, id) => (
               <Grid item xs={12} sm={12} key={id}>
                 <Input
-                  error={trainingError}
+                  error={trainingSeriesError}
                   labelName={translate('TrainingSeriesName')}
                   inputType="text"
                   onChange={e => {
                     trainingSeries.name = e.target.value;
-                    this.setState({ trainingError: false });
+                    this.setState({ trainingSeriesError: false });
                   }}
                   value={update && trainingSeries.name}
                 />

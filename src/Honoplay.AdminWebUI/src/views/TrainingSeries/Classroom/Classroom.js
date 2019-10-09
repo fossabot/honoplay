@@ -98,9 +98,9 @@ class ClassroomCreate extends React.Component {
           classroomLoading: false,
           classroomError: false
         });
-        // this.props.history.push(
-        //   `/admin/trainingseries/training/${this.props.match.params.trainingName}`
-        // );
+        this.props.history.push(
+          `/admin/trainingseries/training/${this.props.match.params.trainingName}`
+        );
       }
     }
     if (prevProps.isTraineeListLoading && !isTraineeListLoading && trainees) {
