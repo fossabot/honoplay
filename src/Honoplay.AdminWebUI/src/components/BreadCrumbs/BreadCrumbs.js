@@ -17,7 +17,7 @@ const PureBreadcrumbs = ({ breadcrumbs, classes }) => (
       ) : (
         <div key={match.url}>
           <Link
-            to={match.url === '/' ? '/dashboard' : match.url || ''}
+            to={match.url === '/' ? '/admin/dashboard' : match.url || ''}
             //
             className={classes.text}
           >

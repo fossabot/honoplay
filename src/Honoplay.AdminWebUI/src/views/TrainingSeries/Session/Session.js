@@ -67,7 +67,7 @@ class SessionCreate extends React.Component {
           sessionError: false
         });
         this.props.history.push(
-          `/trainingseries/training/classroom/${this.props.match.params.trainingSeriesName}`
+          `/admin/trainingseries/training/classroom/${this.props.match.params.trainingSeriesName}`
         );
       }
     }

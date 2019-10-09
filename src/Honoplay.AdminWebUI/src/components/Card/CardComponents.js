@@ -97,7 +97,7 @@ class CardComponent extends React.Component {
                               <Button
                                 variant="contained"
                                 component={url && Link}
-                                to={url && `/${url}`}
+                                to={url && `/admin/${url}`}
                                 onClick={() => this.handleOpen(data.id)}
                               >
                                 {forClassroom
