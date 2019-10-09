@@ -7,8 +7,8 @@ import Trainees from './views/Trainees/Trainee';
 import Trainers from './views/Trainers/Trainers';
 import UserManagement from './views/UserManagement/UserManagement';
 import NewQuestion from './views/Questions/NewQuestion';
-import TrainingSeries from './views/TrainingSeries/TrainingSeries';
-import Trainings from './views/TrainingSeries/Training/Trainings';
+import TrainingSeries from './views/TrainingSeries/TrainingSeries/TrainingSeries';
+import TrainingSeriesTab from './views/TrainingSeries/TrainingSeries/TrainingSeriesTab';
 import Classrooms from './views/TrainingSeries/Classroom/Classrooms';
 import Classroom from './views/TrainingSeries/Classroom/Classroom';
 import Sessions from './views/TrainingSeries/Session/Sessions';
@@ -86,7 +86,7 @@ const App = ({ renewToken, newToken }) => {
             <Route
               exact
               path="/admin/trainingseries/:trainingSeriesName/"
-              component={Trainings}
+              component={TrainingSeriesTab}
             />
             <Route
               exact

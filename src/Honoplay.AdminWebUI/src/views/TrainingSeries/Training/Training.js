@@ -1,7 +1,7 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, Divider } from '@material-ui/core';
+import { Grid, Divider, CircularProgress } from '@material-ui/core';
 import BreadCrumbs from '../../../components/BreadCrumbs/BreadCrumbs';
 import Button from '../../../components/Button/ButtonComponent';
 import Style from '../../Style';
@@ -10,7 +10,6 @@ import DropDown from '../../../components/Input/DropDownInputComponent';
 
 import { connect } from 'react-redux';
 import { createTraining } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Training';
-import { log } from 'util';
 
 class Training extends React.Component {
   constructor(props) {
@@ -51,8 +50,6 @@ class Training extends React.Component {
       });
     }
     if (!prevProps.errorCreateTraining && errorCreateTraining) {
-      console.log('asdas');
-
       this.setState({
         trainingError: true,
         trainingLoading: false
@@ -84,7 +81,8 @@ class Training extends React.Component {
     const {
       createTrainingModels,
       trainingCategory,
-      trainingError
+      trainingError,
+      trainingLoading
     } = this.state;
     const { classes } = this.props;
 
@@ -103,7 +101,15 @@ class Training extends React.Component {
               buttonColor="primary"
               buttonName={translate('Save')}
               onClick={this.handleClick}
+              disabled={trainingLoading}
             />
+            {trainingLoading && (
+              <CircularProgress
+                size={24}
+                disableShrink={true}
+                className={classes.buttonProgressSave}
+              />
+            )}
           </Grid>
           <Grid item xs={12} sm={12}>
             <Divider />
@@ -185,7 +191,6 @@ const mapStateToProps = state => {
   } = state.createTraining;
 
   let newCreateTraining = createTraining;
-  console.log('error', errorCreateTraining);
 
   return {
     isCreateTrainingLoading,

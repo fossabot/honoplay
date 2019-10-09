@@ -8,7 +8,6 @@ import DropDown from '../../../components/Input/DropDownInputComponent';
 import Button from '../../../components/Button/ButtonComponent';
 import Table from '../../../components/Table/TableComponent';
 import BreadCrumbs from '../../../components/BreadCrumbs/BreadCrumbs';
-import Header from '../../../components/Typography/TypographyComponent';
 import { genderToString } from '../../../helpers/Converter';
 
 import { connect } from 'react-redux';

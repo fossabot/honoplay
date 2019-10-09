@@ -4,7 +4,6 @@ import { Paper, Typography, IconButton, Divider } from '@material-ui/core';
 import moment from 'moment';
 import Style from './CardStyle';
 import Edit from '@material-ui/icons/Edit';
-import Add from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
 
 export default function Card(props) {
@@ -43,9 +42,6 @@ export default function Card(props) {
                           <Divider />
 
                           <div className={classes.div4}>
-                            <IconButton>
-                              <Edit />
-                            </IconButton>
                             {add && (
                               <IconButton
                                 component={Link}
@@ -56,7 +52,7 @@ export default function Card(props) {
                                 }
                                 onClick={() => handleOpen(data.id)}
                               >
-                                <Add />
+                                <Edit />
                               </IconButton>
                             )}
                           </div>
