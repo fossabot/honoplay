@@ -82,22 +82,14 @@ class Classrooms extends React.Component {
     this.setState({ search: searched });
   };
 
-  handleClick = () => {
-    this.props.history.push(
-      `/admin/trainingseries/training/${this.props.match.params.trainingName}/classroom`
-    );
-  };
-
   render() {
     const { classroomList, search } = this.state;
-    const { classes } = this.props;
+    const { classes, onClick } = this.props;
 
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={9}>
-            <BreadCrumbs />
-          </Grid>
+          <Grid item xs={12} sm={9} />
           <Grid item xs={12} sm={2}>
             <TextField
               placeholder={translate('Search')}
@@ -118,11 +110,8 @@ class Classrooms extends React.Component {
             <Button
               buttonColor="primary"
               buttonName={translate('Add')}
-              onClick={this.handleClick}
+              onClick={onClick}
             />
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <Divider />
           </Grid>
           <Grid item xs={12} sm={12}>
             <Card

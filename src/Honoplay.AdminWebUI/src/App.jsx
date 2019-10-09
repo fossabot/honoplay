@@ -9,7 +9,8 @@ import UserManagement from './views/UserManagement/UserManagement';
 import NewQuestion from './views/Questions/NewQuestion';
 import TrainingSeries from './views/TrainingSeries/TrainingSeries/TrainingSeries';
 import TrainingSeriesTab from './views/TrainingSeries/TrainingSeries/TrainingSeriesTab';
-import Classrooms from './views/TrainingSeries/Classroom/Classrooms';
+import Training from './views/TrainingSeries/Training/Training';
+import TrainingsTab from './views/TrainingSeries/Training/TrainingsTab';
 import Classroom from './views/TrainingSeries/Classroom/Classroom';
 import Sessions from './views/TrainingSeries/Session/Sessions';
 import Session from './views/TrainingSeries/Session/Session';
@@ -22,7 +23,6 @@ import { connect } from 'react-redux';
 import { renewToken } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/AdminUser';
 import decoder from 'jwt-decode';
 import { StylesProvider, createGenerateClassName } from '@material-ui/styles';
-import Training from './views/TrainingSeries/Training/Training';
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'c',
@@ -96,7 +96,7 @@ const App = ({ renewToken, newToken }) => {
             <Route
               exact
               path="/admin/trainingseries/training/:trainingName/"
-              component={Classrooms}
+              component={TrainingsTab}
             />
             <Route
               exact

@@ -84,7 +84,7 @@ class Training extends React.Component {
       trainingError,
       trainingLoading
     } = this.state;
-    const { classes } = this.props;
+    const { classes, update } = this.props;
 
     this.state.createTrainingModels.map((training, id) => {
       training.trainingSeriesId = this.trainingSeriesId;
@@ -93,14 +93,18 @@ class Training extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={11}>
-            <BreadCrumbs />
-          </Grid>
+          {update ? (
+            <Grid item xs={12} sm={11} />
+          ) : (
+            <Grid item xs={12} sm={11}>
+              <BreadCrumbs />
+            </Grid>
+          )}
           <Grid item xs={12} sm={1}>
             <Button
               buttonColor="primary"
-              buttonName={translate('Save')}
-              onClick={this.handleClick}
+              buttonName={update ? translate('Update') : translate('Save')}
+              onClick={update ? this.handleUpdate : this.handleClick}
               disabled={trainingLoading}
             />
             {trainingLoading && (
@@ -111,9 +115,11 @@ class Training extends React.Component {
               />
             )}
           </Grid>
-          <Grid item xs={12} sm={12}>
-            <Divider />
-          </Grid>
+          {!update && (
+            <Grid item xs={12} sm={12}>
+              <Divider />
+            </Grid>
+          )}
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12}>
             {createTrainingModels.map((training, id) => (
