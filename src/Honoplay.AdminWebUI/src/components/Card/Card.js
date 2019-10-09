@@ -18,26 +18,18 @@ export default function Card(props) {
     <React.Fragment>
       <CssBaseline />
       <div className={classes.root}>
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div className={classes.divRoot}>
           {data &&
             data.map((data, index) => {
               const dateToFormat = data.createdAt;
               return (
-                <div style={{ display: 'flex', flexWrap: 'wrap' }} key={index}>
+                <div className={classes.div1} key={index}>
                   <div className={classes.div}>
-                    <div style={{ position: 'relative' }}>
+                    <div className={classes.div2}>
                       <Paper className={classes.paper}>
-                        <div
-                          style={{
-                            position: 'relative'
-                          }}
-                        >
+                        <div>
                           <div className={classes.box}>
-                            <Typography
-                              style={{ left: 0, textTransform: 'uppercase' }}
-                              color="primary"
-                              gutterBottom
-                            >
+                            <Typography color="primary" gutterBottom>
                               {data.name}
                             </Typography>
                             <Typography
@@ -50,9 +42,7 @@ export default function Card(props) {
                           </div>
                           <Divider />
 
-                          <div
-                            style={{ position: 'absolute', right: 0, top: 0 }}
-                          >
+                          <div className={classes.div4}>
                             <IconButton>
                               <Edit />
                             </IconButton>

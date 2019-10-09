@@ -35,5 +35,28 @@ export default makeStyles(theme => ({
       left: '-8px',
       zIndex: '1'
     }
+  },
+  divRoot: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  div1: {
+    display: 'flex',
+    flexWrap: 'wrap'
+  },
+  div2: {
+    position: 'relative'
+  },
+  div3: {
+    position: 'relative'
+  },
+  text: {
+    left: 0,
+    textTransform: 'uppercase'
+  },
+  div4: {
+    position: 'absolute',
+    right: 0,
+    top: 0
   }
 }));

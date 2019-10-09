@@ -120,8 +120,6 @@ class ClassroomCreate extends React.Component {
   }
 
   handleClick = () => {
-    console.log(this.state.classroom);
-
     this.props.createClassroom(this.state.classroom);
   };
 
