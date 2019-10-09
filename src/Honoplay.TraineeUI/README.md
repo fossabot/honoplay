@@ -1,4 +1,4 @@
 ﻿# Honoplay.TraineeUi
 
 
-# todo: açıklamöa gelecek.
+# todo: açıklama gelecek.
