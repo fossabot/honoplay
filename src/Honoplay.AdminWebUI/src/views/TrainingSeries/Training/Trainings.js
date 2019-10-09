@@ -141,6 +141,7 @@ class Trainings extends React.Component {
           </Grid>
           <Grid item xs={12} sm={12}>
             <Card
+              add
               data={search.length === 0 ? trainingList : search}
               url="training"
               id={id => {

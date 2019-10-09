@@ -4,10 +4,11 @@ import { Paper, Typography, IconButton, Divider } from '@material-ui/core';
 import moment from 'moment';
 import Style from './CardStyle';
 import Edit from '@material-ui/icons/Edit';
+import Add from '@material-ui/icons/Add';
 import { Link } from 'react-router-dom';
 
 export default function Card(props) {
-  const { data, url, url2 } = props;
+  const { data, url, add } = props;
   const classes = Style();
 
   function handleOpen(id) {
@@ -17,26 +18,18 @@ export default function Card(props) {
     <React.Fragment>
       <CssBaseline />
       <div className={classes.root}>
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div className={classes.divRoot}>
           {data &&
             data.map((data, index) => {
               const dateToFormat = data.createdAt;
               return (
-                <div style={{ display: 'flex', flexWrap: 'wrap' }} key={index}>
+                <div className={classes.div1} key={index}>
                   <div className={classes.div}>
-                    <div style={{ position: 'relative' }}>
+                    <div className={classes.div2}>
                       <Paper className={classes.paper}>
-                        <div
-                          style={{
-                            position: 'relative'
-                          }}
-                        >
+                        <div>
                           <div className={classes.box}>
-                            <Typography
-                              style={{ left: 0, textTransform: 'uppercase' }}
-                              color="primary"
-                              gutterBottom
-                            >
+                            <Typography color="primary" gutterBottom>
                               {data.name}
                             </Typography>
                             <Typography
@@ -48,20 +41,24 @@ export default function Card(props) {
                             </Typography>
                           </div>
                           <Divider />
-                          <div
-                            style={{ position: 'absolute', right: 0, top: 0 }}
-                          >
-                            <IconButton
-                              component={Link}
-                              to={
-                                url
-                                  ? `/admin/trainingseries/${url}/${data.name}`
-                                  : `/admin/trainingseries/${data.name}`
-                              }
-                              onClick={() => handleOpen(data.id)}
-                            >
+
+                          <div className={classes.div4}>
+                            <IconButton>
                               <Edit />
                             </IconButton>
+                            {add && (
+                              <IconButton
+                                component={Link}
+                                to={
+                                  url
+                                    ? `/admin/trainingseries/${url}/${data.name}`
+                                    : `/admin/trainingseries/${data.name}`
+                                }
+                                onClick={() => handleOpen(data.id)}
+                              >
+                                <Add />
+                              </IconButton>
+                            )}
                           </div>
                         </div>
                       </Paper>
