@@ -23,9 +23,13 @@ namespace Honoplay.Application.Avatars.Queries.GetAvatarDetail
 
         public async Task<ResponseModel<AvatarDetailModel>> Handle(GetAvatarDetailQuery request, CancellationToken cancellationToken)
         {
-            var avatar = await _context.Avatars
-                .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
+            var redisKey = "Avatars";
+            var avatarsQuery = await _cacheService.RedisCacheAsync(redisKey,
+                _ => _context.Avatars
+                    .AsNoTracking()
+                , cancellationToken);
+
+            var avatar = await avatarsQuery.FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
 
             if (avatar is null)
             {

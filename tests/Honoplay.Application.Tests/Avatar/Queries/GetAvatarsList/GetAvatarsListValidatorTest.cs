@@ -1,4 +1,5 @@
 ﻿using FluentValidation.TestHelper;
+using Honoplay.Application.Avatars.Queries.GetAvatarsList;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Avatars.Queries.GetAvatarsList
