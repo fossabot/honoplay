@@ -19,6 +19,7 @@ namespace Honoplay.Application.TraineeUsers.Commands.CreateTraineeUser
         public int Gender { get; set; }
         public int WorkingStatusId { get; set; }
         public int DepartmentId { get; set; }
+        public int? AvatarId { get; set; }
         [JsonIgnore]
         public int CreatedBy { get; set; }
         [JsonIgnore]
