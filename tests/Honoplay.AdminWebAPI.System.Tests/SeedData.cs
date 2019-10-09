@@ -189,6 +189,11 @@ namespace Honoplay.AdminWebAPI.System.Tests
                 CreatedBy = adminUser.Id
             });
 
+            dbContext.Avatars.Add(new Avatar
+            {
+                Name = "avatar1",
+                ImageBytes = new byte[] { 0x20 }
+            });
             dbContext.SaveChanges();
         }
     }

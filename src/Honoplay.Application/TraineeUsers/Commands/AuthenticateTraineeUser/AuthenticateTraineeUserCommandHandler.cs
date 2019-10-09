@@ -1,5 +1,4 @@
-﻿using Honoplay.Application._Infrastructure;
-using Honoplay.Common._Exceptions;
+﻿using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Persistence;
 using MediatR;
@@ -22,8 +21,6 @@ namespace Honoplay.Application.TraineeUsers.Commands.AuthenticateTraineeUser
 
         public async Task<TraineeUserAuthenticateModel> Handle(AuthenticateTraineeUserCommand request, CancellationToken cancellationToken)
         {
-            var jsValidators = JsValidators.GetAllJsValidations();
-
             var traineeUser = await _context.TraineeUsers
                                     .SingleOrDefaultAsync(u =>
                                             u.Email.Equals(request.Email, StringComparison.InvariantCultureIgnoreCase),
@@ -84,7 +81,7 @@ namespace Honoplay.Application.TraineeUsers.Commands.AuthenticateTraineeUser
                                            departmentId: departmentId,
                                            tenantId: tenantId,
                                            hostName: request.HostName,
-                                           jsValidators: jsValidators);
+                                           avatarId: traineeUser.AvatarId);
         }
     }
 }

@@ -18,34 +18,27 @@ namespace Honoplay.Application.TraineeUsers.Queries.GetTraineeUsersListByClassro
         public string PhoneNumber { get; set; }
         public int Gender { get; set; }
         public int WorkingStatusId { get; set; }
+        public int? AvatarId { get; set; }
         public int DepartmentId { get; set; }
 
 
-        public static Expression<Func<TraineeUser, GetTraineeUsersListByClassroomIdModel>> Projection
+        public static Expression<Func<TraineeUser, GetTraineeUsersListByClassroomIdModel>> Projection => traineeUser => new GetTraineeUsersListByClassroomIdModel
         {
-            get
-            {
-                return traineeUser => new GetTraineeUsersListByClassroomIdModel
-                {
-                    Id = traineeUser.Id,
-                    Email = traineeUser.Email,
-                    CreatedAt = traineeUser.CreatedAt,
-                    CreatedBy = traineeUser.CreatedBy,
-                    UpdatedBy = traineeUser.UpdatedBy,
-                    UpdatedAt = traineeUser.UpdatedAt,
-                    Gender = traineeUser.Gender,
-                    PhoneNumber = traineeUser.PhoneNumber,
-                    NationalIdentityNumber = traineeUser.NationalIdentityNumber,
-                    Surname = traineeUser.Surname,
-                    Name = traineeUser.Name,
-                    WorkingStatusId = traineeUser.WorkingStatusId,
-                    DepartmentId = traineeUser.DepartmentId
-                };
-            }
-        }
-        public static GetTraineeUsersListByClassroomIdModel Create(TraineeUser classroom)
-        {
-            return Projection.Compile().Invoke(classroom);
-        }
+            Id = traineeUser.Id,
+            Email = traineeUser.Email,
+            CreatedAt = traineeUser.CreatedAt,
+            CreatedBy = traineeUser.CreatedBy,
+            UpdatedBy = traineeUser.UpdatedBy,
+            UpdatedAt = traineeUser.UpdatedAt,
+            Gender = traineeUser.Gender,
+            PhoneNumber = traineeUser.PhoneNumber,
+            NationalIdentityNumber = traineeUser.NationalIdentityNumber,
+            Surname = traineeUser.Surname,
+            Name = traineeUser.Name,
+            WorkingStatusId = traineeUser.WorkingStatusId,
+            AvatarId = traineeUser.AvatarId,
+            DepartmentId = traineeUser.DepartmentId
+        };
+        public static GetTraineeUsersListByClassroomIdModel Create(TraineeUser traineeUser) => Projection.Compile().Invoke(traineeUser);
     }
 }

@@ -19,6 +19,7 @@ namespace Honoplay.Application.TraineeUsers.Queries.GetTraineeUsersList
         public DateTimeOffset? UpdatedAt { get; set; }
         public int WorkingStatusId { get; set; }
         public int DepartmentId { get; set; }
+        public int? AvatarId { get; set; }
 
         public static Expression<Func<TraineeUser, TraineeUsersListModel>> Projection => traineeUser => new TraineeUsersListModel
         {
@@ -34,6 +35,7 @@ namespace Honoplay.Application.TraineeUsers.Queries.GetTraineeUsersList
             CreatedAt = traineeUser.CreatedAt,
             CreatedBy = traineeUser.CreatedBy,
             WorkingStatusId = traineeUser.WorkingStatusId,
+            AvatarId = traineeUser.AvatarId,
             DepartmentId = traineeUser.DepartmentId
         };
 

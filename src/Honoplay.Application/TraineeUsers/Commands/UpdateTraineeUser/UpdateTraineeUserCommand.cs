@@ -16,6 +16,7 @@ namespace Honoplay.Application.TraineeUsers.Commands.UpdateTraineeUser
         public string PhoneNumber { get; set; }
         public int Gender { get; set; }
         public int WorkingStatusId { get; set; }
+        public int? AvatarId { get; set; }
         public int DepartmentId { get; set; }
         [JsonIgnore]
         public int UpdatedBy { get; set; }
