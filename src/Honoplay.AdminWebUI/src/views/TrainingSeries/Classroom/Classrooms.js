@@ -115,7 +115,6 @@ class Classrooms extends React.Component {
           </Grid>
           <Grid item xs={12} sm={12}>
             <Card
-              add
               data={search.length === 0 ? classroomList : search}
               url="training/classroom"
               id={id => {

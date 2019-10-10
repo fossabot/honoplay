@@ -17,9 +17,8 @@ import TrainingSeriesTab from './views/TrainingSeries/TrainingSeries/TrainingSer
 import Training from './views/TrainingSeries/Training/Training';
 import TrainingsTab from './views/TrainingSeries/Training/TrainingsTab';
 import Classroom from './views/TrainingSeries/Classroom/Classroom';
-import Sessions from './views/TrainingSeries/Session/Sessions';
 import Session from './views/TrainingSeries/Session/Session';
-
+import ClassroomTab from './views/TrainingSeries/Classroom/ClassroomTab';
 import Dashboard from './views/Home/Dashboard';
 import Reports from './views/Reports/Reports';
 import Profile from './views/Profile/Profile';
@@ -108,7 +107,7 @@ const App = ({ renewToken, newToken }) => {
               <Route
                 exact
                 path="/trainingseries/training/classroom/:classroomId"
-                component={Sessions}
+                component={ClassroomTab}
               />
               <Route
                 exact

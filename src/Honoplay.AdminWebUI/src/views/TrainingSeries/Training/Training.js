@@ -88,7 +88,7 @@ class Training extends React.Component {
           trainingError: false
         });
         this.props.history.push(
-          `/trainingseries/${this.props.match.params.trainingSeriesName}`
+          `/trainingseries/${this.props.match.params.trainingSeriesId}`
         );
       }
     }
@@ -201,7 +201,7 @@ class Training extends React.Component {
                       trainingError: false
                     });
                   }}
-                  value={training.name}
+                  value={update && training.name}
                 />
                 <DropDown
                   error={trainingError}
@@ -213,7 +213,7 @@ class Training extends React.Component {
                       trainingError: false
                     });
                   }}
-                  value={training.trainingCategoryId}
+                  value={update && training.trainingCategoryId}
                 />
                 <Input
                   error={trainingError}
@@ -225,7 +225,10 @@ class Training extends React.Component {
                       trainingError: false
                     });
                   }}
-                  value={moment(training.beginDateTime).format('YYYY-MM-DD')}
+                  value={
+                    update &&
+                    moment(training.beginDateTime).format('YYYY-MM-DD')
+                  }
                 />
                 <Input
                   error={trainingError}
@@ -237,7 +240,9 @@ class Training extends React.Component {
                       trainingError: false
                     });
                   }}
-                  value={moment(training.endDateTime).format('YYYY-MM-DD')}
+                  value={
+                    update && moment(training.endDateTime).format('YYYY-MM-DD')
+                  }
                 />
                 <Input
                   error={trainingError}

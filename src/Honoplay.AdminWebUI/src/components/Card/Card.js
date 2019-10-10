@@ -7,7 +7,7 @@ import Edit from '@material-ui/icons/Edit';
 import { Link } from 'react-router-dom';
 
 export default function Card(props) {
-  const { data, url, add } = props;
+  const { data, url } = props;
   const classes = Style();
 
   function handleOpen(id) {
@@ -40,21 +40,18 @@ export default function Card(props) {
                             </Typography>
                           </div>
                           <Divider />
-
                           <div className={classes.div4}>
-                            {add && (
-                              <IconButton
-                                component={Link}
-                                to={
-                                  url
-                                    ? `/trainingseries/${url}/${data.id}`
-                                    : `/trainingseries/${data.id}`
-                                }
-                                onClick={() => handleOpen(data.id)}
-                              >
-                                <Edit />
-                              </IconButton>
-                            )}
+                            <IconButton
+                              component={Link}
+                              to={
+                                url
+                                  ? `/trainingseries/${url}/${data.id}`
+                                  : `/trainingseries/${data.id}`
+                              }
+                              onClick={() => handleOpen(data.id)}
+                            >
+                              <Edit />
+                            </IconButton>
                           </div>
                         </div>
                       </Paper>

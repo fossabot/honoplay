@@ -99,7 +99,7 @@ class ClassroomCreate extends React.Component {
           classroomError: false
         });
         this.props.history.push(
-          `/trainingseries/training/${this.props.match.params.trainingName}`
+          `/trainingseries/training/${this.props.match.params.trainingId}`
         );
       }
     }
@@ -131,7 +131,7 @@ class ClassroomCreate extends React.Component {
       traineeColumns,
       traineeList
     } = this.state;
-    const { classes } = this.props;
+    const { classes, update } = this.props;
 
     this.state.classroom.createClassroomModels.map(classroom => {
       classroom.trainingId = this.trainingId;
@@ -140,14 +140,12 @@ class ClassroomCreate extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={11}>
-            <BreadCrumbs />
-          </Grid>
+          <Grid item xs={12} sm={11} />
           <Grid item xs={12} sm={1}>
             <Button
               buttonColor="primary"
-              buttonName={translate('Save')}
-              onClick={this.handleClick}
+              buttonName={update ? translate('Update') : translate('Save')}
+              onClick={update ? this.handleUpdate : this.handleClick}
               disabled={classroomLoading}
             />
             {classroomLoading && (
@@ -157,9 +155,6 @@ class ClassroomCreate extends React.Component {
                 className={classes.buttonProgressSave}
               />
             )}
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <Divider />
           </Grid>
           <Grid item xs={12} sm={12} />
           {classroom.createClassroomModels.map((classroom, id) => (
@@ -173,6 +168,7 @@ class ClassroomCreate extends React.Component {
                     classroom.name = e.target.value;
                     this.setState({ classroomError: false });
                   }}
+                  value={update && classroom.name}
                 />
                 <DropDown
                   error={classroomError}
@@ -182,6 +178,7 @@ class ClassroomCreate extends React.Component {
                     classroom.trainerUserId = e.target.value;
                     this.setState({ classroomError: false });
                   }}
+                  value={update && classroom.trainerUserId}
                 />
               </Grid>
               <Grid item xs={12} sm={12}>
