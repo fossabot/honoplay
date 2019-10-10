@@ -5,6 +5,7 @@ import { Button } from "../../Components/Button";
 import History from "../../Helpers/History";
 import { connect } from "react-redux";
 import { fethTrainerUserToken } from "@omegabigdata/honoplay-redux-helper/Src/actions/TrainerUser";
+import { translate } from "@omegabigdata/terasu-api-proxy";
 
 class Login extends Component {
   componentDidUpdate(prevProps, nextState) {
@@ -48,18 +49,18 @@ class Login extends Component {
               onChange={e => (this.email = e.target.value)}
               type="email"
               className="form-control"
-              placeholder="Cep Tel / E-Posta"
+              placeholder={translate("Cep Tel / E-Posta")}
             />
             <input
               defaultValue="123456789"
               onChange={e => (this.password = e.target.value)}
               type="password"
               className="form-control mt-3 mb-2"
-              placeholder="Şifre"
+              placeholder={translate("Password")}
             />
 
             <a href="#" className="su">
-              <u>Şifremi Unuttum</u>
+              <u>{translate("ForgotPassword")}</u>
             </a>
 
             <Button
@@ -69,7 +70,7 @@ class Login extends Component {
                   password: this.password
                 });
               }}
-              title="Giriş Yap"
+              title={translate("Login")}
               className="btn my-btn form-control mt-4"
             />
           </div>

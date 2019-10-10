@@ -1,0 +1,1 @@
+export const HONOPLAY_TERASU_PROJECT_ID = "3";
