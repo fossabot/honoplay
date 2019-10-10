@@ -15,10 +15,7 @@
     "name": "Omega Bigdata"
   },
   "dependencies": {
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@omegabigdata/honoplay-redux-helper": "^0.6.6",
-    "css-loader": "^3.2.0",
-    "file-loader": "^4.2.0",
     "history": "^4.9.0",
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",
@@ -29,10 +26,7 @@
     "react-router-redux": "^4.0.8",
     "react-scripts": "3.1.1",
     "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0",
-    "requirejs": "^2.3.6",
-    "style-loader": "^1.0.0",
-    "url-loader": "^2.1.0"
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {},
   "eslintConfig": {
