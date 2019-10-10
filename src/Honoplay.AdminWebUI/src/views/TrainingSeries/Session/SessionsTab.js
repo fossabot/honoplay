@@ -8,8 +8,7 @@ import SwipeableViews from 'react-swipeable-views';
 import { createMuiTheme } from '@material-ui/core';
 import { deepPurple, deepOrange } from '@material-ui/core/colors';
 import TabContainer from '../../../components/Tabs/TabContainer';
-import Classroom from '../Classroom/Classroom';
-import Sessions from '../Session/Sessions';
+import Session from '../Session/Session';
 
 const theme = createMuiTheme({
   palette: {
@@ -26,7 +25,7 @@ const theme = createMuiTheme({
 class TrainingsTab extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { tabValue: 1 };
+    this.state = { tabValue: 0 };
   }
 
   handleChange = (event, tabValue) => {
@@ -35,12 +34,6 @@ class TrainingsTab extends React.Component {
 
   handleChangeIndex = index => {
     this.setState({ tabValue: index });
-  };
-
-  handleClick = () => {
-    this.props.history.push(
-      `/trainingseries/training/classroom/${this.props.match.params.classroomId}/session`
-    );
   };
 
   render() {
@@ -63,7 +56,6 @@ class TrainingsTab extends React.Component {
             className={classes.tabs}
           >
             <Tab label={translate('BasicKnowledge')} className={classes.tab} />
-            <Tab label={translate('Sessions')} className={classes.tab} />
           </Tabs>
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -71,10 +63,7 @@ class TrainingsTab extends React.Component {
             onChangeIndex={this.handleChangeIndex}
           >
             <TabContainer dir={theme.direction}>
-              <Classroom update />
-            </TabContainer>
-            <TabContainer dir={theme.direction}>
-              <Sessions onClick={this.handleClick} />
+              <Session update />
             </TabContainer>
           </SwipeableViews>
         </MuiThemeProvider>
