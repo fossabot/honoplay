@@ -10,6 +10,7 @@ import {
   ShowTrainee,
   Examined
 } from "../../Helpers/TerasuKeys";
+import { translate } from "@omegabigdata/terasu-api-proxy";
 
 class Classroom extends Component {
   componentDidMount() {
@@ -20,16 +21,19 @@ class Classroom extends Component {
       this.props.fetchClassroomList(location.state);
     }
   }
+
   render() {
     return (
       <PageWrapper>
         <div className="col-sm-12">
-          <h4 className="font-weight-bold text-primary mb-4">{MyClassroom}</h4>
+          <h4 className="font-weight-bold text-primary mb-4">
+            {translate(MyClassroom)}
+          </h4>
           <table className="table">
             <thead className="thead-light">
               <tr>
-                <th scope="col">{ClassroomName}</th>
-                <th scope="col">{ShowTrainee}</th>
+                <th scope="col">{translate(ClassroomName)}</th>
+                <th scope="col">{translate(ShowTrainee)}</th>
               </tr>
             </thead>
             <tbody>
@@ -45,7 +49,7 @@ class Classroom extends Component {
                             state: data.id
                           }}
                         >
-                          {Examined}
+                          {translate(Examined)}
                         </Link>
                       </td>
                     </tr>

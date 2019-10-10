@@ -12,6 +12,7 @@ import {
   Detail,
   Examined
 } from "../../Helpers/TerasuKeys";
+import { translate } from "@omegabigdata/terasu-api-proxy";
 
 class Home extends Component {
   componentDidMount() {
@@ -24,14 +25,16 @@ class Home extends Component {
     return (
       <PageWrapper {...this.state} boxNumber="2">
         <div className="col-sm-12">
-          <h4 className="font-weight-bold text-primary mb-4">{MyTrainings}</h4>
+          <h4 className="font-weight-bold text-primary mb-4">
+            {translate(MyTrainings)}
+          </h4>
           <table className="table">
             <thead className="thead-light">
               <tr>
-                <th scope="col">{TrainingDate}</th>
-                <th scope="col">{TrainingName}</th>
-                <th scope="col">{TrainingDescription}</th>
-                <th scope="col">{Detail}</th>
+                <th scope="col">{translate(TrainingDate)}</th>
+                <th scope="col">{translate(TrainingName)}</th>
+                <th scope="col">{translate(TrainingDescription)}</th>
+                <th scope="col">{translate(Detail)}</th>
               </tr>
             </thead>
             <tbody>
@@ -48,7 +51,7 @@ class Home extends Component {
                         }}
                         to={{ pathname: "/classroom", state: data.id }}
                       >
-                        {Examined}
+                        {translate(Examined)}
                       </Link>
                     </td>
                   </tr>

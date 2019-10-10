@@ -11,6 +11,7 @@ import {
   MobilePhoneAndEmail,
   LoginKey
 } from "../../Helpers/TerasuKeys";
+import { translate } from "@omegabigdata/terasu-api-proxy";
 
 class Login extends Component {
   componentDidUpdate(prevProps, nextState) {
@@ -54,18 +55,18 @@ class Login extends Component {
               onChange={e => (this.email = e.target.value)}
               type="email"
               className="form-control"
-              placeholder={MobilePhoneAndEmail}
+              placeholder={translate(MobilePhoneAndEmail)}
             />
             <input
               defaultValue="123456789"
               onChange={e => (this.password = e.target.value)}
               type="password"
               className="form-control mt-3 mb-2"
-              placeholder={Password}
+              placeholder={translate(Password)}
             />
 
             <a href="#" className="su">
-              <u>{ForgotPassword}</u>
+              <u>{translate(ForgotPassword)}</u>
             </a>
 
             <Button
@@ -75,7 +76,7 @@ class Login extends Component {
                   password: this.password
                 });
               }}
-              title={LoginKey}
+              title={translate(LoginKey)}
               className="btn my-btn form-control mt-4"
             />
           </div>

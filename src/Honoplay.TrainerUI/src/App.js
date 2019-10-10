@@ -27,8 +27,11 @@ const CheckTokenExp = token => {
 };
 
 class App extends React.Component {
-  async componentDidUpdate() {
-    await init(HONOPLAY_TRAINER_PROJECT_ID);
+  componentWillMount() {
+    init(HONOPLAY_TRAINER_PROJECT_ID);
+  }
+
+  componentDidUpdate() {
     let token = localStorage.getItem("token");
     if (CheckTokenExp(token)) {
       this.props.postTrainerRenewToken(token);

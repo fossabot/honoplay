@@ -23,6 +23,7 @@ import {
   Name,
   TraineeList
 } from "../../Helpers/TerasuKeys";
+import { translate } from "@omegabigdata/terasu-api-proxy";
 
 class Training extends Component {
   componentDidMount() {
@@ -46,7 +47,7 @@ class Training extends Component {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb">
               <li className="breadcrumb-item">
-                <Link to="homepage">{MyTrainings}</Link>
+                <Link to="homepage">{translate(MyTrainings)}</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
                 {selectedtraining.name}
@@ -57,9 +58,9 @@ class Training extends Component {
           <table className="table">
             <thead className="thead-light">
               <tr>
-                <th scope="col">{TrainingDate}</th>
-                <th scope="col">{TrainingName}</th>
-                <th scope="col">{TrainingDescription}</th>
+                <th scope="col">{translate(TrainingDate)}</th>
+                <th scope="col">{translate(TrainingName)}</th>
+                <th scope="col">{translate(TrainingDescription)}</th>
               </tr>
             </thead>
             <tbody>
@@ -88,16 +89,16 @@ class Training extends Component {
             </div> */}
 
             <h4 className="font-weight-bold text-primary mb-4">
-              {TraineeList} (21 Adet)
+              {translate(TraineeList)} (21 Adet)
             </h4>
             <table className="table">
               <thead className="thead-light">
                 <tr>
-                  <th scope="col">{Name}</th>
-                  <th scope="col">{Surname}</th>
-                  <th scope="col">{MobilePhone}</th>
-                  <th scope="col">{Email}</th>
-                  <th scope="col">{IsLogin}</th>
+                  <th scope="col">{translate(Name)}</th>
+                  <th scope="col">{translate(Surname)}</th>
+                  <th scope="col">{translate(MobilePhone)}</th>
+                  <th scope="col">{translate(Email)}</th>
+                  <th scope="col">{translate(IsLogin)}</th>
                 </tr>
               </thead>
               <tbody>
@@ -158,10 +159,10 @@ class Training extends Component {
                 to="/joincode"
                 className="btn btn-primary mr-2"
               >
-                {JoinCode}
+                {translate(JoinCode)}
               </Link>
 
-              <Button title={StartGame} />
+              <Button title={translate(StartGame)} />
             </div>
           </div>
         </div>
