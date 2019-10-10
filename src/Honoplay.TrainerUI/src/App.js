@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import History from "./Helpers/History";
 import Login from "./Pages/Login";
@@ -11,10 +11,11 @@ import {
   fetchTrainingList,
   postTrainerRenewToken
 } from "@omegabigdata/honoplay-redux-helper/Src/actions/TrainerUser";
-
 import Classroom from "./Pages/Classroom";
 import Logout from "./Helpers/Logout";
 import decoder from "jwt-decode";
+import { HONOPLAY_TRAINER_PROJECT_ID } from "./Helpers/Statics";
+import { init } from "@omegabigdata/terasu-api-proxy";
 
 const CheckTokenExp = token => {
   if (!token) return false;
@@ -26,7 +27,8 @@ const CheckTokenExp = token => {
 };
 
 class App extends React.Component {
-  componentDidUpdate() {
+  async componentDidUpdate() {
+    await init(HONOPLAY_TRAINER_PROJECT_ID);
     let token = localStorage.getItem("token");
     if (CheckTokenExp(token)) {
       this.props.postTrainerRenewToken(token);
