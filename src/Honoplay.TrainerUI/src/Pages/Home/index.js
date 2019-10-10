@@ -46,7 +46,7 @@ class Home extends Component {
                         onClick={() => {
                           localStorage.setItem("selectedTraining", data.id);
                         }}
-                        to={{ pathname: "/trainer/classroom", state: data.id }}
+                        to={{ pathname: "/classroom", state: data.id }}
                       >
                         {Examined}
                       </Link>

@@ -26,13 +26,13 @@ class Login extends Component {
       userTrainerToken
     ) {
       localStorage.setItem("token", userTrainerToken.token);
-      History.push("/trainer/homepage");
+      this.props.history.push("/homepage");
     }
   }
 
   componentDidMount() {
     if (localStorage.getItem("token")) {
-      History.push("/trainer/homepage");
+      this.props.history.push("/homepage");
     }
   }
 

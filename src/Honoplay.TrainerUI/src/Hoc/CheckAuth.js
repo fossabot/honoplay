@@ -8,9 +8,9 @@ const WithAuth = HocComponent => {
     componentWillMount() {
       const { match } = this.props;
 
-      if (match.url == "/trainer/logout") {
+      if (match.url == "/logout") {
         localStorage.removeItem("token");
-        History.push("/trainer/login");
+        this.props.history.push("/login");
       }
 
       const token = store.getState().trainerUserToken.userTrainerToken.token;

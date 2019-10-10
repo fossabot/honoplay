@@ -1,7 +1,7 @@
 import { translate, init } from "@omegabigdata/terasu-api-proxy";
-import { HONOPLAY_TRAINER_PROJECT_ID } from "./Statics";
+import { HONOPLAY_TRAINEE_PROJECT_ID } from "./Statics";
 
-init(HONOPLAY_TRAINER_PROJECT_ID);
+init(HONOPLAY_TRAINEE_PROJECT_ID);
 
 export const LoginKey = translate("login");
 export const ForgotPassword = translate("ForgotPassword");
@@ -26,3 +26,12 @@ export const Email = translate("Email");
 export const IsLogin = translate("IsLogin");
 export const JoinCode = translate("JoinCode");
 export const StartGame = translate("StartGame");
+export const Join = translate("Join");
+export const PleaseEnterYourGameParticipationCode = translate(
+  "PleaseEnterYourGameParticipationCode"
+);
+export const TheGameIsCompleteThankYouForYourParticipation = translate(
+  "TheGameIsCompleteThankYouForYourParticipation	"
+);
+
+export const FinishGame = translate("FinishGame");

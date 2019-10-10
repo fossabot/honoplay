@@ -15,7 +15,7 @@ class Classroom extends Component {
   componentDidMount() {
     const { location } = this.props;
     if (!location.state) {
-      History.goBack();
+      this.props.history.goBack();
     } else {
       this.props.fetchClassroomList(location.state);
     }
@@ -41,7 +41,7 @@ class Classroom extends Component {
                       <td>
                         <Link
                           to={{
-                            pathname: "/trainer/trainingdetail",
+                            pathname: "/trainingdetail",
                             state: data.id
                           }}
                         >
