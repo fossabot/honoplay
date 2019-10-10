@@ -1,16 +1,9 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
-import {
-  Grid,
-  Divider,
-  TextField,
-  InputAdornment,
-  IconButton
-} from '@material-ui/core';
+import { Grid, TextField, InputAdornment, IconButton } from '@material-ui/core';
 import Style from '../../Style';
 import Card from '../../../components/Card/Card';
-import BreadCrumbs from '../../../components/BreadCrumbs/BreadCrumbs';
 import Button from '../../../components/Button/ButtonComponent';
 import SearchIcon from '@material-ui/icons/Search';
 

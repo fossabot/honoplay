@@ -1,6 +1,7 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
 import { Grid, CircularProgress, Divider } from '@material-ui/core';
 import Style from '../../Style';
 import Input from '../../../components/Input/InputTextComponent';
@@ -15,13 +16,16 @@ import { fetchTrainersList } from '@omegabigdata/honoplay-redux-helper/dist/Src/
 import { fetchTraineeList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee';
 import {
   createClassroom,
-  fetchClassroomListByTrainingId
+  fetchClassroomListByTrainingId,
+  fetchClassroom,
+  updateClassroom
 } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Classroom';
 
 class ClassroomCreate extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      success: false,
       classroomLoading: false,
       classroomError: false,
       trainer: null,
@@ -50,6 +54,7 @@ class ClassroomCreate extends React.Component {
   }
 
   trainingId = localStorage.getItem('trainingId');
+  classroomId = localStorage.getItem('classroomId');
 
   componentDidUpdate(prevProps) {
     const {
@@ -61,8 +66,21 @@ class ClassroomCreate extends React.Component {
       errorCreateClassroom,
       isTraineeListLoading,
       errorTraineeList,
-      trainees
+      trainees,
+      isClassroomLoading,
+      classroom,
+      errorClassroom
     } = this.props;
+
+    if (prevProps.isClassroomLoading && !isClassroomLoading && classroom) {
+      if (!errorClassroom) {
+        this.setState({
+          classroom: {
+            createClassroomModels: classroom.items
+          }
+        });
+      }
+    }
 
     if (
       prevProps.isTrainerListLoading &&
@@ -116,10 +134,15 @@ class ClassroomCreate extends React.Component {
   componentDidMount() {
     this.props.fetchTrainersList(0, 50);
     this.props.fetchTraineeList(0, 50);
+    this.props.fetchClassroom(this.classroomId);
   }
 
   handleClick = () => {
     this.props.createClassroom(this.state.classroom);
+  };
+
+  handleUpdate = () => {
+    //update
   };
 
   render() {
@@ -129,21 +152,32 @@ class ClassroomCreate extends React.Component {
       classroom,
       classroomError,
       traineeColumns,
-      traineeList
+      traineeList,
+      success
     } = this.state;
     const { classes, update } = this.props;
 
     this.state.classroom.createClassroomModels.map(classroom => {
       classroom.trainingId = this.trainingId;
     });
+    const buttonClassname = classNames({
+      [classes.buttonSuccess]: success
+    });
 
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={11} />
+          {update ? (
+            <Grid item xs={12} sm={11} />
+          ) : (
+            <Grid item xs={12} sm={11}>
+              <BreadCrumbs />
+            </Grid>
+          )}
           <Grid item xs={12} sm={1}>
             <Button
               buttonColor="primary"
+              className={buttonClassname}
               buttonName={update ? translate('Update') : translate('Save')}
               onClick={update ? this.handleUpdate : this.handleClick}
               disabled={classroomLoading}
@@ -156,6 +190,11 @@ class ClassroomCreate extends React.Component {
               />
             )}
           </Grid>
+          {!update && (
+            <Grid item xs={12} sm={12}>
+              <Divider />
+            </Grid>
+          )}
           <Grid item xs={12} sm={12} />
           {classroom.createClassroomModels.map((classroom, id) => (
             <Grid item xs={12} sm={12} key={id}>
@@ -219,6 +258,8 @@ const mapStateToProps = state => {
     trainees
   } = state.traineeList;
 
+  const { isClassroomLoading, classroom, errorClassroom } = state.classroom;
+
   return {
     isTrainerListLoading,
     errorTrainerList,
@@ -228,7 +269,10 @@ const mapStateToProps = state => {
     errorCreateClassroom,
     isTraineeListLoading,
     errorTraineeList,
-    trainees
+    trainees,
+    isClassroomLoading,
+    classroom,
+    errorClassroom
   };
 };
 
@@ -236,7 +280,9 @@ const mapDispatchToProps = {
   fetchTrainersList,
   createClassroom,
   fetchClassroomListByTrainingId,
-  fetchTraineeList
+  fetchTraineeList,
+  fetchClassroom,
+  updateClassroom
 };
 
 export default connect(

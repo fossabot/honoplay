@@ -142,52 +142,53 @@ class TableComponent extends React.Component {
                 columns={columns}
               />
               <TableBody>
-                {data
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((data, id) => {
-                    const isSelected = this.isSelected(data.id);
-                    return (
-                      <TableRow
-                        hover
-                        onClick={() => this.handleClick(data.id)}
-                        role="checkbox"
-                        aria-checked={isSelected}
-                        tabIndex={-1}
-                        selected={isSelected}
-                        key={id}
-                      >
-                        <TableCell
-                          padding="checkbox"
-                          className={classes.tableCell}
+                {data &&
+                  data
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((data, id) => {
+                      const isSelected = this.isSelected(data.id);
+                      return (
+                        <TableRow
+                          hover
+                          onClick={() => this.handleClick(data.id)}
+                          role="checkbox"
+                          aria-checked={isSelected}
+                          tabIndex={-1}
+                          selected={isSelected}
+                          key={id}
                         >
-                          <Checkbox checked={isSelected} color="secondary" />
-                        </TableCell>
-                        {columns.map((column, id) => (
-                          <TableCell className={classes.tableCell} key={id}>
-                            {data[column.field]}
-                          </TableCell>
-                        ))}
-                        {selected.includes(data.id) && update ? (
                           <TableCell
-                            onClick={() =>
-                              localStorage.setItem('dataid', data.id)
-                            }
+                            padding="checkbox"
                             className={classes.tableCell}
                           >
-                            <IconButton
-                              onClick={
-                                onClick ? onClick : this.handleClickOpenDialog
-                              }
-                            >
-                              <Edit />
-                            </IconButton>
+                            <Checkbox checked={isSelected} color="secondary" />
                           </TableCell>
-                        ) : (
-                          <TableCell />
-                        )}
-                      </TableRow>
-                    );
-                  })}
+                          {columns.map((column, id) => (
+                            <TableCell className={classes.tableCell} key={id}>
+                              {data[column.field]}
+                            </TableCell>
+                          ))}
+                          {selected.includes(data.id) && update ? (
+                            <TableCell
+                              onClick={() =>
+                                localStorage.setItem('dataid', data.id)
+                              }
+                              className={classes.tableCell}
+                            >
+                              <IconButton
+                                onClick={
+                                  onClick ? onClick : this.handleClickOpenDialog
+                                }
+                              >
+                                <Edit />
+                              </IconButton>
+                            </TableCell>
+                          ) : (
+                            <TableCell />
+                          )}
+                        </TableRow>
+                      );
+                    })}
                 {emptyRows > 0 && (
                   <TableRow style={{ height: 35 * emptyRows }}>
                     <TableCell

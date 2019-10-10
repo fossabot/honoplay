@@ -63,7 +63,7 @@ class TrainingsTab extends React.Component {
             className={classes.tabs}
           >
             <Tab label={translate('BasicKnowledge')} className={classes.tab} />
-            <Tab label={translate('Classrooms')} className={classes.tab} />
+            <Tab label={translate('Sessions')} className={classes.tab} />
           </Tabs>
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
