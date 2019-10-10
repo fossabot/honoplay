@@ -25,7 +25,6 @@ class NewQuestion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      newOptionsModel: null,
       questionsError: false,
       question: '',
       questionId: null,
@@ -35,14 +34,17 @@ class NewQuestion extends React.Component {
         duration: ''
       },
       success: false,
-      newOptions: [],
-      createOptionModels: []
+      newOptions: []
     };
   }
 
   dataId = localStorage.getItem('dataid');
 
   index = null;
+
+  optionsModel = {
+    createOptionModels: []
+  };
 
   componentDidUpdate(prevProps) {
     const {
@@ -133,15 +135,12 @@ class NewQuestion extends React.Component {
           this.setState({ success: false });
         }, 1000);
       }
-
       this.state.newOptions.createOptionModels.map((option, id) => {
         if (option.id) {
           this.props.updateOption(option);
         } else {
-          this.setState({
-            createOptionModels: this.state.createOptionModels.push(option)
-          });
-          this.props.createOption(this.state.optionsModel);
+          this.optionsModel.createOptionModels = [option];
+          this.props.createOption(this.optionsModel);
         }
       });
     }

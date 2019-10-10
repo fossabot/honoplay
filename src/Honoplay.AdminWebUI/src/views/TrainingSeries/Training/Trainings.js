@@ -130,7 +130,7 @@ class Trainings extends React.Component {
           <Grid item xs={12} sm={12}>
             <Card
               data={search.length === 0 ? trainingList : search}
-              url="training"
+              url={`${this.trainingSeriesId}/training`}
               id={id => {
                 if (id) {
                   localStorage.setItem('trainingId', id);
