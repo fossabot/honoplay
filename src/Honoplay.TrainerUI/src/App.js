@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Router as BrowserRouter, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import History from "./Helpers/History";
 import Login from "./Pages/Login";
 import Home from "./Pages/Home/index";
@@ -39,18 +39,17 @@ class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <BrowserRouter history={History}>
+        <Router history={History}>
           <Switch>
-            <Route exact path="/trainer/" component={Login} />
             <Route exact path="/" component={Login} />
-            <Route path="/trainer/login" component={Login} />
-            <Route path="/trainer/homepage" component={Home} />
-            <Route path="/trainer/classroom" component={Classroom} />
-            <Route path="/trainer/trainingdetail" component={Training} />
-            <Route path="/trainer/joincode" component={JoinCode} />
-            <Route path="/trainer/logout" component={Logout} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/homepage" component={Home} />
+            <Route exact path="/classroom" component={Classroom} />
+            <Route exact path="/trainingdetail" component={Training} />
+            <Route exact path="/joincode" component={JoinCode} />
+            <Route exact path="/logout" component={Logout} />
           </Switch>
-        </BrowserRouter>
+        </Router>
       </React.Fragment>
     );
   }

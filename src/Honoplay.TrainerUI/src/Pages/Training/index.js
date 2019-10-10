@@ -28,7 +28,7 @@ class Training extends Component {
   componentDidMount() {
     const { location } = this.props;
     if (!location.state) {
-      History.goBack();
+      this.props.history.goBack();
     }
     this.props.fetchTraineeList(location.state);
   }
@@ -155,7 +155,7 @@ class Training extends Component {
             <div className="mt-5">
               <Link
                 target="about_blank"
-                to="/trainer/joincode"
+                to="/joincode"
                 className="btn btn-primary mr-2"
               >
                 {JoinCode}
