@@ -4,6 +4,10 @@ import WithAuth from "../../Hoc/CheckAuth";
 import { Code } from "../../Assets/index";
 import { Button } from "../../Components/Button";
 import History from "../../Helpers/History";
+import {
+  Join,
+  PleaseEnterYourGameParticipationCode
+} from "../../Helpers/TerasuKeys";
 
 class JoinGame extends Component {
   render() {
@@ -12,13 +16,13 @@ class JoinGame extends Component {
         <div className="row pt-5 pb-5">
           <div className="col-sm-7">
             <p className="mt-5 mb-3 font-weight-bold">
-              Lütfen Oyun Katılım Kodunuzu Giriniz
+              {PleaseEnterYourGameParticipationCode}
             </p>
             <div className="form">
               <input type="text" className="form-control" placeholder="---" />
               <Button
                 onClick={() => History.push("/game")}
-                title="Katıl"
+                title={Join}
                 className="btn my-btn form-control mt-4"
               />
             </div>

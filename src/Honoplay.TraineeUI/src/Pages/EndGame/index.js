@@ -1,6 +1,7 @@
 import React from "react";
 import PageWrapper from "../../Containers/PageWrapper";
 import { Checked } from "../../Assets/index";
+import { TheGameIsCompleteThankYouForYourParticipation } from "../../Helpers/TerasuKeys";
 
 const EndGame = () => {
   return (
@@ -8,7 +9,7 @@ const EndGame = () => {
       <div className="col-sm-12 text-center">
         <img src={Checked} className="img-fluid" />
         <p className="mt-5 mb-3 font-weight-bold">
-          Oyun tamamlandı. Katılımınız için teşekkürler.
+          {TheGameIsCompleteThankYouForYourParticipation}
         </p>
       </div>
     </PageWrapper>

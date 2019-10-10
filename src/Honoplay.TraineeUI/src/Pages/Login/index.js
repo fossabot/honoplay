@@ -3,6 +3,12 @@ import PageWrapper from "../../Containers/PageWrapper";
 import { Logo, Vector } from "../../Assets/index";
 import { Button } from "../../Components/Button";
 import History from "../../Helpers/History";
+import {
+  MobilePhoneAndEmail,
+  ForgotPassword,
+  Password,
+  LoginKey
+} from "../../Helpers/TerasuKeys";
 
 class Login extends Component {
   render() {
@@ -18,21 +24,21 @@ class Login extends Component {
             <input
               type="text"
               className="form-control"
-              placeholder="Cep Tel / E-Posta"
+              placeholder={MobilePhoneAndEmail}
             />
             <input
               type="password"
               className="form-control mt-3 mb-2"
-              placeholder="Şifre"
+              placeholder={Password}
             />
 
             <a href="#" className="su">
-              <u>Şifremi Unuttum</u>
+              <u>{ForgotPassword}</u>
             </a>
 
             <Button
               onClick={() => History.push("/joingame")}
-              title="Giriş Yap"
+              title={LoginKey}
               className="btn my-btn form-control mt-4"
             />
           </div>

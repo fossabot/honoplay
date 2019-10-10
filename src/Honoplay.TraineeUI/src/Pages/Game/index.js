@@ -3,6 +3,7 @@ import WithAuth from "../../Hoc/CheckAuth";
 import PageWrapper from "../../Containers/PageWrapper";
 import { Button } from "../../Components/Button";
 import History from "../../Helpers/History";
+import { FinishGame } from "../../Helpers/TerasuKeys";
 
 class Game extends Component {
   render() {
@@ -15,7 +16,7 @@ class Game extends Component {
         ></iframe>
         <Button
           onClick={() => History.push("/endgame")}
-          title="Oyunu bitir"
+          title={FinishGame}
           className="btn my-btn form-control mt-4"
         ></Button>
       </PageWrapper>
