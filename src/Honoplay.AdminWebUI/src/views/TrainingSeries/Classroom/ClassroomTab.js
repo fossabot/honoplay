@@ -8,8 +8,8 @@ import SwipeableViews from 'react-swipeable-views';
 import { createMuiTheme } from '@material-ui/core';
 import { deepPurple, deepOrange } from '@material-ui/core/colors';
 import TabContainer from '../../../components/Tabs/TabContainer';
-import TrainingSeriesCreate from './TrainingSeriesCreate';
-import Trainings from '../Training/Trainings';
+import Classroom from '../Classroom/Classroom';
+import Sessions from '../Session/Sessions';
 
 const theme = createMuiTheme({
   palette: {
@@ -23,7 +23,7 @@ const theme = createMuiTheme({
   }
 });
 
-class TrainingSeriesTab extends React.Component {
+class TrainingsTab extends React.Component {
   constructor(props) {
     super(props);
     this.state = { tabValue: 1 };
@@ -39,7 +39,7 @@ class TrainingSeriesTab extends React.Component {
 
   handleClick = () => {
     this.props.history.push(
-      `/trainingseries/${this.props.match.params.trainingSeriesId}/training`
+      `/trainingseries/training/${this.props.match.params.trainingId}/classroom`
     );
   };
 
@@ -63,7 +63,7 @@ class TrainingSeriesTab extends React.Component {
             className={classes.tabs}
           >
             <Tab label={translate('BasicKnowledge')} className={classes.tab} />
-            <Tab label={translate('Trainings')} className={classes.tab} />
+            <Tab label={translate('Sessions')} className={classes.tab} />
           </Tabs>
           <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -71,10 +71,10 @@ class TrainingSeriesTab extends React.Component {
             onChangeIndex={this.handleChangeIndex}
           >
             <TabContainer dir={theme.direction}>
-              <TrainingSeriesCreate update />
+              <Classroom update />
             </TabContainer>
             <TabContainer dir={theme.direction}>
-              <Trainings onClick={this.handleClick} />
+              <Sessions />
             </TabContainer>
           </SwipeableViews>
         </MuiThemeProvider>
@@ -83,4 +83,4 @@ class TrainingSeriesTab extends React.Component {
   }
 }
 
-export default withStyles(Style)(TrainingSeriesTab);
+export default withStyles(Style)(TrainingsTab);
