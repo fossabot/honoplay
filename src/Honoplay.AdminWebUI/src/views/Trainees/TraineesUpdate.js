@@ -44,13 +44,14 @@ class TraineesUpdate extends React.Component {
         gender: '',
         workingStatusId: '',
         departmentId: '',
-        password: ''
+        password: '',
+        email: ''
       },
       loadingTrainee: false,
       loadingUpdate: false,
       success: false,
       updateError: false,
-      confirmPassword: null
+      confirmPassword: ''
     };
   }
 
@@ -152,12 +153,13 @@ class TraineesUpdate extends React.Component {
         ...prevState.traineeModel,
         [name]: value
       },
-      updateError: false,
-      [name]: value
+      updateError: false
     }));
   };
 
   handleClick = () => {
+    console.log('traineeModel', this.state.traineeModel);
+
     this.props.updateTrainee(this.state.traineeModel);
   };
 
@@ -249,6 +251,14 @@ class TraineesUpdate extends React.Component {
                 name="gender"
                 value={traineeModel.gender}
               />
+              <Input
+                error={updateError}
+                labelName={translate('EmailAddress')}
+                inputType="text"
+                name="email"
+                value={traineeModel.email}
+                onChange={this.handleChange}
+              />
             </Grid>
             <Grid item xs={12} sm={3}>
               <InputLabel className={classes.bootstrapFormLabel}>
@@ -288,7 +298,12 @@ class TraineesUpdate extends React.Component {
                 className={classes.passwordInput}
                 name="confirmPassword"
                 type={this.state.showPassword ? 'text' : 'password'}
-                onChange={this.handleChange}
+                onChange={e => {
+                  this.setState({
+                    updateError: false,
+                    confirmPassword: e.target.value
+                  });
+                }}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -337,6 +352,8 @@ const mapStateToProps = state => {
   } = state.updateTrainee;
 
   const { isTraineeLoading, errorTrainee, trainee } = state.trainee;
+
+  console.log('trainee', trainee);
 
   const {
     errorDepartmentList,

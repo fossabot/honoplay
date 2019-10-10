@@ -26,6 +26,7 @@ class Classrooms extends React.Component {
   }
 
   trainingId = localStorage.getItem('trainingId');
+  trainingSeriesId = localStorage.getItem('trainingSeriesId');
 
   componentDidUpdate(prevProps) {
     const {
@@ -109,7 +110,7 @@ class Classrooms extends React.Component {
           <Grid item xs={12} sm={12}>
             <Card
               data={search.length === 0 ? classroomList : search}
-              url="training/classroom"
+              url={`${this.trainingSeriesId}/training/${this.trainingId}/classroom`}
               id={id => {
                 if (id) {
                   localStorage.setItem('classroomId', id);

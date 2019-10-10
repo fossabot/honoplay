@@ -255,7 +255,7 @@ class Training extends React.Component {
                       trainingError: false
                     });
                   }}
-                  value={training.description}
+                  value={update && training.description}
                 />
               </Grid>
             ))}

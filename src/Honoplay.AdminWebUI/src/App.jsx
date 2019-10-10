@@ -18,6 +18,7 @@ import Training from './views/TrainingSeries/Training/Training';
 import TrainingsTab from './views/TrainingSeries/Training/TrainingsTab';
 import Classroom from './views/TrainingSeries/Classroom/Classroom';
 import Session from './views/TrainingSeries/Session/Session';
+import SessionsTab from './views/TrainingSeries/Session/SessionsTab';
 import ClassroomTab from './views/TrainingSeries/Classroom/ClassroomTab';
 import Dashboard from './views/Home/Dashboard';
 import Reports from './views/Reports/Reports';
@@ -96,23 +97,28 @@ const App = ({ renewToken, newToken }) => {
               />
               <Route
                 exact
-                path="/trainingseries/training/:trainingId/"
+                path="/trainingseries/:trainingSeriesId/training/:trainingId/"
                 component={TrainingsTab}
               />
               <Route
                 exact
-                path="/trainingseries/training/:trainingId/classroom"
+                path="/trainingseries/:trainingSeriesId/training/:trainingId/classroom"
                 component={Classroom}
               />
               <Route
                 exact
-                path="/trainingseries/training/classroom/:classroomId"
+                path="/trainingseries/:trainingSeriesId/training/:trainingId/classroom/:classroomId"
                 component={ClassroomTab}
               />
               <Route
                 exact
-                path="/trainingseries/training/classroom/:classroomId/session"
+                path="/trainingseries/:trainingSeriesId/training/:trainingId/classroom/:classroomId/session"
                 component={Session}
+              />
+              <Route
+                exact
+                path="/trainingseries/:trainingSeriesId/training/:trainingId/classroom/:classroomId/session/:sessionId"
+                component={SessionsTab}
               />
             </Layout>
           </Switch>
