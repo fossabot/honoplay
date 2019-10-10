@@ -1115,6 +1115,14 @@
     redux "^4.0.1"
     redux-thunk "^2.3.0"
 
+"@omegabigdata/terasu-api-proxy@^0.9.8":
+  version "0.9.8"
+  resolved "https://registry.yarnpkg.com/@omegabigdata/terasu-api-proxy/-/terasu-api-proxy-0.9.8.tgz#1301bd7f88ed765c639c4c2ba3e85f7e55c45ef6"
+  integrity sha512-3TaSZ35icvAHs6UgEcYKvCbRxZkJngTz/fXiJ4NtiFY5fKn/LsfICcxn7Y83fSu2TWw4+Qf87lVJTPwx5pZApw==
+  dependencies:
+    axios "^0.18.0"
+    store "^2.0.12"
+
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-4.2.0.tgz#dadcb6218503532d6884b210e7f3c502caaa44b1"
@@ -9214,6 +9222,11 @@ stealthy-require@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/stealthy-require/-/stealthy-require-1.1.1.tgz#35b09875b4ff49f26a777e509b3090a3226bf24b"
   integrity sha1-NbCYdbT/SfJqd35QmzCQoyJr8ks=
+
+store@^2.0.12:
+  version "2.0.12"
+  resolved "https://registry.yarnpkg.com/store/-/store-2.0.12.tgz#8c534e2a0b831f72b75fc5f1119857c44ef5d593"
+  integrity sha1-jFNOKguDH3K3X8XxEZhXxE711ZM=
 
 stream-browserify@^2.0.1:
   version "2.0.2"

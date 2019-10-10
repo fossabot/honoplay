@@ -4,6 +4,12 @@ import { connect } from "react-redux";
 import { fetchClassroomList } from "@omegabigdata/honoplay-redux-helper/Src/actions/TrainerUser";
 import { Link } from "react-router-dom";
 import WithAuth from "../../Hoc/CheckAuth";
+import {
+  MyClassroom,
+  ClassroomName,
+  ShowTrainee,
+  Examined
+} from "../../Helpers/TerasuKeys";
 
 class Classroom extends Component {
   componentDidMount() {
@@ -18,12 +24,12 @@ class Classroom extends Component {
     return (
       <PageWrapper>
         <div className="col-sm-12">
-          <h4 className="font-weight-bold text-primary mb-4">Sınıflarım</h4>
+          <h4 className="font-weight-bold text-primary mb-4">{MyClassroom}</h4>
           <table className="table">
             <thead className="thead-light">
               <tr>
-                <th scope="col">Sınıf Adı</th>
-                <th scope="col">Katılımcıları gör</th>
+                <th scope="col">{ClassroomName}</th>
+                <th scope="col">{ShowTrainee}</th>
               </tr>
             </thead>
             <tbody>
@@ -34,9 +40,12 @@ class Classroom extends Component {
                       <td>{data.name}</td>
                       <td>
                         <Link
-                          to={{ pathname: "/trainer/trainingdetail", state: data.id }}
+                          to={{
+                            pathname: "/trainer/trainingdetail",
+                            state: data.id
+                          }}
                         >
-                          İncele
+                          {Examined}
                         </Link>
                       </td>
                     </tr>

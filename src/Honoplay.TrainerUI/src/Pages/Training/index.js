@@ -9,6 +9,20 @@ import {
   fetchTrainingList
 } from "@omegabigdata/honoplay-redux-helper/Src/actions/TrainerUser";
 import WithAuth from "../../Hoc/CheckAuth";
+import {
+  MyTrainings,
+  TrainingDate,
+  TrainingName,
+  TrainingDescription,
+  Surname,
+  MobilePhone,
+  Email,
+  IsLogin,
+  JoinCode,
+  StartGame,
+  Name,
+  TraineeList
+} from "../../Helpers/TerasuKeys";
 
 class Training extends Component {
   componentDidMount() {
@@ -32,7 +46,7 @@ class Training extends Component {
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb">
               <li className="breadcrumb-item">
-                <Link to="homepage">Eğitimler</Link>
+                <Link to="homepage">{MyTrainings}</Link>
               </li>
               <li className="breadcrumb-item active" aria-current="page">
                 {selectedtraining.name}
@@ -43,9 +57,9 @@ class Training extends Component {
           <table className="table">
             <thead className="thead-light">
               <tr>
-                <th scope="col">Eğitim Tarihi</th>
-                <th scope="col">Eğitim Adı</th>
-                <th scope="col">Eğitim Açıklama</th>
+                <th scope="col">{TrainingDate}</th>
+                <th scope="col">{TrainingName}</th>
+                <th scope="col">{TrainingDescription}</th>
               </tr>
             </thead>
             <tbody>
@@ -74,16 +88,16 @@ class Training extends Component {
             </div> */}
 
             <h4 className="font-weight-bold text-primary mb-4">
-              Kullanıcı Listesi (21 Adet)
+              {TraineeList} (21 Adet)
             </h4>
             <table className="table">
               <thead className="thead-light">
                 <tr>
-                  <th scope="col">Ad</th>
-                  <th scope="col">Soyad</th>
-                  <th scope="col">Cep Telefonu</th>
-                  <th scope="col">Eposta</th>
-                  <th scope="col">Giriş Yaptı</th>
+                  <th scope="col">{Name}</th>
+                  <th scope="col">{Surname}</th>
+                  <th scope="col">{MobilePhone}</th>
+                  <th scope="col">{Email}</th>
+                  <th scope="col">{IsLogin}</th>
                 </tr>
               </thead>
               <tbody>
@@ -144,10 +158,10 @@ class Training extends Component {
                 to="/trainer/joincode"
                 className="btn btn-primary mr-2"
               >
-                Katılım Kodunu Göster
+                {JoinCode}
               </Link>
 
-              <Button title="Oyunu Başlat" />
+              <Button title={StartGame} />
             </div>
           </div>
         </div>

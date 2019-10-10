@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@omegabigdata/honoplay-redux-helper": "^0.6.6",
+    "@omegabigdata/terasu-api-proxy": "^0.9.8",
     "history": "^4.9.0",
     "jwt-decode": "^2.2.0",
     "moment": "^2.24.0",

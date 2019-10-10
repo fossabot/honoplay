@@ -5,7 +5,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json /app/package.json
 RUN npm install --silent
 COPY . /app
-RUN npm run buildProd
+RUN npm run build
 
 # production environment
 FROM nginx:1.16.0-alpine
