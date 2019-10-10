@@ -1,5 +1,10 @@
 ﻿import React, { useState, useEffect } from 'react';
-import { HashRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
+import {
+  HashRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from 'react-router-dom';
 import Layout from './components/Layout/LayoutComponent';
 
 import Questions from './views/Questions/Questions';
@@ -80,12 +85,36 @@ const App = ({ renewToken, newToken }) => {
               <Route exact path="/usermanagement" component={UserManagement} />
               <Route exact path="/addquestion" component={NewQuestion} />
               <Route exact path="/trainingseries" component={TrainingSeries} />
-              <Route exact path="/trainingseries/:trainingSeriesName/" component={TrainingSeriesTab} />
-              <Route exact path="/trainingseries/:trainingSeriesName/training/" component={Training} />
-              <Route exact path="/trainingseries/training/:trainingName/" component={TrainingsTab} />
-              <Route exact path="/trainingseries/training/:trainingName/classroom" component={Classroom} />
-              <Route exact path="/trainingseries/training/classroom/:classroomName" component={Sessions} />
-              <Route exact path="/trainingseries/training/classroom/:classroomName/session" component={Session} />
+              <Route
+                exact
+                path="/trainingseries/:trainingSeriesId/"
+                component={TrainingSeriesTab}
+              />
+              <Route
+                exact
+                path="/trainingseries/:trainingSeriesId/training/"
+                component={Training}
+              />
+              <Route
+                exact
+                path="/trainingseries/training/:trainingId/"
+                component={TrainingsTab}
+              />
+              <Route
+                exact
+                path="/trainingseries/training/:trainingId/classroom"
+                component={Classroom}
+              />
+              <Route
+                exact
+                path="/trainingseries/training/classroom/:classroomId"
+                component={Sessions}
+              />
+              <Route
+                exact
+                path="/trainingseries/training/classroom/:classroomId/session"
+                component={Session}
+              />
             </Layout>
           </Switch>
         </Router>
