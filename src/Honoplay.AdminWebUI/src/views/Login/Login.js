@@ -25,8 +25,8 @@ class Login extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      email: 'server@omegabigdata.com',
+      password: 'Password1*',
       error: false
     };
   }
@@ -39,7 +39,7 @@ class Login extends React.Component {
       if (token) {
         localStorage.setItem('token', token.token);
         localStorage.setItem('tenantId', token.user.tenantId);
-        this.props.history.push('/admin/dashboard');
+        this.props.history.push('/dashboard');
       }
     }
     if (errorToken !== prevProps.errorToken) {

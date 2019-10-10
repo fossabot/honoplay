@@ -21,6 +21,7 @@ namespace Honoplay.Domain.Entities
         public int DepartmentId { get; set; }
         public int? TraineeGroupId { get; set; }
         public Guid? ProfilPhotoId { get; set; }
+        public int? AvatarId { get; set; }
 
         public byte[] Password { get; set; }
         public byte[] PasswordSalt { get; set; }
@@ -29,6 +30,7 @@ namespace Honoplay.Domain.Entities
 
 
         public virtual ICollection<ClassroomTraineeUser> ClassroomTraineeUsers { get; set; }
+
         [JsonIgnore]
         public WorkingStatus WorkingStatus { get; set; }
         [JsonIgnore]
@@ -37,5 +39,8 @@ namespace Honoplay.Domain.Entities
         public TraineeGroup TraineeGroup { get; set; }
         [JsonIgnore]
         public ContentFile ContentFile { get; set; }
+        [JsonIgnore]
+        public Avatar Avatar { get; set; }
+
     }
 }

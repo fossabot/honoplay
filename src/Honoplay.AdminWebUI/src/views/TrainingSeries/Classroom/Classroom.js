@@ -8,7 +8,6 @@ import DropDown from '../../../components/Input/DropDownInputComponent';
 import Button from '../../../components/Button/ButtonComponent';
 import Table from '../../../components/Table/TableComponent';
 import BreadCrumbs from '../../../components/BreadCrumbs/BreadCrumbs';
-import Header from '../../../components/Typography/TypographyComponent';
 import { genderToString } from '../../../helpers/Converter';
 
 import { connect } from 'react-redux';
@@ -100,7 +99,7 @@ class ClassroomCreate extends React.Component {
           classroomError: false
         });
         this.props.history.push(
-          `/admin/trainingseries/training/${this.props.match.params.trainingName}`
+          `/trainingseries/training/${this.props.match.params.trainingName}`
         );
       }
     }
@@ -133,8 +132,6 @@ class ClassroomCreate extends React.Component {
       traineeList
     } = this.state;
     const { classes } = this.props;
-
-    console.log('trainingId', this.trainingId);
 
     this.state.classroom.createClassroomModels.map(classroom => {
       classroom.trainingId = this.trainingId;
@@ -187,24 +184,17 @@ class ClassroomCreate extends React.Component {
                   }}
                 />
               </Grid>
+              <Grid item xs={12} sm={12}>
+                <Table
+                  columns={traineeColumns}
+                  data={traineeList}
+                  isSelected={selected => {
+                    classroom.traineeUsersId = selected;
+                  }}
+                />
+              </Grid>
             </Grid>
           ))}
-          <Grid item xs={12} sm={12} />
-          <Grid item xs={12} sm={12}>
-            <Header pageHeader={translate('Trainees')} />
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <Divider />
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <Table
-              columns={traineeColumns}
-              data={traineeList}
-              isSelected={selected => {
-                classroom.traineeUsersId = selected;
-              }}
-            />
-          </Grid>
         </Grid>
       </div>
     );

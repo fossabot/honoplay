@@ -1,11 +1,12 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, CircularProgress } from '@material-ui/core';
+import { Grid, CircularProgress, Divider, IconButton } from '@material-ui/core';
 import Style from '../../Style';
 import Input from '../../../components/Input/InputTextComponent';
 import DropDown from '../../../components/Input/DropDownInputComponent';
 import Button from '../../../components/Button/ButtonComponent';
+import BreadCrumbs from '../../../components/BreadCrumbs/BreadCrumbs';
 
 import { connect } from 'react-redux';
 import {
@@ -34,7 +35,7 @@ class SessionCreate extends React.Component {
     };
   }
 
-  classroomId = null;
+  classroomId = localStorage.getItem('classroomId');
 
   componentDidUpdate(prevProps) {
     const {
@@ -65,6 +66,9 @@ class SessionCreate extends React.Component {
           sessionLoading: false,
           sessionError: false
         });
+        this.props.history.push(
+          `/trainingseries/training/classroom/${this.props.match.params.trainingSeriesName}`
+        );
       }
     }
   }
@@ -75,17 +79,37 @@ class SessionCreate extends React.Component {
 
   render() {
     const { sessionLoading, game, session, sessionError } = this.state;
-    const { classes, classroomId } = this.props;
+    const { classes } = this.props;
 
     this.state.session.createSessionModels.map(session => {
-      session.classroomId = classroomId;
+      session.classroomId = this.classroomId;
     });
-
-    this.classroomId = classroomId;
 
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
+          <Grid item xs={12} sm={11}>
+            <BreadCrumbs />
+          </Grid>
+          <Grid item xs={12} sm={1}>
+            <Button
+              buttonColor="primary"
+              buttonName={translate('Save')}
+              onClick={this.handleClick}
+              disabled={sessionLoading}
+            />
+            {sessionLoading && (
+              <CircularProgress
+                size={24}
+                disableShrink={true}
+                className={classes.buttonProgressSave}
+              />
+            )}
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12} sm={12} />
           {session.createSessionModels.map((session, id) => (
             <Grid item xs={12} sm={12} key={id}>
               <Input
@@ -112,22 +136,6 @@ class SessionCreate extends React.Component {
               />
             </Grid>
           ))}
-          <Grid item xs={12} sm={11} />
-          <Grid item xs={12} sm={1}>
-            <Button
-              buttonColor="primary"
-              buttonName={translate('Save')}
-              onClick={this.handleClick}
-              disabled={sessionLoading}
-            />
-            {sessionLoading && (
-              <CircularProgress
-                size={24}
-                disableShrink={true}
-                className={classes.buttonProgressSave}
-              />
-            )}
-          </Grid>
         </Grid>
       </div>
     );

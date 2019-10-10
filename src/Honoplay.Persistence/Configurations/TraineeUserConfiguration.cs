@@ -47,6 +47,10 @@ namespace Honoplay.Persistence.Configurations
             builder.HasOne(x => x.ContentFile)
                 .WithMany(x => x.TraineeUsers)
                 .HasForeignKey(x => x.ProfilPhotoId);
+            //ContentFile
+            builder.HasOne(x => x.Avatar)
+                .WithMany(x => x.TraineeUsers)
+                .HasForeignKey(x => x.AvatarId);
 
         }
     }

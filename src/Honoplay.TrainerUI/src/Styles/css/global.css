@@ -1,5 +1,5 @@
 ﻿body {
-  background: no-repeat center center fixed url(../../Assets/img/bg.jpg);
+  background-color: blue;
   background-size: cover;
   overflow-x: hidden;
 }

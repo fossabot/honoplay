@@ -12,18 +12,19 @@ namespace Honoplay.Application.TraineeUsers.Commands.UpdateTraineeUser
         public string NationalIdentityNumber { get; }
         public string PhoneNumber { get; }
         public int Gender { get; }
+        public int? AvatarId { get; set; }
 
-
-        public UpdateTraineeUserModel(int id, string name, string email, string surname, string nationalIdentityNumber, string phoneNumber, int gender, DateTimeOffset updatedAt)
+        public UpdateTraineeUserModel(int id, string name, string email, string surname, string nationalIdentityNumber, string phoneNumber, int gender, int? avatarId, DateTimeOffset updatedAt)
         {
             Id = id;
+            UpdatedAt = updatedAt;
             Name = name;
             Email = email;
             Surname = surname;
             NationalIdentityNumber = nationalIdentityNumber;
             PhoneNumber = phoneNumber;
             Gender = gender;
-            UpdatedAt = updatedAt;
+            AvatarId = avatarId;
         }
 
     }

@@ -4,6 +4,20 @@
         <name>Honoplay.AdminWebAPI</name>
     </assembly>
     <members>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.AvatarController.Get(Honoplay.Application.Avatars.Queries.GetAvatarsList.GetAvatarsListQueryModel)">
+            <summary>
+            This service retrieve all avatars. Filtered skip and take parameters.
+            </summary>
+            <param name="query">GetAll avatar model</param>
+            <returns>Get all avatars list with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.AvatarController.Get(System.Int32)">
+            <summary>
+            This service retrieve avatar.
+            </summary>
+            <param name="id">Get avatar model</param>
+            <returns>Get avatar by avatarId with status code.</returns>
+        </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.ClassroomController.Post(Honoplay.Application.Classrooms.Commands.CreateClassroom.CreateClassroomCommand)">
             <summary>
             This service create classroom.
