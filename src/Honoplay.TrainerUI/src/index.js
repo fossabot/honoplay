@@ -7,9 +7,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import "./Helpers/Extensions";
 import * as serviceWorker from "./serviceWorker";
 import { init } from "@omegabigdata/terasu-api-proxy";
-import { HONOPLAY_TERASU_PROJECT_ID } from "./Helpers/Statics";
+import { HONOPLAY_TRAINER_PROJECT_ID } from "./Helpers/Statics";
 
-init(HONOPLAY_TERASU_PROJECT_ID);
+init(HONOPLAY_TRAINER_PROJECT_ID);
 
 ReactDOM.render(
   <Provider store={store}>
