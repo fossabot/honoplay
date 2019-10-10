@@ -5,7 +5,10 @@ import store from "./Redux/store";
 import "./Helpers/Extensions";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+import { init } from "@omegabigdata/terasu-api-proxy";
+import { HONOPLAY_TRAINEE_PROJECT_ID } from "./Helpers/Statics";
 
+init(HONOPLAY_TRAINEE_PROJECT_ID);
 render(
   <Provider store={store}>
     <App />
