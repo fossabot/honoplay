@@ -53,6 +53,7 @@ class ClassroomCreate extends React.Component {
     };
   }
 
+  trainingSeriesId = localStorage.getItem('trainingSeriesId');
   trainingId = localStorage.getItem('trainingId');
   classroomId = localStorage.getItem('classroomId');
 
@@ -117,7 +118,7 @@ class ClassroomCreate extends React.Component {
           classroomError: false
         });
         this.props.history.push(
-          `/trainingseries/training/${this.props.match.params.trainingId}`
+          `/trainingseries/${this.trainingSeriesId}/training/${this.props.match.params.trainingId}`
         );
       }
     }

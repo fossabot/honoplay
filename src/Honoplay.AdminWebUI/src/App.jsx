@@ -97,27 +97,27 @@ const App = ({ renewToken, newToken }) => {
               />
               <Route
                 exact
-                path="/trainingseries/training/:trainingId/"
+                path="/trainingseries/:trainingSeriesId/training/:trainingId/"
                 component={TrainingsTab}
               />
               <Route
                 exact
-                path="/trainingseries/training/:trainingId/classroom"
+                path="/trainingseries/:trainingSeriesId/training/:trainingId/classroom"
                 component={Classroom}
               />
               <Route
                 exact
-                path="/trainingseries/training/classroom/:classroomId"
+                path="/trainingseries/:trainingSeriesId/training/:trainingId/classroom/:classroomId"
                 component={ClassroomTab}
               />
               <Route
                 exact
-                path="/trainingseries/training/classroom/:classroomId/session"
+                path="/trainingseries/:trainingSeriesId/training/:trainingId/classroom/:classroomId/session"
                 component={Session}
               />
               <Route
                 exact
-                path="/trainingseries/training/classroom/session/:sessionId"
+                path="/trainingseries/:trainingSeriesId/training/:trainingId/classroom/:classroomId/session/:sessionId"
                 component={SessionsTab}
               />
             </Layout>

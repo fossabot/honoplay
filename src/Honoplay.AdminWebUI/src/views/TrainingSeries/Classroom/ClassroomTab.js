@@ -29,6 +29,9 @@ class TrainingsTab extends React.Component {
     this.state = { tabValue: 1 };
   }
 
+  trainingId = localStorage.getItem('trainingId');
+  trainingSeriesId = localStorage.getItem('trainingSeriesId');
+
   handleChange = (event, tabValue) => {
     this.setState({ tabValue });
   };
@@ -39,7 +42,7 @@ class TrainingsTab extends React.Component {
 
   handleClick = () => {
     this.props.history.push(
-      `/trainingseries/training/classroom/${this.props.match.params.classroomId}/session`
+      `/trainingseries/${this.trainingSeriesId}/training/${this.trainingId}/classroom/${this.props.match.params.classroomId}/session`
     );
   };
 

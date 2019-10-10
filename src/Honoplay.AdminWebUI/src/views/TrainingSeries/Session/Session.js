@@ -41,6 +41,8 @@ class SessionCreate extends React.Component {
 
   classroomId = localStorage.getItem('classroomId');
   sessionId = localStorage.getItem('sessionId');
+  trainingSeriesId = localStorage.getItem('trainingSeriesId');
+  trainingId = localStorage.getItem('trainingId');
 
   componentDidUpdate(prevProps) {
     const {
@@ -88,7 +90,7 @@ class SessionCreate extends React.Component {
           sessionError: false
         });
         this.props.history.push(
-          `/trainingseries/training/classroom/${this.props.match.params.trainingSeriesName}`
+          `/trainingseries/${this.trainingSeriesId}/training/${this.trainingId}/classroom/${this.props.match.params.classroomId}/`
         );
       }
     }
