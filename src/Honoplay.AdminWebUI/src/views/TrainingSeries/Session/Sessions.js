@@ -81,7 +81,7 @@ class Session extends React.Component {
 
   handleClick = () => {
     this.props.history.push(
-      `/trainingseries/training/classroom/${this.props.match.params.classroomName}/session`
+      `/trainingseries/training/classroom/${this.props.match.params.classroomId}/session`
     );
   };
 
@@ -92,9 +92,7 @@ class Session extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={9}>
-            <BreadCrumbs />
-          </Grid>
+          <Grid item xs={12} sm={9} />
           <Grid item xs={12} sm={2}>
             <TextField
               placeholder={translate('Search')}
@@ -117,9 +115,6 @@ class Session extends React.Component {
               buttonName={translate('Add')}
               onClick={this.handleClick}
             />
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <Divider />
           </Grid>
           <Grid item xs={12} sm={12}>
             <Card
