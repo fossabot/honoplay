@@ -1,4 +1,4 @@
-import { translate, init, __esModule } from "@omegabigdata/terasu-api-proxy";
+import { translate, init } from "@omegabigdata/terasu-api-proxy";
 import { HONOPLAY_TRAINER_PROJECT_ID } from "./Statics";
 
 init(HONOPLAY_TRAINER_PROJECT_ID);
