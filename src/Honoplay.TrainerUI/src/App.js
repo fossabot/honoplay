@@ -47,12 +47,12 @@ class App extends React.Component {
         <Router history={History}>
           <Switch>
             <Route exact path="/" component={Login} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/homepage" component={Home} />
-            <Route exact path="/classroom" component={Classroom} />
-            <Route exact path="/trainingdetail" component={Training} />
-            <Route exact path="/joincode" component={JoinCode} />
-            <Route exact path="/logout" component={Logout} />
+            <Route exact path="/trainer/login" component={Login} />
+            <Route exact path="/trainer/homepage" component={Home} />
+            <Route exact path="/trainer/classroom" component={Classroom} />
+            <Route exact path="/trainer/trainingdetail" component={Training} />
+            <Route exact path="/trainer/joincode" component={JoinCode} />
+            <Route exact path="/trainer/logout" component={Logout} />
           </Switch>
         </Router>
       </React.Fragment>
