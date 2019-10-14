@@ -116,6 +116,11 @@ class Classrooms extends React.Component {
                   localStorage.setItem('classroomId', id);
                 }
               }}
+              name={name => {
+                if (name) {
+                  localStorage.setItem('classroomName', name);
+                }
+              }}
             />
           </Grid>
         </Grid>
