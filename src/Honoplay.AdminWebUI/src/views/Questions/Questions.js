@@ -59,7 +59,7 @@ class Questions extends React.Component {
   }
 
   handleClick = () => {
-    this.props.history.push('/addquestion');
+    this.props.history.push('/question');
     localStorage.removeItem('dataid');
   };
 
@@ -85,10 +85,10 @@ class Questions extends React.Component {
             <Table
               columns={questionsColumns}
               data={questions}
+              url="question"
               isSelected={selected => {}}
               remove
               update
-              onClick={this.handleClick}
             />
           </Grid>
         </Grid>

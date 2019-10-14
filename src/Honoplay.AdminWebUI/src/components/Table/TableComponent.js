@@ -1,6 +1,7 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import Edit from '@material-ui/icons/Edit';
 import {
   Table,
@@ -113,7 +114,7 @@ class TableComponent extends React.Component {
       children,
       update,
       remove,
-      onClick
+      url
     } = this.props;
     const { selected, rowsPerPage, page, openDialog } = this.state;
     const emptyRows =
@@ -176,9 +177,9 @@ class TableComponent extends React.Component {
                               className={classes.tableCell}
                             >
                               <IconButton
-                                onClick={
-                                  onClick ? onClick : this.handleClickOpenDialog
-                                }
+                                component={url && Link}
+                                to={url && `/${url}/${data.id}`}
+                                onClick={this.handleClickOpenDialog}
                               >
                                 <Edit />
                               </IconButton>

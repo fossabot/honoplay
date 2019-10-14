@@ -158,8 +158,6 @@ class TraineesUpdate extends React.Component {
   };
 
   handleClick = () => {
-    console.log('traineeModel', this.state.traineeModel);
-
     this.props.updateTrainee(this.state.traineeModel);
   };
 
@@ -352,8 +350,6 @@ const mapStateToProps = state => {
   } = state.updateTrainee;
 
   const { isTraineeLoading, errorTrainee, trainee } = state.trainee;
-
-  console.log('trainee', trainee);
 
   const {
     errorDepartmentList,
