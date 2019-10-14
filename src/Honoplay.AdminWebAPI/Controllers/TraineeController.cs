@@ -13,6 +13,8 @@ using System.Linq;
 using System.Net;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Honoplay.Application.TraineeUsers.Queries.GetTraineeUsersListByClassroomId;
+using Honoplay.Application.Trainings.Queries.GetTrainingsList;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
@@ -118,6 +120,37 @@ namespace Honoplay.AdminWebAPI.Controllers
                 var traineeUsersListModel = await Mediator.Send(new GetTraineeUserDetailQuery(id, userId, tenantId));
 
                 return Ok(traineeUsersListModel);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt());
+            }
+        }
+
+        /// <summary>
+        /// This service retrieve trainings by trainingId
+        /// </summary>
+        /// <param name="classroomId">Get trainings list </param>
+        /// <returns>Get trainings by tenant id and trainerUser id with status code.</returns>
+        [HttpGet]
+        [Route("/Classroom/{classroomId}/TraineeUser")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ResponseModel<TrainingsListModel>>> GetByClassRoomId(int classroomId)
+        {
+            try
+            {
+                var userId = Claims[ClaimTypes.Sid].ToInt();
+                var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
+
+                var trainingsListModel = await Mediator.Send(new GetTraineeUsersListByClassroomIdQuery(userId, classroomId, tenantId));
+
+                return Ok(trainingsListModel);
             }
             catch (NotFoundException)
             {
