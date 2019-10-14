@@ -1,5 +1,4 @@
-﻿using Honoplay.Application.Tags.Queries.GetTagDetail;
-using Honoplay.Common._Exceptions;
+﻿using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -69,11 +68,18 @@ namespace Honoplay.Application.Tests.Tags.Queries.GetTagDetail
 
             var tag = new Tag
             {
-                Id=1,
+                Id = 1,
                 CreatedBy = adminUser.Id,
                 Name = "testTag",
             };
             context.Tags.Add(tag);
+
+            var questionTag = new QuestionTag
+            {
+                TagId = tag.Id,
+                QuestionId = question.Id
+            };
+            context.QuestionTags.Add(questionTag);
 
             tenantId = tenant.Id;
             tagId = tag.Id;

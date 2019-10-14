@@ -9,67 +9,64 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.Application.Tests.Tags.Commands.UpdateTag
+namespace Honoplay.Application.Tests.Tags.Queries.GetTagsList
 {
-    public class UpdateTagCommandTest : TestBase, IDisposable
+    public class GetTagsListQueryTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly UpdateTagCommandHandler _updateTagCommandHandler;
-        private readonly int _questionId;
-        private readonly int _adminUserId;
-        private readonly int _tagId;
+        private readonly GetTagsListQueryHandler _getTagsListQueryHandler;
         private readonly Guid _tenantId;
 
-        public UpdateTagCommandTest()
+        public GetTagsListQueryTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _adminUserId, out _questionId, out _tenantId, out _tagId);
-            _updateTagCommandHandler = new UpdateTagCommandHandler(_context, new CacheManager(cache.Object));
+            _context = InitAndGetDbContext(out _tenantId);
+            _getTagsListQueryHandler = new GetTagsListQueryHandler(_context, new CacheManager(cache.Object));
         }
-
-        //Arrange
-        private HonoplayDbContext InitAndGetDbContext(out int adminUserId, out int questionId, out Guid tenantId, out int tagId)
+        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId)
         {
             var context = GetDbContext();
-
             var salt = ByteArrayExtensions.GetRandomSalt();
+
             var adminUser = new AdminUser
             {
-                Email = "TestAdminUser01@omegabigdata.com",
-                Password = "Passw0rd".GetSHA512(salt),
+                Id = 1,
+                Email = "test@omegabigdata.com",
+                Password = "pass".GetSHA512(salt),
                 PasswordSalt = salt,
-                LastPasswordChangeDateTime = DateTime.Today.AddDays(-5),
+                LastPasswordChangeDateTime = DateTimeOffset.Now.AddDays(-5)
             };
             context.AdminUsers.Add(adminUser);
 
+
             var tenant = new Tenant
             {
-                Name = "TestTenant#01",
-                HostName = "localhost"
+                Name = "testTenant",
+                HostName = "localhost",
+                CreatedBy = adminUser.Id
             };
-
             context.Tenants.Add(tenant);
 
             context.TenantAdminUsers.Add(new TenantAdminUser
             {
                 TenantId = tenant.Id,
                 AdminUserId = adminUser.Id,
-                UpdatedBy = adminUser.Id
+                CreatedBy = adminUser.Id
             });
 
             var question = new Question
             {
-                TenantId = tenant.Id,
-                Duration = 10,
-                Text = "adqwd",
-                UpdatedBy = adminUser.Id,
+                Duration = 3,
+                Text = "testQuestion",
+                CreatedBy = adminUser.Id,
+                TenantId = tenant.Id
             };
             context.Questions.Add(question);
 
             var tag = new Tag
             {
                 CreatedBy = adminUser.Id,
-                Name = "Tag1"
+                Name = "testTag"
             };
             context.Tags.Add(tag);
 
@@ -80,31 +77,29 @@ namespace Honoplay.Application.Tests.Tags.Commands.UpdateTag
             };
             context.QuestionTags.Add(questionTag);
 
-            context.SaveChanges();
-
-            adminUserId = adminUser.Id;
-            questionId = question.Id;
             tenantId = tenant.Id;
-            tagId = tag.Id;
-
+            context.SaveChanges();
             return context;
         }
 
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var updateTag = new UpdateTagCommand
-            {
-                Id = _tagId,
-                TenantId = _tenantId,
-                UpdatedBy = _adminUserId,
-                QuestionId = _questionId,
-                Name = "tag1"
-            };
+            var getTagsListQuery = new GetTagsListQuery(tenantId: _tenantId, skip: 0, take: 10);
 
-            var tagModel = await _updateTagCommandHandler.Handle(updateTag, CancellationToken.None);
+            var tagModel = await _getTagsListQueryHandler.Handle(getTagsListQuery, CancellationToken.None);
 
             Assert.Null(tagModel.Errors);
+        }
+
+        [Fact]
+        public async Task ShouldItemsCount1WhenTake1()
+        {
+            var getTagsListQuery = new GetTagsListQuery(tenantId: _tenantId, skip: 0, take: 1);
+
+            var tagModel = await _getTagsListQueryHandler.Handle(getTagsListQuery, CancellationToken.None);
+
+            Assert.Single(tagModel.Items);
         }
 
         public void Dispose() => _context?.Dispose();
