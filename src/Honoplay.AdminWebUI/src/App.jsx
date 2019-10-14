@@ -11,7 +11,7 @@ import Questions from './views/Questions/Questions';
 import Trainees from './views/Trainees/Trainee';
 import Trainers from './views/Trainers/Trainers';
 import UserManagement from './views/UserManagement/UserManagement';
-import NewQuestion from './views/Questions/NewQuestion';
+import Question from './views/Questions/Question';
 import TrainingSeries from './views/TrainingSeries/TrainingSeries/TrainingSeries';
 import TrainingSeriesTab from './views/TrainingSeries/TrainingSeries/TrainingSeriesTab';
 import Training from './views/TrainingSeries/Training/Training';
@@ -77,13 +77,14 @@ const App = ({ renewToken, newToken }) => {
           <Switch>
             <Layout>
               <Route exact path="/profile" component={Profile} />
-              <Route exact path="/dashboard" component={Dashboard} />
+              <Route exact path="/" component={Dashboard} />
               <Route exact path="/reports" component={Reports} />
               <Route exact path="/questions" component={Questions} />
               <Route exact path="/trainees" component={Trainees} />
               <Route exact path="/trainers" component={Trainers} />
               <Route exact path="/usermanagement" component={UserManagement} />
-              <Route exact path="/addquestion" component={NewQuestion} />
+              <Route exact path="/question" component={Question} />
+              <Route exact path="/question/:id" component={Question} />
               <Route exact path="/trainingseries" component={TrainingSeries} />
               <Route
                 exact
