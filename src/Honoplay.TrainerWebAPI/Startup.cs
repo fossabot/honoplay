@@ -4,6 +4,7 @@ using Honoplay.Common.Constants;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;
 using Honoplay.Persistence.CacheService;
+using Honoplay.TrainerWebAPI.Hubs;
 using Honoplay.TrainerWebAPI.Interfaces;
 using Honoplay.TrainerWebAPI.Services;
 using MediatR;
@@ -37,8 +38,11 @@ namespace Honoplay.TrainerWebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSignalR();
             services.AddCors();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Application.AssemblyIdentifier>());
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Latest)
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AssemblyIdentifier>());
 
             //Add RedisCache
             services.AddDistributedRedisCache(options =>
@@ -100,6 +104,20 @@ namespace Honoplay.TrainerWebAPI
                     {
                         Console.WriteLine("Exception:{0}", y.Exception.Message);
                         return Task.CompletedTask;
+                    },
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+
+                        // If the request is for our hub...
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) &&
+                            (path.StartsWithSegments("/hubs/game")))
+                        {
+                            // Read the token out of the query string
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
                     }
                 };
             });
@@ -139,9 +157,20 @@ namespace Honoplay.TrainerWebAPI
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseCors(builder => builder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .SetIsOriginAllowed((host) => true)
+                .AllowCredentials()
+            );
 
             app.UseAuthentication();
-            app.UseHttpsRedirection();
+
+            
+            app.UseAuthentication();
+            app.UseSignalR(endpoints => endpoints.MapHub<GameHub>("/hubs/game"));
+
+
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -153,11 +182,7 @@ namespace Honoplay.TrainerWebAPI
                 c.SwaggerEndpoint("/api/trainer/swagger/v1/swagger.json", "HonoPlay API V1");
             });
 
-            app.UseCors(builder => builder
-                    .AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
+            app.UseHttpsRedirection();
             app.UseMvc();
         }
     }
