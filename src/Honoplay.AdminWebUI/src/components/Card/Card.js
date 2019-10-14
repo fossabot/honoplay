@@ -10,8 +10,9 @@ export default function Card(props) {
   const { data, url } = props;
   const classes = Style();
 
-  function handleOpen(id) {
-    props.id(id);
+  function handleOpen(data) {
+    props.name(data.name);
+    props.id(data.id);
   }
   return (
     <React.Fragment>
@@ -48,7 +49,7 @@ export default function Card(props) {
                                   ? `/trainingseries/${url}/${data.id}`
                                   : `/trainingseries/${data.id}`
                               }
-                              onClick={() => handleOpen(data.id)}
+                              onClick={() => handleOpen(data)}
                             >
                               <Edit />
                             </IconButton>

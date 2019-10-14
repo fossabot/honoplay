@@ -122,6 +122,11 @@ class TrainingSeries extends React.Component {
                   localStorage.setItem('trainingSeriesId', id);
                 }
               }}
+              name={name => {
+                if (name) {
+                  localStorage.setItem('trainingSeriesName', name);
+                }
+              }}
             />
           </Grid>
         </Grid>

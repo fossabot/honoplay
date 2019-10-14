@@ -1,12 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { translate } from '@omegabigdata/terasu-api-proxy';
-import {
-  DialogContent,
-  Grid,
-  CircularProgress,
-  Divider
-} from '@material-ui/core';
+import { Grid, CircularProgress, Divider } from '@material-ui/core';
 import Style from '../Style';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
