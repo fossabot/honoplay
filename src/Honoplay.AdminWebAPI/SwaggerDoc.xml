@@ -208,6 +208,13 @@
             <param name="command">Create traineeUser model</param>
             <returns>CreateTraineeUserModel with status code.</returns>
         </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TraineeUserController.GetByClassRoomId(System.Int32)">
+            <summary>
+            This service retrieve trainings by trainingId
+            </summary>
+            <param name="classroomId">Get trainings list </param>
+            <returns>Get trainings by tenant id and trainerUser id with status code.</returns>
+        </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.TraineeGroupController.Post(Honoplay.Application.TraineeGroups.Commands.CreateTraineeGroup.CreateTraineeGroupCommand)">
             <summary>
             This service create traineeGroup.
