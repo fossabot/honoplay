@@ -120,7 +120,7 @@ class Options extends React.Component {
                     color="secondary"
                     value={option.text}
                     onChange={e => {
-                      option.isCorrect = true;
+                      option.isCorrect = e.target.checked;
                       this.props.basicOptionModel(this.optionsModel);
                     }}
                     className={classes.checkbox}

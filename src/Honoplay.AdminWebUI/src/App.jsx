@@ -77,7 +77,7 @@ const App = ({ renewToken, newToken }) => {
           <Switch>
             <Layout>
               <Route exact path="/profile" component={Profile} />
-              <Route exact path="/dashboard" component={Dashboard} />
+              <Route exact path="/" component={Dashboard} />
               <Route exact path="/reports" component={Reports} />
               <Route exact path="/questions" component={Questions} />
               <Route exact path="/trainees" component={Trainees} />
