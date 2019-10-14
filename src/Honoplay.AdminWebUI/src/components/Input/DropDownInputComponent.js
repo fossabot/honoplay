@@ -37,7 +37,7 @@ class DropDownInputComponent extends React.Component {
     return (
       <div className={classes.inputRoot}>
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={3} className={classes.labelCenter}>
+          <Grid item xs={12} sm={2} className={classes.labelCenter}>
             <InputLabel
               htmlFor="bootstrap-input"
               className={classes.bootstrapFormLabel}
@@ -68,14 +68,14 @@ class DropDownInputComponent extends React.Component {
                   </option>
                 ))}
             </NativeSelect>
-            {describable && (
-              <Grid item xs={12} sm={1}>
-                <IconButton onClick={this.handleOpen}>
-                  <MoreVertIcon />
-                </IconButton>
-              </Grid>
-            )}
           </Grid>
+          {describable && (
+            <Grid item xs={12} sm={1}>
+              <IconButton onClick={this.handleOpen}>
+                <MoreVertIcon />
+              </IconButton>
+            </Grid>
+          )}
         </Grid>
         <Modal titleName={labelName} handleClose={this.handleClose} open={open}>
           {children}

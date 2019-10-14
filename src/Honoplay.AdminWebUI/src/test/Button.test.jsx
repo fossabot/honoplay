@@ -1,6 +1,7 @@
 import React from 'react';
 import 'jsdom-global/register';
-import should from 'should';
+import 'should';
+import 'should-enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { configure, shallow } from 'enzyme';

@@ -19,7 +19,7 @@ const InputTextComponent = props => {
     <div className={classes.inputRoot}>
       <Grid container spacing={3}>
         {labelName && (
-          <Grid item xs={12} sm={3} className={classes.labelCenter}>
+          <Grid item xs={12} sm={2} className={classes.labelCenter}>
             <InputLabel className={classes.bootstrapFormLabel}>
               {labelName}
             </InputLabel>
@@ -41,6 +41,7 @@ const InputTextComponent = props => {
             }}
           />
         </Grid>
+        <Grid item xs={12} sm={1} />
       </Grid>
     </div>
   );

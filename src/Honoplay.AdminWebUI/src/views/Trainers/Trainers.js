@@ -44,9 +44,9 @@ class Trainers extends React.Component {
       trainerColumns: [
         { title: translate('Name'), field: 'name' },
         { title: translate('Surname'), field: 'surname' },
-        { title: translate('NationalIdentityNumber'), field: 'email' },
+        { title: translate('Department'), field: 'departmentId' },
         { title: translate('PhoneNumber'), field: 'phoneNumber' },
-        { title: translate('Department'), field: 'departmentId' }
+        { title: translate('EmailAddress'), field: 'email' }
       ]
     };
   }
@@ -222,21 +222,21 @@ class Trainers extends React.Component {
             <Input
               error={trainerError}
               onChange={this.handleChange}
-              labelName={translate('EmailAddress')}
-              inputType="text"
-              name="email"
-              value={this.trainerModel.email}
-            />
-            <Input
-              error={trainerError}
-              onChange={this.handleChange}
               labelName={translate('PhoneNumber')}
               inputType="text"
               name="phoneNumber"
               value={this.trainerModel.phoneNumber}
             />
+            <Input
+              error={trainerError}
+              onChange={this.handleChange}
+              labelName={translate('EmailAddress')}
+              inputType="text"
+              name="email"
+              value={this.trainerModel.email}
+            />
           </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={2}>
             <InputLabel className={classes.bootstrapFormLabel}>
               {translate('Password')}
             </InputLabel>
@@ -266,6 +266,8 @@ class Trainers extends React.Component {
               }}
             />
           </Grid>
+          <Grid item xs={12} sm={1} />
+          <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={11} />
           <Grid item xs={12} sm={1}>
             <Button

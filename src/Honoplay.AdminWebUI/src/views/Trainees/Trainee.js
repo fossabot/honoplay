@@ -252,7 +252,7 @@ class Trainee extends React.Component {
               onChange={this.handleChange}
             />
           </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={2}>
             <InputLabel className={classes.bootstrapFormLabel}>
               {translate('Password')}
             </InputLabel>
@@ -282,6 +282,7 @@ class Trainee extends React.Component {
               }}
             />
           </Grid>
+          <Grid item xs={12} sm={1} />
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={11} />
           <Grid item xs={12} sm={1}>
