@@ -136,6 +136,11 @@ class Trainings extends React.Component {
                   localStorage.setItem('trainingId', id);
                 }
               }}
+              name={name => {
+                if (name) {
+                  localStorage.setItem('trainingName', name);
+                }
+              }}
             />
           </Grid>
         </Grid>

@@ -44,7 +44,7 @@ namespace Honoplay.Application.TraineeUsers.Commands.UpdateTraineeUser
 
                     if (traineeUser is null)
                     {
-                        throw new NotFoundException(nameof(Department), request.DepartmentId);
+                        throw new NotFoundException(nameof(TraineeUser), request.Id);
                     }
 
                     traineeUser.Name = request.Name;
@@ -59,6 +59,7 @@ namespace Honoplay.Application.TraineeUsers.Commands.UpdateTraineeUser
                     traineeUser.UpdatedAt = updateAt;
                     traineeUser.PasswordSalt = salt;
                     traineeUser.Password = request.Password.GetSHA512(salt);
+                    traineeUser.Email = request.Email;
                     traineeUser.LastPasswordChangeDateTime = updateAt;
 
                     _context.Update(traineeUser);

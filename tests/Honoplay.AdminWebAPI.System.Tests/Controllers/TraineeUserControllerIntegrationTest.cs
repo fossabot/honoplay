@@ -1,13 +1,12 @@
-﻿using Honoplay.AdminWebAPI;
+﻿using Honoplay.AdminWebAPI.System.Tests.Extensions;
 using Honoplay.Application.TraineeUsers.Commands.CreateTraineeUser;
 using Honoplay.Application.TraineeUsers.Commands.UpdateTraineeUser;
+using Honoplay.Application.TraineeUsers.Queries.GetTraineeUsersList;
 using Honoplay.Common.Constants;
-using Honoplay.AdminWebAPI.System.Tests.Extensions;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using Honoplay.Application.TraineeUsers.Queries.GetTraineeUsersList;
 using Xunit;
 
 namespace Honoplay.AdminWebAPI.System.Tests.Controllers
@@ -134,6 +133,16 @@ namespace Honoplay.AdminWebAPI.System.Tests.Controllers
             Assert.True(httpResponse.IsSuccessStatusCode);
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
 
+        }
+        [Fact]
+        public async void CanGetTraineeListByClassroomId()
+        {
+            var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
+
+            var httpResponse = await authorizedClient.GetAsync(requestUri: "/Classroom/1/TraineeUser");
+
+            httpResponse.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
         }
     }
 }
