@@ -21,8 +21,7 @@ namespace Honoplay.Application.Tests.Tags.Commands.CreateTag
             {
                 new CreateTagCommandModel
                 {
-                    Name = "sample",
-                    QuestionId = 1
+                    Name = "sample"
                 }
             };
             Assert.True(_createTagValidator.Validate(new CreateTagCommand { CreateTagModels = newTag }).IsValid);

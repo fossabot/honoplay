@@ -86,7 +86,6 @@ namespace Honoplay.Application.Tests.Tags.Commands.CreateTag
                 {
                     new CreateTagCommandModel
                     {
-                        QuestionId = _questionId,
                         Name = "tag1"
                     }
                 }
