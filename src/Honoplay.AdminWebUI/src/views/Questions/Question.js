@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Divider, CircularProgress } from '@material-ui/core';
 import Style from '../Style';
-import Typography from '../../components/Typography/TypographyComponent';
+import Header from '../../components/Typography/TypographyComponent';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Options from './Options';
@@ -211,8 +211,31 @@ class NewQuestion extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
+          <Grid item xs={12} sm={11}>
+            <Header pageHeader={translate('CreateAQuestion')} />
+          </Grid>
+          <Grid item xs={12} sm={1}>
+            <Button
+              buttonColor="primary"
+              buttonName={this.dataId ? translate('Update') : translate('Save')}
+              onClick={this.dataId ? this.handleUpdate : this.handleClick}
+              disabled={loading}
+              className={buttonClassname}
+            />
+            {loading && (
+              <CircularProgress
+                size={24}
+                disableShrink={true}
+                className={
+                  this.dataId
+                    ? classes.buttonProgressUpdate
+                    : classes.buttonProgressSave
+                }
+              />
+            )}
+          </Grid>
           <Grid item xs={12} sm={12}>
-            <Typography pageHeader={translate('CreateAQuestion')} />
+            <Divider />
           </Grid>
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12} />
@@ -234,9 +257,8 @@ class NewQuestion extends React.Component {
               onChange={this.handleChange}
             />
           </Grid>
-          <Grid item xs={12} sm={12}>
-            <Typography pageHeader={translate('Options')} />
-          </Grid>
+          <Grid item xs={12} sm={12} />
+          <Header pageHeader={translate('Options')} />
           <Grid item xs={12} sm={12}>
             <Divider />
           </Grid>
@@ -251,33 +273,6 @@ class NewQuestion extends React.Component {
               }
             }}
           />
-          <Grid item xs={12} sm={11} />
-          <Grid item xs={12} sm={1}>
-            {this.dataId ? (
-              <Button
-                buttonColor="secondary"
-                buttonName={translate('Update')}
-                onClick={this.handleUpdate}
-                disabled={loading}
-                className={buttonClassname}
-              />
-            ) : (
-              <Button
-                buttonColor="secondary"
-                buttonName={translate('Save')}
-                onClick={this.handleClick}
-                disabled={loading}
-              />
-            )}
-            {loading && (
-              <CircularProgress
-                size={24}
-                disableShrink={true}
-                className={classes.buttonProgressSave}
-              />
-            )}
-          </Grid>
-          <Grid item xs={12} sm={12}></Grid>
         </Grid>
       </div>
     );

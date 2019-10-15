@@ -239,7 +239,40 @@ class Trainers extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Header pageHeader={translate('Trainers')} />
+          <Grid item xs={12} sm={11}>
+            <Header pageHeader={translate('Trainers')} />
+          </Grid>
+          <Grid item xs={12} sm={1}>
+            <Button
+              className={buttonClassname}
+              buttonColor="primary"
+              buttonName={
+                this.props.match.params.id
+                  ? translate('Update')
+                  : translate('Save')
+              }
+              disabled={loadingTrainer}
+              onClick={
+                this.props.match.params.id
+                  ? this.handleClickUpdate
+                  : this.handleClick
+              }
+            />
+            {loadingTrainer && (
+              <CircularProgress
+                size={24}
+                disableShrink={true}
+                className={
+                  this.props.match.params.id
+                    ? classes.buttonProgressUpdate
+                    : classes.buttonProgressSave
+                }
+              />
+            )}
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Divider />
+          </Grid>
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12}>
@@ -326,35 +359,6 @@ class Trainers extends React.Component {
           </Grid>
           <Grid item xs={12} sm={1} />
           <Grid item xs={12} sm={12} />
-          <Grid item xs={12} sm={11} />
-          <Grid item xs={12} sm={1}>
-            <Button
-              className={buttonClassname}
-              buttonColor="primary"
-              buttonName={
-                this.props.match.params.id
-                  ? translate('Update')
-                  : translate('Save')
-              }
-              disabled={loadingTrainer}
-              onClick={
-                this.props.match.params.id
-                  ? this.handleClickUpdate
-                  : this.handleClick
-              }
-            />
-            {loadingTrainer && (
-              <CircularProgress
-                size={24}
-                disableShrink={true}
-                className={
-                  this.props.match.params.id
-                    ? classes.buttonProgressUpdate
-                    : classes.buttonProgressSave
-                }
-              />
-            )}
-          </Grid>
           <Grid item xs={12} sm={12}>
             <Divider />
           </Grid>

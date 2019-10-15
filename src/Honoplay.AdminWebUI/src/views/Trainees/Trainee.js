@@ -20,7 +20,6 @@ import Table from '../../components/Table/TableComponent';
 import Header from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
 
-import TraineesUpdate from './TraineesUpdate';
 import WorkingStatuses from './WorkingStatus';
 
 import { connect } from 'react-redux';
@@ -237,14 +236,41 @@ class Trainee extends React.Component {
     return (
       <div className={classes.root} id="addTrainee">
         <Grid container spacing={3}>
-          <Header pageHeader={translate('Trainees')} />
-          <Grid item xs={12} sm={12} />
-          <Grid item xs={12} sm={12}>
-            <div />
-            <a href="#trainees" className={classes.linkStyle}>
-              {`${translate('Trainee')} ${translate('Add')}`}
-            </a>
+          <Grid item xs={12} sm={11}>
+            <Header pageHeader={translate('Trainees')} />
           </Grid>
+          <Grid item xs={12} sm={1}>
+            <Button
+              className={buttonClassname}
+              buttonColor="primary"
+              buttonName={
+                this.props.match.params.id
+                  ? translate('Update')
+                  : translate('Save')
+              }
+              disabled={loading}
+              onClick={
+                this.props.match.params.id
+                  ? this.handleClickUpdate
+                  : this.handleClick
+              }
+            />
+            {loading && (
+              <CircularProgress
+                size={24}
+                disableShrink={true}
+                className={
+                  this.props.match.params.id
+                    ? classes.buttonProgressUpdate
+                    : classes.buttonProgressSave
+                }
+              />
+            )}
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Divider />
+          </Grid>
+          <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12}>
             <DropDown
               error={isErrorTrainee}
@@ -345,57 +371,19 @@ class Trainee extends React.Component {
           </Grid>
           <Grid item xs={12} sm={1} />
           <Grid item xs={12} sm={12} />
-          <Grid item xs={12} sm={11} />
-          <Grid item xs={12} sm={1}>
-            <Button
-              className={buttonClassname}
-              buttonColor="primary"
-              buttonName={
-                this.props.match.params.id
-                  ? translate('Update')
-                  : translate('Save')
-              }
-              disabled={loading}
-              onClick={
-                this.props.match.params.id
-                  ? this.handleClickUpdate
-                  : this.handleClick
-              }
-            />
-            {loading && (
-              <CircularProgress
-                size={24}
-                disableShrink={true}
-                className={
-                  this.props.match.params.id
-                    ? classes.buttonProgressUpdate
-                    : classes.buttonProgressSave
-                }
-              />
-            )}
-          </Grid>
           <Grid item xs={12} sm={12}>
             <Divider />
           </Grid>
           <Grid item xs={12} sm={12}>
-            <a href="#addTrainee" className={classes.linkStyle}>
-              {translate('Trainees')}
-            </a>
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <div id="trainees">
-              <Table
-                columns={traineeColumns}
-                data={traineeList}
-                isSelected={selected => {}}
-                url="trainees"
-                dataId={dataId => this.handleChangeTrainee(dataId)}
-                remove
-                update
-              >
-                <TraineesUpdate />
-              </Table>
-            </div>
+            <Table
+              columns={traineeColumns}
+              data={traineeList}
+              isSelected={selected => {}}
+              url="trainees"
+              dataId={dataId => this.handleChangeTrainee(dataId)}
+              remove
+              update
+            />
           </Grid>
         </Grid>
       </div>
