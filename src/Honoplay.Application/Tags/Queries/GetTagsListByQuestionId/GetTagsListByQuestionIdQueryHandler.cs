@@ -29,14 +29,18 @@ namespace Honoplay.Application.Tags.Queries.GetTagsListByQuestionId
                     .Include(x => x.Question)
                     .Include(x => x.Tag)
                     .Where(x => x.Question.TenantId == request.TenantId)
-                    .Select(x => x.Tag)
                 , cancellationToken);
 
             var tagsListByQuestionId = allTagsListByQuestionId
-                .Select(TagsListByQuestionIdModel.Projection)
-                .ToList();
+                .Where(x => x.QuestionId == request.QuestionId)
+                .Select(x => x.Tag);
 
-            return new ResponseModel<TagsListByQuestionIdModel>(numberOfTotalItems: allTagsListByQuestionId.LongCount(), numberOfSkippedItems: 0, source: tagsListByQuestionId);
+            var responseModelSource = await tagsListByQuestionId
+                .Select(TagsListByQuestionIdModel.Projection)
+                .ToListAsync(cancellationToken);
+
+
+            return new ResponseModel<TagsListByQuestionIdModel>(numberOfTotalItems: allTagsListByQuestionId.LongCount(), numberOfSkippedItems: 0, source: responseModelSource);
 
         }
     }

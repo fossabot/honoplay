@@ -21,6 +21,7 @@ namespace Honoplay.Application.Tests.Tags.Commands.CreateTag
             {
                 new CreateTagCommandModel
                 {
+                    ToQuestion = true,
                     Name = "sample"
                 }
             };
