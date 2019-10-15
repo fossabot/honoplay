@@ -1,5 +1,4 @@
 ﻿using Honoplay.Application.Avatars.Queries.GetAvatarsList;
-using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheManager;

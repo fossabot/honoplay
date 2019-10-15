@@ -4,6 +4,7 @@ import PageWrapper from "../../Containers/PageWrapper";
 import { Button } from "../../Components/Button";
 import History from "../../Helpers/History";
 import { FinishGame } from "../../Helpers/TerasuKeys";
+import { translate } from "@omegabigdata/terasu-api-proxy";
 
 class Game extends Component {
   render() {
@@ -16,7 +17,7 @@ class Game extends Component {
         ></iframe>
         <Button
           onClick={() => History.push("/endgame")}
-          title={FinishGame}
+          title={translate(FinishGame)}
           className="btn my-btn form-control mt-4"
         ></Button>
       </PageWrapper>

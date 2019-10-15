@@ -9,6 +9,7 @@ import {
   Password,
   LoginKey
 } from "../../Helpers/TerasuKeys";
+import { translate } from "@omegabigdata/terasu-api-proxy";
 
 class Login extends Component {
   render() {
@@ -24,21 +25,21 @@ class Login extends Component {
             <input
               type="text"
               className="form-control"
-              placeholder={MobilePhoneAndEmail}
+              placeholder={translate(MobilePhoneAndEmail)}
             />
             <input
               type="password"
               className="form-control mt-3 mb-2"
-              placeholder={Password}
+              placeholder={translate(Password)}
             />
 
             <a href="#" className="su">
-              <u>{ForgotPassword}</u>
+              <u>{translate(ForgotPassword)}</u>
             </a>
 
             <Button
               onClick={() => History.push("/joingame")}
-              title={LoginKey}
+              title={translate(LoginKey)}
               className="btn my-btn form-control mt-4"
             />
           </div>

@@ -17,7 +17,7 @@ namespace Honoplay.Persistence.Configurations
             builder.Property(x => x.Name)
                 .HasMaxLength(50)
                 .IsRequired();
-
+            //Composite key
             builder.HasIndex(x => new { x.TrainingId, x.Name }).IsUnique();
 
             //RELATIONS
