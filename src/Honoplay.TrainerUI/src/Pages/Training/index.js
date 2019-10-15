@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PageWrapper from "../../Containers/PageWrapper";
 import { Button } from "../../Components/Button";
 import { Link } from "react-router-dom";
-import History from "../../Helpers/History";
 import { connect } from "react-redux";
 import {
   fetchTraineeList,
@@ -27,17 +26,21 @@ import { translate } from "@omegabigdata/terasu-api-proxy";
 
 class Training extends Component {
   componentDidMount() {
-    const { location } = this.props;
-    if (!location.state) {
-      this.props.history.goBack();
+    const selectedClassroomId = localStorage.getItem("selectedClassroom");
+    if (selectedClassroomId) {
+      this.props.fetchTraineeList(selectedClassroomId);
+      this.props.fetchTrainingList();
     }
-    this.props.fetchTraineeList(location.state);
   }
 
   render() {
     const selectedTrainingId = localStorage.getItem("selectedTraining");
 
-    const selectedtraining = this.props.trainingList.items.filter(
+    if (!this.props.trainingList) {
+      return null;
+    }
+
+    let selectedtraining = this.props.trainingList.items.filter(
       q => q.id == selectedTrainingId
     )[0];
 
