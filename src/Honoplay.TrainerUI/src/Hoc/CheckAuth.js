@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import History from "../Helpers/History";
 import actionIndex from "@omegabigdata/honoplay-redux-helper/Src/actions";
-import { store } from "../Redux/store";
+import  store  from "../Redux/store";
 
 const WithAuth = HocComponent => {
   return class extends Component {
