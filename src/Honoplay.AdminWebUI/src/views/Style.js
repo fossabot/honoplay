@@ -35,7 +35,7 @@ const Style = theme => ({
   progressModal: {
     position: 'absolute',
     marginTop: -25,
-    marginLeft: 520
+    marginLeft: 800
   },
   buttonProgressUpdate: {
     color: green[500],

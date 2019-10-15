@@ -1,6 +1,7 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
 import {
   Grid,
   Divider,
@@ -13,7 +14,7 @@ import {
 import Style from '../Style';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import Typography from '../../components/Typography/TypographyComponent';
+import Header from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
@@ -22,19 +23,21 @@ import Table from '../../components/Table/TableComponent';
 import { connect } from 'react-redux';
 import {
   createTrainer,
-  fetchTrainersList
+  fetchTrainersList,
+  fetchTrainer,
+  updateTrainer
 } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainer';
 import { fetchDepartmentList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department';
 import { fetchProfessionList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Profession';
 
 import { departmentToString } from '../../helpers/Converter';
-import TrainersUpdate from './TrainersUpdate';
 import Profession from './Profession';
 
 class Trainers extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      trainerId: null,
       departments: [],
       trainer: [],
       professions: [],
@@ -44,10 +47,11 @@ class Trainers extends React.Component {
       trainerColumns: [
         { title: translate('Name'), field: 'name' },
         { title: translate('Surname'), field: 'surname' },
-        { title: translate('NationalIdentityNumber'), field: 'email' },
+        { title: translate('Department'), field: 'departmentId' },
         { title: translate('PhoneNumber'), field: 'phoneNumber' },
-        { title: translate('Department'), field: 'departmentId' }
-      ]
+        { title: translate('EmailAddress'), field: 'email' }
+      ],
+      success: false
     };
   }
 
@@ -73,7 +77,13 @@ class Trainers extends React.Component {
       errorTrainerList,
       trainersList,
       isProfessionListLoading,
-      professionList
+      professionList,
+      isTrainerLoading,
+      errorTrainer,
+      trainer,
+      isUpdateTrainerLoading,
+      errorUpdateTrainer,
+      updateTrainer
     } = this.props;
 
     if (!prevProps.errorDepartmentList && errorDepartmentList) {
@@ -138,6 +148,41 @@ class Trainers extends React.Component {
         });
       }
     }
+
+    if (prevProps.isTrainerLoading && !isTrainerLoading) {
+      this.setState({
+        loading: true
+      });
+    }
+    if (prevProps.isTrainerLoading && !isTrainerLoading && trainer) {
+      if (!errorTrainer) {
+        this.trainerModel = trainer.items[0];
+      }
+    }
+    if (!prevProps.errorUpdateTrainer && errorUpdateTrainer) {
+      this.setState({
+        trainerError: true,
+        loadingTrainer: false,
+        success: false
+      });
+    }
+    if (
+      prevProps.isUpdateTrainerLoading &&
+      !isUpdateTrainerLoading &&
+      updateTrainer
+    ) {
+      if (!errorUpdateTrainer) {
+        this.props.fetchTrainersList(0, 50);
+        this.setState({
+          trainerError: false,
+          loadingTrainer: false,
+          success: true
+        });
+        setTimeout(() => {
+          this.setState({ success: false });
+        }, 1000);
+      }
+    }
   }
 
   componentDidMount() {
@@ -156,14 +201,21 @@ class Trainers extends React.Component {
   };
 
   handleClick = () => {
-    const { createTrainer } = this.props;
-    createTrainer(this.trainerModel);
+    this.props.createTrainer(this.trainerModel);
+  };
+
+  handleClickUpdate = () => {
+    this.props.updateTrainer(this.trainerModel);
   };
 
   handleClickShowPassword = () => {
     this.setState(state => ({
       showPassword: !state.showPassword
     }));
+  };
+
+  handleChangeTrainer = dataId => {
+    this.props.fetchTrainer(dataId);
   };
 
   render() {
@@ -173,14 +225,18 @@ class Trainers extends React.Component {
       trainerError,
       trainer,
       trainerColumns,
-      professions
+      professions,
+      success
     } = this.state;
     const { classes } = this.props;
+    const buttonClassname = classNames({
+      [classes.buttonSuccess]: success
+    });
 
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Typography pageHeader={translate('Trainers')} />
+          <Header pageHeader={translate('Trainers')} />
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12}>
@@ -222,21 +278,21 @@ class Trainers extends React.Component {
             <Input
               error={trainerError}
               onChange={this.handleChange}
-              labelName={translate('EmailAddress')}
-              inputType="text"
-              name="email"
-              value={this.trainerModel.email}
-            />
-            <Input
-              error={trainerError}
-              onChange={this.handleChange}
               labelName={translate('PhoneNumber')}
               inputType="text"
               name="phoneNumber"
               value={this.trainerModel.phoneNumber}
             />
+            <Input
+              error={trainerError}
+              onChange={this.handleChange}
+              labelName={translate('EmailAddress')}
+              inputType="text"
+              name="email"
+              value={this.trainerModel.email}
+            />
           </Grid>
-          <Grid item xs={12} sm={3}>
+          <Grid item xs={12} sm={2}>
             <InputLabel className={classes.bootstrapFormLabel}>
               {translate('Password')}
             </InputLabel>
@@ -250,7 +306,6 @@ class Trainers extends React.Component {
               name="password"
               type={this.state.showPassword ? 'text' : 'password'}
               onChange={this.handleChange}
-              value={this.trainerModel.password}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -266,19 +321,34 @@ class Trainers extends React.Component {
               }}
             />
           </Grid>
+          <Grid item xs={12} sm={1} />
+          <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={11} />
           <Grid item xs={12} sm={1}>
             <Button
+              className={buttonClassname}
               buttonColor="primary"
-              buttonName={translate('Save')}
+              buttonName={
+                this.props.match.params.id
+                  ? translate('Update')
+                  : translate('Save')
+              }
               disabled={loadingTrainer}
-              onClick={this.handleClick}
+              onClick={
+                this.props.match.params.id
+                  ? this.handleClickUpdate
+                  : this.handleClick
+              }
             />
             {loadingTrainer && (
               <CircularProgress
                 size={24}
                 disableShrink={true}
-                className={classes.buttonProgress}
+                className={
+                  this.props.match.params.id
+                    ? classes.buttonProgressUpdate
+                    : classes.buttonProgressSave
+                }
               />
             )}
           </Grid>
@@ -290,11 +360,11 @@ class Trainers extends React.Component {
               columns={trainerColumns}
               data={trainer}
               isSelected={selected => {}}
+              url="trainers"
               remove
               update
-            >
-              <TrainersUpdate />
-            </Table>
+              dataId={dataId => this.handleChangeTrainer(dataId)}
+            />
           </Grid>
         </Grid>
       </div>
@@ -327,6 +397,14 @@ const mapStateToProps = state => {
     errorProfessionList
   } = state.professionList;
 
+  const { isTrainerLoading, errorTrainer, trainer } = state.trainer;
+
+  const {
+    isUpdateTrainerLoading,
+    errorUpdateTrainer,
+    updateTrainer
+  } = state.updateTrainer;
+
   return {
     isCreateTrainerLoading,
     createTrainer,
@@ -339,7 +417,13 @@ const mapStateToProps = state => {
     trainersList,
     isProfessionListLoading,
     professionList,
-    errorProfessionList
+    errorProfessionList,
+    isTrainerLoading,
+    errorTrainer,
+    trainer,
+    isUpdateTrainerLoading,
+    errorUpdateTrainer,
+    updateTrainer
   };
 };
 
@@ -347,7 +431,9 @@ const mapDispatchToProps = {
   createTrainer,
   fetchTrainersList,
   fetchDepartmentList,
-  fetchProfessionList
+  fetchProfessionList,
+  fetchTrainer,
+  updateTrainer
 };
 
 export default connect(

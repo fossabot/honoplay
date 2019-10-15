@@ -171,15 +171,15 @@ class TableComponent extends React.Component {
                           ))}
                           {selected.includes(data.id) && update ? (
                             <TableCell
-                              onClick={() =>
-                                localStorage.setItem('dataid', data.id)
-                              }
+                              onClick={() => {
+                                localStorage.setItem('dataid', data.id);
+                                this.props.dataId(data.id);
+                              }}
                               className={classes.tableCell}
                             >
                               <IconButton
                                 component={url && Link}
                                 to={url && `/${url}/${data.id}`}
-                                onClick={this.handleClickOpenDialog}
                               >
                                 <Edit />
                               </IconButton>
