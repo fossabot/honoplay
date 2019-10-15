@@ -18,5 +18,6 @@ namespace Honoplay.Application.Tags.Commands.CreateTag
     public class CreateTagCommandModel
     {
         public string Name { get; set; }
+        public bool ToQuestion { get; set; }
     }
 }

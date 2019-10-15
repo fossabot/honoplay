@@ -8,6 +8,7 @@ namespace Honoplay.Application.Tags.Commands.CreateTag
         {
             RuleForEach(x => x.CreateTagModels).SetValidator(new InlineValidator<CreateTagCommandModel> {
                 orderValidator => orderValidator.RuleFor(x => x.Name).NotNull().NotEmpty(),
+                orderValidator => orderValidator.RuleFor(x => x.ToQuestion).NotNull().NotEmpty()
             });
 
         }

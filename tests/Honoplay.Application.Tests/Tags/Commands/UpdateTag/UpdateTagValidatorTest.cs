@@ -20,7 +20,7 @@ namespace Honoplay.Application.Tests.Tags.Commands.UpdateTag
             Assert.True(_updateTagValidator.Validate(
                 new UpdateTagCommand
                 {
-                    QuestionId = 1,
+                    ToQuestion = true,
                     Name = "tag1"
                 }
             ).IsValid);
@@ -30,7 +30,7 @@ namespace Honoplay.Application.Tests.Tags.Commands.UpdateTag
         public void ShouldBeNotValidForNullOrEmpty()
         {
             _updateTagValidator.ShouldHaveValidationErrorFor(x => x.Name, string.Empty);
-            _updateTagValidator.ShouldHaveValidationErrorFor(x => x.QuestionId, 0);
+            _updateTagValidator.ShouldHaveValidationErrorFor(x => x.ToQuestion, null);
         }
     }
 }

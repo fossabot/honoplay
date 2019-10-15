@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Tags.Commands.UpdateTag;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Tags.Commands.UpdateTag
@@ -69,7 +70,8 @@ namespace Honoplay.Application.Tests.Tags.Commands.UpdateTag
             var tag = new Tag
             {
                 CreatedBy = adminUser.Id,
-                Name = "Tag1"
+                Name = "Tag1",
+                ToQuestion = true
             };
             context.Tags.Add(tag);
 
@@ -98,7 +100,7 @@ namespace Honoplay.Application.Tests.Tags.Commands.UpdateTag
                 Id = _tagId,
                 TenantId = _tenantId,
                 UpdatedBy = _adminUserId,
-                QuestionId = _questionId,
+                ToQuestion = true,
                 Name = "tag1"
             };
 

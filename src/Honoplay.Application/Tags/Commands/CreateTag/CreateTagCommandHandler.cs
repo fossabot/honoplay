@@ -42,7 +42,8 @@ namespace Honoplay.Application.Tags.Commands.CreateTag
                         var newTag = new Tag
                         {
                             CreatedBy = request.CreatedBy,
-                            Name = createTagModel.Name
+                            Name = createTagModel.Name,
+                            ToQuestion = createTagModel.ToQuestion
                         };
                         newTags.Add(newTag);
                     }
@@ -66,6 +67,7 @@ namespace Honoplay.Application.Tags.Commands.CreateTag
 
                     newTags.ForEach(x => createdTags.Add(new CreateTagModel(x.Id,
                                                                             x.Name,
+                                                                            x.ToQuestion,
                                                                             x.CreatedBy,
                                                                             x.CreatedAt)));
                 }

@@ -10,6 +10,7 @@ namespace Honoplay.Domain.Entities
         }
         public int Id { get; set; }
         public string Name { get; set; }
+        public bool ToQuestion { get; set; }
         public virtual ICollection<QuestionTag> QuestionTags { get; set; }
     }
 }
