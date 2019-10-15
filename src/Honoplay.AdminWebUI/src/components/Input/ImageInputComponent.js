@@ -41,13 +41,13 @@ class ImageInputComponent extends React.Component {
       <div className={classes.inputRoot}>
         <Grid container spacing={3}>
           {labelName && (
-            <Grid item xs={12} sm={3} className={classes.labelCenter}>
+            <Grid item xs={12} sm={2} className={classes.labelCenter}>
               <InputLabel className={classes.bootstrapFormLabel}>
                 {labelName}
               </InputLabel>
             </Grid>
           )}
-          <Grid item xs={8} sm={5}>
+          <Grid item xs={8} sm={9}>
             <InputBase
               classes={{
                 root: classes.bootstrapRoot,
@@ -58,7 +58,7 @@ class ImageInputComponent extends React.Component {
               error={error ? true : false}
             />
           </Grid>
-          <Grid item xs={4} sm={4}>
+          <Grid item xs={4} sm={1}>
             <input
               accept="image/*"
               className={classes.fileInput}

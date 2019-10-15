@@ -93,11 +93,11 @@ class CompanyCard extends React.Component {
           open={open}
           onClose={this.handleClose}
         >
-          <MenuItem component={Link} to="/login" onClick={this.logout}>
-            {translate('Logout')}
-          </MenuItem>
           <MenuItem component={Link} to="/profile">
             {translate('TenantProfile')}
+          </MenuItem>
+          <MenuItem component={Link} to="/login" onClick={this.logout}>
+            {translate('Logout')}
           </MenuItem>
         </Menu>
       </div>

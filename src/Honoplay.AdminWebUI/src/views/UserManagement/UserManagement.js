@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Divider, CircularProgress } from '@material-ui/core';
 import Style from '../Style';
-import Typography from '../../components/Typography/TypographyComponent';
+import Header from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Input from '../../components/Input/InputTextComponent';
 
@@ -74,7 +74,28 @@ class UserManagement extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Typography pageHeader={translate('UserManagement')} />
+          <Grid item xs={12} sm={11}>
+            <Header pageHeader={translate('UserManagement')} />
+          </Grid>
+          <Grid item xs={12} sm={1}>
+            <Button
+              className={buttonClassname}
+              buttonColor="primary"
+              buttonName={translate('Save')}
+              onClick={this.handleClick}
+              disabled={loading}
+            />
+            {loading && (
+              <CircularProgress
+                size={24}
+                disableShrink={true}
+                className={classes.buttonProgress}
+              />
+            )}
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Divider />
+          </Grid>
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12}>
@@ -116,26 +137,6 @@ class UserManagement extends React.Component {
             />
           </Grid>
           <Grid item xs={12} sm={12} />
-          <Grid item xs={12} sm={11} />
-          <Grid item xs={12} sm={1}>
-            <Button
-              className={buttonClassname}
-              buttonColor="primary"
-              buttonName={translate('Save')}
-              onClick={this.handleClick}
-              disabled={loading}
-            />
-            {loading && (
-              <CircularProgress
-                size={24}
-                disableShrink={true}
-                className={classes.buttonProgress}
-              />
-            )}
-          </Grid>
-          <Grid item xs={12} sm={12}>
-            <Divider />
-          </Grid>
         </Grid>
       </div>
     );

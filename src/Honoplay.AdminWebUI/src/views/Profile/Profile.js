@@ -112,8 +112,28 @@ class Profile extends React.Component {
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
-          <Grid item xs={6} sm={12}>
+          <Grid item xs={6} sm={11}>
             <Header pageHeader={translate('TenantInformation')} />
+          </Grid>
+          <Grid item xs={12} sm={1}>
+            <Button
+              buttonColor="secondary"
+              buttonName={translate('Update')}
+              onClick={this.handleClick}
+              disabled={loading}
+              className={buttonClassname}
+            />
+            {loading && (
+              <CircularProgress
+                size={24}
+                disableShrink={true}
+                className={classes.buttonProgressUpdate}
+              />
+            )}
+          </Grid>
+          <Grid item xs={12} sm={12} />
+          <Grid item xs={12} sm={12}>
+            <Divider />
           </Grid>
           <Grid item xs={12} sm={12} />
           <Grid item xs={12} sm={12}>
@@ -142,28 +162,14 @@ class Profile extends React.Component {
               labelName={translate('TenantLogo')}
             />
           </Grid>
-          <Grid item xs={12} sm={12} />
-          <Grid item xs={12} sm={11} />
-          <Grid item xs={12} sm={1}>
-            <Button
-              buttonColor="secondary"
-              buttonName={translate('Update')}
-              onClick={this.handleClick}
-              disabled={loading}
-              className={buttonClassname}
-            />
-            {loading && (
-              <CircularProgress
-                size={24}
-                disableShrink={true}
-                className={classes.buttonProgressUpdate}
-              />
-            )}
-          </Grid>
           <Grid item xs={12} sm={12}>
             <Divider />
           </Grid>
-          <Departman />
+          <Grid item xs={12} sm={12} />
+          <Grid item xs={12} sm={12}>
+            <Departman />
+            <Divider />
+          </Grid>
         </Grid>
       </div>
     );

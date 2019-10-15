@@ -5,7 +5,6 @@ import {
   Grid,
   Checkbox,
   MuiThemeProvider,
-  Divider,
   Typography
 } from '@material-ui/core';
 import { Style, theme } from './Style';
@@ -117,7 +116,7 @@ class Options extends React.Component {
                 <Grid item xs={12} sm={1}>
                   <Checkbox
                     checked={Boolean(option.isCorrect)}
-                    color="secondary"
+                    color="primary"
                     value={option.text}
                     onChange={e => {
                       option.isCorrect = e.target.checked;
@@ -146,7 +145,7 @@ class Options extends React.Component {
                 ) : (
                   <Grid item xs={12} sm={1}>
                     <Button
-                      buttonColor="secondary"
+                      buttonColor="primary"
                       onClick={this.optionRemove(id)}
                       buttonIcon="minus"
                     />
@@ -159,14 +158,11 @@ class Options extends React.Component {
             <Grid item xs={12} sm={12} />
             <Grid item xs={12} sm={12}>
               <Button
-                buttonColor="secondary"
+                buttonColor="primary"
                 buttonName={translate('AddOption')}
                 onClick={this.optionAdd}
                 buttonIcon="plus"
               />
-            </Grid>
-            <Grid item xs={12} sm={12}>
-              <Divider />
             </Grid>
           </Grid>
         </div>

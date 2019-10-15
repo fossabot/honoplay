@@ -1,9 +1,9 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
+import { Grid, Divider } from '@material-ui/core';
 import Style from '../Style';
-import Typography from '../../components/Typography/TypographyComponent';
+import Header from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Table from '../../components/Table/TableComponent';
 
@@ -71,15 +71,17 @@ class Questions extends React.Component {
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={6} sm={11}>
-            <Typography pageHeader={translate('Questions')} />
+            <Header pageHeader={translate('Questions')} />
           </Grid>
           <Grid item xs={6} sm={1}>
             <Button
               onClick={this.handleClick}
-              buttonColor="secondary"
-              buttonIcon="plus"
+              buttonColor="primary"
               buttonName={translate('NewQuestion')}
             />
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            <Divider />
           </Grid>
           <Grid item xs={12} sm={12}>
             <Table
