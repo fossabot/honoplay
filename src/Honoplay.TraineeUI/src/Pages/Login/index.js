@@ -54,4 +54,23 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = state => {
+  const {
+    userTraineeTokenIsLoading,
+    userTraineeToken,
+    userTraineeTokenError
+  } = state.traineeUserToken;
+
+  return {
+    userTraineeTokenIsLoading,
+    userTraineeToken,
+    userTraineeTokenError
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    fethTraineeUserToken
+  }
+)(Login);
