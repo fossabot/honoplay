@@ -5,6 +5,7 @@ import History from "./Helpers/History";
 import JoinGame from "./Pages/JoinGame";
 import Game from "./Pages/Game";
 import EndGame from "./Pages/EndGame";
+import Logout from "./Helpers/Logout";
 
 class App extends React.Component {
   render() {
@@ -16,6 +17,7 @@ class App extends React.Component {
           <Route path="/joingame" component={JoinGame} />
           <Route path="/game" component={Game} />
           <Route path="/endgame" component={EndGame} />
+          <Route path="/logout" component={Logout} />
         </BrowserRouter>
       </React.Fragment>
     );
