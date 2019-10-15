@@ -8,6 +8,7 @@ import {
   Join,
   PleaseEnterYourGameParticipationCode
 } from "../../Helpers/TerasuKeys";
+import { translate } from "@omegabigdata/terasu-api-proxy";
 
 class JoinGame extends Component {
   render() {
@@ -16,19 +17,22 @@ class JoinGame extends Component {
         <div className="row pt-5 pb-5">
           <div className="col-sm-7">
             <p className="mt-5 mb-3 font-weight-bold">
-              {PleaseEnterYourGameParticipationCode}
+              {translate(PleaseEnterYourGameParticipationCode)}
             </p>
             <div className="form">
               <input type="text" className="form-control" placeholder="---" />
               <Button
                 onClick={() => History.push("/game")}
-                title={Join}
+                title={translate(Join)}
                 className="btn my-btn form-control mt-4"
               />
             </div>
           </div>
           <div className="col-sm-5 text-center">
-            <img src={Code} className="img-fluid d-none d-sm-block" />
+            <img
+              src={translate(Code)}
+              className="img-fluid d-none d-sm-block"
+            />
           </div>
         </div>
       </PageWrapper>
