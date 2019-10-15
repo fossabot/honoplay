@@ -8,6 +8,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Tags.Queries.GetTagsListByQuestionId;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Tags.Queries.GetTagsListByQuestionId
@@ -70,6 +71,7 @@ namespace Honoplay.Application.Tests.Tags.Queries.GetTagsListByQuestionId
                 Id = 1,
                 CreatedBy = adminUser.Id,
                 Name = "testTag",
+                ToQuestion = true
             };
             context.Tags.Add(tag);
 
