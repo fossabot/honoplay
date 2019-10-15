@@ -1,6 +1,5 @@
 import React from "react";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
-import History from "./Helpers/History";
 import Login from "./Pages/Login";
 import Home from "./Pages/Home/index";
 import Training from "./Pages/Training";
@@ -44,7 +43,7 @@ class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Router history={History}>
+        <Router>
           <Switch>
             <Route exact path="/" component={Login} />
             <Route exact path="/login" component={Login} />
