@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PageWrapper from "../../Containers/PageWrapper";
 import { Logo, Vector } from "../../Assets/index";
 import { Button } from "../../Components/Button";
-import History from "../../Helpers/History";
 import { connect } from "react-redux";
 import { fethTrainerUserToken } from "@omegabigdata/honoplay-redux-helper/Src/actions/TrainerUser";
 import {
