@@ -194,6 +194,20 @@ namespace Honoplay.AdminWebAPI.System.Tests
                 Name = "avatar1",
                 ImageBytes = new byte[] { 0x20 }
             });
+
+            var tag = new Tag
+            {
+                Name = "tag1",
+                CreatedBy = adminUser.Id,
+                ToQuestion = true
+            };
+            dbContext.Tags.Add(tag);
+            var questionTag = new QuestionTag
+            {
+                QuestionId = question.Id,
+                TagId = tag.Id
+            };
+            dbContext.QuestionTags.Add(questionTag);
             dbContext.SaveChanges();
         }
     }

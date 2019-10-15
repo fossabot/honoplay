@@ -8,6 +8,7 @@ namespace Honoplay.Domain.Entities
         public Question()
         {
             Options = new HashSet<Option>();
+            QuestionTags = new HashSet<QuestionTag>();
         }
         public int Id { get; set; }
         public Guid TenantId { get; set; }
@@ -16,6 +17,7 @@ namespace Honoplay.Domain.Entities
         public Guid? VisualId { get; set; }
 
         public virtual ICollection<Option> Options { get; set; }
+        public virtual ICollection<QuestionTag> QuestionTags { get; set; }
         public Tenant Tenant { get; set; }
         public ContentFile ContentFile { get; set; }
     }
