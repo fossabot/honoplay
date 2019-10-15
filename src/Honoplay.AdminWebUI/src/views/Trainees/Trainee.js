@@ -1,6 +1,7 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
+import classNames from 'classnames';
 import {
   Grid,
   Divider,
@@ -25,7 +26,9 @@ import WorkingStatuses from './WorkingStatus';
 import { connect } from 'react-redux';
 import {
   fetchTraineeList,
-  createTrainee
+  createTrainee,
+  fetchTrainee,
+  updateTrainee
 } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee';
 import { fetchDepartmentList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Department';
 import { fetchWorkingStatusList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/WorkingStatus';
@@ -35,6 +38,7 @@ class Trainee extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      success: false,
       traineeList: [],
       departments: [],
       workingStatuses: [],
@@ -46,6 +50,7 @@ class Trainee extends React.Component {
           title: translate('NationalIdentityNumber'),
           field: 'nationalIdentityNumber'
         },
+        { title: translate('EmailAddress'), field: 'email' },
         { title: translate('PhoneNumber'), field: 'phoneNumber' },
         { title: translate('Gender'), field: 'gender' }
       ],
@@ -76,7 +81,13 @@ class Trainee extends React.Component {
       workingStatusList,
       errorCreateTrainee,
       isCreateTraineeLoading,
-      newTrainee
+      newTrainee,
+      isTraineeLoading,
+      errorTrainee,
+      trainee,
+      isUpdateTraineeLoading,
+      errorUpdateTrainee,
+      updatedTrainee
     } = this.props;
 
     if (prevProps.isTraineeListLoading && !isTraineeListLoading && trainees) {
@@ -130,12 +141,51 @@ class Trainee extends React.Component {
         });
       }
     }
+    if (prevProps.isTraineeLoading && !isTraineeLoading && trainee) {
+      if (!errorTrainee) {
+        this.setState({
+          traineeModel: trainee.items[0]
+        });
+      }
+    }
+    if (!prevProps.isUpdateTraineeLoading && isUpdateTraineeLoading) {
+      this.setState({
+        loading: true
+      });
+    }
+    if (!prevProps.errorUpdateTrainee && errorUpdateTrainee) {
+      this.setState({
+        isErrorTrainee: true,
+        loading: false,
+        success: false
+      });
+    }
+    if (
+      prevProps.isUpdateTraineeLoading &&
+      !isUpdateTraineeLoading &&
+      updatedTrainee
+    ) {
+      if (!errorUpdateTrainee) {
+        this.props.fetchTraineeList(0, 50);
+        this.setState({
+          isErrorTrainee: false,
+          loading: false,
+          success: true
+        });
+        setTimeout(() => {
+          this.setState({ success: false });
+        }, 1000);
+      }
+    }
   }
 
   componentDidMount() {
     this.props.fetchTraineeList(0, 50);
     this.props.fetchWorkingStatusList(0, 50);
     this.props.fetchDepartmentList(0, 50);
+    if (this.props.match.params.id) {
+      this.props.fetchTrainee(parseInt(this.props.match.params.id));
+    }
   }
 
   handleChange = e => {
@@ -159,6 +209,14 @@ class Trainee extends React.Component {
     this.props.createTrainee(this.state.traineeModel);
   };
 
+  handleClickUpdate = () => {
+    this.props.updateTrainee(this.state.traineeModel);
+  };
+
+  handleChangeTrainee = dataId => {
+    this.props.fetchTrainee(dataId);
+  };
+
   render() {
     const { classes } = this.props;
     const {
@@ -169,8 +227,12 @@ class Trainee extends React.Component {
       traineeList,
       loading,
       isErrorTrainee,
-      traineeModel
+      traineeModel,
+      success
     } = this.state;
+    const buttonClassname = classNames({
+      [classes.buttonSuccess]: success
+    });
 
     return (
       <div className={classes.root} id="addTrainee">
@@ -266,7 +328,6 @@ class Trainee extends React.Component {
               name="password"
               type={this.state.showPassword ? 'text' : 'password'}
               onChange={this.handleChange}
-              value={traineeModel.password}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -287,16 +348,29 @@ class Trainee extends React.Component {
           <Grid item xs={12} sm={11} />
           <Grid item xs={12} sm={1}>
             <Button
-              buttonColor="secondary"
-              buttonName={translate('Save')}
-              onClick={this.handleClick}
+              className={buttonClassname}
+              buttonColor="primary"
+              buttonName={
+                this.props.match.params.id
+                  ? translate('Update')
+                  : translate('Save')
+              }
               disabled={loading}
+              onClick={
+                this.props.match.params.id
+                  ? this.handleClickUpdate
+                  : this.handleClick
+              }
             />
             {loading && (
               <CircularProgress
                 size={24}
                 disableShrink={true}
-                className={classes.buttonProgressSave}
+                className={
+                  this.props.match.params.id
+                    ? classes.buttonProgressUpdate
+                    : classes.buttonProgressSave
+                }
               />
             )}
           </Grid>
@@ -314,6 +388,8 @@ class Trainee extends React.Component {
                 columns={traineeColumns}
                 data={traineeList}
                 isSelected={selected => {}}
+                url="trainees"
+                dataId={dataId => this.handleChangeTrainee(dataId)}
                 remove
                 update
               >
@@ -352,6 +428,14 @@ const mapStateToProps = state => {
     newTrainee
   } = state.createTrainee;
 
+  const { isTraineeLoading, errorTrainee, trainee } = state.trainee;
+
+  const {
+    isUpdateTraineeLoading,
+    errorUpdateTrainee,
+    updatedTrainee
+  } = state.updateTrainee;
+
   return {
     isTraineeListLoading,
     errorTraineeList,
@@ -364,7 +448,13 @@ const mapStateToProps = state => {
     errorWorkingStatusList,
     errorCreateTrainee,
     isCreateTraineeLoading,
-    newTrainee
+    newTrainee,
+    isTraineeLoading,
+    errorTrainee,
+    trainee,
+    isUpdateTraineeLoading,
+    errorUpdateTrainee,
+    updatedTrainee
   };
 };
 
@@ -372,7 +462,9 @@ const mapDispatchToProps = {
   fetchTraineeList,
   fetchDepartmentList,
   fetchWorkingStatusList,
-  createTrainee
+  createTrainee,
+  fetchTrainee,
+  updateTrainee
 };
 
 export default connect(

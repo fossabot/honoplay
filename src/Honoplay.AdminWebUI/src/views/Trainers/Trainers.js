@@ -140,8 +140,8 @@ class Trainers extends React.Component {
       trainersList
     ) {
       if (!errorTrainerList) {
-        if (departmentList && trainersList) {
-          departmentToString(departmentList.items, trainersList.items);
+        if (this.state.departments && trainersList) {
+          departmentToString(this.state.departments, trainersList.items);
         }
         this.setState({
           trainer: trainersList.items
@@ -189,6 +189,9 @@ class Trainers extends React.Component {
     this.props.fetchTrainersList(0, 50);
     this.props.fetchDepartmentList(0, 50);
     this.props.fetchProfessionList(0, 50);
+    if (this.props.match.params.id) {
+      this.props.fetchTrainer(this.props.match.params.id);
+    }
   }
 
   handleChange = e => {
