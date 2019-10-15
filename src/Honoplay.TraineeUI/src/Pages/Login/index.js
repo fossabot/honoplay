@@ -10,6 +10,8 @@ import {
   LoginKey
 } from "../../Helpers/TerasuKeys";
 import { translate } from "@omegabigdata/terasu-api-proxy";
+import { fethTraineeUserToken } from "@omegabigdata/honoplay-redux-helper/Src/actions/TraineeUser";
+import { connect } from "react-redux";
 
 class Login extends Component {
   render() {
