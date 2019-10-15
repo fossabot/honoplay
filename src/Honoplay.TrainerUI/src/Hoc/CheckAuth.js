@@ -16,7 +16,7 @@ const WithAuth = HocComponent => {
       const localStorageToken = localStorage.getItem("token");
 
       if (localStorageToken == null) {
-        History.go(0);
+        this.props.history.push("/login");
       }
 
       if (localStorageToken) {
