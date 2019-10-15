@@ -32,7 +32,6 @@
     "react-router-redux": "^4.0.8",
     "react-scripts": "3.2.0",
     "redux": "^4.0.1",
-    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "should": "^13.2.3",
     "should-enzyme": "^2.1.0",
