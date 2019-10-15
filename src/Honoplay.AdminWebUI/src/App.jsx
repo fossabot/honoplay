@@ -82,6 +82,7 @@ const App = ({ renewToken, newToken }) => {
               <Route exact path="/questions" component={Questions} />
               <Route exact path="/trainees" component={Trainees} />
               <Route exact path="/trainers" component={Trainers} />
+              <Route exact path="/trainers/:id" component={Trainers} />
               <Route exact path="/usermanagement" component={UserManagement} />
               <Route exact path="/question" component={Question} />
               <Route exact path="/question/:id" component={Question} />
