@@ -179,6 +179,41 @@
             <param name="classroomId">Get session model</param>
             <returns>Get session by tenant id and classroom id with status code.</returns>
         </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TagController.Post(Honoplay.Application.Tags.Commands.CreateTag.CreateTagCommand)">
+            <summary>
+            This service create tag.
+            </summary>
+            <param name="command">Create tag model</param>
+            <returns>CreateTagModel with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TagController.Put(Honoplay.Application.Tags.Commands.UpdateTag.UpdateTagCommand)">
+            <summary>
+            This service update tag.
+            </summary>
+            <param name="command">Update tag model</param>
+            <returns>UpdateTagModel with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TagController.Get(Honoplay.Application.Tags.Queries.GetTagsList.GetTagsListQueryModel)">
+            <summary>
+            This service update tag.
+            </summary>
+            <param name="query">GetAll tag model</param>
+            <returns>Get all tags list by tenant id with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TagController.Get(System.Int32)">
+            <summary>
+            This service update tag.
+            </summary>
+            <param name="id">Get tag model</param>
+            <returns>Get tag by tenant id and tag id with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TagController.GetQuestionsListByQuestionId(System.Int32)">
+            <summary>
+            This service retrieve session by question id
+            </summary>
+            <param name="questionId">Get tag model</param>
+            <returns>Get tag by tenant id and tag id with status code.</returns>
+        </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.TenantController.Get(System.Guid)">
             <summary>
             Retrieve the tenant by ID.
