@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.Tags.Queries.GetTagsList;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Tags.Queries.GetTagsList
@@ -66,7 +67,8 @@ namespace Honoplay.Application.Tests.Tags.Queries.GetTagsList
             var tag = new Tag
             {
                 CreatedBy = adminUser.Id,
-                Name = "testTag"
+                Name = "testTag",
+                ToQuestion = true
             };
             context.Tags.Add(tag);
 
