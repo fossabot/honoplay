@@ -6,9 +6,13 @@ namespace Honoplay.Application.QuestionCategories.Commands.CreateQuestionCategor
     {
         public CreateQuestionCategoryValidator()
         {
-            RuleFor(x => x.Name)
-                .NotNull()
-                .NotEmpty();
+            {
+                RuleForEach(x => x.CreateQuestionCategoryModels).SetValidator(
+                    new InlineValidator<CreateQuestionCategoryCommandModel>
+                    {
+                        orderValidator => orderValidator.RuleFor(x => x.Name).NotNull().NotEmpty()
+                    });
+            }
         }
     }
 }
