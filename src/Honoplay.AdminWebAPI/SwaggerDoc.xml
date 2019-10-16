@@ -116,6 +116,13 @@
             <param name="questionId">Get option model</param>
             <returns>Get option by tenant id and option id with status code.</returns>
         </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.QuestionCategoryController.Post(Honoplay.Application.QuestionCategories.Commands.CreateQuestionCategory.CreateQuestionCategoryCommand)">
+            <summary>
+            This service create contentFile.
+            </summary>
+            <param name="command">Create contentFile model</param>
+            <returns>CreateQuestionCategoryModel with status code.</returns>
+        </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.QuestionController.Post(Honoplay.Application.Questions.Commands.CreateQuestion.CreateQuestionCommand)">
             <summary>
             This service create question.
