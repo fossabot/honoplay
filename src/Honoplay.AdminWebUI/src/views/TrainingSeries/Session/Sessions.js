@@ -121,6 +121,7 @@ class Session extends React.Component {
                   localStorage.setItem('sessionId', id);
                 }
               }}
+              name={name => {}}
             />
           </Grid>
         </Grid>
