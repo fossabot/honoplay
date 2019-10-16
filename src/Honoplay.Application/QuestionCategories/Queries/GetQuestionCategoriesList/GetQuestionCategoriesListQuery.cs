@@ -9,16 +9,13 @@ namespace Honoplay.Application.QuestionCategories.Queries.GetQuestionCategoriesL
     {
         public GetQuestionCategoriesListQuery() { }
 
-        public GetQuestionCategoriesListQuery(int adminUserId, Guid tenantId, int skip, int take)
+        public GetQuestionCategoriesListQuery(Guid tenantId, int skip, int take)
         {
-            AdminUserId = adminUserId;
             TenantId = tenantId;
             Skip = skip;
             Take = take;
         }
 
-        [JsonIgnore]
-        public int AdminUserId { get; private set; }
         [JsonIgnore]
         public Guid TenantId { get; private set; }
         public int Skip { get; private set; }
