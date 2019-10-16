@@ -1,8 +1,8 @@
 ﻿using FluentValidation.TestHelper;
-using Honoplay.Application.QuestionDifficultys.Queries.GetQuestionDifficultyDetail;
+using Honoplay.Application.QuestionDifficulties.Queries.GetQuestionDifficultyDetail;
 using Xunit;
 
-namespace Honoplay.Application.Tests.QuestionDifficultys.Queries.GetQuestionDifficultyDetail
+namespace Honoplay.Application.Tests.QuestionDifficulties.Queries.GetQuestionDifficultyDetail
 {
     public class GetQuestionDifficultyDetailValidatorTest
     {
