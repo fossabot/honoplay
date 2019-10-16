@@ -63,7 +63,7 @@ namespace Honoplay.Application.Tests.QuestionDifficulties.Queries.GetQuestionDif
             };
             context.Questions.Add(question);
 
-            var questionDifficulty = new QuestionDifficulty
+            var questionDifficulty = new Domain.Entities.QuestionDifficulty
             {
                 Id = 1,
                 Name = "questionDifficulty1",
