@@ -29,6 +29,7 @@
     "file-loader": "^3.0.1",
     "history": "^4.9.0",
     "jwt-decode": "^2.2.0",
+    "material-table": "^1.52.0",
     "moment": "^2.24.0",
     "notistack": "^0.8.5",
     "react": "^16.8.6",

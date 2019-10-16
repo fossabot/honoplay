@@ -16,9 +16,9 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
-import Table from '../../components/Table/TableComponent';
 import Header from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
+import MaterialTable from 'material-table';
 
 import WorkingStatuses from './WorkingStatus';
 
@@ -212,8 +212,9 @@ class Trainee extends React.Component {
     this.props.updateTrainee(this.state.traineeModel);
   };
 
-  handleChangeTrainee = dataId => {
-    this.props.fetchTrainee(dataId);
+  handleChangeTrainee = id => {
+    this.props.fetchTrainee(id);
+    this.props.history.push(`/trainees/${id}`);
   };
 
   render() {
@@ -375,14 +376,21 @@ class Trainee extends React.Component {
             <Divider />
           </Grid>
           <Grid item xs={12} sm={12}>
-            <Table
+            <MaterialTable
+              title={translate('Trainees')}
               columns={traineeColumns}
               data={traineeList}
-              isSelected={selected => {}}
-              url="trainees"
-              dataId={dataId => this.handleChangeTrainee(dataId)}
-              remove
-              update
+              actions={[
+                {
+                  icon: 'edit',
+                  tooltip: 'edit User',
+                  onClick: (event, rowData) =>
+                    this.handleChangeTrainee(rowData.id)
+                }
+              ]}
+              options={{
+                actionsColumnIndex: -1
+              }}
             />
           </Grid>
         </Grid>
