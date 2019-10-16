@@ -38,6 +38,7 @@ namespace Honoplay.Persistence
         public DbSet<QuestionTag> QuestionTags { get; set; }
         public DbSet<QuestionType> QuestionTypes { get; set; }
         public DbSet<QuestionDifficulty> QuestionDifficulties { get; set; }
+        public DbSet<QuestionCategory> QuestionCategories { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

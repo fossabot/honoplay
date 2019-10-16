@@ -17,12 +17,14 @@ namespace Honoplay.Domain.Entities
         public Guid? VisualId { get; set; }
         public int? QuestionTypeId { get; set; }
         public int? QuestionDifficultyId { get; set; }
+        public int? QuestionCategoryId { get; set; }
 
         public virtual ICollection<Option> Options { get; set; }
         public virtual ICollection<QuestionTag> QuestionTags { get; set; }
         public Tenant Tenant { get; set; }
         public ContentFile ContentFile { get; set; }
         public QuestionType QuestionType { get; set; }
+        public QuestionCategory QuestionCategory { get; set; }
         public QuestionDifficulty QuestionDifficulty { get; set; }
     }
 }
