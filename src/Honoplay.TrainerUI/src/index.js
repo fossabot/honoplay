@@ -2,8 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { Provider } from "react-redux";
-import { store, persistor } from "./Redux/store";
-import { PersistGate } from "redux-persist/integration/react";
+import store from "./Redux/store";
 import "./Helpers/Extensions";
 import * as serviceWorker from "./serviceWorker";
 import { init } from "@omegabigdata/terasu-api-proxy";
@@ -13,9 +12,7 @@ init(HONOPLAY_TRAINER_PROJECT_ID);
 setTimeout(() => {
   ReactDOM.render(
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <App />
-      </PersistGate>
+      <App />
     </Provider>,
     document.getElementById("root")
   );

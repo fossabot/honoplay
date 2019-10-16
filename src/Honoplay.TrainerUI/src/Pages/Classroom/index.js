@@ -14,15 +14,14 @@ import { translate } from "@omegabigdata/terasu-api-proxy";
 
 class Classroom extends Component {
   componentDidMount() {
-    const { location } = this.props;
-    if (!location.state) {
-      this.props.history.goBack();
-    } else {
-      this.props.fetchClassroomList(location.state);
+    const selectedTraining = localStorage.getItem("selectedTraining");
+    if (selectedTraining) {
+      this.props.fetchClassroomList(selectedTraining);
     }
   }
 
   render() {
+    if (!this.props.classroomList) return null;
     return (
       <PageWrapper>
         <div className="col-sm-12">
@@ -44,6 +43,9 @@ class Classroom extends Component {
                       <td>{data.name}</td>
                       <td>
                         <Link
+                          onClick={() =>
+                            localStorage.setItem("selectedClassroom", data.id)
+                          }
                           to={{
                             pathname: "/trainingdetail",
                             state: data.id

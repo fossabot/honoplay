@@ -10,8 +10,35 @@ import {
   LoginKey
 } from "../../Helpers/TerasuKeys";
 import { translate } from "@omegabigdata/terasu-api-proxy";
+import { fethTraineeUserToken } from "@omegabigdata/honoplay-redux-helper/Src/actions/TraineeUser";
+import { connect } from "react-redux";
 
 class Login extends Component {
+  componentDidUpdate(prevProps, nextState) {
+    const {
+      userTraineeTokenIsLoading,
+      userTraineeToken,
+      userTrainerTokenError
+    } = this.props;
+
+    if (
+      prevProps.userTraineeTokenIsLoading &&
+      !userTraineeTokenIsLoading &&
+      userTraineeToken
+    ) {
+      localStorage.setItem("token", userTraineeToken.token);
+      this.props.history.push("/joingame");
+    }
+  }
+
+  componentDidMount() {
+    if (localStorage.getItem("token")) {
+      this.props.history.push("/joingame");
+    }
+  }
+
+  email = "agha@omegabigdata.com";
+  password = "123456789";
   render() {
     return (
       <PageWrapper>
@@ -23,11 +50,15 @@ class Login extends Component {
 
           <div className="form">
             <input
+              onChange={e => (this.email = e.target.value)}
+              defaultValue="agha@omegabigdata.com"
               type="text"
               className="form-control"
               placeholder={translate(MobilePhoneAndEmail)}
             />
             <input
+              onChange={e => (this.password = e.target.value)}
+              defaultValue="123456789"
               type="password"
               className="form-control mt-3 mb-2"
               placeholder={translate(Password)}
@@ -38,7 +69,12 @@ class Login extends Component {
             </a>
 
             <Button
-              onClick={() => History.push("/joingame")}
+              onClick={() =>
+                this.props.fethTraineeUserToken({
+                  email: this.email,
+                  password: this.password
+                })
+              }
               title={translate(LoginKey)}
               className="btn my-btn form-control mt-4"
             />
@@ -52,4 +88,23 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = state => {
+  const {
+    userTraineeTokenIsLoading,
+    userTraineeToken,
+    userTraineeTokenError
+  } = state.traineeUserToken;
+
+  return {
+    userTraineeTokenIsLoading,
+    userTraineeToken,
+    userTraineeTokenError
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  {
+    fethTraineeUserToken
+  }
+)(Login);

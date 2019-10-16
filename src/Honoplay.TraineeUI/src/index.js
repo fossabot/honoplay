@@ -9,11 +9,13 @@ import { init } from "@omegabigdata/terasu-api-proxy";
 import { HONOPLAY_TRAINEE_PROJECT_ID } from "./Helpers/Statics";
 
 init(HONOPLAY_TRAINEE_PROJECT_ID);
-render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById("root")
-);
+setTimeout(() => {
+  render(
+    <Provider store={store}>
+      <App />
+    </Provider>,
+    document.getElementById("root")
+  );
+}, 650);
 
 serviceWorker.register();
