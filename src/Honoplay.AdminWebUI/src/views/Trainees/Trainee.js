@@ -383,7 +383,6 @@ class Trainee extends React.Component {
               actions={[
                 {
                   icon: 'edit',
-                  tooltip: 'edit User',
                   onClick: (event, rowData) =>
                     this.handleChangeTrainee(rowData.id)
                 }
