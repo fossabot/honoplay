@@ -1,7 +1,7 @@
 ﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Application.WorkingStatuses.Commands.CreateWorkingStatus;
 using Honoplay.Application.WorkingStatuses.Commands.UpdateWorkingStatus;
-using Honoplay.Application.WorkingStatuses.Queries;
+using Honoplay.Application.WorkingStatuses.Queries.GetWorkingStatusesList;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Microsoft.AspNetCore.Authorization;

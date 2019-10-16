@@ -9,7 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Honoplay.Application.WorkingStatuses.Queries
+namespace Honoplay.Application.WorkingStatuses.Queries.GetWorkingStatusesList
 {
     public class GetWorkingStatusesListQueryHandler : IRequestHandler<GetWorkingStatusesListQuery, ResponseModel<WorkingStatusesListModel>>
     {

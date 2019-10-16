@@ -1,9 +1,9 @@
-﻿using Honoplay.Application._Infrastructure;
+﻿using System;
+using Honoplay.Application._Infrastructure;
 using MediatR;
 using Newtonsoft.Json;
-using System;
 
-namespace Honoplay.Application.WorkingStatuses.Queries
+namespace Honoplay.Application.WorkingStatuses.Queries.GetWorkingStatusesList
 {
     public class GetWorkingStatusesListQuery : IRequest<ResponseModel<WorkingStatusesListModel>>
     {
