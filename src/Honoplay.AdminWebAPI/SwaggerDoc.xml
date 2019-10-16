@@ -144,6 +144,20 @@
             <param name="id">Get question model</param>
             <returns>Get question by tenant id and question id with status code.</returns>
         </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.QuestionDifficultyController.Get(Honoplay.Application.QuestionDifficulties.Queries.GetQuestionDifficultiesList.GetQuestionDifficultiesListQueryModel)">
+            <summary>
+            This service retrieve all questionDifficulties by tenant id. Filtered skip and take parameters.
+            </summary>
+            <param name="query">GetAll questionDifficulty model</param>
+            <returns>Get all questionDifficulties list by tenant id with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.QuestionDifficultyController.Get(System.Int32)">
+            <summary>
+            This service retrieve questionDifficulty.
+            </summary>
+            <param name="id">Get questionDifficulty model</param>
+            <returns>Get questionDifficulty by questionDifficultyId with status code.</returns>
+        </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.QuestionTypeController.Get(Honoplay.Application.QuestionTypes.Queries.GetQuestionTypesList.GetQuestionTypesListQueryModel)">
             <summary>
             This service retrieve all questionTypes by tenant id. Filtered skip and take parameters.
