@@ -1,4 +1,5 @@
-﻿using Honoplay.Common._Exceptions;
+﻿using Honoplay.Application.QuestionTypes.Queries.GetQuestionTypeDetail;
+using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -64,7 +65,7 @@ namespace Honoplay.Application.Tests.QuestionTypes.Queries.GetQuestionTypeDetail
             };
             context.Questions.Add(question);
 
-            var questionType = new QuestionType
+            var questionType = new Domain.Entities.QuestionType
             {
                 Id = 1,
                 Name = "questionType1"

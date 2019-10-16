@@ -1,4 +1,5 @@
 ﻿using FluentValidation.TestHelper;
+using Honoplay.Application.QuestionTypes.Queries.GetQuestionTypeDetail;
 using Xunit;
 
 namespace Honoplay.Application.Tests.QuestionTypes.Queries.GetQuestionTypeDetail

@@ -1,20 +1,21 @@
 ﻿using FluentValidation.TestHelper;
+using Honoplay.Application.QuestionTypes.Queries.GetQuestionTypesList;
 using Xunit;
 
 namespace Honoplay.Application.Tests.QuestionType.Queries.GetQuestionTypeList
 {
     public class GetQuestionTypeListValidatorTest
     {
-        private readonly GetQuestionTypeListValidator _getQuestionTypeListValidator;
+        private readonly GetQuestionTypesListValidator _getQuestionTypeListValidator;
 
         public GetQuestionTypeListValidatorTest()
         {
-            _getQuestionTypeListValidator = new GetQuestionTypeListValidator();
+            _getQuestionTypeListValidator = new GetQuestionTypesListValidator();
         }
         [Fact]
         public void ShouldBeValid()
         {
-            Assert.True(_getQuestionTypeListValidator.Validate(new GetQuestionTypeListQueryModel { Take = 5 }).IsValid);
+            Assert.True(_getQuestionTypeListValidator.Validate(new GetQuestionTypesListQueryModel { Take = 5 }).IsValid);
         }
 
         [Fact]

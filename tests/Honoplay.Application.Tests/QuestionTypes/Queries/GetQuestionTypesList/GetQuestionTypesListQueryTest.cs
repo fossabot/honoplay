@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Honoplay.Application.QuestionTypes.Queries.GetQuestionTypesList;
 using Xunit;
 
 namespace Honoplay.Application.Tests.QuestionTypes.Queries.GetQuestionTypesList
@@ -62,7 +63,7 @@ namespace Honoplay.Application.Tests.QuestionTypes.Queries.GetQuestionTypesList
             };
             context.Questions.Add(question);
 
-            var questionType = new QuestionType
+            var questionType = new Domain.Entities.QuestionType
             {
                 Id = 1,
                 Name = "questionType1",
