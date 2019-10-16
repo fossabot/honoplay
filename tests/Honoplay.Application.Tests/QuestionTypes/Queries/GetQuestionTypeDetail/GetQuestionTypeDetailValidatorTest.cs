@@ -1,6 +1,4 @@
-﻿using System;
-using FluentValidation.TestHelper;
-using Honoplay.Application.QuestionTypes.Queries.GetQuestionTypeDetail;
+﻿using FluentValidation.TestHelper;
 using Xunit;
 
 namespace Honoplay.Application.Tests.QuestionTypes.Queries.GetQuestionTypeDetail
@@ -16,7 +14,7 @@ namespace Honoplay.Application.Tests.QuestionTypes.Queries.GetQuestionTypeDetail
         [Fact]
         public void ShouldBeValid()
         {
-            Assert.True(_getQuestionTypeDetailValidator.Validate(new GetQuestionTypeDetailQuery(adminUserId: 1, id: Guid.NewGuid(), tenantId: Guid.NewGuid())).IsValid);
+            Assert.True(_getQuestionTypeDetailValidator.Validate(new GetQuestionTypeDetailQuery(id: 1)).IsValid);
         }
 
         [Fact]

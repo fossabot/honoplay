@@ -1,5 +1,4 @@
-﻿using Honoplay.Application.QuestionTypes.Queries.GetQuestionTypeDetail;
-using Honoplay.Common._Exceptions;
+﻿using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -18,17 +17,15 @@ namespace Honoplay.Application.Tests.QuestionTypes.Queries.GetQuestionTypeDetail
     {
         private readonly HonoplayDbContext _context;
         private readonly GetQuestionTypeDetailQueryHandler _getQuestionTypeDetailQueryHandler;
-        private readonly int _adminUserId;
         private readonly int _questionTypeId;
-        private readonly Guid _tenantId;
 
         public GetQuestionTypeDetailQueryTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _tenantId, out _questionTypeId, out _adminUserId);
+            _context = InitAndGetDbContext(out _questionTypeId);
             _getQuestionTypeDetailQueryHandler = new GetQuestionTypeDetailQueryHandler(_context, new CacheManager(cache.Object));
         }
-        private HonoplayDbContext InitAndGetDbContext(out Guid tenantId, out int questionTypeId, out int adminUserId)
+        private HonoplayDbContext InitAndGetDbContext(out int questionTypeId)
         {
             var context = GetDbContext();
             var salt = ByteArrayExtensions.GetRandomSalt();
@@ -74,9 +71,7 @@ namespace Honoplay.Application.Tests.QuestionTypes.Queries.GetQuestionTypeDetail
             };
             context.QuestionTypes.Add(questionType);
 
-            tenantId = tenant.Id;
             questionTypeId = questionType.Id;
-            adminUserId = adminUser.Id;
             context.SaveChanges();
             return context;
         }
@@ -84,7 +79,7 @@ namespace Honoplay.Application.Tests.QuestionTypes.Queries.GetQuestionTypeDetail
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var questionTypeDetailQuery = new GetQuestionTypeDetailQuery(_adminUserId, _questionTypeId, _tenantId);
+            var questionTypeDetailQuery = new GetQuestionTypeDetailQuery(_questionTypeId);
 
             var questionTypeDetailResponseModel = await _getQuestionTypeDetailQueryHandler.Handle(questionTypeDetailQuery, CancellationToken.None);
 
@@ -96,7 +91,8 @@ namespace Honoplay.Application.Tests.QuestionTypes.Queries.GetQuestionTypeDetail
         [Fact]
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
-            var questionTypeDetailQuery = new GetQuestionTypeDetailQuery(_adminUserId, Guid.NewGuid(), _tenantId);
+            //Unregistered questionId
+            var questionTypeDetailQuery = new GetQuestionTypeDetailQuery(78979);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
                 await _getQuestionTypeDetailQueryHandler.Handle(questionTypeDetailQuery, CancellationToken.None));
