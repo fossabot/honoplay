@@ -18,22 +18,29 @@ namespace Honoplay.AdminWebAPI.Controllers
     [Authorize]
     public class QuestionCategoryController : BaseController
     {
-        [HttpPost]
+        /// <summary>
+        /// This service create contentFile.
+        /// </summary>
+        /// <param name="command">Create contentFile model</param>
+        /// <returns>CreateQuestionCategoryModel with status code.</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<ResponseModel<CreateQuestionCategoryModel>>> Post([FromBody]CreateQuestionCategoryCommand command)
         {
             try
             {
-                command.CreatedBy = Claims[ClaimTypes.Sid].ToInt();
-                command.TenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
+                var userId = Claims[ClaimTypes.Sid].ToInt();
+                var tenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
+
+                command.CreatedBy = userId;
+                command.TenantId = tenantId;
 
                 var createQuestionCategoryModel = await Mediator.Send(command);
-
-                return Created($"api/questionCategory/{createQuestionCategoryModel.Items.Single().Name}", createQuestionCategoryModel);
+                return Created($"api/traineeUser", createQuestionCategoryModel);
             }
             catch (NotFoundException)
             {
