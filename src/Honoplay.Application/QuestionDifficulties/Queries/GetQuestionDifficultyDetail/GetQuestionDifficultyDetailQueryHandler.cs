@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Honoplay.Application.QuestionDifficultys.Queries.GetQuestionDifficultyDetail
+namespace Honoplay.Application.QuestionDifficulties.Queries.GetQuestionDifficultyDetail
 {
     public class GetQuestionDifficultyDetailQueryHandler : IRequestHandler<GetQuestionDifficultyDetailQuery, ResponseModel<QuestionDifficultyDetailModel>>
     {

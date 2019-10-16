@@ -2,7 +2,7 @@
 using System;
 using System.Linq.Expressions;
 
-namespace Honoplay.Application.QuestionDifficultys.Queries.GetQuestionDifficultyDetail
+namespace Honoplay.Application.QuestionDifficulties.Queries.GetQuestionDifficultyDetail
 {
     public struct QuestionDifficultyDetailModel
     {

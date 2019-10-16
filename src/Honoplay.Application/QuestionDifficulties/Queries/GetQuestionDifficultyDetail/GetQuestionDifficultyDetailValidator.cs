@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Honoplay.Application.QuestionDifficultys.Queries.GetQuestionDifficultyDetail
+namespace Honoplay.Application.QuestionDifficulties.Queries.GetQuestionDifficultyDetail
 {
     public class GetQuestionDifficultyDetailValidator : AbstractValidator<GetQuestionDifficultyDetailQuery>
     {
