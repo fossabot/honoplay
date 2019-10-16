@@ -16,6 +16,13 @@ namespace Honoplay.Persistence.Configurations
             //Text
             builder.Property(x => x.Name)
                 .HasMaxLength(150);
+
+            //RELATIONS
+
+            //Tenant
+            builder.HasOne(c => c.Tenant)
+                .WithMany(t => t.QuestionCategories)
+                .HasForeignKey(x => x.TenantId);
         }
     }
 }
