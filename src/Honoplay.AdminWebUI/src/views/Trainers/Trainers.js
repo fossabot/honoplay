@@ -18,7 +18,7 @@ import Header from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
-import Table from '../../components/Table/TableComponent';
+import Table from 'material-table';
 
 import { connect } from 'react-redux';
 import {
@@ -217,8 +217,9 @@ class Trainers extends React.Component {
     }));
   };
 
-  handleChangeTrainer = dataId => {
-    this.props.fetchTrainer(dataId);
+  handleChangeTrainer = id => {
+    this.props.fetchTrainer(id);
+    this.props.history.push(`/trainers/${id}`);
   };
 
   render() {
@@ -364,13 +365,19 @@ class Trainers extends React.Component {
           </Grid>
           <Grid item xs={12} sm={12}>
             <Table
+              title={translate('Trainers')}
               columns={trainerColumns}
               data={trainer}
-              isSelected={selected => {}}
-              url="trainers"
-              remove
-              update
-              dataId={dataId => this.handleChangeTrainer(dataId)}
+              actions={[
+                {
+                  icon: 'edit',
+                  onClick: (event, rowData) =>
+                    this.handleChangeTrainer(rowData.id)
+                }
+              ]}
+              options={{
+                actionsColumnIndex: -1
+              }}
             />
           </Grid>
         </Grid>

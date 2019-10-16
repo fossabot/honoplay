@@ -18,7 +18,7 @@ import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
 import Header from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
-import MaterialTable from 'material-table';
+import Table from 'material-table';
 
 import WorkingStatuses from './WorkingStatus';
 
@@ -376,7 +376,7 @@ class Trainee extends React.Component {
             <Divider />
           </Grid>
           <Grid item xs={12} sm={12}>
-            <MaterialTable
+            <Table
               title={translate('Trainees')}
               columns={traineeColumns}
               data={traineeList}

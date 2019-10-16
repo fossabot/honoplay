@@ -5,7 +5,7 @@ import { Grid, Divider } from '@material-ui/core';
 import Style from '../Style';
 import Header from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
-import Table from '../../components/Table/TableComponent';
+import Table from 'material-table';
 
 import { connect } from 'react-redux';
 import { fetchQuestionList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Question';
@@ -63,6 +63,11 @@ class Questions extends React.Component {
     localStorage.removeItem('dataid');
   };
 
+  handleChangeQuestion = id => {
+    this.props.history.push(`/question/${id}`);
+    localStorage.setItem('dataid', id);
+  };
+
   render() {
     const { questions, questionsColumns } = this.state;
     const { classes } = this.props;
@@ -85,12 +90,19 @@ class Questions extends React.Component {
           </Grid>
           <Grid item xs={12} sm={12}>
             <Table
+              title={translate('Questions')}
               columns={questionsColumns}
               data={questions}
-              url="question"
-              isSelected={selected => {}}
-              remove
-              update
+              actions={[
+                {
+                  icon: 'edit',
+                  onClick: (event, rowData) =>
+                    this.handleChangeQuestion(rowData.id)
+                }
+              ]}
+              options={{
+                actionsColumnIndex: -1
+              }}
             />
           </Grid>
         </Grid>
