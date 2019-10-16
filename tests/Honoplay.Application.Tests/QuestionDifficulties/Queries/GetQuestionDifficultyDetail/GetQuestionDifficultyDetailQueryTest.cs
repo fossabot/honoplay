@@ -1,4 +1,4 @@
-﻿using Honoplay.Application.QuestionDifficultys.Queries.GetQuestionDifficultyDetail;
+﻿using Honoplay.Application.QuestionDifficulties.Queries.GetQuestionDifficultyDetail;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.Application.Tests.QuestionDifficultys.Queries.GetQuestionDifficultyDetail
+namespace Honoplay.Application.Tests.QuestionDifficulties.Queries.GetQuestionDifficultyDetail
 {
     public class GetQuestionDifficultyDetailQueryTest : TestBase, IDisposable
     {
