@@ -15,10 +15,12 @@ namespace Honoplay.Domain.Entities
         public string Text { get; set; }
         public int Duration { get; set; }
         public Guid? VisualId { get; set; }
+        public int? QuestionTypeId { get; set; }
 
         public virtual ICollection<Option> Options { get; set; }
         public virtual ICollection<QuestionTag> QuestionTags { get; set; }
         public Tenant Tenant { get; set; }
         public ContentFile ContentFile { get; set; }
+        public QuestionType QuestionType { get; set; }
     }
 }

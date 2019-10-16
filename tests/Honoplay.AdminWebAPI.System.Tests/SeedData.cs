@@ -2,6 +2,7 @@
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using System;
+using System.Collections.Generic;
 
 namespace Honoplay.AdminWebAPI.System.Tests
 {
@@ -51,6 +52,21 @@ namespace Honoplay.AdminWebAPI.System.Tests
                 AdminUserId = adminUser.Id,
                 CreatedBy = adminUser.Id
             });
+
+            var questionTypes = new List<QuestionType>
+            {
+                new QuestionType
+                {
+                    Id = 1,
+                    Name = "questionType1"
+                },
+                new QuestionType
+                {
+                    Id = 2,
+                    Name = "questionType2"
+                }
+            };
+            dbContext.QuestionTypes.AddRange(questionTypes);
 
             var department = new Department
             {
