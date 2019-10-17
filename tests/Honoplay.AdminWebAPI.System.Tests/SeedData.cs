@@ -83,6 +83,21 @@ namespace Honoplay.AdminWebAPI.System.Tests
             };
             dbContext.QuestionDifficulties.AddRange(questionDifficulties);
 
+            var questionCategories = new List<QuestionCategory>
+            {
+                new QuestionCategory
+                {
+                    Name = "questionDifficulty1",
+                    TenantId = tenantId
+                },
+                new QuestionCategory
+                {
+                    Name = "questionDifficulty2",
+                    TenantId = tenantId
+                }
+            };
+            dbContext.QuestionCategories.AddRange(questionCategories);
+
             var department = new Department
             {
                 CreatedBy = adminUser.Id,
