@@ -16,7 +16,6 @@ namespace Honoplay.TraineeWebAPI.Controllers
     public class TraineeUserController : BaseController
     {
         private readonly ITraineeUserService _traineeUserService;
-
         public TraineeUserController(ITraineeUserService traineeUserService)
         {
             _traineeUserService = traineeUserService;

@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using Honoplay.Common._Exceptions;
 
 namespace Honoplay.TraineeWebAPI.Services
 {
@@ -50,9 +51,18 @@ namespace Honoplay.TraineeWebAPI.Services
         public string RenewToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
+            var key = System.Text.Encoding.ASCII.GetBytes(_appSettings.JWTSecret);
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+            };
+
+            tokenHandler.ValidateToken(token, validationParameters, out _);
 
             var jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
-            var key = System.Text.Encoding.ASCII.GetBytes(_appSettings.JWTSecret);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
