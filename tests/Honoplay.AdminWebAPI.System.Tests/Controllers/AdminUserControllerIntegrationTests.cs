@@ -1,4 +1,4 @@
-using Honoplay.AdminWebAPI;
+using Honoplay.AdminWebAPI.System.Tests.ResponseModels;
 using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
 using Honoplay.Application.AdminUsers.Commands.RegisterAdminUser;
 using Honoplay.Common.Constants;
@@ -63,6 +63,32 @@ namespace Honoplay.AdminWebAPI.System.Tests.Controllers
 
             Assert.True(httpResponse.IsSuccessStatusCode);
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
+        }
+
+        [Fact]
+        public async Task CanRenewTokenAdminUser()
+        {
+            //First request to get Token.
+            var command = new AuthenticateAdminUserCommand
+            {
+                Email = "registered@omegabigdata.com",
+                Password = "Passw0rd"
+            };
+            var json = JsonConvert.SerializeObject(command);
+            var authenticateResponse = await _client.PostAsync("/AdminUser/Authenticate", new StringContent(json, Encoding.UTF8, StringConstants.ApplicationJson));
+
+            var firstToken = JsonConvert.DeserializeObject<AuthenticateResponseModel>(await authenticateResponse.Content.ReadAsStringAsync()).Token;
+
+            //Second request to renewToken
+
+            var renewToken = JsonConvert.SerializeObject(firstToken);
+            var renewTokenResponse = await _client.PostAsync("/AdminUser/RenewToken", new StringContent(renewToken, Encoding.UTF8, StringConstants.ApplicationJson));
+
+            // Must be successful.
+            renewTokenResponse.EnsureSuccessStatusCode();
+
+            Assert.True(renewTokenResponse.IsSuccessStatusCode);
+            Assert.Equal(HttpStatusCode.Created, renewTokenResponse.StatusCode);
         }
     }
 }
