@@ -1,5 +1,6 @@
 ﻿using Honoplay.AdminWebAPI.Interfaces;
 using Honoplay.Application.AdminUsers.Commands.AuthenticateAdminUser;
+using Honoplay.Common._Exceptions;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -46,12 +47,26 @@ namespace Honoplay.AdminWebAPI.Services
             var userWithToken = (user, stringToken);
             return userWithToken;
         }
+
         public string RenewToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
+            var key = System.Text.Encoding.ASCII.GetBytes(_appSettings.JWTSecret);
+            var validationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = false,
+                ValidateAudience = false,
+            };
+
+            tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
+            if (!(validatedToken is JwtSecurityToken))
+            {
+                throw new NotFoundException("Invalid Token", token);
+            }
 
             var jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
-            var key = System.Text.Encoding.ASCII.GetBytes(_appSettings.JWTSecret);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
