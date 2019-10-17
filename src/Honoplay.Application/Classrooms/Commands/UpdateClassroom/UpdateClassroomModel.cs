@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
 {
@@ -10,8 +11,9 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
         public string Name { get; set; }
         public int UpdatedBy { get; }
         public DateTimeOffset UpdatedAt { get; }
+        public List<int> TraineeUsersIdList { get; set; }
 
-        public UpdateClassroomModel(int id, int trainerUserId, int trainingId, string name, int updatedBy, DateTimeOffset updatedAt)
+        public UpdateClassroomModel(int id, int trainerUserId, int trainingId, string name, List<int> traineeUsersIdList, int updatedBy, DateTimeOffset updatedAt)
         {
             Id = id;
             TrainerUserId = trainerUserId;
@@ -19,6 +21,7 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
             Name = name;
             UpdatedBy = updatedBy;
             UpdatedAt = updatedAt;
+            TraineeUsersIdList = traineeUsersIdList;
         }
     }
 }
