@@ -11,18 +11,16 @@ namespace Honoplay.Application.TrainerUsers.Commands.AuthenticateTrainerUser
         public Guid TenantId { get; }
         public string HostName { get; }
         public bool IsPasswordExpired { get; }
-        public string JsValidators { get; }
 
-        public TrainerUserAuthenticateModel(int id, string email, string name, bool isPasswordExpired, int departmentId, Guid tenantId, string hostName, string jsValidators)
+        public TrainerUserAuthenticateModel(int id, string email, string name, int departmentId, Guid tenantId, string hostName, bool isPasswordExpired)
         {
             Id = id;
             Email = email;
             Name = name;
-            IsPasswordExpired = isPasswordExpired;
             DepartmentId = departmentId;
             TenantId = tenantId;
             HostName = hostName;
-            JsValidators = jsValidators;
+            IsPasswordExpired = isPasswordExpired;
         }
     }
 }

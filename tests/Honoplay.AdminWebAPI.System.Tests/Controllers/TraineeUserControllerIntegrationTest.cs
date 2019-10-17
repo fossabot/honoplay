@@ -1,4 +1,6 @@
 ﻿using Honoplay.AdminWebAPI.System.Tests.Extensions;
+using Honoplay.AdminWebAPI.System.Tests.ResponseModels;
+using Honoplay.Application.TraineeUsers.Commands.AuthenticateTraineeUser;
 using Honoplay.Application.TraineeUsers.Commands.CreateTraineeUser;
 using Honoplay.Application.TraineeUsers.Commands.UpdateTraineeUser;
 using Honoplay.Application.TraineeUsers.Queries.GetTraineeUsersList;
@@ -7,6 +9,7 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Honoplay.AdminWebAPI.System.Tests.Controllers

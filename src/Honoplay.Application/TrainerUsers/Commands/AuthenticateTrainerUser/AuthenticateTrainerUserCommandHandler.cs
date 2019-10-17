@@ -22,7 +22,6 @@ namespace Honoplay.Application.TrainerUsers.Commands.AuthenticateTrainerUser
 
         public async Task<TrainerUserAuthenticateModel> Handle(AuthenticateTrainerUserCommand request, CancellationToken cancellationToken)
         {
-            var jsValidators = JsValidators.GetAllJsValidations();
 
             var trainerUser = await _context.TrainerUsers
                                     .SingleOrDefaultAsync(u =>
@@ -83,8 +82,7 @@ namespace Honoplay.Application.TrainerUsers.Commands.AuthenticateTrainerUser
                                            isPasswordExpired: isPasswordExpired,
                                            departmentId: departmentId,
                                            tenantId: tenantId,
-                                           hostName: request.HostName,
-                                           jsValidators: jsValidators);
+                                           hostName: request.HostName);
         }
     }
 }
