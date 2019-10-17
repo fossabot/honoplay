@@ -15,7 +15,7 @@ namespace Honoplay.TrainerWebAPI.System.Tests.Extensions
             var client = factory.CreateClient();
             var authenticateTrainerUserCommand = new AuthenticateTrainerUserCommand
             {
-                Email = "yunuskas55@gmail.com",
+                Email = "registered@omegabigdata.com",
                 Password = "Passw0rd"
             };
             var content = JsonConvert.SerializeObject(authenticateTrainerUserCommand);

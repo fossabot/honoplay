@@ -2,6 +2,7 @@
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using System;
+using System.Collections.Generic;
 
 namespace Honoplay.TrainerWebAPI.System.Tests
 {
@@ -51,6 +52,51 @@ namespace Honoplay.TrainerWebAPI.System.Tests
                 AdminUserId = adminUser.Id,
                 CreatedBy = adminUser.Id
             });
+
+            var questionTypes = new List<QuestionType>
+            {
+                new QuestionType
+                {
+                    Id = 1,
+                    Name = "questionType1"
+                },
+                new QuestionType
+                {
+                    Id = 2,
+                    Name = "questionType2"
+                }
+            };
+            dbContext.QuestionTypes.AddRange(questionTypes);
+
+            var questionDifficulties = new List<QuestionDifficulty>
+            {
+                new QuestionDifficulty
+                {
+                    Id = 1,
+                    Name = "questionDifficulty1"
+                },
+                new QuestionDifficulty
+                {
+                    Id = 2,
+                    Name = "questionDifficulty2"
+                }
+            };
+            dbContext.QuestionDifficulties.AddRange(questionDifficulties);
+
+            var questionCategories = new List<QuestionCategory>
+            {
+                new QuestionCategory
+                {
+                    Name = "questionDifficulty1",
+                    TenantId = tenantId
+                },
+                new QuestionCategory
+                {
+                    Name = "questionDifficulty2",
+                    TenantId = tenantId
+                }
+            };
+            dbContext.QuestionCategories.AddRange(questionCategories);
 
             var department = new Department
             {
@@ -112,11 +158,10 @@ namespace Honoplay.TrainerWebAPI.System.Tests
                 Surname = "KAS",
                 DepartmentId = department.Id,
                 CreatedBy = adminUser.Id,
-                Email = "yunuskas55@gmail.com",
-                ProfessionId = profession.Id,
+                Email = "registered@omegabigdata.com",
                 Password = "Passw0rd".GetSHA512(salt),
                 PasswordSalt = salt,
-                LastPasswordChangeDateTime = DateTime.Today.AddDays(-5),
+                ProfessionId = profession.Id
             };
             dbContext.TrainerUsers.Add(trainerUser);
 
@@ -126,6 +171,9 @@ namespace Honoplay.TrainerWebAPI.System.Tests
                 Name = "Yunus Emre",
                 CreatedBy = adminUser.Id,
                 Gender = 1,
+                Email = "registered@omegabigdata.com",
+                Password = "Passw0rd".GetSHA512(salt),
+                PasswordSalt = salt,
                 NationalIdentityNumber = "654654654444",
                 PhoneNumber = "053546835411",
                 Surname = "KAS",
@@ -175,11 +223,42 @@ namespace Honoplay.TrainerWebAPI.System.Tests
                 GameId = game.Id,
             };
             dbContext.Sessions.Add(session);
+
+            dbContext.TraineeGroups.Add(new TraineeGroup
+            {
+                CreatedBy = adminUser.Id,
+                Name = "traineeGroup",
+                TenantId = tenantId
+            });
+            dbContext.ContentFiles.Add(new ContentFile
+            {
+                Id = Guid.Parse("4f2b88e3-704c-41d8-a679-f608a159d055"),
+                Name = "contentFile1",
+                ContentType = "contentFile1",
+                Data = new byte[] { 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20 },
+                TenantId = tenantId,
+                CreatedBy = adminUser.Id
+            });
+
             dbContext.Avatars.Add(new Avatar
             {
                 Name = "avatar1",
                 ImageBytes = new byte[] { 0x20 }
             });
+
+            var tag = new Tag
+            {
+                Name = "tag1",
+                CreatedBy = adminUser.Id,
+                ToQuestion = true
+            };
+            dbContext.Tags.Add(tag);
+            var questionTag = new QuestionTag
+            {
+                QuestionId = question.Id,
+                TagId = tag.Id
+            };
+            dbContext.QuestionTags.Add(questionTag);
             dbContext.SaveChanges();
         }
     }
