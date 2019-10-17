@@ -18,7 +18,5 @@ namespace Honoplay.Application.QuestionCategories.Commands.CreateQuestionCategor
     public class CreateQuestionCategoryCommandModel
     {
         public string Name { get; set; }
-        public string ContentType { get; set; }
-        public byte[] Data { get; set; }
     }
 }

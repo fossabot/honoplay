@@ -118,9 +118,9 @@
         </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.QuestionCategoryController.Post(Honoplay.Application.QuestionCategories.Commands.CreateQuestionCategory.CreateQuestionCategoryCommand)">
             <summary>
-            This service create contentFile.
+            This service create questionCategory.
             </summary>
-            <param name="command">Create contentFile model</param>
+            <param name="command">Create questionCategory model</param>
             <returns>CreateQuestionCategoryModel with status code.</returns>
         </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.QuestionController.Post(Honoplay.Application.Questions.Commands.CreateQuestion.CreateQuestionCommand)">

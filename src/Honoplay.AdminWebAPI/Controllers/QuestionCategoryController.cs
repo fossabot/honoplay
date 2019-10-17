@@ -19,9 +19,9 @@ namespace Honoplay.AdminWebAPI.Controllers
     public class QuestionCategoryController : BaseController
     {
         /// <summary>
-        /// This service create contentFile.
+        /// This service create questionCategory.
         /// </summary>
-        /// <param name="command">Create contentFile model</param>
+        /// <param name="command">Create questionCategory model</param>
         /// <returns>CreateQuestionCategoryModel with status code.</returns>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status409Conflict)]

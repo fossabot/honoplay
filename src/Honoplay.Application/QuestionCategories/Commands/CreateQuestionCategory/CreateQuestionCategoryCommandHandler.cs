@@ -37,7 +37,6 @@ namespace Honoplay.Application.QuestionCategories.Commands.CreateQuestionCategor
             {
                 try
                 {
-
                     foreach (var createQuestionCategoryModel in request.CreateQuestionCategoryModels)
                     {
                         var newQuestionCategory = new QuestionCategory

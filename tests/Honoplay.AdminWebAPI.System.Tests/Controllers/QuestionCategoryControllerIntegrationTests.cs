@@ -33,7 +33,7 @@ namespace Honoplay.AdminWebAPI.System.Tests.Controllers
                 {
                     new CreateQuestionCategoryCommandModel
                     {
-                        Name = "questionCategory1",
+                        Name = "questionCategoryqdqwd1",
                     }
                 }
             };
@@ -97,15 +97,5 @@ namespace Honoplay.AdminWebAPI.System.Tests.Controllers
             Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
         }
 
-        [Fact]
-        public async Task CanGetQuestionCategoryDetail()
-        {
-            var authorizedClient = SystemTestExtension.GetTokenAuthorizeHttpClient(_factory);
-
-            var httpResponse = await authorizedClient.GetAsync(requestUri: $"/QuestionCategory/1");
-
-            httpResponse.EnsureSuccessStatusCode();
-            Assert.Equal(HttpStatusCode.OK, httpResponse.StatusCode);
-        }
     }
 }

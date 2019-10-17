@@ -87,13 +87,13 @@ namespace Honoplay.AdminWebAPI.System.Tests
             {
                 new QuestionCategory
                 {
-                    Id = 1,
-                    Name = "questionDifficulty1"
+                    Name = "questionDifficulty1",
+                    TenantId = tenantId
                 },
                 new QuestionCategory
                 {
-                    Id = 2,
-                    Name = "questionDifficulty2"
+                    Name = "questionDifficulty2",
+                    TenantId = tenantId
                 }
             };
             dbContext.QuestionCategories.AddRange(questionCategories);
