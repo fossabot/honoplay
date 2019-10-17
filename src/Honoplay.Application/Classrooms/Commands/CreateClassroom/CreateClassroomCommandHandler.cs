@@ -41,7 +41,7 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                 {
                     foreach (var createClassroomModel in request.CreateClassroomModels)
                     {
-                        foreach (var traineeUserId in createClassroomModel.TraineeUsersId)
+                        foreach (var traineeUserId in createClassroomModel.TraineeUsersIdList)
                         {
                             var isExist = await _context.TraineeUsers
                                 .Include(x => x.Department)
@@ -72,7 +72,7 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                         {
                             foreach (var createClassroomModel in request.CreateClassroomModels)
                             {
-                                foreach (var i in createClassroomModel.TraineeUsersId)
+                                foreach (var i in createClassroomModel.TraineeUsersIdList)
                                 {
                                     newClassroomTraineeUsers.Add(new ClassroomTraineeUser
                                     {
@@ -91,7 +91,7 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                         for (int i = 0; i < newClassrooms.Count; i++)
                         {
                             await _context.Classrooms.AddAsync(newClassrooms[i], cancellationToken);
-                            foreach (var traineeUserId in request.CreateClassroomModels[i].TraineeUsersId)
+                            foreach (var traineeUserId in request.CreateClassroomModels[i].TraineeUsersIdList)
                             {
                                 newClassrooms[i].ClassroomTraineeUsers.Add(new ClassroomTraineeUser
                                 {
