@@ -2,6 +2,7 @@
 using MediatR;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
 {
@@ -15,5 +16,7 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
         public int TrainerUserId { get; set; }
         public int TrainingId { get; set; }
         public string Name { get; set; }
+        public List<int> TraineeUsersIdList { get; set; }
+
     }
 }
