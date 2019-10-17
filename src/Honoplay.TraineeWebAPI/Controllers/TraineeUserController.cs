@@ -46,7 +46,6 @@ namespace Honoplay.TraineeWebAPI.Controllers
         [HttpPost("RenewToken")]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult RenewToken([FromBody]string renewToken)
         {
             try

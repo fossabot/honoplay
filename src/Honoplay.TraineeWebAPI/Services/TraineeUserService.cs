@@ -60,11 +60,7 @@ namespace Honoplay.TraineeWebAPI.Services
                 ValidateAudience = false,
             };
 
-            tokenHandler.ValidateToken(token, validationParameters, out var validatedToken);
-            if (!(validatedToken is JwtSecurityToken))
-            {
-                throw new NotFoundException("Invalid Token", token);
-            }
+            tokenHandler.ValidateToken(token, validationParameters, out _);
 
             var jwtSecurityToken = new JwtSecurityTokenHandler().ReadJwtToken(token);
 
