@@ -16,7 +16,6 @@ namespace Honoplay.TraineeWebAPI.Controllers
     public class TraineeUserController : BaseController
     {
         private readonly ITraineeUserService _traineeUserService;
-
         public TraineeUserController(ITraineeUserService traineeUserService)
         {
             _traineeUserService = traineeUserService;
@@ -47,6 +46,7 @@ namespace Honoplay.TraineeWebAPI.Controllers
         [HttpPost("RenewToken")]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public IActionResult RenewToken([FromBody]string renewToken)
         {
             try
