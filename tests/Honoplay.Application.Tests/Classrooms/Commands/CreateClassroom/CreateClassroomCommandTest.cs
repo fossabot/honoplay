@@ -160,7 +160,7 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
                 {
                     new CreateClassroomCommandModel
                     {
-                        TraineeUsersId = new List<int>{_traineeUserId},
+                        TraineeUsersIdList = new List<int>{_traineeUserId},
                         TrainerUserId = _trainerUserId,
                         TrainingId = _trainingId,
                         Name = "testasdad"
