@@ -37,6 +37,8 @@ class TrainingsTab extends React.Component {
     this.setState({ tabValue: index });
   };
 
+  trainingSeriesId = localStorage.getItem('trainingSeriesId');
+
   handleClick = () => {
     this.props.history.push(
       `/trainingseries/${this.trainingSeriesId}/training/${this.props.match.params.trainingId}/classroom`
