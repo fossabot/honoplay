@@ -7,13 +7,17 @@ import Style from '../../Style';
 import Input from '../../../components/Input/InputTextComponent';
 import DropDown from '../../../components/Input/DropDownInputComponent';
 import Button from '../../../components/Button/ButtonComponent';
-import Table from '../../../components/Table/TableComponent';
 import BreadCrumbs from '../../../components/BreadCrumbs/BreadCrumbs';
+import TransferList from '../../../components/TransferList/TransferList';
 import { genderToString } from '../../../helpers/Converter';
+import differenceBy from 'lodash/differenceBy';
 
 import { connect } from 'react-redux';
 import { fetchTrainersList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainer';
-import { fetchTraineeList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee';
+import {
+  fetchTraineeList,
+  fetchTraineeUserByClassroomId
+} from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainee';
 import {
   createClassroom,
   fetchClassroomListByTrainingId,
@@ -32,24 +36,15 @@ class ClassroomCreate extends React.Component {
       classroom: {
         createClassroomModels: [
           {
-            name: '',
             trainerUserId: '',
             trainingId: '',
-            traineeUsersId: []
+            name: '',
+            traineeUsersIdList: []
           }
         ]
       },
-      traineeColumns: [
-        { title: translate('Name'), field: 'name' },
-        { title: translate('Surname'), field: 'surname' },
-        {
-          title: translate('NationalIdentityNumber'),
-          field: 'nationalIdentityNumber'
-        },
-        { title: translate('PhoneNumber'), field: 'phoneNumber' },
-        { title: translate('Gender'), field: 'gender' }
-      ],
-      traineeList: []
+      traineeList: [],
+      traineeUsers: []
     };
   }
 
@@ -70,7 +65,13 @@ class ClassroomCreate extends React.Component {
       trainees,
       isClassroomLoading,
       classroom,
-      errorClassroom
+      errorClassroom,
+      isTraineeUserByClassroomIdLoading,
+      traineeUserByClassroomId,
+      errorTraineeUserByClassroomId,
+      isUpdateClassroomLoading,
+      updateClassroom,
+      errorUpdateClassroom
     } = this.props;
 
     if (prevProps.isClassroomLoading && !isClassroomLoading && classroom) {
@@ -112,6 +113,7 @@ class ClassroomCreate extends React.Component {
       newClassroom
     ) {
       this.props.fetchClassroomListByTrainingId(this.trainingId);
+      this.props.fetchTraineeUserByClassroomId(this.classroomId);
       if (!errorCreateClassroom) {
         this.setState({
           classroomLoading: false,
@@ -130,12 +132,52 @@ class ClassroomCreate extends React.Component {
         });
       }
     }
+    if (
+      prevProps.isTraineeUserByClassroomIdLoading &&
+      !isTraineeUserByClassroomIdLoading &&
+      traineeUserByClassroomId
+    ) {
+      if (!errorTraineeUserByClassroomId) {
+        this.setState({
+          traineeUsers: traineeUserByClassroomId.items
+        });
+      }
+    }
+    if (!prevProps.isUpdateClassroomLoading && isUpdateClassroomLoading) {
+      this.setState({
+        classroomLoading: true
+      });
+    }
+    if (!prevProps.errorUpdateClassroom && errorUpdateClassroom) {
+      this.setState({
+        classroomError: true,
+        classroomLoading: false,
+        success: false
+      });
+    }
+    if (
+      prevProps.isUpdateClassroomLoading &&
+      !isUpdateClassroomLoading &&
+      updateClassroom
+    ) {
+      if (!errorUpdateClassroom) {
+        this.setState({
+          classroomError: false,
+          classroomLoading: false,
+          success: true
+        });
+        setTimeout(() => {
+          this.setState({ success: false });
+        }, 1000);
+      }
+    }
   }
 
   componentDidMount() {
     this.props.fetchTrainersList(0, 50);
     this.props.fetchTraineeList(0, 50);
     this.props.fetchClassroom(this.classroomId);
+    this.props.fetchTraineeUserByClassroomId(this.classroomId);
   }
 
   handleClick = () => {
@@ -143,7 +185,9 @@ class ClassroomCreate extends React.Component {
   };
 
   handleUpdate = () => {
-    //update
+    this.state.classroom.createClassroomModels.map((classroom, id) =>
+      this.props.updateClassroom(classroom)
+    );
   };
 
   render() {
@@ -152,7 +196,7 @@ class ClassroomCreate extends React.Component {
       trainer,
       classroom,
       classroomError,
-      traineeColumns,
+      traineeUsers,
       traineeList,
       success
     } = this.state;
@@ -167,38 +211,38 @@ class ClassroomCreate extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Grid container spacing={3}>
-          {update ? (
-            <Grid item xs={12} sm={11} />
-          ) : (
-            <Grid item xs={12} sm={11}>
-              <BreadCrumbs />
-            </Grid>
-          )}
-          <Grid item xs={12} sm={1}>
-            <Button
-              buttonColor="primary"
-              className={buttonClassname}
-              buttonName={update ? translate('Update') : translate('Save')}
-              onClick={update ? this.handleUpdate : this.handleClick}
-              disabled={classroomLoading}
-            />
-            {classroomLoading && (
-              <CircularProgress
-                size={24}
-                disableShrink={true}
-                className={classes.buttonProgressSave}
-              />
+        {classroom.createClassroomModels.map((classroom, id) => (
+          <Grid container spacing={3} key={id}>
+            {update ? (
+              <Grid item xs={12} sm={11} />
+            ) : (
+              <Grid item xs={12} sm={11}>
+                <BreadCrumbs />
+              </Grid>
             )}
-          </Grid>
-          {!update && (
-            <Grid item xs={12} sm={12}>
-              <Divider />
+            <Grid item xs={12} sm={1}>
+              <Button
+                buttonColor="primary"
+                className={buttonClassname}
+                buttonName={update ? translate('Update') : translate('Save')}
+                onClick={update ? this.handleUpdate : this.handleClick}
+                disabled={classroomLoading}
+              />
+              {classroomLoading && (
+                <CircularProgress
+                  size={24}
+                  disableShrink={true}
+                  className={classes.buttonProgressSave}
+                />
+              )}
             </Grid>
-          )}
-          <Grid item xs={12} sm={12} />
-          {classroom.createClassroomModels.map((classroom, id) => (
-            <Grid item xs={12} sm={12} key={id}>
+            {!update && (
+              <Grid item xs={12} sm={12}>
+                <Divider />
+              </Grid>
+            )}
+            <Grid item xs={12} sm={12} />
+            <Grid item xs={12} sm={12}>
               <Grid item xs={12} sm={12}>
                 <Input
                   error={classroomError}
@@ -221,18 +265,24 @@ class ClassroomCreate extends React.Component {
                   value={update && classroom.trainerUserId}
                 />
               </Grid>
+            </Grid>
+            {traineeUsers && traineeUsers.length !== 0 && (
               <Grid item xs={12} sm={12}>
-                <Table
-                  columns={traineeColumns}
-                  data={traineeList}
+                <TransferList
+                  leftData={
+                    update
+                      ? differenceBy(traineeList, traineeUsers, 'id')
+                      : traineeList
+                  }
+                  rightData={update ? traineeUsers : []}
                   isSelected={selected => {
-                    classroom.traineeUsersId = selected;
+                    classroom.traineeUsersIdList = selected;
                   }}
                 />
               </Grid>
-            </Grid>
-          ))}
-        </Grid>
+            )}
+          </Grid>
+        ))}
       </div>
     );
   }
@@ -261,6 +311,18 @@ const mapStateToProps = state => {
 
   const { isClassroomLoading, classroom, errorClassroom } = state.classroom;
 
+  const {
+    isTraineeUserByClassroomIdLoading,
+    traineeUserByClassroomId,
+    errorTraineeUserByClassroomId
+  } = state.traineeUserByClassroomId;
+
+  const {
+    isUpdateClassroomLoading,
+    updateClassroom,
+    errorUpdateClassroom
+  } = state.updateClassroom;
+
   return {
     isTrainerListLoading,
     errorTrainerList,
@@ -273,7 +335,13 @@ const mapStateToProps = state => {
     trainees,
     isClassroomLoading,
     classroom,
-    errorClassroom
+    errorClassroom,
+    isTraineeUserByClassroomIdLoading,
+    traineeUserByClassroomId,
+    errorTraineeUserByClassroomId,
+    isUpdateClassroomLoading,
+    updateClassroom,
+    errorUpdateClassroom
   };
 };
 
@@ -283,7 +351,8 @@ const mapDispatchToProps = {
   fetchClassroomListByTrainingId,
   fetchTraineeList,
   fetchClassroom,
-  updateClassroom
+  updateClassroom,
+  fetchTraineeUserByClassroomId
 };
 
 export default connect(
