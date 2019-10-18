@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Style from './Style';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Grid,
   List,
@@ -13,6 +13,24 @@ import {
   Divider
 } from '@material-ui/core';
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    margin: 'auto'
+  },
+  cardHeader: {
+    padding: theme.spacing(1, 2)
+  },
+  list: {
+    width: 650,
+    height: 530,
+    backgroundColor: theme.palette.background.paper,
+    overflow: 'auto'
+  },
+  button: {
+    margin: theme.spacing(0.5, 0)
+  }
+}));
+
 function not(a, b) {
   return a.filter(value => b.indexOf(value) === -1);
 }
@@ -25,7 +43,7 @@ function union(a, b) {
   return [...a, ...not(b, a)];
 }
 export default function TransferList(props) {
-  const classes = Style();
+  const classes = useStyles();
   const [checked, setChecked] = useState([]);
   const [left, setLeft] = useState(props.leftData);
   const [right, setRight] = useState(props.rightData);
