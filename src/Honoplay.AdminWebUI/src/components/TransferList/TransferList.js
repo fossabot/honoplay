@@ -100,6 +100,7 @@ export default function TransferList(props) {
         subheader={`${numberOfChecked(items)}/${items.length} selected`}
       />
       <Divider />
+
       <List className={classes.list} dense component="div" role="list">
         {items.length !== 0 &&
           items.map(value => {
