@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using EFCore.BulkExtensions;
+using Honoplay.Common.Extensions;
 
 namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
 {
@@ -55,15 +56,12 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
 
                     foreach (var i in request.TraineeUsersIdList)
                     {
-                        updateClassroomTraineeUsers.Add(new ClassroomTraineeUser
+                        _context.ClassroomTraineeUsers.AddOrUpdate(new ClassroomTraineeUser
                         {
                             ClassroomId = request.Id,
                             TraineeUserId = i
                         });
                     }
-                    updateClassroom.ClassroomTraineeUsers = updateClassroomTraineeUsers;
-
-                    _context.UpdateRange(updateClassroomTraineeUsers);
 
                     _context.Classrooms.Update(updateClassroom);
                     await _context.SaveChangesAsync(cancellationToken);
