@@ -1,4 +1,4 @@
-﻿using Honoplay.Application.WorkingStatuses.Queries;
+﻿using Honoplay.Application.WorkingStatuses.Queries.GetWorkingStatusesList;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;

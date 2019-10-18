@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Honoplay.Domain.Entities;
+using System;
 using System.Linq.Expressions;
-using Honoplay.Domain.Entities;
 
-namespace Honoplay.Application.WorkingStatuses.Queries
+namespace Honoplay.Application.WorkingStatuses.Queries.GetWorkingStatusesList
 {
     public struct WorkingStatusesListModel
     {

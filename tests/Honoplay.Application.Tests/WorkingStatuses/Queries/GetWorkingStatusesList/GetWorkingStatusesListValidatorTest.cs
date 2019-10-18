@@ -1,5 +1,5 @@
 ﻿using FluentValidation.TestHelper;
-using Honoplay.Application.WorkingStatuses.Queries;
+using Honoplay.Application.WorkingStatuses.Queries.GetWorkingStatusesList;
 using Xunit;
 
 namespace Honoplay.Application.Tests.WorkingStatuses.Queries.GetWorkingStatusesList

@@ -83,6 +83,21 @@ namespace Honoplay.AdminWebAPI.System.Tests
             };
             dbContext.QuestionDifficulties.AddRange(questionDifficulties);
 
+            var questionCategories = new List<QuestionCategory>
+            {
+                new QuestionCategory
+                {
+                    Name = "questionDifficulty1",
+                    TenantId = tenantId
+                },
+                new QuestionCategory
+                {
+                    Name = "questionDifficulty2",
+                    TenantId = tenantId
+                }
+            };
+            dbContext.QuestionCategories.AddRange(questionCategories);
+
             var department = new Department
             {
                 CreatedBy = adminUser.Id,
@@ -143,7 +158,9 @@ namespace Honoplay.AdminWebAPI.System.Tests
                 Surname = "KAS",
                 DepartmentId = department.Id,
                 CreatedBy = adminUser.Id,
-                Email = "yunuskas55@gmail.com",
+                Email = "registered@omegabigdata.com",
+                Password = "Passw0rd".GetSHA512(salt),
+                PasswordSalt = salt,
                 ProfessionId = profession.Id
             };
             dbContext.TrainerUsers.Add(trainerUser);
@@ -154,6 +171,9 @@ namespace Honoplay.AdminWebAPI.System.Tests
                 Name = "Yunus Emre",
                 CreatedBy = adminUser.Id,
                 Gender = 1,
+                Email = "registered@omegabigdata.com",
+                Password = "Passw0rd".GetSHA512(salt),
+                PasswordSalt = salt,
                 NationalIdentityNumber = "654654654444",
                 PhoneNumber = "053546835411",
                 Surname = "KAS",

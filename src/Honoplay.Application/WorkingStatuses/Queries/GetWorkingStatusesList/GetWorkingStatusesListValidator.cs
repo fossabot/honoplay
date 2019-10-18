@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Honoplay.Application.WorkingStatuses.Queries
+namespace Honoplay.Application.WorkingStatuses.Queries.GetWorkingStatusesList
 {
     public class GetWorkingStatusesListValidator : AbstractValidator<GetWorkingStatusesListQueryModel>
     {
