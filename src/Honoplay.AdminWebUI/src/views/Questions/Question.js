@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Grid, Divider, CircularProgress } from '@material-ui/core';
 import Style from '../Style';
 import Header from '../../components/Typography/TypographyComponent';
+import DropDown from '../../components/Input/DropDownInputComponent';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Options from './Options';
@@ -20,6 +21,7 @@ import {
   createOption,
   updateOption
 } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options';
+import { fetchQuestionDifficultyList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/QuestionDifficulty';
 
 class NewQuestion extends React.Component {
   constructor(props) {
@@ -31,10 +33,12 @@ class NewQuestion extends React.Component {
       options: [],
       questionsModel: {
         text: '',
-        duration: ''
+        duration: '',
+        questionDifficultyId: ''
       },
       success: false,
-      newOptions: []
+      newOptions: [],
+      questionDifficulty: []
     };
   }
 
@@ -61,9 +65,23 @@ class NewQuestion extends React.Component {
       optionsListByQuestionId,
       isCreateOptionLoading,
       createOption,
-      errorCreateOption
+      errorCreateOption,
+      isQuestionDifficultyListLoading,
+      questionDifficulties,
+      errorQuestionDifficultyList
     } = this.props;
 
+    if (
+      prevProps.isQuestionDifficultyListLoading &&
+      !isQuestionDifficultyListLoading &&
+      questionDifficulties
+    ) {
+      if (!errorQuestionDifficultyList) {
+        this.setState({
+          questionDifficulty: questionDifficulties.items
+        });
+      }
+    }
     if (
       prevProps.isOptionListByQuestionIdLoading &&
       !isOptionListByQuestionIdLoading &&
@@ -179,6 +197,7 @@ class NewQuestion extends React.Component {
         questionId: this.dataId
       });
     }
+    this.props.fetchQuestionDifficultyList(0, 50);
   }
 
   handleChange = e => {
@@ -202,7 +221,13 @@ class NewQuestion extends React.Component {
   };
 
   render() {
-    const { questionsError, loading, questionId, success } = this.state;
+    const {
+      questionsError,
+      loading,
+      questionId,
+      success,
+      questionDifficulty
+    } = this.state;
     const { classes } = this.props;
     const buttonClassname = classNames({
       [classes.buttonSuccess]: success
@@ -255,6 +280,14 @@ class NewQuestion extends React.Component {
               value={this.state.questionsModel.duration}
               name="duration"
               onChange={this.handleChange}
+            />
+            <DropDown
+              error={questionsError}
+              data={questionDifficulty}
+              name="questionDifficultyId"
+              labelName={translate('QuestionDifficulty')}
+              onChange={this.handleChange}
+              value={this.state.questionsModel.questionDifficultyId}
             />
           </Grid>
           <Grid item xs={12} sm={12} />
@@ -314,6 +347,12 @@ const mapStateToProps = state => {
     errorUpdateOption
   } = state.updateOption;
 
+  const {
+    isQuestionDifficultyListLoading,
+    questionDifficulties,
+    errorQuestionDifficultyList
+  } = state.questionDifficultyList;
+
   return {
     isCreateQuestionLoading,
     createQuestion,
@@ -333,7 +372,10 @@ const mapStateToProps = state => {
     errorCreateOption,
     isUpdateOptionLoading,
     updateOption,
-    errorUpdateOption
+    errorUpdateOption,
+    isQuestionDifficultyListLoading,
+    questionDifficulties,
+    errorQuestionDifficultyList
   };
 };
 
@@ -343,7 +385,8 @@ const mapDispatchToProps = {
   fetchQuestion,
   updateQuestion,
   createOption,
-  updateOption
+  updateOption,
+  fetchQuestionDifficultyList
 };
 
 export default connect(
