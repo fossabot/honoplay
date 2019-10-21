@@ -100,6 +100,21 @@ class Questions extends React.Component {
                     this.handleChangeQuestion(rowData.id)
                 }
               ]}
+              localization={{
+                pagination: {
+                  labelDisplayedRows: '{from}-{to} / {count}',
+                  labelRowsSelect: translate('NumberOfRows')
+                },
+                toolbar: {
+                  searchPlaceholder: translate('Search')
+                },
+                header: {
+                  actions: translate('Edit')
+                },
+                body: {
+                  emptyDataSourceMessage: translate('NoRecordsToDisplay')
+                }
+              }}
               options={{
                 actionsColumnIndex: -1
               }}

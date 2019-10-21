@@ -378,6 +378,24 @@ class Trainers extends React.Component {
               options={{
                 actionsColumnIndex: -1
               }}
+              localization={{
+                pagination: {
+                  labelDisplayedRows: '{from}-{to} / {count}',
+                  labelRowsSelect: translate('NumberOfRows')
+                },
+                toolbar: {
+                  searchPlaceholder: translate('Search')
+                },
+                header: {
+                  actions: translate('Edit')
+                },
+                body: {
+                  emptyDataSourceMessage: translate('NoRecordsToDisplay')
+                }
+              }}
+              options={{
+                actionsColumnIndex: -1
+              }}
             />
           </Grid>
         </Grid>
