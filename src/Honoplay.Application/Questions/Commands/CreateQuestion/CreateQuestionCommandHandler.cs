@@ -33,7 +33,11 @@ namespace Honoplay.Application.Questions.Commands.CreateQuestion
                 TenantId = request.TenantId,
                 CreatedBy = request.CreatedBy,
                 Text = request.Text,
-                Duration = request.Duration
+                Duration = request.Duration,
+                QuestionCategoryId = request.CategoryId,
+                QuestionDifficultyId = request.DifficultyId,
+                QuestionTypeId = request.TypeId,
+                ContentFileId = request.ContentFileId
             };
 
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
@@ -66,9 +70,12 @@ namespace Honoplay.Application.Questions.Commands.CreateQuestion
             var createQuestionModel = new CreateQuestionModel(newQuestion.Id,
                                                               newQuestion.Text,
                                                               newQuestion.Duration,
+                                                              newQuestion.QuestionTypeId,
+                                                              newQuestion.QuestionDifficultyId,
+                                                              newQuestion.QuestionCategoryId,
+                                                              newQuestion.ContentFileId,
                                                               newQuestion.CreatedBy,
-                                                              newQuestion.CreatedAt,
-                                                              newQuestion.VisualId);
+                                                              newQuestion.CreatedAt);
             return new ResponseModel<CreateQuestionModel>(createQuestionModel);
         }
     }
