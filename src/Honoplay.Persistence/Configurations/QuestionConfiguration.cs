@@ -42,7 +42,7 @@ namespace Honoplay.Persistence.Configurations
             //ContentFile
             builder.HasOne(q => q.ContentFile)
                 .WithMany(cf => cf.Questions)
-                .HasForeignKey(q => q.VisualId);
+                .HasForeignKey(q => q.ContentFileId);
 
         }
     }

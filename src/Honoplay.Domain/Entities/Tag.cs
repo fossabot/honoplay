@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Honoplay.Domain.Entities
 {
@@ -11,6 +12,9 @@ namespace Honoplay.Domain.Entities
         public int Id { get; set; }
         public string Name { get; set; }
         public bool ToQuestion { get; set; }
+        public Guid TenantId { get; set; }
+
+        public Tenant Tenant { get; set; }
         public virtual ICollection<QuestionTag> QuestionTags { get; set; }
     }
 }
