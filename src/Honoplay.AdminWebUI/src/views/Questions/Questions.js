@@ -15,6 +15,7 @@ class Questions extends React.Component {
     super(props);
     this.state = {
       questionsColumns: [
+        { title: '#', field: 'id' },
         { title: translate('QuestionText'), field: 'text' },
         { title: translate('Duration'), field: 'duration' },
         { title: 'Soru Tipi**', field: 'createdAt' },
@@ -90,7 +91,7 @@ class Questions extends React.Component {
           </Grid>
           <Grid item xs={12} sm={12}>
             <Table
-              title={translate('Questions')}
+              title={''}
               columns={questionsColumns}
               data={questions}
               actions={[
