@@ -26,20 +26,18 @@ namespace Honoplay.Application.Tags.Queries.GetTagsList
             CancellationToken cancellationToken)
         {
             var redisKey = $"TagsByTenantId{request.TenantId}";
-            var allTagsList = await _cacheService.RedisCacheAsync(redisKey,
-                _ => _context.QuestionTags
-                    .Include(x => x.Question)
-                    .Include(x => x.Tag)
-                    .Where(x => x.Question.TenantId == request.TenantId)
-                    .Select(x => x.Tag)
+            var redisTags = await _cacheService.RedisCacheAsync(redisKey,
+                _ => _context.Tags
+                    .AsNoTracking()
+                    .Where(x => x.TenantId == request.TenantId)
                 , cancellationToken);
 
-            if (!allTagsList.Any())
+            if (!redisTags.Any())
             {
                 throw new NotFoundException();
             }
 
-            var tagsList = allTagsList
+            var tagsList = redisTags
                 .Select(TagsListModel.Projection)
                 .OrderBy(x => x.Id)
                 .SkipOrAll(request.Skip)

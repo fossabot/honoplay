@@ -26,11 +26,9 @@ namespace Honoplay.Application.Tags.Queries.GetTagDetail
         {
             var redisKey = $"TagsByTenantId{request.TenantId}";
             var redisTags = await _cacheService.RedisCacheAsync(redisKey,
-                _ => _context.QuestionTags
-                    .Include(x => x.Question)
-                    .Include(x => x.Tag)
-                    .Where(x => x.Question.TenantId == request.TenantId)
-                    .Select(x => x.Tag)
+                _ => _context.Tags
+                    .AsNoTracking()
+                    .Where(x => x.TenantId == request.TenantId)
                 , cancellationToken);
 
             var tag = redisTags.FirstOrDefault(x => x.Id == request.Id);
