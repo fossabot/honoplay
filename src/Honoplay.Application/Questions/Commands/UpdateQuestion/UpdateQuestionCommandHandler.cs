@@ -46,9 +46,9 @@ namespace Honoplay.Application.Questions.Commands.UpdateQuestion
 
                     updateQuestion.Duration = request.Duration;
                     updateQuestion.Text = request.Text;
-                    updateQuestion.QuestionCategoryId = request.QuestionCategoryId;
-                    updateQuestion.QuestionDifficultyId = request.QuestionDifficultyId;
-                    updateQuestion.QuestionTypeId = request.QuestionTypeId;
+                    updateQuestion.QuestionCategoryId = request.CategoryId;
+                    updateQuestion.QuestionDifficultyId = request.DifficultyId;
+                    updateQuestion.QuestionTypeId = request.TypeId;
                     updateQuestion.ContentFileId = request.ContentFileId;
                     updateQuestion.UpdatedAt = updatedAt;
                     updateQuestion.UpdatedBy = request.UpdatedBy;
@@ -83,9 +83,9 @@ namespace Honoplay.Application.Questions.Commands.UpdateQuestion
             var updateQuestionModel = new UpdateQuestionModel(request.Id,
                                                               request.Text,
                                                               request.Duration,
-                                                              request.QuestionTypeId,
-                                                              request.QuestionDifficultyId,
-                                                              request.QuestionCategoryId,
+                                                              request.DifficultyId,
+                                                              request.CategoryId,
+                                                              request.TypeId,
                                                               request.ContentFileId,
                                                               request.UpdatedBy,
                                                               updatedAt);
