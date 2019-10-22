@@ -147,7 +147,10 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.UpdateClassroom
                 Id = _classroomId,
                 TrainerUserId = _trainerUserId,
                 TrainingId = _trainingId,
-                Name = "test"
+                Name = "test",
+                BeginDatetime = DateTimeOffset.Now,
+                EndDatetime = DateTimeOffset.Now.AddDays(4),
+                Location = "asdas"
             };
 
             var classroomResponseModel = await _commandHandler.Handle(updateClassroomCommand, CancellationToken.None);
