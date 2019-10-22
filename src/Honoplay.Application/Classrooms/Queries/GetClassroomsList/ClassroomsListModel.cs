@@ -14,6 +14,10 @@ namespace Honoplay.Application.Classrooms.Queries.GetClassroomsList
         public DateTimeOffset CreatedAt { get; private set; }
         public int? UpdatedBy { get; private set; }
         public DateTimeOffset? UpdatedAt { get; private set; }
+        public DateTimeOffset BeginDatetime { get; set; }
+        public DateTimeOffset EndDatetime { get; set; }
+        public string Location { get; set; }
+        public string Code { get; set; }
 
         public static Expression<Func<Classroom, ClassroomsListModel>> Projection
         {
@@ -29,6 +33,10 @@ namespace Honoplay.Application.Classrooms.Queries.GetClassroomsList
                     CreatedAt = classroom.CreatedAt,
                     UpdatedBy = classroom.UpdatedBy,
                     UpdatedAt = classroom.UpdatedAt,
+                    BeginDatetime = classroom.BeginDatetime,
+                    EndDatetime = classroom.EndDatetime,
+                    Location = classroom.Location,
+                    Code = classroom.Code
                 };
             }
         }
