@@ -20,6 +20,7 @@ namespace Honoplay.Persistence.Configurations
             //Tenant
             builder.HasOne(q => q.Tenant)
                 .WithMany(t => t.Tags)
+                .OnDelete(DeleteBehavior.Restrict)
                 .HasForeignKey(q => q.TenantId);
 
         }
