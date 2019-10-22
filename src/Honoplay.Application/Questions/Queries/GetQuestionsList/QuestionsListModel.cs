@@ -9,22 +9,22 @@ namespace Honoplay.Application.Questions.Queries.GetQuestionsList
         public int Id { get; private set; }
         public string Text { get; set; }
         public int Duration { get; set; }
-        public int? QuestionTypeId { get; set; }
-        public int? QuestionDifficultyId { get; set; }
-        public int? QuestionCategoryId { get; set; }
+        public int? DifficultyId { get; set; }
+        public int? CategoryId { get; set; }
+        public int? TypeId { get; set; }
         public Guid? ContentFileId { get; set; }
         public int? UpdatedBy { get; private set; }
         public DateTimeOffset? UpdatedAt { get; private set; }
         public int CreatedBy { get; private set; }
         public DateTimeOffset CreatedAt { get; private set; }
 
-        public static Expression<Func<Question, QuestionsListModel>> Projection => question => new QuestionsListModel()
+        public static Expression<Func<Question, QuestionsListModel>> Projection => question => new QuestionsListModel
         {
             Id = question.Id,
-            QuestionDifficultyId = question.QuestionDifficultyId,
+            DifficultyId = question.QuestionDifficultyId,
             ContentFileId = question.ContentFileId,
-            QuestionCategoryId = question.QuestionCategoryId,
-            QuestionTypeId = question.QuestionTypeId,
+            CategoryId = question.QuestionCategoryId,
+            TypeId = question.QuestionTypeId,
             CreatedBy = question.CreatedBy,
             UpdatedBy = question.UpdatedBy,
             UpdatedAt = question.UpdatedAt,
