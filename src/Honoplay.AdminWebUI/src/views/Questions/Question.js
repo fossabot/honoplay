@@ -32,9 +32,12 @@ class NewQuestion extends React.Component {
       questionId: null,
       options: [],
       questionsModel: {
+        difficultyId: '',
+        categoryId: '',
+        typeId: '',
+        contentFileId: '',
         text: '',
-        duration: '',
-        questionDifficultyId: ''
+        duration: ''
       },
       success: false,
       newOptions: [],
@@ -193,6 +196,7 @@ class NewQuestion extends React.Component {
     if (this.dataId) {
       this.props.fetchQuestion(parseInt(this.dataId));
       this.props.fetchOptionsByQuestionId(this.dataId);
+      this.props.fetchQuestionDifficultyList(0, 50);
       this.setState({
         questionId: this.dataId
       });
@@ -212,10 +216,14 @@ class NewQuestion extends React.Component {
   };
 
   handleClick = () => {
+    console.log('save', this.state.questionsModel);
+
     this.props.createQuestion(this.state.questionsModel);
   };
 
   handleUpdate = () => {
+    console.log('update', this.state.questionsModel);
+
     this.props.updateQuestion(this.state.questionsModel);
     localStorage.removeItem('dataid');
   };
@@ -232,6 +240,7 @@ class NewQuestion extends React.Component {
     const buttonClassname = classNames({
       [classes.buttonSuccess]: success
     });
+    console.log('question', this.state.questionsModel);
 
     return (
       <div className={classes.root}>
@@ -284,10 +293,10 @@ class NewQuestion extends React.Component {
             <DropDown
               error={questionsError}
               data={questionDifficulty}
-              name="questionDifficultyId"
+              name="difficultyId"
               labelName={translate('QuestionDifficulty')}
               onChange={this.handleChange}
-              value={this.state.questionsModel.questionDifficultyId}
+              value={this.state.questionsModel.difficultyId}
             />
           </Grid>
           <Grid item xs={12} sm={12} />
