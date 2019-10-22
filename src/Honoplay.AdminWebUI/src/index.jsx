@@ -7,15 +7,12 @@ import { Provider } from 'react-redux';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { projeId } from './helpers/Terasu';
 import store from './redux/store';
-import { createBrowserHistory } from 'history';
-
-const history = createBrowserHistory();
 
 init(projeId);
 
 render(
   <Provider store={store}>
-    <Router history={history}>
+    <Router>
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route path="/" component={App} />
