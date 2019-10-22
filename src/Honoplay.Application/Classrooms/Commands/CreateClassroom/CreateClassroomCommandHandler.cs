@@ -34,7 +34,7 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
             var newClassrooms = new List<Classroom>();
             var newClassroomTraineeUsers = new List<ClassroomTraineeUser>();
             var createdClassrooms = new List<CreateClassroomModel>();
-
+            var random = new Random();
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
                 try
@@ -57,7 +57,11 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                             CreatedBy = request.CreatedBy,
                             TrainerUserId = createClassroomModel.TrainerUserId,
                             Name = createClassroomModel.Name,
-                            TrainingId = createClassroomModel.TrainingId
+                            TrainingId = createClassroomModel.TrainingId,
+                            BeginDatetime = createClassroomModel.BeginDatetime,
+                            EndDatetime = createClassroomModel.EndDatetime,
+                            Location = createClassroomModel.Location,
+                            Code = random.Next(0, 100000).ToString()
                         };
 
                         newClassrooms.Add(newClassroom);
@@ -118,8 +122,12 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                             x.ClassroomTraineeUsers
                                 .Select(s => s.TraineeUserId)
                                 .ToList(),
+                            x.BeginDatetime,
+                            x.EndDatetime,
+                            x.Location,
                             x.CreatedBy,
-                            x.CreatedAt)));
+                            x.CreatedAt,
+                            x.Code)));
                 }
                 catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
                                                    (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))

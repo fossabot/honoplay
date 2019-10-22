@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using System;
 
 namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
 {
@@ -20,7 +21,18 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
                     inlineValidator => inlineValidator
                         .RuleFor(x => x.TrainingId)
                         .NotNull()
+                        .NotEmpty(),
+                    inlineValidator => inlineValidator
+                        .RuleFor(x => x.BeginDatetime)
+                        .NotNull()
                         .NotEmpty()
+                        .GreaterThanOrEqualTo(DateTimeOffset.Now),
+                    inlineValidator => inlineValidator
+                        .RuleFor(x => x.EndDatetime)
+                        .NotNull()
+                        .NotEmpty()
+                        .GreaterThan(DateTimeOffset.Now)
+                        .GreaterThan(x => x.BeginDatetime)
                 });
         }
     }
