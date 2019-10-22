@@ -23,7 +23,7 @@ namespace Honoplay.Application.Tags.Queries.GetTagsListByQuestionId
         public async Task<ResponseModel<TagsListByQuestionIdModel>> Handle(GetTagsListByQuestionIdQuery request,
             CancellationToken cancellationToken)
         {
-            var redisKey = $"TagsByTenantId{request.TenantId}";
+            var redisKey = $"TagsWithQuestionsByTenantId{request.TenantId}";
             var allTagsListByQuestionId = await _cacheService.RedisCacheAsync(redisKey,
                 _ => _context.QuestionTags
                     .Include(x => x.Question)
