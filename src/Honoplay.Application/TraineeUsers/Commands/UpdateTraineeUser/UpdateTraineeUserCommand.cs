@@ -22,6 +22,5 @@ namespace Honoplay.Application.TraineeUsers.Commands.UpdateTraineeUser
         public int UpdatedBy { get; set; }
         [JsonIgnore]
         public Guid TenantId { get; set; }
-
     }
 }
