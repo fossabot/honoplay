@@ -9,6 +9,7 @@ import DropDown from '../../components/Input/DropDownInputComponent';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Options from './Options';
+import QuestionCategory from './QuestionCategory';
 
 import { connect } from 'react-redux';
 import {
@@ -22,6 +23,7 @@ import {
   updateOption
 } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options';
 import { fetchQuestionDifficultyList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/QuestionDifficulty';
+import { fetchQuestionCategoryList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/QuestionCategory';
 
 class NewQuestion extends React.Component {
   constructor(props) {
@@ -41,7 +43,8 @@ class NewQuestion extends React.Component {
       },
       success: false,
       newOptions: [],
-      questionDifficulty: []
+      questionDifficulty: [],
+      questionCategory: []
     };
   }
 
@@ -71,9 +74,23 @@ class NewQuestion extends React.Component {
       errorCreateOption,
       isQuestionDifficultyListLoading,
       questionDifficulties,
-      errorQuestionDifficultyList
+      errorQuestionDifficultyList,
+      isQuestionCategoryListLoading,
+      questionCategories,
+      errorQuestionCategoryList
     } = this.props;
 
+    if (
+      prevProps.isQuestionCategoryListLoading &&
+      !isQuestionCategoryListLoading &&
+      questionCategories
+    ) {
+      if (!errorQuestionDifficultyList) {
+        this.setState({
+          questionCategory: questionCategories.items
+        });
+      }
+    }
     if (
       prevProps.isQuestionDifficultyListLoading &&
       !isQuestionDifficultyListLoading &&
@@ -202,6 +219,7 @@ class NewQuestion extends React.Component {
       });
     }
     this.props.fetchQuestionDifficultyList(0, 50);
+    this.props.fetchQuestionCategoryList(0, 50);
   }
 
   handleChange = e => {
@@ -216,14 +234,10 @@ class NewQuestion extends React.Component {
   };
 
   handleClick = () => {
-    console.log('save', this.state.questionsModel);
-
     this.props.createQuestion(this.state.questionsModel);
   };
 
   handleUpdate = () => {
-    console.log('update', this.state.questionsModel);
-
     this.props.updateQuestion(this.state.questionsModel);
     localStorage.removeItem('dataid');
   };
@@ -234,13 +248,13 @@ class NewQuestion extends React.Component {
       loading,
       questionId,
       success,
-      questionDifficulty
+      questionDifficulty,
+      questionCategory
     } = this.state;
     const { classes } = this.props;
     const buttonClassname = classNames({
       [classes.buttonSuccess]: success
     });
-    console.log('question', this.state.questionsModel);
 
     return (
       <div className={classes.root}>
@@ -298,6 +312,17 @@ class NewQuestion extends React.Component {
               onChange={this.handleChange}
               value={this.state.questionsModel.difficultyId}
             />
+            <DropDown
+              error={questionsError}
+              data={questionCategory}
+              name="categoryId"
+              labelName={translate('Category')}
+              onChange={this.handleChange}
+              value={this.state.questionsModel.categoryId}
+              describable
+            >
+              <QuestionCategory />
+            </DropDown>
           </Grid>
           <Grid item xs={12} sm={12} />
           <Header pageHeader={translate('Options')} />
@@ -362,6 +387,12 @@ const mapStateToProps = state => {
     errorQuestionDifficultyList
   } = state.questionDifficultyList;
 
+  const {
+    isQuestionCategoryListLoading,
+    questionCategories,
+    errorQuestionCategoryList
+  } = state.questionCategoryList;
+
   return {
     isCreateQuestionLoading,
     createQuestion,
@@ -384,7 +415,10 @@ const mapStateToProps = state => {
     errorUpdateOption,
     isQuestionDifficultyListLoading,
     questionDifficulties,
-    errorQuestionDifficultyList
+    errorQuestionDifficultyList,
+    isQuestionCategoryListLoading,
+    questionCategories,
+    errorQuestionCategoryList
   };
 };
 
@@ -395,7 +429,8 @@ const mapDispatchToProps = {
   updateQuestion,
   createOption,
   updateOption,
-  fetchQuestionDifficultyList
+  fetchQuestionDifficultyList,
+  fetchQuestionCategoryList
 };
 
 export default connect(
