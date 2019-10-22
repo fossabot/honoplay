@@ -10,9 +10,9 @@ namespace Honoplay.Application.Questions.Commands.UpdateQuestion
         public int Id { get; set; }
         public string Text { get; set; }
         public int Duration { get; set; }
-        public int? QuestionTypeId { get; set; }
-        public int? QuestionDifficultyId { get; set; }
-        public int? QuestionCategoryId { get; set; }
+        public int? DifficultyId { get; set; }
+        public int? CategoryId { get; set; }
+        public int? TypeId { get; set; }
         public Guid? ContentFileId { get; set; }
         [JsonIgnore]
         public int UpdatedBy { get; set; }
