@@ -31,18 +31,17 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
             var redisKey = $"ClassroomsByTenantId{request.TenantId}";
             var updatedAt = DateTimeOffset.Now;
 
-            var classroomsByTenantId = await _context.Classrooms
-                .Include(x => x.Training)
-                .Include(x => x.Training.TrainingSeries)
-                .Where(x => x.Training.TrainingSeries.TenantId == request.TenantId)
-                .ToListAsync(cancellationToken);
-
-            var updateClassroom = classroomsByTenantId.FirstOrDefault(x => x.Id == request.Id);
-
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
                 try
                 {
+                    var classroomsByTenantId = await _context.Classrooms
+                        .Include(x => x.Training)
+                        .Include(x => x.Training.TrainingSeries)
+                        .Where(x => x.Training.TrainingSeries.TenantId == request.TenantId)
+                        .ToListAsync(cancellationToken);
+
+                    var updateClassroom = classroomsByTenantId.FirstOrDefault(x => x.Id == request.Id);
 
                     if (updateClassroom is null)
                     {
@@ -56,14 +55,14 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
                     updateClassroom.EndDatetime = request.EndDatetime;
                     updateClassroom.Location = request.Location;
 
-                    foreach (var i in request.TraineeUsersIdList)
-                    {
-                        _context.ClassroomTraineeUsers.AddOrUpdate(new ClassroomTraineeUser
-                        {
-                            ClassroomId = request.Id,
-                            TraineeUserId = i
-                        });
-                    }
+                    //foreach (var i in request.TraineeUsersIdList)
+                    //{
+                    //    _context.ClassroomTraineeUsers.AddOrUpdate(new ClassroomTraineeUser
+                    //    {
+                    //        ClassroomId = request.Id,
+                    //        TraineeUserId = i
+                    //    });
+                    //}
 
                     _context.Classrooms.Update(updateClassroom);
                     await _context.SaveChangesAsync(cancellationToken);
@@ -116,8 +115,7 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
                 request.TraineeUsersIdList,
                 request.BeginDatetime,
                 request.EndDatetime,
-                request.Location,
-                updateClassroom.Code);
+                request.Location);
 
             return new ResponseModel<UpdateClassroomModel>(updateClassroomModel);
         }

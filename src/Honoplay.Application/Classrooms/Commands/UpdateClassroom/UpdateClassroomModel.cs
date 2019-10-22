@@ -15,9 +15,8 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
         public DateTimeOffset BeginDatetime { get; set; }
         public DateTimeOffset EndDatetime { get; set; }
         public string Location { get; set; }
-        public string Code { get; set; }
 
-        public UpdateClassroomModel(int id, int trainerUserId, int trainingId, string name, int updatedBy, DateTimeOffset updatedAt, List<int> traineeUsersIdList, DateTimeOffset beginDatetime, DateTimeOffset endDatetime, string location, string code)
+        public UpdateClassroomModel(int id, int trainerUserId, int trainingId, string name, int updatedBy, DateTimeOffset updatedAt, List<int> traineeUsersIdList, DateTimeOffset beginDatetime, DateTimeOffset endDatetime, string location)
         {
             Id = id;
             TrainerUserId = trainerUserId;
@@ -29,7 +28,6 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
             BeginDatetime = beginDatetime;
             EndDatetime = endDatetime;
             Location = location;
-            Code = code;
         }
     }
 }
