@@ -50,6 +50,7 @@ namespace Honoplay.Application.Tags.Commands.UpdateTag
                     updateTag.UpdatedAt = updatedAt;
                     updateTag.UpdatedBy = request.UpdatedBy;
                     updateTag.ToQuestion = request.ToQuestion;
+                    updateTag.TenantId = request.TenantId;
 
                     _context.Tags.Update(updateTag);
                     await _context.SaveChangesAsync(cancellationToken);

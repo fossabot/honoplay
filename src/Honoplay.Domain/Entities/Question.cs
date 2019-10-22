@@ -14,7 +14,7 @@ namespace Honoplay.Domain.Entities
         public Guid TenantId { get; set; }
         public string Text { get; set; }
         public int Duration { get; set; }
-        public Guid? VisualId { get; set; }
+        public Guid? ContentFileId { get; set; }
         public int? QuestionTypeId { get; set; }
         public int? QuestionDifficultyId { get; set; }
         public int? QuestionCategoryId { get; set; }

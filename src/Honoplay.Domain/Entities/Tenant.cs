@@ -19,6 +19,7 @@ namespace Honoplay.Domain.Entities
             TrainingSerieses = new HashSet<TrainingSeries>();
             ContentFiles = new HashSet<ContentFile>();
             QuestionCategories = new HashSet<QuestionCategory>();
+            Tags = new HashSet<Tag>();
         }
         public Guid Id { get; set; }
 
@@ -37,5 +38,6 @@ namespace Honoplay.Domain.Entities
         public virtual ICollection<TrainingSeries> TrainingSerieses { get; set; }
         public virtual ICollection<ContentFile> ContentFiles { get; set; }
         public virtual ICollection<QuestionCategory> QuestionCategories { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
     }
 }

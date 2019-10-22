@@ -43,7 +43,8 @@ namespace Honoplay.Application.Tags.Commands.CreateTag
                         {
                             CreatedBy = request.CreatedBy,
                             Name = createTagModel.Name,
-                            ToQuestion = createTagModel.ToQuestion
+                            ToQuestion = createTagModel.ToQuestion,
+                            TenantId = request.TenantId
                         };
                         newTags.Add(newTag);
                     }
