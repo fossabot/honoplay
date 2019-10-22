@@ -1,5 +1,6 @@
 ﻿using FluentValidation.TestHelper;
 using Honoplay.Application.Classrooms.Commands.UpdateClassroom;
+using System;
 using Xunit;
 
 namespace Honoplay.Application.Tests.Classrooms.Commands.UpdateClassroom
@@ -20,7 +21,10 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.UpdateClassroom
                 Id = 1,
                 TrainerUserId = 1,
                 TrainingId = 1,
-                Name = "test"
+                Name = "test",
+                BeginDatetime = DateTimeOffset.Now,
+                EndDatetime = DateTimeOffset.Now.AddDays(4),
+                Location = "adasd"
             }).IsValid);
         }
         [Fact]
