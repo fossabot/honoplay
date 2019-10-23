@@ -73,6 +73,9 @@ export const Style = theme => ({
   labelCenter: {
     marginTop: 10
   },
+  labelCenterForSelect: {
+    marginTop: 25
+  },
   fileInput: {
     display: 'none'
   },
