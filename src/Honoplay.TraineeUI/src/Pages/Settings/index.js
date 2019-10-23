@@ -14,7 +14,6 @@ import DefaultAvatar from "../../Assets/img/pipo-enemy001.png";
 import Pass from "../../Assets/img/pass.jpg";
 import Input from "../../Components/Input";
 import Modal from "../../Containers/Modal";
-import $ from "jquery";
 import "bootstrap/dist/js/bootstrap.bundle";
 
 class Settings extends React.Component {
