@@ -11,6 +11,8 @@ import Button from '../../components/Button/ButtonComponent';
 import Options from './Options';
 import QuestionCategory from './QuestionCategory';
 import ImageInput from '../../components/Input/ImageInputComponent';
+import SelectDropdown from '../../components/Input/SelectDropdown';
+import QuestionTag from './QuestionTag';
 
 import { connect } from 'react-redux';
 import {
@@ -27,6 +29,7 @@ import { fetchQuestionDifficultyList } from '@omegabigdata/honoplay-redux-helper
 import { fetchQuestionCategoryList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/QuestionCategory';
 import { fetchQuestionTypeList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/QuestionType';
 import { createContentFile } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/ContentFile';
+import { fetchTagList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Tag';
 
 class NewQuestion extends React.Component {
   constructor(props) {
@@ -48,7 +51,8 @@ class NewQuestion extends React.Component {
       newOptions: [],
       questionDifficulty: [],
       questionCategory: [],
-      questionTypes: []
+      questionTypes: [],
+      questionTags: []
     };
   }
 
@@ -97,9 +101,19 @@ class NewQuestion extends React.Component {
       errorQuestionTypeList,
       isCreateContentFileLoading,
       newContentFile,
-      errorCreateContentFile
+      errorCreateContentFile,
+      isTagListLoading,
+      tags,
+      errorTagList
     } = this.props;
 
+    if (prevProps.isTagListLoading && !isTagListLoading && tags) {
+      if (!errorTagList) {
+        this.setState({
+          questionTags: tags.items
+        });
+      }
+    }
     if (!prevProps.isCreateContentFileLoading && isCreateContentFileLoading) {
       this.setState({
         loading: true
@@ -278,6 +292,7 @@ class NewQuestion extends React.Component {
     this.props.fetchQuestionDifficultyList(0, 50);
     this.props.fetchQuestionCategoryList(0, 50);
     this.props.fetchQuestionTypeList(0, 50);
+    this.props.fetchTagList(0, 50);
   }
 
   handleChange = e => {
@@ -312,7 +327,8 @@ class NewQuestion extends React.Component {
       success,
       questionDifficulty,
       questionCategory,
-      questionTypes
+      questionTypes,
+      questionTags
     } = this.state;
     const { classes } = this.props;
     const buttonClassname = classNames({
@@ -413,6 +429,16 @@ class NewQuestion extends React.Component {
                   />
                 )
               )}
+            <SelectDropdown
+              describable
+              options={questionTags}
+              labelName={translate('QuestionTag')}
+              selectedOption={value => {
+                console.log(value);
+              }}
+            >
+              <QuestionTag />
+            </SelectDropdown>
           </Grid>
           <Grid item xs={12} sm={12} />
           <Header pageHeader={translate('Options')} />
@@ -495,6 +521,8 @@ const mapStateToProps = state => {
     errorCreateContentFile
   } = state.createContentFile;
 
+  const { isTagListLoading, tags, errorTagList } = state.tagList;
+
   return {
     isCreateQuestionLoading,
     createQuestion,
@@ -526,7 +554,10 @@ const mapStateToProps = state => {
     errorQuestionTypeList,
     isCreateContentFileLoading,
     newContentFile,
-    errorCreateContentFile
+    errorCreateContentFile,
+    isTagListLoading,
+    tags,
+    errorTagList
   };
 };
 
@@ -540,7 +571,8 @@ const mapDispatchToProps = {
   fetchQuestionDifficultyList,
   fetchQuestionCategoryList,
   fetchQuestionTypeList,
-  createContentFile
+  createContentFile,
+  fetchTagList
 };
 
 export default connect(
