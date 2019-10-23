@@ -63,7 +63,7 @@ namespace Honoplay.Application.Tests.TrainingCategories.Queries.GetTrainingCateg
             };
             context.Questions.Add(question);
 
-            var trainingCategory = new Domain.Entities.TrainingCategory
+            var trainingCategory = new TrainingCategory
             {
                 Id = 1,
                 Name = "trainingCategory1"  

@@ -2,7 +2,7 @@
 using Honoplay.Application.TrainingCategories.Queries.GetTrainingCategoriesList;
 using Xunit;
 
-namespace Honoplay.Application.Tests.TrainingCategory.Queries.GetTrainingCategoryList
+namespace Honoplay.Application.Tests.TrainingCategories.Queries.GetTrainingCategoryList
 {
     public class GetTrainingCategoryListValidatorTest
     {
