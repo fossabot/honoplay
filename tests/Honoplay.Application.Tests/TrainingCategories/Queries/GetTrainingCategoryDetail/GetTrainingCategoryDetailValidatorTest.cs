@@ -1,27 +1,27 @@
 ﻿using FluentValidation.TestHelper;
-using Honoplay.Application.TraininigCategories.Queries.GetTraininigCategoryDetail;
+using Honoplay.Application.TrainingCategories.Queries.GetTrainingCategoryDetail;
 using Xunit;
 
-namespace Honoplay.Application.Tests.TraininigCategories.Queries.GetTraininigCategoryDetail
+namespace Honoplay.Application.Tests.TrainingCategories.Queries.GetTrainingCategoryDetail
 {
-    public class GetTraininigCategoryDetailValidatorTest
+    public class GetTrainingCategoryDetailValidatorTest
     {
-        private readonly GetTraininigCategoryDetailValidator _getTraininigCategoryDetailValidator;
+        private readonly GetTrainingCategoryDetailValidator _getTrainingCategoryDetailValidator;
 
-        public GetTraininigCategoryDetailValidatorTest()
+        public GetTrainingCategoryDetailValidatorTest()
         {
-            _getTraininigCategoryDetailValidator = new GetTraininigCategoryDetailValidator();
+            _getTrainingCategoryDetailValidator = new GetTrainingCategoryDetailValidator();
         }
         [Fact]
         public void ShouldBeValid()
         {
-            Assert.True(_getTraininigCategoryDetailValidator.Validate(new GetTraininigCategoryDetailQuery(id: 1)).IsValid);
+            Assert.True(_getTrainingCategoryDetailValidator.Validate(new GetTrainingCategoryDetailQuery(id: 1)).IsValid);
         }
 
         [Fact]
         public void ShouldBeNotValidForNullOrEmpty()
         {
-            _getTraininigCategoryDetailValidator.ShouldHaveValidationErrorFor(x => x.Id, 0);
+            _getTrainingCategoryDetailValidator.ShouldHaveValidationErrorFor(x => x.Id, 0);
         }
     }
 }
