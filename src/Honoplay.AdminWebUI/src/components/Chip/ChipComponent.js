@@ -8,9 +8,9 @@ class ChipComponent extends React.Component {
     const { classes, data } = this.props;
 
     return (
-      <Grid container spacing={10}>
-        <Grid item xs={12} sm={12}>
-          {data.map(data => {
+      <>
+        {data &&
+          data.map(data => {
             return (
               <Chip
                 variant="outlined"
@@ -20,8 +20,7 @@ class ChipComponent extends React.Component {
               />
             );
           })}
-        </Grid>
-      </Grid>
+      </>
     );
   }
 }

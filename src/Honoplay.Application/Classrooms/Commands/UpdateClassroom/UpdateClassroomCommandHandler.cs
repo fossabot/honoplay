@@ -1,5 +1,6 @@
 ﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
@@ -7,13 +8,10 @@ using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using EFCore.BulkExtensions;
-using Honoplay.Common.Extensions;
 
 namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
 {
@@ -32,7 +30,6 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
         {
             var redisKey = $"ClassroomsByTenantId{request.TenantId}";
             var updatedAt = DateTimeOffset.Now;
-            var updateClassroomTraineeUsers = new List<ClassroomTraineeUser>();
 
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
@@ -45,6 +42,7 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
                         .ToListAsync(cancellationToken);
 
                     var updateClassroom = classroomsByTenantId.FirstOrDefault(x => x.Id == request.Id);
+
                     if (updateClassroom is null)
                     {
                         throw new NotFoundException(nameof(Classroom), request.Id);
@@ -53,15 +51,18 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
                     updateClassroom.Name = request.Name;
                     updateClassroom.UpdatedAt = updatedAt;
                     updateClassroom.UpdatedBy = request.UpdatedBy;
+                    updateClassroom.BeginDatetime = request.BeginDatetime;
+                    updateClassroom.EndDatetime = request.EndDatetime;
+                    updateClassroom.Location = request.Location;
 
-                    foreach (var i in request.TraineeUsersIdList)
-                    {
-                        _context.ClassroomTraineeUsers.AddOrUpdate(new ClassroomTraineeUser
-                        {
-                            ClassroomId = request.Id,
-                            TraineeUserId = i
-                        });
-                    }
+                    //foreach (var i in request.TraineeUsersIdList)
+                    //{
+                    //    _context.ClassroomTraineeUsers.AddOrUpdate(new ClassroomTraineeUser
+                    //    {
+                    //        ClassroomId = request.Id,
+                    //        TraineeUserId = i
+                    //    });
+                    //}
 
                     _context.Classrooms.Update(updateClassroom);
                     await _context.SaveChangesAsync(cancellationToken);
@@ -74,7 +75,11 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
                         Name = x.Name,
                         UpdatedAt = x.UpdatedAt,
                         TrainingId = x.TrainingId,
-                        TrainerUserId = x.TrainerUserId
+                        TrainerUserId = x.TrainerUserId,
+                        BeginDatetime = x.BeginDatetime,
+                        EndDatetime = x.EndDatetime,
+                        Location = x.Location,
+                        Code = x.Code
                     }).ToList();
 
                     transaction.Commit();
@@ -100,13 +105,17 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
                     throw new TransactionException();
                 }
             }
+
             var updateClassroomModel = new UpdateClassroomModel(request.Id,
-                                                              request.TrainerUserId,
-                                                              request.TrainingId,
-                                                              request.Name,
-                                                              request.TraineeUsersIdList,
-                                                              request.UpdatedBy,
-                                                              updatedAt);
+                request.TrainerUserId,
+                request.TrainingId,
+                request.Name,
+                request.UpdatedBy,
+                updatedAt,
+                request.TraineeUsersIdList,
+                request.BeginDatetime,
+                request.EndDatetime,
+                request.Location);
 
             return new ResponseModel<UpdateClassroomModel>(updateClassroomModel);
         }

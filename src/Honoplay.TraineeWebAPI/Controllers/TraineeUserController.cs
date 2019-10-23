@@ -1,13 +1,16 @@
 ﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Application.TraineeUsers.Commands.AuthenticateTraineeUser;
 using Honoplay.Application.TraineeUsers.Commands.CreateTraineeUser;
+using Honoplay.Application.TraineeUsers.Commands.UpdateTraineeUser;
 using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
 using Honoplay.TraineeWebAPI.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Honoplay.TraineeWebAPI.Controllers
@@ -40,6 +43,35 @@ namespace Honoplay.TraineeWebAPI.Controllers
             catch (Exception)
             {
                 return BadRequest();
+            }
+        }
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<ActionResult<ResponseModel<UpdateTraineeUserModel>>> Put([FromBody]UpdateTraineeUserCommand command)
+        {
+            try
+            {
+                command.Id = Claims[ClaimTypes.Sid].ToInt();
+                command.TenantId = Guid.Parse(Claims[ClaimTypes.UserData]);
+
+                var updateTraineeUserModel = await Mediator.Send(command);
+
+                return Ok(updateTraineeUserModel);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ObjectAlreadyExistsException ex)
+            {
+                return Conflict(new ResponseModel<UpdateTraineeUserModel>(new Error(HttpStatusCode.Conflict, ex)));
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt());
             }
         }
 

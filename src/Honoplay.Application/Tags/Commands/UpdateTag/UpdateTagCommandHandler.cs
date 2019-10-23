@@ -33,11 +33,8 @@ namespace Honoplay.Application.Tags.Commands.UpdateTag
             {
                 try
                 {
-                    var tagsByTenantId = await _context.QuestionTags
-                        .Include(x => x.Question)
-                        .Include(x => x.Tag)
-                        .Where(x => x.Question.TenantId == request.TenantId)
-                        .Select(x => x.Tag)
+                    var tagsByTenantId = await _context.Tags
+                        .Where(x => x.TenantId == request.TenantId)
                         .ToListAsync(cancellationToken);
 
                     var updateTag = tagsByTenantId.FirstOrDefault(x => x.Id == request.Id);

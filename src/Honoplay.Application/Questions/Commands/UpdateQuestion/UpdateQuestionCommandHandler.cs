@@ -46,6 +46,13 @@ namespace Honoplay.Application.Questions.Commands.UpdateQuestion
 
                     updateQuestion.Duration = request.Duration;
                     updateQuestion.Text = request.Text;
+                    updateQuestion.QuestionCategoryId = request.CategoryId;
+                    updateQuestion.QuestionDifficultyId = request.DifficultyId;
+                    updateQuestion.QuestionTypeId = request.TypeId;
+                    updateQuestion.ContentFileId = request.ContentFileId;
+                    updateQuestion.UpdatedAt = updatedAt;
+                    updateQuestion.UpdatedBy = request.UpdatedBy;
+
 
                     _context.Questions.Update(updateQuestion);
                     await _context.SaveChangesAsync(cancellationToken);
@@ -76,6 +83,10 @@ namespace Honoplay.Application.Questions.Commands.UpdateQuestion
             var updateQuestionModel = new UpdateQuestionModel(request.Id,
                                                               request.Text,
                                                               request.Duration,
+                                                              request.DifficultyId,
+                                                              request.CategoryId,
+                                                              request.TypeId,
+                                                              request.ContentFileId,
                                                               request.UpdatedBy,
                                                               updatedAt);
             return new ResponseModel<UpdateQuestionModel>(updateQuestionModel);

@@ -15,6 +15,7 @@ class Questions extends React.Component {
     super(props);
     this.state = {
       questionsColumns: [
+        { title: '#', field: 'id' },
         { title: translate('QuestionText'), field: 'text' },
         { title: translate('Duration'), field: 'duration' },
         { title: 'Soru Tipi**', field: 'createdAt' },
@@ -90,7 +91,7 @@ class Questions extends React.Component {
           </Grid>
           <Grid item xs={12} sm={12}>
             <Table
-              title={translate('Questions')}
+              title={''}
               columns={questionsColumns}
               data={questions}
               actions={[
@@ -100,6 +101,21 @@ class Questions extends React.Component {
                     this.handleChangeQuestion(rowData.id)
                 }
               ]}
+              localization={{
+                pagination: {
+                  labelDisplayedRows: '{from}-{to} / {count}',
+                  labelRowsSelect: translate('NumberOfRows')
+                },
+                toolbar: {
+                  searchPlaceholder: translate('Search')
+                },
+                header: {
+                  actions: translate('Edit')
+                },
+                body: {
+                  emptyDataSourceMessage: translate('NoRecordsToDisplay')
+                }
+              }}
               options={{
                 actionsColumnIndex: -1
               }}

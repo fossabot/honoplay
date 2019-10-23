@@ -20,5 +20,8 @@ namespace Honoplay.Application.Classrooms.Commands.CreateClassroom
         public int TrainingId { get; set; }
         public string Name { get; set; }
         public List<int> TraineeUsersIdList { get; set; }
+        public DateTimeOffset BeginDatetime { get; set; }
+        public DateTimeOffset EndDatetime { get; set; }
+        public string Location { get; set; }
     }
 }

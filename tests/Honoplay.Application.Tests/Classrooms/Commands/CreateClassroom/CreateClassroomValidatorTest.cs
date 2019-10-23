@@ -27,7 +27,10 @@ namespace Honoplay.Application.Tests.Classrooms.Commands.CreateClassroom
                     {
                         TrainerUserId = 1,
                         TrainingId = 1,
-                        Name = "test"
+                        Name = "test",
+                        BeginDatetime = DateTimeOffset.Now,
+                        Location = "asda",
+                        EndDatetime = DateTimeOffset.Now.AddDays(4)
                     }
                 }
             }).IsValid);

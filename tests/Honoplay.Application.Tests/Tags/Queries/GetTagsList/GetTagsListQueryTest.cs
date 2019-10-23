@@ -68,7 +68,8 @@ namespace Honoplay.Application.Tests.Tags.Queries.GetTagsList
             {
                 CreatedBy = adminUser.Id,
                 Name = "testTag",
-                ToQuestion = true
+                ToQuestion = true,
+                TenantId = tenant.Id
             };
             context.Tags.Add(tag);
 

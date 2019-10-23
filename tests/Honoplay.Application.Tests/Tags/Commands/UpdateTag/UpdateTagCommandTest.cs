@@ -71,7 +71,8 @@ namespace Honoplay.Application.Tests.Tags.Commands.UpdateTag
             {
                 CreatedBy = adminUser.Id,
                 Name = "Tag1",
-                ToQuestion = true
+                ToQuestion = true,
+                TenantId = tenant.Id
             };
             context.Tags.Add(tag);
 

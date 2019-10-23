@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using System;
 
 namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
 {
@@ -22,6 +23,17 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
             RuleFor(x => x.TrainingId)
                 .NotNull()
                 .NotEmpty();
+
+            RuleFor(x => x.BeginDatetime)
+                .NotNull()
+                .NotEmpty()
+                .GreaterThanOrEqualTo(DateTimeOffset.Now);
+
+            RuleFor(x => x.EndDatetime)
+                .NotNull()
+                .NotEmpty()
+                .GreaterThan(DateTimeOffset.Now)
+                .GreaterThan(x => x.BeginDatetime);
         }
     }
 }
