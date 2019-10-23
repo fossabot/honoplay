@@ -17,6 +17,10 @@ class ImageInputComponent extends React.Component {
       filename: e.target.value.replace('C:\\fakepath\\', '')
     });
     this.getBase64(e.target.files[0]);
+    const name = e.target.files[0].name;
+    const type = e.target.files[0].type;
+    this.props.name(name);
+    this.props.type(type);
   };
 
   getBase64 = file => {
