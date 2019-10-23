@@ -11,9 +11,11 @@ using System.Threading.Tasks;
 using Honoplay.Application.ContentFiles.Commands.CreateContentFile;
 using Honoplay.Application.ContentFiles.Commands.UpdateContentFile;
 using Honoplay.Application.ContentFiles.Queries.GetContentFilesList;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
+    [Authorize]
     public class ContentFileController : BaseController
     {
 

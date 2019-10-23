@@ -1,4 +1,4 @@
-﻿using Honoplay.Application.QuestionTypes.Queries.GetQuestionTypeDetail;
+﻿using Honoplay.Application.TrainingCategories.Queries.GetTrainingCategoryDetail;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
@@ -12,21 +12,21 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Honoplay.Application.Tests.QuestionTypes.Queries.GetQuestionTypeDetail
+namespace Honoplay.Application.Tests.TrainingCategories.Queries.GetTrainingCategoryDetail
 {
-    public class GetQuestionTypeDetailQueryTest : TestBase, IDisposable
+    public class GetTrainingCategoryDetailQueryTest : TestBase, IDisposable
     {
         private readonly HonoplayDbContext _context;
-        private readonly GetQuestionTypeDetailQueryHandler _getQuestionTypeDetailQueryHandler;
-        private readonly int _questionTypeId;
+        private readonly GetTrainingCategoryDetailQueryHandler _getTrainingCategoryDetailQueryHandler;
+        private readonly int _trainingCategoryId;
 
-        public GetQuestionTypeDetailQueryTest()
+        public GetTrainingCategoryDetailQueryTest()
         {
             var cache = new Mock<IDistributedCache>();
-            _context = InitAndGetDbContext(out _questionTypeId);
-            _getQuestionTypeDetailQueryHandler = new GetQuestionTypeDetailQueryHandler(_context, new CacheManager(cache.Object));
+            _context = InitAndGetDbContext(out _trainingCategoryId);
+            _getTrainingCategoryDetailQueryHandler = new GetTrainingCategoryDetailQueryHandler(_context, new CacheManager(cache.Object));
         }
-        private HonoplayDbContext InitAndGetDbContext(out int questionTypeId)
+        private HonoplayDbContext InitAndGetDbContext(out int trainingCategoryId)
         {
             var context = GetDbContext();
             var salt = ByteArrayExtensions.GetRandomSalt();
@@ -65,14 +65,14 @@ namespace Honoplay.Application.Tests.QuestionTypes.Queries.GetQuestionTypeDetail
             };
             context.Questions.Add(question);
 
-            var questionType = new QuestionType
+            var trainingCategory = new TrainingCategory
             {
                 Id = 1,
-                Name = "questionType1"
+                Name = "trainingCategory1"
             };
-            context.QuestionTypes.Add(questionType);
+            context.TrainingCategories.Add(trainingCategory);
 
-            questionTypeId = questionType.Id;
+            trainingCategoryId = trainingCategory.Id;
             context.SaveChanges();
             return context;
         }
@@ -80,12 +80,12 @@ namespace Honoplay.Application.Tests.QuestionTypes.Queries.GetQuestionTypeDetail
         [Fact]
         public async Task ShouldGetModelForValidInformation()
         {
-            var questionTypeDetailQuery = new GetQuestionTypeDetailQuery(_questionTypeId);
+            var trainingCategoryDetailQuery = new GetTrainingCategoryDetailQuery(_trainingCategoryId);
 
-            var questionTypeDetailResponseModel = await _getQuestionTypeDetailQueryHandler.Handle(questionTypeDetailQuery, CancellationToken.None);
+            var trainingCategoryDetailResponseModel = await _getTrainingCategoryDetailQueryHandler.Handle(trainingCategoryDetailQuery, CancellationToken.None);
 
-            Assert.Null(questionTypeDetailResponseModel.Errors);
-            Assert.Equal(expected: _context.QuestionTypes.First().Name, actual: questionTypeDetailResponseModel.Items.First().Name, ignoreCase: true);
+            Assert.Null(trainingCategoryDetailResponseModel.Errors);
+            Assert.Equal(expected: _context.TrainingCategories.First().Name, actual: trainingCategoryDetailResponseModel.Items.First().Name, ignoreCase: true);
 
         }
 
@@ -93,10 +93,10 @@ namespace Honoplay.Application.Tests.QuestionTypes.Queries.GetQuestionTypeDetail
         public async Task ShouldThrowErrorWhenInValidInformation()
         {
             //Unregistered questionId
-            var questionTypeDetailQuery = new GetQuestionTypeDetailQuery(78979);
+            var trainingCategoryDetailQuery = new GetTrainingCategoryDetailQuery(78979);
 
             await Assert.ThrowsAsync<NotFoundException>(async () =>
-                await _getQuestionTypeDetailQueryHandler.Handle(questionTypeDetailQuery, CancellationToken.None));
+                await _getTrainingCategoryDetailQueryHandler.Handle(trainingCategoryDetailQuery, CancellationToken.None));
         }
 
         public void Dispose() => _context?.Dispose();

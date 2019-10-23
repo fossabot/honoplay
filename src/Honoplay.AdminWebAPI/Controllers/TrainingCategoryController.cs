@@ -1,35 +1,35 @@
 ﻿using Honoplay.Application._Infrastructure;
-using Honoplay.Application.QuestionTypes.Queries.GetQuestionTypeDetail;
-using Honoplay.Application.QuestionTypes.Queries.GetQuestionTypesList;
+using Honoplay.Application.TrainingCategories.Queries.GetTrainingCategoriesList;
+using Honoplay.Application.TrainingCategories.Queries.GetTrainingCategoryDetail;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
     [Authorize]
-    public class QuestionTypeController : BaseController
+    public class TrainingCategoryController : BaseController
     {
         /// <summary>
-        /// This service retrieve all questionTypes by tenant id. Filtered skip and take parameters.
+        /// This service retrieve all trainingCategories by tenant id. Filtered skip and take parameters.
         /// </summary>
-        /// <param name="query">GetAll questionType model</param>
-        /// <returns>Get all questionTypes list by tenant id with status code.</returns>
+        /// <param name="query">GetAll trainingCategory model</param>
+        /// <returns>Get all trainingCategories list by tenant id with status code.</returns>
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ResponseModel<QuestionTypesListModel>>> Get([FromQuery] GetQuestionTypesListQueryModel query)
+        public async Task<ActionResult<ResponseModel<TrainingCategoriesListModel>>> Get([FromQuery] GetTrainingCategoriesListQueryModel query)
         {
             try
             {
-                var questionTypesListModel = await Mediator.Send(new GetQuestionTypesListQuery(query.Skip, query.Take));
+                var trainingCategoriesListModel = await Mediator.Send(new GetTrainingCategoriesListQuery(query.Skip, query.Take));
 
-                return Ok(questionTypesListModel);
+                return Ok(trainingCategoriesListModel);
             }
             catch (NotFoundException)
             {
@@ -42,21 +42,21 @@ namespace Honoplay.AdminWebAPI.Controllers
         }
 
         /// <summary>
-        /// This service retrieve questionType.
+        /// This service retrieve trainingCategory.
         /// </summary>
-        /// <param name="id">Get questionType model</param>
-        /// <returns>Get questionType by questionTypeId with status code.</returns>
+        /// <param name="id">Get trainingCategory model</param>
+        /// <returns>Get trainingCategory by trainingCategoryId with status code.</returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public async Task<ActionResult<ResponseModel<QuestionTypeDetailModel>>> Get(int id)
+        public async Task<ActionResult<ResponseModel<TrainingCategoryDetailModel>>> Get(int id)
         {
             try
             {
-                var questionTypesListModel = await Mediator.Send(new GetQuestionTypeDetailQuery(id));
+                var trainingCategoryDetailModel = await Mediator.Send(new GetTrainingCategoryDetailQuery(id));
 
-                return Ok(questionTypesListModel);
+                return Ok(trainingCategoryDetailModel);
             }
             catch (NotFoundException)
             {
