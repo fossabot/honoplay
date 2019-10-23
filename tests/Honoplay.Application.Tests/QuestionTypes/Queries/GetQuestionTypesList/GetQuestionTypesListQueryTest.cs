@@ -63,7 +63,7 @@ namespace Honoplay.Application.Tests.QuestionTypes.Queries.GetQuestionTypesList
             };
             context.Questions.Add(question);
 
-            var questionType = new Domain.Entities.QuestionType
+            var questionType = new QuestionType
             {
                 Id = 1,
                 Name = "questionType1",
