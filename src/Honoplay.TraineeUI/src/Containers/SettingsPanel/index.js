@@ -2,6 +2,7 @@ import React from "react";
 import DefaultAvatar from "../../Assets/img/avatar.jpg";
 import History from "../../Helpers/History";
 
+const userData = JSON.parse(localStorage.getItem("traineeUserData"));
 class Settings extends React.Component {
   render() {
     return (
@@ -16,7 +17,7 @@ class Settings extends React.Component {
               </td>
               <td>
                 <p style={{ marginLeft: "8px" }} class="font-weight-bold mb-0">
-                  Bruce Wayne
+                  {userData.name} {userData.surname}
                 </p>
               </td>
             </tr>

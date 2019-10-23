@@ -26,7 +26,10 @@ class Login extends Component {
       !userTraineeTokenIsLoading &&
       userTraineeToken
     ) {
-      localStorage.setItem("traineeUserData", userTraineeToken.user);
+      localStorage.setItem(
+        "traineeUserData",
+        JSON.stringify(userTraineeToken.user)
+      );
       localStorage.setItem("token", userTraineeToken.token);
       this.props.history.push("/joingame");
     }
