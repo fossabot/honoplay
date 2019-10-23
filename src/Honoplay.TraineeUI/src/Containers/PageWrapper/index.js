@@ -5,9 +5,9 @@ import "../../Styles/css/global.css";
 
 class PageWrapper extends Component {
   render() {
-    const { children, boxNumber = "", rowClass = "" } = this.props;
+    const { children, className, boxNumber = "", rowClass = "" } = this.props;
     return (
-      <div className={`box${boxNumber} shadow p-5`}>
+      <div className={className}>
         <div className={`row ${rowClass}`}>{children}</div>
       </div>
     );
