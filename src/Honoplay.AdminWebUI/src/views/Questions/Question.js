@@ -10,6 +10,7 @@ import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Options from './Options';
 import QuestionCategory from './QuestionCategory';
+import ImageInput from '../../components/Input/ImageInputComponent';
 
 import { connect } from 'react-redux';
 import {
@@ -24,6 +25,8 @@ import {
 } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options';
 import { fetchQuestionDifficultyList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/QuestionDifficulty';
 import { fetchQuestionCategoryList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/QuestionCategory';
+import { fetchQuestionTypeList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/QuestionType';
+import { createContentFile } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/ContentFile';
 
 class NewQuestion extends React.Component {
   constructor(props) {
@@ -44,7 +47,8 @@ class NewQuestion extends React.Component {
       success: false,
       newOptions: [],
       questionDifficulty: [],
-      questionCategory: []
+      questionCategory: [],
+      questionTypes: []
     };
   }
 
@@ -54,6 +58,16 @@ class NewQuestion extends React.Component {
 
   optionsModel = {
     createOptionModels: []
+  };
+
+  contentFileModel = {
+    createContentFileModels: [
+      {
+        name: '',
+        contentType: '',
+        data: ''
+      }
+    ]
   };
 
   componentDidUpdate(prevProps) {
@@ -77,15 +91,58 @@ class NewQuestion extends React.Component {
       errorQuestionDifficultyList,
       isQuestionCategoryListLoading,
       questionCategories,
-      errorQuestionCategoryList
+      errorQuestionCategoryList,
+      isQuestionTypeListLoading,
+      questionTypes,
+      errorQuestionTypeList,
+      isCreateContentFileLoading,
+      newContentFile,
+      errorCreateContentFile
     } = this.props;
 
+    if (!prevProps.isCreateContentFileLoading && isCreateContentFileLoading) {
+      this.setState({
+        loading: true
+      });
+    }
+    if (!prevProps.errorCreateContentFile && errorCreateContentFile) {
+      this.setState({
+        questionsError: true,
+        loading: false
+      });
+    }
+    if (
+      prevProps.isCreateContentFileLoading &&
+      !isCreateContentFileLoading &&
+      newContentFile
+    ) {
+      if (!errorCreateContentFile) {
+        this.setState({
+          loading: false,
+          questionsError: false
+        });
+        this.state.questionsModel.contentFileId = newContentFile.items[0][0].id;
+        this.props.createQuestion(this.state.questionsModel);
+      }
+    }
+
+    if (
+      prevProps.isQuestionTypeListLoading &&
+      !isQuestionTypeListLoading &&
+      questionTypes
+    ) {
+      if (!errorQuestionTypeList) {
+        this.setState({
+          questionTypes: questionTypes.items
+        });
+      }
+    }
     if (
       prevProps.isQuestionCategoryListLoading &&
       !isQuestionCategoryListLoading &&
       questionCategories
     ) {
-      if (!errorQuestionDifficultyList) {
+      if (!errorQuestionCategoryList) {
         this.setState({
           questionCategory: questionCategories.items
         });
@@ -220,6 +277,7 @@ class NewQuestion extends React.Component {
     }
     this.props.fetchQuestionDifficultyList(0, 50);
     this.props.fetchQuestionCategoryList(0, 50);
+    this.props.fetchQuestionTypeList(0, 50);
   }
 
   handleChange = e => {
@@ -234,7 +292,11 @@ class NewQuestion extends React.Component {
   };
 
   handleClick = () => {
-    this.props.createQuestion(this.state.questionsModel);
+    if (this.state.questionsModel.typeId == 1) {
+      this.props.createContentFile(this.contentFileModel);
+    } else {
+      this.props.createQuestion(this.state.questionsModel);
+    }
   };
 
   handleUpdate = () => {
@@ -249,7 +311,8 @@ class NewQuestion extends React.Component {
       questionId,
       success,
       questionDifficulty,
-      questionCategory
+      questionCategory,
+      questionTypes
     } = this.state;
     const { classes } = this.props;
     const buttonClassname = classNames({
@@ -323,6 +386,33 @@ class NewQuestion extends React.Component {
             >
               <QuestionCategory />
             </DropDown>
+            <DropDown
+              error={questionsError}
+              data={questionTypes}
+              name="typeId"
+              labelName={translate('QuestionType')}
+              onChange={this.handleChange}
+              value={this.state.questionsModel.typeId}
+            />
+            {this.state.questionsModel.typeId == 1 &&
+              this.contentFileModel.createContentFileModels.map(
+                (contentFile, index) => (
+                  <ImageInput
+                    key={index}
+                    error={questionsError}
+                    selectedImage={value => {
+                      contentFile.data = value;
+                    }}
+                    name={value => {
+                      contentFile.name = value;
+                    }}
+                    type={value => {
+                      contentFile.contentType = value;
+                    }}
+                    labelName={translate('QuestionImage')}
+                  />
+                )
+              )}
           </Grid>
           <Grid item xs={12} sm={12} />
           <Header pageHeader={translate('Options')} />
@@ -393,6 +483,18 @@ const mapStateToProps = state => {
     errorQuestionCategoryList
   } = state.questionCategoryList;
 
+  const {
+    isQuestionTypeListLoading,
+    questionTypes,
+    errorQuestionTypeList
+  } = state.questionTypeList;
+
+  const {
+    isCreateContentFileLoading,
+    newContentFile,
+    errorCreateContentFile
+  } = state.createContentFile;
+
   return {
     isCreateQuestionLoading,
     createQuestion,
@@ -418,7 +520,13 @@ const mapStateToProps = state => {
     errorQuestionDifficultyList,
     isQuestionCategoryListLoading,
     questionCategories,
-    errorQuestionCategoryList
+    errorQuestionCategoryList,
+    isQuestionTypeListLoading,
+    questionTypes,
+    errorQuestionTypeList,
+    isCreateContentFileLoading,
+    newContentFile,
+    errorCreateContentFile
   };
 };
 
@@ -430,7 +538,9 @@ const mapDispatchToProps = {
   createOption,
   updateOption,
   fetchQuestionDifficultyList,
-  fetchQuestionCategoryList
+  fetchQuestionCategoryList,
+  fetchQuestionTypeList,
+  createContentFile
 };
 
 export default connect(
