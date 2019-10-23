@@ -26,6 +26,7 @@ class Login extends Component {
       !userTraineeTokenIsLoading &&
       userTraineeToken
     ) {
+      localStorage.setItem("traineeUserData", userTraineeToken.user);
       localStorage.setItem("token", userTraineeToken.token);
       this.props.history.push("/joingame");
     }
@@ -80,7 +81,7 @@ class Login extends Component {
             />
             <Button
               className="btn my-btn2 form-control mt-3"
-              title="Ilk Giriş"
+              title="İlk Giriş"
             />
           </div>
         </div>
