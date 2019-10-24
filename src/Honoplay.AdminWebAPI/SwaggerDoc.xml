@@ -81,6 +81,13 @@
             <param name="id">Get contentFile model</param>
             <returns>Get contentFile by contentFileId with status code.</returns>
         </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.ContentFileController.GetFile(System.Guid)">
+            <summary>
+            This service retrieve contentFile.
+            </summary>
+            <param name="id">Get contentFile model</param>
+            <returns>Get contentFile by contentFileId with status code.</returns>
+        </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.OptionController.Post(Honoplay.Application.Options.Commands.CreateOption.CreateOptionCommand)">
             <summary>
             This service create option.
