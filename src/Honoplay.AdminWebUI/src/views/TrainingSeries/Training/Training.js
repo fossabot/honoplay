@@ -16,6 +16,7 @@ import {
   fetchTraining,
   updateTraining
 } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Training';
+import { fetchTrainingCategoryList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/TrainingCategory';
 
 class Training extends React.Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class Training extends React.Component {
       success: false,
       trainingLoading: false,
       trainingError: false,
-      trainingCategory: [{ id: 1, name: 'Yazılım' }],
+      trainingCategory: [],
       createTrainingModels: [
         {
           trainingSeriesId: '',
@@ -55,9 +56,23 @@ class Training extends React.Component {
       errorTraining,
       isUpdateTrainingLoading,
       updateTraining,
-      errorUpdateTraining
+      errorUpdateTraining,
+      isTrainingCategoryListLoading,
+      trainingCategories,
+      errorTrainingCategoryList
     } = this.props;
 
+    if (
+      prevProps.isTrainingCategoryListLoading &&
+      !isTrainingCategoryListLoading &&
+      trainingCategories
+    ) {
+      if (!errorTrainingCategoryList) {
+        this.setState({
+          trainingCategory: trainingCategories.items
+        });
+      }
+    }
     if (prevProps.isTrainingLoading && !isTrainingLoading && training) {
       if (!errorTraining) {
         this.setState({
@@ -65,7 +80,6 @@ class Training extends React.Component {
         });
       }
     }
-
     if (!prevProps.isCreateTrainingLoading && isCreateTrainingLoading) {
       this.setState({
         trainingLoading: true
@@ -125,6 +139,7 @@ class Training extends React.Component {
 
   componentDidMount() {
     this.props.fetchTraining(this.trainingId);
+    this.props.fetchTrainingCategoryList(0, 50);
   }
 
   handleClick = () => {
@@ -293,6 +308,12 @@ const mapStateToProps = state => {
     errorUpdateTraining
   } = state.updateTraining;
 
+  const {
+    isTrainingCategoryListLoading,
+    trainingCategories,
+    errorTrainingCategoryList
+  } = state.trainingCategoryList;
+
   return {
     isCreateTrainingLoading,
     newCreateTraining,
@@ -302,14 +323,18 @@ const mapStateToProps = state => {
     errorTraining,
     isUpdateTrainingLoading,
     updateTraining,
-    errorUpdateTraining
+    errorUpdateTraining,
+    isTrainingCategoryListLoading,
+    trainingCategories,
+    errorTrainingCategoryList
   };
 };
 
 const mapDispatchToProps = {
   createTraining,
   fetchTraining,
-  updateTraining
+  updateTraining,
+  fetchTrainingCategoryList
 };
 
 export default connect(

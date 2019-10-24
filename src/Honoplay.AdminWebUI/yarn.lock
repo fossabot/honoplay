@@ -1398,21 +1398,21 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@omegabigdata/honoplay-api-helper-node@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-api-helper-node/-/honoplay-api-helper-node-0.5.0.tgz#a228853f9c97bad585d7221b7131e7ad7eff0670"
-  integrity sha512-+HwBSd9/DA3u0Y255Gcktce4rB2ZqT1KfrlPtf2j+81oqaBMrClrWyqxAhG1k+4EqPbRJUln6BfbN0qx9UkSSQ==
+"@omegabigdata/honoplay-api-helper-node@^0.5.6":
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-api-helper-node/-/honoplay-api-helper-node-0.5.6.tgz#a8a525b3495e168d9470748565e6d769d498c577"
+  integrity sha512-h0X6wUvpuDj+0z46zMzJsD0opTZogtvkMyb8CD+giNN31uVy3qbGYisxssVU8URJuvUhbAe0Cr1K3Hx94AdqYw==
   dependencies:
     axios "^0.18.0"
     axios-retry "^3.1.2"
     chai-http "^4.3.0"
 
-"@omegabigdata/honoplay-redux-helper@^0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-redux-helper/-/honoplay-redux-helper-0.7.0.tgz#de6bf20b9c28d46afd961f45deb89ac92c289cec"
-  integrity sha512-zE4A142jpeWwBCmt46oF3LNMI31fP0W4NahEj959fMv7dL3wETme5klc6tREwv9P7XVDMHHi/IiqhJzN7x1NOQ==
+"@omegabigdata/honoplay-redux-helper@^0.7.3":
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/@omegabigdata/honoplay-redux-helper/-/honoplay-redux-helper-0.7.3.tgz#b4ecd7fbfe964cb7154992122237d1f820dc6a90"
+  integrity sha512-J3R15yXSDATR6Kjk5MnjwqL9Kb87tELY42bEDw5g9vqCTyigHRLGksg9cwGULrC0M7hcI6MWrxBfCZatktHdJg==
   dependencies:
-    "@omegabigdata/honoplay-api-helper-node" "^0.5.0"
+    "@omegabigdata/honoplay-api-helper-node" "^0.5.6"
     redux "^4.0.1"
     redux-thunk "^2.3.0"
 
