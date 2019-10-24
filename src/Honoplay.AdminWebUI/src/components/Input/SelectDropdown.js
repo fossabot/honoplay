@@ -30,17 +30,29 @@ class SelectDropdown extends React.Component {
   };
   render() {
     const { selectedOption, open } = this.state;
-    const { options, classes, describable, labelName, children } = this.props;
+    const {
+      options,
+      classes,
+      describable,
+      labelName,
+      children,
+      htmlFor,
+      id
+    } = this.props;
     return (
       <>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={2} className={classes.labelCenterForSelect}>
-            <InputLabel className={classes.bootstrapFormLabel}>
+            <InputLabel
+              htmlFor={htmlFor}
+              className={classes.bootstrapFormLabel}
+            >
               {labelName}
             </InputLabel>
           </Grid>
           <Grid item xs={12} sm={9} className={classes.labelCenter}>
             <Select
+              inputId={id}
               getOptionLabel={option => option.name}
               getOptionValue={option => option.id}
               value={selectedOption}

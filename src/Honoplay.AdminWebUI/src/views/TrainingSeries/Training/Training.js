@@ -202,6 +202,8 @@ class Training extends React.Component {
                     });
                   }}
                   value={update && training.name}
+                  htmlFor="trainingName"
+                  id="trainingName"
                 />
                 <DropDown
                   error={trainingError}
@@ -214,6 +216,8 @@ class Training extends React.Component {
                     });
                   }}
                   value={update && training.trainingCategoryId}
+                  htmlFor="trainingCategory"
+                  id="trainingCategory"
                 />
                 <Input
                   error={trainingError}
@@ -229,6 +233,8 @@ class Training extends React.Component {
                     update &&
                     moment(training.beginDateTime).format('YYYY-MM-DD')
                   }
+                  htmlFor="beginDate"
+                  id="beginDate"
                 />
                 <Input
                   error={trainingError}
@@ -243,6 +249,8 @@ class Training extends React.Component {
                   value={
                     update && moment(training.endDateTime).format('YYYY-MM-DD')
                   }
+                  htmlFor="endDate"
+                  id="endDate"
                 />
                 <Input
                   error={trainingError}
@@ -256,6 +264,8 @@ class Training extends React.Component {
                     });
                   }}
                   value={update && training.description}
+                  htmlFor="description"
+                  id="description"
                 />
               </Grid>
             ))}

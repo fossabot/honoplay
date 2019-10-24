@@ -117,6 +117,8 @@ class QuestionCategory extends React.Component {
               labelName={translate('QuestionCategory')}
               inputType="text"
               name="name"
+              htmlFor="questionCategory"
+              id="questionCategory"
             />
           </Grid>
           <Grid item xs={12} sm={1}>

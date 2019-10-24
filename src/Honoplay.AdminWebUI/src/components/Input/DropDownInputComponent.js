@@ -32,14 +32,16 @@ class DropDownInputComponent extends React.Component {
       name,
       value,
       data,
-      children
+      children,
+      htmlFor,
+      id
     } = this.props;
     return (
       <div className={classes.inputRoot}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={2} className={classes.labelCenter}>
             <InputLabel
-              htmlFor="bootstrap-input"
+              htmlFor={htmlFor}
               className={classes.bootstrapFormLabel}
             >
               {labelName}
@@ -47,6 +49,7 @@ class DropDownInputComponent extends React.Component {
           </Grid>
           <Grid item xs={12} sm={9}>
             <NativeSelect
+              id={id}
               data={data}
               name={name}
               value={value}

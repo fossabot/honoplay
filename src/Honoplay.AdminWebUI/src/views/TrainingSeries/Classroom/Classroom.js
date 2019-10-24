@@ -257,6 +257,8 @@ class ClassroomCreate extends React.Component {
                     this.setState({ classroomError: false });
                   }}
                   value={update && classroom.name}
+                  htmlFor="classroomName"
+                  id="classroomName"
                 />
                 <DropDown
                   error={classroomError}
@@ -267,6 +269,8 @@ class ClassroomCreate extends React.Component {
                     this.setState({ classroomError: false });
                   }}
                   value={update && classroom.trainerUserId}
+                  htmlFor="trainer"
+                  id="trainer"
                 />
                 <Input
                   error={classroomError}
@@ -282,6 +286,8 @@ class ClassroomCreate extends React.Component {
                     update &&
                     moment(classroom.beginDateTime).format('YYYY-MM-DD')
                   }
+                  htmlFor="beginDate"
+                  id="beginDate"
                 />
                 <Input
                   error={classroomError}
@@ -296,6 +302,8 @@ class ClassroomCreate extends React.Component {
                   value={
                     update && moment(classroom.endDateTime).format('YYYY-MM-DD')
                   }
+                  htmlFor="endDate"
+                  id="endDate"
                 />
                 <Input
                   error={classroomError}
@@ -309,6 +317,8 @@ class ClassroomCreate extends React.Component {
                     });
                   }}
                   value={update && classroom.location}
+                  htmlFor="location"
+                  id="location"
                 />
               </Grid>
             </Grid>

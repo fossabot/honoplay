@@ -112,6 +112,8 @@ class Department extends React.Component {
               inputType="text"
               name="departments"
               value={this.departmentModel.departments}
+              htmlFor="departmentModal"
+              id="departmentModal"
             />
           </Grid>
           <Grid item xs={12} sm={1}>

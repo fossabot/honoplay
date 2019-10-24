@@ -184,6 +184,8 @@ class TrainingSeriesCreate extends React.Component {
                     this.setState({ trainingSeriesError: false });
                   }}
                   value={update && trainingSeries.name}
+                  htmlFor="trainingSeriesName"
+                  id="trainingSeriesName"
                 />
               </Grid>
             )

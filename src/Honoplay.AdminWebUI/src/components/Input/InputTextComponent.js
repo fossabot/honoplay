@@ -13,20 +13,26 @@ const InputTextComponent = props => {
     value,
     onChange,
     error,
-    placeholder
+    placeholder,
+    htmlFor,
+    id
   } = props;
   return (
     <div className={classes.inputRoot}>
       <Grid container spacing={3}>
         {labelName && (
           <Grid item xs={12} sm={2} className={classes.labelCenter}>
-            <InputLabel className={classes.bootstrapFormLabel}>
+            <InputLabel
+              htmlFor={htmlFor}
+              className={classes.bootstrapFormLabel}
+            >
               {labelName}
             </InputLabel>
           </Grid>
         )}
         <Grid item xs={12} sm={9}>
           <InputBase
+            id={id}
             error={error ? true : false}
             placeholder={placeholder}
             onChange={onChange}

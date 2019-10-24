@@ -374,6 +374,8 @@ class NewQuestion extends React.Component {
               value={this.state.questionsModel.text}
               name="text"
               onChange={this.handleChange}
+              htmlFor="questionText"
+              id="questionText"
             />
             <Input
               error={questionsError}
@@ -383,6 +385,8 @@ class NewQuestion extends React.Component {
               name="duration"
               onChange={this.handleChange}
               placeholder={translate('Duration')}
+              htmlFor="duration"
+              id="duration"
             />
             <DropDown
               error={questionsError}
@@ -391,6 +395,8 @@ class NewQuestion extends React.Component {
               labelName={translate('QuestionDifficulty')}
               onChange={this.handleChange}
               value={this.state.questionsModel.difficultyId}
+              htmlFor="questionDifficulty"
+              id="questionDifficulty"
             />
             <DropDown
               error={questionsError}
@@ -400,6 +406,8 @@ class NewQuestion extends React.Component {
               onChange={this.handleChange}
               value={this.state.questionsModel.categoryId}
               describable
+              htmlFor="category"
+              id="category"
             >
               <QuestionCategory />
             </DropDown>
@@ -410,6 +418,8 @@ class NewQuestion extends React.Component {
               labelName={translate('QuestionType')}
               onChange={this.handleChange}
               value={this.state.questionsModel.typeId}
+              htmlFor="questionType"
+              id="questionType"
             />
             {this.state.questionsModel.typeId == 1 &&
               this.contentFileModel.createContentFileModels.map(
@@ -427,10 +437,14 @@ class NewQuestion extends React.Component {
                       contentFile.contentType = value;
                     }}
                     labelName={translate('QuestionImage')}
+                    htmlFor="questionImage"
+                    id="questionImage"
                   />
                 )
               )}
             <SelectDropdown
+              htmlFor="questionTag"
+              id="questionTag"
               describable
               options={questionTags}
               labelName={translate('QuestionTag')}
