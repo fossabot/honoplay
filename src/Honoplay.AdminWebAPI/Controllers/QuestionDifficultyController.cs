@@ -3,6 +3,7 @@ using Honoplay.Application.QuestionDifficulties.Queries.GetQuestionDifficultiesL
 using Honoplay.Application.QuestionDifficulties.Queries.GetQuestionDifficultyDetail;
 using Honoplay.Common._Exceptions;
 using Honoplay.Common.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
+    [Authorize]
     public class QuestionDifficultyController : BaseController
     {
         /// <summary>

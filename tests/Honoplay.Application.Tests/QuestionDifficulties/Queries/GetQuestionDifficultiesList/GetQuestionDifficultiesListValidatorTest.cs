@@ -2,7 +2,7 @@
 using Honoplay.Application.QuestionDifficulties.Queries.GetQuestionDifficultiesList;
 using Xunit;
 
-namespace Honoplay.Application.Tests.QuestionDifficulty.Queries.GetQuestionDifficultyList
+namespace Honoplay.Application.Tests.QuestionDifficulties.Queries.GetQuestionDifficultyList
 {
     public class GetQuestionDifficultyListValidatorTest
     {

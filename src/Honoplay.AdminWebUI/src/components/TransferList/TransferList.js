@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { translate } from '@omegabigdata/terasu-api-proxy';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Grid,
@@ -97,7 +98,7 @@ export default function TransferList(props) {
     setChecked(not(checked, rightChecked));
   };
 
-  const customList = items => (
+  const customList = (title, items) => (
     <Card>
       <CardHeader
         className={classes.cardHeader}
@@ -115,7 +116,10 @@ export default function TransferList(props) {
             inputProps={{ 'aria-label': 'all items selected' }}
           />
         }
-        subheader={`${numberOfChecked(items)}/${items.length} selected`}
+        title={title}
+        subheader={`${numberOfChecked(items)}/${items.length} ${translate(
+          'Selected'
+        )}`}
       />
       <Divider />
 
@@ -156,7 +160,7 @@ export default function TransferList(props) {
       alignItems="center"
       className={classes.root}
     >
-      <Grid item>{customList(left)}</Grid>
+      <Grid item>{customList(translate('Trainees'), left)}</Grid>
       <Grid item>
         <Grid container direction="column" alignItems="center">
           <Button
@@ -181,7 +185,7 @@ export default function TransferList(props) {
           </Button>
         </Grid>
       </Grid>
-      <Grid item>{customList(right)}</Grid>
+      <Grid item>{customList(translate('SelectedTrainees'), right)}</Grid>
     </Grid>
   );
 }
