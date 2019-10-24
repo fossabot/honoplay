@@ -40,7 +40,6 @@ namespace Honoplay.Application.Avatars.Queries.GetAvatarsList
                 .SkipOrAll(request.Skip)
                 .TakeOrAll(request.Take)
                 .Select(AvatarsListModel.Projection)
-                .OrderBy(x => x.Id)
                 .ToListAsync(cancellationToken);
 
             return new ResponseModel<AvatarsListModel>(numberOfTotalItems: avatarsQuery.LongCount(), numberOfSkippedItems: request.Skip, source: avatarsList);
