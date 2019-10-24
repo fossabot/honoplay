@@ -72,6 +72,9 @@ const Style = theme => ({
   tab: {
     textTransform: 'capitalize',
     paddingRight: 150
+  },
+  center: {
+    marginTop: 15
   }
 });
 

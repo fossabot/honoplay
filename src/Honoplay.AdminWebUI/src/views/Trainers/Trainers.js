@@ -289,6 +289,8 @@ class Trainers extends React.Component {
               inputType="text"
               name="name"
               value={this.trainerModel.name}
+              htmlFor="name"
+              id="name"
             />
             <Input
               error={trainerError}
@@ -297,6 +299,8 @@ class Trainers extends React.Component {
               inputType="text"
               name="surname"
               value={this.trainerModel.surname}
+              htmlFor="surname"
+              id="surname"
             />
             <DropDown
               error={trainerError}
@@ -306,6 +310,8 @@ class Trainers extends React.Component {
               name="departmentId"
               value={this.trainerModel.departmentId}
               describable
+              htmlFor="department"
+              id="department"
             >
               <Department describable />
             </DropDown>
@@ -317,6 +323,8 @@ class Trainers extends React.Component {
               name="professionId"
               value={this.trainerModel.professionId}
               describable
+              htmlFor="trainerExpertise"
+              id="trainerExpertise"
             >
               <Profession />
             </DropDown>
@@ -327,6 +335,8 @@ class Trainers extends React.Component {
               inputType="text"
               name="phoneNumber"
               value={this.trainerModel.phoneNumber}
+              htmlFor="phoneNumber"
+              id="phoneNumber"
             />
             <Input
               error={trainerError}
@@ -335,15 +345,21 @@ class Trainers extends React.Component {
               inputType="text"
               name="email"
               value={this.trainerModel.email}
+              htmlFor="emailAddress"
+              id="emailAddress"
             />
           </Grid>
-          <Grid item xs={12} sm={2}>
-            <InputLabel className={classes.bootstrapFormLabel}>
+          <Grid item xs={12} sm={2} className={classes.center}>
+            <InputLabel
+              htmlFor="password"
+              className={classes.bootstrapFormLabel}
+            >
               {translate('Password')}
             </InputLabel>
           </Grid>
           <Grid item xs={12} sm={9}>
             <TextField
+              id="password"
               margin="dense"
               variant="outlined"
               error={trainerError && true}

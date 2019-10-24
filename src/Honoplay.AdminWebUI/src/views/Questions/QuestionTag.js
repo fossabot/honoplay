@@ -103,6 +103,8 @@ class QuestionTag extends React.Component {
               labelName={translate('QuestionTag')}
               inputType="text"
               name="name"
+              htmlFor="tag"
+              id="tag"
             />
           </Grid>
           <Grid item xs={12} sm={1}>

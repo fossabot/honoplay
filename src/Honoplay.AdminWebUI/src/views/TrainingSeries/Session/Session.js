@@ -23,7 +23,7 @@ class SessionCreate extends React.Component {
     this.state = {
       success: false,
       sessionLoading: false,
-      game: [{ id: 1, name: 'Kelime Oyunu' }, { id: 2, name: 'Puzzle' }],
+      game: [{ id: 1, name: 'Adım adım eğitim' }],
       session: {
         createSessionModels: [
           {
@@ -195,6 +195,8 @@ class SessionCreate extends React.Component {
                   });
                 }}
                 value={update && session.name}
+                htmlFor="sessionName"
+                id="sessionName"
               />
               <DropDown
                 error={sessionError}
@@ -207,6 +209,8 @@ class SessionCreate extends React.Component {
                   });
                 }}
                 value={update && session.gameId}
+                htmlFor="game"
+                id="game"
               />
             </Grid>
           ))}

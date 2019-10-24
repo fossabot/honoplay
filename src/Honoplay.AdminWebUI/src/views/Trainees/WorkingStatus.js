@@ -106,6 +106,8 @@ class WorkingStatus extends React.Component {
               inputType="text"
               name="name"
               value={this.workingStatusModel.name}
+              htmlFor="workingStatusModal"
+              id="workingStatusModal"
             />
           </Grid>
           <Grid item xs={12} sm={1}>

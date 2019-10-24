@@ -107,6 +107,8 @@ class UserManagement extends React.Component {
                 this.adminUserModel.name = e.target.value;
                 this.setState({ error: false });
               }}
+              htmlFor="name"
+              id="name"
             />
             <Input
               error={error}
@@ -116,6 +118,8 @@ class UserManagement extends React.Component {
                 this.adminUserModel.surname = e.target.value;
                 this.setState({ error: false });
               }}
+              htmlFor="surname"
+              id="surname"
             />
             <Input
               error={error}
@@ -125,6 +129,8 @@ class UserManagement extends React.Component {
                 this.adminUserModel.email = e.target.value;
                 this.setState({ error: false });
               }}
+              htmlFor="emailAddress"
+              id="emailAddress"
             />
             <Input
               error={error}
@@ -134,6 +140,8 @@ class UserManagement extends React.Component {
                 this.adminUserModel.password = e.target.value;
                 this.setState({ error: false });
               }}
+              htmlFor="password"
+              id="password"
             />
           </Grid>
           <Grid item xs={12} sm={12} />
