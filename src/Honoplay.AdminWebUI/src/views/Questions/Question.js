@@ -377,11 +377,12 @@ class NewQuestion extends React.Component {
             />
             <Input
               error={questionsError}
-              labelName={translate('Duration')}
+              labelName={translate('QuestionTime')}
               inputType="number"
               value={this.state.questionsModel.duration}
               name="duration"
               onChange={this.handleChange}
+              placeholder={translate('Duration')}
             />
             <DropDown
               error={questionsError}

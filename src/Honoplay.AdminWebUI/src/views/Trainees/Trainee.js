@@ -18,6 +18,7 @@ import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
 import Header from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
+import Department from '../Profile/Department';
 import Table from 'material-table';
 
 import WorkingStatuses from './WorkingStatus';
@@ -307,7 +308,10 @@ class Trainee extends React.Component {
               onChange={this.handleChange}
               name="departmentId"
               value={traineeModel.departmentId}
-            />
+              describable
+            >
+              <Department describable />
+            </DropDown>
             <Input
               error={isErrorTrainee}
               labelName={translate('NationalIdentityNumber')}

@@ -18,6 +18,7 @@ import Header from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
+import Department from '../Profile/Department';
 import Table from 'material-table';
 
 import { connect } from 'react-redux';
@@ -140,9 +141,6 @@ class Trainers extends React.Component {
       trainersList
     ) {
       if (!errorTrainerList) {
-        if (this.state.departments && trainersList) {
-          departmentToString(this.state.departments, trainersList.items);
-        }
         this.setState({
           trainer: trainersList.items
         });
@@ -158,6 +156,11 @@ class Trainers extends React.Component {
       if (!errorTrainer) {
         this.trainerModel = trainer.items[0];
       }
+    }
+    if (!prevProps.isUpdateTrainerLoading && isUpdateTrainerLoading) {
+      this.setState({
+        loadingTrainer: true
+      });
     }
     if (!prevProps.errorUpdateTrainer && errorUpdateTrainer) {
       this.setState({
@@ -237,6 +240,8 @@ class Trainers extends React.Component {
       [classes.buttonSuccess]: success
     });
 
+    departmentToString(departments, trainer);
+
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
@@ -300,7 +305,10 @@ class Trainers extends React.Component {
               labelName={translate('Department')}
               name="departmentId"
               value={this.trainerModel.departmentId}
-            />
+              describable
+            >
+              <Department describable />
+            </DropDown>
             <DropDown
               error={trainerError}
               onChange={this.handleChange}
