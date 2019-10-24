@@ -1,4 +1,5 @@
-﻿using Honoplay.Application._Infrastructure;
+﻿using System.Linq;
+using Honoplay.Application._Infrastructure;
 using Honoplay.Application.Avatars.Queries.GetAvatarDetail;
 using Honoplay.Application.Avatars.Queries.GetAvatarsList;
 using Honoplay.Common._Exceptions;
@@ -30,7 +31,6 @@ namespace Honoplay.TraineeWebAPI.Controllers
                 var avatarsListModel = await Mediator.Send(new GetAvatarsListQuery(query.Skip, query.Take));
 
                 return Ok(avatarsListModel);
-
             }
             catch (NotFoundException)
             {
@@ -58,6 +58,34 @@ namespace Honoplay.TraineeWebAPI.Controllers
                 var avatarsListModel = await Mediator.Send(new GetAvatarDetailQuery(id));
 
                 return Ok(avatarsListModel);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch
+            {
+                return StatusCode(HttpStatusCode.InternalServerError.ToInt());
+            }
+        }
+
+        /// <summary>
+        /// This service retrieve avatar.
+        /// </summary>
+        /// <param name="id">Get avatar model</param>
+        /// <returns>Get avatar by avatarId with status code.</returns>
+        [HttpGet("GetFile/{id}")]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<ResponseModel<AvatarDetailModel>>> GetFile(int id)
+        {
+            try
+            {
+                var avatarsListModel = await Mediator.Send(new GetAvatarDetailQuery(id));
+                var avatar = avatarsListModel.Items.FirstOrDefault();
+
+                return File(avatar.ImageBytes, "image/webp");
             }
             catch (NotFoundException)
             {

@@ -18,5 +18,12 @@
             <param name="id">Get avatar model</param>
             <returns>Get avatar by avatarId with status code.</returns>
         </member>
+        <member name="M:Honoplay.TraineeWebAPI.Controllers.AvatarController.GetFile(System.Int32)">
+            <summary>
+            This service retrieve avatar.
+            </summary>
+            <param name="id">Get avatar model</param>
+            <returns>Get avatar by avatarId with status code.</returns>
+        </member>
     </members>
 </doc>
