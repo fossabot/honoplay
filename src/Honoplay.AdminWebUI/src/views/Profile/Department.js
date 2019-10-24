@@ -1,11 +1,12 @@
 import React from 'react';
 import { translate } from '@omegabigdata/terasu-api-proxy';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, CircularProgress } from '@material-ui/core';
+import { Grid, CircularProgress, Divider } from '@material-ui/core';
 import Style from '../Style';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import SimpleTable from '../../components/Table/SimpleTable';
+import Chip from '../../components/Chip/ChipComponent';
 
 import { connect } from 'react-redux';
 import {
@@ -98,43 +99,55 @@ class Department extends React.Component {
 
   render() {
     const { loading, departmentError, department } = this.state;
-    const { classes } = this.props;
+    const { classes, describable } = this.props;
 
     return (
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={12} />
-        <Grid item xs={12} sm={11}>
-          <Input
-            error={departmentError}
-            onChange={this.handleChange}
-            labelName={translate('Department')}
-            inputType="text"
-            name="departments"
-            value={this.departmentModel.departments}
-          />
-        </Grid>
-        <Grid item xs={12} sm={1}>
-          <Button
-            buttonColor="secondary"
-            buttonName={translate('Add')}
-            onClick={this.handleClick}
-            disabled={loading}
-          />
-          {loading && (
-            <CircularProgress
-              size={24}
-              disableShrink={true}
-              className={classes.buttonProgress}
+      <div className={classes.root}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={11}>
+            <Input
+              error={departmentError}
+              onChange={this.handleChange}
+              labelName={translate('Department')}
+              inputType="text"
+              name="departments"
+              value={this.departmentModel.departments}
             />
+          </Grid>
+          <Grid item xs={12} sm={1}>
+            <Button
+              buttonColor="secondary"
+              buttonName={translate('Add')}
+              onClick={this.handleClick}
+              disabled={loading}
+            />
+            {loading && (
+              <CircularProgress
+                size={24}
+                disableShrink={true}
+                className={classes.buttonProgress}
+              />
+            )}
+          </Grid>
+          {describable ? (
+            <>
+              <Grid item xs={12} sm={12}>
+                <Divider />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <Chip data={department} />
+              </Grid>
+            </>
+          ) : (
+            <Grid item xs={12} sm={12}>
+              <SimpleTable
+                data={department}
+                header={translate('TenantDepartments')}
+              />
+            </Grid>
           )}
         </Grid>
-        <Grid item xs={12} sm={12}>
-          <SimpleTable
-            data={department}
-            header={translate('TenantDepartments')}
-          />
-        </Grid>
-      </Grid>
+      </div>
     );
   }
 }
