@@ -12,7 +12,14 @@ class Settings extends React.Component {
             <tr>
               <td style={{ width: "70px;" }}>
                 <figure class="avatar-profile mb-0">
-                  <img src={DefaultAvatar} class="img-fluid shadow-sm" />
+                  {this.props.ImageByte ? (
+                    <img
+                      src={`data:image/jpeg;base64,${this.props.ImageByte.items[0].imageBytes}`}
+                      class="img-fluid shadow-sm"
+                    />
+                  ) : (
+                    <img src={DefaultAvatar} class="img-fluid shadow-sm" />
+                  )}
                 </figure>
               </td>
               <td>
