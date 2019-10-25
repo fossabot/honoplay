@@ -56,14 +56,18 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
                     updateClassroom.EndDatetime = request.EndDatetime;
                     updateClassroom.Location = request.Location;
 
-                    _context.TryUpdateManyToMany(updateClassroom.ClassroomTraineeUsers, request.TraineeUsersIdList
-                        .Select(x => new ClassroomTraineeUser
-                        {
-                            ClassroomId = updateClassroom.Id,
-                            TraineeUserId = x
-                        }), x => x.ClassroomId);
+                    if (request.TraineeUsersIdList != null)
+                    {
 
-                    _context.SaveChanges();
+                        _context.TryUpdateManyToMany(updateClassroom.ClassroomTraineeUsers, request
+                            .TraineeUsersIdList
+                            .Select(x => new ClassroomTraineeUser
+                            {
+                                ClassroomId = updateClassroom.Id,
+                                TraineeUserId = x
+                            }), x => x.ClassroomId);
+                        await _context.SaveChangesAsync(cancellationToken);
+                    }
 
                     _context.Classrooms.Update(updateClassroom);
                     await _context.SaveChangesAsync(cancellationToken);
@@ -89,8 +93,10 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
                         _ => classroomsByTenantId,
                         cancellationToken);
                 }
-                catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
-                                                   (ex.InnerException is SqliteException sqliteException && sqliteException.SqliteErrorCode == 19))
+                catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException &&
+                                                    (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
+                                                   (ex.InnerException is SqliteException sqliteException &&
+                                                    sqliteException.SqliteErrorCode == 19))
                 {
                     transaction.Rollback();
                     throw new ObjectAlreadyExistsException(nameof(Classroom), request.Id);
