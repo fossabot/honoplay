@@ -2,6 +2,7 @@
 using MediatR;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace Honoplay.Application.Questions.Commands.CreateQuestion
 {
@@ -13,6 +14,7 @@ namespace Honoplay.Application.Questions.Commands.CreateQuestion
         public Guid? ContentFileId { get; set; }
         public string Text { get; set; }
         public int Duration { get; set; }
+        public ICollection<int> TagsIdList { get; set; }
         [JsonIgnore]
         public int CreatedBy { get; set; }
         [JsonIgnore]
