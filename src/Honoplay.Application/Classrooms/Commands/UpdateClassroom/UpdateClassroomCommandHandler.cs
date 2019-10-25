@@ -39,6 +39,7 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
                         .Include(x => x.Training)
                         .Include(x => x.Training.TrainingSeries)
                         .Where(x => x.Training.TrainingSeries.TenantId == request.TenantId)
+                        .Include(x => x.ClassroomTraineeUsers)
                         .ToListAsync(cancellationToken);
 
                     var updateClassroom = classroomsByTenantId.FirstOrDefault(x => x.Id == request.Id);
@@ -55,14 +56,14 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
                     updateClassroom.EndDatetime = request.EndDatetime;
                     updateClassroom.Location = request.Location;
 
-                    //foreach (var i in request.TraineeUsersIdList)
-                    //{
-                    //    _context.ClassroomTraineeUsers.AddOrUpdate(new ClassroomTraineeUser
-                    //    {
-                    //        ClassroomId = request.Id,
-                    //        TraineeUserId = i
-                    //    });
-                    //}
+                    _context.TryUpdateManyToMany(updateClassroom.ClassroomTraineeUsers, request.TraineeUsersIdList
+                        .Select(x => new ClassroomTraineeUser
+                        {
+                            ClassroomId = updateClassroom.Id,
+                            TraineeUserId = x
+                        }), x => x.ClassroomId);
+
+                    _context.SaveChanges();
 
                     _context.Classrooms.Update(updateClassroom);
                     await _context.SaveChangesAsync(cancellationToken);
