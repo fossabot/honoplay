@@ -6,6 +6,7 @@ using Honoplay.Persistence.CacheManager;
 using Microsoft.Extensions.Caching.Distributed;
 using Moq;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -57,6 +58,16 @@ namespace Honoplay.Application.Tests.Questions.Commands.UpdateQuestion
                 CreatedBy = adminUser.Id
             });
 
+            var tag = new Tag
+            {
+                Name = "asdasd",
+                CreatedBy = adminUser.Id,
+                TenantId = tenant.Id,
+                ToQuestion = true
+            };
+            context.Tags.Add(tag);
+
+
             var question = new Question
             {
                 TenantId = tenant.Id,
@@ -83,7 +94,8 @@ namespace Honoplay.Application.Tests.Questions.Commands.UpdateQuestion
                 TenantId = _tenantId,
                 UpdatedBy = _adminUserId,
                 Text = "Asagidakilerden hangisi asagidadir?",
-                Duration = 3
+                Duration = 3,
+                TagsIdList = new List<int> { 1 }
             };
 
             var questionModel = await _updateQuestionCommandHandler.Handle(updateQuestion, CancellationToken.None);

@@ -72,7 +72,8 @@ namespace Honoplay.Application.Tests.Questions.Commands.CreateQuestion
                 TenantId = _tenantId,
                 CreatedBy = _adminUserId,
                 Text = "Asagidakilerden hangisi asagidadir?",
-                Duration = 3
+                Duration = 3,
+                TagsIdList = null
             };
 
             var questionModel = await _createQuestionCommandHandler.Handle(createQuestionCommand, CancellationToken.None);

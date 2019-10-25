@@ -29,7 +29,9 @@ namespace Honoplay.Application.Questions.Queries.GetQuestionDetail
             var redisQuestions = await _cacheService.RedisCacheAsync(redisKey,
                 _ => _context.Questions
                     .AsNoTracking()
-                    .Where(x => x.TenantId == request.TenantId)
+                    .Where(x => x.TenantId == request.TenantId && x.Id == request.Id)
+                    .Include(y => y.QuestionTags)
+                    .ThenInclude(y => y.Tag)
                     .ToList()
                 , cancellationToken);
 

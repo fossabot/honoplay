@@ -46,11 +46,34 @@ namespace Honoplay.Application.Questions.Commands.CreateQuestion
                 {
                     await _context.Questions.AddAsync(newQuestion, cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
+
+                    if (request.TagsIdList != null)
+                    {
+                        foreach (var tagId in request.TagsIdList)
+                        {
+                            var questionTag = new QuestionTag
+                            {
+                                QuestionId = newQuestion.Id,
+                                TagId = tagId
+                            };
+                            await _context.QuestionTags.AddAsync(questionTag, cancellationToken);
+                        }
+                    }
+                    await _context.SaveChangesAsync(cancellationToken);
                     transaction.Commit();
+
+                    newQuestion.QuestionTags = await _context.QuestionTags
+                                                             .AsNoTracking()
+                                                             .Where(x => x.QuestionId == newQuestion.Id)
+                                                             .Include(x => x.Tag)
+                                                             .ToListAsync(cancellationToken);
 
                     await _cacheService.RedisCacheUpdateAsync(redisKey,
                         _ => _context.Questions
+                            .AsNoTracking()
                             .Where(x => x.TenantId == request.TenantId)
+                            .Include(x => x.QuestionTags)
+                            .ThenInclude(y => y.Tag)
                             .ToList()
                         , cancellationToken);
                 }
@@ -70,9 +93,10 @@ namespace Honoplay.Application.Questions.Commands.CreateQuestion
             var createQuestionModel = new CreateQuestionModel(newQuestion.Id,
                                                               newQuestion.Text,
                                                               newQuestion.Duration,
-                                                              newQuestion.QuestionTypeId,
                                                               newQuestion.QuestionDifficultyId,
                                                               newQuestion.QuestionCategoryId,
+                                                              tags: newQuestion.QuestionTags.Select(x => x.Tag).ToList(),
+                                                              newQuestion.QuestionTypeId,
                                                               newQuestion.ContentFileId,
                                                               newQuestion.CreatedBy,
                                                               newQuestion.CreatedAt);

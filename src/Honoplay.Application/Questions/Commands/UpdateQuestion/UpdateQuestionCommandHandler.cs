@@ -1,5 +1,6 @@
 ﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Common._Exceptions;
+using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
@@ -29,15 +30,18 @@ namespace Honoplay.Application.Questions.Commands.UpdateQuestion
             var redisKey = $"QuestionsByTenantId{request.TenantId}";
             var updatedAt = DateTimeOffset.Now;
 
+            var questionListByTenantId = _context.Questions
+                .Where(x => x.TenantId == request.TenantId)
+                .Include(x => x.QuestionTags)
+                .ThenInclude(y => y.Tag);
+
+            var updateQuestion = questionListByTenantId.FirstOrDefault(x => x.Id == request.Id);
+
             using (var transaction = await _context.Database.BeginTransactionAsync(cancellationToken))
             {
                 try
                 {
-                    var questionListByTenantId = await _context.Questions
-                        .Where(x => x.TenantId == request.TenantId)
-                        .ToListAsync(cancellationToken);
 
-                    var updateQuestion = questionListByTenantId.FirstOrDefault(x => x.Id == request.Id);
 
                     if (updateQuestion == null)
                     {
@@ -54,12 +58,26 @@ namespace Honoplay.Application.Questions.Commands.UpdateQuestion
                     updateQuestion.UpdatedBy = request.UpdatedBy;
 
 
+                    if (request.TagsIdList != null)
+                    {
+
+                        _context.TryUpdateManyToMany(updateQuestion.QuestionTags, request
+                            .TagsIdList
+                            .Select(x => new QuestionTag
+                            {
+                                QuestionId = request.Id,
+                                TagId = x
+                            }), x => x.QuestionId);
+                        await _context.SaveChangesAsync(cancellationToken);
+                    }
+
+
                     _context.Questions.Update(updateQuestion);
                     await _context.SaveChangesAsync(cancellationToken);
                     transaction.Commit();
 
                     await _cacheService.RedisCacheUpdateAsync(redisKey,
-                        _ => questionListByTenantId
+                        _ => questionListByTenantId.ToList()
                         , cancellationToken);
                 }
                 catch (DbUpdateException ex) when ((ex.InnerException is SqlException sqlException && (sqlException.Number == 2627 || sqlException.Number == 2601)) ||
@@ -86,6 +104,7 @@ namespace Honoplay.Application.Questions.Commands.UpdateQuestion
                                                               request.DifficultyId,
                                                               request.CategoryId,
                                                               request.TypeId,
+                                                              updateQuestion.QuestionTags.Select(x => x.Tag).ToList(),
                                                               request.ContentFileId,
                                                               request.UpdatedBy,
                                                               updatedAt);
