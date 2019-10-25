@@ -4,13 +4,14 @@ import { withStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import { Grid, CircularProgress, Divider } from '@material-ui/core';
 import Style from '../../Style';
-import Input from '../../../components/Input/InputTextComponent';
 import DropDown from '../../../components/Input/DropDownInputComponent';
 import Button from '../../../components/Button/ButtonComponent';
+import Input from '../../../components/Input/InputTextComponent';
 import BreadCrumbs from '../../../components/BreadCrumbs/BreadCrumbs';
 import TransferList from '../../../components/TransferList/TransferList';
 import { genderToString } from '../../../helpers/Converter';
 import differenceBy from 'lodash/differenceBy';
+import moment from 'moment';
 
 import { connect } from 'react-redux';
 import { fetchTrainersList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainer';
@@ -39,7 +40,10 @@ class ClassroomCreate extends React.Component {
             trainerUserId: '',
             trainingId: '',
             name: '',
-            traineeUsersIdList: []
+            traineeUsersIdList: [],
+            beginDatetime: '',
+            endDatetime: '',
+            location: ''
           }
         ]
       },
@@ -253,6 +257,8 @@ class ClassroomCreate extends React.Component {
                     this.setState({ classroomError: false });
                   }}
                   value={update && classroom.name}
+                  htmlFor="classroomName"
+                  id="classroomName"
                 />
                 <DropDown
                   error={classroomError}
@@ -263,18 +269,74 @@ class ClassroomCreate extends React.Component {
                     this.setState({ classroomError: false });
                   }}
                   value={update && classroom.trainerUserId}
+                  htmlFor="trainer"
+                  id="trainer"
+                />
+                <Input
+                  error={classroomError}
+                  labelName={translate('BeginDate')}
+                  inputType="date"
+                  onChange={e => {
+                    classroom.beginDateTime = e.target.value;
+                    this.setState({
+                      classroomError: false
+                    });
+                  }}
+                  value={
+                    update &&
+                    moment(classroom.beginDateTime).format('YYYY-MM-DD')
+                  }
+                  htmlFor="beginDate"
+                  id="beginDate"
+                />
+                <Input
+                  error={classroomError}
+                  labelName={translate('EndDate')}
+                  inputType="date"
+                  onChange={e => {
+                    classroom.endDateTime = e.target.value;
+                    this.setState({
+                      classroomError: false
+                    });
+                  }}
+                  value={
+                    update && moment(classroom.endDateTime).format('YYYY-MM-DD')
+                  }
+                  htmlFor="endDate"
+                  id="endDate"
+                />
+                <Input
+                  error={classroomError}
+                  multiline
+                  labelName={translate('Location')}
+                  inputType="text"
+                  onChange={e => {
+                    classroom.location = e.target.value;
+                    this.setState({
+                      classroomError: false
+                    });
+                  }}
+                  value={update && classroom.location}
+                  htmlFor="location"
+                  id="location"
                 />
               </Grid>
             </Grid>
-            {traineeUsers && traineeUsers.length !== 0 && (
+            {traineeUsers && traineeUsers.length !== 0 && update ? (
               <Grid item xs={12} sm={12}>
                 <TransferList
-                  leftData={
-                    update
-                      ? differenceBy(traineeList, traineeUsers, 'id')
-                      : traineeList
-                  }
-                  rightData={update ? traineeUsers : []}
+                  leftData={differenceBy(traineeList, traineeUsers, 'id')}
+                  rightData={traineeUsers}
+                  isSelected={selected => {
+                    classroom.traineeUsersIdList = selected;
+                  }}
+                />
+              </Grid>
+            ) : (
+              <Grid item xs={12} sm={12}>
+                <TransferList
+                  leftData={traineeList}
+                  rightData={[]}
                   isSelected={selected => {
                     classroom.traineeUsersIdList = selected;
                   }}

@@ -2,7 +2,7 @@
 using Honoplay.Application.QuestionTypes.Queries.GetQuestionTypesList;
 using Xunit;
 
-namespace Honoplay.Application.Tests.QuestionType.Queries.GetQuestionTypeList
+namespace Honoplay.Application.Tests.QuestionTypes.Queries.GetQuestionTypeList
 {
     public class GetQuestionTypeListValidatorTest
     {

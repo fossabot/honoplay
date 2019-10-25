@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Honoplay.AdminWebAPI.Controllers
 {
+    [Authorize]
     public class QuestionTypeController : BaseController
     {
         /// <summary>

@@ -5,11 +5,13 @@ import {
   Grid,
   Checkbox,
   MuiThemeProvider,
-  Typography
+  Typography,
+  IconButton
 } from '@material-ui/core';
 import { Style, theme } from './Style';
 import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
+import Delete from '@material-ui/icons/Delete';
 
 import { connect } from 'react-redux';
 import { fetchOptionsByQuestionId } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Options';
@@ -108,12 +110,17 @@ class Options extends React.Component {
         <div className={classes.root}>
           <Grid container spacing={3}>
             <Grid item xs={12} sm={12} />
-            <Grid item xs={12} sm={12}>
+            <Grid item xs={12} sm={1}>
               <Typography>{translate('CorrectAnswer')}</Typography>
             </Grid>
+            <Grid item xs={12} sm={1}>
+              <Typography>{translate('Order')}</Typography>
+            </Grid>
+            <Grid item xs={12} sm={10} />
+            <Grid item xs={12} sm={12} />
             {this.state.options.map((option, id) => (
               <Grid container direction="row" spacing={3} key={id}>
-                <Grid item xs={12} sm={1}>
+                <Grid item xs={12} sm={1} className={classes.center}>
                   <Checkbox
                     checked={Boolean(option.isCorrect)}
                     color="primary"
@@ -143,12 +150,14 @@ class Options extends React.Component {
                 {option.id ? (
                   ''
                 ) : (
-                  <Grid item xs={12} sm={1}>
-                    <Button
-                      buttonColor="primary"
+                  <Grid>
+                    <IconButton
+                      size="medium"
                       onClick={this.optionRemove(id)}
-                      buttonIcon="minus"
-                    />
+                      className={classes.icon}
+                    >
+                      <Delete />
+                    </IconButton>
                   </Grid>
                 )}
                 <Grid item xs={12} sm={7}></Grid>

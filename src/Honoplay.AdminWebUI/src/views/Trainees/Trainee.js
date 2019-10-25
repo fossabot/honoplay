@@ -18,6 +18,7 @@ import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
 import Header from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
+import Department from '../Profile/Department';
 import Table from 'material-table';
 
 import WorkingStatuses from './WorkingStatus';
@@ -281,6 +282,8 @@ class Trainee extends React.Component {
               onChange={this.handleChange}
               name="workingStatusId"
               value={traineeModel.workingStatusId}
+              htmlFor="workingStatus"
+              id="workingStatus"
             >
               <WorkingStatuses data={workingStatuses} />
             </DropDown>
@@ -291,6 +294,8 @@ class Trainee extends React.Component {
               onChange={this.handleChange}
               name="name"
               value={traineeModel.name}
+              htmlFor="name"
+              id="name"
             />
             <Input
               error={isErrorTrainee}
@@ -299,6 +304,8 @@ class Trainee extends React.Component {
               onChange={this.handleChange}
               name="surname"
               value={traineeModel.surname}
+              htmlFor="surname"
+              id="surname"
             />
             <DropDown
               error={isErrorTrainee}
@@ -307,7 +314,12 @@ class Trainee extends React.Component {
               onChange={this.handleChange}
               name="departmentId"
               value={traineeModel.departmentId}
-            />
+              describable
+              htmlFor="department"
+              id="department"
+            >
+              <Department describable />
+            </DropDown>
             <Input
               error={isErrorTrainee}
               labelName={translate('NationalIdentityNumber')}
@@ -315,6 +327,8 @@ class Trainee extends React.Component {
               onChange={this.handleChange}
               name="nationalIdentityNumber"
               value={traineeModel.nationalIdentityNumber}
+              htmlFor="nationalIdentityNumber"
+              id="nationalIdentityNumber"
             />
             <Input
               error={isErrorTrainee}
@@ -323,6 +337,8 @@ class Trainee extends React.Component {
               onChange={this.handleChange}
               name="phoneNumber"
               value={traineeModel.phoneNumber}
+              htmlFor="phoneNumber"
+              id="phoneNumber"
             />
             <DropDown
               error={isErrorTrainee}
@@ -331,6 +347,8 @@ class Trainee extends React.Component {
               onChange={this.handleChange}
               name="gender"
               value={traineeModel.gender}
+              htmlFor="gender"
+              id="gender"
             />
             <Input
               error={isErrorTrainee}
@@ -339,15 +357,21 @@ class Trainee extends React.Component {
               name="email"
               value={traineeModel.email}
               onChange={this.handleChange}
+              htmlFor="emailAddress"
+              id="emailAddress"
             />
           </Grid>
-          <Grid item xs={12} sm={2}>
-            <InputLabel className={classes.bootstrapFormLabel}>
+          <Grid item xs={12} sm={2} className={classes.center}>
+            <InputLabel
+              htmlFor="password"
+              className={classes.bootstrapFormLabel}
+            >
               {translate('Password')}
             </InputLabel>
           </Grid>
           <Grid item xs={12} sm={9}>
             <TextField
+              id="password"
               margin="dense"
               variant="outlined"
               error={isErrorTrainee && true}

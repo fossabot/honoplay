@@ -103,6 +103,8 @@ class Profession extends React.Component {
               inputType="text"
               name="professions"
               value={this.professionsModel.professions}
+              htmlFor="profession"
+              id="profession"
             />
           </Grid>
           <Grid item xs={12} sm={1}>

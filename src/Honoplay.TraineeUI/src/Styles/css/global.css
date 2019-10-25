@@ -7,7 +7,7 @@
 .box {
   max-width: 768px;
   width: 90%;
-  margin: 50px auto;
+  margin: 30px auto;
   background: #fff;
   border-radius: 5px;
 }
@@ -42,4 +42,23 @@
   border: 1px solid #e92428 !important;
   background: #fff !important;
   font-weight: bold !important;
+}
+
+.profil-ayarlari-btn {
+  position: relative;
+  top: 25px;
+  right: 35px;
+}
+
+.avatar-select {
+  height: 45px !important;
+  background: #eaeaea !important;
+}
+
+.avatar-profile {
+  max-width: 60px;
+}
+
+.top {
+  background: #fff;
 }

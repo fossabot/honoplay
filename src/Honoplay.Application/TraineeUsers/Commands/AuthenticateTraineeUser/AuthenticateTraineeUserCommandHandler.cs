@@ -77,6 +77,7 @@ namespace Honoplay.Application.TraineeUsers.Commands.AuthenticateTraineeUser
             return new TraineeUserAuthenticateModel(id: traineeUser.Id,
                                            email: traineeUser.Email,
                                            name: traineeUser.Name,
+                                           surname:traineeUser.Surname,
                                            isPasswordExpired: isPasswordExpired,
                                            departmentId: departmentId,
                                            tenantId: tenantId,

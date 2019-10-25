@@ -20,10 +20,12 @@ const Style = theme => ({
     marginLeft: 19
   },
   buttonSuccess: {
+    textTransform: 'capitalize',
     backgroundColor: green[500],
     boxShadow: '0 .1rem 1rem rgba(0,128,0.25)',
     '&:hover': {
-      backgroundColor: green[700]
+      backgroundColor: green[700],
+      textTransform: 'capitalize'
     },
     color: 'white'
   },
@@ -70,6 +72,9 @@ const Style = theme => ({
   tab: {
     textTransform: 'capitalize',
     paddingRight: 150
+  },
+  center: {
+    marginTop: 15
   }
 });
 

@@ -320,6 +320,20 @@
             <param name="id">Get traineeGroup model</param>
             <returns>Get traineeGroup by tenant id and traineeGroup id with status code.</returns>
         </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TrainingCategoryController.Get(Honoplay.Application.TrainingCategories.Queries.GetTrainingCategoriesList.GetTrainingCategoriesListQueryModel)">
+            <summary>
+            This service retrieve all trainingCategories by tenant id. Filtered skip and take parameters.
+            </summary>
+            <param name="query">GetAll trainingCategory model</param>
+            <returns>Get all trainingCategories list by tenant id with status code.</returns>
+        </member>
+        <member name="M:Honoplay.AdminWebAPI.Controllers.TrainingCategoryController.Get(System.Int32)">
+            <summary>
+            This service retrieve trainingCategory.
+            </summary>
+            <param name="id">Get trainingCategory model</param>
+            <returns>Get trainingCategory by trainingCategoryId with status code.</returns>
+        </member>
         <member name="M:Honoplay.AdminWebAPI.Controllers.TrainingController.Post(Honoplay.Application.Trainings.Commands.CreateTraining.CreateTrainingCommand)">
             <summary>
             This service create training.

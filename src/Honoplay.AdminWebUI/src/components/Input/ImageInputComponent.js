@@ -39,14 +39,17 @@ class ImageInputComponent extends React.Component {
   };
 
   render() {
-    const { classes, labelName, error } = this.props;
+    const { classes, labelName, error, htmlFor, id } = this.props;
 
     return (
       <div className={classes.inputRoot}>
         <Grid container spacing={3}>
           {labelName && (
             <Grid item xs={12} sm={2} className={classes.labelCenter}>
-              <InputLabel className={classes.bootstrapFormLabel}>
+              <InputLabel
+                htmlFor={htmlFor}
+                className={classes.bootstrapFormLabel}
+              >
                 {labelName}
               </InputLabel>
             </Grid>
@@ -60,6 +63,7 @@ class ImageInputComponent extends React.Component {
               value={this.state.filename}
               fullWidth
               error={error ? true : false}
+              id={id}
             />
           </Grid>
           <Grid item xs={4} sm={1}>

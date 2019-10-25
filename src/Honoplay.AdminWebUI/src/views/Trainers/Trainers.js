@@ -18,6 +18,7 @@ import Header from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Input from '../../components/Input/InputTextComponent';
 import DropDown from '../../components/Input/DropDownInputComponent';
+import Department from '../Profile/Department';
 import Table from 'material-table';
 
 import { connect } from 'react-redux';
@@ -140,9 +141,6 @@ class Trainers extends React.Component {
       trainersList
     ) {
       if (!errorTrainerList) {
-        if (this.state.departments && trainersList) {
-          departmentToString(this.state.departments, trainersList.items);
-        }
         this.setState({
           trainer: trainersList.items
         });
@@ -158,6 +156,11 @@ class Trainers extends React.Component {
       if (!errorTrainer) {
         this.trainerModel = trainer.items[0];
       }
+    }
+    if (!prevProps.isUpdateTrainerLoading && isUpdateTrainerLoading) {
+      this.setState({
+        loadingTrainer: true
+      });
     }
     if (!prevProps.errorUpdateTrainer && errorUpdateTrainer) {
       this.setState({
@@ -237,6 +240,8 @@ class Trainers extends React.Component {
       [classes.buttonSuccess]: success
     });
 
+    departmentToString(departments, trainer);
+
     return (
       <div className={classes.root}>
         <Grid container spacing={3}>
@@ -284,6 +289,8 @@ class Trainers extends React.Component {
               inputType="text"
               name="name"
               value={this.trainerModel.name}
+              htmlFor="name"
+              id="name"
             />
             <Input
               error={trainerError}
@@ -292,6 +299,8 @@ class Trainers extends React.Component {
               inputType="text"
               name="surname"
               value={this.trainerModel.surname}
+              htmlFor="surname"
+              id="surname"
             />
             <DropDown
               error={trainerError}
@@ -300,7 +309,12 @@ class Trainers extends React.Component {
               labelName={translate('Department')}
               name="departmentId"
               value={this.trainerModel.departmentId}
-            />
+              describable
+              htmlFor="department"
+              id="department"
+            >
+              <Department describable />
+            </DropDown>
             <DropDown
               error={trainerError}
               onChange={this.handleChange}
@@ -309,6 +323,8 @@ class Trainers extends React.Component {
               name="professionId"
               value={this.trainerModel.professionId}
               describable
+              htmlFor="trainerExpertise"
+              id="trainerExpertise"
             >
               <Profession />
             </DropDown>
@@ -319,6 +335,8 @@ class Trainers extends React.Component {
               inputType="text"
               name="phoneNumber"
               value={this.trainerModel.phoneNumber}
+              htmlFor="phoneNumber"
+              id="phoneNumber"
             />
             <Input
               error={trainerError}
@@ -327,15 +345,21 @@ class Trainers extends React.Component {
               inputType="text"
               name="email"
               value={this.trainerModel.email}
+              htmlFor="emailAddress"
+              id="emailAddress"
             />
           </Grid>
-          <Grid item xs={12} sm={2}>
-            <InputLabel className={classes.bootstrapFormLabel}>
+          <Grid item xs={12} sm={2} className={classes.center}>
+            <InputLabel
+              htmlFor="password"
+              className={classes.bootstrapFormLabel}
+            >
               {translate('Password')}
             </InputLabel>
           </Grid>
           <Grid item xs={12} sm={9}>
             <TextField
+              id="password"
               margin="dense"
               variant="outlined"
               error={trainerError && true}
