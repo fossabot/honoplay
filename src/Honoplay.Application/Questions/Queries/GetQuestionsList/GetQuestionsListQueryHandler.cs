@@ -5,7 +5,6 @@ using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,8 +27,11 @@ namespace Honoplay.Application.Questions.Queries.GetQuestionsList
             var redisKey = $"QuestionsByTenantId{request.TenantId}";
             var questionsQuery = await _cacheService.RedisCacheAsync(redisKey,
                 _ => _context.Questions
-                    .Where(x => x.TenantId == request.TenantId)
                     .AsNoTracking()
+                    .Where(x => x.TenantId == request.TenantId)
+                    .Include(y => y.QuestionTags)
+                    .ThenInclude(y => y.Tag)
+
                 , cancellationToken);
 
             if (!questionsQuery.Any())
