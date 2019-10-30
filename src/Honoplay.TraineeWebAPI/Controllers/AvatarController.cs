@@ -85,7 +85,7 @@ namespace Honoplay.TraineeWebAPI.Controllers
                 var avatarsListModel = await Mediator.Send(new GetAvatarDetailQuery(id));
                 var avatar = avatarsListModel.Items.FirstOrDefault();
 
-                return File(avatar.ImageBytes, "image/webp");
+                return File(avatar.ImageBytes, "image/png");
             }
             catch (NotFoundException)
             {
