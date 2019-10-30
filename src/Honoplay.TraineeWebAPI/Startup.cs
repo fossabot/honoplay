@@ -88,6 +88,17 @@ namespace Honoplay.TraineeWebAPI
                 };
                 x.Events = new JwtBearerEvents
                 {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+
+                        if (!string.IsNullOrEmpty(accessToken))
+                        {
+                            // Read the token out of the query string
+                            context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    },
                     OnTokenValidated = y =>
                     {
                         if (y.Principal.Claims.First(c => c.Type == ClaimTypes.Webpage).Value != y.HttpContext.Request.Host.Host)
