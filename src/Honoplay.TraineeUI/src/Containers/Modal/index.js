@@ -30,78 +30,18 @@ class Modal extends React.Component {
             </div>
             <div class="modal-body">
               <div class="row">
-                <div class="col-sm-2 mb-4">
-                  <img
-                    src="img/avatars/pipo-enemy001.png"
-                    class="img-thumbnail"
-                  />
-                </div>
-                <div class="col-sm-2 mb-4">
-                  <img
-                    src="img/avatars/pipo-enemy001a.png"
-                    class="img-thumbnail"
-                  />
-                </div>
-                <div class="col-sm-2 mb-4">
-                  <img
-                    src="img/avatars/pipo-enemy001b.png"
-                    class="img-thumbnail"
-                  />
-                </div>
-                <div class="col-sm-2 mb-4">
-                  <img
-                    src="img/avatars/pipo-enemy002.png"
-                    class="img-thumbnail"
-                  />
-                </div>
-                <div class="col-sm-2 mb-4">
-                  <img
-                    src="img/avatars/pipo-enemy002a.png"
-                    class="img-thumbnail"
-                  />
-                </div>
-                <div class="col-sm-2 mb-4">
-                  <img
-                    src="img/avatars/pipo-enemy002b.png"
-                    class="img-thumbnail"
-                  />
-                </div>
-                <div class="col-sm-2 mb-4">
-                  <img
-                    src="img/avatars/pipo-enemy003.png"
-                    class="img-thumbnail"
-                  />
-                </div>
-                <div class="col-sm-2 mb-4">
-                  <img
-                    src="img/avatars/pipo-enemy003a.png"
-                    class="img-thumbnail"
-                  />
-                </div>
-                <div class="col-sm-2 mb-4">
-                  <img
-                    src="img/avatars/pipo-enemy003b.png"
-                    class="img-thumbnail"
-                  />
-                </div>
-                <div class="col-sm-2 mb-4">
-                  <img
-                    src="img/avatars/pipo-enemy004.png"
-                    class="img-thumbnail"
-                  />
-                </div>
-                <div class="col-sm-2 mb-4">
-                  <img
-                    src="img/avatars/pipo-enemy004a.png"
-                    class="img-thumbnail"
-                  />
-                </div>
-                <div class="col-sm-2 mb-4">
-                  <img
-                    src="img/avatars/pipo-enemy004b.png"
-                    class="img-thumbnail"
-                  />
-                </div>
+                {this.props.Images &&
+                  this.props.Images.items.map(img => {
+                    return (
+                      <div class="col-sm-2 mb-4">
+                        <img
+                          src={`data:image/jpeg;base64,${img.imageBytes}`}
+                          class="img-thumbnail"
+                        />
+   
+                      </div>
+                    );
+                  })}
               </div>
             </div>
           </div>

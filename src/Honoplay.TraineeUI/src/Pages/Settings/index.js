@@ -15,8 +15,14 @@ import Pass from "../../Assets/img/pass.jpg";
 import Input from "../../Components/Input";
 import Modal from "../../Containers/Modal";
 import "bootstrap/dist/js/bootstrap.bundle";
+import { getAllAvatar } from "@omegabigdata/honoplay-redux-helper/Src/actions/TraineeUserAvatar";
+import { connect } from "react-redux";
 
 class Settings extends React.Component {
+  componentDidMount() {
+    this.props.getAllAvatar(null,null);
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -81,10 +87,29 @@ class Settings extends React.Component {
             </div>
           </div>
         </PageWrapper>
-        <Modal />
+        <Modal Images={this.props.traineeAvatarList} />
       </React.Fragment>
     );
   }
 }
 
-export default WithAuth(Settings);
+const mapStateToProps = state => {
+  const {
+    isTraineeAvatarListLoading,
+    traineeAvatarList,
+    errorTraineegAvatarList
+  } = state.fetchAvatarList;
+
+  console.log("avatars :", traineeAvatarList);
+
+  return {
+    isTraineeAvatarListLoading,
+    traineeAvatarList,
+    errorTraineegAvatarList
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  { getAllAvatar }
+)(WithAuth(Settings));
