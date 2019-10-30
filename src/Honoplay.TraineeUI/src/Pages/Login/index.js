@@ -26,6 +26,10 @@ class Login extends Component {
       !userTraineeTokenIsLoading &&
       userTraineeToken
     ) {
+      localStorage.setItem(
+        "traineeUserData",
+        JSON.stringify(userTraineeToken.user)
+      );
       localStorage.setItem("token", userTraineeToken.token);
       this.props.history.push("/joingame");
     }
@@ -41,7 +45,7 @@ class Login extends Component {
   password = "123456789";
   render() {
     return (
-      <PageWrapper>
+      <PageWrapper className={"box shadow p-5"}>
         <div className="col-sm-7">
           <img src={Logo} className="img-fluid" />
           <p className="mt-3 mb-5">
@@ -77,6 +81,10 @@ class Login extends Component {
               }
               title={translate(LoginKey)}
               className="btn my-btn form-control mt-4"
+            />
+            <Button
+              className="btn my-btn2 form-control mt-3"
+              title="İlk Giriş"
             />
           </div>
         </div>
