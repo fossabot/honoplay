@@ -26,27 +26,27 @@ class JoinGame extends Component {
       <React.Fragment>
         <SettingsPanel ImageByte={this.props.traineeAvatar} />
         <PageWrapper>
-          <div class="shadow-sm box p-4">
-            <div class="row pt-5 pb-5">
-              <div class="col-sm-7">
-                <p class="mt-5 mb-3 font-weight-bold">
+          <div className="shadow-sm box p-4">
+            <div className="row pt-5 pb-5">
+              <div className="col-sm-7">
+                <p className="mt-5 mb-3 font-weight-bold">
                   {translate(PleaseEnterYourGameParticipationCode)}
                 </p>
 
-                <div class="form">
-                  <input type="text" class="form-control" placeholder="---" />
+                <div className="form">
+                  <input type="text" className="form-control" placeholder="---" />
 
                   <button
                     onClick={() => History.push("/game")}
                     title={translate(Join)}
-                    class="btn my-btn form-control mt-4"
+                    className="btn my-btn form-control mt-4"
                   >
                     Katıl
                   </button>
                 </div>
               </div>
-              <div class="col-sm-5 text-center">
-                <img src={Code} class="img-fluid d-none d-sm-block" />
+              <div className="col-sm-5 text-center">
+                <img src={Code} className ="img-fluid d-none d-sm-block" />
               </div>
             </div>
           </div>

@@ -29,25 +29,25 @@ class Settings extends React.Component {
         <SettingsPanel />
 
         <PageWrapper>
-          <div class="box shadow p-3">
+          <div className="box shadow p-3">
             <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item">
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item">
                   <a onClick={() => History.goBack()}>
-                    <i class="fas fa-arrow-left"></i> Geri Dön
+                    <i className="fas fa-arrow-left"></i> Geri Dön
                   </a>
                 </li>
               </ol>
             </nav>
 
-            <div class="shadow-sm box">
-              <div class="row p-3">
-                <div class="col-sm-3">
-                  <img src={DefaultAvatar} class="img-thumbnail" />
+            <div className="shadow-sm box">
+              <div className="row p-3">
+                <div className="col-sm-3">
+                  <img src={DefaultAvatar} className="img-thumbnail" />
                 </div>
-                <div class="col-sm-9">
-                  <div class="form">
-                    <h5 class="mb-2 font-weight-bold">Avatarı Değiştir</h5>
+                <div className="col-sm-9">
+                  <div className="form">
+                    <h5 className="mb-2 font-weight-bold">Avatarı Değiştir</h5>
                     <p>
                       Kazandığın avatarlardan birini seçerek karakterini
                       özelleştirebilirsin.
@@ -56,7 +56,7 @@ class Settings extends React.Component {
                       // onClick={() => {
                       //   $("#bd-example-modal-xl").modal("show");
                       // }}
-                      class="btn my-btn2"
+                      className="btn my-btn2"
                       data-toggle="modal"
                       data-target=".bd-example-modal-xl"
                     >
@@ -67,14 +67,14 @@ class Settings extends React.Component {
               </div>
             </div>
 
-            <div class="shadow-sm box">
-              <div class="row p-3">
-                <div class="col-sm-3">
-                  <img src={Pass} class="img-fluid" />
+            <div className="shadow-sm box">
+              <div className="row p-3">
+                <div className="col-sm-3">
+                  <img src={Pass} className="img-fluid" />
                 </div>
-                <div class="col-sm-9">
-                  <div class="form">
-                    <h5 class="mb-3 font-weight-bold">Yeni Şifre Oluştur</h5>
+                <div className="col-sm-9">
+                  <div className="form">
+                    <h5 className="mb-3 font-weight-bold">Yeni Şifre Oluştur</h5>
                     <Input type="password" placeholder="Yeni Şifre" />
                     <Input type="password" placeholder="Yeni Şifre Tekrar" />
                     <Button
