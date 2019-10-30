@@ -30,7 +30,7 @@ class Modal extends React.Component {
             </div>
             <div className="modal-body">
               <div className="row">
-                {this.props.Images &&
+                {/* {this.props.Images &&
                   this.props.Images.items.map(img => {
                     return (
                       <div className="col-sm-2 mb-4">
@@ -41,7 +41,7 @@ class Modal extends React.Component {
    
                       </div>
                     );
-                  })}
+                  })} */}
               </div>
             </div>
           </div>

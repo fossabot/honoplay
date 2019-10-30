@@ -34,7 +34,11 @@ class JoinGame extends Component {
                 </p>
 
                 <div className="form">
-                  <input type="text" className="form-control" placeholder="---" />
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="---"
+                  />
 
                   <button
                     onClick={() => History.push("/game")}
@@ -46,7 +50,7 @@ class JoinGame extends Component {
                 </div>
               </div>
               <div className="col-sm-5 text-center">
-                <img src={Code} className ="img-fluid d-none d-sm-block" />
+                <img src={Code} className="img-fluid d-none d-sm-block" />
               </div>
             </div>
           </div>
@@ -63,7 +67,6 @@ const mapStateToProps = state => {
     errorTraineeAvatar
   } = state.fetchAvatar;
 
-  console.log(traineeAvatar);
   return {
     isTraineeAvatarIsLoading,
     traineeAvatar,

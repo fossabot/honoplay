@@ -87,7 +87,7 @@ class Settings extends React.Component {
             </div>
           </div>
         </PageWrapper>
-        <Modal Images={this.props.traineeAvatarList} />
+        {/* <Modal Images={this.props.traineeAvatarList} /> */}
       </React.Fragment>
     );
   }
