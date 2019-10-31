@@ -11,61 +11,83 @@ const Link = React.forwardRef((props, ref) => (
 ));
 
 function PureBreadcrumbs(props) {
-  const { classes } = props;
+  const { classes, questions } = props;
   return (
-    <Breadcrumbs>
-      <Link to="/trainingseries" className={classes.text}>
-        {translate('TrainingSeries')}
-      </Link>
-      {props.match.params.trainingSeriesId && (
-        <Link
-          to={`/trainingseries/${props.match.params.trainingSeriesId}`}
-          className={classes.text}
-        >
-          {localStorage.getItem('trainingSeriesName')}
-        </Link>
+    <>
+      {questions ? (
+        <Breadcrumbs>
+          <Link to={`/questions`} className={classes.text}>
+            {translate('Questions')}
+          </Link>
+          {props.match.params.id ? (
+            <Link
+              to={`/question/${props.match.params.id}`}
+              className={classes.text}
+            >
+              {translate('Update')}
+            </Link>
+          ) : (
+            <Link to={`/question`} className={classes.text}>
+              {translate('CreateAQuestion')}
+            </Link>
+          )}
+        </Breadcrumbs>
+      ) : (
+        <Breadcrumbs>
+          <Link to="/trainingseries" className={classes.text}>
+            {translate('TrainingSeries')}
+          </Link>
+          {props.match.params.trainingSeriesId && (
+            <Link
+              to={`/trainingseries/${props.match.params.trainingSeriesId}`}
+              className={classes.text}
+            >
+              {localStorage.getItem('trainingSeriesName')}
+            </Link>
+          )}
+          {props.match.params.trainingSeriesId && (
+            <Link
+              to={`/trainingseries/${props.match.params.trainingId}/training`}
+              className={classes.text}
+            >
+              {translate('Trainings')}
+            </Link>
+          )}
+          {props.match.params.trainingId && (
+            <Link
+              to={`/trainingseries/${props.match.params.trainingSeriesId}/training/${props.match.params.trainingId}`}
+              className={classes.text}
+            >
+              {localStorage.getItem('trainingName')}
+            </Link>
+          )}
+          {props.match.params.trainingId && (
+            <Link
+              to={`/trainingseries/${props.match.params.trainingId}/training/${props.match.params.trainingId}/classroom`}
+              className={classes.text}
+            >
+              {translate('Classrooms')}
+            </Link>
+          )}
+          {props.match.params.classroomId && (
+            <Link
+              to={`/trainingseries/${props.match.params.trainingId}/training/${props.match.params.trainingId}/classroom/${props.match.params.classroomId}`}
+              className={classes.text}
+            >
+              {localStorage.getItem('classroomName')}
+            </Link>
+          )}
+          {props.match.params.classroomId && (
+            <Link
+              to={`/trainingseries/${props.match.params.trainingId}/training/${props.match.params.trainingId}/classroom/${props.match.params.classroomId}/session`}
+              className={classes.text}
+            >
+              {translate('Sessions')}
+            </Link>
+          )}
+        </Breadcrumbs>
       )}
-      {props.match.params.trainingSeriesId && (
-        <Link
-          to={`/trainingseries/${props.match.params.trainingId}/training`}
-          className={classes.text}
-        >
-          {translate('Trainings')}
-        </Link>
-      )}
-      {props.match.params.trainingId && (
-        <Link
-          to={`/trainingseries/${props.match.params.trainingSeriesId}/training/${props.match.params.trainingId}`}
-          className={classes.text}
-        >
-          {localStorage.getItem('trainingName')}
-        </Link>
-      )}
-      {props.match.params.trainingId && (
-        <Link
-          to={`/trainingseries/${props.match.params.trainingId}/training/${props.match.params.trainingId}/classroom`}
-          className={classes.text}
-        >
-          {translate('Classrooms')}
-        </Link>
-      )}
-      {props.match.params.classroomId && (
-        <Link
-          to={`/trainingseries/${props.match.params.trainingId}/training/${props.match.params.trainingId}/classroom/${props.match.params.classroomId}`}
-          className={classes.text}
-        >
-          {localStorage.getItem('classroomName')}
-        </Link>
-      )}
-      {props.match.params.classroomId && (
-        <Link
-          to={`/trainingseries/${props.match.params.trainingId}/training/${props.match.params.trainingId}/classroom/${props.match.params.classroomId}/session`}
-          className={classes.text}
-        >
-          {translate('Sessions')}
-        </Link>
-      )}
-    </Breadcrumbs>
+    </>
   );
 }
 export default withStyles(Style)(withBreadcrumbs()(PureBreadcrumbs));
