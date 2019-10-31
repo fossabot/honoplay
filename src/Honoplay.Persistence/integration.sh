@@ -2,12 +2,16 @@
 
 SERVICE_NAME=honoplay_db_service
 SERVICE_IMAGE_NAME=omegabigdata/mssql
+LIMIT_CPU=$(( $(nproc) / 4 ))
+LIMIT_MEMORY=10000m
 
 if docker service ls | grep -q ${SERVICE_NAME}; then
 	echo "$(tput setaf 2) ${SERVICE_NAME} Bulundu Guncelleniyor...$(tput sgr 0)"
 	
     docker service update --force \
         --image ${SERVICE_IMAGE_NAME} \
+        --limit-cpu $LIMIT_CPU \
+        --limit-memory $LIMIT_MEMORY \
 		${SERVICE_NAME}
 else
 	echo "$(tput setaf 3) ${SERVICE_NAME} Bulunamadi Kuruluyor...$(tput sgr 0)"
@@ -25,6 +29,8 @@ else
         --with-registry-auth \
         --network backend \
         --publish 2443:1433 \
+        --limit-cpu $LIMIT_CPU \
+        --limit-memory $LIMIT_MEMORY \
         --mount type=bind,source=/root/database-files/${SERVICE_NAME},destination=/var/opt/mssql \
         --constraint 'node.labels.is-database-node == true' \
         ${SERVICE_IMAGE_NAME}
