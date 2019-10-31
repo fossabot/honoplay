@@ -5,11 +5,10 @@ import classNames from 'classnames';
 import { Grid, Divider, CircularProgress } from '@material-ui/core';
 import Style from '../Style';
 import Input from '../../components/Input/InputTextComponent';
-import ImageInput from '../../components/Input/ImageInputComponent';
 import Header from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Departman from './Department';
-
+import Uploader from '../../components/Uploader';
 import { connect } from 'react-redux';
 import {
   fetchTenant,
@@ -154,12 +153,16 @@ class Profile extends React.Component {
               name="description"
               value={tenantModel && tenantModel.description}
             />
-            <ImageInput
-              error={isErrorTenant}
+          </Grid>
+          <Grid item xs={12} sm={12} />
+          <Grid item xs={12} sm={2} />
+          <Grid item xs={12} sm={9}>
+            <Uploader
               selectedImage={value => {
                 tenantModel.logo = value;
               }}
-              labelName={translate('TenantLogo')}
+              name={value => {}}
+              type={value => {}}
             />
           </Grid>
           <Grid item xs={12} sm={12}>
