@@ -12,7 +12,6 @@ import TransferList from '../../../components/TransferList/TransferList';
 import { genderToString } from '../../../helpers/Converter';
 import differenceBy from 'lodash/differenceBy';
 import moment from 'moment';
-
 import { connect } from 'react-redux';
 import { fetchTrainersList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainer';
 import {
@@ -275,16 +274,16 @@ class ClassroomCreate extends React.Component {
                 <Input
                   error={classroomError}
                   labelName={translate('BeginDate')}
-                  inputType="date"
+                  inputType="datetime-local"
                   onChange={e => {
-                    classroom.beginDateTime = e.target.value;
+                    classroom.beginDatetime = e.target.value;
                     this.setState({
                       classroomError: false
                     });
                   }}
                   value={
                     update &&
-                    moment(classroom.beginDateTime).format('YYYY-MM-DD')
+                    moment(classroom.beginDatetime).format('YYYY-MM-DDTHH:mm')
                   }
                   htmlFor="beginDate"
                   id="beginDate"
@@ -292,15 +291,16 @@ class ClassroomCreate extends React.Component {
                 <Input
                   error={classroomError}
                   labelName={translate('EndDate')}
-                  inputType="date"
+                  inputType="datetime-local"
                   onChange={e => {
-                    classroom.endDateTime = e.target.value;
+                    classroom.endDatetime = e.target.value;
                     this.setState({
                       classroomError: false
                     });
                   }}
                   value={
-                    update && moment(classroom.endDateTime).format('YYYY-MM-DD')
+                    update &&
+                    moment(classroom.endDatetime).format('YYYY-MM-DDTHH:mm')
                   }
                   htmlFor="endDate"
                   id="endDate"

@@ -47,6 +47,11 @@ namespace Honoplay.Application.Trainings.Commands.UpdateTraining
                     }
 
                     updateTraining.Name = request.Name;
+                    updateTraining.BeginDateTime=request.BeginDateTime;
+                    updateTraining.EndDateTime = request.EndDateTime;
+                    updateTraining.Description = request.Description;
+                    updateTraining.TrainingSeriesId = request.TrainingSeriesId;
+                    updateTraining.TrainingCategoryId = request.TrainingCategoryId;
                     updateTraining.UpdatedAt = updatedAt;
                     updateTraining.UpdatedBy = request.UpdatedBy;
 
