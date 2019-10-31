@@ -31,7 +31,6 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "material-table": "^1.52.0",
-    "material-ui-dropzone": "^2.4.5",
     "moment": "^2.24.0",
     "notistack": "^0.8.5",
     "react": "^16.8.6",
