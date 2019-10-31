@@ -25,6 +25,7 @@
     "@material-ui/icons": "^4.4.3",
     "@omegabigdata/honoplay-redux-helper": "^0.7.3",
     "@omegabigdata/terasu-api-proxy": "^0.9.8",
+    "antd": "^3.24.3",
     "axios": "^0.18.0",
     "file-loader": "^3.0.1",
     "history": "^4.9.0",

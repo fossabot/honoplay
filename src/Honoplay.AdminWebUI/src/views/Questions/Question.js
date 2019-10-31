@@ -12,6 +12,7 @@ import Options from './Options';
 import QuestionCategory from './QuestionCategory';
 import ImageInput from '../../components/Input/ImageInputComponent';
 import SelectDropdown from '../../components/Input/SelectDropdown';
+import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
 import QuestionTag from './QuestionTag';
 
 import { connect } from 'react-redux';
@@ -339,7 +340,9 @@ class NewQuestion extends React.Component {
       <div className={classes.root}>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={11}>
-            <Header pageHeader={translate('CreateAQuestion')} />
+            <Grid item xs={12} sm={9}>
+              <BreadCrumbs questions />
+            </Grid>
           </Grid>
           <Grid item xs={12} sm={1}>
             <Button
