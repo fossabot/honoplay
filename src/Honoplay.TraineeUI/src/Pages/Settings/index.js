@@ -20,7 +20,7 @@ import { connect } from "react-redux";
 
 class Settings extends React.Component {
   componentDidMount() {
-    this.props.getAllAvatar(null,null);
+    this.props.getAllAvatar(null, null);
   }
 
   render() {
@@ -53,9 +53,6 @@ class Settings extends React.Component {
                       özelleştirebilirsin.
                     </p>
                     <a
-                      // onClick={() => {
-                      //   $("#bd-example-modal-xl").modal("show");
-                      // }}
                       className="btn my-btn2"
                       data-toggle="modal"
                       data-target=".bd-example-modal-xl"
@@ -74,7 +71,9 @@ class Settings extends React.Component {
                 </div>
                 <div className="col-sm-9">
                   <div className="form">
-                    <h5 className="mb-3 font-weight-bold">Yeni Şifre Oluştur</h5>
+                    <h5 className="mb-3 font-weight-bold">
+                      Yeni Şifre Oluştur
+                    </h5>
                     <Input type="password" placeholder="Yeni Şifre" />
                     <Input type="password" placeholder="Yeni Şifre Tekrar" />
                     <Button
@@ -87,7 +86,7 @@ class Settings extends React.Component {
             </div>
           </div>
         </PageWrapper>
-        {/* <Modal Images={this.props.traineeAvatarList} /> */}
+        <Modal Images={this.props.traineeAvatarList} />
       </React.Fragment>
     );
   }

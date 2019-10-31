@@ -1,10 +1,14 @@
 import React from "react";
 import DefaultAvatar from "../../Assets/img/avatar.jpg";
 import History from "../../Helpers/History";
+import { GetImage } from "../../Helpers/Image";
+import Image from "react-image-webp";
 
-const userData = JSON.parse(localStorage.getItem("traineeUserData"));
-class Settings extends React.Component {
+class SettingsPanel extends React.Component {
   render() {
+    const userData = JSON.parse(localStorage.getItem("traineeUserData"));
+    console.log("user data :", userData);
+
     return (
       <div className="top p-3 shadow">
         <div className="float-left">
@@ -13,17 +17,13 @@ class Settings extends React.Component {
               <tr>
                 <td style={{ width: "70px" }}>
                   <figure className="avatar-profile mb-0">
-                    {this.props.ImageByte ? (
-                      <img
-                        src={`data:image/jpeg;base64,${this.props.ImageByte.items[0].imageBytes}`}
-                        className="img-fluid shadow-sm"
-                      />
-                    ) : (
-                      <img
-                        src={DefaultAvatar}
-                        className="img-fluid shadow-sm"
-                      />
-                    )}
+                    {/* <Image src={this.state.image} webp={this.state.image} /> */}
+                    <img
+                      async="on"
+                      decoding="async"
+                      src={GetImage("125")}
+                      className="img-fluid shadow-sm"
+                    />
                   </figure>
                 </td>
                 <td>
@@ -31,7 +31,7 @@ class Settings extends React.Component {
                     style={{ marginLeft: "8px" }}
                     className="font-weight-bold mb-0"
                   >
-                    {userData.name} {userData.surname}
+                    {userData && userData.name + " " + userData.surname}
                   </p>
                 </td>
               </tr>
@@ -55,4 +55,4 @@ class Settings extends React.Component {
   }
 }
 
-export default Settings;
+export default SettingsPanel;
