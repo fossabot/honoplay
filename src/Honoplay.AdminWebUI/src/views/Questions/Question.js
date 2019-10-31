@@ -10,7 +10,7 @@ import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Options from './Options';
 import QuestionCategory from './QuestionCategory';
-import ImageInput from '../../components/Input/ImageInputComponent';
+import Uploader from '../../components/Uploader';
 import SelectDropdown from '../../components/Input/SelectDropdown';
 import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
 import QuestionTag from './QuestionTag';
@@ -31,6 +31,7 @@ import { fetchQuestionCategoryList } from '@omegabigdata/honoplay-redux-helper/d
 import { fetchQuestionTypeList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/QuestionType';
 import { createContentFile } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/ContentFile';
 import { fetchTagList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Tag';
+import { fetchContentFile } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/ContentFile';
 
 class NewQuestion extends React.Component {
   constructor(props) {
@@ -53,7 +54,8 @@ class NewQuestion extends React.Component {
       questionDifficulty: [],
       questionCategory: [],
       questionTypes: [],
-      questionTags: []
+      questionTags: [],
+      contentFileData: ''
     };
   }
 
@@ -105,8 +107,23 @@ class NewQuestion extends React.Component {
       errorCreateContentFile,
       isTagListLoading,
       tags,
-      errorTagList
+      errorTagList,
+      isContentFileLoading,
+      contentFile,
+      errorContentFile
     } = this.props;
+
+    if (
+      prevProps.isContentFileLoading &&
+      !isContentFileLoading &&
+      contentFile
+    ) {
+      if (!errorContentFile) {
+        this.setState({
+          contentFileData: contentFile.items[0].data
+        });
+      }
+    }
 
     if (prevProps.isTagListLoading && !isTagListLoading && tags) {
       if (!errorTagList) {
@@ -186,6 +203,7 @@ class NewQuestion extends React.Component {
 
     if (prevProps.isQuestionLoading && !isQuestionLoading && question) {
       if (!errorQuestion) {
+        this.props.fetchContentFile(question.items[0].contentFileId);
         this.setState({
           questionsModel: question.items[0]
         });
@@ -329,7 +347,8 @@ class NewQuestion extends React.Component {
       questionDifficulty,
       questionCategory,
       questionTypes,
-      questionTags
+      questionTags,
+      contentFileData
     } = this.state;
     const { classes } = this.props;
     const buttonClassname = classNames({
@@ -424,12 +443,15 @@ class NewQuestion extends React.Component {
               htmlFor="questionType"
               id="questionType"
             />
+          </Grid>
+          <Grid item xs={12} sm={2} />
+          <Grid item xs={12} sm={9}>
             {this.state.questionsModel.typeId == 1 &&
               this.contentFileModel.createContentFileModels.map(
                 (contentFile, index) => (
-                  <ImageInput
+                  <Uploader
+                    imageData={contentFileData && contentFileData}
                     key={index}
-                    error={questionsError}
                     selectedImage={value => {
                       contentFile.data = value;
                     }}
@@ -439,12 +461,11 @@ class NewQuestion extends React.Component {
                     type={value => {
                       contentFile.contentType = value;
                     }}
-                    labelName={translate('QuestionImage')}
-                    htmlFor="questionImage"
-                    id="questionImage"
                   />
                 )
               )}
+          </Grid>
+          <Grid item xs={12} sm={12}>
             <SelectDropdown
               htmlFor="questionTag"
               id="questionTag"
@@ -541,6 +562,12 @@ const mapStateToProps = state => {
 
   const { isTagListLoading, tags, errorTagList } = state.tagList;
 
+  const {
+    isContentFileLoading,
+    contentFile,
+    errorContentFile
+  } = state.contentFile;
+
   return {
     isCreateQuestionLoading,
     createQuestion,
@@ -575,7 +602,10 @@ const mapStateToProps = state => {
     errorCreateContentFile,
     isTagListLoading,
     tags,
-    errorTagList
+    errorTagList,
+    isContentFileLoading,
+    contentFile,
+    errorContentFile
   };
 };
 
@@ -590,7 +620,8 @@ const mapDispatchToProps = {
   fetchQuestionCategoryList,
   fetchQuestionTypeList,
   createContentFile,
-  fetchTagList
+  fetchTagList,
+  fetchContentFile
 };
 
 export default connect(

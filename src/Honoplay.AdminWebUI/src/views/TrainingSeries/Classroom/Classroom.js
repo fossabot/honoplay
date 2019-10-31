@@ -12,9 +12,6 @@ import TransferList from '../../../components/TransferList/TransferList';
 import { genderToString } from '../../../helpers/Converter';
 import differenceBy from 'lodash/differenceBy';
 import moment from 'moment';
-import 'moment/locale/tr';
-moment.locale('tr');
-
 import { connect } from 'react-redux';
 import { fetchTrainersList } from '@omegabigdata/honoplay-redux-helper/dist/Src/actions/Trainer';
 import {
