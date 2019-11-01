@@ -25,12 +25,7 @@ namespace Honoplay.Application.Avatars.Queries.GetAvatarsList
         public async Task<ResponseModel<AvatarsListModel>> Handle(GetAvatarsListQuery request,
             CancellationToken cancellationToken)
         {
-            var redisKey = "Avatars";
-            var avatarsQuery = await _cacheService.RedisCacheAsync(redisKey,
-                _ => _context.Avatars
-                    .AsNoTracking()
-                , cancellationToken);
-
+            var avatarsQuery = _context.Avatars.AsNoTracking();
             if (!avatarsQuery.Any())
             {
                 throw new NotFoundException();
