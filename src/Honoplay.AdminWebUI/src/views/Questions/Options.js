@@ -89,7 +89,6 @@ class Options extends React.Component {
 
   optionRemove = id => () => {
     this.setState({
-      order: this.state.order - 1,
       options: this.state.options.filter((o, oid) => id !== oid)
     });
   };
