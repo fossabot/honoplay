@@ -10,7 +10,7 @@ import Input from '../../components/Input/InputTextComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Options from './Options';
 import QuestionCategory from './QuestionCategory';
-import Uploader from '../../components/Uploader';
+import Uploader from '../../components/Dropzone/Uploader';
 import SelectDropdown from '../../components/Input/SelectDropdown';
 import BreadCrumbs from '../../components/BreadCrumbs/BreadCrumbs';
 import QuestionTag from './QuestionTag';
@@ -444,11 +444,13 @@ class NewQuestion extends React.Component {
               id="questionType"
             />
           </Grid>
-          <Grid item xs={12} sm={2} />
-          <Grid item xs={12} sm={9}>
-            {this.state.questionsModel.typeId == 1 &&
-              this.contentFileModel.createContentFileModels.map(
-                (contentFile, index) => (
+          {this.state.questionsModel.typeId == 1 && (
+            <Grid item xs={12} sm={2} />
+          )}
+          {this.state.questionsModel.typeId == 1 &&
+            this.contentFileModel.createContentFileModels.map(
+              (contentFile, index) => (
+                <Grid item xs={12} sm={9}>
                   <Uploader
                     imageData={contentFileData && contentFileData}
                     key={index}
@@ -462,9 +464,9 @@ class NewQuestion extends React.Component {
                       contentFile.contentType = value;
                     }}
                   />
-                )
-              )}
-          </Grid>
+                </Grid>
+              )
+            )}
           <Grid item xs={12} sm={12}>
             <SelectDropdown
               htmlFor="questionTag"
