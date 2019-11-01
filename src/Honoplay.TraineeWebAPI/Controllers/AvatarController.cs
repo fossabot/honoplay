@@ -75,6 +75,8 @@ namespace Honoplay.TraineeWebAPI.Controllers
         /// <param name="id">Get avatar model</param>
         /// <returns>Get avatar by avatarId with status code.</returns>
         [HttpGet("GetFile/{id}")]
+        [ResponseCache(Duration = 60, Location = ResponseCacheLocation.Any)]
+        [ETagFilter]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]

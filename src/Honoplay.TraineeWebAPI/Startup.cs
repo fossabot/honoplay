@@ -38,6 +38,8 @@ namespace Honoplay.TraineeWebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
+
+            services.AddResponseCaching();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Latest).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Application.AssemblyIdentifier>());
 
             //Add RedisCache
@@ -153,6 +155,7 @@ namespace Honoplay.TraineeWebAPI
 
             app.UseAuthentication();
             app.UseHttpsRedirection();
+            app.UseResponseCaching();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
