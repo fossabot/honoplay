@@ -1,6 +1,5 @@
 ﻿using Honoplay.Application._Infrastructure;
 using Honoplay.Common._Exceptions;
-using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
@@ -58,19 +57,16 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
 
                     if (request.TraineeUsersIdList != null)
                     {
-
-                        _context.TryUpdateManyToMany(updateClassroom.ClassroomTraineeUsers, request
-                            .TraineeUsersIdList
-                            .Select(x => new ClassroomTraineeUser
+                        _context.ClassroomTraineeUsers.RemoveRange(updateClassroom.ClassroomTraineeUsers);
+                        foreach (var TraineeUserId in request.TraineeUsersIdList)
+                        {
+                            updateClassroom.ClassroomTraineeUsers.Add(new ClassroomTraineeUser
                             {
                                 ClassroomId = updateClassroom.Id,
-                                TraineeUserId = x
-                            }), x => x.ClassroomId);
-                        await _context.SaveChangesAsync(cancellationToken);
+                                TraineeUserId = TraineeUserId
+                            });
+                        }
                     }
-
-                    _context.Classrooms.Update(updateClassroom);
-                    await _context.SaveChangesAsync(cancellationToken);
 
                     classroomsByTenantId = classroomsByTenantId.Select(x => new Classroom
                     {
