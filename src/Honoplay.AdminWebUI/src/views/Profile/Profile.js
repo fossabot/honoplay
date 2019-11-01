@@ -8,7 +8,7 @@ import Input from '../../components/Input/InputTextComponent';
 import Header from '../../components/Typography/TypographyComponent';
 import Button from '../../components/Button/ButtonComponent';
 import Departman from './Department';
-import Uploader from '../../components/Uploader';
+import Uploader from '../../components/Dropzone/Uploader';
 import { connect } from 'react-redux';
 import {
   fetchTenant,

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DropzoneComponent from 'react-dropzone-component';
+import { translate } from '@omegabigdata/terasu-api-proxy';
 import 'dropzone/dist/dropzone.css';
 import 'react-dropzone-component/styles/filepicker.css';
 
@@ -30,7 +31,7 @@ class InputDropzoneComponent extends Component {
   render() {
     const { imageData } = this.props;
     const componentConfig = {
-      iconFiletypes: ['.jpg', '.png', '.gif'],
+      iconFiletypes: ['.jpg', '.png'],
       showFiletypeIcon: true,
       postUrl: 'https://httpbin.org/post'
     };
@@ -38,13 +39,12 @@ class InputDropzoneComponent extends Component {
       addRemoveLinks: true,
       acceptedFiles: 'image/jpeg,image/jpg,image/png',
       maxFiles: 1,
-      dictDefaultMessage: 'new default message'
+      dictDefaultMessage: translate('DropImageHereToUpload')
     };
     const eventHandlers = {
       addedfile: file => this.array(file)
-      //init: imageData => `data:image/jpeg;base64,${imageData}`
     };
-    console.log('deneme', imageData);
+    //console.log('deneme', imageData);
     return (
       <div className="dropzone-wrapper">
         <DropzoneComponent
