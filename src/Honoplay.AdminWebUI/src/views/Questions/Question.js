@@ -47,7 +47,8 @@ class NewQuestion extends React.Component {
         typeId: '',
         contentFileId: '',
         text: '',
-        duration: ''
+        duration: '',
+        tagsIdList: []
       },
       success: false,
       newOptions: [],
@@ -329,6 +330,8 @@ class NewQuestion extends React.Component {
     if (this.state.questionsModel.typeId == 1) {
       this.props.createContentFile(this.contentFileModel);
     } else {
+      console.log('question', this.state.questionsModel);
+
       this.props.createQuestion(this.state.questionsModel);
     }
   };
@@ -450,10 +453,9 @@ class NewQuestion extends React.Component {
           {this.state.questionsModel.typeId == 1 &&
             this.contentFileModel.createContentFileModels.map(
               (contentFile, index) => (
-                <Grid item xs={12} sm={9}>
+                <Grid item xs={12} sm={9} key={index}>
                   <Uploader
                     imageData={contentFileData && contentFileData}
-                    key={index}
                     selectedImage={value => {
                       contentFile.data = value;
                     }}
@@ -474,8 +476,10 @@ class NewQuestion extends React.Component {
               describable
               options={questionTags}
               labelName={translate('QuestionTag')}
-              selectedOption={value => {
-                console.log(value);
+              selectedOption={tagIdList => {
+                this.state.questionsModel.tagsIdList = tagIdList.map(
+                  tag => tag.id
+                );
               }}
             >
               <QuestionTag />
