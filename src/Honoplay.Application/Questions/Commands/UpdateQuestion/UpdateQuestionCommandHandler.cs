@@ -1,6 +1,6 @@
 ﻿using Honoplay.Application._Infrastructure;
+using Honoplay.Application.Tags.Queries.GetTagDetail;
 using Honoplay.Common._Exceptions;
-using Honoplay.Common.Extensions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
 using Honoplay.Persistence.CacheService;
@@ -42,7 +42,6 @@ namespace Honoplay.Application.Questions.Commands.UpdateQuestion
                 try
                 {
 
-
                     if (updateQuestion == null)
                     {
                         throw new NotFoundException(nameof(Question), request.Id);
@@ -60,15 +59,16 @@ namespace Honoplay.Application.Questions.Commands.UpdateQuestion
 
                     if (request.TagsIdList != null)
                     {
-
-                        _context.TryUpdateManyToMany(updateQuestion.QuestionTags, request
-                            .TagsIdList
-                            .Select(x => new QuestionTag
+                        _context.QuestionTags.RemoveRange(updateQuestion.QuestionTags);
+                        foreach (var TagId in request.TagsIdList)
+                        {
+                            updateQuestion.QuestionTags.Add(new QuestionTag
                             {
-                                QuestionId = request.Id,
-                                TagId = x
-                            }), x => x.QuestionId);
-                        await _context.SaveChangesAsync(cancellationToken);
+                                QuestionId = updateQuestion.Id,
+                                TagId = TagId
+                            });
+                        }
+
                     }
 
 
@@ -98,14 +98,14 @@ namespace Honoplay.Application.Questions.Commands.UpdateQuestion
                 }
             }
 
-            var updateQuestionModel = new UpdateQuestionModel(request.Id,
-                                                              request.Text,
-                                                              request.Duration,
-                                                              request.DifficultyId,
-                                                              request.CategoryId,
-                                                              request.TypeId,
-                                                              updateQuestion.QuestionTags.Select(x => x.Tag).ToList(),
-                                                              request.ContentFileId,
+            var updateQuestionModel = new UpdateQuestionModel(updateQuestion.Id,
+                                                              updateQuestion.Text,
+                                                              updateQuestion.Duration,
+                                                              updateQuestion.QuestionDifficultyId,
+                                                              updateQuestion.QuestionCategoryId,
+                                                              updateQuestion.QuestionTypeId,
+                                                              updateQuestion.QuestionTags.Select(x => TagDetailModel.Create(x.Tag)).ToList(),
+                                                              updateQuestion.ContentFileId,
                                                               request.UpdatedBy,
                                                               updatedAt);
             return new ResponseModel<UpdateQuestionModel>(updateQuestionModel);
