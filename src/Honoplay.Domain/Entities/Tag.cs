@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace Honoplay.Domain.Entities
@@ -15,6 +16,7 @@ namespace Honoplay.Domain.Entities
         public Guid TenantId { get; set; }
 
         public Tenant Tenant { get; set; }
+        [JsonIgnore]
         public virtual ICollection<QuestionTag> QuestionTags { get; set; }
     }
 }

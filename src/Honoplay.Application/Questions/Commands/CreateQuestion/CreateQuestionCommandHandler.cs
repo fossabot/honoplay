@@ -1,4 +1,5 @@
 ﻿using Honoplay.Application._Infrastructure;
+using Honoplay.Application.Tags.Queries.GetTagDetail;
 using Honoplay.Common._Exceptions;
 using Honoplay.Domain.Entities;
 using Honoplay.Persistence;
@@ -59,14 +60,13 @@ namespace Honoplay.Application.Questions.Commands.CreateQuestion
                             await _context.QuestionTags.AddAsync(questionTag, cancellationToken);
                         }
                     }
+                    newQuestion.QuestionTags = await _context.QuestionTags
+                                         .AsNoTracking()
+                                         .Where(x => x.QuestionId == newQuestion.Id)
+                                         .Include(x => x.Tag)
+                                         .ToListAsync(cancellationToken);
                     await _context.SaveChangesAsync(cancellationToken);
                     transaction.Commit();
-
-                    newQuestion.QuestionTags = await _context.QuestionTags
-                                                             .AsNoTracking()
-                                                             .Where(x => x.QuestionId == newQuestion.Id)
-                                                             .Include(x => x.Tag)
-                                                             .ToListAsync(cancellationToken);
 
                     await _cacheService.RedisCacheUpdateAsync(redisKey,
                         _ => _context.Questions
@@ -95,7 +95,7 @@ namespace Honoplay.Application.Questions.Commands.CreateQuestion
                                                               newQuestion.Duration,
                                                               newQuestion.QuestionDifficultyId,
                                                               newQuestion.QuestionCategoryId,
-                                                              tags: newQuestion.QuestionTags.Select(x => x.Tag).ToList(),
+                                                              newQuestion.QuestionTags.Select(x => TagDetailModel.Create(x.Tag)).ToList(),
                                                               newQuestion.QuestionTypeId,
                                                               newQuestion.ContentFileId,
                                                               newQuestion.CreatedBy,
