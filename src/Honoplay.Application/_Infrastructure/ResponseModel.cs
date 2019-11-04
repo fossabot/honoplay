@@ -10,7 +10,7 @@ namespace Honoplay.Application._Infrastructure
     {
         /// <inheritdoc />
         /// <summary>
-        /// Tek bir kayıt için yapıcı metod
+        /// Tek bir kayıt için yapıcı metot
         /// </summary>
         /// <param name="source"></param>
         public ResponseModel(T source) : this(numberOfTotalItems: 1, numberOfSkippedItems: 0, source: new[] { source })
@@ -18,7 +18,7 @@ namespace Honoplay.Application._Infrastructure
         }
 
         /// <summary>
-        /// Hata mesajı listesi için yapıcı metod
+        /// Hata mesajı listesi için yapıcı metot
         /// </summary>
         /// <param name="errors"></param>
         public ResponseModel(IEnumerable<Error> errors) : this(numberOfTotalItems: 0, numberOfSkippedItems: 0, source: new List<T>())
@@ -27,7 +27,7 @@ namespace Honoplay.Application._Infrastructure
         }
 
         /// <summary>
-        /// Tek bir hata mesajı için yapıcı metod
+        /// Tek bir hata mesajı için yapıcı metot
         /// </summary>
         /// <param name="error"></param>
         public ResponseModel(Error error) : this(errors: new[] { error })
@@ -35,7 +35,7 @@ namespace Honoplay.Application._Infrastructure
         }
 
         /// <summary>
-        /// Hata mesajı listesi ile birlikte liste için yapıcı metod
+        /// Hata mesajı listesi ile birlikte liste için yapıcı metot
         /// </summary>
         /// <param name="numberOfTotalItems"></param>
         /// <param name="numberOfSkippedItems"></param>
@@ -47,7 +47,7 @@ namespace Honoplay.Application._Infrastructure
         }
 
         /// <summary>
-        /// Hata mesajı listesi ile birlikte tek bir kayıt için yapıcı metod
+        /// Hata mesajı listesi ile birlikte tek bir kayıt için yapıcı metot
         /// </summary>
         /// <param name="source"></param>
         /// <param name="errors"></param>
@@ -57,7 +57,7 @@ namespace Honoplay.Application._Infrastructure
         }
 
         /// <summary>
-        /// Liste için yapıcı metod
+        /// Liste için yapıcı metot
         /// </summary>
         /// <param name="numberOfTotalItems"></param>
         /// <param name="numberOfSkippedItems"></param>
