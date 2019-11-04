@@ -68,6 +68,9 @@ namespace Honoplay.Application.Classrooms.Commands.UpdateClassroom
                         }
                     }
 
+                    _context.Classrooms.Update(updateClassroom);
+                    await _context.SaveChangesAsync(cancellationToken);
+
                     classroomsByTenantId = classroomsByTenantId.Select(x => new Classroom
                     {
                         Id = x.Id,
