@@ -37,7 +37,8 @@ class SelectDropdown extends React.Component {
       labelName,
       children,
       htmlFor,
-      id
+      id,
+      tags
     } = this.props;
     return (
       <>
@@ -55,7 +56,7 @@ class SelectDropdown extends React.Component {
               inputId={id}
               getOptionLabel={option => option.name}
               getOptionValue={option => option.id}
-              value={selectedOption}
+              value={selectedOption ? selectedOption : tags}
               onChange={this.handleChange}
               options={options}
               isMulti
