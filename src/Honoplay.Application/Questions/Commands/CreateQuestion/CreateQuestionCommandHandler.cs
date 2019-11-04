@@ -45,9 +45,6 @@ namespace Honoplay.Application.Questions.Commands.CreateQuestion
             {
                 try
                 {
-                    await _context.Questions.AddAsync(newQuestion, cancellationToken);
-                    await _context.SaveChangesAsync(cancellationToken);
-
                     if (request.TagsIdList != null)
                     {
                         foreach (var tagId in request.TagsIdList)
@@ -57,14 +54,11 @@ namespace Honoplay.Application.Questions.Commands.CreateQuestion
                                 QuestionId = newQuestion.Id,
                                 TagId = tagId
                             };
-                            await _context.QuestionTags.AddAsync(questionTag, cancellationToken);
+                            newQuestion.QuestionTags.Add(questionTag);
                         }
                     }
-                    newQuestion.QuestionTags = await _context.QuestionTags
-                                         .AsNoTracking()
-                                         .Where(x => x.QuestionId == newQuestion.Id)
-                                         .Include(x => x.Tag)
-                                         .ToListAsync(cancellationToken);
+                    await _context.Questions.AddAsync(newQuestion, cancellationToken);
+
                     await _context.SaveChangesAsync(cancellationToken);
                     transaction.Commit();
 
@@ -95,7 +89,6 @@ namespace Honoplay.Application.Questions.Commands.CreateQuestion
                                                               newQuestion.Duration,
                                                               newQuestion.QuestionDifficultyId,
                                                               newQuestion.QuestionCategoryId,
-                                                              newQuestion.QuestionTags.Select(x => TagDetailModel.Create(x.Tag)).ToList(),
                                                               newQuestion.QuestionTypeId,
                                                               newQuestion.ContentFileId,
                                                               newQuestion.CreatedBy,
