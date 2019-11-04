@@ -52,14 +52,13 @@ export default function TransferList(props) {
   const leftChecked = intersection(checked, left);
   const rightChecked = intersection(checked, right);
 
-  useEffect(
-    () => {
-      setLeft(props.leftData);
-      setRight(props.rightData);
-    },
-    [props.leftData],
-    [props.rightData]
-  );
+  useEffect(() => {
+    setLeft(props.leftData);
+  }, [props.leftData]);
+
+  useEffect(() => {
+    setRight(props.rightData);
+  }, [props.leftData]);
 
   props.isSelected(right.map(n => n.id));
 
