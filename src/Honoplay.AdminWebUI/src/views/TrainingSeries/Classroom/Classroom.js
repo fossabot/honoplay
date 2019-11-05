@@ -142,13 +142,11 @@ class ClassroomCreate extends React.Component {
       traineeUserByClassroomId
     ) {
       if (!errorTraineeUserByClassroomId) {
-        console.log('buradaaa');
-
         this.setState({
           traineeUsers: traineeUserByClassroomId.items
         });
         const difference = differenceBy(
-          this.state.traineeList,
+          trainees.items,
           traineeUserByClassroomId.items,
           'id'
         );
