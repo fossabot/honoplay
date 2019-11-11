@@ -47,7 +47,8 @@ class ClassroomCreate extends React.Component {
         ]
       },
       traineeList: [],
-      traineeUsers: []
+      traineeUsers: [],
+      unSelectedTrainee: []
     };
   }
 
@@ -144,6 +145,14 @@ class ClassroomCreate extends React.Component {
         this.setState({
           traineeUsers: traineeUserByClassroomId.items
         });
+        const difference = differenceBy(
+          trainees.items,
+          traineeUserByClassroomId.items,
+          'id'
+        );
+        this.setState({
+          unSelectedTrainee: difference
+        });
       }
     }
     if (!prevProps.isUpdateClassroomLoading && isUpdateClassroomLoading) {
@@ -201,7 +210,8 @@ class ClassroomCreate extends React.Component {
       classroomError,
       traineeUsers,
       traineeList,
-      success
+      success,
+      unSelectedTrainee
     } = this.state;
     const { classes, update } = this.props;
 
@@ -322,10 +332,10 @@ class ClassroomCreate extends React.Component {
                 />
               </Grid>
             </Grid>
-            {traineeUsers && traineeUsers.length !== 0 && update ? (
+            {unSelectedTrainee && update ? (
               <Grid item xs={12} sm={12}>
                 <TransferList
-                  leftData={differenceBy(traineeList, traineeUsers, 'id')}
+                  leftData={unSelectedTrainee}
                   rightData={traineeUsers}
                   isSelected={selected => {
                     classroom.traineeUsersIdList = selected;
