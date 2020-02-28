@@ -1,9 +1,11 @@
-﻿# honoplay
+# honoplay
 Honoplay Stack
 
 
 
 # Klasör Yapısı
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fomegabigdata%2Fhonoplay.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fomegabigdata%2Fhonoplay?ref=badge_shield)
+
 
 ## Common
 
@@ -90,3 +92,6 @@ https://fluentvalidation.net/start
 Honoplay.Persistence klasöründe olduğunu doğruladıktan sonra
 `dotnet ef migrations add InitialCreate`  
 `dotnet ef database update`
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fomegabigdata%2Fhonoplay.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fomegabigdata%2Fhonoplay?ref=badge_large)
